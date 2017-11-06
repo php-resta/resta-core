@@ -2,7 +2,7 @@
     "name": "restapix/resta",
     "type": "library",
     "description": "resta php api restfull framework",
-    "keywords": ["php","restapi",'restfull'],
+    "keywords": ["php","restapi","restfull"],
     "homepage": "https://github.com/restapix/resta",
     "license": "MIT",
     "authors": [
