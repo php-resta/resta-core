@@ -2,13 +2,9 @@
 
 namespace Resta\Foundation;
 
-use Resta\Traits\ApplicationTraits;
-use Resta\Contracts\Application as ApplicationContract;
+use Resta\Contracts\ApplicationContracts;
 
-class Application extends Kernel implements ApplicationContract {
-
-    //application traits
-    use ApplicationTraits;
+class Application extends Kernel implements ApplicationContracts {
 
     /**
      * @var $environment null
@@ -19,6 +15,11 @@ class Application extends Kernel implements ApplicationContract {
      * @var $console null
      */
     public $console;
+
+    /**
+     * @var $boot
+     */
+    public $boot=false;
 
     /**
      * Application constructor.
@@ -32,9 +33,23 @@ class Application extends Kernel implements ApplicationContract {
         $this->environment=$environment;
         $this->console=$console;
 
+        //this method only includes the settings to be run in the development environment
+        //the managed classes can be managed from the kernel file
+        $this->devEagerConfiguration();
+
         //start boot for app
         //this method is the main fire and is brain for system
         $this->booting();
+
+        //middleware installers are user-based pre-installers
+        //that come after the pre-installers required for the system
+        $this->middleware();
+    }
+
+    public function devEagerConfiguration(){
+
+        //kernel eager for dev
+        $this->devEagers($this);
     }
 
     /**
@@ -43,8 +58,28 @@ class Application extends Kernel implements ApplicationContract {
      */
     public function booting(){
 
+        //check boot for only once
+        //if boot is true,booting classes would not run
+        if($this->boot){
+            return;
+        }
+
         //system booting for app
+        //pre-loaders are the most necessary classes for the system.
         $this->bootstrappers($this);
+
+        //boot true
+        $this->boot=true;
+    }
+
+    /**
+     * @method middleware
+     * @return void
+     */
+    public function middleware(){
+
+        //pre-loaders user-based
+        $this->middlewareLoaders($this);
     }
 
 

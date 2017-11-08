@@ -13,7 +13,7 @@ class Kernel {
 
     /**
      * @method bootstrappers
-     * @param $app \Resta\Contracts\Application
+     * @param $app \Resta\Contracts\ApplicationContracts
      */
     protected function bootstrappers($app){
 
@@ -27,5 +27,23 @@ class Kernel {
             ])
                 ->boot();
         }
+    }
+
+    /**
+     * @method devEagers
+     * @param $app \Resta\Contracts\ApplicationContracts
+     * @return void
+     */
+    protected function devEagers($app){
+
+    }
+
+    /**
+     * @method middlewareLoaders
+     * @param $app \Resta\Contracts\ApplicationContracts
+     * @return void
+     */
+    protected function middlewareLoaders($app){
+
     }
 }
