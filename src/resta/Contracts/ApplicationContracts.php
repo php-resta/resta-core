@@ -15,4 +15,10 @@ interface ApplicationContracts {
      * @return mixed
      */
     public function handle();
+
+    /**
+     * @method bind
+     * @return mixed
+     */
+    public function bind();
 }

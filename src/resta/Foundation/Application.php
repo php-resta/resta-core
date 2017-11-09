@@ -3,8 +3,12 @@
 namespace Resta\Foundation;
 
 use Resta\Contracts\ApplicationContracts;
+use Resta\Traits\ApplicationTraits;
 
 class Application extends Kernel implements ApplicationContracts {
+
+    //get application traits
+    use ApplicationTraits;
 
     /**
      * @var $environment null
@@ -89,6 +93,6 @@ class Application extends Kernel implements ApplicationContracts {
      */
     public function handle(){
 
-        return $this->environment;
+        return $this->kernel->router;
     }
 }

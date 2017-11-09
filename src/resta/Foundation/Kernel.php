@@ -6,9 +6,19 @@ use Resta\Utils;
 
 class Kernel {
 
+    /**
+     * @var $kernel
+     */
+    protected $kernel;
+
+    /**
+     * @var array
+     */
     protected $bootstrappers=[
 
-        \Boot\Encrypter::class
+        \Boot\Encrypter::class,
+        \Resta\Booting\SymfonyRequest::class,
+        \Boot\Router::class
     ];
 
     /**
@@ -45,5 +55,14 @@ class Kernel {
      */
     protected function middlewareLoaders($app){
 
+    }
+
+    /**
+     * @method bind
+     * @return \stdClass
+     */
+    public function bind(){
+
+        return $this->kernel=new \stdClass;
     }
 }
