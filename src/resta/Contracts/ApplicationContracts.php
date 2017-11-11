@@ -18,7 +18,23 @@ interface ApplicationContracts {
 
     /**
      * @method bind
+     * @param $object null
+     * @param $callback null
      * @return mixed
      */
-    public function bind();
+    public function bind($object=null,$callback=null);
+
+    /**
+     * @method singleton
+     * @return mixed
+     */
+    public function singleton();
+
+    /**
+     * @method kernel
+     * @return mixed
+     */
+    public function kernel();
+
+
 }

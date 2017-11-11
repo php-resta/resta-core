@@ -2,18 +2,12 @@
 
 namespace Resta\Booting;
 
-class Encrypter {
+use Resta\ApplicationProvider;
 
-    public $app;
-
-    public function __construct($app)
-    {
-        $this->app=$app;
-    }
+class Encrypter extends ApplicationProvider {
 
     public function boot(){
 
-        //
+        $this->app->bind()->encrypter='encrypter';
     }
-
 }

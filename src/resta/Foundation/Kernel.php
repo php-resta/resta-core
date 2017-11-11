@@ -7,9 +7,14 @@ use Resta\Utils;
 class Kernel {
 
     /**
+     * @var $singleton
+     */
+    protected $singleton=false;
+
+    /**
      * @var $kernel
      */
-    protected $kernel;
+    public $kernel;
 
     /**
      * @var array
@@ -17,9 +22,19 @@ class Kernel {
     protected $bootstrappers=[
 
         \Boot\Encrypter::class,
-        \Resta\Booting\SymfonyRequest::class,
+        \Resta\Booting\GlobalAccessor::class,
+        \Resta\Booting\UrlParse::class,
         \Boot\Router::class
     ];
+
+    /**
+     * @return mixed
+     */
+    public function kernel(){
+
+        //get kernel object
+        return $this->kernel;
+    }
 
     /**
      * @method bootstrappers
@@ -32,9 +47,7 @@ class Kernel {
         foreach ($this->bootstrappers as $bootstrapper){
 
             //set makeBuild for kernel boots
-            Utils::makeBind($bootstrapper,[
-                'app'=>$app
-            ])
+            Utils::makeBind($bootstrapper,$this->applicationProviderBinding($app))
                 ->boot();
         }
     }
@@ -59,10 +72,78 @@ class Kernel {
 
     /**
      * @method bind
-     * @return \stdClass
+     * @param $object null
+     * @param $callback null
+     * @return mixed
      */
-    public function bind(){
+    public function bind($object=null,$callback=null){
 
-        return $this->kernel=new \stdClass;
+        //we check whether the boolean value of the singleton variable used
+        //for booting does not reset every time the object variable to be assigned to the kernel variable is true
+        $this->singleton();
+
+        //If the bind method does not have parameters object and callback, the value is directly assigned to the kernel object.
+        //Otherwise, when the bind object and callback are sent, the closure class inherits
+        //the applicationProvider object and the makeBind method is called
+        return ($object===null) ? $this->build() : $this->make($object,$callback);
+
+    }
+
+    /**
+     * @method singleton
+     */
+    public function singleton(){
+
+        if($this->singleton===false){
+
+            //after first initializing, the singleton variable is set to true,
+            //and subsequent incoming classes can inherit the loaded object.
+            $this->singleton=true;
+            $this->kernel=new \stdClass;
+        }
+
+        //kernel object taken over
+        return $this->kernel;
+    }
+
+    /**
+     * @method build
+     * @return mixed
+     */
+    public function build(){
+
+        //kernel object taken over
+        return $this->kernel;
+    }
+
+    /**
+     * @method make
+     * @param $object
+     * @param $callback
+     * @return mixed
+     */
+    public function make($object,$callback){
+
+        //if a pre loader class wants to have before kernel values,
+        //it must return a callback to the bind method
+        $concrete=call_user_func($callback);
+
+        //the value corresponding to the bind value for the global object is assigned and
+        //the makeBind method is called for the dependency method.
+        $this->kernel->{$object}=Utils::makeBind($concrete,$this->applicationProviderBinding($this))
+            ->handle();
+
+        return $this->kernel;
+    }
+
+    /**
+     * @param $make
+     * @return array
+     */
+    public function applicationProviderBinding($make){
+
+        return [
+            'app'=>$make
+        ];
     }
 }

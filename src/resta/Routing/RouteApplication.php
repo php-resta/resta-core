@@ -2,14 +2,12 @@
 
 namespace Resta\Routing;
 
-class RouteApplication {
+use Resta\ApplicationProvider;
 
-    public function __construct() {
-
-    }
+class RouteApplication extends ApplicationProvider {
 
     public function handle(){
 
-        return 'router';
+        dd($this->app->kernel()->url);
     }
 }
