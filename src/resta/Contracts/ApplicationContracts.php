@@ -36,5 +36,11 @@ interface ApplicationContracts {
      */
     public function kernel();
 
+    /**
+     * @method console
+     * @return mixed
+     */
+    public function console();
+
 
 }

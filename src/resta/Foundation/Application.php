@@ -57,6 +57,15 @@ class Application extends Kernel implements ApplicationContracts {
     }
 
     /**
+     * @method console
+     * @return bool|null
+     */
+    public function console(){
+
+        return $this->console;
+    }
+
+    /**
      * @method booting
      * @return void
      */
@@ -93,6 +102,6 @@ class Application extends Kernel implements ApplicationContracts {
      */
     public function handle(){
 
-        return $this->kernel->router;
+        return ($this->console) ? $this->kernel->console : $this->kernel->router;
     }
 }

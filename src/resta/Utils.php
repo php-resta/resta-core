@@ -40,4 +40,12 @@ class Utils {
         $container = self::callBuild();
         return $container->make($class,$param);
     }
+
+    public static function upperCase($argument){
+
+        array_shift($argument);
+        return array_map(function($argument){
+            return ucfirst($argument);
+        },$argument);
+    }
 }

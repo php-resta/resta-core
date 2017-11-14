@@ -3,6 +3,7 @@
 namespace Resta\UrlParse;
 
 use Resta\ApplicationProvider;
+use Resta\Utils;
 
 /**
  * Class UrlParseApplication
@@ -35,7 +36,7 @@ class UrlParseApplication extends ApplicationProvider{
 
     /**
      * @method handle
-     * @return object
+     * @return array
      */
     public function handle(){
 
@@ -43,18 +44,18 @@ class UrlParseApplication extends ApplicationProvider{
         $query=$this->convertArrayForQuery();
 
         //determines the application name for your project
-        $this->urlList['project']=$query[0];
+        $this->urlList['project']=(isset($query[0])) ? $query[0] : null;
 
         //determines the namespace for your project
-        $this->urlList['namespace']=$query[1];
+        $this->urlList['namespace']=(isset($query[1])) ? $query[1] : null;
 
         //determines the endpoint for your project
-        $this->urlList['endpoint']=$query[2];
+        $this->urlList['endpoint']=(isset($query[2])) ? $query[2] : null;
 
         //determines the endpoint method for your project
-        $this->urlList['method']=$query[3];
+        $this->urlList['method']=(isset($query[3])) ? $query[3] : null;
 
-        return (object)$this->urlList;
+        return $this->urlList;
     }
 
     /**
@@ -67,6 +68,11 @@ class UrlParseApplication extends ApplicationProvider{
         //we are removing the first empty element from the array due to the slash sign.
         $arrayForQuery=explode("/",$this->query);
         array_shift($arrayForQuery);
-        return $arrayForQuery;
+
+        //we set the first letter of the array elements
+        //to be big according to the project standards
+        return array_map(function($query){
+            return ucfirst($query);
+        },$arrayForQuery);
     }
 }

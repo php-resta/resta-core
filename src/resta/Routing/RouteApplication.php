@@ -8,6 +8,6 @@ class RouteApplication extends ApplicationProvider {
 
     public function handle(){
 
-        dd($this->app->kernel()->url);
+        return 'router';
     }
 }
