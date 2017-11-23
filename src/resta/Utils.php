@@ -48,4 +48,14 @@ class Utils {
             return ucfirst($argument);
         },$argument);
     }
+
+
+    /**
+     * @param null $app
+     * @return string
+     */
+    public static function getAppVersion($app=null){
+
+        return 'V1';
+    }
 }

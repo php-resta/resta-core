@@ -3,13 +3,25 @@
 namespace Resta\Console\Source\Test;
 
 use Resta\Console\ConsoleOutputter;
+use Resta\FileProcess;
+use Resta\StaticPathModel;
 
 class Test extends ConsoleOutputter {
 
     /**
      * @var $argument
      */
-    protected  $argument;
+    public  $argument;
+
+    /**
+     * @var $file
+     */
+    public $file;
+
+    /**
+     * @var $directory
+     */
+    public $directory=array();
 
     /**
      * Project constructor.
@@ -19,6 +31,7 @@ class Test extends ConsoleOutputter {
 
         parent::__construct();
         $this->argument=$argument;
+        $this->file=new FileProcess();
     }
 
     /**

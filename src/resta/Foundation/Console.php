@@ -28,7 +28,7 @@ class Console extends Kernel {
     public function consoleProcess(){
 
         $consoleClassNamespace='Resta\Console\\Source\\'.$this->getConsoleClass().'\\'.$this->getConsoleClass();
-        return (new $consoleClassNamespace($this->getConsoleClassRealArguments()))->{$this->getConsoleClassMethod()}();
+        return (new $consoleClassNamespace($this->getConsoleArgumentsWithKey()))->{$this->getConsoleClassMethod()}();
     }
 
     /**
@@ -56,5 +56,37 @@ class Console extends Kernel {
     public function getConsoleClassRealArguments(){
 
         return array_slice($this->getArguments(),2);
+    }
+
+    /**
+     * @method getConsoleArgumentsWithKey
+     * @return array
+     */
+    public function getConsoleArgumentsWithKey(){
+
+        //get console class real arguments
+        $getConsoleClassRealArguments=$this->getConsoleClassRealArguments();
+
+        $listKey=[];
+
+        foreach($getConsoleClassRealArguments as $key=>$value){
+
+            if($key=="0"){
+
+                $listKey['project']=$value;
+            }
+            else{
+
+                $colonExplode=explode(":",$value);
+                $listKey[strtolower($colonExplode[0])]=ucfirst($colonExplode[1]);
+            }
+
+        }
+
+        //get app version
+        $listKey['version']=Utils::getAppVersion($listKey['project']);
+
+        return $listKey;
+
     }
 }
