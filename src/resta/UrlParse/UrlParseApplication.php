@@ -3,7 +3,6 @@
 namespace Resta\UrlParse;
 
 use Resta\ApplicationProvider;
-use Resta\Utils;
 
 /**
  * Class UrlParseApplication
@@ -21,18 +20,6 @@ class UrlParseApplication extends ApplicationProvider{
      */
     public $urlList=[];
 
-    /**
-     * UrlParseApplication constructor.
-     * @param $app
-     */
-    public function __construct($app){
-
-        //provider construct binding
-        //get path info with request component
-        parent::__construct($app);
-        $this->query=$this->app->kernel()->request->getPathInfo();
-
-    }
 
     /**
      * @method handle
@@ -40,22 +27,17 @@ class UrlParseApplication extends ApplicationProvider{
      */
     public function handle(){
 
+        //symfony request getPathInfo
+        $this->query=$this->app->kernel()->request->getPathInfo();
+
         //convert array for query
         $query=$this->convertArrayForQuery();
 
-        //determines the application name for your project
-        $this->urlList['project']=(isset($query[0])) ? $query[0] : null;
+        //assign url list
+        $this->assignUrlList($query);
 
-        //determines the namespace for your project
-        $this->urlList['namespace']=(isset($query[1])) ? $query[1] : null;
-
-        //determines the endpoint for your project
-        $this->urlList['endpoint']=(isset($query[2])) ? $query[2] : null;
-
-        //determines the endpoint method for your project
-        $this->urlList['method']=(isset($query[3])) ? $query[3] : null;
-
-        return $this->urlList;
+        //we make url parse resolving with resolved
+        return (new UrlParseParamResolved)->urlParamResolve($this);
     }
 
     /**
@@ -74,5 +56,25 @@ class UrlParseApplication extends ApplicationProvider{
         return array_map(function($query){
             return ucfirst($query);
         },$arrayForQuery);
+    }
+
+
+    /**
+     * @method assignUrlList
+     * @param array $query
+     */
+    public function assignUrlList($query=array()){
+
+        //determines the application name for your project
+        $this->urlList['project']=(isset($query[0])) ? $query[0] : null;
+
+        //determines the namespace for your project
+        $this->urlList['namespace']=(isset($query[1])) ? $query[1] : null;
+
+        //determines the endpoint for your project
+        $this->urlList['endpoint']=(isset($query[2])) ? $query[2] : null;
+
+        //determines the endpoint method for your project
+        $this->urlList['method']=(isset($query[3])) ? $query[3] : 'index';
     }
 }
