@@ -2,37 +2,27 @@
 
 namespace Resta\Console\Source\Test;
 
+use Resta\Console\ConsoleListAccessor;
 use Resta\Console\ConsoleOutputter;
-use Resta\FileProcess;
-use Resta\StaticPathModel;
 
 class Test extends ConsoleOutputter {
 
-    /**
-     * @var $argument
-     */
-    public  $argument;
+    use ConsoleListAccessor;
 
     /**
-     * @var $file
+     * @var $type
      */
-    public $file;
+    public $type='test';
 
     /**
-     * @var $directory
+     * @var $define
      */
-    public $directory=array();
+    public $define='Test';
 
     /**
-     * Project constructor.
-     * @param $argument
+     * @var $command_create
      */
-    public function __construct($argument){
-
-        parent::__construct();
-        $this->argument=$argument;
-        $this->file=new FileProcess();
-    }
+    public $command_create='php api test create';
 
     /**
      * @method create

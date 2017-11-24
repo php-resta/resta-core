@@ -2,38 +2,27 @@
 
 namespace Resta\Console\Source\Project;
 
+use Resta\Console\ConsoleListAccessor;
 use Resta\Console\ConsoleOutputter;
-use Resta\FileProcess;
-use Resta\StaticPathModel;
 
 class Project extends ConsoleOutputter {
 
-    /**
-     * @var $argument
-     */
-    public  $argument;
+    use ConsoleListAccessor;
 
     /**
-     * @var $file
+     * @var $type
      */
-    public $file;
+    public $type='project';
 
     /**
-     * @var $directory
+     * @var $define
      */
-    public $directory=array();
-
+    public $define='Project Set';
 
     /**
-     * Project constructor.
-     * @param $argument
+     * @var $command_create
      */
-    public function __construct($argument){
-
-        parent::__construct();
-        $this->argument=$argument;
-        $this->file=new FileProcess();
-    }
+    public $command_create='php api project create [projectName]';
 
     /**
      * @method create
@@ -42,24 +31,53 @@ class Project extends ConsoleOutputter {
     public function create(){
 
         //get project directory all path
-        $this->directory['projectDir']       = StaticPathModel::appPath().'/'.$this->argument['project'];
-        $this->directory['kernelDir']        = $this->directory['projectDir'].'/Kernel';
-        $this->directory['middleWareDir']    = $this->directory['kernelDir'].'/Middleware';
-        $this->directory['boot']             = $this->directory['kernelDir'].'/Boot';
-        $this->directory['storageDir']       = $this->directory['projectDir'].'/Storage';
-        $this->directory['logDir']           = $this->directory['storageDir'].'/Logs';
-        $this->directory['resourceDir']      = $this->directory['storageDir'].'/Resource';
-        $this->directory['languageDir']      = $this->directory['storageDir'].'/Language';
-        $this->directory['sessionDir']       = $this->directory['storageDir'].'/Session';
-        $this->directory['versionDir']       = $this->directory['projectDir'].'/V1';
-        $this->directory['callDir']          = $this->directory['versionDir'].'/__Call';
-        $this->directory['modelDir']         = $this->directory['versionDir'].'/Model';
-        $this->directory['migrationDir']     = $this->directory['versionDir'].'/Migration';
-        $this->directory['configDir']        = $this->directory['versionDir'].'/Config';
-        $this->directory['optionalDir']      = $this->directory['versionDir'].'/Optional';
+        $this->directory['kernelDir']        = $this->kernel();
+        $this->directory['repositoryDir']    = $this->repository();
+        $this->directory['middleWareDir']    = $this->middleware();
+        $this->directory['nodeDir']          = $this->node();
+        $this->directory['onceDir']          = $this->once();
+        $this->directory['stubDir']          = $this->stub();
+        $this->directory['storageDir']       = $this->storage();
+        $this->directory['logDir']           = $this->log();
+        $this->directory['resourceDir']      = $this->resource();
+        $this->directory['languageDir']      = $this->language();
+        $this->directory['sessionDir']       = $this->session();
+        $this->directory['versionDir']       = $this->version();
+        $this->directory['callDir']          = $this->controller();
+        $this->directory['modelDir']         = $this->model();
+        $this->directory['builderDir']       = $this->builder();
+        $this->directory['migrationDir']     = $this->migration();
+        $this->directory['configDir']        = $this->config();
+        $this->directory['jobsDir']          = $this->job();
+        $this->directory['webserviceDir']    = $this->webservice();
 
         //set project directory
         $this->file->makeDirectory($this);
+
+
+        //get project file all path
+        $this->touch['ignore']                      = $this->project.'/.gitignore';
+        $this->touch['publish']                     = $this->project.'/publish.php';
+        $this->touch['version']                     = $this->project.'/version.php';
+        $this->touch['repository/index']            = $this->repository().'/index.html';
+        $this->touch['kernel/kernel']               = $this->kernel().'/Kernel.php';
+        $this->touch['controller/index']            = $this->controller().'/index.html';
+        $this->touch['config/index']                = $this->config().'/index.html';
+        $this->touch['job/index']                   = $this->job().'/index.html';
+        $this->touch['migration/index']             = $this->migration().'/index.html';
+        $this->touch['model/index']                 = $this->model().'/index.html';
+        $this->touch['builder/index']               = $this->builder().'/index.html';
+        $this->touch['webservice/index']            = $this->webservice().'/index.html';
+        $this->touch['version/annotations']         = $this->version().'/ServiceAnnotationsController.php';
+        $this->touch['version/base']                = $this->version().'/ServiceBaseController.php';
+        $this->touch['version/token']               = $this->version().'/ServiceTokenController.php';
+        $this->touch['version/log']                 = $this->version().'/ServiceLogController.php';
+        $this->touch['version/tool']               = $this->version().'/ServiceToolsController.php';
+
+
+        //set project touch
+        $this->file->touch($this);
+
 
         return $this->blue('Project Has Been Successfully Created');
     }

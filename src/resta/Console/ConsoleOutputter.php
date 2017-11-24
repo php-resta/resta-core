@@ -2,12 +2,49 @@
 
 namespace Resta\Console;
 
+use Resta\FileProcess;
+use Resta\StaticPathModel;
+
 class ConsoleOutputter {
 
+    /**
+     * @var array
+     */
     private $foreground_colors = array();
+
+    /**
+     * @var array
+     */
     private $background_colors = array();
 
-    public function __construct() {
+    /**
+     * @var $project
+     */
+    public $project;
+
+    /**
+     * @var $argument
+     */
+    public  $argument;
+
+    /**
+     * @var $file
+     */
+    public $file;
+
+    /**
+     * @var $directory
+     */
+    public $directory=array();
+
+    /**
+     * @var $touch
+     */
+    public $touch=array();
+
+    public function __construct($argument) {
+
+
         // Set up shell colors
         $this->foreground_colors['black'] = '0;30';
         $this->foreground_colors['dark_gray'] = '1;30';
@@ -34,6 +71,10 @@ class ConsoleOutputter {
         $this->background_colors['magenta'] = '45';
         $this->background_colors['cyan'] = '46';
         $this->background_colors['light_gray'] = '47';
+
+        $this->argument=$argument;
+        $this->file=new FileProcess();
+        $this->project=StaticPathModel::appPath().'/'.$this->argument['project'];
     }
 
     // Returns colored string

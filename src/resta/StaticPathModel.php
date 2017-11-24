@@ -6,18 +6,7 @@ namespace Resta;
  * Class StaticPathModel
  * @package Resta
  */
-class StaticPathModel {
-
-    /**
-     * @var string
-     */
-    public static $appDefine='src';
-
-    /**
-     * @var null
-     */
-    public static $appPath=null;
-
+class StaticPathModel extends StaticPathList {
 
     /**
      * @method appPath

@@ -1,0 +1,65 @@
+<?php
+
+namespace App\__project__\__version__;
+
+class ServiceBaseController
+{
+    //response object
+    public $response='json';
+
+    //default lang name
+    public $lang='tr';
+
+    //data log
+    public $log=true;
+
+    //cache Adapter
+    public $cacheAdapter='file';
+
+    //data object Loader
+    public $objectLoader=false;
+
+    //default search driver
+    public $search='elasticSearch';
+
+    //default model
+    public $model='Sudb';
+
+    //platform config
+    public $platform=false;
+
+    //throttle status
+    public $throttle;
+
+    //node list
+    public $nodes=[];
+
+    //source
+    public $source;
+
+    //query
+    public $query;
+
+    //main
+    public $main;
+
+    //mongo
+    public $mongo;
+
+    //webservice
+    public $webservice;
+
+    //symfony request
+    public $request;
+
+    //http get object
+    public $get;
+
+    //http post object
+    public $post;
+
+    //http headers object
+    public $headers;
+
+
+}

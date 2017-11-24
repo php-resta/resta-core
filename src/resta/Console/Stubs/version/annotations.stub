@@ -1,0 +1,26 @@
+<?php
+
+namespace App\__project__\__version__;
+
+/**
+ * Trait ServiceAnnotationsController
+ * @method namespace pipeline
+ * @package App\__project__\__version__
+ */
+trait ServiceAnnotationsController
+{
+
+    /**
+     * @var $redis
+     */
+    public $redis;
+
+    /**
+     * @return mixed
+     */
+    public function redis(){
+
+        return 'redis';
+    }
+
+}
