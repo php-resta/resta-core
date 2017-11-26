@@ -132,6 +132,12 @@ class StaticPathList {
     public static $stub='Stub';
 
 
+    /**
+     * @var $store
+     */
+    public static $store='Store';
+
+
 
 
 

@@ -23,6 +23,7 @@ class Kernel {
 
         \Boot\Encrypter::class,
         \Resta\Booting\GlobalAccessor::class,
+        \Resta\Booting\Exception::class,
         \Resta\Booting\UrlParse::class,
         \Boot\Router::class,
         \Boot\Response::class,

@@ -3,12 +3,8 @@
 namespace Resta\Foundation;
 
 use Resta\Contracts\ApplicationContracts;
-use Resta\Traits\ApplicationTraits;
 
 class Application extends Kernel implements ApplicationContracts {
-
-    //get application traits
-    use ApplicationTraits;
 
     /**
      * @var $environment null

@@ -39,4 +39,22 @@ class ApplicationProvider {
 
         return $this->app->applicationProviderBinding($this->app);
     }
+
+    /**
+     * @method getStatus
+     * @return mixed
+     */
+    public function getStatus(){
+
+        return $this->app->kernel()->responseStatus;
+    }
+
+    /**
+     * @method getSuccess
+     * @return mixed
+     */
+    public function getSuccess(){
+
+        return $this->app->kernel()->responseSuccess;
+    }
 }

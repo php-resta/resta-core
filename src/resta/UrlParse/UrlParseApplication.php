@@ -67,14 +67,18 @@ class UrlParseApplication extends ApplicationProvider{
 
         //determines the application name for your project
         $this->urlList['project']=(isset($query[0])) ? $query[0] : null;
+        define('app',$this->urlList['project']);
 
         //determines the namespace for your project
         $this->urlList['namespace']=(isset($query[1])) ? $query[1] : null;
+        define('namespace',$this->urlList['namespace']);
 
         //determines the endpoint for your project
         $this->urlList['endpoint']=(isset($query[2])) ? $query[2] : null;
+        define('endpoint',$this->urlList['endpoint']);
 
         //determines the endpoint method for your project
         $this->urlList['method']=(isset($query[3])) ? $query[3] : 'index';
+        define('method',$this->urlList['method']);
     }
 }

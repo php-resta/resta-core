@@ -2,9 +2,12 @@
 
 namespace Resta\Booting;
 
+use Resta\Response\ResponseApplication;
 use Symfony\Component\HttpFoundation\Request;
 use Resta\ApplicationProvider;
 use Resta\Foundation\Console;
+use Resta\Exception\ErrorHandler;
+use Resta\StaticPathModel;
 
 class GlobalAccessor extends ApplicationProvider {
 
@@ -13,6 +16,13 @@ class GlobalAccessor extends ApplicationProvider {
      * @return void
      */
     public function boot(){
+
+        //get response success and status
+        $this->app->kernel()->responseSuccess=true;
+        $this->app->kernel()->responseStatus=200;
+
+        //we first load the response class as a singleton object to allow you to send output anywhere
+        $this->app->singleton()->out=$this->makeBind(ResponseApplication::class);
 
         //The HttpFoundation component defines an object-oriented layer for the HTTP specification.
         //The HttpFoundation component replaces these default PHP global variables and functions by an object-oriented layer

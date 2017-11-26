@@ -3,7 +3,6 @@
 namespace Resta\Response;
 
 use Resta\ApplicationProvider;
-use Resta\Utils;
 
 class ResponseApplication extends ApplicationProvider {
 

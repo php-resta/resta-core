@@ -34,8 +34,8 @@ trait ResponseOutput {
 
         return [
 
-            'success'=>true,
-            'status'=>200,
+            'success'=>$this->getSuccess(),
+            'status'=>$this->getStatus(),
         ];
     }
 }
