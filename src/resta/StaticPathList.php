@@ -14,6 +14,16 @@ class StaticPathList {
     public static $appDefine='src';
 
     /**
+     * @var string
+     */
+    public static $autoloadNamespace='App';
+
+    /**
+     * @var string
+     */
+    public static $methodPrefix='Action';
+
+    /**
      * @var null
      */
     public static $appPath=null;
@@ -57,6 +67,11 @@ class StaticPathList {
      * @var $config
      */
     public static $config='Config';
+
+    /**
+     * @var $optional
+     */
+    public static $optional='Optional';
 
     /**
      * @var $job

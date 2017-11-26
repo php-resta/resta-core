@@ -48,6 +48,7 @@ class Project extends ConsoleOutputter {
         $this->directory['builderDir']       = $this->builder();
         $this->directory['migrationDir']     = $this->migration();
         $this->directory['configDir']        = $this->config();
+        $this->directory['optionalDir']      = $this->optional();
         $this->directory['jobsDir']          = $this->job();
         $this->directory['webserviceDir']    = $this->webservice();
 
@@ -61,6 +62,14 @@ class Project extends ConsoleOutputter {
         $this->touch['version']                     = $this->project.'/version.php';
         $this->touch['repository/index']            = $this->repository().'/index.html';
         $this->touch['kernel/kernel']               = $this->kernel().'/Kernel.php';
+        $this->touch['middleware/index']            = $this->middleware().'/index.html';
+        $this->touch['once/index']                  = $this->once().'/index.html';
+        $this->touch['node/index']                  = $this->node().'/index.html';
+        $this->touch['stub/index']                  = $this->stub().'/index.html';
+        $this->touch['language/index']              = $this->language().'/index.html';
+        $this->touch['log/index']                   = $this->log().'/index.html';
+        $this->touch['resource/index']              = $this->resource().'/index.html';
+        $this->touch['session/index']               = $this->session().'/index.html';
         $this->touch['controller/index']            = $this->controller().'/index.html';
         $this->touch['config/index']                = $this->config().'/index.html';
         $this->touch['job/index']                   = $this->job().'/index.html';
@@ -72,7 +81,7 @@ class Project extends ConsoleOutputter {
         $this->touch['version/base']                = $this->version().'/ServiceBaseController.php';
         $this->touch['version/token']               = $this->version().'/ServiceTokenController.php';
         $this->touch['version/log']                 = $this->version().'/ServiceLogController.php';
-        $this->touch['version/tool']               = $this->version().'/ServiceToolsController.php';
+        $this->touch['version/tool']                = $this->version().'/ServiceToolsController.php';
 
 
         //set project touch

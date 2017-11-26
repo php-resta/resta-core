@@ -9,7 +9,7 @@ class Kernel {
     /**
      * @var $singleton
      */
-    protected $singleton=false;
+    public $singleton=false;
 
     /**
      * @var $kernel
@@ -23,9 +23,9 @@ class Kernel {
 
         \Boot\Encrypter::class,
         \Resta\Booting\GlobalAccessor::class,
-        \Boot\Response::class,
         \Resta\Booting\UrlParse::class,
-        \Boot\Router::class
+        \Boot\Router::class,
+        \Boot\Response::class,
     ];
 
     /**

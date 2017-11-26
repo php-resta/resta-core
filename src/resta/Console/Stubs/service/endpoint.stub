@@ -1,0 +1,21 @@
+<?php
+
+namespace App\__project__\__version__\__controller__\__service__;
+
+/**
+ * Class GetService
+ * @package App\__project__\__version__\__controller__\__service__
+ */
+class GetService {
+
+    /**
+     * @method indexAction
+     * @return array
+     */
+    public function indexAction(){
+
+        return [
+            'endpoint'=>'__service__'
+        ];
+    }
+}

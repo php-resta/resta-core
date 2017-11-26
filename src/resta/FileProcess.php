@@ -35,7 +35,7 @@ class FileProcess {
             throw new \LogicException('This Project Is Already Available');
         }
 
-        if($data->type!=="project" && !file_exists($data->directory['projectDir'])){
+        if($data->type!=="project" && !file_exists($data->project)){
             throw new \LogicException('Project No');
         }
 

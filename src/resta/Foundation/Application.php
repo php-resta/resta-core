@@ -102,6 +102,6 @@ class Application extends Kernel implements ApplicationContracts {
      */
     public function handle(){
 
-        return ($this->console) ? $this->kernel->console : $this->kernel->router;
+        return ($this->console) ? $this->kernel->console : $this->kernel->response;
     }
 }

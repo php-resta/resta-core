@@ -41,6 +41,18 @@ class Utils {
         return $container->make($class,$param);
     }
 
+
+    /**
+     * @param $class null
+     * @param array $param
+     * @return mixed
+     */
+    public static function callBind($class=null, $param=array()){
+
+        $container = self::callBuild();
+        return $container->call($class,$param);
+    }
+
     public static function upperCase($argument){
 
         array_shift($argument);
@@ -58,4 +70,16 @@ class Utils {
 
         return 'V1';
     }
+
+
+    /**
+     * @param array $data
+     * @return string
+     */
+    public static function generatorNamespace($data=array()){
+
+        return implode("\\",$data);
+    }
+
+
 }

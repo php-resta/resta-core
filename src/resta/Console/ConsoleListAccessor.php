@@ -18,14 +18,6 @@ trait ConsoleListAccessor {
     /**
      * @return mixed
      */
-    public function repository(){
-
-        return $this->project.'/'.StaticPathModel::$repository;
-    }
-
-    /**
-     * @return mixed
-     */
     public function storage(){
 
         return $this->project.'/'.StaticPathModel::$storage;
@@ -45,7 +37,8 @@ trait ConsoleListAccessor {
      */
     public function controller(){
 
-        return $this->version().'/'.StaticPathModel::$controller;
+        $this->argument['controller']=StaticPathModel::$controller;
+        return $this->version().'/'.$this->argument['controller'];
     }
 
 
@@ -88,9 +81,27 @@ trait ConsoleListAccessor {
     /**
      * @return mixed
      */
+    public function optional(){
+
+        return $this->version().'/'.StaticPathModel::$optional;
+    }
+
+
+    /**
+     * @return mixed
+     */
+    public function repository(){
+
+        return $this->optional().'/'.StaticPathModel::$repository;
+    }
+
+
+    /**
+     * @return mixed
+     */
     public function job(){
 
-        return $this->version().'/'.StaticPathModel::$job;
+        return $this->optional().'/'.StaticPathModel::$job;
     }
 
 
@@ -99,7 +110,7 @@ trait ConsoleListAccessor {
      */
     public function webservice(){
 
-        return $this->version().'/'.StaticPathModel::$webservice;
+        return $this->optional().'/'.StaticPathModel::$webservice;
     }
 
 
