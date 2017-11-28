@@ -18,8 +18,10 @@ class GlobalAccessor extends ApplicationProvider {
     public function boot(){
 
         //get response success and status
+        $this->app->kernel()->instanceController=null;
         $this->app->kernel()->responseSuccess=true;
         $this->app->kernel()->responseStatus=200;
+        $this->app->kernel()->responseType='json';
 
         //we first load the response class as a singleton object to allow you to send output anywhere
         $this->app->singleton()->out=$this->makeBind(ResponseApplication::class);

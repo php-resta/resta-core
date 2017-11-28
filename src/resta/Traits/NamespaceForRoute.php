@@ -63,7 +63,7 @@ trait NamespaceForRoute {
     public function getControllerNamespace(){
 
         //generator namespace for array
-        return Utils::generatorNamespace([
+        $namespace=Utils::generatorNamespace([
 
             //composer autoload namespace
             StaticPathModel::$autoloadNamespace,
@@ -83,6 +83,17 @@ trait NamespaceForRoute {
             //call file
             'GetService'
         ]);
+
+        //check namespace exists
+        if(Utils::isNamespaceExists($namespace)){
+            return $namespace;
+        }
+
+        //throw exception for invalid class
+        throw new \DomainException('Any class called the specified endpoint is not available');
+
+
+
     }
 
 

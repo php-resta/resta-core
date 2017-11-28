@@ -66,7 +66,7 @@ class UrlParseApplication extends ApplicationProvider{
     public function assignUrlList($query=array()){
 
         //determines the application name for your project
-        $this->urlList['project']=(isset($query[0])) ? $query[0] : null;
+        $this->urlList['project']=(strlen($query[0])>0) ? $query[0] : null;
         define('app',$this->urlList['project']);
 
         //determines the namespace for your project

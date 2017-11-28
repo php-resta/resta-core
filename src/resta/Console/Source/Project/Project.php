@@ -83,7 +83,6 @@ class Project extends ConsoleOutputter {
         $this->touch['version/log']                 = $this->version().'/ServiceLogController.php';
         $this->touch['version/tool']                = $this->version().'/ServiceToolsController.php';
 
-
         //set project touch
         $this->file->touch($this);
 

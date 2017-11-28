@@ -34,7 +34,11 @@ class Endpoint extends ConsoleOutputter {
 
         $this->file->makeDirectory($this);
 
-        $this->touch['service/endpoint']=$this->directory['endpoint'].'/GetService.php';
+        $this->touch['service/endpoint']        =$this->directory['endpoint'].'/GetService.php';
+        $this->touch['service/app']             =$this->directory['endpoint'].'/App.php';
+        $this->touch['service/developer']       =$this->directory['endpoint'].'/Developer.php';
+        $this->touch['service/conf']            =$this->directory['endpoint'].'/ServiceConf.php';
+        $this->touch['service/dummy']            =$this->directory['endpoint'].'/Dummy.yaml';
 
         $this->file->touch($this);
 

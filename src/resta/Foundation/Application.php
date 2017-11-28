@@ -12,11 +12,6 @@ class Application extends Kernel implements ApplicationContracts {
     public $environment;
 
     /**
-     * @var $console null
-     */
-    public $console;
-
-    /**
      * @var $boot
      */
     public $boot=false;
@@ -50,15 +45,6 @@ class Application extends Kernel implements ApplicationContracts {
 
         //kernel eager for dev
         $this->devEagers($this);
-    }
-
-    /**
-     * @method console
-     * @return bool|null
-     */
-    public function console(){
-
-        return $this->console;
     }
 
     /**

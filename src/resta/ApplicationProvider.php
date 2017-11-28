@@ -12,13 +12,22 @@ class ApplicationProvider {
     public $app;
 
     /**
-     * SymfonyRequest constructor.
+     * constructor.
      * @param $app
      */
     public function __construct($app)
     {
         //application object
         $this->app=$app;
+    }
+
+    /**
+     * SymfonyRequest constructor.
+     */
+    public function request()
+    {
+        //symfony request
+        return $this->app->kernel()->request;
     }
 
     /**

@@ -56,7 +56,7 @@ trait ConsoleListAccessor {
      */
     public function builder(){
 
-        return $this->version().'/'.StaticPathModel::$builder;
+        return $this->model().'/'.StaticPathModel::$builder;
     }
 
 
@@ -154,7 +154,7 @@ trait ConsoleListAccessor {
      */
     public function middleware(){
 
-        return $this->kernel().'/'.StaticPathModel::$middleware;
+        return $this->version().'/'.StaticPathModel::$middleware;
     }
 
 

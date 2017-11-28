@@ -37,8 +37,14 @@ class Utils {
      */
     public static function makeBind($class=null, $param=array()){
 
-        $container = self::callBuild();
-        return $container->make($class,$param);
+        if($class!==null){
+
+            $container = self::callBuild();
+            return $container->make($class,$param);
+        }
+
+        return null;
+
     }
 
 
@@ -79,6 +85,15 @@ class Utils {
     public static function generatorNamespace($data=array()){
 
         return implode("\\",$data);
+    }
+
+    /**
+     * @param $namespace
+     * @return bool
+     */
+    public static function isNamespaceExists($namespace){
+
+        return (class_exists($namespace)) ? true : false;
     }
 
 

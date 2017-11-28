@@ -3,14 +3,25 @@
 namespace Resta\Exception;
 
 use Resta\ApplicationProvider;
-use Resta\Response\ResponseApplication;
 use Resta\StaticPathModel;
 
 class ErrorHandler extends ApplicationProvider {
 
+    /**
+     * @method handle
+     * return void
+     */
     public function handle(){
 
+        //This function can be used for defining your own way of handling errors during runtime,
+        //for example in applications in which you need to do cleanup of data/files when a critical error happens,
+        //or when you need to trigger an error under certain conditions (using trigger_error()).
         set_error_handler([$this,'setErrorHandler']);
+
+        //Registers a callback to be executed after script execution finishes or exit() is called.
+        //Multiple calls to register_shutdown_function() can be made, and each will be called in the same order as
+        //they were registered. If you call exit() within one registered shutdown function,
+        //processing will stop completely and no other registered shutdown functions will be called.
         register_shutdown_function([$this,'fatalErrorShutdownHandler']);
     }
 
@@ -24,12 +35,20 @@ class ErrorHandler extends ApplicationProvider {
      */
     public function setErrorHandler($errNo=null, $errStr=null, $errFile=null, $errLine=null, $errContext=null){
 
-        //get App Exception Config Class
+        /**
+         * @var $exception \Store\Config\Exception
+         * get App Exception Config Class
+         */
         $exception=StaticPathModel::$store.'\Config\Exception';
 
+        //set as the success object is false
         $appExceptionSuccess=['success'=>false];
 
+        //constant object
         $errType='Undefined';
+        $errStrReal='';
+
+        //Catch exception via preg match
         if(preg_match('@(.*?):@is',$errStr,$errArr)){
             $errType=trim(str_replace('Uncaught','',$errArr[1]));
         }
@@ -45,6 +64,7 @@ class ErrorHandler extends ApplicationProvider {
             $errContext['trace']=$errStr;
         }
 
+        //finally,set object for exception
         $appException=$appExceptionSuccess+$exception::handler($errNo,$errStrReal,$errFile,$errLine,$errType,$errContext);
 
         //set json app exception
