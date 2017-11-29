@@ -25,42 +25,23 @@ trait ResponseOutput {
      */
     private function outputCapsule($data){
 
-        return [
+        return $this->hateoasCapsule([
             'data'=>$data,
-            'links'=>[
-                'href'              =>$this->request()->getUri(),
-                'client_get'        => $this->request()->query->all(),
-                'client_post'       =>$this->request()->request->all(),
-                'client_header'     =>$this->getClientHeaders()
-            ]
-        ];
+        ]);
     }
 
     /**
-     * @method getClientHeaders
-     * @return array
+     * @param $data array
+     * @method hateoasCapsule
+     * @return mixed
      */
-    private function getClientHeaders(){
+    private function hateoasCapsule($data=array()){
 
-        /*** @var $httpHeaders \Store\Config\HttpHeaders */
-        //get Client Http Headers
-        $httpHeaders=StaticPathModel::$store.'\Config\HttpHeaders';
+        //get hateoas class from app config
+        $hateoasConfig=StaticPathModel::appConfig(true).'\Hateoas';
 
-        $list=[];
-
-        //We only get the objects in the list name to match the header objects
-        //that come with the request path to the objects sent by the client
-        foreach ($this->request()->headers->all() as $key=>$value) {
-
-            //We separate the header objects sent by the client from all
-            //the header fields and send them only to the output
-            if(!in_array($key,$httpHeaders::$httpHeaders)){
-                $list[$key]=$value;
-            }
-        }
-
-        //return header list
-        return $list;
+        //return
+        return array_merge($data,$this->makeBind($hateoasConfig)->handle());
     }
 
     /**

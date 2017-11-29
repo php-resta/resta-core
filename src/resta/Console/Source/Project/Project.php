@@ -72,9 +72,10 @@ class Project extends ConsoleOutputter {
         $this->touch['session/index']               = $this->session().'/index.html';
         $this->touch['controller/index']            = $this->controller().'/index.html';
         $this->touch['config/index']                = $this->config().'/index.html';
+        $this->touch['config/hateoas']              = $this->config().'/Hateoas.php';
+        $this->touch['config/database']             = $this->config().'/Database.php';
         $this->touch['job/index']                   = $this->job().'/index.html';
         $this->touch['migration/index']             = $this->migration().'/index.html';
-        $this->touch['model/index']                 = $this->model().'/index.html';
         $this->touch['builder/index']               = $this->builder().'/index.html';
         $this->touch['webservice/index']            = $this->webservice().'/index.html';
         $this->touch['version/annotations']         = $this->version().'/ServiceAnnotationsController.php';

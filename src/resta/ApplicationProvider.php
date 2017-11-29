@@ -13,7 +13,7 @@ class ApplicationProvider {
 
     /**
      * constructor.
-     * @param $app
+     * @param $app \Resta\Contracts\ApplicationContracts
      */
     public function __construct($app)
     {
@@ -23,6 +23,7 @@ class ApplicationProvider {
 
     /**
      * SymfonyRequest constructor.
+     * @return \Symfony\Component\HttpFoundation\Request
      */
     public function request()
     {
@@ -44,7 +45,7 @@ class ApplicationProvider {
      * @method providerBinding
      * @return mixed
      */
-    private function providerBinding(){
+    public function providerBinding(){
 
         return $this->app->applicationProviderBinding($this->app);
     }

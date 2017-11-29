@@ -51,7 +51,7 @@ class RouteApplication extends ApplicationProvider {
      */
     private function controllerMethodProcess($controller){
 
-        return Utils::callBind([$controller,$this->getPrefixMethod()],[]);
+        return Utils::callBind([$controller,$this->getPrefixMethod()],$this->providerBinding());
     }
 
 }

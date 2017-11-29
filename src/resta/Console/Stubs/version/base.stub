@@ -2,64 +2,39 @@
 
 namespace App\__project__\__version__;
 
-class ServiceBaseController
+use Resta\ApplicationProvider;
+use Resta\StaticPathModel;
+
+class ServiceBaseController extends ApplicationProvider
 {
     //response object
     public $response='json';
 
-    //default lang name
-    public $lang='tr';
+    //orm type
+    public $orm='eloquent';
 
-    //data log
-    public $log=true;
+    /**
+     * @method getClientHeaders
+     * @return array
+     */
+    public function getClientHeaders(){
 
-    //cache Adapter
-    public $cacheAdapter='file';
+        $list=[];
 
-    //data object Loader
-    public $objectLoader=false;
+        //We only get the objects in the list name to match the header objects
+        //that come with the request path to the objects sent by the client
+        foreach ($this->request()->headers->all() as $key=>$value) {
 
-    //default search driver
-    public $search='elasticSearch';
+            //We separate the header objects sent by the client from all
+            //the header fields and send them only to the output
+            if(!in_array($key,StaticPathModel::httpHeaders())){
+                $list[$key]=$value;
+            }
+        }
 
-    //default model
-    public $model='Sudb';
-
-    //platform config
-    public $platform=false;
-
-    //throttle status
-    public $throttle;
-
-    //node list
-    public $nodes=[];
-
-    //source
-    public $source;
-
-    //query
-    public $query;
-
-    //main
-    public $main;
-
-    //mongo
-    public $mongo;
-
-    //webservice
-    public $webservice;
-
-    //symfony request
-    public $request;
-
-    //http get object
-    public $get;
-
-    //http post object
-    public $post;
-
-    //http headers object
-    public $headers;
+        //return header list
+        return $list;
+    }
 
 
 }

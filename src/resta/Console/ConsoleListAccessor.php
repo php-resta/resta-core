@@ -47,6 +47,7 @@ trait ConsoleListAccessor {
      */
     public function model(){
 
+        $this->argument['model']=StaticPathModel::$model;
         return $this->version().'/'.StaticPathModel::$model;
     }
 

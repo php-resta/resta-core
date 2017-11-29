@@ -19,6 +19,15 @@ class StaticPathModel extends StaticPathList {
     }
 
     /**
+     * @method appVersionRoot
+     * @return string
+     */
+    public static function appVersionRoot(){
+
+        return self::$autoloadNamespace.'\\'.app.'\\'.Utils::getAppVersion(app).'';
+    }
+
+    /**
      * @var $namespace
      * @method appConfig
      * @return string
@@ -30,6 +39,24 @@ class StaticPathModel extends StaticPathList {
             return self::appPath().'/'.app.'/'.Utils::getAppVersion(app).'/'.self::$config;
         }
         return self::$autoloadNamespace.'\\'.app.'\\'.Utils::getAppVersion(app).'\\'.self::$config;
+    }
+
+    /**
+     * @return mixed
+     */
+    public static function httpHeaders(){
+
+        //get http header
+        /*** @var $httpHeaders \Store\Config\HttpHeaders */
+        $httpHeaders=self::$store.'\Config\HttpHeaders';
+
+        //return http headers
+        return $httpHeaders::$httpHeaders;
+    }
+
+    public static function appBase(){
+
+        return self::appVersionRoot().'\\ServiceBaseController';
     }
 
 }

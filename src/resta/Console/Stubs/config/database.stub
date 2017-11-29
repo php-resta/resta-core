@@ -1,0 +1,29 @@
+<?php
+
+namespace App\__project__\__version__\Config;
+
+class Database
+{
+
+    /**
+     * database settings.
+     * access database object for every service.
+     * @return array
+     */
+    public function handle()
+    {
+
+        //default connection
+        $connection='mysql';
+
+        //local settings
+        $db['mysql']['driver']      ='mysql';
+        $db['mysql']['host']        ='localhost';
+        $db['mysql']['database']    ='database';
+        $db['mysql']['user']        ='user';
+        $db['mysql']['password']    ='password';
+
+        //return db
+        return $db[$connection];
+    }
+}
