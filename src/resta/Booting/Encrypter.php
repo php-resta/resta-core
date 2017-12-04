@@ -8,6 +8,6 @@ class Encrypter extends ApplicationProvider {
 
     public function boot(){
 
-        $this->app->bind()->encrypter='encrypter';
+        $this->app->singleton()->encrypter='encrypter';
     }
 }

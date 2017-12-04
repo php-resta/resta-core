@@ -33,13 +33,21 @@ trait NamespaceForRoute {
         return $this->url['endpoint'];
     }
 
+    /**
+     * @return mixed
+     */
+    public function urlMethod(){
+
+        return $this->url['method'];
+    }
+
 
     /**
      * @return mixed
      */
     public function method(){
 
-        return $this->url['method'];
+        return $this->httpMethod().''.$this->url['method'];
     }
 
     /**
@@ -51,9 +59,61 @@ trait NamespaceForRoute {
     }
 
 
+    /**
+     * @return string
+     */
     public function getPrefixMethod(){
 
         return $this->method().''.StaticPathModel::$methodPrefix;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPrefixIndexMethod(){
+
+        //by default we assign a default method value of indexAction
+        //this value must be a method value automatically named indexAction
+        //if it does not come from the url discovery value
+        return $this->httpMethod().'index'.StaticPathModel::$methodPrefix;
+    }
+
+    /**
+     * @method checkIfExistsMethod
+     * @return mixed
+     */
+    public function checkIfExistsMethod(){
+
+        //If controller does not have a method after checking whether the method specified in the controller class exists,
+        //then by default we assign a default method value of indexAction.
+        //This value must match the class strictly, otherwise the controller can not be called
+        if(method_exists($this->instanceController(),$this->getPrefixMethod())){
+
+            //If the path variables give values ​​in the methods do we have a method name,
+            //we subtract this value from the route variables.
+            $this->routeParametersDiff();
+
+            //method value as normal
+            return $this->getPrefixMethod();
+        }
+
+        //by default we assign a default method value of indexAction
+        //this value must be a method value automatically named indexAction
+        //if it does not come from the url discovery value
+        return $this->getPrefixIndexMethod();
+
+    }
+
+
+    /**
+     * @method routeParametersDiff
+     * @return void
+     */
+    public function routeParametersDiff(){
+
+        //If the path variables give values ​​in the methods do we have a method name,
+        //we subtract this value from the route variables.
+        $this->singleton()->routeParameters=array_diff($this->routeParameters(),[$this->urlMethod()]);
     }
 
 

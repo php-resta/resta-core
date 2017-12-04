@@ -31,7 +31,7 @@ class GlobalAccessor extends ApplicationProvider {
         $this->app->singleton()->request=Request::createFromGlobals();
 
         //We determine with the kernel object which HTTP method the requested from the client
-        $this->app->singleton()->httpMethod=$this->app->kernel()->request->getRealMethod();
+        $this->app->singleton()->httpMethod=ucfirst(strtolower($this->app->kernel()->request->getRealMethod()));
 
         //If the second parameter is sent true to the application builder,
         //all operations are performed by the console and the custom bootings are executed
