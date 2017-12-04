@@ -2,7 +2,8 @@
 
 namespace Resta;
 
-use Resta\Utils;
+use Resta\Contracts\ApplicationContracts;
+use Resta\StaticPathModel;
 
 class ApplicationProvider {
 
@@ -15,7 +16,7 @@ class ApplicationProvider {
      * constructor.
      * @param $app \Resta\Contracts\ApplicationContracts
      */
-    public function __construct($app)
+    public function __construct(ApplicationContracts $app)
     {
         //application object
         $this->app=$app;
@@ -66,5 +67,32 @@ class ApplicationProvider {
     public function getSuccess(){
 
         return $this->app->kernel()->responseSuccess;
+    }
+
+    /**
+     * @method httpMethod
+     * @return mixed
+     */
+    public function httpMethod(){
+
+        return $this->app->kernel()->httpMethod;
+    }
+
+    /**
+     * @method routeParameters
+     * @return mixed
+     */
+    public function routeParameters(){
+
+        return $this->app->kernel()->routeParameters;
+    }
+
+    /**
+     * @method singleton
+     * @return mixed
+     */
+    public function singleton(){
+
+        return $this->app->singleton();
     }
 }

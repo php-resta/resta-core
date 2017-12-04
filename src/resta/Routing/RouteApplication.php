@@ -31,6 +31,10 @@ class RouteApplication extends ApplicationProvider {
 
     }
 
+    /**
+     * @method callController
+     * @return mixed
+     */
     private function callController(){
 
         //get controller namespace
@@ -40,7 +44,16 @@ class RouteApplication extends ApplicationProvider {
         $this->app->singleton()->instanceController=$this->makeBind($controller);
 
         //call service together with controller method
-        return $this->controllerMethodProcess($this->app->kernel()->instanceController);
+        return $this->controllerMethodProcess($this->instanceController());
+    }
+
+    /**
+     * @method instanceController
+     * @return mixed
+     */
+    public function instanceController(){
+
+        return $this->app->kernel()->instanceController;
     }
 
 
@@ -51,7 +64,7 @@ class RouteApplication extends ApplicationProvider {
      */
     private function controllerMethodProcess($controller){
 
-        return Utils::callBind([$controller,$this->getPrefixMethod()],$this->providerBinding());
+        return Utils::callBind([$controller,$this->checkIfExistsMethod()],$this->providerBinding());
     }
 
 }

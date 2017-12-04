@@ -13,10 +13,10 @@ class GetService extends App {
      public $forbidden=false;
 
     /**
-     * @method indexAction
+     * @method getIndexAction
      * @return array
      */
-    public function indexAction(){
+    public function getIndexAction(){
 
         return [
             'endpoint'=>'__service__'

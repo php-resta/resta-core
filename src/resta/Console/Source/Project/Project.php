@@ -79,6 +79,8 @@ class Project extends ConsoleOutputter {
         $this->touch['builder/index']               = $this->builder().'/index.html';
         $this->touch['webservice/index']            = $this->webservice().'/index.html';
         $this->touch['version/annotations']         = $this->version().'/ServiceAnnotationsController.php';
+        $this->touch['version/serviceboot']         = $this->version().'/ServiceBootController.php';
+        $this->touch['version/base']                = $this->version().'/ServiceBaseController.php';
         $this->touch['version/base']                = $this->version().'/ServiceBaseController.php';
         $this->touch['version/token']               = $this->version().'/ServiceTokenController.php';
         $this->touch['version/log']                 = $this->version().'/ServiceLogController.php';

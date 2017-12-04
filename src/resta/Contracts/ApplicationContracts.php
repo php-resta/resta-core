@@ -5,24 +5,21 @@ namespace Resta\Contracts;
 interface ApplicationContracts {
 
     /**
-     * @method booting
-     * @return mixed
-     */
-    public function booting();
-
-    /**
-     * @method handle
-     * @return mixed
-     */
-    public function handle();
-
-    /**
      * @method bind
      * @param $object null
      * @param $callback null
      * @return mixed
      */
     public function bind($object=null,$callback=null);
+
+
+    /**
+     * @method service
+     * @param $object null
+     * @param $callback null
+     * @return mixed
+     */
+    public function service($object=null,$callback=null);
 
     /**
      * @method singleton

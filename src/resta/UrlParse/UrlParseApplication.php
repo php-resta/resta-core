@@ -80,5 +80,9 @@ class UrlParseApplication extends ApplicationProvider{
         //determines the endpoint method for your project
         $this->urlList['method']=(isset($query[3])) ? $query[3] : 'index';
         define('method',$this->urlList['method']);
+
+        //determines the endpoint method for your project
+        $this->urlList['parameters']=array_slice($query,3);
+        $this->app->singleton()->routeParameters=$this->urlList['parameters'];
     }
 }

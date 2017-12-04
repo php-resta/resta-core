@@ -59,6 +59,16 @@ class Utils {
         return $container->call($class,$param);
     }
 
+    /**
+     * @param $class null
+     * @return mixed
+     */
+    public static function get($class=null){
+
+        $container = self::callBuild();
+        return $container->get($class);
+    }
+
     public static function upperCase($argument){
 
         array_shift($argument);
