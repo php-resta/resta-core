@@ -19,6 +19,16 @@ class StaticPathModel extends StaticPathList {
     }
 
     /**
+     * @method getEncrypter
+     * @return mixed
+     */
+    public static function getEncrypter(){
+
+        //get app path for application
+        return self::appPath().'/encrypter.yaml';
+    }
+
+    /**
      * @method appVersionRoot
      * @return string
      */
