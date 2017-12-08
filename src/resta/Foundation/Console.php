@@ -3,10 +3,19 @@
 namespace Resta\Foundation;
 
 use Resta\Utils;
+use Resta\Contracts\ApplicationContracts;
 
 class Console extends Kernel {
 
-    public function handle(){
+    public $app;
+
+    /**
+     * @param ApplicationContracts $app
+     * @return mixed
+     */
+    public function handle(ApplicationContracts $app){
+
+        $this->app=$app;
 
         return $this->consoleProcess();
     }
@@ -28,7 +37,7 @@ class Console extends Kernel {
     public function consoleProcess(){
 
         $consoleClassNamespace='Resta\Console\\Source\\'.$this->getConsoleClass().'\\'.$this->getConsoleClass();
-        return (new $consoleClassNamespace($this->getConsoleArgumentsWithKey()))->{$this->getConsoleClassMethod()}();
+        return (new $consoleClassNamespace($this->getConsoleArgumentsWithKey(),$this))->{$this->getConsoleClassMethod()}();
     }
 
     /**

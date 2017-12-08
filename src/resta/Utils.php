@@ -2,6 +2,8 @@
 
 namespace Resta;
 
+use Symfony\Component\Yaml\Yaml;
+
 class Utils {
 
 
@@ -109,6 +111,11 @@ class Utils {
     public static function isArrayEqual($first,$second){
 
         return ( count( $first ) == count( $second ) && !array_diff( $first, $second ) );
+    }
+
+    public static function getYaml($path){
+
+        return Yaml::parse(file_get_contents($path));
     }
 
 
