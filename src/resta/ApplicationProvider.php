@@ -32,6 +32,16 @@ class ApplicationProvider {
     }
 
     /**
+     * Application Kernel.
+     * @return mixed
+     */
+    public function app()
+    {
+        //symfony request
+        return $this->app->kernel();
+    }
+
+    /**
      * SymfonyRequest constructor.
      * @return \Symfony\Component\HttpFoundation\Request
      */
