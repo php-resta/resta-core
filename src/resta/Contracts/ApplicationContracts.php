@@ -14,12 +14,12 @@ interface ApplicationContracts {
 
 
     /**
-     * @method service
+     * @method container
      * @param $object null
      * @param $callback null
      * @return mixed
      */
-    public function service($object=null,$callback=null);
+    public function container($object=null,$callback=null);
 
     /**
      * @method singleton

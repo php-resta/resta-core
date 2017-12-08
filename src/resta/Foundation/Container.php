@@ -27,7 +27,9 @@ class Container implements ApplicationContracts {
      */
     public function kernel(){
 
-        //get kernel object
+        //The kernel object system is the container backbone.
+        //Binding binding and container loads are done with
+        //the help of this object and distributed to the system.
         return $this->kernel;
     }
 
@@ -37,7 +39,22 @@ class Container implements ApplicationContracts {
      */
     public function console(){
 
+        //Controlling the console object is
+        //intended to make sure that the kernel bootstrap classes do not work.
         return $this->console;
+    }
+
+    /**
+     * @method serviceContainerObject
+     * @return void
+     */
+    private function serviceContainerObject(){
+
+        //Since the objects that come to the build method are objects from the container method,
+        //we need to automatically create a kernel object named serviceContainer in this method.
+        if(!isset($this->kernel()->serviceContainer)){
+            $this->kernel()->serviceContainer=[];
+        }
     }
 
     /**
@@ -61,12 +78,12 @@ class Container implements ApplicationContracts {
 
 
     /**
-     * @method service
+     * @method container
      * @param $object null
      * @param $callback null
      * @return mixed
      */
-    public function service($object=null,$callback=null){
+    public function container($object=null,$callback=null){
 
         //we check whether the boolean value of the singleton variable used
         //for booting does not reset every time the object variable to be assigned to the kernel variable is true
@@ -102,7 +119,7 @@ class Container implements ApplicationContracts {
      * @param $callback
      * @return mixed
      */
-    public function make($object,$callback){
+    private function make($object,$callback){
 
         //If the console object returns true,
         //we do not cancel binding operations
@@ -133,7 +150,7 @@ class Container implements ApplicationContracts {
      * @param $callback
      * @return mixed
      */
-    public function build($object,$callback){
+    private function build($object,$callback){
 
         //If the console object returns true,
         //we do not cancel binding operations
@@ -143,13 +160,17 @@ class Container implements ApplicationContracts {
         //it must return a callback to the bind method
         $concrete=call_user_func($callback);
 
+        //Since the objects that come to the build method are objects from the container method,
+        //we need to automatically create a kernel object named serviceContainer in this method.
+        $this->serviceContainerObject();
+
         //We check that the concrete object
         //is an object that can be retrieved.
-        if(!isset($this->kernel()->{$object}) && !class_exists($concrete)){
+        if(isset($this->kernel()->serviceContainer) && !isset($this->kernel()->serviceContainer[$object])){
 
             //the value corresponding to the bind value for the global object is assigned and
             //the makeBind method is called for the dependency method.
-            $this->kernel()->{$object}=$concrete;
+            $this->kernel()->serviceContainer[$object]=$concrete;
         }
 
         //return kernel object

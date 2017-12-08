@@ -27,6 +27,29 @@ class StaticPathModel extends StaticPathList {
         return self::$autoloadNamespace.'\\'.app.'\\'.Utils::getAppVersion(app).'';
     }
 
+    public static function endpointPath(){
+
+        return self::appPath().'/'.app.'/'.Utils::getAppVersion(app).'/'.self::$controller.'/'.endpoint;
+    }
+
+    /**
+     * @method getServiceConf
+     * @return string
+     */
+    public static function getServiceConf(){
+
+        return self::endpointPath().'/ServiceConf.php';
+    }
+
+    /**
+     * @method getServiceDummy
+     * @return string
+     */
+    public static function getServiceDummy(){
+
+        return self::endpointPath().'/Dummy.yaml';
+    }
+
     /**
      * @var $namespace
      * @method appConfig

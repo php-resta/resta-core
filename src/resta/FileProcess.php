@@ -101,4 +101,17 @@ class FileProcess {
 
     }
 
+
+    /**
+     * @param null $file
+     * @return mixed
+     */
+    public function callFile($file=null){
+
+        if(file_exists($file)){
+
+            return require_once($file);
+        }
+    }
+
 }

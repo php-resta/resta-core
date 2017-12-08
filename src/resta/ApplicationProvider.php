@@ -13,6 +13,11 @@ class ApplicationProvider {
     public $app;
 
     /**
+     * @var $url
+     */
+    public $url;
+
+    /**
      * constructor.
      * @param $app \Resta\Contracts\ApplicationContracts
      */
@@ -20,6 +25,10 @@ class ApplicationProvider {
     {
         //application object
         $this->app=$app;
+
+        //url object assign
+        $this->url();
+
     }
 
     /**
@@ -30,6 +39,20 @@ class ApplicationProvider {
     {
         //symfony request
         return $this->app->kernel()->request;
+    }
+
+    /**
+     * @method url
+     * @return mixed
+     */
+    public function url(){
+
+        if(isset($this->app->kernel()->url)){
+
+            //we assign the url object to the global kernel url object
+            //so that it can be read anywhere in our route file.
+            $this->url=$this->app->kernel()->url;
+        }
     }
 
     /**
@@ -94,5 +117,14 @@ class ApplicationProvider {
     public function singleton(){
 
         return $this->app->singleton();
+    }
+
+    /**
+     * @method container
+     * @return mixed
+     */
+    public function container(){
+
+        return (object)$this->app->kernel()->serviceContainer;
     }
 }

@@ -106,5 +106,10 @@ class Utils {
         return (class_exists($namespace)) ? true : false;
     }
 
+    public static function isArrayEqual($first,$second){
+
+        return ( count( $first ) == count( $second ) && !array_diff( $first, $second ) );
+    }
+
 
 }
