@@ -35,7 +35,7 @@ class GlobalAccessor extends ApplicationProvider {
 
         //If the second parameter is sent true to the application builder,
         //all operations are performed by the console and the custom bootings are executed
-        $this->app->singleton()->console=($this->app->console()) ? (new Console())->handle() : null;
+        $this->app->singleton()->console=($this->app->console()) ? (new Console())->handle($this->app) : null;
     }
 
 }

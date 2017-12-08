@@ -4,6 +4,7 @@ namespace Resta\Console;
 
 use Resta\FileProcess;
 use Resta\StaticPathModel;
+use Resta\Contracts\ApplicationContracts;
 
 class ConsoleOutputter {
 
@@ -38,11 +39,16 @@ class ConsoleOutputter {
     public $directory=array();
 
     /**
+     * @var $app
+     */
+    public $app;
+
+    /**
      * @var $touch
      */
     public $touch=array();
 
-    public function __construct($argument) {
+    public function __construct($argument,ApplicationContracts $app) {
 
 
         // Set up shell colors
@@ -72,6 +78,7 @@ class ConsoleOutputter {
         $this->background_colors['cyan'] = '46';
         $this->background_colors['light_gray'] = '47';
 
+        $this->app=$app;
         $this->argument=$argument;
         $this->file=new FileProcess();
         $this->project=StaticPathModel::appPath().'/'.$this->argument['project'];
