@@ -81,7 +81,11 @@ class ConsoleOutputter {
         $this->app=$app;
         $this->argument=$argument;
         $this->file=new FileProcess();
-        $this->project=StaticPathModel::appPath().'/'.$this->argument['project'];
+
+        if(isset($this->argument['project'])){
+            $this->project=StaticPathModel::appPath().'/'.$this->argument['project'];
+        }
+
     }
 
     // Returns colored string
