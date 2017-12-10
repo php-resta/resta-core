@@ -2,14 +2,10 @@
 
 namespace Resta\Foundation;
 
+use Resta\App;
 use Resta\Contracts\ApplicationContracts;
 
 class Application extends Kernel implements ApplicationContracts {
-
-    /**
-     * @var $environment null
-     */
-    public $environment;
 
     /**
      * @var $boot
@@ -18,14 +14,11 @@ class Application extends Kernel implements ApplicationContracts {
 
     /**
      * Application constructor.
-     * @param $environment
      * @param bool $console
      */
-    public function __construct($environment, $console=false){
+    public function __construct($console=false){
 
-        //get environment for app
         //get console status for cli
-        $this->environment=$environment;
         $this->console=$console;
 
         //this method only includes the settings to be run in the development environment

@@ -28,6 +28,21 @@ class StaticPathModel extends StaticPathList {
         return self::appPath().'/encrypter.yaml';
     }
 
+
+    /**
+     * @method getEnvironmentFile
+     * @return mixed
+     */
+    public static function getEnvironmentFile(){
+
+        if(defined('app')){
+
+            //get app path for application
+            return self::appPath().'/'.strtolower(app).'.yaml';
+        }
+
+    }
+
     /**
      * @method appVersionRoot
      * @return string

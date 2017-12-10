@@ -12,8 +12,10 @@ class Kernel extends Container {
     protected $bootstrappers=[
 
         \Resta\Booting\Exception::class,
+        \Resta\Booting\GlobalsForApplicationAndConsole::class,
         \Resta\Booting\GlobalAccessor::class,
         \Resta\Booting\UrlParse::class,
+        \Resta\Booting\Environment::class,
         \Boot\Encrypter::class,
         \Resta\Booting\ServiceContainer::class,
         \Boot\Router::class,

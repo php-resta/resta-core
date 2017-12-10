@@ -3,7 +3,7 @@
 namespace Resta\Routing;
 
 use Resta\ApplicationProvider;
-use Resta\SingletonEeager;
+use Resta\GlobalLoaders\Route;
 use Resta\Traits\NamespaceForRoute;
 use Resta\Utils;
 
@@ -71,7 +71,7 @@ class RouteApplication extends ApplicationProvider {
         //the singleton eager class is a class built to temporarily prevent
         //the use of user-side kernel objects used by the resta.
         //Objects in this class are destroyed when their work is finished.
-        $this->makeBind(SingletonEeager::class)->route($unset);
+        $this->makeBind(Route::class)->route($unset);
     }
 
 
