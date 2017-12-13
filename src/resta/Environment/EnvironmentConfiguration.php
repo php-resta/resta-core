@@ -27,8 +27,12 @@ class EnvironmentConfiguration extends ApplicationProvider {
      */
     public static function environment($var=array(),$environment=null){
 
+        //environment is recognized as a production environment directly
+        //if there is no env object in the environment variable.
+        $isProduction=(isset($environment['env'])) ? $environment['env'] : 'production';
+
         //we issue a controlled environment key map for the submitted environment
-        return (count($var)===0) ? $environment['env'] : self::getEnvironmentForVariables($var,$environment);
+        return (count($var)===0) ? $isProduction : self::getEnvironmentForVariables($var,$environment);
     }
 
     /**
