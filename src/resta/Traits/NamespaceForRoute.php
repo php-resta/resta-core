@@ -2,6 +2,7 @@
 
 namespace Resta\Traits;
 
+use Resta\Routing\CheckEndpointForAutoService;
 use Resta\StaticPathModel;
 use Resta\Utils;
 
@@ -47,7 +48,15 @@ trait NamespaceForRoute {
      */
     public function method(){
 
-        return $this->httpMethod().''.$this->url['method'];
+        return strtolower($this->httpMethod()).''.ucfirst($this->url['method']);
+    }
+
+    /**
+     * @return string
+     */
+    public function autoService(){
+
+        return StaticPathModel::getAutoServiceNamespace().'\\'.$this->endpoint().'\\'.$this->endpoint().''.StaticPathModel::$callClassPrefix;
     }
 
     /**
@@ -64,7 +73,7 @@ trait NamespaceForRoute {
      */
     public function getPrefixMethod(){
 
-        return $this->method().''.StaticPathModel::$methodPrefix;
+        return ucfirst($this->method()).''.StaticPathModel::$methodPrefix;
     }
 
     /**
@@ -141,7 +150,7 @@ trait NamespaceForRoute {
             $this->endpoint(),
 
             //call file
-            'GetService'
+            $this->endpoint().''.StaticPathModel::$callClassPrefix
         ]);
 
         //check namespace exists
@@ -149,11 +158,32 @@ trait NamespaceForRoute {
             return $namespace;
         }
 
-        //throw exception for invalid class
-        throw new \DomainException('Any class called the specified endpoint is not available');
+        //Here we do the namespace control for the auto service. There is no endpoint available,
+        //but if there is an auto service recognized by the system, this auto service will be the endpoint.
+        return $this->checkAutoService($this);
 
+    }
 
+    /**
+     * @param $instance
+     * @return string
+     */
+    public function checkAutoService($instance){
 
+        //If auto service is present, this auto service will be accepted as endpoint namespace.
+        return $this->checkEndpointForAutoService()->getNamespaceForAutoService($instance,function(){
+            throw new \LogicException('Any endpoint is not available');
+        });
+    }
+
+    /**
+     * @return \Resta\Routing\CheckEndpointForAutoService
+     */
+    public function checkEndpointForAutoService(){
+
+        //Here we do the namespace control for the auto service. There is no endpoint available,
+        //but if there is an auto service recognized by the system, this auto service will be the endpoint.
+        return $this->makeBind(CheckEndpointForAutoService::class);
     }
 
 

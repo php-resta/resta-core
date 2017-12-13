@@ -28,6 +28,12 @@ class StaticPathModel extends StaticPathList {
         return self::appPath().'/encrypter.yaml';
     }
 
+    public static function getAutoServiceNamespace(){
+
+        return ''.self::$store.'\Autoservice';
+    }
+
+
 
     /**
      * @method getEnvironmentFile

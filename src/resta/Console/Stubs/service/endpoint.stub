@@ -2,7 +2,7 @@
 
 namespace App\__project__\__version__\__controller__\__service__;
 
-class GetService extends App {
+class __service__Service extends App {
 
     /**
      * Production forbidden.
@@ -16,7 +16,7 @@ class GetService extends App {
      * @method getIndexAction
      * @return array
      */
-    public function getIndexAction(){
+    public function getIndex__methodPrefix__(){
 
         return [
             'endpoint'=>'__service__'

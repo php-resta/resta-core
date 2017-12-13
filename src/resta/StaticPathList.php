@@ -21,7 +21,12 @@ class StaticPathList {
     /**
      * @var string
      */
-    public static $methodPrefix='Action';
+    public static $methodPrefix='';
+
+    /**
+     * @var string
+     */
+    public static $callClassPrefix='Service';
 
     /**
      * @var null

@@ -4,6 +4,7 @@ namespace Resta\Console\Source\Endpoint;
 
 use Resta\Console\ConsoleListAccessor;
 use Resta\Console\ConsoleOutputter;
+use Resta\StaticPathModel;
 
 class Endpoint extends ConsoleOutputter {
 
@@ -30,15 +31,16 @@ class Endpoint extends ConsoleOutputter {
      */
     public function create(){
 
+        $this->argument['methodPrefix'] = StaticPathModel::$methodPrefix;
         $this->directory['endpoint']    = $this->controller().'/'.$this->argument['service'];
 
         $this->file->makeDirectory($this);
 
-        $this->touch['service/endpoint']        =$this->directory['endpoint'].'/GetService.php';
-        $this->touch['service/app']             =$this->directory['endpoint'].'/App.php';
-        $this->touch['service/developer']       =$this->directory['endpoint'].'/Developer.php';
-        $this->touch['service/conf']            =$this->directory['endpoint'].'/ServiceConf.php';
-        $this->touch['service/dummy']            =$this->directory['endpoint'].'/Dummy.yaml';
+        $this->touch['service/endpoint']        = $this->directory['endpoint'].'/'.$this->argument['service'].'Service.php';
+        $this->touch['service/app']             = $this->directory['endpoint'].'/App.php';
+        $this->touch['service/developer']       = $this->directory['endpoint'].'/Developer.php';
+        $this->touch['service/conf']            = $this->directory['endpoint'].'/ServiceConf.php';
+        $this->touch['service/dummy']           = $this->directory['endpoint'].'/Dummy.yaml';
 
         $this->file->touch($this);
 
