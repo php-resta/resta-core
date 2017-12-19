@@ -71,7 +71,12 @@ class RouteApplication extends ApplicationProvider {
         //the singleton eager class is a class built to temporarily prevent
         //the use of user-side kernel objects used by the resta.
         //Objects in this class are destroyed when their work is finished.
-        $this->makeBind(Route::class)->route($unset);
+        $this->singleton()->routerGlobalInstance->route($unset);
+
+        //we update the existing route parameter to make a new assignment on
+        //the kernel object to extract the method name from the original route parameters.
+        $this->singleton()->routerGlobalInstance->substractMethodNameFromRouteParameters($this->checkIfExistsMethod());
+
     }
 
 

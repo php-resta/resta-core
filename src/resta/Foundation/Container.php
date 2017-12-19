@@ -3,6 +3,7 @@
 namespace Resta\Foundation;
 
 use Resta\Contracts\ApplicationContracts;
+use Resta\GlobalLoaders\GlobalAssignerForBind;
 use Resta\Utils;
 
 class Container implements ApplicationContracts {
@@ -133,6 +134,11 @@ class Container implements ApplicationContracts {
         //is an object that can be retrieved.
         if(!isset($this->kernel()->{$object}) && class_exists($concrete)){
 
+            //we automatically load a global loaders for the bind method
+            //and assign it to the object name in the kernel object with bind,
+            //which you can easily use in the booted classes for kernel object assignments.
+            $this->globalAssignerForBind($object);
+
             //the value corresponding to the bind value for the global object is assigned and
             //the makeBind method is called for the dependency injection.
             $this->kernel()->{$object}=Utils::makeBind($concrete,$this->applicationProviderBinding($this))
@@ -141,6 +147,20 @@ class Container implements ApplicationContracts {
 
         //return kernel object
         return $this->kernel();
+    }
+
+    /**
+     * @method globalAssignerForBind
+     * @param $object
+     * @return mixed
+     */
+    private function globalAssignerForBind($object){
+
+        //we automatically load a global loaders for the bind method
+        //and assign it to the object name in the kernel object with bind,
+        //which you can easily use in the booted classes for kernel object assignments.
+        Utils::makeBind(GlobalAssignerForBind::class,$this->applicationProviderBinding($this))->getAssigner($object);
+
     }
 
 

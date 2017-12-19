@@ -8,7 +8,7 @@ use Resta\StaticPathModel;
 use Resta\Traits\NamespaceForRoute;
 use Symfony\Component\Yaml\Yaml;
 
-class Route extends ApplicationProvider  {
+class Router extends ApplicationProvider  {
 
     //get namespace for route
     use NamespaceForRoute;
@@ -27,8 +27,18 @@ class Route extends ApplicationProvider  {
         //utils make bind via dependency injection named as service container
         $this->singleton()->serviceConf             = (new FileProcess())->callFile(StaticPathModel::getServiceConf());
         $this->singleton()->serviceDummy            = (isset($serviceDummy)) ? $serviceDummy : [];
-        define('appInstance',(base64_encode(serialize($this))));
         $this->singleton()->instanceController      = $this->makeBind($this->getControllerNamespace());
     }
+
+    /**
+     * @param $method
+     * @return mixed
+     */
+    public function substractMethodNameFromRouteParameters($method){
+
+        $this->singleton()->routeParameters=$this->routeParametersAssign($this->resolveMethod($method));
+        define('appInstance',(base64_encode(serialize($this))));
+    }
+
 
 }

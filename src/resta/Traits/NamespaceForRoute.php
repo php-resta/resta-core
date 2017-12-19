@@ -2,6 +2,7 @@
 
 namespace Resta\Traits;
 
+use Resta\GlobalLoaders\Route;
 use Resta\Routing\CheckEndpointForAutoService;
 use Resta\StaticPathModel;
 use Resta\Utils;
@@ -52,6 +53,15 @@ trait NamespaceForRoute {
     }
 
     /**
+     * @param $method
+     * @method resolveMethod
+     */
+    public function resolveMethod($method){
+
+        return str_replace($this->httpMethod(),'',$method);
+    }
+
+    /**
      * @return string
      */
     public function autoService(){
@@ -84,7 +94,7 @@ trait NamespaceForRoute {
         //by default we assign a default method value of indexAction
         //this value must be a method value automatically named indexAction
         //if it does not come from the url discovery value
-        return $this->httpMethod().'index'.StaticPathModel::$methodPrefix;
+        return $this->httpMethod().'Index'.StaticPathModel::$methodPrefix;
     }
 
     /**
@@ -98,10 +108,6 @@ trait NamespaceForRoute {
         //This value must match the class strictly, otherwise the controller can not be called
         if(method_exists($this->instanceController(),$this->getPrefixMethod())){
 
-            //If the path variables give values ​​in the methods do we have a method name,
-            //we subtract this value from the route variables.
-            $this->routeParametersDiff();
-
             //method value as normal
             return $this->getPrefixMethod();
         }
@@ -113,16 +119,17 @@ trait NamespaceForRoute {
 
     }
 
-
     /**
-     * @method routeParametersDiff
-     * @return void
+     * @param $method
+     * @method routeParametersAssign
+     * @return mixed
      */
-    public function routeParametersDiff(){
+    public function routeParametersAssign($method){
 
         //If the path variables give values ​​in the methods do we have a method name,
         //we subtract this value from the route variables.
-        $this->singleton()->routeParameters=array_diff($this->routeParameters(),[$this->urlMethod()]);
+        return array_values(array_diff($this->routeParameters(),[$method]));
+
     }
 
 
