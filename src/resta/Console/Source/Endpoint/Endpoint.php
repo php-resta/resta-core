@@ -5,6 +5,7 @@ namespace Resta\Console\Source\Endpoint;
 use Resta\Console\ConsoleListAccessor;
 use Resta\Console\ConsoleOutputter;
 use Resta\StaticPathModel;
+use Resta\Utils;
 
 class Endpoint extends ConsoleOutputter {
 
@@ -44,7 +45,10 @@ class Endpoint extends ConsoleOutputter {
 
         $this->file->touch($this);
 
-
-        return $this->blue('Endpoint Has Been Successfully Created');
+        echo $this->classical('---------------------------------------------------------------------------');
+        echo $this->bluePrint('Endpoint Named ['.$this->argument['service'].'] Has Been Successfully Created in the '.$this->argument['project'].'');
+        echo $this->classical('---------------------------------------------------------------------------');
+        echo $this->cyan('   You can see in src/app/'.$this->argument['project'].'/'.Utils::getAppVersion($this->argument['project']).'/__Call your project   ');
+        echo $this->classical('---------------------------------------------------------------------------');
     }
 }

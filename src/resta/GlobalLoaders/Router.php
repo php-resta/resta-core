@@ -2,6 +2,7 @@
 
 namespace Resta\GlobalLoaders;
 
+use Resta\App;
 use Resta\ApplicationProvider;
 use Resta\FileProcess;
 use Resta\StaticPathModel;
@@ -19,6 +20,7 @@ class Router extends ApplicationProvider  {
      * return mixed
      */
     public function route($unset=false){
+
         //
         if(file_exists($serviceDummy=StaticPathModel::getServiceDummy())){
             $serviceDummy=Yaml::parse(file_get_contents($serviceDummy));
@@ -38,6 +40,7 @@ class Router extends ApplicationProvider  {
 
         $this->singleton()->routeParameters=$this->routeParametersAssign($this->resolveMethod($method));
         define('appInstance',(base64_encode(serialize($this))));
+        class_alias(App::class,'application');
     }
 
 

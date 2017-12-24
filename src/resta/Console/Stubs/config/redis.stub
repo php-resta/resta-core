@@ -1,0 +1,29 @@
+<?php
+
+namespace App\__project__\__version__\Config;
+
+class Redis
+{
+
+    /**
+     * redis settings.
+     * access redis object for every service.
+     * @return array
+     */
+    public function handle()
+    {
+        //redis array
+        $redis=[];
+
+        //redis settings
+        $redis['connection']['host']    =environment('redis_host', '127.0.0.1');
+        $redis['connection']['port']    =environment('redis_port', '6379');
+        $redis['connection']['scheme']  =environment('redis_scheme', 'tcp');
+
+        //select database names
+        //$redis['databases']['redisDb::log']=env('redisDb::log',1);
+
+        return $redis;
+
+    }
+}

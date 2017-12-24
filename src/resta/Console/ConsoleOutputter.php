@@ -206,6 +206,45 @@ class ConsoleOutputter {
         return ''.$colored_string.'' . PHP_EOL;
     }
 
+    // Returns colored string information
+    public function yellow($string, $foreground_color = 'blue', $background_color = 'yellow') {
+        $colored_string = "";
+
+        // Check if given foreground color found
+        if (isset($this->foreground_colors[$foreground_color])) {
+            $colored_string .= "\033[" . $this->foreground_colors[$foreground_color] . "m";
+        }
+        // Check if given background color found
+        if (isset($this->background_colors[$background_color])) {
+            $colored_string .= "\033[" . $this->background_colors[$background_color] . "m";
+        }
+
+        // Add string and end coloring
+        $colored_string .=  $string . "\033[0m";
+
+        return ''.$colored_string.'' . PHP_EOL;
+    }
+
+
+    // Returns colored string information
+    public function cyan($string, $foreground_color = 'magenta', $background_color = 'cyan') {
+        $colored_string = "";
+
+        // Check if given foreground color found
+        if (isset($this->foreground_colors[$foreground_color])) {
+            $colored_string .= "\033[" . $this->foreground_colors[$foreground_color] . "m";
+        }
+        // Check if given background color found
+        if (isset($this->background_colors[$background_color])) {
+            $colored_string .= "\033[" . $this->background_colors[$background_color] . "m";
+        }
+
+        // Add string and end coloring
+        $colored_string .=  $string . "\033[0m";
+
+        return ''.$colored_string.'' . PHP_EOL;
+    }
+
 
     // Returns colored string information
     public function input($string, $foreground_color = 'blue', $background_color = 'light_gray') {

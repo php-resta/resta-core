@@ -71,8 +71,8 @@ class Project extends ConsoleOutputter {
         $this->touch['resource/index']              = $this->resource().'/index.html';
         $this->touch['session/index']               = $this->session().'/index.html';
         $this->touch['controller/index']            = $this->controller().'/index.html';
-        $this->touch['config/index']                = $this->config().'/index.html';
         $this->touch['config/hateoas']              = $this->config().'/Hateoas.php';
+        $this->touch['config/redis']                = $this->config().'/Redis.php';
         $this->touch['config/database']             = $this->config().'/Database.php';
         $this->touch['job/index']                   = $this->job().'/index.html';
         $this->touch['migration/index']             = $this->migration().'/index.html';
@@ -90,6 +90,10 @@ class Project extends ConsoleOutputter {
         $this->file->touch($this);
 
 
-        return $this->blue('Project Has Been Successfully Created');
+        echo $this->classical('---------------------------------------------------------------------------');
+        echo $this->bluePrint('Project Named ['.$this->argument['project'].'] Has Been Successfully Created');
+        echo $this->classical('---------------------------------------------------------------------------');
+        echo $this->cyan('   You can see in src/app your project   ');
+        echo $this->classical('---------------------------------------------------------------------------');
     }
 }

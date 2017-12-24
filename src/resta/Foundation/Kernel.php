@@ -20,6 +20,7 @@ class Kernel extends Container {
         \Resta\Booting\ServiceContainer::class,
         \Boot\Router::class,
         \Boot\Response::class,
+
     ];
 
 

@@ -143,6 +143,12 @@ class StaticPathList {
     public static $store='Store';
 
 
+    /**
+     * @var $store
+     */
+    public static $autoService='AutoService';
+
+
 
 
 

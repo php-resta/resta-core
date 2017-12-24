@@ -24,7 +24,9 @@ class GlobalAccessor extends ApplicationProvider  {
 
         //The HttpFoundation component defines an object-oriented layer for the HTTP specification.
         //The HttpFoundation component replaces these default PHP global variables and functions by an object-oriented layer
-        $this->singleton()->request=Request::createFromGlobals();
+        $this->singleton()->request     = Request::createFromGlobals();
+        $this->singleton()->get         = $this->app->kernel()->request->query->all();
+        $this->singleton()->post        = $this->app->kernel()->request->request->all();
 
         //We determine with the kernel object which HTTP method the requested from the client
         $this->singleton()->httpMethod=ucfirst(strtolower($this->app->kernel()->request->getRealMethod()));

@@ -4,23 +4,23 @@ namespace App\__project__\__version__;
 
 /**
  * Trait ServiceAnnotationsController
- * @method namespace pipeline
+ * @method \Store\Services\HttpSession session
+ * @method \Store\Services\Redis redis
  * @package App\__project__\__version__
  */
 trait ServiceAnnotationsController
 {
 
     /**
-     * @var $redis
-     */
-    public $redis;
+    * @param $service
+    * @param $arg
+    * @return mixed
+    */
+    public function __call($service,$arg){
 
-    /**
-     * @return mixed
-     */
-    public function redis(){
-
-        return 'redis';
+        //in this magic way, the annotations described above are managed by
+        //the application static preloader class to be loaded as requested by the application.
+        return \application::annotationsLoaders($service,$arg);
     }
 
 }

@@ -52,6 +52,24 @@ class ApplicationProvider {
     }
 
     /**
+     * @return mixed
+     */
+    public function get()
+    {
+        //symfony request query object
+        return $this->app->kernel()->get;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function post()
+    {
+        //symfony request post object
+        return $this->app->kernel()->post;
+    }
+
+    /**
      * @method url
      * @return mixed
      */

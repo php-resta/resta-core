@@ -186,5 +186,14 @@ trait ConsoleListAccessor {
     }
 
 
+    /**
+     * @return mixed
+     */
+    public function autoService(){
+
+        return root.'/'.StaticPathModel::$store.'/'.StaticPathModel::$autoService;
+    }
+
+
 
 }
