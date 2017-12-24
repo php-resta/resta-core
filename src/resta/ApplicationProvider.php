@@ -155,4 +155,15 @@ class ApplicationProvider {
 
         return (object)$this->app->kernel()->serviceContainer;
     }
+
+    /**
+     * @param $config null
+     * @method config
+     * @return mixed
+     */
+    public function config($config=null){
+
+        return $this->singleton()->appClass->configLoaders($config);
+
+    }
 }

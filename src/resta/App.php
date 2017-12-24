@@ -2,6 +2,7 @@
 
 namespace Resta;
 
+use function DI\object;
 use Store\Services\HttpSession as Session;
 use Store\Services\Redis as Redis;
 
@@ -45,4 +46,34 @@ class App {
 
         return new Redis();
     }
+
+    /**
+     * @param null $config
+     * @return string
+     */
+    public function configLoaders($config=null){
+
+        $border=new self;
+
+        $kernelConfig=$border->getAppInstance()->singleton()->appConfig;
+
+        if(null===$config){
+            return $kernelConfig;
+        }
+
+        if(isset($kernelConfig[$config])){
+
+            if(Utils::isNamespaceExists($configFile=$kernelConfig[$config]['namespace'])){
+                return (object)Utils::makeBind($configFile)->handle();
+            }
+
+            if(file_exists($configFile=$kernelConfig[$config]['file'])){
+                $pureConfig=require($configFile);
+                return (object)$pureConfig;
+            }
+        }
+
+        throw new \InvalidArgumentException('The requested config is not available');
+    }
+
 }

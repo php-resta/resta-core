@@ -118,5 +118,19 @@ class Utils {
         return Yaml::parse(file_get_contents($path));
     }
 
+    public static function glob($path,$filename=false){
+
+        $configList=[];
+        foreach (glob($path.'/*.php') as $config) {
+            $configArray=str_replace(".php","",explode("/",$config));
+            $configList[end($configArray)]=$config;
+        }
+
+        if($filename===true){
+            return array_keys($configList);
+        }
+        return $configList;
+    }
+
 
 }

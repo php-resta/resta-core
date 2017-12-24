@@ -2,6 +2,7 @@
 
 namespace Resta\Foundation;
 
+use Resta\Booting\ConfigLoader;
 use Resta\Utils;
 
 class Kernel extends Container {
@@ -17,6 +18,7 @@ class Kernel extends Container {
         \Resta\Booting\UrlParse::class,
         \Resta\Booting\Environment::class,
         \Boot\Encrypter::class,
+        \Resta\Booting\ConfigLoader::class,
         \Resta\Booting\ServiceContainer::class,
         \Boot\Router::class,
         \Boot\Response::class,

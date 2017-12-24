@@ -121,6 +121,8 @@ class FileProcess {
 
             return require_once($file);
         }
+
+        return null;
     }
 
 }
