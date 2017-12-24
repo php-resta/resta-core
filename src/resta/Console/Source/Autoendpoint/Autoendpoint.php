@@ -30,17 +30,20 @@ class Autoendpoint extends ConsoleOutputter {
      */
     public function create(){
 
-        dd($this->autoService());
-        $this->argument['methodPrefix'] = StaticPathModel::$methodPrefix;
-        $this->directory['endpoint']    = $this->controller().'/'.$this->argument['service'];
+        //$this->argument['methodPrefix'] = StaticPathModel::$methodPrefix;
+        $this->directory['path']    = $this->autoService().'/'.$this->argument['project'];
 
-        $this->file->makeDirectory($this);
+        $this->file->makeDirectory($this,true);
 
-        $this->touch['autoservice/endpoint']        = $this->directory['endpoint'].'/'.$this->argument['service'].'Service.php';
+        $this->touch['service/autoendpoint']        = $this->directory['path'].'/'.$this->argument['project'].'Service.php';
 
         $this->file->touch($this);
 
 
-        return $this->blue('Endpoint Has Been Successfully Created');
+        echo $this->classical('---------------------------------------------------------------------------');
+        echo $this->bluePrint('Auto Endpoint Named ['.$this->argument['project'].'] Has Been Successfully Created');
+        echo $this->classical('---------------------------------------------------------------------------');
+        echo $this->cyan('   You can see in src/store your auto endpoint   ');
+        echo $this->classical('---------------------------------------------------------------------------');
     }
 }

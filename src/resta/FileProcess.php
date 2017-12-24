@@ -29,14 +29,18 @@ class FileProcess {
      * @param $data object
      * @return mixed
      */
-    public function makeDirectory($data){
+    public function makeDirectory($data,$status=false){
 
         if($data->type=="project" && file_exists($data->project)){
             throw new \LogicException('This Project Is Already Available');
         }
 
-        if($data->type!=="project" && !file_exists($data->project)){
-            throw new \LogicException('Project No');
+        if(false===$status){
+
+            if($data->type!=="project" && !file_exists($data->project)){
+                throw new \LogicException('Project No');
+            }
+
         }
 
         foreach ($data->directory as $directory){

@@ -191,7 +191,7 @@ trait ConsoleListAccessor {
      */
     public function autoService(){
 
-        return root.'/'.StaticPathModel::$store.'/'.StaticPathModel::$autoService;
+        return root.'/'.StaticPathModel::$appDefine.'/'.strtolower(StaticPathModel::$store).'/'.StaticPathModel::$autoService;
     }
 
 

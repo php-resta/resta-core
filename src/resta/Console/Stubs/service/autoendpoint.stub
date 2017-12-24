@@ -1,0 +1,23 @@
+<?php
+
+namespace Store\Autoservice\__project__;
+
+use Resta\ApplicationProvider;
+
+/**
+ * Class __project__Service
+ * @package Store\Autoservice\__project__
+ */
+class __project__Service extends ApplicationProvider {
+
+    /**
+     * @return array
+     */
+    public function getIndex(){
+
+        return [
+            '__project__service'=>'do somethings'
+        ];
+    }
+
+}

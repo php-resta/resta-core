@@ -146,7 +146,7 @@ class StaticPathList {
     /**
      * @var $store
      */
-    public static $autoService='AutoService';
+    public static $autoService='Autoservice';
 
 
 
