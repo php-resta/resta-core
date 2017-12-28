@@ -40,8 +40,6 @@ class Router extends ApplicationProvider  {
 
         $this->singleton()->routeParameters=$this->routeParametersAssign($this->resolveMethod($method));
         define('appInstance',(base64_encode(serialize($this))));
-        class_alias(App::class,'application');
-        $this->singleton()->appClass=new \application();
     }
 
 

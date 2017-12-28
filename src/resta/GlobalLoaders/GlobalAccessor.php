@@ -5,6 +5,7 @@ namespace Resta\GlobalLoaders;
 use Resta\Response\ResponseApplication;
 use Symfony\Component\HttpFoundation\Request;
 use Resta\ApplicationProvider;
+use Resta\App;
 
 class GlobalAccessor extends ApplicationProvider  {
 
@@ -12,6 +13,10 @@ class GlobalAccessor extends ApplicationProvider  {
      * @method handle
      */
     public function handle(){
+
+        //class alias for global app class
+        class_alias(App::class,'application');
+        $this->singleton()->appClass=new \application();
 
         //get response success and status
         $this->singleton()->instanceController=null;
