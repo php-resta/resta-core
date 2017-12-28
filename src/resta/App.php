@@ -5,6 +5,7 @@ namespace Resta;
 use function DI\object;
 use Store\Services\HttpSession as Session;
 use Store\Services\Redis as Redis;
+use Store\Services\AppCollection as Collection;
 
 /**
  * Class App
@@ -45,6 +46,15 @@ class App {
     private static function redis(){
 
         return new Redis();
+    }
+
+
+    /**
+     * @return Collection
+     */
+    private static function collection(){
+
+        return (new Collection());
     }
 
     /**
