@@ -1,0 +1,16 @@
+<?php
+
+namespace App\__project__\__version__;
+
+class ServiceMiddlewareController extends ServiceBaseController {
+
+    /**
+     * @return array
+     */
+    public function handle(){
+
+        return [
+        ];
+    }
+
+}

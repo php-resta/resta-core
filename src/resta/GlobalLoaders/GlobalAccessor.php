@@ -3,6 +3,7 @@
 namespace Resta\GlobalLoaders;
 
 use Resta\Response\ResponseApplication;
+use Resta\StaticPathModel;
 use Symfony\Component\HttpFoundation\Request;
 use Resta\ApplicationProvider;
 use Resta\App;
@@ -35,7 +36,6 @@ class GlobalAccessor extends ApplicationProvider  {
 
         //We determine with the kernel object which HTTP method the requested from the client
         $this->singleton()->httpMethod=ucfirst(strtolower($this->app->kernel()->request->getRealMethod()));
-
 
 
     }

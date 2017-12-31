@@ -71,11 +71,31 @@ class Utils {
         return $container->get($class);
     }
 
-    public static function upperCase($argument){
+    /**
+     * @param $argument
+     * @param bool $shift
+     * @return array
+     */
+    public static function upperCase($argument,$shift=true){
 
-        array_shift($argument);
+        if($shift){
+            array_shift($argument);
+        }
+
         return array_map(function($argument){
             return ucfirst($argument);
+        },$argument);
+    }
+
+
+    /**
+     * @param $argument
+     * @return array
+     */
+    public static function strtolower($argument){
+
+        return array_map(function($argument){
+            return strtolower($argument);
         },$argument);
     }
 

@@ -10,7 +10,7 @@ class Kernel extends Container {
     /**
      * @var array
      */
-    protected $bootstrappers=[
+    protected $middlewareGroups=[
 
         \Resta\Booting\Exception::class,
         \Resta\Booting\GlobalsForApplicationAndConsole::class,
@@ -19,6 +19,14 @@ class Kernel extends Container {
         \Resta\Booting\Environment::class,
         \Boot\Encrypter::class,
         \Resta\Booting\ConfigLoader::class,
+        \Resta\Booting\Middleware::class
+    ];
+
+    /**
+     * @var array
+     */
+    protected $bootstrappers=[
+
         \Resta\Booting\ServiceContainer::class,
         \Boot\Router::class,
         \Boot\Response::class,
@@ -29,15 +37,16 @@ class Kernel extends Container {
     /**
      * @method bootstrappers
      * @param $app \Resta\Contracts\ApplicationContracts
+     * @param $strappers bootstrappers
      */
-    protected function bootstrappers($app){
+    protected function bootstrappers($app,$strappers='bootstrappers'){
 
         //kernel boots run and service container
         //makeBuild for service Container
-        foreach ($this->bootstrappers as $bootstrapper){
+        foreach ($this->{$strappers} as $strapper){
 
             //set makeBuild for kernel boots
-            Utils::makeBind($bootstrapper,$this->applicationProviderBinding($app))
+            Utils::makeBind($strapper,$this->applicationProviderBinding($app))
                 ->boot();
         }
     }
@@ -58,6 +67,10 @@ class Kernel extends Container {
      */
     protected function middlewareLoaders($app){
 
+        //When your application is requested, the middleware classes are running before all bootstrapper executables.
+        //Thus, if you make http request your application, you can verify with an intermediate middleware layer
+        //and throw an exception.
+        $this->bootstrappers($app,'middlewareGroups');
     }
 
 

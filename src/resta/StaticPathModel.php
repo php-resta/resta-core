@@ -123,4 +123,18 @@ class StaticPathModel extends StaticPathList {
         return self::appVersionRoot().'\\ServiceBaseController';
     }
 
+    public static function appMiddleware(){
+
+        return self::appVersionRoot().'\\ServiceMiddlewareController';
+    }
+
+    /**
+     * @method appMiddlewarePath
+     * @return string
+     */
+    public static function appMiddlewarePath(){
+
+        return self::$autoloadNamespace.'\\'.app.'\\'.Utils::getAppVersion(app).'\\'.self::$middleware;
+    }
+
 }

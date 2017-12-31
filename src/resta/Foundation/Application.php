@@ -25,13 +25,13 @@ class Application extends Kernel implements ApplicationContracts {
         //the managed classes can be managed from the kernel file
         $this->devEagerConfiguration();
 
-        //start boot for app
-        //this method is the main fire and is brain for system
-        $this->booting();
-
         //middleware installers are user-based pre-installers
         //that come after the pre-installers required for the system
         $this->middleware();
+
+        //start boot for app
+        //this method is the main fire and is brain for system
+        $this->booting();
     }
 
     public function devEagerConfiguration(){

@@ -2,7 +2,6 @@
 
 namespace Resta;
 
-use function DI\object;
 use Store\Services\HttpSession as Session;
 use Store\Services\Redis as Redis;
 use Store\Services\AppCollection as Collection;

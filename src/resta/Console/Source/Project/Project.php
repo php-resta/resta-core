@@ -62,7 +62,7 @@ class Project extends ConsoleOutputter {
         $this->touch['version']                     = $this->project.'/version.php';
         $this->touch['repository/index']            = $this->repository().'/index.html';
         $this->touch['kernel/kernel']               = $this->kernel().'/Kernel.php';
-        $this->touch['middleware/index']            = $this->middleware().'/index.html';
+        $this->touch['middleware/validation']       = $this->middleware().'/Validation.php';
         $this->touch['once/index']                  = $this->once().'/index.html';
         $this->touch['node/index']                  = $this->node().'/index.html';
         $this->touch['stub/index']                  = $this->stub().'/index.html';
@@ -80,6 +80,7 @@ class Project extends ConsoleOutputter {
         $this->touch['webservice/index']            = $this->webservice().'/index.html';
         $this->touch['version/annotations']         = $this->version().'/ServiceAnnotationsController.php';
         $this->touch['version/servicecontainer']    = $this->version().'/ServiceContainerController.php';
+        $this->touch['version/servicemiddleware']   = $this->version().'/ServiceMiddlewareController.php';
         $this->touch['version/base']                = $this->version().'/ServiceBaseController.php';
         $this->touch['version/base']                = $this->version().'/ServiceBaseController.php';
         $this->touch['version/token']               = $this->version().'/ServiceTokenController.php';
