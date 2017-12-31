@@ -19,6 +19,7 @@ class Kernel extends Container {
         \Resta\Booting\Environment::class,
         \Boot\Encrypter::class,
         \Resta\Booting\ConfigLoader::class,
+        \Resta\Booting\ServiceContainer::class,
         \Resta\Booting\Middleware::class
     ];
 
@@ -27,7 +28,6 @@ class Kernel extends Container {
      */
     protected $bootstrappers=[
 
-        \Resta\Booting\ServiceContainer::class,
         \Boot\Router::class,
         \Boot\Response::class,
 

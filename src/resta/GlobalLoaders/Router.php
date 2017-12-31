@@ -39,7 +39,6 @@ class Router extends ApplicationProvider  {
     public function substractMethodNameFromRouteParameters($method){
 
         $this->singleton()->routeParameters=$this->routeParametersAssign($this->resolveMethod($method));
-        define('appInstance',(base64_encode(serialize($this))));
     }
 
 

@@ -2,14 +2,37 @@
 
 namespace App\__project__\__version__\Middleware;
 
+use App\__project__\__version__\ServiceAnnotationsController;
+
 class Validation {
+
+    //service annotations
+    use ServiceAnnotationsController;
 
     /**
      * @method handle
-     * @return mixed
+     * @return void
      */
     public function handle() {
 
-        //do somethings
+        //check page on query
+        $this->checkPageOnQuery();
+    }
+
+    /**
+     * @return bool
+     */
+    public function checkPageOnQuery(){
+
+        //get page on query
+        $page=app()->get('page');
+
+        //check page on query for filter
+        //throw exception as invalid argument
+        if($page!==null && !is_numeric($page)){
+            throw new \InvalidArgumentException('page variable that on query is not is numeric');
+        }
+
+        return true;
     }
 }

@@ -14,6 +14,9 @@ class ApplicationMiddleware extends ApplicationProvider {
      */
     public function handle(){
 
+        //The app instance is a global application example, and a hash is loaded as this hash.
+        $this->singleton()->middlewareGlobalInstance->setAppInstance();
+
         //When your application is requested, the middleware classes are running before all bootstrapper executables.
         //Thus, if you make http request your application, you can verify with an intermediate middleware layer
         //and throw an exception.

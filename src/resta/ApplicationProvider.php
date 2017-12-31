@@ -52,12 +52,15 @@ class ApplicationProvider {
     }
 
     /**
+     * @param $param null
      * @return mixed
      */
-    public function get()
+    public function get($param=null)
     {
         //symfony request query object
-        return $this->app->kernel()->get;
+        $get=$this->app->kernel()->get;
+
+        return ($param===null) ? $get : (isset($get[$param]) ? $get[$param] : null);
     }
 
     /**
@@ -66,7 +69,7 @@ class ApplicationProvider {
     public function post()
     {
         //symfony request post object
-        return $this->app->kernel()->post;
+        return (object)$this->app->kernel()->post;
     }
 
     /**
