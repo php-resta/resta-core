@@ -152,5 +152,15 @@ class Utils {
         return $configList;
     }
 
+    public static function chmod($path) {
+        $dir = new \DirectoryIterator($path);
+        foreach ($dir as $item) {
+            chmod($item->getPathname(), 0777);
+            if ($item->isDir() && !$item->isDot()) {
+                self::chmod($item->getPathname());
+            }
+        }
+    }
+
 
 }

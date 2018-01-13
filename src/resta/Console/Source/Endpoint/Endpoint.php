@@ -45,6 +45,8 @@ class Endpoint extends ConsoleOutputter {
 
         $this->file->touch($this);
 
+        Utils::chmod($this->controller());
+
         echo $this->classical('---------------------------------------------------------------------------');
         echo $this->bluePrint('Endpoint Named ['.$this->argument['service'].'] Has Been Successfully Created in the '.$this->argument['project'].'');
         echo $this->classical('---------------------------------------------------------------------------');

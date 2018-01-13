@@ -4,6 +4,7 @@ namespace Resta\Console\Source\Project;
 
 use Resta\Console\ConsoleListAccessor;
 use Resta\Console\ConsoleOutputter;
+use Resta\Utils;
 
 class Project extends ConsoleOutputter {
 
@@ -89,6 +90,8 @@ class Project extends ConsoleOutputter {
 
         //set project touch
         $this->file->touch($this);
+
+        Utils::chmod($this->project);
 
 
         echo $this->classical('---------------------------------------------------------------------------');
