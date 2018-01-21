@@ -38,6 +38,8 @@ class Env extends ConsoleOutputter {
         //set key file touch
         $this->file->touch($this);
 
+        Utils::chmod(StaticPathModel::appPath());
+
         return $this->blue('Your Environment File Has Been Successfully Created');
     }
 }

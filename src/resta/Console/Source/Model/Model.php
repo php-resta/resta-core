@@ -4,6 +4,7 @@ namespace Resta\Console\Source\Model;
 
 use Resta\Console\ConsoleListAccessor;
 use Resta\Console\ConsoleOutputter;
+use Resta\Utils;
 
 class Model extends ConsoleOutputter {
 
@@ -38,6 +39,8 @@ class Model extends ConsoleOutputter {
 
         //set project touch
         $this->file->touch($this);
+
+        Utils::chmod($this->model());
 
         return $this->blue('Model Has Been Succesfully Created');
     }

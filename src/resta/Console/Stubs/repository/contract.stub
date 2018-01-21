@@ -1,0 +1,11 @@
+<?php
+
+namespace App\__project__\__version__\Optional\Repository\__repository__;
+
+interface __repository__Contract {
+
+    /**
+     * @return mixed
+     */
+    public function getRepository();
+}

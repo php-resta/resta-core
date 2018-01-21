@@ -162,5 +162,11 @@ class Utils {
         }
     }
 
+    public static function getJustClassName($namespace){
+
+        $path = explode('\\', $namespace);
+        return array_pop($path);
+    }
+
 
 }

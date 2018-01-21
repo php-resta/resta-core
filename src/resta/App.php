@@ -44,7 +44,7 @@ class App {
      */
     private static function redis(){
 
-        return new Redis();
+        return (new Redis())->client();
     }
 
 

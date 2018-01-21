@@ -1,0 +1,47 @@
+<?php
+
+namespace App\__project__\__version__\Optional\Repository\__repository__;
+
+use Resta\StaticPathModel;
+use Resta\Utils;
+
+/**
+ * Trait __repository__
+ * @package App\__project__\__version__\Optional\Repository\__repository__
+ */
+trait __repository__Trait {
+
+    /**
+     * @method adapter
+     * @return mixed
+     */
+    public function adapter(){
+
+        return $this->makeBind($this->getRepositorySourceAdapter());
+    }
+
+    /**
+     * @return string
+     */
+    protected function getRepositorySourcePath(){
+
+        return StaticPathModel::appRepository().'\\'.$this->getRepositoryName().'\Source\\'.$this->adapter;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getRepositorySourceAdapter(){
+
+        return $this->getRepositorySourcePath().'\\'.$this->getRepositoryName().''.$this->adapter;
+    }
+
+    /**
+     * @return mixed
+     */
+    protected function getRepositoryName(){
+
+        return str_replace('Adapter','',Utils::getJustClassName(__CLASS__));
+    }
+
+}

@@ -12,10 +12,16 @@ trait ResponseOutput {
      */
     public function printer($output){
 
-        return array_merge(
-            $this->metaAdd(),
-            $this->outputCapsule($output)
-        );
+        //if the system throws an exception,
+        //we subtract the hateoas extension from the output value.
+        return $this->noInExceptionHateoas($output,function() use ($output){
+
+            return array_merge(
+                $this->metaAdd(),
+                $this->outputCapsule($output)
+            );
+        });
+
     }
 
     /**
@@ -28,6 +34,20 @@ trait ResponseOutput {
         return $this->hateoasCapsule([
             'data'=>$data,
         ]);
+    }
+
+    /**
+     * @param $output
+     * @param callable $callback
+     */
+    private function noInExceptionHateoas($output,callable $callback){
+
+        if(isset($output['success']) && false===$output['success']){
+            return $output;
+        }
+
+        return call_user_func($callback);
+
     }
 
     /**

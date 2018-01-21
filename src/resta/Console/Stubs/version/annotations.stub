@@ -5,7 +5,7 @@ namespace App\__project__\__version__;
 /**
  * Trait ServiceAnnotationsController
  * @method \Store\Services\HttpSession session
- * @method \Store\Services\Redis redis
+ * @method \Predis\Client redis
  * @method \Store\Services\AppCollection collection
  * @package App\__project__\__version__
  */

@@ -137,4 +137,9 @@ class StaticPathModel extends StaticPathList {
         return self::$autoloadNamespace.'\\'.app.'\\'.Utils::getAppVersion(app).'\\'.self::$middleware;
     }
 
+    public static function appRepository(){
+
+        return self::appVersionRoot().'\\'.self::$optional.'\\'.self::$repository;
+    }
+
 }

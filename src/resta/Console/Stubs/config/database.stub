@@ -17,11 +17,12 @@ class Database
         $connection='mysql';
 
         //local settings
-        $db['mysql']['driver']      ='mysql';
-        $db['mysql']['host']        ='localhost';
-        $db['mysql']['database']    ='database';
-        $db['mysql']['user']        ='user';
-        $db['mysql']['password']    ='password';
+        $db['mysql']['driver']      = environment('db_connection','mysql');
+        $db['mysql']['port']        = environment('db_port','localhost');
+        $db['mysql']['host']        = environment('db_host','localhost');
+        $db['mysql']['database']    = environment('db_database','database');
+        $db['mysql']['user']        = environment('db_username','user');
+        $db['mysql']['password']    = environment('db_password','password');
 
         //return db
         return $db[$connection];
