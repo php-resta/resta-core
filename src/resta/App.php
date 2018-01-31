@@ -13,6 +13,11 @@ use Store\Services\AppCollection as Collection;
 class App {
 
     /**
+     * @var array
+     */
+    protected static $instance=[];
+
+    /**
      * @return mixed
      */
     public static function getAppInstance(){
@@ -28,6 +33,16 @@ class App {
      */
     public static function annotationsLoaders($service,$arg){
 
+        //if $name starts with $needles for repository
+        if(Str::endsWith($service,'Repository')){
+            return self::repository($service);
+        }
+
+        //if $name starts with $needles for model
+        if(Str::endsWith($service,'Builder')){
+            return self::Builder(ucfirst($service));
+        }
+
         return self::$service();
     }
 
@@ -40,11 +55,51 @@ class App {
     }
 
     /**
+     * @param $service
+     * @return mixed
+     */
+    private static function repository($service){
+
+        //I can get the repository name from the magic method as a salt repository,
+        //after which we will edit it as an adapter namespace.
+        $repositoryName=ucfirst(preg_replace('@Repository@is','',$service));
+
+        //If we then configure the name of the simple repository to be an adapter
+        //then we will give the user an example of the adapter class in each repository call.
+        $repositoryAdapterName  = $repositoryName.'Adapter';
+        $repositoryNamespace    = StaticPathModel::appRepository().'\\'.$repositoryName.'\\'.$repositoryAdapterName;
+
+        //and eventually we conclude the adapter class of the repository package as an instance.
+        return app()->makeBind($repositoryNamespace)->adapter();
+    }
+
+    /**
+     * @param $service
+     * @return mixed
+     */
+    private static function builder($service){
+
+        //We are making a namespace assignment for the builder.
+        $builder=StaticPathModel::appBuilder().'\\'.$service;
+
+        //We are getting builder instance.
+        return app()->makeBind($builder);
+    }
+
+    /**
      * @return \Predis\Client
      */
     private static function redis(){
 
-        return (new Redis())->client();
+        if(!isset(self::$instance['redis'])){
+
+            self::$instance['redis']=(new Redis())->client();
+            return self::$instance['redis'];
+
+        }
+
+        return self::$instance['redis'];
+
     }
 
 

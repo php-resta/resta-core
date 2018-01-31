@@ -4,6 +4,7 @@ namespace Resta\Console\Source\Model;
 
 use Resta\Console\ConsoleListAccessor;
 use Resta\Console\ConsoleOutputter;
+use Resta\StaticPathModel;
 use Resta\Utils;
 
 class Model extends ConsoleOutputter {
@@ -35,13 +36,26 @@ class Model extends ConsoleOutputter {
         $this->argument['table']=strtolower($this->argument['table']);
 
         //model set
-        $this->touch['model/model']= $this->model().'/'.$this->argument['file'].'.php';
+        $this->touch['model/model']     = $this->model().'/'.$this->argument['file'].'.php';
+        $this->touch['model/builder']   = $this->model().'/Builder/'.$this->argument['file'].'Builder.php';
 
         //set project touch
         $this->file->touch($this);
 
+        $this->setAnnotations();
+
         Utils::chmod($this->model());
 
         return $this->blue('Model Has Been Succesfully Created');
+    }
+
+    /**
+     * @return bool
+     */
+    private function setAnnotations(){
+
+        return Utils::changeClass(StaticPathModel::appAnnotation($this->projectName(),true).'',
+            ['Trait ServiceAnnotationsController'=>'Trait ServiceAnnotationsController'.PHP_EOL.' * @method \\'.StaticPathModel::appBuilder($this->projectName()).'\\'.$this->argument['file'].'Builder '.strtolower($this->argument['file']).'Builder'
+            ]);
     }
 }

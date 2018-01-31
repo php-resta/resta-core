@@ -63,9 +63,15 @@ class StaticPathModel extends StaticPathList {
      * @method appVersionRoot
      * @return string
      */
-    public static function appVersionRoot(){
+    public static function appVersionRoot($app=null,$path=false){
 
-        return self::$autoloadNamespace.'\\'.app.'\\'.Utils::getAppVersion(app).'';
+        $app=($app!==null) ? $app : app;
+
+        if($path){
+
+            return self::appPath().'/'.$app.'/'.Utils::getAppVersion($app).'';
+        }
+        return self::$autoloadNamespace.'\\'.$app.'\\'.Utils::getAppVersion($app).'';
     }
 
     public static function endpointPath(){
@@ -123,6 +129,14 @@ class StaticPathModel extends StaticPathList {
         return self::appVersionRoot().'\\ServiceBaseController';
     }
 
+    public static function appAnnotation($app=null,$path=false){
+
+        if($path){
+            return self::appVersionRoot($app,true).'/ServiceAnnotationsController.php';
+        }
+        return self::appVersionRoot($app).'\\ServiceAnnotationsController';
+    }
+
     public static function appMiddleware(){
 
         return self::appVersionRoot().'\\ServiceMiddlewareController';
@@ -137,9 +151,14 @@ class StaticPathModel extends StaticPathList {
         return self::$autoloadNamespace.'\\'.app.'\\'.Utils::getAppVersion(app).'\\'.self::$middleware;
     }
 
-    public static function appRepository(){
+    public static function appRepository($app=null){
 
-        return self::appVersionRoot().'\\'.self::$optional.'\\'.self::$repository;
+        return self::appVersionRoot($app).'\\'.self::$optional.'\\'.self::$repository;
+    }
+
+    public static function appBuilder($app=null){
+
+        return self::appVersionRoot($app).'\\'.self::$model.'\\'.self::$builder;
     }
 
 }

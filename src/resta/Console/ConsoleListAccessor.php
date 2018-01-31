@@ -7,6 +7,11 @@ use Resta\Utils;
 
 trait ConsoleListAccessor {
 
+    public function projectName(){
+
+        $projectParse=explode("/",$this->project);
+        return end($projectParse);
+    }
     /**
      * @return mixed
      */

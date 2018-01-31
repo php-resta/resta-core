@@ -7,6 +7,9 @@ use Resta\StaticPathModel;
 
 class ServiceBaseController extends ApplicationProvider
 {
+    //get service annotation
+    use ServiceAnnotationsController;
+
     //response object
     public $response='json';
 
