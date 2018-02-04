@@ -2,6 +2,7 @@
 
 namespace Resta\Traits;
 
+use Resta\Logger\LoggerService;
 use Resta\StaticPathModel;
 
 trait ResponseOutput {
@@ -14,13 +15,16 @@ trait ResponseOutput {
 
         //if the system throws an exception,
         //we subtract the hateoas extension from the output value.
-        return $this->noInExceptionHateoas($output,function() use ($output){
+        $printer=$this->noInExceptionHateoas($output,function() use ($output){
 
             return array_merge(
                 $this->metaAdd(),
                 $this->outputCapsule($output)
             );
         });
+
+        //set log for printer
+        return $this->makeBind(LoggerService::class)->logHandler($printer);
 
     }
 
@@ -75,4 +79,6 @@ trait ResponseOutput {
             'status'=>$this->getStatus(),
         ];
     }
+
+
 }

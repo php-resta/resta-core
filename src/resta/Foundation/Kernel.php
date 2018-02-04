@@ -2,6 +2,7 @@
 
 namespace Resta\Foundation;
 
+use Boot\Logger;
 use Resta\Booting\ConfigLoader;
 use Resta\Utils;
 
@@ -28,6 +29,7 @@ class Kernel extends Container {
      */
     protected $bootstrappers=[
 
+        \Resta\Booting\LogProvider::class,
         \Boot\Router::class,
         \Boot\Response::class,
 

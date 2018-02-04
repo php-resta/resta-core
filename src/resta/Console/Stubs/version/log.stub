@@ -2,9 +2,37 @@
 
 namespace App\__project__\__version__;
 
-class ServiceLogController
-{
+use Monolog\Logger;
+use Resta\StaticPathModel;
+use Monolog\Handler\StreamHandler;
 
-    //
+class ServiceLogController extends ServiceBaseController
+{
+    /**
+     * @var $adapter
+     */
+    public $adapter='file';
+
+    /**
+     * @param $output
+     */
+    public function file($output) {
+
+        //Log type level
+        $type=($this->getSuccess()) ? 'info' : 'error';
+
+        //log register path
+        $filePath=StaticPathModel::appLog().'/access.log';
+
+        //monologue library and make the necessary adjustments.
+        $log = new Logger('monolog');
+        $log->pushHandler(new StreamHandler($filePath, Logger::INFO));
+
+        //We write to the specified file.
+        $log->{$type}(json_encode($output));
+
+    }
+
+
 
 }

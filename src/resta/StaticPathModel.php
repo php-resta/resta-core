@@ -161,4 +161,14 @@ class StaticPathModel extends StaticPathList {
         return self::appVersionRoot($app).'\\'.self::$model.'\\'.self::$builder;
     }
 
+    public static function appLog(){
+
+        return self::getAppStorage().'/'.self::$log;
+    }
+
+    public static function appServiceLog(){
+
+        return self::appVersionRoot().'\ServiceLogController';
+    }
+
 }

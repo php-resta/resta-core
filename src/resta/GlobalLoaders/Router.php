@@ -27,6 +27,7 @@ class Router extends ApplicationProvider  {
         }
 
         //utils make bind via dependency injection named as service container
+        $this->singleton()->logger                  = StaticPathModel::appServiceLog();
         $this->singleton()->serviceConf             = (new FileProcess())->callFile(StaticPathModel::getServiceConf());
         $this->singleton()->serviceDummy            = (isset($serviceDummy)) ? $serviceDummy : [];
         $this->singleton()->instanceController      = $this->makeBind($this->getControllerNamespace());
