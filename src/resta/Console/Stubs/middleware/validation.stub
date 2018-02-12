@@ -2,12 +2,9 @@
 
 namespace App\__project__\__version__\Middleware;
 
-use App\__project__\__version__\ServiceAnnotationsController;
+use App\__project__\__version__\ServiceBaseController as Base;
 
-class Validation {
-
-    //service annotations
-    use ServiceAnnotationsController;
+class Validation extends Base {
 
     /**
      * @method handle
@@ -25,7 +22,7 @@ class Validation {
     public function checkPageOnQuery(){
 
         //get page on query
-        $page=app()->get('page');
+        $page=$this->get('page');
 
         //check page on query for filter
         //throw exception as invalid argument
