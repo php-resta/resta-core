@@ -79,4 +79,31 @@ class Application extends Kernel implements ApplicationContracts {
 
         return ($this->console) ? $this->kernel->console : $this->kernel->response;
     }
+
+    /**
+     * @param $boot
+     * @param $app
+     */
+    public function bootFire($boot){
+
+        //The boot method to be executed can be specified by the user.
+        //We use this method to know how to customize it.
+        return forward_static_call_array([array_pop($boot),'loadBootstrappers'],[$boot]);
+    }
+
+    /**
+     * @return array
+     */
+    public function getMiddlewareGroups(){
+
+        return $this->middlewareGroups;
+    }
+
+    /**
+     * @return array
+     */
+    public function getBootstrappers(){
+
+        return $this->bootstrappers;
+    }
 }

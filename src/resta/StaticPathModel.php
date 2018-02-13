@@ -9,6 +9,17 @@ namespace Resta;
 class StaticPathModel extends StaticPathList {
 
     /**
+     * @method bootDir
+     * @return mixed
+     */
+    public static function bootDir(){
+
+        //get boot directory for application
+        return root.'/src/boot';
+    }
+
+
+    /**
      * @method appPath
      * @return mixed
      */

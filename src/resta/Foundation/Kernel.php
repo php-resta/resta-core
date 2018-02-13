@@ -15,7 +15,6 @@ use Resta\Booting\ResponseManager;
 use Resta\Booting\RouteProvider;
 use Resta\Booting\ServiceContainer;
 use Resta\Booting\UrlParse;
-use Resta\Utils;
 
 class Kernel extends Container {
 
@@ -54,14 +53,15 @@ class Kernel extends Container {
      */
     protected function bootstrappers($app,$strappers='bootstrappers'){
 
-        //kernel boots run and service container
-        //makeBuild for service Container
-        foreach ($this->{$strappers} as $strapper){
+        //The boot method to be executed can be specified by the user.
+        //We use this method to know how to customize it.
+        BootFireCallback::setBootFire([$app,$strappers],function($boot){
 
-            //set makeBuild for kernel boots
-            Utils::makeBind($strapper,$this->applicationProviderBinding($app))
-                ->boot();
-        }
+            //kernel boots run and service container
+            //makeBuild for service Container
+            pos($boot)->bootFire($boot);
+        });
+
     }
 
     /**

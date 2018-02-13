@@ -162,9 +162,9 @@ class Utils {
         }
     }
 
-    public static function getJustClassName($namespace){
+    public static function getJustClassName($namespace,$seperator="\\"){
 
-        $path = explode('\\', $namespace);
+        $path = explode($seperator, $namespace);
         return array_pop($path);
     }
 
