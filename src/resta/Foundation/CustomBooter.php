@@ -37,7 +37,7 @@ class CustomBooter {
 
         //If the boot list does not belong to the middlewaregroups list,
         //we normally send the boot list exactly as it is.
-        return current($booter)->{$this->boot}();
+        return $this->getBooterList($booter);
     }
 
     /**
@@ -46,7 +46,7 @@ class CustomBooter {
     private function addMiddlewareGroupsForCustomBooter($booter){
 
         //normally we will assign a variable to our MiddlewareGroups list.
-        $booterList=$booter[0]->{$this->boot}();
+        $booterList=$this->getBooterList($booter);
 
         //Now, let's get our custom boot list.
         //Let's assign the final state to our middlewaregroups list along with our custom boot list.
@@ -71,6 +71,16 @@ class CustomBooter {
 
         //Let's get our boot objects through the glob method.
         return Utils::glob(StaticPathModel::bootDir());
+    }
+
+    /**
+     * @param $booter
+     * @return mixed
+     */
+    private function getBooterList($booter){
+
+        //We specify the method call for the booter list.
+        return $booter[0]->{$this->boot}();
     }
 
 }

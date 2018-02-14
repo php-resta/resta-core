@@ -13,7 +13,7 @@ class __project__Service extends ApplicationProvider {
     /**
      * @return array
      */
-    public function getIndex(){
+    public function getIndex__methodPrefix__(){
 
         return [
             '__project__service'=>'do somethings'

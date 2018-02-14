@@ -4,6 +4,8 @@ namespace Resta\Console\Source\Autoendpoint;
 
 use Resta\Console\ConsoleListAccessor;
 use Resta\Console\ConsoleOutputter;
+use Resta\StaticPathModel;
+use Resta\Utils;
 
 class Autoendpoint extends ConsoleOutputter {
 
@@ -30,7 +32,7 @@ class Autoendpoint extends ConsoleOutputter {
      */
     public function create(){
 
-        //$this->argument['methodPrefix'] = StaticPathModel::$methodPrefix;
+        $this->argument['methodPrefix'] = StaticPathModel::$methodPrefix;
         $this->directory['path']    = $this->autoService().'/'.$this->argument['project'];
 
         $this->file->makeDirectory($this,true);
@@ -39,6 +41,7 @@ class Autoendpoint extends ConsoleOutputter {
 
         $this->file->touch($this);
 
+        Utils::chmod(root);
 
         echo $this->classical('---------------------------------------------------------------------------');
         echo $this->bluePrint('Auto Endpoint Named ['.$this->argument['project'].'] Has Been Successfully Created');
