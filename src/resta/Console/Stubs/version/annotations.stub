@@ -2,6 +2,8 @@
 
 namespace App\__project__\__version__;
 
+use Store\Traits\Annotations;
+
 /**
  * Trait ServiceAnnotationsController
  * @method \Store\Services\HttpSession session
@@ -11,17 +13,5 @@ namespace App\__project__\__version__;
  */
 trait ServiceAnnotationsController
 {
-
-    /**
-    * @param $service
-    * @param $arg
-    * @return mixed
-    */
-    public function __call($service,$arg){
-
-        //in this magic way, the annotations described above are managed by
-        //the application static preloader class to be loaded as requested by the application.
-        return \application::annotationsLoaders($service,$arg);
-    }
-
+    use Annotations;
 }

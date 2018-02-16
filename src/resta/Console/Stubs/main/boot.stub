@@ -1,0 +1,20 @@
+<?php
+
+namespace Boot;
+
+use Resta\ApplicationProvider;
+use Store\Traits\Annotations;
+
+class __project__ extends ApplicationProvider  {
+
+    use Annotations;
+
+    /**
+     * @method boot
+     */
+    public function boot(){
+
+        //do somethings
+    }
+
+}
