@@ -54,7 +54,7 @@ class CustomBooter {
 
             //Your custom boot objects in
             //the boot directory should not be in the middlewaregroups list.
-            if(!in_array('Boot\\'.$customBoots,$booterList)){
+            if(false===pos($booter)->console && !in_array('Boot\\'.$customBoots,$booterList)){
                 $booterList[]='Boot\\'.$customBoots;
             }
         }

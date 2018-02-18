@@ -19,11 +19,6 @@ class Container implements ApplicationContracts {
     public $kernel;
 
     /**
-     * @var $console null
-     */
-    public $console;
-
-    /**
      * @return mixed
      */
     public function kernel(){

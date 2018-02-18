@@ -64,6 +64,7 @@ class Project extends ConsoleOutputter {
         $this->touch['repository/index']            = $this->repository().'/index.html';
         $this->touch['kernel/kernel']               = $this->kernel().'/Kernel.php';
         $this->touch['middleware/validation']       = $this->middleware().'/Validation.php';
+        $this->touch['middleware/settimezone']      = $this->middleware().'/SetClientTimezone.php';
         $this->touch['once/index']                  = $this->once().'/index.html';
         $this->touch['node/index']                  = $this->node().'/index.html';
         $this->touch['stub/index']                  = $this->stub().'/index.html';

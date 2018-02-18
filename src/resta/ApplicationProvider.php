@@ -64,12 +64,15 @@ class ApplicationProvider {
     }
 
     /**
-     * @return mixed
+     * @param null $param
+     * @return null
      */
-    public function post()
+    public function post($param=null)
     {
-        //symfony request post object
-        return (object)$this->app->kernel()->post;
+        //symfony request query object
+        $post=$this->app->kernel()->post;
+
+        return ($param===null) ? $post : (isset($post[$param]) ? $post[$param] : null);
     }
 
     /**

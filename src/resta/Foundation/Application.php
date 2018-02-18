@@ -13,6 +13,11 @@ class Application extends Kernel implements ApplicationContracts {
     public $boot=false;
 
     /**
+     * @var $console null
+     */
+    public $console;
+
+    /**
      * Application constructor.
      * @param bool $console
      */

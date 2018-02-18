@@ -5,6 +5,7 @@ namespace Resta;
 use Store\Services\HttpSession as Session;
 use Store\Services\Redis as Redis;
 use Store\Services\AppCollection as Collection;
+use Store\Services\DateCollection as Date;
 
 /**
  * Class App
@@ -43,15 +44,29 @@ class App {
             return self::Builder(ucfirst($service));
         }
 
-        return self::$service();
+        return self::$service($arg);
     }
 
     /**
+     * @param $arg
      * @return Session
      */
-    private static function session(){
+    private static function session($arg){
 
         return new Session();
+    }
+
+    /**
+     * @param $arg
+     * @return Session
+     */
+    private static function date($arg){
+
+        if(property_exists($class=pos($arg),'app')){
+            return $class->makeBind(Date::class);
+        }
+
+        return null;
     }
 
     /**
@@ -87,9 +102,10 @@ class App {
     }
 
     /**
+     * @param $arg
      * @return \Predis\Client
      */
-    private static function redis(){
+    private static function redis($arg){
 
         if(!isset(self::$instance['redis'])){
 
@@ -104,9 +120,10 @@ class App {
 
 
     /**
+     * @param $arg
      * @return Collection
      */
-    private static function collection(){
+    private static function collection($arg){
 
         return (new Collection());
     }

@@ -24,7 +24,13 @@ trait ResponseOutput {
         });
 
         //set log for printer
-        return $this->makeBind(LoggerService::class)->logHandler($printer);
+        if(property_exists($this->singleton(),'log')){
+            return $this->makeBind(LoggerService::class)->logHandler($printer);
+        }
+
+        //return
+        return $printer;
+
 
     }
 

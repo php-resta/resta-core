@@ -41,9 +41,6 @@ class ErrorHandler extends ApplicationProvider {
          */
         $exception=StaticPathModel::$store.'\Config\Exception';
 
-        //set as the success object is false
-        $appExceptionSuccess=['success'=>false];
-
         //constant object
         $errType='Undefined';
         $errStrReal='';
@@ -64,12 +61,13 @@ class ErrorHandler extends ApplicationProvider {
             $errContext['trace']=$errStr;
         }
 
+        //set as the success object is false
+        $appExceptionSuccess=['success'=>false,'status'=>$exception::exceptionTypeCodes($errType)];
+
         //finally,set object for exception
         $appException=$appExceptionSuccess+$exception::handler($errNo,$errStrReal,$errFile,$errLine,$errType,$errContext);
 
         //set json app exception
-        $this->app->kernel()->responseSuccess=false;
-        $this->app->kernel()->responseStatus=$exception::exceptionTypeCodes($errType);
         $this->app->kernel()->router=$appException;
         echo $this->app->kernel()->out->handle();
         exit();
