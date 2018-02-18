@@ -64,8 +64,8 @@ class ApplicationProvider {
     }
 
     /**
-     * @param null $param
-     * @return null
+     * @param $param null
+     * @return mixed
      */
     public function post($param=null)
     {

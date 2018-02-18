@@ -85,7 +85,6 @@ class Project extends ConsoleOutputter {
         $this->touch['version/servicemiddleware']   = $this->version().'/ServiceMiddlewareController.php';
         $this->touch['version/base']                = $this->version().'/ServiceBaseController.php';
         $this->touch['version/base']                = $this->version().'/ServiceBaseController.php';
-        $this->touch['version/token']               = $this->version().'/ServiceTokenController.php';
         $this->touch['version/log']                 = $this->version().'/ServiceLogController.php';
         $this->touch['version/tool']                = $this->version().'/ServiceToolsController.php';
 

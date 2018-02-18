@@ -9,6 +9,11 @@ use Resta\Utils;
 class ApplicationMiddleware extends ApplicationProvider {
 
     /**
+     * @var array $middleware
+     */
+    protected $middleware=array();
+
+    /**
      * @method boot
      * @return mixed
      */
@@ -20,7 +25,7 @@ class ApplicationMiddleware extends ApplicationProvider {
         //When your application is requested, the middleware classes are running before all bootstrapper executables.
         //Thus, if you make http request your application, you can verify with an intermediate middleware layer
         //and throw an exception.
-        $resolveServiceMiddleware=$this->makeBind(appMiddlewarePath)->handle();
+        $resolveServiceMiddleware=$this->singleton()->middlewareClass->handle();
         $this->serviceMiddleware($resolveServiceMiddleware);
 
     }
@@ -34,14 +39,35 @@ class ApplicationMiddleware extends ApplicationProvider {
         //the middleware classes specified for the service middleware middleware.
         foreach($middleware as $middleVal=>$middleKey){
 
+            //middleware with capital letters
+            $middlewareName=ucfirst($middleVal);
+
+            //middleware and exclude class instances
+            $excludeClass=$this->singleton()->excludeClass;
+            $middlewareClass=$this->singleton()->middlewareClass;
+
+            //middleware definitions.
+            $this->middleware['namespace']          = middleware.'\\'.$middlewareName;
+            $this->middleware['key']                = $middleKey;
+            $this->middleware['class']              = $middlewareClass;
+            $this->middleware['middlewareName']     = $middleVal;
+
             //middleware class for service middlware
             //it will be handled according to the following rule.
-            $middlewareNamespace=middleware.'\\'.ucfirst($middleVal);
+            //The exclude class will return a callback and allocate the result as bool to the exclude variable.
+            //If the exclude variable is true then the middleware will be run.
+            $excludeClass->exclude($this->middleware,function($exclude){
 
-            //The condition of a specific statement to be handled
-            if(Utils::isNamespaceExists($middlewareNamespace) && $this->specificMiddlewareCondition($middleKey)){
-                $this->makeBind($middlewareNamespace)->handle();
-            }
+                if($exclude){
+
+                    //The condition of a specific statement to be handled
+                    if($this->checkNamespaceAndSpecificCondition()){
+                        $this->makeBind($this->middleware['namespace'])->handle();
+                    }
+                }
+
+            });
+
         }
     }
 
@@ -81,5 +107,13 @@ class ApplicationMiddleware extends ApplicationProvider {
           2=>[endpoint,method],
           3=>[endpoint,method,$this->singleton()->httpMethod]
         ];
+    }
+
+    /**
+     * @return bool
+     */
+    private function checkNamespaceAndSpecificCondition(){
+
+        return Utils::isNamespaceExists($this->middleware['namespace']) && $this->specificMiddlewareCondition($this->middleware['key']);
     }
 }

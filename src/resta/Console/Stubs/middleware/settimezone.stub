@@ -16,6 +16,9 @@ class SetClientTimezone extends Base {
         $headerTimezone=(isset($this->getClientHeaders()['timezone']))
                 ? $this->getClientHeaders()['timezone'][0] : 'Europe/Istanbul';
 
+        //timezone coming normally
+        $timezone_name=$headerTimezone;
+
         //is numeric for timezone
         if(is_numeric($headerTimezone)){
 
@@ -25,12 +28,6 @@ class SetClientTimezone extends Base {
             // Convert minutes to seconds
             $timezone_name = timezone_name_from_abbr("", $timezone_offset_minutes*60, false);
         }
-        else{
-
-            //timezone coming normally
-            $timezone_name=$headerTimezone;
-        }
-
 
         //set timezone for client
         date_default_timezone_set($timezone_name);
