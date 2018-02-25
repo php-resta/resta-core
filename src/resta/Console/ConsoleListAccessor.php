@@ -96,6 +96,40 @@ trait ConsoleListAccessor {
     /**
      * @return mixed
      */
+    public function sourceDir(){
+
+        return $this->optional().'/'.StaticPathModel::$sourcePath;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function sourceEndpointDir(){
+
+        return $this->optional().'/'.StaticPathModel::$sourcePath.'/Endpoint';
+    }
+
+
+    /**
+     * @return mixed
+     */
+    public function sourceRequestDir(){
+
+        return $this->optional().'/'.StaticPathModel::$sourcePath.'/Request';
+    }
+
+    /**
+     * @return mixed
+     */
+    public function sourceSupportDir(){
+
+        return $this->optional().'/'.StaticPathModel::$sourcePath.'/Support';
+    }
+
+
+    /**
+     * @return mixed
+     */
     public function repository(){
 
         return $this->optional().'/'.StaticPathModel::$repository;

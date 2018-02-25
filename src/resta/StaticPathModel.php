@@ -167,6 +167,11 @@ class StaticPathModel extends StaticPathList {
         return self::appVersionRoot($app).'\\'.self::$optional.'\\'.self::$repository;
     }
 
+    public static function appSourceEndpoint($app=null){
+
+        return self::appVersionRoot($app).'\\'.self::$optional.'\\'.self::$sourcePath.'\Endpoint';
+    }
+
     public static function appBuilder($app=null){
 
         return self::appVersionRoot($app).'\\'.self::$model.'\\'.self::$builder;

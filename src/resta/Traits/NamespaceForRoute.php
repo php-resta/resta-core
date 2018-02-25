@@ -148,7 +148,7 @@ trait NamespaceForRoute {
             $this->project(),
 
             //project version name
-            Utils::getAppVersion($this->project()),
+            Utils::getAppVersion($this->project(),$this),
 
             //controller static path name
             StaticPathModel::$controller,

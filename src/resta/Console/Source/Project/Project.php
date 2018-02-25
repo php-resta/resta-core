@@ -32,26 +32,30 @@ class Project extends ConsoleOutputter {
     public function create(){
 
         //get project directory all path
-        $this->directory['kernelDir']        = $this->kernel();
-        $this->directory['repositoryDir']    = $this->repository();
-        $this->directory['middleWareDir']    = $this->middleware();
-        $this->directory['nodeDir']          = $this->node();
-        $this->directory['onceDir']          = $this->once();
-        $this->directory['stubDir']          = $this->stub();
-        $this->directory['storageDir']       = $this->storage();
-        $this->directory['logDir']           = $this->log();
-        $this->directory['resourceDir']      = $this->resource();
-        $this->directory['languageDir']      = $this->language();
-        $this->directory['sessionDir']       = $this->session();
-        $this->directory['versionDir']       = $this->version();
-        $this->directory['callDir']          = $this->controller();
-        $this->directory['modelDir']         = $this->model();
-        $this->directory['builderDir']       = $this->builder();
-        $this->directory['migrationDir']     = $this->migration();
-        $this->directory['configDir']        = $this->config();
-        $this->directory['optionalDir']      = $this->optional();
-        $this->directory['jobsDir']          = $this->job();
-        $this->directory['webserviceDir']    = $this->webservice();
+        $this->directory['kernelDir']               = $this->kernel();
+        $this->directory['repositoryDir']           = $this->repository();
+        $this->directory['middleWareDir']           = $this->middleware();
+        $this->directory['nodeDir']                 = $this->node();
+        $this->directory['onceDir']                 = $this->once();
+        $this->directory['stubDir']                 = $this->stub();
+        $this->directory['storageDir']              = $this->storage();
+        $this->directory['logDir']                  = $this->log();
+        $this->directory['resourceDir']             = $this->resource();
+        $this->directory['languageDir']             = $this->language();
+        $this->directory['sessionDir']              = $this->session();
+        $this->directory['versionDir']              = $this->version();
+        $this->directory['callDir']                 = $this->controller();
+        $this->directory['modelDir']                = $this->model();
+        $this->directory['builderDir']              = $this->builder();
+        $this->directory['migrationDir']            = $this->migration();
+        $this->directory['configDir']               = $this->config();
+        $this->directory['optionalDir']             = $this->optional();
+        $this->directory['sourceDir']               = $this->sourceDir();
+        $this->directory['sourceEndpointDir']       = $this->sourceEndpointDir();
+        $this->directory['sourceRequestDir']        = $this->sourceRequestDir();
+        $this->directory['sourceSupportDir']        = $this->sourceSupportDir();
+        $this->directory['jobsDir']                 = $this->job();
+        $this->directory['webserviceDir']           = $this->webservice();
 
         //set project directory
         $this->file->makeDirectory($this);
@@ -60,8 +64,12 @@ class Project extends ConsoleOutputter {
         //get project file all path
         $this->touch['ignore']                      = $this->project.'/.gitignore';
         $this->touch['publish']                     = $this->project.'/publish.php';
-        $this->touch['version']                     = $this->project.'/version.php';
+        $this->touch['main/version']                = $this->project.'/version.php';
         $this->touch['repository/index']            = $this->repository().'/index.html';
+        $this->touch['source/index']                = $this->sourceDir().'/index.html';
+        $this->touch['source/index1']               = $this->sourceEndpointDir().'/index.html';
+        $this->touch['source/index2']               = $this->sourceRequestDir().'/index.html';
+        $this->touch['source/index3']               = $this->sourceSupportDir().'/index.html';
         $this->touch['kernel/kernel']               = $this->kernel().'/Kernel.php';
         $this->touch['middleware/validation']       = $this->middleware().'/Validation.php';
         $this->touch['middleware/settimezone']      = $this->middleware().'/SetClientTimezone.php';

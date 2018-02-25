@@ -1,0 +1,87 @@
+<?php
+
+namespace Resta\Console\Source\Source;
+
+use Resta\Console\ConsoleListAccessor;
+use Resta\Console\ConsoleOutputter;
+use Resta\StaticPathModel;
+use Resta\Utils;
+
+class Source extends ConsoleOutputter {
+
+    use ConsoleListAccessor;
+
+    /**
+     * @var $type
+     */
+    public $type='source';
+
+    /**
+     * @var $define
+     */
+    public $define='Source create';
+
+    /**
+     * @var $command_create
+     */
+    public $command_create='php api source create [project] service:[endpoint] source:[source] file:[file]';
+
+    /**
+     * @method create
+     * @return mixed
+     */
+    public function create(){
+
+        $this->argument['sourcePath']           = StaticPathModel::$sourcePath;
+        $this->argument['sourceDir']            = $this->argument['source'].'Source';
+        $this->directory['sourcePath']          = $this->sourceEndpointDir().'/'.$this->argument['service'];
+        $this->directory['sourceMainPath']      = $this->directory['sourcePath'].'/'.$this->argument['sourceDir'];
+
+        if($this->argument['file']===null){
+
+            $this->file->makeDirectory($this);
+            $this->argument['sourceFile'] = 'Main';
+            $this->touch['source/main']   = $this->directory['sourceMainPath'].'/Main.php';
+        }
+        else{
+
+            if(!file_exists($this->directory['sourceMainPath'].'/Main.php')){
+                throw new \LogicException('Main.php is not available');
+            }
+
+            $this->argument['sourceFile'] = $this->argument['file'];
+            $this->touch['source/sourcefile']   = $this->directory['sourceMainPath'].'/'.$this->argument['file'].'.php';
+        }
+
+
+        if(!file_exists($this->directory['sourcePath'].'/Interface'.$this->argument['sourcePath'].'.php')){
+            $this->touch['source/interface']        = $this->directory['sourcePath'].'/Interface'.$this->argument['sourcePath'].'.php';
+
+        }
+
+        $this->file->touch($this);
+
+        if($this->argument['file']===null){
+            $this->setAnnotations();
+        }
+
+
+        Utils::chmod($this->optional());
+
+        echo $this->classical('---------------------------------------------------------------------------');
+        echo $this->bluePrint('Source For Endpoint Named ['.$this->argument['source'].'] Has Been Successfully Created in the '.$this->argument['project'].'');
+        echo $this->classical('---------------------------------------------------------------------------');
+        echo $this->cyan('   You can see in src/app/'.$this->argument['project'].'/'.Utils::getAppVersion($this->argument['project']).'/__Call your project   ');
+        echo $this->classical('---------------------------------------------------------------------------');
+    }
+
+    /**
+     * @return bool
+     */
+    private function setAnnotations(){
+
+        return Utils::changeClass(StaticPathModel::appAnnotation($this->projectName(),true).'',
+            ['Trait ServiceAnnotationsController'=>'Trait ServiceAnnotationsController'.PHP_EOL.' * @method \\'.Utils::getNamespace($this->directory['sourceMainPath'].'/Main').' '.strtolower($this->argument['source']).''.$this->argument['sourcePath']
+            ]);
+    }
+}

@@ -94,6 +94,9 @@ class Utils {
      */
     public static function strtolower($argument){
 
+        if(!is_array($argument)){
+            return strtolower($argument);
+        }
         return array_map(function($argument){
             return strtolower($argument);
         },$argument);
@@ -104,7 +107,14 @@ class Utils {
      * @param null $app
      * @return string
      */
-    public static function getAppVersion($app=null){
+    public static function getAppVersion($app=null,$appInstance=null){
+
+        $versionClass='App\\'.$app.'\version';
+
+        if(self::isNamespaceExists($versionClass)){
+            $instance=new $versionClass;
+            return $instance->handle($appInstance);
+        }
 
         return 'V1';
     }
@@ -126,6 +136,16 @@ class Utils {
     public static function isNamespaceExists($namespace){
 
         return (class_exists($namespace)) ? true : false;
+    }
+
+    /**
+     * @param $class
+     * @param $method
+     * @return bool
+     */
+    public static function existMethod($class,$method){
+
+        return method_exists($class,$method);
     }
 
     public static function isArrayEqual($first,$second){
@@ -182,6 +202,27 @@ class Utils {
         fwrite($dt, $content);
         fclose($dt);
         return true;
+    }
+
+    /**
+     * @param $data
+     * @param $callback
+     * @return mixed
+     */
+    public static function returnCallback($data,$callback){
+
+        return call_user_func_array($callback,[$data]);
+    }
+
+    public static function getNamespace($namespace){
+
+        $rootDelete=str_replace(root.'/src/app/','',$namespace);
+
+
+        return 'App\\'.self::generatorNamespace(
+          explode('/',$rootDelete)
+        );
+
     }
 
 

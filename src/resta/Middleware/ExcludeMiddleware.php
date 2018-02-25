@@ -41,7 +41,7 @@ class ExcludeMiddleware extends ApplicationProvider {
         }
 
         //return true
-        return $this->returnCallback($this->result,$callback);
+        return Utils::returnCallback($this->result,$callback);
     }
 
     /**
@@ -60,29 +60,11 @@ class ExcludeMiddleware extends ApplicationProvider {
     }
 
     /**
-     * @param $bool
-     * @param $callback
-     * @return mixed
-     */
-    private function returnCallback($bool,$callback){
-
-        return call_user_func_array($callback,[$bool]);
-    }
-
-    /**
-     * @return string
-     */
-    private function psrEndpoint(){
-
-        return strtolower(endpoint);
-    }
-
-    /**
      * @return bool
      */
     private function existMethod(){
 
-        return method_exists($this->excludeList['middleware']['class'],'exclude');
+        return Utils::existMethod($this->excludeList['middleware']['class'],'exclude');
     }
 
     /**
@@ -90,7 +72,7 @@ class ExcludeMiddleware extends ApplicationProvider {
      */
     private function inArrayExclude($exclude){
 
-        if(in_array($this->psrEndpoint(),$exclude)){
+        if(in_array(Utils::strtolower(endpoint),$exclude)){
             $this->result=false;
         }
     }

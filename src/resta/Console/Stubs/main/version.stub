@@ -1,0 +1,30 @@
+<?php
+
+namespace App\__project__;
+
+class version {
+
+    /**
+     * @var string
+     */
+    public $version='V1';
+
+    /**
+     * @param $app null
+     * @return string
+     */
+    public function handle($app=null){
+
+        //app instance
+        if($app!==null){
+
+            //get version for http request
+            return $this->version;
+        }
+
+        //console version
+        return $this->version;
+    }
+
+
+}

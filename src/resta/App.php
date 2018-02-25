@@ -39,6 +39,11 @@ class App {
             return self::repository($service);
         }
 
+        //if $name starts with $needles for source
+        if(Str::endsWith($service,'Source')){
+            return self::source($service,$arg);
+        }
+
         //if $name starts with $needles for model
         if(Str::endsWith($service,'Builder')){
             return self::Builder(ucfirst($service));
@@ -86,6 +91,23 @@ class App {
 
         //and eventually we conclude the adapter class of the repository package as an instance.
         return app()->makeBind($repositoryNamespace)->adapter();
+    }
+
+    /**
+     * @param $service
+     * @param $arg
+     * @return mixed
+     */
+    private static function source($service,$arg){
+
+        //get Source path
+        $service=ucfirst($service);
+        $getCalledClass=str_replace('\\'.class_basename($arg[0]),'',get_class($arg[0]));
+        $getCalledClass=class_basename($getCalledClass);
+
+        //run service for endpoint
+        $serviceSource=StaticPathModel::appSourceEndpoint().'\\'.$getCalledClass.'\\'.$service.'\Main';
+        return app()->makeBind($serviceSource);
     }
 
     /**

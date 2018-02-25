@@ -54,6 +54,11 @@ class StaticPathList {
     public static $controller='__Call';
 
     /**
+     * @var $sourcePath
+     */
+    public static $sourcePath='Source';
+
+    /**
      * @var $model
      */
     public static $model='Model';

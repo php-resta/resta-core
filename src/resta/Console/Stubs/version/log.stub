@@ -15,6 +15,7 @@ class ServiceLogController extends ServiceBaseController
 
     /**
      * @param $output
+     * @throws \Exception
      */
     public function file($output) {
 

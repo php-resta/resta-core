@@ -48,7 +48,7 @@ class ApplicationProvider {
     public function request()
     {
         //symfony request
-        return $this->app->kernel()->request;
+        return $this->app()->request;
     }
 
     /**
@@ -58,7 +58,7 @@ class ApplicationProvider {
     public function get($param=null)
     {
         //symfony request query object
-        $get=$this->app->kernel()->get;
+        $get=$this->app()->get;
 
         return ($param===null) ? $get : (isset($get[$param]) ? $get[$param] : null);
     }
@@ -70,7 +70,7 @@ class ApplicationProvider {
     public function post($param=null)
     {
         //symfony request query object
-        $post=$this->app->kernel()->post;
+        $post=$this->app()->post;
 
         return ($param===null) ? $post : (isset($post[$param]) ? $post[$param] : null);
     }
@@ -81,7 +81,7 @@ class ApplicationProvider {
      */
     public function url(){
 
-        if(isset($this->app->kernel()->url)){
+        if(isset($this->app()->url)){
 
             //we assign the url object to the global kernel url object
             //so that it can be read anywhere in our route file.
@@ -114,7 +114,7 @@ class ApplicationProvider {
      */
     public function getStatus(){
 
-        return $this->app->kernel()->responseStatus;
+        return $this->app()->responseStatus;
     }
 
     /**
@@ -123,7 +123,7 @@ class ApplicationProvider {
      */
     public function getSuccess(){
 
-        return $this->app->kernel()->responseSuccess;
+        return $this->app()->responseSuccess;
     }
 
     /**
@@ -132,7 +132,7 @@ class ApplicationProvider {
      */
     public function httpMethod(){
 
-        return $this->app->kernel()->httpMethod;
+        return $this->app()->httpMethod;
     }
 
     /**
@@ -141,7 +141,7 @@ class ApplicationProvider {
      */
     public function routeParameters(){
 
-        return $this->app->kernel()->routeParameters;
+        return $this->app()->routeParameters;
     }
 
     /**
@@ -159,7 +159,7 @@ class ApplicationProvider {
      */
     public function container(){
 
-        return (object)$this->app->kernel()->serviceContainer;
+        return (object)$this->app()->serviceContainer;
     }
 
     /**
