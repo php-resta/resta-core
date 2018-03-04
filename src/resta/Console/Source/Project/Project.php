@@ -103,7 +103,7 @@ class Project extends ConsoleOutputter {
 
 
         echo $this->classical('---------------------------------------------------------------------------');
-        echo $this->bluePrint('Project Named ['.$this->argument['project'].'] Has Been Successfully Created');
+        echo $this->yellowPrint('Project Named ['.$this->argument['project'].'] Has Been Successfully Created');
         echo $this->classical('---------------------------------------------------------------------------');
         echo $this->cyan('   You can see in src/app your project   ');
         echo $this->classical('---------------------------------------------------------------------------');

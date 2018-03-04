@@ -109,12 +109,16 @@ class Utils {
      */
     public static function getAppVersion($app=null,$appInstance=null){
 
-        $versionClass='App\\'.$app.'\version';
+        if(defined('app')){
 
-        if(self::isNamespaceExists($versionClass)){
-            $instance=new $versionClass;
-            return $instance->handle($appInstance);
+            $versionClass='App\\'.$app.'\version';
+
+            if(file_exists(self::getPathFromNamespace($versionClass)) && self::isNamespaceExists($versionClass)){
+                $instance=new $versionClass;
+                return $instance->handle($appInstance);
+            }
         }
+
 
         return 'V1';
     }
@@ -127,6 +131,12 @@ class Utils {
     public static function generatorNamespace($data=array()){
 
         return implode("\\",$data);
+    }
+
+    public static function getPathFromNamespace($class){
+
+        $default=root.'/'.str_replace("\\","/",$class).'.php';
+        return str_replace("/App",'/src/app',$default);
     }
 
     /**

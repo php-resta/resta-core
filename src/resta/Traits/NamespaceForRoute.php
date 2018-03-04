@@ -161,7 +161,7 @@ trait NamespaceForRoute {
         ]);
 
         //check namespace exists
-        if(Utils::isNamespaceExists($namespace)){
+        if(file_exists(Utils::getPathFromNamespace($namespace)) && Utils::isNamespaceExists($namespace)){
             return $namespace;
         }
 
