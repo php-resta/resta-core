@@ -86,5 +86,23 @@ trait ResponseOutput {
         ];
     }
 
+    /**
+     * @method getOutPut
+     * @return mixed
+     */
+    public function getRouter(){
+
+        return $this->app->kernel()->router;
+    }
+
+    /**
+     * @method getOutPutter
+     * @return mixed
+     */
+    public function getOutPutter(){
+
+        return $this->printer($this->getRouter());
+    }
+
 
 }

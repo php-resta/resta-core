@@ -4,8 +4,9 @@ namespace Resta\Response;
 
 use Resta\ApplicationProvider;
 use Resta\Traits\ResponseOutput;
+use Spatie\ArrayToXml\ArrayToXml;
 
-class JsonOutputter extends ApplicationProvider {
+class XmlOutputter extends ApplicationProvider {
 
     //get response output
     use ResponseOutput;
@@ -16,8 +17,8 @@ class JsonOutputter extends ApplicationProvider {
      */
     public function handle(){
 
-        header('Content-type:application/json;charset=utf-8');
-        return json_encode($this->getOutPutter());
+        header('Content-type:application/xml;charset=utf-8');
+        return ArrayToXml::convert($this->getOutPutter());
     }
 
 

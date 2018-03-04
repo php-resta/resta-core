@@ -11,7 +11,8 @@ class ResponseApplication extends ApplicationProvider {
      * @var array
      */
     public $outputter=[
-        'json'=>'Resta\Response\JsonOutputter'
+        'json'  => 'Resta\Response\JsonOutputter',
+        'xml'   => 'Resta\Response\XmlOutputter'
     ];
 
     /**
