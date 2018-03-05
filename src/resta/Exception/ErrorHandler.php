@@ -67,7 +67,7 @@ class ErrorHandler extends ApplicationProvider {
         $appExceptionSuccess=['success'=>(bool)false,'status'=>$exception::exceptionTypeCodes($errType)];
 
         //finally,set object for exception
-        $environment=environment();
+        $environment=($this->app->kernel()->applicationKey===null) ? 'production' : environment();
         $appException=$appExceptionSuccess+$exception::$environment($errNo,$errStrReal,$errFile,$errLine,$errType,$errContext);
 
         //set json app exception
