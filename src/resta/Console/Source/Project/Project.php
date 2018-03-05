@@ -54,6 +54,7 @@ class Project extends ConsoleOutputter {
         $this->directory['sourceEndpointDir']       = $this->sourceEndpointDir();
         $this->directory['sourceRequestDir']        = $this->sourceRequestDir();
         $this->directory['sourceSupportDir']        = $this->sourceSupportDir();
+        $this->directory['sourceSupportTraitDir']   = $this->sourceSupportDir().'/Traits';
         $this->directory['jobsDir']                 = $this->job();
         $this->directory['webserviceDir']           = $this->webservice();
 
@@ -72,6 +73,7 @@ class Project extends ConsoleOutputter {
         $this->touch['source/index3']               = $this->sourceSupportDir().'/index.html';
         $this->touch['kernel/kernel']               = $this->kernel().'/Kernel.php';
         $this->touch['middleware/validation']       = $this->middleware().'/Validation.php';
+        $this->touch['middleware/clientToken']      = $this->middleware().'/ClientApiToken.php';
         $this->touch['middleware/settimezone']      = $this->middleware().'/SetClientTimezone.php';
         $this->touch['once/index']                  = $this->once().'/index.html';
         $this->touch['node/index']                  = $this->node().'/index.html';
@@ -95,6 +97,7 @@ class Project extends ConsoleOutputter {
         $this->touch['version/base']                = $this->version().'/ServiceBaseController.php';
         $this->touch['version/log']                 = $this->version().'/ServiceLogController.php';
         $this->touch['version/tool']                = $this->version().'/ServiceToolsController.php';
+        $this->touch['source/apitokentrait']        = $this->sourceSupportDir().'/Traits/ClientApiTokenTrait.php';
 
         //set project touch
         $this->file->touch($this);

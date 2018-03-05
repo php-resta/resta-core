@@ -2,7 +2,7 @@
 
 namespace App\__project__\__version__\Optional\__sourcePath__\Endpoint\__service__;
 
-interface interface__sourcePath__ {
+interface Interface__sourcePath__ {
 
     /**
      * @method handle

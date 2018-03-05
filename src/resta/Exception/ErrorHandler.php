@@ -50,7 +50,9 @@ class ErrorHandler extends ApplicationProvider {
             $errType=trim(str_replace('Uncaught','',$errArr[1]));
         }
 
-        if(preg_match('@(.*?):(.*?)in.\/@is',$errStr,$errStrRealArray)){
+        $errStrReal=$errStr;
+
+        if(preg_match('@Uncaught@is',$errStr) && preg_match('@(.*?):(.*?)\sin\s@is',$errStr,$errStrRealArray)){
             $errStrReal=trim($errStrRealArray[2]);
         }
 
@@ -62,10 +64,11 @@ class ErrorHandler extends ApplicationProvider {
         }
 
         //set as the success object is false
-        $appExceptionSuccess=['success'=>false,'status'=>$exception::exceptionTypeCodes($errType)];
+        $appExceptionSuccess=['success'=>(bool)false,'status'=>$exception::exceptionTypeCodes($errType)];
 
         //finally,set object for exception
-        $appException=$appExceptionSuccess+$exception::handler($errNo,$errStrReal,$errFile,$errLine,$errType,$errContext);
+        $environment=environment();
+        $appException=$appExceptionSuccess+$exception::$environment($errNo,$errStrReal,$errFile,$errLine,$errType,$errContext);
 
         //set json app exception
         $this->app->kernel()->router=$appException;
@@ -82,10 +85,14 @@ class ErrorHandler extends ApplicationProvider {
     public function fatalErrorShutdownHandler(){
 
         $last_error = error_get_last();
-        if ($last_error['type'] === E_ERROR) {
+
+        if($last_error!==null){
             // fatal error
             $this->setErrorHandler(E_ERROR, $last_error['message'], $last_error['file'], $last_error['line'],[]);
+
         }
+
+
     }
 
 }

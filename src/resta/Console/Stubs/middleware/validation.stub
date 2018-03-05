@@ -31,7 +31,7 @@ class Validation extends Base {
         //check page on query for filter
         //throw exception as invalid argument
         if($page!==null && !is_numeric($page)){
-            throw new \InvalidArgumentException('page variable that on query is not is numeric');
+            throw new \InvalidArgumentException('page variable that on query is not numeric');
         }
 
         return true;

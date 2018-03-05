@@ -37,7 +37,7 @@ class Source extends ConsoleOutputter {
         $this->directory['sourcePath']          = $this->sourceEndpointDir().'/'.$this->argument['service'];
         $this->directory['sourceMainPath']      = $this->directory['sourcePath'].'/'.$this->argument['sourceDir'];
 
-        if($this->argument['file']===null){
+        if(!isset($this->argument['file'])){
 
             $this->file->makeDirectory($this);
             $this->argument['sourceFile'] = 'Main';
@@ -61,7 +61,7 @@ class Source extends ConsoleOutputter {
 
         $this->file->touch($this);
 
-        if($this->argument['file']===null){
+        if(!isset($this->argument['file'])){
             $this->setAnnotations();
         }
 
