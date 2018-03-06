@@ -157,7 +157,11 @@ class StaticPathModel extends StaticPathList {
      * @method appMiddlewarePath
      * @return string
      */
-    public static function appMiddlewarePath(){
+    public static function appMiddlewarePath($app=null){
+
+        if($app!==null){
+            define('app',$app);
+        }
 
         return self::$autoloadNamespace.'\\'.app.'\\'.Utils::getAppVersion(app).'\\'.self::$middleware;
     }

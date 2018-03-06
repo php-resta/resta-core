@@ -55,4 +55,21 @@ trait ClientApiTokenTrait {
             throw new \DomainException('Client api token is missing');
         }
     }
+
+
+    /**
+     * @return string
+    */
+    public function createToken($key){
+
+        //check client token for key
+        $tokens=$this->clientTokens();
+        $getTokenValue=(isset($tokens[$key])) ? $tokens[$key] : null;
+
+        if($getTokenValue===null) {
+            throw new \InvalidArgumentException('key is false');
+        }
+
+        return JsonWebToken::encode([$key=>$getTokenValue],$this->tokenSign);
+    }
 }
