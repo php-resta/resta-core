@@ -2,7 +2,6 @@
 
 namespace Resta\Foundation;
 
-use Resta\App;
 use Resta\Contracts\ApplicationContracts;
 
 class Application extends Kernel implements ApplicationContracts {
@@ -20,25 +19,22 @@ class Application extends Kernel implements ApplicationContracts {
     /**
      * Application constructor.
      * @param bool $console
+     * @return void
      */
     public function __construct($console=false){
 
         //get console status for cli
         $this->console=$console;
 
-        //this method only includes the settings to be run in the development environment
-        //the managed classes can be managed from the kernel file
-        $this->devEagerConfiguration();
-
-        //middleware installers are user-based pre-installers
-        //that come after the pre-installers required for the system
-        $this->middleware();
-
-        //start boot for app
-        //this method is the main fire and is brain for system
-        $this->booting();
+        //The bootstrapper method is the initial process
+        //that runs the individual methods that the application initiated.
+        new Bootstrappers($this);
     }
 
+    /**
+     * @method devEagerConfiguration
+     * @return void
+     */
     public function devEagerConfiguration(){
 
         //kernel eager for dev
@@ -87,7 +83,7 @@ class Application extends Kernel implements ApplicationContracts {
 
     /**
      * @param $boot
-     * @param $app
+     * @return mixed
      */
     public function bootFire($boot){
 

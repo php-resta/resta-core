@@ -42,6 +42,7 @@ class CustomBooter {
 
     /**
      * @param $booter
+     * @return array|mixed
      */
     private function addMiddlewareGroupsForCustomBooter($booter){
 
