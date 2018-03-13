@@ -19,6 +19,11 @@ use Resta\Booting\UrlParse;
 class Kernel extends Container {
 
     /**
+     * @var $boot
+     */
+    protected $boot=false;
+
+    /**
      * @var array
      */
     protected $middlewareGroups=[
@@ -57,7 +62,7 @@ class Kernel extends Container {
         //We use this method to know how to customize it.
         BootFireCallback::setBootFire([$app,$strappers],function($boot){
 
-            //kernel boots run and service container
+            //kernel boots run and service container{
             //makeBuild for service Container
             pos($boot)->bootFire($boot);
         });
@@ -84,6 +89,46 @@ class Kernel extends Container {
         //Thus, if you make http request your application, you can verify with an intermediate middleware layer
         //and throw an exception.
         $this->bootstrappers($app,'middlewareGroups');
+    }
+
+    /**
+     * @method devEagerConfiguration
+     * @return void
+     */
+    public function devEagerConfiguration(){
+
+        //kernel eager for dev
+        $this->devEagers($this);
+    }
+
+    /**
+     * @method booting
+     * @return void
+     */
+    public function booting(){
+
+        //check boot for only once
+        //if boot is true,booting classes would not run
+        if($this->boot){
+            return;
+        }
+
+        //system booting for app
+        //pre-loaders are the most necessary classes for the system.
+        $this->bootstrappers($this);
+
+        //boot true
+        $this->boot=true;
+    }
+
+    /**
+     * @method middleware
+     * @return void
+     */
+    public function middleware(){
+
+        //pre-loaders user-based
+        $this->middlewareLoaders($this);
     }
 
 

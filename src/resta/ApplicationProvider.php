@@ -43,7 +43,7 @@ class ApplicationProvider {
 
     /**
      * SymfonyRequest constructor.
-     * @return \Symfony\Component\HttpFoundation\Request
+     * @return \Symfony\Component\HttpFoundation\Request|\Store\Services\RequestService
      */
     public function request()
     {

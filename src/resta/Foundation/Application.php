@@ -7,11 +7,6 @@ use Resta\Contracts\ApplicationContracts;
 class Application extends Kernel implements ApplicationContracts {
 
     /**
-     * @var $boot
-     */
-    public $boot=false;
-
-    /**
      * @var $console null
      */
     public $console;
@@ -32,47 +27,6 @@ class Application extends Kernel implements ApplicationContracts {
     }
 
     /**
-     * @method devEagerConfiguration
-     * @return void
-     */
-    public function devEagerConfiguration(){
-
-        //kernel eager for dev
-        $this->devEagers($this);
-    }
-
-    /**
-     * @method booting
-     * @return void
-     */
-    public function booting(){
-
-        //check boot for only once
-        //if boot is true,booting classes would not run
-        if($this->boot){
-            return;
-        }
-
-        //system booting for app
-        //pre-loaders are the most necessary classes for the system.
-        $this->bootstrappers($this);
-
-        //boot true
-        $this->boot=true;
-    }
-
-    /**
-     * @method middleware
-     * @return void
-     */
-    public function middleware(){
-
-        //pre-loaders user-based
-        $this->middlewareLoaders($this);
-    }
-
-
-    /**
      * @method handle
      * @return string
      */
@@ -85,7 +39,7 @@ class Application extends Kernel implements ApplicationContracts {
      * @param $boot
      * @return mixed
      */
-    public function bootFire($boot){
+    protected function bootFire($boot){
 
         //The boot method to be executed can be specified by the user.
         //We use this method to know how to customize it.
