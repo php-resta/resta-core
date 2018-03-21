@@ -4,6 +4,7 @@ namespace Resta\Foundation;
 
 use Boot\Encrypter;
 use Boot\Logger;
+use Resta\Booting\ApplicationInstanceLoader;
 use Resta\Booting\ConfigLoader;
 use Resta\Booting\Environment;
 use Resta\Booting\Exception;
@@ -15,6 +16,7 @@ use Resta\Booting\ResponseManager;
 use Resta\Booting\RouteProvider;
 use Resta\Booting\ServiceContainer;
 use Resta\Booting\UrlParse;
+
 
 class Kernel extends Container {
 
@@ -28,6 +30,7 @@ class Kernel extends Container {
      */
     protected $middlewareGroups=[
 
+        ApplicationInstanceLoader::class,
         GlobalAccessor::class,
         Exception::class,
         GlobalsForApplicationAndConsole::class,

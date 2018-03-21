@@ -7,7 +7,7 @@ use Resta\StaticPathModel;
 use Symfony\Component\HttpFoundation\Request;
 use Resta\ApplicationProvider;
 use Store\Services\RequestService;
-use Resta\App;
+
 
 class GlobalAccessor extends ApplicationProvider  {
 
@@ -15,10 +15,6 @@ class GlobalAccessor extends ApplicationProvider  {
      * @method handle
      */
     public function handle(){
-
-        //class alias for global app class
-        class_alias(App::class,'application');
-        $this->singleton()->appClass=new \application();
 
         //get response success and status
         $this->singleton()->instanceController=null;

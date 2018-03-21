@@ -37,6 +37,7 @@ class Project extends ConsoleOutputter {
         $this->directory['middleWareDir']           = $this->middleware();
         $this->directory['nodeDir']                 = $this->node();
         $this->directory['onceDir']                 = $this->once();
+        $this->directory['commandDir']              = $this->command();
         $this->directory['stubDir']                 = $this->stub();
         $this->directory['storageDir']              = $this->storage();
         $this->directory['logDir']                  = $this->log();
@@ -76,6 +77,7 @@ class Project extends ConsoleOutputter {
         $this->touch['middleware/clientToken']      = $this->middleware().'/ClientApiToken.php';
         $this->touch['middleware/settimezone']      = $this->middleware().'/SetClientTimezone.php';
         $this->touch['once/index']                  = $this->once().'/index.html';
+        $this->touch['command/index']               = $this->command().'/index.html';
         $this->touch['node/index']                  = $this->node().'/index.html';
         $this->touch['stub/index']                  = $this->stub().'/index.html';
         $this->touch['language/index']              = $this->language().'/index.html';

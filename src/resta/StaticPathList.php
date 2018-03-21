@@ -135,6 +135,11 @@ class StaticPathList {
      */
     public static $once='Once';
 
+    /**
+     * @var $command
+     */
+    public static $command='Command';
+
 
     /**
      * @var $stub

@@ -3,11 +3,20 @@
 namespace Resta\Foundation;
 
 use Resta\Utils;
+use Resta\Console\CustomConsoleProcess;
 use Resta\Contracts\ApplicationContracts;
 
 class Console extends Kernel {
 
+    /**
+     * @var $app
+     */
     public $app;
+
+    /**
+     * @var $consoleClassNamespace
+     */
+    public $consoleClassNamespace;
 
     /**
      * @param ApplicationContracts $app
@@ -36,8 +45,14 @@ class Console extends Kernel {
      */
     public function consoleProcess(){
 
-        $consoleClassNamespace='Resta\Console\\Source\\'.$this->getConsoleClass().'\\'.$this->getConsoleClass();
-        return (new $consoleClassNamespace($this->getConsoleArgumentsWithKey(),$this))->{$this->getConsoleClassMethod()}();
+        //
+        $this->consoleClassNamespace='Resta\Console\\Source\\'.$this->getConsoleClass().'\\'.$this->getConsoleClass();
+
+        //
+        return $this->checkConsoleNamespace(function(){
+            return (new $this->consoleClassNamespace($this->getConsoleArgumentsWithKey(),$this))->{$this->getConsoleClassMethod()}();
+        });
+
     }
 
     /**
@@ -100,6 +115,22 @@ class Console extends Kernel {
         $listKey['version']=Utils::getAppVersion($listKey['project']);
 
         return $listKey;
+
+    }
+
+    /**
+     * @param $namespace
+     * @param callable $callback
+     */
+    public function checkConsoleNamespace(callable $callback){
+
+        //
+        if(Utils::isNamespaceExists($this->consoleClassNamespace)){
+            return call_user_func($callback);
+        }
+
+        //
+        return (new CustomConsoleProcess($this->getConsoleArgumentsWithKey(),$this))->handle();
 
     }
 }

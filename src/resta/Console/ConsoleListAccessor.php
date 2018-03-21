@@ -17,6 +17,9 @@ trait ConsoleListAccessor {
      */
     public function kernel(){
 
+        if($this->project===null){
+            throw new \InvalidArgumentException('Project name is invalid');
+        }
         return $this->project.'/'.StaticPathModel::$kernel;
     }
 
@@ -213,6 +216,14 @@ trait ConsoleListAccessor {
     public function once(){
 
         return $this->kernel().'/'.StaticPathModel::$once;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function command(){
+
+        return $this->kernel().'/'.StaticPathModel::$command;
     }
 
 

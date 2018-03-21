@@ -4,6 +4,7 @@ namespace Resta;
 
 use Resta\Contracts\ApplicationContracts;
 use Resta\StaticPathModel;
+use Resta\Response\ResponseOutManager;
 
 class ApplicationProvider {
 
@@ -85,7 +86,7 @@ class ApplicationProvider {
 
             //we assign the url object to the global kernel url object
             //so that it can be read anywhere in our route file.
-            $this->url=$this->app->kernel()->url;
+            $this->url=$this->app()->url;
         }
     }
 
@@ -171,5 +172,13 @@ class ApplicationProvider {
 
         return $this->singleton()->appClass->configLoaders($config);
 
+    }
+
+    /**
+     * @return \Resta\Response\ResponseOutManager
+     */
+    public function response(){
+
+        return new ResponseOutManager($this);
     }
 }

@@ -1,30 +1,29 @@
 <?php
 
-namespace Resta\Console\Source\Boot;
+namespace Resta\Console\Source\Command;
 
 use Resta\Console\ConsoleListAccessor;
 use Resta\Console\ConsoleOutputter;
-use Resta\StaticPathModel;
 use Resta\Utils;
 
-class Boot extends ConsoleOutputter {
+class Command extends ConsoleOutputter {
 
     use ConsoleListAccessor;
 
     /**
      * @var $type
      */
-    public $type='boot';
+    public $type='command';
 
     /**
      * @var $define
      */
-    public $define='Boot create';
+    public $define='command';
 
     /**
      * @var $command_create
      */
-    public $command_create='php api boot create [boot]';
+    public $command_create='php api command create [project] command:[commandName]';
 
     /**
      * @method create
@@ -32,16 +31,17 @@ class Boot extends ConsoleOutputter {
      */
     public function create(){
 
-        $this->touch['main/boot']        = StaticPathModel::bootDir().'/'.$this->argument['project'].'.php';
+        $this->touch['command/file']        = $this->command().'/'.$this->argument['command'].'.php';
 
         $this->file->touch($this);
 
         Utils::chmod(root);
 
         echo $this->classical('---------------------------------------------------------------------------');
-        echo $this->bluePrint('Booting Class Named ['.$this->argument['project'].'] Has Been Successfully Created');
+        echo $this->bluePrint('Command Class Named ['.$this->argument['command'].'] Has Been Successfully Created');
         echo $this->classical('---------------------------------------------------------------------------');
-        echo $this->cyan('   You can see in src/boot your boot class   ');
+        echo $this->cyan('   You can see in '.$this->command().' your command class   ');
         echo $this->classical('---------------------------------------------------------------------------');
+
     }
 }

@@ -1,0 +1,36 @@
+<?php
+
+namespace App\__project__\Kernel\Command;
+
+use Resta\Console\ConsoleListAccessor;
+use Resta\Console\ConsoleOutputter;
+use App\__project__\__version__\ServiceAnnotationsController;
+
+class __command__ extends ConsoleOutputter {
+
+    use ConsoleListAccessor,ServiceAnnotationsController;
+
+    /**
+     * @var $type
+     */
+    protected $type='__command__';
+
+    /**
+     * @var $define
+     */
+    protected $define='__command__';
+
+    /**
+     * @var $command_create
+     */
+    protected $command_create='php api __command__';
+
+    /**
+     * @method handle
+     * @return mixed
+     */
+    public function handle(){
+
+        return $this->blue('__command__');
+    }
+}
