@@ -11,7 +11,7 @@ class Environment extends ApplicationProvider  {
      * @param null $environment
      */
     public function environment($environment=null){
-        
+
         $this->singleton()->env=(count($environment)) ? $environment['env'] : 'production';
         $this->singleton()->var=$environment;
     }

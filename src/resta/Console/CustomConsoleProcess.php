@@ -18,6 +18,6 @@ class CustomConsoleProcess extends ConsoleOutputter{
     public function handle(){
 
         $commandNamespace=Utils::getNamespace($this->command()).'\\'.$this->app->getConsoleClass();
-        return (new $commandNamespace($this->argument,$this->app))->{strtolower($this->app->getConsoleClassMethod())}();
+        return (new $commandNamespace($this->argument,$this->app->app))->{strtolower($this->app->getConsoleClassMethod())}();
     }
 }

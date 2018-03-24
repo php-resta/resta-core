@@ -37,7 +37,7 @@ class Key extends ConsoleOutputter {
         $this->touch['main/keygenerate']= StaticPathModel::getEncrypter();
 
         //key generate code
-        $this->argument['applicationKey']=Utils::makeBind(Encrypter::class,['app'=>$this->app])->keyGenerate();
+        $this->argument['applicationKey']=$this->app->app->makeBind(Encrypter::class)->keyGenerate();
 
         //set key file touch
         $this->file->touch($this);
