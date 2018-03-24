@@ -39,12 +39,4 @@ interface ApplicationContracts {
      */
     public function console();
 
-
-    /**
-     * @param $make
-     * @return mixed
-     */
-    public function applicationProviderBinding($make);
-
-
 }

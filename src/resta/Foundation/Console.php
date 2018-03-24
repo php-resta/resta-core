@@ -45,10 +45,11 @@ class Console extends Kernel {
      */
     public function consoleProcess(){
 
-        //
+        //We create a namespace for the console and we assign to a variable the path of this class.
         $this->consoleClassNamespace='Resta\Console\\Source\\'.$this->getConsoleClass().'\\'.$this->getConsoleClass();
 
-        //
+        //If the console executor is a custom console application; in this case we look at the kernel directory inside the application.
+        //If the console class is not available on the kernel of resta, then the system will run the command class in the application.
         return $this->checkConsoleNamespace(function(){
             return (new $this->consoleClassNamespace($this->getConsoleArgumentsWithKey(),$this))->{$this->getConsoleClassMethod()}();
         });

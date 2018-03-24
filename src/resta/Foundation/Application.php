@@ -3,8 +3,14 @@
 namespace Resta\Foundation;
 
 use Resta\Contracts\ApplicationContracts;
+use Resta\Utils;
 
 class Application extends Kernel implements ApplicationContracts {
+
+    /**
+     * @var array  $instance
+     */
+    private static $instance=[];
 
     /**
      * @var $console null
@@ -32,6 +38,9 @@ class Application extends Kernel implements ApplicationContracts {
      */
     public function handle(){
 
+        //This is the main calling place of your application.
+        //If you come via http, the kernel response value is evaulated.
+        //If you come via console, the kernel console value is evaulated.
         return ($this->console) ? $this->kernel->console : $this->kernel->response;
     }
 
@@ -61,4 +70,38 @@ class Application extends Kernel implements ApplicationContracts {
 
         return $this->bootstrappers;
     }
+
+    /**
+     * @param $make
+     * @return array
+     */
+    public function applicationProviderBinding($make){
+
+        return [
+            'app'=>$make
+        ];
+    }
+
+    /**
+     * @method $class
+     * @param $class
+     * @return mixed
+     */
+    public function makeBind($class){
+
+        //We do an instance check to get the static instance values of
+        //the classes to be resolved with the makebind method.
+        if(!isset(self::$instance[$class])){
+            self::$instance[$class]=Utils::makeBind($class,$this->applicationProviderBinding($this));
+            return self::$instance[$class];
+        }
+
+        //if the class to be resolved has already been loaded,
+        //we get the instance value that was saved to get the recurring instance.
+        return self::$instance[$class];
+
+    }
+
+
+
 }

@@ -3,7 +3,6 @@
 namespace Resta\Environment;
 
 use Resta\ApplicationProvider;
-use Resta\GlobalLoaders\Environment;
 
 class EnvironmentConfiguration extends ApplicationProvider {
 
@@ -17,7 +16,7 @@ class EnvironmentConfiguration extends ApplicationProvider {
         $environment=$this->makeBind(CheckEnvironmentFile::class)->checkConfiguration();
 
         //We are globalizing environment variables.
-        $this->makeBind(Environment::class)->environment($environment);
+        $this->singleton()->environmentGlobalInstance->environment($environment);
     }
 
     /**

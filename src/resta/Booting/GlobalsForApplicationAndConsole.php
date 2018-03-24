@@ -13,9 +13,15 @@ class GlobalsForApplicationAndConsole extends ApplicationProvider {
      */
     public function boot(){
 
-        //If the second parameter is sent true to the application builder,
-        //all operations are performed by the console and the custom bootings are executed
-        $this->makeBind(ForAppAndConsole::class)->forAppAndConsole();
+        //if the console is true
+        //console app runner
+        if($this->app->console()){
+
+            //If the second parameter is sent true to the application builder,
+            //all operations are performed by the console and the custom bootings are executed
+            $this->makeBind(ForAppAndConsole::class)->forAppAndConsole();
+        }
+
     }
 
 }

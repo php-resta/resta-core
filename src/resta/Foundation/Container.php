@@ -2,6 +2,7 @@
 
 namespace Resta\Foundation;
 
+use Resta\Console\ConsoleBindings;
 use Resta\Contracts\ApplicationContracts;
 use Resta\GlobalLoaders\GlobalAssignerForBind;
 use Resta\Utils;
@@ -117,13 +118,17 @@ class Container implements ApplicationContracts {
      */
     private function make($object,$callback){
 
+        //we check whether the callback value is a callable function.
+        $isCallableForCallback=is_callable($callback);
+
         //If the console object returns true,
         //we do not cancel binding operations
-        if($this->console()) return $this->kernel();
+        //We are getting what applies to console with consoleKernelObject.
+        if($this->console() AND $isCallableForCallback) return $this->consoleKernelObject($object);
 
         //if a pre loader class wants to have before kernel values,
         //it must return a callback to the bind method
-        $concrete=call_user_func($callback);
+        $concrete=($isCallableForCallback) ? call_user_func($callback) : $callback;
 
         //We check that the concrete object
         //is an object that can be retrieved.
@@ -136,11 +141,24 @@ class Container implements ApplicationContracts {
 
             //the value corresponding to the bind value for the global object is assigned and
             //the makeBind method is called for the dependency injection.
-            $this->kernel()->{$object}=Utils::makeBind($concrete,$this->applicationProviderBinding($this))
-                ->handle();
+            $this->kernel()->{$object}=$this->makeBind($concrete)->handle();
         }
 
         //return kernel object
+        return $this->kernel();
+    }
+
+    /**
+     * @param $object
+     * @return mixed
+     */
+    private function consoleKernelObject($object){
+
+        //we use the console bindings class to specify the classes to be preloaded in the console application.
+        //Thus, classes that can not be bound with http are called without closure in global loaders directory.
+        $this->makeBind(ConsoleBindings::class)->console($object);
+
+        //The console application must always return the kernel method.
         return $this->kernel();
     }
 
@@ -149,12 +167,12 @@ class Container implements ApplicationContracts {
      * @param $object
      * @return mixed
      */
-    private function globalAssignerForBind($object){
+    public function globalAssignerForBind($object){
 
         //we automatically load a global loaders for the bind method
         //and assign it to the object name in the kernel object with bind,
         //which you can easily use in the booted classes for kernel object assignments.
-        Utils::makeBind(GlobalAssignerForBind::class,$this->applicationProviderBinding($this))->getAssigner($object);
+        $this->makeBind(GlobalAssignerForBind::class)->getAssigner($object);
 
     }
 
@@ -193,14 +211,5 @@ class Container implements ApplicationContracts {
     }
 
 
-    /**
-     * @param $make
-     * @return array
-     */
-    public function applicationProviderBinding($make){
 
-        return [
-            'app'=>$make
-        ];
-    }
 }
