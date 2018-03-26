@@ -11,6 +11,6 @@ class Environment extends ApplicationProvider {
 
         $this->app->bind('environment',function(){
             return EnvironmentConfiguration::class;
-        });
+        },true);
     }
 }

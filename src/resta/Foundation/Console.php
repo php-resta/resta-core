@@ -2,11 +2,14 @@
 
 namespace Resta\Foundation;
 
+use Resta\Console\ConsoleArguments;
 use Resta\Utils;
 use Resta\Console\CustomConsoleProcess;
 use Resta\Contracts\ApplicationContracts;
 
 class Console extends Kernel {
+
+    use ConsoleArguments;
 
     /**
      * @var $app
@@ -30,92 +33,19 @@ class Console extends Kernel {
     }
 
     /**
-     * @method getArguments
-     * @return array
-     */
-    public function getArguments(){
-
-        //get psr standard console arguments
-        return Utils::upperCase(arguments);
-    }
-
-    /**
      * @method consoleProcess
      * @return mixed
      */
     public function consoleProcess(){
 
         //We create a namespace for the console and we assign to a variable the path of this class.
-        $this->consoleClassNamespace='Resta\Console\\Source\\'.$this->getConsoleClass().'\\'.$this->getConsoleClass();
+        $this->consoleClassNamespace=$this->consoleClassNamespace();
 
         //If the console executor is a custom console application; in this case we look at the kernel directory inside the application.
         //If the console class is not available on the kernel of resta, then the system will run the command class in the application.
         return $this->checkConsoleNamespace(function(){
             return (new $this->consoleClassNamespace($this->getConsoleArgumentsWithKey(),$this))->{$this->getConsoleClassMethod()}();
         });
-
-    }
-
-    /**
-     * @method getConsoleClass
-     * @return mixed
-     */
-    public function getConsoleClass(){
-
-        return current($this->getArguments());
-    }
-
-    /**
-     * @method getConsoleClassMethod
-     * @return mixed
-     */
-    public function getConsoleClassMethod(){
-
-        return $this->getArguments()[1];
-    }
-
-    /**
-     * @method getConsoleClassMethod
-     * @return mixed
-     */
-    public function getConsoleClassRealArguments(){
-
-        return array_slice($this->getArguments(),2);
-    }
-
-    /**
-     * @method getConsoleArgumentsWithKey
-     * @return array
-     */
-    public function getConsoleArgumentsWithKey(){
-
-        //get console class real arguments
-        $getConsoleClassRealArguments=$this->getConsoleClassRealArguments();
-
-        $listKey=[];
-
-        if(count($getConsoleClassRealArguments)===0){
-            return $listKey;
-        }
-
-        foreach($getConsoleClassRealArguments as $key=>$value){
-
-            if($key=="0"){
-
-                $listKey['project']=$value;
-            }
-            else{
-
-                $colonExplode=explode(":",$value);
-                $listKey[strtolower($colonExplode[0])]=ucfirst($colonExplode[1]);
-            }
-
-        }
-
-        //get app version
-        $listKey['version']=Utils::getAppVersion($listKey['project']);
-
-        return $listKey;
 
     }
 

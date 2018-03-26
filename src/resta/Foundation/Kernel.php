@@ -10,7 +10,7 @@ use Resta\Booting\ConfigLoader;
 use Resta\Booting\Environment;
 use Resta\Booting\Exception;
 use Resta\Booting\GlobalAccessor;
-use Resta\Booting\GlobalsForApplicationAndConsole;
+use Resta\Booting\Console;
 use Resta\Booting\LogProvider;
 use Resta\Booting\Middleware;
 use Resta\Booting\ResponseManager;
@@ -49,7 +49,7 @@ class Kernel extends Container {
      */
     protected $bootstrappers=[
 
-        GlobalsForApplicationAndConsole::class,
+        Console::class,
         RouteProvider::class,
         ResponseManager::class,
 

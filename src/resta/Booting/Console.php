@@ -4,8 +4,9 @@ namespace Resta\Booting;
 
 use Resta\ApplicationProvider;
 use Resta\GlobalLoaders\ForAppAndConsole;
+use Resta\Console\ConsoleDefinitor;
 
-class GlobalsForApplicationAndConsole extends ApplicationProvider {
+class Console extends ApplicationProvider {
 
     /**
      * @method boot
@@ -19,7 +20,7 @@ class GlobalsForApplicationAndConsole extends ApplicationProvider {
 
             //If the second parameter is sent true to the application builder,
             //all operations are performed by the console and the custom bootings are executed
-            $this->makeBind(ForAppAndConsole::class)->forAppAndConsole();
+            $this->app->bind('appConsole',ConsoleDefinitor::class,true);
         }
 
     }

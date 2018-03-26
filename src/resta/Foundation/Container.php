@@ -58,13 +58,20 @@ class Container implements ApplicationContracts {
      * @method bind
      * @param $object null
      * @param $callback null
+     * @param $consoleShared false|true
      * @return mixed
      */
-    public function bind($object=null,$callback=null){
+    public function bind($object=null,$callback=null,$consoleShared=false){
 
         //we check whether the boolean value of the singleton variable used
         //for booting does not reset every time the object variable to be assigned to the kernel variable is true
         $this->singleton();
+
+        //The console share is evaluated as a true variable to be assigned as the 3rd parameter in the classes to be bound.
+        //The work to be done here is to bind the classes to be included in the console share privately.
+        if($consoleShared){
+            $this->consoleShared($object,$callback);
+        }
 
         //If the bind method does not have parameters object and callback, the value is directly assigned to the kernel object.
         //Otherwise, when the bind object and callback are sent, the closure class inherits
@@ -128,7 +135,7 @@ class Container implements ApplicationContracts {
 
         //if a pre loader class wants to have before kernel values,
         //it must return a callback to the bind method
-        $concrete=($isCallableForCallback) ? call_user_func($callback) : $callback;
+        $concrete=Utils::callbackProcess($callback);
 
         //We check that the concrete object
         //is an object that can be retrieved.
@@ -160,6 +167,19 @@ class Container implements ApplicationContracts {
 
         //The console application must always return the kernel method.
         return $this->kernel();
+    }
+
+    /**
+     * @param $object
+     * @param $callback
+     */
+    private function consoleShared($object,$callback){
+
+        //The console share is evaluated as a true variable to be assigned as the 3rd parameter in the classes to be bound.
+        //The work to be done here is to bind the classes to be included in the console share privately.
+        if($this->console()){
+            $this->kernel()->consoleShared[$object]=Utils::callbackProcess($callback);
+        }
     }
 
     /**

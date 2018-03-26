@@ -11,6 +11,6 @@ class ConfigLoader extends ApplicationProvider {
 
         $this->app->bind('config',function(){
             return Config::class;
-        });
+        },true);
     }
 }

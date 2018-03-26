@@ -224,6 +224,10 @@ class Utils {
         return call_user_func_array($callback,[$data]);
     }
 
+    /**
+     * @param $namespace
+     * @return string
+     */
     public static function getNamespace($namespace){
 
         $rootDelete=str_replace(root.'/src/app/','',$namespace);
@@ -234,6 +238,16 @@ class Utils {
         );
 
     }
+
+    /**
+     * @param $callback
+     * @return mixed
+     */
+    public static function callbackProcess($callback){
+        return (is_callable($callback)) ? call_user_func($callback) : $callback;
+    }
+
+
 
 
 }

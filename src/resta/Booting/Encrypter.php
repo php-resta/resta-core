@@ -11,6 +11,6 @@ class Encrypter extends ApplicationProvider {
 
         $this->app->bind('encrypter',function(){
             return EncrypterProvider::class;
-        });
+        },true);
     }
 }

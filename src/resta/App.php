@@ -179,4 +179,15 @@ class App {
         throw new \InvalidArgumentException('The requested config is not available');
     }
 
+    /**
+     * @param $object
+     */
+    public function createAppInstance($object){
+
+        if(!defined('appInstance')){
+            define('appInstance',(base64_encode(serialize($object))));
+        }
+
+    }
+
 }
