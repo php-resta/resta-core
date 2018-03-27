@@ -190,4 +190,18 @@ class App {
 
     }
 
+    /**
+     * @param $instance
+     * @param $class
+     * @param array $bind
+     * @return mixed
+     */
+    public function container($instance,$class,$bind=array()){
+
+        if(!is_array($instance->container()->{$class}) AND Utils::isNamespaceExists($container=$instance->container()->{$class})){
+            return $instance->makeBind($container,$bind);
+        }
+        return $instance->container()->{$class};
+    }
+
 }

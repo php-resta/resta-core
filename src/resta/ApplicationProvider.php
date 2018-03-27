@@ -91,22 +91,22 @@ class ApplicationProvider {
     }
 
     /**
-     * @method $class
      * @param $class
+     * @param array $bind
      * @return mixed
      */
-    public function makeBind($class){
+    public function makeBind($class,$bind=array()){
 
-        return Utils::makeBind($class,$this->providerBinding());
+        return Utils::makeBind($class,$this->providerBinding($bind));
     }
 
     /**
-     * @method providerBinding
+     * @param array $bind
      * @return mixed
      */
-    public function providerBinding(){
+    public function providerBinding($bind=array()){
 
-        return $this->app->applicationProviderBinding($this->app);
+        return $this->app->applicationProviderBinding($this->app,$bind);
     }
 
     /**
@@ -180,5 +180,22 @@ class ApplicationProvider {
     public function response(){
 
         return new ResponseOutManager($this);
+    }
+
+    /**
+     * @param $data
+     * @return mixed
+     */
+    public function pick($data=null,$key=null){
+
+        if($data===null) return $this->singleton()->pick;
+
+        if($key===null){
+            $this->singleton()->pick[]=$data;
+        }
+        else{
+            $this->singleton()->pick[$key]=$data;
+        }
+
     }
 }

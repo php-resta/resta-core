@@ -92,7 +92,7 @@ trait ResponseOutput {
      */
     public function getRouter(){
 
-        return $this->app->kernel()->router;
+        return (isset($this->singleton()->pick)) ? current($this->singleton()->pick)  : $this->app->kernel()->router;
     }
 
     /**

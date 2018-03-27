@@ -73,13 +73,13 @@ class Application extends Kernel implements ApplicationContracts {
 
     /**
      * @param $make
+     * @param array $bind
      * @return array
      */
-    public function applicationProviderBinding($make){
+    public function applicationProviderBinding($make,$bind=array()){
 
-        return [
-            'app'=>$make
-        ];
+        $default=['app'=>$make];
+        return array_merge($default,$bind);
     }
 
     /**

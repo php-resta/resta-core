@@ -211,7 +211,7 @@ class Container implements ApplicationContracts {
 
         //if a pre loader class wants to have before kernel values,
         //it must return a callback to the bind method
-        $concrete=call_user_func($callback);
+        $concrete=Utils::callbackProcess($callback);
 
         //Since the objects that come to the build method are objects from the container method,
         //we need to automatically create a kernel object named serviceContainer in this method.
