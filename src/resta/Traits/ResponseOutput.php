@@ -3,6 +3,7 @@
 namespace Resta\Traits;
 
 use Resta\Logger\LoggerService;
+use Resta\Routing\KernelRouterProcess;
 use Resta\StaticPathModel;
 
 trait ResponseOutput {
@@ -92,7 +93,7 @@ trait ResponseOutput {
      */
     public function getRouter(){
 
-        return (isset($this->singleton()->pick)) ? current($this->singleton()->pick)  : $this->app->kernel()->router;
+        return $this->app->makeBind(KernelRouterProcess::class)->router();
     }
 
     /**

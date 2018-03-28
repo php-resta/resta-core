@@ -198,4 +198,21 @@ class ApplicationProvider {
         }
 
     }
+
+    /**
+     * @param $data
+     * @return mixed
+     */
+    public function stack($data=null,$key=null){
+
+        if($data===null) return $this->singleton()->stack;
+
+        if($key===null){
+            $this->singleton()->stack[]=$data;
+        }
+        else{
+            $this->singleton()->stack[$key]=$data;
+        }
+
+    }
 }

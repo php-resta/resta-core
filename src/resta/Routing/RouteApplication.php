@@ -89,7 +89,7 @@ class RouteApplication extends ApplicationProvider {
         //In this case, the dummy object is checked as bool in the service conf object
         //and the equation is compared with the returned value.
         //If the boolean value is true at the end of the comparison, the dummy data screen is printed
-        return ($this->app->kernel()->serviceConf['dummy']) ? $this->checkDummy() : $this->getCallBindController();
+        return ($this->singleton()->serviceConf['dummy']) ? $this->checkDummy() : $this->getCallBindController();
     }
 
     /**

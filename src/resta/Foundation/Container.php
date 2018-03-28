@@ -73,10 +73,14 @@ class Container implements ApplicationContracts {
             $this->consoleShared($object,$callback);
         }
 
+        //If the third parameter passed to the bind method carries a container value,
+        //then you will not be able to fire the build method instead of the make method.
+        $makeBuild=($consoleShared==="container") ? 'build' : 'make';
+
         //If the bind method does not have parameters object and callback, the value is directly assigned to the kernel object.
         //Otherwise, when the bind object and callback are sent, the closure class inherits
         //the applicationProvider object and the makeBind method is called
-        return ($object===null) ? $this->kernel() : $this->make($object,$callback);
+        return ($object===null) ? $this->kernel() : $this->{$makeBuild}($object,$callback);
 
     }
 
@@ -89,14 +93,10 @@ class Container implements ApplicationContracts {
      */
     public function container($object=null,$callback=null){
 
-        //we check whether the boolean value of the singleton variable used
-        //for booting does not reset every time the object variable to be assigned to the kernel variable is true
-        $this->singleton();
-
         //If the bind method does not have parameters object and callback, the value is directly assigned to the kernel object.
         //Otherwise, when the bind object and callback are sent, the closure class inherits
         //the applicationProvider object and the makeBind method is called
-        return ($object===null) ? $this->kernel() : $this->build($object,$callback);
+        return $this->bind($object,$callback,'container');
 
     }
 
@@ -157,13 +157,14 @@ class Container implements ApplicationContracts {
 
     /**
      * @param $object
+     * @param bool $container
      * @return mixed
      */
-    private function consoleKernelObject($object){
+    private function consoleKernelObject($object,$container=false){
 
         //we use the console bindings class to specify the classes to be preloaded in the console application.
         //Thus, classes that can not be bound with http are called without closure in global loaders directory.
-        $this->makeBind(ConsoleBindings::class)->console($object);
+        $this->makeBind(ConsoleBindings::class)->console($object,$container);
 
         //The console application must always return the kernel method.
         return $this->kernel();
@@ -203,11 +204,15 @@ class Container implements ApplicationContracts {
      * @param $callback
      * @return mixed
      */
-    private function build($object,$callback){
+    public function build($object,$callback){
+
+        //we check whether the callback value is a callable function.
+        $isCallableForCallback=is_callable($callback);
 
         //If the console object returns true,
         //we do not cancel binding operations
-        if($this->console()) return $this->kernel();
+        //We are getting what applies to console with consoleKernelObject.
+        if($this->console() AND $isCallableForCallback) return $this->consoleKernelObject($object,true);
 
         //if a pre loader class wants to have before kernel values,
         //it must return a callback to the bind method
