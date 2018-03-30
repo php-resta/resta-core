@@ -5,6 +5,7 @@ namespace Resta\Foundation;
 use Resta\Console\ConsoleBindings;
 use Resta\Contracts\ApplicationContracts;
 use Resta\GlobalLoaders\GlobalAssignerForBind;
+use Resta\GlobalLoaders\KernelAssigner;
 use Resta\Utils;
 
 class Container implements ApplicationContracts {
@@ -49,19 +50,17 @@ class Container implements ApplicationContracts {
 
         //Since the objects that come to the build method are objects from the container method,
         //we need to automatically create a kernel object named serviceContainer in this method.
-        if(!isset($this->kernel()->serviceContainer)){
-            $this->kernel()->serviceContainer=[];
-        }
+        $this->makeBind(KernelAssigner::class)->container();
     }
 
     /**
      * @method bind
      * @param $object null
      * @param $callback null
-     * @param $consoleShared false|true
+     * @param $container false|true
      * @return mixed
      */
-    public function bind($object=null,$callback=null,$consoleShared=false){
+    public function bind($object=null,$callback=null,$container=false){
 
         //we check whether the boolean value of the singleton variable used
         //for booting does not reset every time the object variable to be assigned to the kernel variable is true
@@ -69,13 +68,13 @@ class Container implements ApplicationContracts {
 
         //The console share is evaluated as a true variable to be assigned as the 3rd parameter in the classes to be bound.
         //The work to be done here is to bind the classes to be included in the console share privately.
-        if($consoleShared){
+        if($container){
             $this->consoleShared($object,$callback);
         }
 
         //If the third parameter passed to the bind method carries a container value,
         //then you will not be able to fire the build method instead of the make method.
-        $makeBuild=($consoleShared==="container") ? 'build' : 'make';
+        $makeBuild=($container==="container") ? 'build' : 'make';
 
         //If the bind method does not have parameters object and callback, the value is directly assigned to the kernel object.
         //Otherwise, when the bind object and callback are sent, the closure class inherits
@@ -83,7 +82,6 @@ class Container implements ApplicationContracts {
         return ($object===null) ? $this->kernel() : $this->{$makeBuild}($object,$callback);
 
     }
-
 
     /**
      * @method container
@@ -110,7 +108,7 @@ class Container implements ApplicationContracts {
             //after first initializing, the singleton variable is set to true,
             //and subsequent incoming classes can inherit the loaded object.
             $this->singleton=true;
-            $this->kernel=new \stdClass;
+            $this->kernel=\application::kernelBindObject();
         }
 
         //kernel object taken over
@@ -121,35 +119,24 @@ class Container implements ApplicationContracts {
      * @method make
      * @param $object
      * @param $callback
+     * @param $sync false
      * @return mixed
      */
-    private function make($object,$callback){
-
-        //we check whether the callback value is a callable function.
-        $isCallableForCallback=is_callable($callback);
+    private function make($object,$callback,$sync=false){
 
         //If the console object returns true,
         //we do not cancel binding operations
         //We are getting what applies to console with consoleKernelObject.
-        if($this->console() AND $isCallableForCallback) return $this->consoleKernelObject($object);
+        if($sync===false) return $this->consoleKernelObjectChecker($object,$callback);
 
-        //if a pre loader class wants to have before kernel values,
-        //it must return a callback to the bind method
-        $concrete=Utils::callbackProcess($callback);
+        //we automatically load a global loaders for the bind method
+        //and assign it to the object name in the kernel object with bind,
+        //which you can easily use in the booted classes for kernel object assignments.
+        $this->globalAssignerForBind($object);
 
-        //We check that the concrete object
-        //is an object that can be retrieved.
-        if(!isset($this->kernel()->{$object}) && class_exists($concrete)){
-
-            //we automatically load a global loaders for the bind method
-            //and assign it to the object name in the kernel object with bind,
-            //which you can easily use in the booted classes for kernel object assignments.
-            $this->globalAssignerForBind($object);
-
-            //the value corresponding to the bind value for the global object is assigned and
-            //the makeBind method is called for the dependency injection.
-            $this->kernel()->{$object}=$this->makeBind($concrete)->handle();
-        }
+        //the value corresponding to the bind value for the global object is assigned and
+        //the makeBind method is called for the dependency injection.
+        $this->makeBind(KernelAssigner::class)->setKernelObject($object,$callback);
 
         //return kernel object
         return $this->kernel();
@@ -178,9 +165,7 @@ class Container implements ApplicationContracts {
 
         //The console share is evaluated as a true variable to be assigned as the 3rd parameter in the classes to be bound.
         //The work to be done here is to bind the classes to be included in the console share privately.
-        if($this->console()){
-            $this->kernel()->consoleShared[$object]=Utils::callbackProcess($callback);
-        }
+        $this->makeBind(KernelAssigner::class)->consoleShared($object,$callback);
     }
 
     /**
@@ -188,7 +173,7 @@ class Container implements ApplicationContracts {
      * @param $object
      * @return mixed
      */
-    public function globalAssignerForBind($object){
+    private function globalAssignerForBind($object){
 
         //we automatically load a global loaders for the bind method
         //and assign it to the object name in the kernel object with bind,
@@ -197,14 +182,38 @@ class Container implements ApplicationContracts {
 
     }
 
-
     /**
      * @method build
      * @param $object
      * @param $callback
+     * @param $sync false
      * @return mixed
      */
-    public function build($object,$callback){
+    public function build($object,$callback,$sync=false){
+
+        //If the console object returns true,
+        //we do not cancel binding operations
+        //We are getting what applies to console with consoleKernelObject.
+        if($sync===false) return $this->consoleKernelObjectChecker($object,$callback,true);
+
+        //Since the objects that come to the build method are objects from the container method,
+        //we need to automatically create a kernel object named serviceContainer in this method.
+        $this->serviceContainerObject();
+
+        //the value corresponding to the bind value for the global object is assigned and
+        //the makeBind method is called for the dependency method.
+        $this->makeBind(KernelAssigner::class)->setKernelObject($object,$callback,'serviceContainer');
+
+        //return kernel object
+        return $this->kernel();
+    }
+
+    /**
+     * @param $object
+     * @param $callback
+     * @param bool $container
+     */
+    private function consoleKernelObjectChecker($object,$callback,$container=false){
 
         //we check whether the callback value is a callable function.
         $isCallableForCallback=is_callable($callback);
@@ -212,27 +221,10 @@ class Container implements ApplicationContracts {
         //If the console object returns true,
         //we do not cancel binding operations
         //We are getting what applies to console with consoleKernelObject.
-        if($this->console() AND $isCallableForCallback) return $this->consoleKernelObject($object,true);
+        if($this->console() AND $isCallableForCallback) return $this->consoleKernelObject($object,$container);
 
-        //if a pre loader class wants to have before kernel values,
-        //it must return a callback to the bind method
-        $concrete=Utils::callbackProcess($callback);
-
-        //Since the objects that come to the build method are objects from the container method,
-        //we need to automatically create a kernel object named serviceContainer in this method.
-        $this->serviceContainerObject();
-
-        //We check that the concrete object
-        //is an object that can be retrieved.
-        if(isset($this->kernel()->serviceContainer) && !isset($this->kernel()->serviceContainer[$object])){
-
-            //the value corresponding to the bind value for the global object is assigned and
-            //the makeBind method is called for the dependency method.
-            $this->kernel()->serviceContainer[$object]=$concrete;
-        }
-
-        //return kernel object
-        return $this->kernel();
+        //If the application is not a console operation, we re-bind to existing methods synchronously.
+        return ($container) ? $this->build($object,$callback,true) : $this->make($object,$callback,true);
     }
 
 

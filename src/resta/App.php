@@ -19,13 +19,25 @@ class App {
     protected static $instance=[];
 
     /**
+     * @return \stdClass
+     */
+    public static function kernelBindObject(){
+        return new \stdClass;
+    }
+
+    /**
      * @return mixed
      */
     public static function getAppInstance(){
 
         //we save an instance for the entire application
         //and add it to the helper file to be accessed from anywhere in the application.
-        return unserialize(base64_decode(appInstance));
+        if(!isset(self::$instance['appInstance'])){
+            self::$instance['appInstance']=unserialize(base64_decode(appInstance));
+            return self::$instance['appInstance'];
+        }
+        return self::$instance['appInstance'];
+
     }
 
     /**
@@ -198,10 +210,44 @@ class App {
      */
     public function container($instance,$class,$bind=array()){
 
+        if(!property_exists($instance->container(),$class)){
+            throw new \InvalidArgumentException('container object false for ('.$class.') object');
+        }
         if(!is_array($instance->container()->{$class}) AND Utils::isNamespaceExists($container=$instance->container()->{$class})){
             return $instance->makeBind($container,$bind);
         }
         return $instance->container()->{$class};
+    }
+
+    /**
+     * @param null $param
+     */
+    public function route($param=null){
+
+        $kernel=self::getAppInstance()->app->kernel;
+
+        $saltRouteParameters=$kernel->routeParameters;
+        $urlMethod=strtolower($kernel->url['method']);
+
+        $serviceConfRouteParameters=$kernel->serviceConf['routeParameters'][$urlMethod];
+
+        $list=[];
+
+        foreach ($saltRouteParameters as $key=>$value){
+            if(isset($serviceConfRouteParameters[$key])){
+                $list[$serviceConfRouteParameters[$key]]=$value;
+            }
+            else{
+                $list[$key]=$value;
+            }
+        }
+
+        if($param===null){
+            return $list;
+        }
+
+        return (isset($list[$param])) ? $list[$param] : null;
+
     }
 
 }

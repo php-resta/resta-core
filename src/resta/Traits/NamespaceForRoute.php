@@ -58,7 +58,10 @@ trait NamespaceForRoute {
      */
     public function resolveMethod($method){
 
-        return str_replace($this->httpMethod(),'',$method);
+        $method=str_replace($this->httpMethod(),'',$method);
+        $method=str_replace(StaticPathModel::$methodPrefix,'',$method);
+        return $method;
+
     }
 
     /**

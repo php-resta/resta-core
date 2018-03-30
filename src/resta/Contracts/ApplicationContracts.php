@@ -8,9 +8,10 @@ interface ApplicationContracts {
      * @method bind
      * @param $object null
      * @param $callback null
+     * @param $container false
      * @return mixed
      */
-    public function bind($object=null,$callback=null);
+    public function bind($object=null,$callback=null,$container=false);
 
 
     /**

@@ -76,7 +76,7 @@ class StaticPathModel extends StaticPathList {
      */
     public static function appVersionRoot($app=null,$path=false){
 
-        $app=($app!==null) ? $app : app;
+        $app=($app!==null) ? $app : (defined('app')) ? app : null;
 
         if($path){
 

@@ -24,7 +24,9 @@ class ApplicationProvider {
      */
     public function __construct(ApplicationContracts $app)
     {
-        //application object
+        /**
+         * @var $app \Resta\Contracts\ApplicationContracts
+         */
         $this->app=$app;
 
         //url object assign

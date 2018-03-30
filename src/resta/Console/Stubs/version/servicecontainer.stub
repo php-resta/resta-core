@@ -12,8 +12,8 @@ class ServiceContainerController extends Base
      */
     public function handle(){
 
-        $this->app->container('resta',function(){
-            return 'hello resta';
+        $this->app->container('tool',function(){
+            return ServiceToolsController::class;
         });
     }
 }

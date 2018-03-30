@@ -18,6 +18,14 @@ return [
      * Service dummy object
      * it providers dummy data for service
      */
-    'dummy'=>false
+    'dummy'=>false,
+
+    /**
+     * Route parameters for method
+     * client route parameters
+     */
+     'routeParameters'=>[
+        'index'=>[]
+     ]
 
 ];

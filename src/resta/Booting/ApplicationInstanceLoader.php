@@ -4,6 +4,7 @@ namespace Resta\Booting;
 
 use Resta\ApplicationProvider;
 use Resta\App;
+use Resta\Container;
 
 class ApplicationInstanceLoader extends ApplicationProvider {
 
@@ -17,5 +18,7 @@ class ApplicationInstanceLoader extends ApplicationProvider {
         //and easily resolve an encrypted instance of all the kernel variables in our helper class.
         class_alias(App::class,'application');
         $this->singleton()->appClass=new \application();
+
+
     }
 }

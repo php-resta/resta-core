@@ -94,6 +94,7 @@ trait ConsoleArguments {
         if(Utils::isNamespaceExists($this->consoleClassNamespace())===false){
             return call_user_func($callback);
         }
+        $this->defineAppnameForCustomConsole();
 
     }
 

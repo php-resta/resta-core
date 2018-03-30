@@ -46,7 +46,9 @@ class ConsoleBindings extends ApplicationProvider {
         //The console object represents the classes to be bound for the kernel object console.
         $this->bindings=$this->bindConsoleShared();
 
-        //
+        //if the container value is true,
+        //we will have to assign a value to the build method,
+        //which is the container method directly.
         $appMakeBind=($container) ? 'build' : 'bind';
 
         //we send the value to the bind method without callback after checking the bind object to be loaded for the console.
