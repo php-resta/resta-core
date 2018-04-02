@@ -7,12 +7,13 @@ use Resta\ApplicationProvider;
 use Resta\FileProcess;
 use Resta\StaticPathModel;
 use Resta\Traits\NamespaceForRoute;
+use Resta\Traits\InstanceRegister;
 use Symfony\Component\Yaml\Yaml;
 
 class Router extends ApplicationProvider  {
 
-    //get namespace for route
-    use NamespaceForRoute;
+    //get namespace for route and instance
+    use NamespaceForRoute,InstanceRegister;
 
     /**
      * @method route
@@ -27,12 +28,11 @@ class Router extends ApplicationProvider  {
         }
 
         //utils make bind via dependency injection named as service container
-        $this->singleton()->logger                  = StaticPathModel::appServiceLog();
-        $this->singleton()->serviceConf             = (new FileProcess())->callFile(StaticPathModel::getServiceConf());
-        $this->singleton()->serviceDummy            = (isset($serviceDummy)) ? $serviceDummy : [];
-        $this->singleton()->instanceController      = $this->makeBind($this->getControllerNamespace());
-
-        $this->makeBind(KernelAssigner::class)->registerStackToAppInstance('serviceConf',$this->singleton()->serviceConf);
+        $this->register('logger',                   StaticPathModel::appServiceLog());
+        $this->register('serviceConf',              (new FileProcess())->callFile(StaticPathModel::getServiceConf()));
+        $this->register('serviceDummy',      (isset($serviceDummy)) ? $serviceDummy : []);
+        $this->register('instanceController',       $this->makeBind($this->getControllerNamespace()));
+        $this->register('serviceConf',              $this->singleton()->serviceConf);
     }
 
     /**
@@ -41,10 +41,10 @@ class Router extends ApplicationProvider  {
      */
     public function substractMethodNameFromRouteParameters($method){
 
-        $this->singleton()->url['method']       = $this->resolveMethod($method);
-        $this->singleton()->routeParameters     = $this->routeParametersAssign($this->resolveMethod($method));
-        $this->makeBind(KernelAssigner::class)->registerStackToAppInstance('url','method',$this->singleton()->url['method']);
-        $this->makeBind(KernelAssigner::class)->registerStackToAppInstance('routeParameters',$this->routeParametersAssign($this->resolveMethod($method)));
+        $this->register('url',                 'method',$this->resolveMethod($method));
+        $this->register('routeParameters',             $this->routeParametersAssign($this->resolveMethod($method)));
+        $this->register('url','method',         $this->singleton()->url['method']);
+        $this->register('routeParameters',             $this->routeParametersAssign($this->resolveMethod($method)));
 
     }
 

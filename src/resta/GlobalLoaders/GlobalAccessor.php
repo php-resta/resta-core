@@ -4,6 +4,7 @@ namespace Resta\GlobalLoaders;
 
 use Resta\Response\ResponseApplication;
 use Resta\StaticPathModel;
+use Resta\Traits\InstanceRegister;
 use Symfony\Component\HttpFoundation\Request;
 use Resta\ApplicationProvider;
 use Store\Services\RequestService;
@@ -11,19 +12,22 @@ use Store\Services\RequestService;
 
 class GlobalAccessor extends ApplicationProvider  {
 
+    //instance register
+    use InstanceRegister;
+
     /**
      * @method handle
      */
     public function handle(){
 
         //get response success and status
-        $this->singleton()->instanceController=null;
-        $this->singleton()->responseSuccess=true;
-        $this->singleton()->responseStatus=200;
-        $this->singleton()->responseType='json';
+        $this->register('instanceController',       null);
+        $this->register('responseSuccess',          true);
+        $this->register('responseStatus',           200);
+        $this->register('responseType',             'json');
 
         //we first load the response class as a singleton object to allow you to send output anywhere
-        $this->singleton()->out=$this->makeBind(ResponseApplication::class);
+        $this->register('out',             $this->makeBind(ResponseApplication::class));
 
         //The HttpFoundation component defines an object-oriented layer for the HTTP specification.
         //The HttpFoundation component replaces these default PHP global variables and functions by an object-oriented layer
@@ -43,12 +47,14 @@ class GlobalAccessor extends ApplicationProvider  {
                 $server,
                 $content);
         });
-        $this->singleton()->request     = Request::createFromGlobals();
-        $this->singleton()->get         = $this->app->kernel()->request->query->all();
-        $this->singleton()->post        = $this->app->kernel()->request->request->all();
+
+        //After registering the symfony request method, we also save the get and post methods for user convenience.
+        $this->register('request',      Request::createFromGlobals());
+        $this->register('get',          $this->app->kernel()->request->query->all());
+        $this->register('post',         $this->app->kernel()->request->request->all());
 
         //We determine with the kernel object which HTTP method the requested from the client
-        $this->singleton()->httpMethod=ucfirst(strtolower($this->app->kernel()->request->getRealMethod()));
+        $this->register('httpMethod',ucfirst(strtolower($this->app->kernel()->request->getRealMethod())));
     }
 
 }

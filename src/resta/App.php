@@ -229,7 +229,11 @@ class App {
         $saltRouteParameters=$kernel->routeParameters;
         $urlMethod=strtolower($kernel->url['method']);
 
-        $serviceConfRouteParameters=$kernel->serviceConf['routeParameters'][$urlMethod];
+        $serviceConfRouteParameters=[];
+        if(isset($kernel->serviceConf['routeParameters'][$urlMethod])){
+            $serviceConfRouteParameters=$kernel->serviceConf['routeParameters'][$urlMethod];
+        }
+
 
         $list=[];
 

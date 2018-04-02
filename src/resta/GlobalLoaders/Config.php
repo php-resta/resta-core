@@ -3,9 +3,13 @@
 namespace Resta\GlobalLoaders;
 
 use Resta\ApplicationProvider;
+use Resta\Traits\InstanceRegister;
 use Resta\Utils;
 
 class Config extends ApplicationProvider  {
+
+    //Instance register
+    use InstanceRegister;
 
     /**
      * @param array $files
@@ -14,12 +18,12 @@ class Config extends ApplicationProvider  {
 
         foreach($files as $key=>$file){
 
-            $this->singleton()
-                    ->appConfig[strtolower($key)]=[
+            $this->register('appConfig',strtolower($key),[
 
                 'namespace' =>'App\\'.app.'\\'.Utils::getAppVersion(app).'\Config\\'.$key,
                 'file'      =>$file
-            ];
+            ]);
+
         }
 
 

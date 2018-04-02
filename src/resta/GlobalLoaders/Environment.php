@@ -3,8 +3,12 @@
 namespace Resta\GlobalLoaders;
 
 use Resta\ApplicationProvider;
+use Resta\Traits\InstanceRegister;
 
 class Environment extends ApplicationProvider  {
+
+    //Instance register
+    use InstanceRegister;
 
     /**
      * @method environment
@@ -12,8 +16,8 @@ class Environment extends ApplicationProvider  {
      */
     public function environment($environment=null){
 
-        $this->singleton()->env=(count($environment)) ? $environment['env'] : 'production';
-        $this->singleton()->var=$environment;
+        $this->register('env',(count($environment)) ? $environment['env'] : 'production');
+        $this->register('var',$environment);
     }
 
 }

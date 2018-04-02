@@ -4,8 +4,12 @@ namespace Resta\GlobalLoaders;
 
 use Resta\ApplicationProvider;
 use Resta\StaticPathModel;
+use Resta\Traits\InstanceRegister;
 
 class Url extends ApplicationProvider  {
+
+    //Instance register
+    use InstanceRegister;
 
     /**
      * @param $urlList array
@@ -13,21 +17,22 @@ class Url extends ApplicationProvider  {
      */
     public function definitor($urlList){
 
-        //
+        //We define global URL objects globally for the application.
         define('app',               $urlList['project']);
         define('namespace',         $urlList['namespace']);
         define('endpoint',          $urlList['endpoint']);
         define('method',            $urlList['method']);
 
-        //
+        //global path definitors
         $this->globalPathDefinitor();
 
-        //
-        $this->app->singleton()->routeParameters=$urlList['parameters'];
+        //route parameters kernel object register
+        $this->register('routeParameters',$urlList['parameters']);
     }
 
     private function globalPathDefinitor(){
 
+        //global path definitors
         define('middleware',                StaticPathModel::appMiddlewarePath());
         define('appMiddlewarePath',         StaticPathModel::appMiddleware());
     }

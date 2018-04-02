@@ -3,9 +3,13 @@
 namespace Resta\GlobalLoaders;
 
 use Resta\ApplicationProvider;
+use Resta\Traits\InstanceRegister;
 use Resta\Utils;
 
 class KernelAssigner extends ApplicationProvider  {
+
+    //Instance register
+    use InstanceRegister;
 
     /**
      * @return mixed|void
@@ -14,7 +18,7 @@ class KernelAssigner extends ApplicationProvider  {
 
         //We are initializing the array property for the service container object.
         if(!isset($this->singleton()->serviceContainer)){
-            $this->singleton()->serviceContainer=[];
+            $this->register('serviceContainer',[]);
         }
     }
 
@@ -28,7 +32,7 @@ class KernelAssigner extends ApplicationProvider  {
         //The console share is evaluated as a true variable to be assigned as the 3rd parameter in the classes to be bound.
         //The work to be done here is to bind the classes to be included in the console share privately.
         if($this->app->console()){
-            $this->singleton()->consoleShared[$object]=$this->getConcrete($callback);
+            $this->register('consoleShared',$object,$this->getConcrete($callback));
         }
     }
 
@@ -96,29 +100,8 @@ class KernelAssigner extends ApplicationProvider  {
 
             //the value corresponding to the bind value for the global object is assigned and
             //the makeBind method is called for the dependency method.
-            $this->singleton()->serviceContainer[$object]=$concrete;
-
-            //
-            $this->registerStackToAppInstance('serviceContainer',$object,$concrete);
-        }
-    }
-
-    /**
-     * @param $key
-     * @param $object
-     * @param $concrete
-     */
-    public function registerStackToAppInstance($key,$object,$concrete=null){
-
-        if(defined('appInstance')){
-            $appInstance=\application::getAppInstance();
-            if($concrete===null) {
-                $appInstance->app->kernel->{$key}=$object;
-            }
-            else{
-                $appInstance->app->kernel->{$key}[$object]=$concrete;
-            }
-
+            //$this->singleton()->serviceContainer[$object]=$concrete;
+            $this->register('serviceContainer',$object,$concrete);
         }
     }
 
