@@ -32,17 +32,6 @@ class Container implements ApplicationContracts {
     }
 
     /**
-     * @method console
-     * @return bool|null
-     */
-    public function console(){
-
-        //Controlling the console object is
-        //intended to make sure that the kernel bootstrap classes do not work.
-        return $this->console;
-    }
-
-    /**
      * @method serviceContainerObject
      * @return void
      */

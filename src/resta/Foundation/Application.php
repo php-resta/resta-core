@@ -3,9 +3,15 @@
 namespace Resta\Foundation;
 
 use Resta\Contracts\ApplicationContracts;
+use Resta\Contracts\ApplicationHelpersContracts;
+use Resta\StaticPathModel;
+use Resta\Traits\ApplicationPath;
 use Resta\Utils;
 
-class Application extends Kernel implements ApplicationContracts {
+class Application extends Kernel implements ApplicationContracts,ApplicationHelpersContracts {
+
+    //get app paths
+    use ApplicationPath;
 
     /**
      * @var array  $instance
@@ -15,7 +21,7 @@ class Application extends Kernel implements ApplicationContracts {
     /**
      * @var $console null
      */
-    public $console;
+    protected $console;
 
     /**
      * Application constructor.
@@ -60,6 +66,8 @@ class Application extends Kernel implements ApplicationContracts {
      */
     public function getMiddlewareGroups(){
 
+        //we can refer to this method
+        //because we can boot classes in the middleware array.
         return $this->middlewareGroups;
     }
 
@@ -68,6 +76,8 @@ class Application extends Kernel implements ApplicationContracts {
      */
     public function getBootstrappers(){
 
+        //we can refer to this method
+        //because we can boot classes in the bootstrappers array.
         return $this->bootstrappers;
     }
 
@@ -78,6 +88,9 @@ class Application extends Kernel implements ApplicationContracts {
      */
     public function applicationProviderBinding($make,$bind=array()){
 
+        //service container is an automatic application provider
+        //that we can bind to the special class di in the dependency condition.
+        //This method is automatically added to the classes resolved by the entire makebind method.
         return array_merge(['app'=>$make],$bind);
     }
 
@@ -91,6 +104,9 @@ class Application extends Kernel implements ApplicationContracts {
         //We do an instance check to get the static instance values of
         //the classes to be resolved with the makebind method.
         if(!isset(self::$instance[$class])){
+
+            //By singleton checking, we solve the dependency injection of the given class.
+            //Thus, each class can be called together with its dependency.
             self::$instance[$class]=Utils::makeBind($class,$this->applicationProviderBinding($this));
             return self::$instance[$class];
         }
@@ -101,6 +117,15 @@ class Application extends Kernel implements ApplicationContracts {
 
     }
 
+    /**
+     * @method console
+     * @return bool|null
+     */
+    public function console(){
 
+        //Controlling the console object is
+        //intended to make sure that the kernel bootstrap classes do not work.
+        return $this->console;
+    }
 
 }
