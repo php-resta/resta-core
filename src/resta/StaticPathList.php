@@ -84,6 +84,11 @@ class StaticPathList {
     public static $optional='Optional';
 
     /**
+     * @var $optionalException
+     */
+    public static $optionalException='Exception';
+
+    /**
      * @var $job
      */
     public static $job='Job';

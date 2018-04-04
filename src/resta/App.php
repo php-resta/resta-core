@@ -250,7 +250,7 @@ class App {
             return $list;
         }
 
-        return (isset($list[$param])) ? $list[$param] : null;
+        return (isset($list[$param])) ? strtolower($list[$param]) : null;
 
     }
 

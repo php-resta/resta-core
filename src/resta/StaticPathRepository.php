@@ -45,6 +45,15 @@ class StaticPathRepository {
     }
 
     /**
+     * @param null $app
+     * @return mixed
+     */
+    public function appOptionalException($app=null){
+
+        return $this->appVersion($app).'/'.StaticPathModel::$optional.'/'.StaticPathModel::$optionalException;
+    }
+
+    /**
      * @return mixed|null
      */
     private function appDetector(){

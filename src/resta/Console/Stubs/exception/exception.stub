@@ -1,0 +1,16 @@
+<?php
+
+namespace App\__project__\__version__\Optional\Exception;
+
+class __exception__Exception extends \DomainException
+{
+    /**
+     * @var string $message
+     */
+    protected $message = '__exception__ Exception';
+
+    /**
+     * @var bool
+     */
+    public $logger=false;
+}

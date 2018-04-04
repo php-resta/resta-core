@@ -63,8 +63,29 @@ class ErrorHandler extends ApplicationProvider {
             $errContext['trace']=$errStr;
         }
 
+        $status=$exception::exceptionTypeCodes($errType);
+
+        $optionalException=str_replace("\\","\\\\",$this->app->namespace()->optionalException());
+
+        if(preg_match('@'.$optionalException.'@is',$errType)){
+
+            //linux test
+            $trace=$errContext['trace'];
+            if(preg_match('@Stack trace:\n#0(.*)\n#1@is',$trace,$traceArray)){
+                $traceFile=str_replace(root,'',$traceArray[1]);
+                if(preg_match('@(.*)\((\d+)\)@is',$traceFile,$traceResolve)){
+                    $errFile=$traceResolve[1];
+                    $errLine=(int)$traceResolve[2];
+                }
+            }
+            $instanceErrtype=new $errType;
+            $status=$exception::exceptionTypeCodes(current(class_parents($instanceErrtype)));
+
+            $errType=class_basename($errType);
+        }
+
         //set as the success object is false
-        $appExceptionSuccess=['success'=>(bool)false,'status'=>$exception::exceptionTypeCodes($errType)];
+        $appExceptionSuccess=['success'=>(bool)false,'status'=>$status];
 
         //finally,set object for exception
         $environment=($this->app->kernel()->applicationKey===null) ? 'production' : environment();
@@ -87,6 +108,7 @@ class ErrorHandler extends ApplicationProvider {
         $last_error = error_get_last();
 
         if($last_error!==null){
+
             // fatal error
             $this->setErrorHandler(E_ERROR, $last_error['message'], $last_error['file'], $last_error['line'],[]);
 
