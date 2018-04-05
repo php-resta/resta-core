@@ -44,6 +44,11 @@ class ConsoleOutputter {
     public $app;
 
     /**
+     * @var $table
+     */
+    public $table;
+
+    /**
      * @var $touch
      */
     public $touch=array();
@@ -81,6 +86,8 @@ class ConsoleOutputter {
         $this->app=$app;
         $this->argument=$argument;
         $this->file=new FileProcess();
+        $table=require_once ('ConsoleTable.php');
+        $this->table=new \console_table();
 
         if(isset($this->argument['project'])){
             $this->project=StaticPathModel::appPath().'/'.$this->argument['project'];
@@ -90,6 +97,9 @@ class ConsoleOutputter {
 
     // Returns colored string
     public function getColoredString($string, $foreground_color = null, $background_color = null) {
+
+        if(isset($this->argument['commandCall'])) return $string;
+
         $colored_string = "";
 
         // Check if given foreground color found
@@ -110,6 +120,9 @@ class ConsoleOutputter {
 
     // Returns colored string information
     public function info($string, $foreground_color = 'blue', $background_color = 'white') {
+
+        if(isset($this->argument['commandCall'])) return $string;
+
         $colored_string = "";
 
         // Check if given foreground color found
@@ -130,6 +143,9 @@ class ConsoleOutputter {
 
     // Returns colored string information
     public function success($string, $foreground_color = 'white', $background_color = 'yellow') {
+
+        if(isset($this->argument['commandCall'])) return $string;
+
         $colored_string = "";
 
         // Check if given foreground color found
@@ -150,6 +166,9 @@ class ConsoleOutputter {
 
     // Returns colored string information
     public function classical($string, $foreground_color = 'red', $background_color = 'white') {
+
+        if(isset($this->argument['commandCall'])) return $string;
+
         $colored_string = "";
 
         // Check if given foreground color found
@@ -169,6 +188,9 @@ class ConsoleOutputter {
 
     // Returns colored string information
     public function bluePrint($string, $foreground_color = 'blue', $background_color = 'white') {
+
+        if(isset($this->argument['commandCall'])) return $string;
+
         $colored_string = "";
 
         // Check if given foreground color found
@@ -189,6 +211,9 @@ class ConsoleOutputter {
 
     // Returns colored string information
     public function yellowPrint($string, $foreground_color = 'black', $background_color = 'yellow') {
+
+        if(isset($this->argument['commandCall'])) return $string;
+
         $colored_string = "";
 
         // Check if given foreground color found
@@ -209,6 +234,9 @@ class ConsoleOutputter {
 
     // Returns colored string information
     public function blue($string, $foreground_color = 'white', $background_color = 'blue') {
+
+        if(isset($this->argument['commandCall'])) return $string;
+
         $colored_string = "";
 
         // Check if given foreground color found
@@ -228,6 +256,9 @@ class ConsoleOutputter {
 
     // Returns colored string information
     public function yellow($string, $foreground_color = 'blue', $background_color = 'yellow') {
+
+        if(isset($this->argument['commandCall'])) return $string;
+
         $colored_string = "";
 
         // Check if given foreground color found
@@ -248,6 +279,9 @@ class ConsoleOutputter {
 
     // Returns colored string information
     public function cyan($string, $foreground_color = 'magenta', $background_color = 'cyan') {
+
+        if(isset($this->argument['commandCall'])) return $string;
+
         $colored_string = "";
 
         // Check if given foreground color found
@@ -268,6 +302,9 @@ class ConsoleOutputter {
 
     // Returns colored string information
     public function input($string, $foreground_color = 'blue', $background_color = 'light_gray') {
+
+        if(isset($this->argument['commandCall'])) return $string;
+
         $colored_string = "";
 
         // Check if given foreground color found
@@ -287,6 +324,9 @@ class ConsoleOutputter {
 
     // Returns colored string information
     public function error($string, $foreground_color = 'white', $background_color = 'red') {
+
+        if(isset($this->argument['commandCall'])) return $string;
+
         $colored_string = "";
 
         // Check if given foreground color found

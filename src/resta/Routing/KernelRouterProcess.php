@@ -66,8 +66,16 @@ class KernelRouterProcess extends ApplicationProvider {
      */
     private function stackRouter(){
 
+        //singleton object
         $singleton=$this->singleton();
-        $singleton->routerSpecifications['router']=(isset($singleton->stack)) ? $singleton->stack : $singleton->router;
+
+        //if there is no singleton pick
+        //If this is the case, we collect these values and assign them to the router variable.
+        //if it is not, the router will send the default value to the output.
+        if(!isset($singleton->pick)){
+            $singleton->routerSpecifications['router']=(isset($singleton->stack)) ? $singleton->stack : $singleton->router;
+        }
+
     }
 
 }

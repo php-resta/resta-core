@@ -26,6 +26,20 @@ class StaticPathRepository {
     }
 
     /**
+     * @return mixed
+     */
+    public function appKernel(){
+        return $this->app().'\\'.StaticPathModel::$kernel;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function appCommand(){
+        return $this->appKernel().'\\'.StaticPathModel::$command;
+    }
+
+    /**
      * @param null $app
      * @return mixed
      */
@@ -51,6 +65,87 @@ class StaticPathRepository {
     public function appOptionalException($app=null){
 
         return $this->appVersion($app).'/'.StaticPathModel::$optional.'/'.StaticPathModel::$optionalException;
+    }
+
+    /**
+     * @param null $app
+     * @return mixed
+     */
+    public function appOptionalRepository($app=null){
+
+        return $this->appVersion($app).'/'.StaticPathModel::$optional.'/'.StaticPathModel::$repository;
+    }
+
+    /**
+     * @param null $app
+     * @return mixed
+     */
+    public function appOptionalJob($app=null){
+
+        return $this->appVersion($app).'/'.StaticPathModel::$optional.'/'.StaticPathModel::$job;
+    }
+
+    /**
+     * @param null $app
+     * @return mixed
+     */
+    public function appOptionalSource($app=null){
+
+        return $this->appVersion($app).'/'.StaticPathModel::$optional.'/'.StaticPathModel::$sourcePath;
+    }
+
+    /**
+     * @param null $app
+     * @return mixed
+     */
+    public function appOptionalWebservice($app=null){
+
+        return $this->appVersion($app).'/'.StaticPathModel::$optional.'/'.StaticPathModel::$webservice;
+    }
+
+    /**
+     * @param null $app
+     * @return mixed
+     */
+    public function appCall($app=null){
+
+        return $this->appVersion($app).'/'.StaticPathModel::$controller;
+    }
+
+    /**
+     * @param null $app
+     * @return mixed
+     */
+    public function appMiddleware($app=null){
+
+        return $this->appVersion($app).'/'.StaticPathModel::$middleware;
+    }
+
+    /**
+     * @param null $app
+     * @return mixed
+     */
+    public function appModel($app=null){
+
+        return $this->appVersion($app).'/'.StaticPathModel::$model;
+    }
+
+    /**
+     * @param null $app
+     * @return mixed
+     */
+    public function appMigration($app=null){
+
+        return $this->appVersion($app).'/'.StaticPathModel::$migration;
+    }
+
+    /**
+     * @param null $app
+     * @return mixed
+     */
+    public function appConfig($app=null){
+
+        return $this->appVersion($app).'/'.StaticPathModel::$config;
     }
 
     /**

@@ -4,6 +4,7 @@ namespace Resta\Response;
 
 use Resta\ApplicationProvider;
 use Resta\Traits\ResponseOutput;
+use Symfony\Component\HttpFoundation\Response;
 
 class JsonOutputter extends ApplicationProvider {
 
@@ -16,8 +17,14 @@ class JsonOutputter extends ApplicationProvider {
      */
     public function handle(){
 
+        //header set and symfony response call
         header('Content-type:application/json;charset=utf-8');
-        return json_encode($this->getOutPutter());
+        $response = new Response();
+
+        //json data set and get content from symfony response
+        $response->setContent(json_encode($this->getOutPutter()));
+        return $response->getContent();
+
     }
 
 
