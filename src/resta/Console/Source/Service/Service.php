@@ -1,30 +1,30 @@
 <?php
 
-namespace Resta\Console\Source\Endpoint;
+namespace Resta\Console\Source\Service;
 
 use Resta\Console\ConsoleListAccessor;
 use Resta\Console\ConsoleOutputter;
 use Resta\StaticPathModel;
 use Resta\Utils;
 
-class Endpoint extends ConsoleOutputter {
+class Service extends ConsoleOutputter {
 
     use ConsoleListAccessor;
 
     /**
      * @var $type
      */
-    public $type='endpoint';
+    public $type='service';
 
     /**
      * @var $define
      */
-    public $define='Endpoint create';
+    public $define='Service create';
 
     /**
      * @var $command_create
      */
-    public $command_create='php api endpoint create [project] service:[endpoint]';
+    public $command_create='php api service create [project] service:[endpoint]';
 
     /**
      * @method create

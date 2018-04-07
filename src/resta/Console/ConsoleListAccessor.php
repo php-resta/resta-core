@@ -49,6 +49,15 @@ trait ConsoleListAccessor {
         return $this->version().'/'.$this->argument['controller'];
     }
 
+    /**
+     * @return mixed
+     */
+    public function platform(){
+
+        $this->argument['platform']=StaticPathModel::$platform;
+        return $this->version().'/'.$this->argument['platform'];
+    }
+
 
     /**
      * @return mixed

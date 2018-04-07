@@ -58,7 +58,7 @@ class RouteApplication extends ApplicationProvider {
 
         //The kernel object
         //we temporarily assigned on the instance of the class obtained by route
-        return $this->app->kernel()->serviceDummy;
+        return $this->app->kernel()->serviceDummy[strtolower(method)];
     }
 
     /**
@@ -111,7 +111,8 @@ class RouteApplication extends ApplicationProvider {
         //In this case, the dummy object is checked as bool in the service conf object
         //and the equation is compared with the returned value.
         //If the boolean value is true at the end of the comparison, the dummy data screen is printed
-        return (false===$this->diffDummyAndController()) ? $this->serviceDummy() : $this->getCallBindController();
+        return (false===$this->diffDummyAndController()) ?
+            array_merge($this->serviceDummy(),['__serviceDummy'=>true]) : $this->getCallBindController();
 
     }
 
@@ -122,7 +123,7 @@ class RouteApplication extends ApplicationProvider {
     private function diffDummyAndController(){
 
         //We check the equality of the dummy data with the controller method data.
-        return Utils::isArrayEqual($this->getCallBindController(),$this->serviceDummy());
+        return Utils::array_diff_key_recursive($this->serviceDummy(),$this->getCallBindController());
     }
 
 

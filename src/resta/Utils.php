@@ -6,6 +6,10 @@ use Symfony\Component\Yaml\Yaml;
 
 class Utils {
 
+    /**
+     * @var array
+     */
+    private static $bool=[];
 
     /**
      * @return mixed
@@ -245,6 +249,37 @@ class Utils {
      */
     public static function callbackProcess($callback){
         return (is_callable($callback)) ? call_user_func($callback) : $callback;
+    }
+
+    /**
+     * @param $array1
+     * @param $array2
+     * @return bool
+     */
+    public static function array_diff_key_recursive ($array1, $array2) {
+
+        if(count($array1)!==count($array2)) self::$bool[]=false;
+
+        foreach ($array1 as $array1_key=>$array1_value){
+
+            //
+            if(!is_array($array1_value)){
+                if(!array_key_exists($array1_key,$array2)) self::$bool[]=false;
+            }
+            else{
+                if(!array_key_exists($array1_key,$array2)) self::$bool[]=false;
+
+                if(!isset($array2[$array1_key]) OR !is_array($array2[$array1_key])) $array2[$array1_key]=[];
+                if(isset($array1_value[0])) $array1_value=$array1_value[0];
+                if(isset($array2[$array1_key][0])) $array2[$array1_key]=$array2[$array1_key][0];
+                self::array_diff_key_recursive($array1_value,$array2[$array1_key]);
+            }
+        }
+
+        if(in_array(false,self::$bool)){
+            return false;
+        }
+        return true;
     }
 
 

@@ -54,6 +54,11 @@ class StaticPathList {
     public static $controller='__Call';
 
     /**
+     * @var $platform
+     */
+    public static $platform='__Platform';
+
+    /**
      * @var $sourcePath
      */
     public static $sourcePath='Source';
