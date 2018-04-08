@@ -2,6 +2,7 @@
 
 namespace Resta;
 
+use Store\Services\Cache;
 use Store\Services\HttpSession as Session;
 use Store\Services\Redis as Redis;
 use Store\Services\AppCollection as Collection;
@@ -103,6 +104,14 @@ class App {
 
         //and eventually we conclude the adapter class of the repository package as an instance.
         return app()->makeBind($repositoryNamespace)->adapter();
+    }
+
+    /**
+     * @param $arg
+     * @return Cache
+     */
+    private static function cache($arg){
+        return new Cache();
     }
 
     /**
@@ -252,6 +261,17 @@ class App {
 
         return (isset($list[$param])) ? strtolower($list[$param]) : null;
 
+    }
+
+    /**
+     * @param $output
+     * @param $file
+     * @param $type
+     * @return mixed
+     */
+    public function logger($output,$file,$type){
+
+        return app()->singleton()->loggerService->logHandler($output,$file,$type);
     }
 
 }

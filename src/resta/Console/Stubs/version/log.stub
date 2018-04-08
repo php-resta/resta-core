@@ -15,15 +15,14 @@ class ServiceLogController extends ServiceBaseController
 
     /**
      * @param $output
+     * @param string $file
+     * @param string $type
      * @throws \Exception
      */
-    public function file($output) {
-
-        //Log type level
-        $type=($this->getSuccess()) ? 'info' : 'error';
+    public function file($output,$file="access",$type="info") {
 
         //log register path
-        $filePath=StaticPathModel::appLog().'/access.log';
+        $filePath=StaticPathModel::appLog().'/'.$file.'.log';
 
         //monologue library and make the necessary adjustments.
         $log = new Logger('monolog');

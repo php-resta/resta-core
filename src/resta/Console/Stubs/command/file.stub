@@ -31,6 +31,6 @@ class __command__ extends ConsoleOutputter {
      */
     public function handle(){
 
-        return $this->blue('__command__');
+        return $this->info('__command__');
     }
 }

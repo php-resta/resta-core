@@ -116,6 +116,11 @@ class StaticPathList {
      */
     public static $resource='Resource';
 
+    /**
+     * @var $cache
+     */
+    public static $cache='Cache';
+
 
     /**
      * @var $language

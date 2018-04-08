@@ -2,8 +2,10 @@
 
 namespace Resta\Console\Source\Project;
 
+use const Grpc\STATUS_ABORTED;
 use Resta\Console\ConsoleListAccessor;
 use Resta\Console\ConsoleOutputter;
+use Resta\StaticPathModel;
 use Resta\Utils;
 
 class Project extends ConsoleOutputter {
@@ -42,6 +44,7 @@ class Project extends ConsoleOutputter {
         $this->directory['storageDir']              = $this->storage();
         $this->directory['logDir']                  = $this->log();
         $this->directory['resourceDir']             = $this->resource();
+        $this->directory['resourceCacheDir']        = $this->resource().'/'.StaticPathModel::$cache;
         $this->directory['languageDir']             = $this->language();
         $this->directory['sessionDir']              = $this->session();
         $this->directory['versionDir']              = $this->version();
@@ -83,6 +86,7 @@ class Project extends ConsoleOutputter {
         $this->touch['language/index']              = $this->language().'/index.html';
         $this->touch['log/index']                   = $this->log().'/index.html';
         $this->touch['resource/index']              = $this->resource().'/index.html';
+        $this->touch['resource/index']              = $this->resource().'/'.StaticPathModel::$cache.'/index.html';
         $this->touch['session/index']               = $this->session().'/index.html';
         $this->touch['controller/index']            = $this->controller().'/index.html';
         $this->touch['config/hateoas']              = $this->config().'/Hateoas.php';

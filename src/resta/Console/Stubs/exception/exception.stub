@@ -2,15 +2,28 @@
 
 namespace App\__project__\__version__\Optional\Exception;
 
-class __exception__Exception extends \DomainException
+use App\__project__\__version__\ServiceAnnotationsController;
+
+class __exception__Exception extends \Exception
 {
+    //get app annotations controller
+    use ServiceAnnotationsController;
+
     /**
      * @var string $message
      */
     protected $message = '__exception__ Exception';
 
     /**
-     * @var bool
+     * @method event
+     * @return mixed|void
      */
-    public $logger=false;
+    public function event(){
+
+        /**
+         * You can run the event directly when the exception is thrown.
+         * As an example you can log.
+        */
+        //logger([],'logFile','logType');
+    }
 }

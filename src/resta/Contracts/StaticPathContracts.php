@@ -20,6 +20,11 @@ interface StaticPathContracts {
     public function appStorage();
 
     /**
+     * @return mixed
+     */
+    public function appResourche();
+
+    /**
      * @param null $app
      * @return mixed
      */

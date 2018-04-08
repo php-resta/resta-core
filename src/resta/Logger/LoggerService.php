@@ -24,14 +24,16 @@ class LoggerService extends ApplicationProvider {
         }
 
         //we send the resulting adapter property as a reference to the bind automatic instance class.
-        $this->singleton()->loggerGlobalInstance->adapterProcess($appBase,$logAdapter);
+        $this->singleton()->loggerGlobalInstance->adapterProcess($appBase,$logAdapter,$this);
     }
 
     /**
      * @param $printer
+     * @param string $file
+     * @param string $type
      * @return mixed
      */
-    public function logHandler($printer){
+    public function logHandler($printer,$file="access",$type='info'){
 
         //we get the log object that was previously assigned.
         $log=$this->singleton()->log;
@@ -43,7 +45,7 @@ class LoggerService extends ApplicationProvider {
         //and log the application in the customized mode for the application.
         //The service log class uses the monolog class.
         if(method_exists($base=current($log),$adapter=key($log))){
-            call_user_func_array([$base,$adapter],[$printer]);
+            call_user_func_array([$base,$adapter],[$printer,$file,$type]);
         }
 
         //printer back

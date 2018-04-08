@@ -28,6 +28,14 @@ class StaticPathRepository {
     /**
      * @return mixed
      */
+    public function appResourche(){
+        return StaticPathModel::getAppStorage().'/'.StaticPathModel::$resource;
+    }
+
+
+    /**
+     * @return mixed
+     */
     public function appKernel(){
         return $this->app().'\\'.StaticPathModel::$kernel;
     }

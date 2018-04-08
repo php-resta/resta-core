@@ -26,7 +26,12 @@ trait ResponseOutput {
 
         //set log for printer
         if(property_exists($this->singleton(),'log')){
-            return $this->makeBind(LoggerService::class)->logHandler($printer);
+
+            //Log type level
+            $type=($this->getSuccess()) ? 'info' : 'error';
+
+            //logger service handler
+            return $this->singleton()->loggerService->logHandler($printer,'access',$type);
         }
 
         //return
