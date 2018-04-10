@@ -64,6 +64,11 @@ class StaticPathList {
     public static $sourcePath='Source';
 
     /**
+     * @var $sourceRequest
+     */
+    public static $sourceRequest='Request';
+
+    /**
      * @var $model
      */
     public static $model='Model';

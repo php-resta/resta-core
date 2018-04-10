@@ -73,7 +73,7 @@ class Project extends ConsoleOutputter {
         $this->touch['repository/index']            = $this->repository().'/index.html';
         $this->touch['source/index']                = $this->sourceDir().'/index.html';
         $this->touch['source/index1']               = $this->sourceEndpointDir().'/index.html';
-        $this->touch['source/index2']               = $this->sourceRequestDir().'/index.html';
+        $this->touch['source/request']              = $this->sourceRequestDir().'/Request.php';
         $this->touch['source/index3']               = $this->sourceSupportDir().'/index.html';
         $this->touch['kernel/kernel']               = $this->kernel().'/Kernel.php';
         $this->touch['middleware/validation']       = $this->middleware().'/Validation.php';

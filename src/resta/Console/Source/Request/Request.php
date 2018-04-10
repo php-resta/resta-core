@@ -1,30 +1,31 @@
 <?php
 
-namespace Resta\Console\Source\Exception;
+namespace Resta\Console\Source\Request;
 
+use const Grpc\STATUS_ABORTED;
 use Resta\Console\ConsoleListAccessor;
 use Resta\Console\ConsoleOutputter;
 use Resta\StaticPathModel;
 use Resta\Utils;
 
-class Exception extends ConsoleOutputter {
+class Request extends ConsoleOutputter {
 
     use ConsoleListAccessor;
 
     /**
      * @var $type
      */
-    public $type='exception';
+    public $type='request';
 
     /**
      * @var $define
      */
-    public $define='Exception create';
+    public $define='Request create';
 
     /**
      * @var $command_create
      */
-    public $command_create='php api exception create [projectName] exception:[exceptionName]';
+    public $command_create='php api request create [projectName] request:[requestName]';
 
     /**
      * @method create
@@ -32,14 +33,14 @@ class Exception extends ConsoleOutputter {
      */
     public function create(){
 
-        $exception=$this->argument['exception'];
+        $request=$this->argument['request'];
 
-        $this->directory['exceptionDir']=$this->optional().'/'.StaticPathModel::$optionalException;
+        $this->directory['requestDir']=$this->optional().'/'.StaticPathModel::$sourcePath.'/'.StaticPathModel::$sourceRequest;
 
         //set project directory
         $this->file->makeDirectory($this);
 
-        $this->touch['exception/exception']        =$this->directory['exceptionDir'].'/'.$exception.'Exception.php';
+        $this->touch['source/requestFile']        =$this->directory['requestDir'].'/'.$request.'Request.php';
 
         //set project touch
         $this->file->touch($this);
@@ -47,9 +48,9 @@ class Exception extends ConsoleOutputter {
         Utils::chmod($this->optional());
 
         echo $this->classical('---------------------------------------------------------------------------');
-        echo $this->bluePrint('Exception Named ['.$exception.'] Has Been Successfully Created');
+        echo $this->bluePrint('Request Named ['.$request.'] Has Been Successfully Created');
         echo $this->classical('---------------------------------------------------------------------------');
-        echo $this->cyan('   You can see in repository directory your '.$this->directory['exceptionDir'].'   ');
+        echo $this->cyan('   You can see in repository directory your '.$this->directory['requestDir'].'   ');
         echo $this->classical('---------------------------------------------------------------------------');
     }
 }

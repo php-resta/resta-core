@@ -1,0 +1,15 @@
+<?php
+
+namespace App\__project__\__version__\Optional\Source\Request;
+
+trait Request {
+
+    /**
+     * With the auto injector,
+     * all the indices in the array are executed as methods
+     * and the global input is automatically injected.
+     *
+     * @var array $autoInject
+     */
+    protected $autoInject=[];
+}

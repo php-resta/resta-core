@@ -1,0 +1,12 @@
+<?php
+
+namespace App\__project__\__version__\Optional\Source\Request;
+
+use Store\Services\RequestClient;
+
+class __request__Request extends RequestClient{
+
+    //request
+    use Request;
+
+}
