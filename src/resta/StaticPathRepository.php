@@ -28,6 +28,13 @@ class StaticPathRepository {
     /**
      * @return mixed
      */
+    public function appLanguage(){
+        return StaticPathModel::getAppStorage().'/'.StaticPathModel::$language;
+    }
+
+    /**
+     * @return mixed
+     */
     public function appResourche(){
         return StaticPathModel::getAppStorage().'/'.StaticPathModel::$resource;
     }

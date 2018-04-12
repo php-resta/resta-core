@@ -7,6 +7,7 @@ use Store\Services\HttpSession as Session;
 use Store\Services\Redis as Redis;
 use Store\Services\AppCollection as Collection;
 use Store\Services\DateCollection as Date;
+use Lingua\Lingua;
 
 /**
  * Class App
@@ -272,6 +273,33 @@ class App {
     public function logger($output,$file,$type){
 
         return app()->singleton()->loggerService->logHandler($output,$file,$type);
+    }
+
+    /**
+     * @param $data
+     * @param array $select
+     * @return mixed|string
+     */
+    public function translator($data,$select=array()){
+
+        //
+        $lang=(new Lingua(app()->path()->appLanguage()));
+
+        //
+        $base=app()->makeBind(StaticPathModel::appBase());
+
+        $defaultLocale=property_exists($base,'locale') ? $base->locale : 'en';
+
+        if(method_exists($base,'locale')){
+            $defaultLocale=$base->locale();
+        }
+
+        if(count($select)){
+            return $lang->include(['default'])->locale($defaultLocale)->get($data,$select);
+        }
+
+        return $lang->include(['default'])->locale($defaultLocale)->get($data);
+
     }
 
 }

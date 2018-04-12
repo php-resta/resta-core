@@ -22,6 +22,11 @@ interface StaticPathContracts {
     /**
      * @return mixed
      */
+    public function appLanguage();
+
+    /**
+     * @return mixed
+     */
     public function appResourche();
 
     /**

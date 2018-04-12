@@ -16,6 +16,9 @@ class ServiceBaseController extends ApplicationProvider
     //orm type
     public $orm='eloquent';
 
+    //localization
+    public $locale='tr';
+
     /**
      * @method getClientHeaders
      * @return array
