@@ -13,7 +13,7 @@ use Symfony\Component\Yaml\Yaml;
 class Router extends ApplicationProvider  {
 
     //get namespace for route and instance
-    use NamespaceForRoute,InstanceRegister;
+    use NamespaceForRoute;
 
     /**
      * @method route

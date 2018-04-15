@@ -8,9 +8,6 @@ use Resta\Utils;
 
 class Config extends ApplicationProvider  {
 
-    //Instance register
-    use InstanceRegister;
-
     /**
      * @param array $files
      */

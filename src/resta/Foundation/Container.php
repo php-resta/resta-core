@@ -21,6 +21,11 @@ class Container implements ApplicationContracts {
     public $kernel;
 
     /**
+     * @var array  $instance
+     */
+    private static $instance=[];
+
+    /**
      * @return mixed
      */
     public function kernel(){
@@ -214,6 +219,29 @@ class Container implements ApplicationContracts {
 
         //If the application is not a console operation, we re-bind to existing methods synchronously.
         return ($container) ? $this->build($object,$callback,true) : $this->make($object,$callback,true);
+    }
+
+    /**
+     * @method $class
+     * @param $class
+     * @return mixed
+     */
+    public function makeBind($class){
+
+        //We do an instance check to get the static instance values of
+        //the classes to be resolved with the makebind method.
+        if(!isset(self::$instance[$class])){
+
+            //By singleton checking, we solve the dependency injection of the given class.
+            //Thus, each class can be called together with its dependency.
+            self::$instance[$class]=Utils::makeBind($class,$this->applicationProviderBinding($this));
+            return self::$instance[$class];
+        }
+
+        //if the class to be resolved has already been loaded,
+        //we get the instance value that was saved to get the recurring instance.
+        return self::$instance[$class];
+
     }
 
 

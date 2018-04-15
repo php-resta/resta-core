@@ -7,16 +7,12 @@ use Resta\Contracts\ApplicationHelpersContracts;
 use Resta\StaticPathModel;
 use Resta\Traits\ApplicationPath;
 use Resta\Utils;
+use Resta\App;
 
 class Application extends Kernel implements ApplicationContracts,ApplicationHelpersContracts {
 
     //get app paths
     use ApplicationPath;
-
-    /**
-     * @var array  $instance
-     */
-    private static $instance=[];
 
     /**
      * @var $console null
@@ -92,29 +88,6 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
         //that we can bind to the special class di in the dependency condition.
         //This method is automatically added to the classes resolved by the entire makebind method.
         return array_merge(['app'=>$make],$bind);
-    }
-
-    /**
-     * @method $class
-     * @param $class
-     * @return mixed
-     */
-    public function makeBind($class){
-
-        //We do an instance check to get the static instance values of
-        //the classes to be resolved with the makebind method.
-        if(!isset(self::$instance[$class])){
-
-            //By singleton checking, we solve the dependency injection of the given class.
-            //Thus, each class can be called together with its dependency.
-            self::$instance[$class]=Utils::makeBind($class,$this->applicationProviderBinding($this));
-            return self::$instance[$class];
-        }
-
-        //if the class to be resolved has already been loaded,
-        //we get the instance value that was saved to get the recurring instance.
-        return self::$instance[$class];
-
     }
 
     /**

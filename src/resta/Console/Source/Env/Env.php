@@ -40,6 +40,6 @@ class Env extends ConsoleOutputter {
 
         Utils::chmod(StaticPathModel::appPath());
 
-        return $this->blue('Your Environment File Has Been Successfully Created');
+        return $this->info('Your Environment File Has Been Successfully Created');
     }
 }

@@ -42,6 +42,6 @@ class Key extends ConsoleOutputter {
         //set key file touch
         $this->file->touch($this);
 
-        return $this->blue('Your Application Key File Has Been Successfully Created');
+        return $this->info('Your Application Key File Has Been Successfully Created');
     }
 }

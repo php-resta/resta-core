@@ -12,9 +12,6 @@ use Store\Services\RequestService;
 
 class GlobalAccessor extends ApplicationProvider  {
 
-    //instance register
-    use InstanceRegister;
-
     /**
      * @method handle
      */

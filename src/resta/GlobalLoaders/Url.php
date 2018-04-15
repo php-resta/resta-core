@@ -8,9 +8,6 @@ use Resta\Traits\InstanceRegister;
 
 class Url extends ApplicationProvider  {
 
-    //Instance register
-    use InstanceRegister;
-
     /**
      * @param $urlList array
      * @method definitor

@@ -12,9 +12,6 @@ use Monolog\Logger as Log;
 
 class Logger extends ApplicationProvider  {
 
-    //Instance register
-    use InstanceRegister;
-
     /**
      * @param $base
      * @param $adapter

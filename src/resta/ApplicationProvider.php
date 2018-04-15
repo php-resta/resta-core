@@ -45,6 +45,17 @@ class ApplicationProvider {
     }
 
     /**
+     * @param $key
+     * @param $object
+     * @param null $concrete
+     */
+    public function register($key,$object,$concrete=null){
+
+        //register app bound
+        return $this->app()->bound->register($key,$object,$concrete);
+    }
+
+    /**
      * SymfonyRequest constructor.
      * @return \Symfony\Component\HttpFoundation\Request|\Store\Services\RequestService
      */

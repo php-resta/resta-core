@@ -5,12 +5,9 @@ namespace Resta\Booting;
 use Resta\ApplicationProvider;
 use Resta\App;
 use Resta\Container;
-use Resta\Traits\InstanceRegister;
+use Resta\Foundation\RegisterAppBound;
 
 class ApplicationInstanceLoader extends ApplicationProvider {
-
-    //Instance register
-    use InstanceRegister;
 
     /**
      * @method boot
@@ -21,6 +18,11 @@ class ApplicationInstanceLoader extends ApplicationProvider {
         //we can use this method to move an instance of the application class with the kernel object
         //and easily resolve an encrypted instance of all the kernel variables in our helper class.
         class_alias(App::class,'application');
+
+        //For the application, we create the object that the register method,
+        // which is the container center, is connected to by the kernel objesine register method.
+        $registeAppBound=$this->makeBind(RegisterAppBound::class);
+        $registeAppBound->register('bound',$registeAppBound);
         $this->register('appClass',new \application());
 
         //we register the general application instance object.

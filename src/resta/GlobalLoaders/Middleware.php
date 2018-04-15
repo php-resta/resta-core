@@ -8,9 +8,6 @@ use Resta\Traits\InstanceRegister;
 
 class Middleware extends ApplicationProvider  {
 
-    //Instance register
-    use InstanceRegister;
-
     public function setAppInstance(){
 
         //We are logging the kernel for the middleware class and the exclude class.

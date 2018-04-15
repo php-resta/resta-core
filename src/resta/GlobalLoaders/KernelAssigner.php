@@ -8,9 +8,6 @@ use Resta\Utils;
 
 class KernelAssigner extends ApplicationProvider  {
 
-    //Instance register
-    use InstanceRegister;
-
     /**
      * @return mixed|void
      */

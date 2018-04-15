@@ -136,11 +136,4 @@ class Kernel extends Container {
         $this->middlewareLoaders($this);
     }
 
-
-
-
-
-
-
-
 }

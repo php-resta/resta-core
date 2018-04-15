@@ -7,9 +7,6 @@ use Resta\Traits\InstanceRegister;
 
 class Environment extends ApplicationProvider  {
 
-    //Instance register
-    use InstanceRegister;
-
     /**
      * @method environment
      * @param null $environment
