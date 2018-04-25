@@ -34,5 +34,12 @@ interface ApplicationContracts {
      */
     public function kernel();
 
+    /**
+     * @param $eventName
+     * @param $object
+     * @return mixed
+     */
+    public function addEvent($eventName,$object);
+
 
 }

@@ -10,15 +10,17 @@ class RegisterAppBound extends ApplicationProvider {
      * @param $key
      * @param $object
      * @param null $concrete
+     * @param bool $unregister
+     * @return mixed|void
      */
-    public function register($key,$object,$concrete=null){
+    public function register($key,$object,$concrete=null,$unregister=false){
 
         if(defined('appInstance')){
-            $this->setAppSingleton($key,$object,$concrete);
-            $this->setAppInstance($key,$object,$concrete);
+            $this->setAppSingleton($key,$object,$concrete,$unregister);
+            $this->setAppInstance($key,$object,$concrete,$unregister);
         }
         else{
-            $this->setAppSingleton($key,$object,$concrete);
+            $this->setAppSingleton($key,$object,$concrete,$unregister);
         }
     }
 
@@ -26,16 +28,31 @@ class RegisterAppBound extends ApplicationProvider {
      * @param $key
      * @param $object
      * @param null $concrete
+     * @param bool $unregister
      */
-    private function setAppInstance($key,$object,$concrete=null){
+    private function setAppInstance($key,$object,$concrete=null,$unregister=false){
 
         $appInstance=\application::getAppInstance();
 
         if($concrete===null) {
-            $appInstance->app->kernel->{$key}=$object;
+
+            if($unregister){
+                unset( $appInstance->app->kernel->{$key});
+            }
+            else{
+                $appInstance->app->kernel->{$key}=$object;
+            }
+
         }
         else{
-            $appInstance->app->kernel->{$key}[$object]=$concrete;
+
+            if($unregister){
+                unset($appInstance->app->kernel->{$key});
+            }
+            else{
+                $appInstance->app->kernel->{$key}[$object]=$concrete;
+            }
+
         }
     }
 
@@ -43,18 +60,33 @@ class RegisterAppBound extends ApplicationProvider {
      * @param $key
      * @param $object
      * @param null $concrete
+     * @param bool $unregister
      */
-    private function setAppSingleton($key,$object,$concrete=null){
+    private function setAppSingleton($key,$object,$concrete=null,$unregister=false){
 
         if($concrete===null) {
 
             if(!isset($this->singleton()->{$key})){
-                $this->singleton()->{$key}=$object;
+
+                if($unregister){
+                    unset($this->singleton()->{$key});
+                }
+                else{
+                    $this->singleton()->{$key}=$object;
+                }
+
             }
 
         }
         else{
-            $this->singleton()->{$key}[$object]=$concrete;
+
+            if($unregister){
+                unset($this->singleton()->{$key});
+            }
+            else{
+                $this->singleton()->{$key}[$object]=$concrete;
+            }
+
         }
     }
 

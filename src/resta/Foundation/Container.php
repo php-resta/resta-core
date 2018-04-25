@@ -37,6 +37,15 @@ class Container implements ApplicationContracts {
     }
 
     /**
+     * @return mixed
+     */
+    public function kernelAssigner(){
+
+        //We will use the kernelAssigner class to resolve the singleton object state.
+        return $this->makeBind(KernelAssigner::class);
+    }
+
+    /**
      * @method serviceContainerObject
      * @return void
      */
@@ -44,7 +53,7 @@ class Container implements ApplicationContracts {
 
         //Since the objects that come to the build method are objects from the container method,
         //we need to automatically create a kernel object named serviceContainer in this method.
-        $this->makeBind(KernelAssigner::class)->container();
+        $this->kernelAssigner()->container();
     }
 
     /**
@@ -93,6 +102,24 @@ class Container implements ApplicationContracts {
     }
 
     /**
+     * @param $eventName
+     * @param $object
+     * @return mixed
+     */
+    public function addEvent($eventName,$object){
+
+        //Since the objects that come to the build method are objects from the container method,
+        //we need to automatically create a kernel object named serviceContainer in this method.
+        $this->kernelAssigner()->event();
+
+        //If the bind method does not have parameters object and callback, the value is directly assigned to the kernel object.
+        //Otherwise, when the bind object and callback are sent, the closure class inherits
+        //the applicationProvider object and the makeBind method is called
+        return $this->bind($eventName,$object,'container');
+
+    }
+
+    /**
      * @method singleton
      */
     public function singleton(){
@@ -130,7 +157,7 @@ class Container implements ApplicationContracts {
 
         //the value corresponding to the bind value for the global object is assigned and
         //the makeBind method is called for the dependency injection.
-        $this->makeBind(KernelAssigner::class)->setKernelObject($object,$callback);
+        $this->kernelAssigner()->setKernelObject($object,$callback);
 
         //return kernel object
         return $this->kernel();
@@ -159,7 +186,7 @@ class Container implements ApplicationContracts {
 
         //The console share is evaluated as a true variable to be assigned as the 3rd parameter in the classes to be bound.
         //The work to be done here is to bind the classes to be included in the console share privately.
-        $this->makeBind(KernelAssigner::class)->consoleShared($object,$callback);
+        $this->kernelAssigner()->consoleShared($object,$callback);
     }
 
     /**
@@ -196,7 +223,7 @@ class Container implements ApplicationContracts {
 
         //the value corresponding to the bind value for the global object is assigned and
         //the makeBind method is called for the dependency method.
-        $this->makeBind(KernelAssigner::class)->setKernelObject($object,$callback,'serviceContainer');
+        $this->kernelAssigner()->setKernelObject($object,$callback,'serviceContainer');
 
         //return kernel object
         return $this->kernel();

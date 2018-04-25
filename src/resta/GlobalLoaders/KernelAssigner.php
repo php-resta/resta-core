@@ -20,6 +20,18 @@ class KernelAssigner extends ApplicationProvider  {
     }
 
     /**
+     * @return mixed|void
+     */
+    public function event(){
+
+        //We are initializing the array property for the service container object.
+        if(!isset($this->singleton()->events)){
+            $this->register('eventObject',true);
+            $this->register('events',[]);
+        }
+    }
+
+    /**
      * @param $object
      * @param $callback
      * @return mixed|void
@@ -97,8 +109,14 @@ class KernelAssigner extends ApplicationProvider  {
 
             //the value corresponding to the bind value for the global object is assigned and
             //the makeBind method is called for the dependency method.
-            //$this->singleton()->serviceContainer[$object]=$concrete;
-            $this->register('serviceContainer',$object,$concrete);
+            $containerType=($eventObject=isset($this->singleton()->eventObject)) ? 'events' : 'serviceContainer';
+            $this->register($containerType,$object,$concrete);
+
+            //If the method type to be saved for
+            //the container comes as an event object, we remove it from the registration state.
+            if($eventObject){
+                $this->register('eventObject',true,null,true);
+            }
         }
     }
 
