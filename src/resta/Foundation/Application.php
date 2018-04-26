@@ -2,6 +2,8 @@
 
 namespace Resta\Foundation;
 
+use App\AppKernel;
+use Resta\ClosureDispatcher;
 use Resta\Contracts\ApplicationContracts;
 use Resta\Contracts\ApplicationHelpersContracts;
 use Resta\StaticPathModel;
@@ -47,47 +49,26 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
     }
 
     /**
-     * @param $boot
+     * @param null $boot
+     * @param null $maker
      * @return mixed
      */
-    protected function bootFire($boot){
+    public function bootFire($boot=null,$maker=null){
+
+        //we can refer to this method
+        //because we can boot classes in the middleware or bootstrappers array.
+        if($boot===null && $maker!==null){
+
+            //We create kernel bootstrapping objects
+            //that can be changed by you with the closure dispatcher method.
+            return $this->makeBind(ClosureDispatcher::class,['bind'=>new AppKernel()])->call(function() use ($maker){
+                return $this->{$maker};
+            });
+        }
 
         //The boot method to be executed can be specified by the user.
         //We use this method to know how to customize it.
         return forward_static_call_array([array_pop($boot),'loadBootstrappers'],[$boot]);
-    }
-
-    /**
-     * @return array
-     */
-    public function getMiddlewareGroups(){
-
-        //we can refer to this method
-        //because we can boot classes in the middleware array.
-        return $this->middlewareGroups;
-    }
-
-    /**
-     * @return array
-     */
-    public function getBootstrappers(){
-
-        //we can refer to this method
-        //because we can boot classes in the bootstrappers array.
-        return $this->bootstrappers;
-    }
-
-    /**
-     * @param $make
-     * @param array $bind
-     * @return array
-     */
-    public function applicationProviderBinding($make,$bind=array()){
-
-        //service container is an automatic application provider
-        //that we can bind to the special class di in the dependency condition.
-        //This method is automatically added to the classes resolved by the entire makebind method.
-        return array_merge(['app'=>$make],$bind);
     }
 
     /**

@@ -58,6 +58,6 @@ class BootFireCallback extends ApplicationProvider {
      */
     public static function getBooter($booter){
 
-        return 'get'.ucfirst(end($booter));
+        return end($booter);
     }
 }

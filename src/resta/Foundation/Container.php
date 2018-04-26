@@ -26,6 +26,11 @@ class Container implements ApplicationContracts {
     private static $instance=[];
 
     /**
+     * @var array $bindParams
+     */
+    private static $bindParams=[];
+
+    /**
      * @return mixed
      */
     public function kernel(){
@@ -249,19 +254,26 @@ class Container implements ApplicationContracts {
     }
 
     /**
-     * @method $class
      * @param $class
+     * @param array $bind
      * @return mixed
      */
-    public function makeBind($class){
+    public function makeBind($class,$bind=array()){
+
+        //the context bind objects are checked again and the bind sequence submitted by
+        //the user is checked and forced to re-instantiate the object.
+        $this->contextualBindCleaner($class,$bind);
 
         //We do an instance check to get the static instance values of
         //the classes to be resolved with the makebind method.
         if(!isset(self::$instance[$class])){
 
+            //bind params object
+            self::$bindParams[$class]=$bind;
+
             //By singleton checking, we solve the dependency injection of the given class.
             //Thus, each class can be called together with its dependency.
-            self::$instance[$class]=Utils::makeBind($class,$this->applicationProviderBinding($this));
+            self::$instance[$class]=Utils::makeBind($class,$this->applicationProviderBinding($this,self::$bindParams[$class]));
             return self::$instance[$class];
         }
 
@@ -269,6 +281,34 @@ class Container implements ApplicationContracts {
         //we get the instance value that was saved to get the recurring instance.
         return self::$instance[$class];
 
+    }
+
+    /**
+     * @param $class
+     * @param $bind
+     */
+    private function contextualBindCleaner($class,$bind){
+
+        //the context bind objects are checked again and the bind sequence submitted by
+        //the user is checked and forced to re-instantiate the object.
+        if(isset(self::$instance[$class]) && self::$bindParams[$class]!==$bind){
+            unset(self::$instance[$class]);
+            unset(self::$bindParams[$class]);
+        }
+    }
+
+
+    /**
+     * @param $make
+     * @param array $bind
+     * @return array
+     */
+    public function applicationProviderBinding($make,$bind=array()){
+
+        //service container is an automatic application provider
+        //that we can bind to the special class di in the dependency condition.
+        //This method is automatically added to the classes resolved by the entire makebind method.
+        return array_merge($bind,['app'=>$make]);
     }
 
 

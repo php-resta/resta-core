@@ -41,5 +41,12 @@ interface ApplicationContracts {
      */
     public function addEvent($eventName,$object);
 
+    /**
+     * @param $class
+     * @param array $bind
+     * @return mixed
+     */
+    public function makeBind($class,$bind=array());
+
 
 }

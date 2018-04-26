@@ -81,7 +81,7 @@ class CustomBooter {
     private function getBooterList($booter){
 
         //We specify the method call for the booter list.
-        return $booter[0]->{$this->boot}();
+        return $booter[0]->bootFire(null,$this->boot);
     }
 
 }
