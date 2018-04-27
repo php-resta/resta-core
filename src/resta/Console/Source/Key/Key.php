@@ -4,9 +4,10 @@ namespace Resta\Console\Source\Key;
 
 use Resta\Console\ConsoleListAccessor;
 use Resta\Console\ConsoleOutputter;
-use Boot\Encrypter;
+
 use Resta\StaticPathModel;
 use Resta\Utils;
+use Symfony\Component\Security\Core\Tests\Encoder\EncAwareUser;
 
 class Key extends ConsoleOutputter {
 
@@ -37,7 +38,7 @@ class Key extends ConsoleOutputter {
         $this->touch['main/keygenerate']= StaticPathModel::getEncrypter();
 
         //key generate code
-        $this->argument['applicationKey']=$this->app->app->makeBind(Encrypter::class)->keyGenerate();
+        $this->argument['applicationKey']=app()->singleton()->bindings['encrypter']->setCipherText();
 
         //set key file touch
         $this->file->touch($this);

@@ -8,8 +8,9 @@ class GlobalAssignerForBind extends ApplicationProvider  {
 
     /**
      * @param $bindClass
+     * @param $callback
      */
-    public function getAssigner($bindClass){
+    public function getAssigner($bindClass,$callback){
 
         //set namespace for bind class
         $bindClassNamespace=__NAMESPACE__.'\\'.ucfirst($bindClass);
@@ -21,8 +22,17 @@ class GlobalAssignerForBind extends ApplicationProvider  {
 
             //global instance name and kernel object assign
             $bindClassInstanceName=$bindClass.'GlobalInstance';
-            $this->singleton()->{$bindClassInstanceName}=$this->makeBind($bindClassNamespace);
+            $this->register($bindClassInstanceName,$this->makeBind($bindClassNamespace));
         }
+
+        //we register the bound object to the kernel bindings property.
+        if(is_callable($callback)){
+            if(class_exists($call=call_user_func($callback))){
+                $this->register('bindings',$bindClass,$this->makeBind($call));
+            }
+
+        }
+
     }
 
 }

@@ -10,7 +10,6 @@ use Resta\Utils;
 
 class Encrypter extends ApplicationProvider {
 
-
     /**
      * @return mixed
      * @throws \Defuse\Crypto\Exception\EnvironmentIsBrokenException
@@ -32,7 +31,7 @@ class Encrypter extends ApplicationProvider {
 
         //we are assigning a singleton object
         //so that we can use our application key in the project.
-        $this->app->singleton()->applicationKey=$appKey[0];
+        $this->singleton()->encrypterGlobalInstance->applicationKey($appKey);
 
         //If the crypto decrypts when we get a false error, we stop the automatic application
         return Crypto::Decrypt($appKey[0], unserialize(base64_decode($appKey[1])));

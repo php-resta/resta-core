@@ -158,7 +158,7 @@ class Container implements ApplicationContracts {
         //we automatically load a global loaders for the bind method
         //and assign it to the object name in the kernel object with bind,
         //which you can easily use in the booted classes for kernel object assignments.
-        $this->globalAssignerForBind($object);
+        $this->globalAssignerForBind($object,$callback);
 
         //the value corresponding to the bind value for the global object is assigned and
         //the makeBind method is called for the dependency injection.
@@ -195,16 +195,15 @@ class Container implements ApplicationContracts {
     }
 
     /**
-     * @method globalAssignerForBind
      * @param $object
-     * @return mixed
+     * @param $callback
      */
-    private function globalAssignerForBind($object){
+    private function globalAssignerForBind($object,$callback){
 
         //we automatically load a global loaders for the bind method
         //and assign it to the object name in the kernel object with bind,
         //which you can easily use in the booted classes for kernel object assignments.
-        $this->makeBind(GlobalAssignerForBind::class)->getAssigner($object);
+        $this->makeBind(GlobalAssignerForBind::class)->getAssigner($object,$callback);
 
     }
 
@@ -243,6 +242,11 @@ class Container implements ApplicationContracts {
 
         //we check whether the callback value is a callable function.
         $isCallableForCallback=is_callable($callback);
+
+        //we automatically load a global loaders for the bind method
+        //and assign it to the object name in the kernel object with bind,
+        //which you can easily use in the booted classes for kernel object assignments.
+        $this->globalAssignerForBind($object,$callback);
 
         //If the console object returns true,
         //we do not cancel binding operations

@@ -2,24 +2,6 @@
 
 namespace Resta\Foundation;
 
-use Boot\Encrypter;
-use Boot\Logger;
-use Resta\Console\ConsoleBindings;
-use Resta\Booting\ApplicationInstanceLoader;
-use Resta\Booting\ConfigLoader;
-use Resta\Booting\Environment;
-use Resta\Booting\Exception;
-use Resta\Booting\GlobalAccessor;
-use Resta\Booting\Console;
-use Resta\Booting\LogProvider;
-use Resta\Booting\Middleware;
-use Resta\Booting\ResponseManager;
-use Resta\Booting\RouteProvider;
-use Resta\Booting\ServiceContainer;
-use Resta\Booting\UrlParse;
-use Resta\Utils;
-
-
 class Kernel extends Container {
 
     /**
@@ -32,16 +14,16 @@ class Kernel extends Container {
      */
     protected $middlewareGroups=[
 
-        ApplicationInstanceLoader::class,
-        GlobalAccessor::class,
-        Exception::class,
-        UrlParse::class,
-        LogProvider::class,
-        Environment::class,
-        Encrypter::class,
-        ConfigLoader::class,
-        ServiceContainer::class,
-        Middleware::class
+        'Resta\Booting\ApplicationInstanceLoader',
+        'Resta\Booting\GlobalAccessor',
+        'Resta\Booting\Exception',
+        'Resta\Booting\UrlParse',
+        'Resta\Booting\LogProvider',
+        'Resta\Booting\Environment',
+        'Resta\Booting\Encrypter',
+        'Resta\Booting\ConfigLoader',
+        'Resta\Booting\ServiceContainer',
+        'Resta\Booting\Middleware'
     ];
 
     /**
@@ -49,9 +31,9 @@ class Kernel extends Container {
      */
     protected $bootstrappers=[
 
-        Console::class,
-        RouteProvider::class,
-        ResponseManager::class,
+        'Resta\Booting\Console',
+        'Resta\Booting\RouteProvider',
+        'Resta\Booting\ResponseManager',
 
     ];
 
