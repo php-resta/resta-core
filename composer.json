@@ -1,9 +1,9 @@
 {
-    "name": "aligurbuz/resta",
+    "name": "restapix/resta",
     "type": "library",
     "description": "resta php api restfull framework",
     "keywords": ["php","restapi","restfull"],
-    "homepage": "https://github.com/aligurbuz/resta",
+    "homepage": "https://github.com/restapix/resta",
     "license": "MIT",
     "authors": [
         {
@@ -11,16 +11,39 @@
             "email": "galiant781@gmail.com"
         }
     ],
+
     "autoload": {
         "psr-4": {
-            "App\\": "src/app",
-            "Boot\\": "src/boot",
-            "Store\\": "src/store"
+            "Resta\\": "src/resta/"
         },
-        "files": ["src/helpers.php"]
+        "files": ["src/resta/ApplicationHelpers.php"]
     },
     "require": {
-        "restapix/resta":"dev-master",
-        "phpunit/phpunit": "^6.3"
+        "php-di/php-di": "^5.4",
+        "ocramius/proxy-manager": "~1.0|~2.0",
+        "symfony/yaml": "2.*",
+        "nesbot/carbon": "^1.21",
+        "symfony/http-foundation": "^3.2",
+        "predis/predis": "^1.0",
+        "symfony/var-dumper": "*",
+        "monolog/monolog": "^1.22",
+        "symfony/console": "^3.2",
+        "symfony/debug": "^3.2",
+        "vlucas/phpdotenv": "^2.4",
+        "guzzlehttp/guzzle": "^6.2",
+        "symfony/finder": "^4.0",
+        "symfony/security-csrf": "^3.2",
+        "symfony/filesystem": "^3.2",
+        "twig/twig": "~1.0",
+        "symfony/cache": "^3.2",
+        "illuminate/database": "^5.4",
+        "illuminate/pagination": "^5.4",
+        "symfony/event-dispatcher": "^3.2",
+        "spatie/array-to-xml": "^2.3",
+        "defuse/php-encryption": "^2.1",
+        "symfony/process": "^4.0",
+        "zendframework/zend-validator": "^2.10",
+        "aligurbuz/lingua": "^1.0",
+        "mobiledetect/mobiledetectlib": "^2.8"
     }
 }
