@@ -15,7 +15,8 @@
     "autoload": {
         "psr-4": {
             "Resta\\": "src/resta/"
-        }
+        },
+        "files": ["src/resta/ApplicationHelpers.php"]
     },
     "require": {}
 }
