@@ -1,0 +1,19 @@
+<?php
+
+namespace App\__project__\__version__\Config;
+
+class AliasGroup
+{
+    /**
+     * alias class group settings.
+     * access alias classes for every service.
+     * @return array
+     */
+    public function handle() {
+
+        return [
+            'tool' => 'App\__project__\__version__\ServiceToolsController'
+        ];
+
+    }
+}

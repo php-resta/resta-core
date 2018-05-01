@@ -223,6 +223,7 @@ class App {
         if(!property_exists($instance->container(),$class)){
             throw new \InvalidArgumentException('container object false for ('.$class.') object');
         }
+
         if(!is_array($instance->container()->{$class}) AND Utils::isNamespaceExists($container=$instance->container()->{$class})){
             return $instance->makeBind($container,$bind);
         }

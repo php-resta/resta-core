@@ -46,6 +46,7 @@ class autoloadRegister {
         $this->class=$class;
         $this->classPath=root.'/'.$this->class.'.php';
         $this->classPath=str_replace("\\","/",$this->classPath);
+
     }
 
     /**
@@ -66,19 +67,24 @@ class autoloadRegister {
      */
     private function checkAliasClassFormatter($class,$callback){
 
-        if(!file_exists($class)){
-            return $this->getAliasClassFormatter($class);
+        $systemApp=[];
+        if(defined('app')){
+            $systemApp=(new ClassAliasGroup())->handle($class);
         }
+
+        if(!file_exists($class)){
+            return $this->getAliasClassFormatter($class,$systemApp);
+        }
+
         return call_user_func($callback);
     }
 
     /**
      * @param $class
-     * @return mixed
+     * @param $systemApp
      */
-    private function getAliasClassFormatter($class){
-
-
+    private function getAliasClassFormatter($class,$systemApp){
+        $this->setAliasClassGroup($class,$systemApp);
 
     }
 
@@ -89,6 +95,13 @@ class autoloadRegister {
      */
     private function setAliasClassGroup($class,$systemApp){
 
+        $alias=str_replace(root.'/','',$class);
+        $alias=str_replace('.php','',$alias);
+
+        //set class_alias groups
+        if(array_key_exists($alias,$systemApp)){
+            class_alias($systemApp[$alias],$alias);
+        }
 
     }
 
