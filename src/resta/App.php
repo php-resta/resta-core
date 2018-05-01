@@ -90,9 +90,10 @@ class App {
 
     /**
      * @param $service
+     * @param bool $namespace
      * @return mixed
      */
-    private static function repository($service){
+    public static function repository($service,$namespace=false){
 
         //I can get the repository name from the magic method as a salt repository,
         //after which we will edit it as an adapter namespace.
@@ -102,6 +103,8 @@ class App {
         //then we will give the user an example of the adapter class in each repository call.
         $repositoryAdapterName  = $repositoryName.'Adapter';
         $repositoryNamespace    = StaticPathModel::appRepository().'\\'.$repositoryName.'\\'.$repositoryAdapterName;
+
+        if($namespace) return $repositoryNamespace;
 
         //and eventually we conclude the adapter class of the repository package as an instance.
         return app()->makeBind($repositoryNamespace)->adapter();
