@@ -68,27 +68,48 @@ class ApplicationProvider {
     }
 
     /**
-     * @param $param null
-     * @return mixed
+     * @param null $param
+     * @param null $default
+     * @return null
      */
-    public function get($param=null)
+    public function get($param=null,$default=null)
     {
         //symfony request query object
         $get=$this->app()->get;
 
-        return ($param===null) ? $get : (isset($get[$param]) ? $get[$param] : null);
+        return ($param===null) ? $get : (isset($get[$param]) ? $get[$param] : $default);
     }
 
     /**
-     * @param $param null
-     * @return mixed
+     * @param null $param
+     * @param null $default
+     * @return null
      */
-    public function post($param=null)
+    public function post($param=null,$default=null)
     {
         //symfony request query object
         $post=$this->app()->post;
 
-        return ($param===null) ? $post : (isset($post[$param]) ? $post[$param] : null);
+        return ($param===null) ? $post : (isset($post[$param]) ? $post[$param] : $default);
+    }
+
+    /**
+     * @param null $param
+     * @param null $default
+     * @return null
+     */
+    public function headers($param=null,$default=null)
+    {
+        $list=[];
+
+        //We only get the objects in the list name to match the header objects
+        //that come with the request path to the objects sent by the client
+        foreach ($this->request()->headers->all() as $key=>$value) {
+            $list[$key]=$value;
+        }
+
+        //return header list
+        return ($param===null) ? $list : (isset($list[$param]) ? $list[$param][0] : $default);
     }
 
     /**
@@ -194,7 +215,8 @@ class ApplicationProvider {
      */
     public function response(){
 
-        return new ResponseOutManager($this);
+        $object=debug_backtrace()[2]['object'];
+        return new ResponseOutManager($object);
     }
 
     /**

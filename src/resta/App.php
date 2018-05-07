@@ -2,6 +2,7 @@
 
 namespace Resta;
 
+use Resta\Config\ConfigProcess;
 use Store\Services\Cache;
 use Store\Services\HttpSession as Session;
 use Store\Services\Redis as Redis;
@@ -177,31 +178,11 @@ class App {
 
     /**
      * @param null $config
-     * @return string
+     * @return ConfigProcess
      */
     public function configLoaders($config=null){
 
-        $border=new self;
-
-        $kernelConfig=$border->getAppInstance()->singleton()->appConfig;
-
-        if(null===$config){
-            return $kernelConfig;
-        }
-
-        if(isset($kernelConfig[$config])){
-
-            if(Utils::isNamespaceExists($configFile=$kernelConfig[$config]['namespace'])){
-                return (object)Utils::makeBind($configFile)->handle();
-            }
-
-            if(file_exists($configFile=$kernelConfig[$config]['file'])){
-                $pureConfig=require($configFile);
-                return (object)$pureConfig;
-            }
-        }
-
-        throw new \InvalidArgumentException('The requested config is not available');
+        return (new ConfigProcess($config))->get();
     }
 
     /**

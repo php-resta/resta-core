@@ -19,28 +19,4 @@ class ServiceBaseController extends ApplicationProvider
     //localization
     public $locale='tr';
 
-    /**
-     * @method getClientHeaders
-     * @return array
-     */
-    public function getClientHeaders(){
-
-        $list=[];
-
-        //We only get the objects in the list name to match the header objects
-        //that come with the request path to the objects sent by the client
-        foreach ($this->request()->headers->all() as $key=>$value) {
-
-            //We separate the header objects sent by the client from all
-            //the header fields and send them only to the output
-            if(!in_array($key,StaticPathModel::httpHeaders())){
-                $list[$key]=$value;
-            }
-        }
-
-        //return header list
-        return $list;
-    }
-
-
 }

@@ -51,16 +51,28 @@ if (!function_exists('request')) {
     }
 }
 
+if (!function_exists('response')) {
+
+    /**
+     * @return \Resta\Response\ResponseOutManager
+     */
+    function response()
+    {
+        return appInstance()->response();
+    }
+}
+
 
 if (!function_exists('post')) {
 
     /**
      * @param null $param
+     * @param null $default
      * @return mixed
      */
-    function post($param=null)
+    function post($param=null,$default=null)
     {
-        return appInstance()->post($param);
+        return appInstance()->post($param,$default);
     }
 }
 
@@ -70,11 +82,25 @@ if (!function_exists('get')) {
 
     /**
      * @param null $param
-     * @return mixed
+     * @param null $default
+     * @return null
      */
-    function get($param=null)
+    function get($param=null,$default=null)
     {
-        return appInstance()->get($param);
+        return appInstance()->get($param,$default);
+    }
+}
+
+if (!function_exists('headers')) {
+
+    /**
+     * @param null $param
+     * @param null $default
+     * @return array
+     */
+    function headers($param=null,$default=null)
+    {
+        return appInstance()->headers($param,$default);
     }
 }
 
@@ -97,7 +123,7 @@ if (!function_exists('config')) {
 
     /**
      * @param $config null
-     * @return string
+     * @return \Resta\Config\ConfigProcess
      */
     function config($config=null)
     {

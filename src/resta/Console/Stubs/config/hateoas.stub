@@ -17,9 +17,9 @@ class Hateoas extends ServiceBaseController  {
         return [
                     'links'=>[
                         'href'              => $this->request()->getUri(),
-                        'client_get'        => $this->request()->query->all(),
-                        'client_post'       => $this->request()->request->all(),
-                        'client_header'     => $this->getClientHeaders()
+                        'client_get'        => get(),
+                        'client_post'       => post(),
+                        'client_header'     => headers()
                     ]
                 ];
     }
