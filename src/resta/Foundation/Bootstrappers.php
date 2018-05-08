@@ -27,9 +27,10 @@ class Bootstrappers {
      * @var bootstrappers array
      */
     protected $bootstrappers=[
-        'devEagerConfiguration',
-        'middleware',
-        'booting'
+        'devEagerGroups',
+        'originGroups',
+        'middlewareGroups',
+        'reflectionGroups'
     ];
 
     /**
@@ -56,6 +57,15 @@ class Bootstrappers {
 
         //call bootstrapper process
         $this->callBootstrapperProcess();
+
+        // If you do not have a special pusher list,
+        // we are peeling.
+        if(count($this->pusher)=='0'){
+
+            //call onion peelings
+            $this->peelings();
+        }
+
     }
 
     /**
@@ -81,14 +91,36 @@ class Bootstrappers {
     }
 
     /**
-     * @method callBootstrapperProcess
-     * @return void
+     * @param array $customBootstrapers
      */
-    private function callBootstrapperProcess(){
+    public function callBootstrapperProcess($customBootstrapers=[]){
+
+        // here we check that a special bootstrappers list will work and we identify the onion identifier.
+        // we are peeling onion class by classifying onion class.
+        $customBootstrapersCount        = count($customBootstrapers);
+        $getBootstrappers               = $this->getBootstrappers(true);
+        $getBootstrappers               = ($customBootstrapersCount) ? $customBootstrapers : $getBootstrappers;
+        $onionIdentifier                = ($customBootstrapersCount) ? false : true;
 
         //We run the bootstrap list by callback with the object specified for the content respectively.
-        foreach($this->getBootstrappers(true) as $bootstrapper){
-            call_user_func([$this->concrete,$bootstrapper]);
+        foreach($getBootstrappers as $bootstrapper){
+            call_user_func_array([$this->concrete,__FUNCTION__],[$bootstrapper,$this,$onionIdentifier]);
+        }
+    }
+
+    /**
+     * @method peelings
+     * @return mixed|void
+     */
+    private function peelings(){
+
+        //if there are peelings
+        if(isset(app()->singleton()->peelings)){
+
+            // We send the peelings property to
+            // the bootstrapperPeelOnion class.
+            $peelings=app()->singleton()->peelings;
+            pos($peelings)->onionRun($peelings);
         }
     }
 }
