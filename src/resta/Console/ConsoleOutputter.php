@@ -123,6 +123,8 @@ class ConsoleOutputter {
 
         if(isset($this->argument['commandCall'])) return $string;
 
+        dd($string);
+
         $colored_string = "";
 
         // Check if given foreground color found

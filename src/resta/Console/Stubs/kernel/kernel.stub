@@ -1,0 +1,23 @@
+<?php
+
+namespace App\__project__\Kernel;
+
+class Kernel {
+
+    /**
+     * @method handle
+     * @return array
+     */
+    public function handle(){
+
+        return [
+
+        /**
+         * services
+         * all service names
+         */
+        'Services' => []
+
+        ];
+    }
+}

@@ -8,6 +8,7 @@ use Resta\FileProcess;
 use Resta\StaticPathModel;
 use Resta\Traits\NamespaceForRoute;
 use Resta\Traits\InstanceRegister;
+use Resta\Utils;
 use Symfony\Component\Yaml\Yaml;
 
 class Router extends ApplicationProvider  {

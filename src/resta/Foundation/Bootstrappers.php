@@ -61,8 +61,6 @@ class Bootstrappers {
         // If you do not have a special pusher list,
         // we are peeling.
         if(count($this->pusher)=='0'){
-
-            //call onion peelings
             $this->peelings();
         }
 

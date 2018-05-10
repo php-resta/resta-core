@@ -77,9 +77,6 @@ class Kernel extends Container {
             // pass our bootstraper classes through this method.
             // Our goal here is to implement the middleware layer correctly.
             $this->makeBind(BootstrapperPeelOnion::class)->onionBoot([$group,$booting],function() use($group){
-
-                //system booting for app
-                //pre-loaders are the most necessary classes for the system.
                 $this->bootstrappers($this,$group);
             });
 
@@ -89,6 +86,8 @@ class Kernel extends Container {
         //system booting for app
         //pre-loaders are the most necessary classes for the system.
         $this->bootstrappers($this,$group);
+
+
 
 
     }

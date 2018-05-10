@@ -7,6 +7,16 @@ use Resta\ApplicationProvider;
 class RegisterAppBound extends ApplicationProvider {
 
     /**
+     * @var $unregister
+     */
+    protected $unregister;
+
+    /**
+     * @var array
+     */
+    protected $values=[];
+
+    /**
      * @param $key
      * @param $object
      * @param null $concrete
@@ -15,79 +25,85 @@ class RegisterAppBound extends ApplicationProvider {
      */
     public function register($key,$object,$concrete=null,$unregister=false){
 
+        // we assign the values ​​required
+        // for register to the global value variable.
+        $this->unregister           = $unregister;
+        $this->values['key']        = $key;
+        $this->values['object']     = $object;
+        $this->values['concrete']   = $concrete;
+
+        // If there is an instance of the application class,
+        // the register method is saved both in this example and in the global.
         if(defined('appInstance')){
-            $this->setAppSingleton($key,$object,$concrete,$unregister);
-            $this->setAppInstance($key,$object,$concrete,$unregister);
+
+            // where we will assign both the global instance
+            // and the registered application object.
+            $this->setAppInstance($this->singleton());
+            $this->setAppInstance(app()->singleton());
+
+            return false;
         }
-        else{
-            $this->setAppSingleton($key,$object,$concrete,$unregister);
-        }
+
+        // we are just doing global instance here.
+        $this->setAppInstance($this->singleton());
     }
 
     /**
-     * @param $key
-     * @param $object
-     * @param null $concrete
-     * @param bool $unregister
+     * @return void
      */
-    private function setAppInstance($key,$object,$concrete=null,$unregister=false){
+    private function setAppInstance($instance){
 
-        $appInstance=\application::getAppInstance();
+        // for application instance
+        // if the values ​​to be saved are to be saved without the concrete,
+        // if it is an array.
+        if($this->values['concrete']===null) {
 
-        if($concrete===null) {
-
-            if($unregister){
-                unset( $appInstance->app->kernel->{$key});
+            // Without concrete,
+            // the saved value will be saved
+            // if the it does not exist in application instance.
+            if(!isset($instance->{$this->values['key']})) {
+                $this->registerProcess($instance);
             }
-            else{
-                $appInstance->app->kernel->{$key}=$object;
-            }
-
+            return false;
         }
-        else{
 
-            if($unregister){
-                unset($appInstance->app->kernel->{$key});
-            }
-            else{
-                $appInstance->app->kernel->{$key}[$object]=$concrete;
-            }
-
-        }
+        // We send concrete values to be recorded with concrete as true.
+        // these values will be recorded as a array.
+        $this->registerProcess($instance,true);
     }
 
     /**
-     * @param $key
-     * @param $object
-     * @param null $concrete
-     * @param bool $unregister
+     * @param $instance
+     * @param bool $withConcrete
      */
-    private function setAppSingleton($key,$object,$concrete=null,$unregister=false){
+    private function registerProcess($instance,$withConcrete=false){
 
-        if($concrete===null) {
+        // values recorded without concrete.
+        // or values deleted
+        if(false===$withConcrete){
 
-            if(!isset($this->singleton()->{$key})){
-
-                if($unregister){
-                    unset($this->singleton()->{$key});
-                }
-                else{
-                    $this->singleton()->{$key}=$object;
-                }
-
+            //unregister without concrete
+            if($this->unregister){
+                unset( $instance->{$this->values['key']});
+                return false;
             }
 
+            //values registered without concrete
+            $instance->{$this->values['key']}=$this->values['object'];
+            return false;
         }
-        else{
 
-            if($unregister){
-                unset($this->singleton()->{$key});
-            }
-            else{
-                $this->singleton()->{$key}[$object]=$concrete;
-            }
+        // values recorded with concrete.
+        // or values deleted
+        if($this->unregister){
 
+            //unregister without concrete
+            unset($instance->{$this->values['key']}[$this->values['object']]);
+            return false;
         }
+
+        //values registered with concrete
+        $instance->{$this->values['key']}[$this->values['object']]=$this->values['concrete'];
     }
 
 

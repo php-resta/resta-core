@@ -14,15 +14,22 @@ class ServiceMiddlewareController extends ServiceBaseController {
         ];
     }
 
-
-    /**
-     * @return array
-     */
+     /**
+      * @return array
+      */
      public function exclude(){
 
         return [
             'all'=>['hook']
          ];
+     }
+
+     /**
+      * @return array
+      */
+     public function after(){
+
+        return [];
      }
 
 }

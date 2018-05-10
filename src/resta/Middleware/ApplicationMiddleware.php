@@ -14,10 +14,14 @@ class ApplicationMiddleware extends ApplicationProvider {
     protected $middleware=array();
 
     /**
-     * @method boot
-     * @return mixed
+     * @param bool $after
      */
-    public function handle(){
+    public function handle($after=false){
+
+        // If the after variable is sent normally,
+        // the handle method will be executed.
+        // If true, then the middleware will be executed.
+        $middlewareMethod=($after===false) ? 'handle' : 'after';
 
         //The app instance is a global application example, and a hash is loaded as this hash.
         $this->singleton()->middlewareGlobalInstance->setAppInstance();
@@ -25,7 +29,7 @@ class ApplicationMiddleware extends ApplicationProvider {
         //When your application is requested, the middleware classes are running before all bootstrapper executables.
         //Thus, if you make http request your application, you can verify with an intermediate middleware layer
         //and throw an exception.
-        $resolveServiceMiddleware=$this->singleton()->middlewareClass->handle();
+        $resolveServiceMiddleware=$this->singleton()->middlewareClass->{$middlewareMethod}();
         $this->serviceMiddleware($resolveServiceMiddleware);
 
     }
