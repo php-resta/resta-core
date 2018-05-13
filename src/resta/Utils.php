@@ -53,6 +53,20 @@ class Utils {
 
     }
 
+    /**
+     * @param null $class
+     */
+    public static function injectOnBind($class=null){
+
+        if($class!==null){
+
+            $container = self::callBuild();
+            return $container->injectOn($class);
+        }
+
+        return null;
+    }
+
 
     /**
      * @param $class null

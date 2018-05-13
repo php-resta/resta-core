@@ -147,6 +147,14 @@ trait ConsoleListAccessor {
         return $this->optional().'/'.StaticPathModel::$repository;
     }
 
+    /**
+     * @return mixed
+     */
+    public function listener(){
+
+        return $this->optional().'/'.StaticPathModel::$listener;
+    }
+
 
     /**
      * @return mixed

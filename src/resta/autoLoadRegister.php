@@ -46,7 +46,6 @@ class autoloadRegister {
         $this->class=$class;
         $this->classPath=root.'/'.$this->class.'.php';
         $this->classPath=str_replace("\\","/",$this->classPath);
-
     }
 
     /**
@@ -68,6 +67,7 @@ class autoloadRegister {
     private function checkAliasClassFormatter($class,$callback){
 
         $systemApp=[];
+
         if(defined('app')){
             $systemApp=(new ClassAliasGroup())->handle($class);
         }

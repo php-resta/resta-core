@@ -176,7 +176,7 @@ if (!function_exists('exception')) {
      */
     function exception()
     {
-        $exceptionManager=Store\Exception\ExceptionManager::class;
+        $exceptionManager=\Resta\Exception\ExceptionManager::class;
         return new $exceptionManager;
     }
 }

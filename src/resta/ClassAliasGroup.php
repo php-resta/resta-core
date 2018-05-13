@@ -13,15 +13,7 @@ class ClassAliasGroup {
      * @return mixed
      */
    public function handle($class){
-
-       $list=[];
-       $aliasGroup=$this->getConfigAliasGroup();
-       if(count($aliasGroup)){
-           foreach ($aliasGroup as $aliasKey=>$aliasValue){
-               $list[$aliasKey]=$aliasGroup[$aliasKey];
-           }
-       }
-       return $list;
+       return $this->getConfigAliasGroup();
 
    }
 
@@ -32,7 +24,7 @@ class ClassAliasGroup {
 
        $aliasGroup=app()->namespace()->config().'\AliasGroup';
        if(class_exists($aliasGroup)){
-           return $aliasGroupInstance=app()->makeBind($aliasGroup)->handle();
+           return app()->makeBind($aliasGroup)->handle();
        }
        return [];
 

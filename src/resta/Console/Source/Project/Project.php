@@ -36,6 +36,7 @@ class Project extends ConsoleOutputter {
         //get project directory all path
         $this->directory['kernelDir']               = $this->kernel();
         $this->directory['repositoryDir']           = $this->repository();
+        $this->directory['listenerDir']             = $this->listener();
         $this->directory['middleWareDir']           = $this->middleware();
         $this->directory['nodeDir']                 = $this->node();
         $this->directory['onceDir']                 = $this->once();
@@ -71,6 +72,7 @@ class Project extends ConsoleOutputter {
         $this->touch['publish']                     = $this->project.'/publish.php';
         $this->touch['main/version']                = $this->project.'/version.php';
         $this->touch['repository/index']            = $this->repository().'/index.html';
+        $this->touch['listener/index']              = $this->listener().'/index.html';
         $this->touch['source/index']                = $this->sourceDir().'/index.html';
         $this->touch['source/index1']               = $this->sourceEndpointDir().'/index.html';
         $this->touch['source/request']              = $this->sourceRequestDir().'/Request.php';
@@ -101,6 +103,7 @@ class Project extends ConsoleOutputter {
         $this->touch['version/annotations']         = $this->version().'/ServiceAnnotationsController.php';
         $this->touch['version/servicecontainer']    = $this->version().'/ServiceContainerController.php';
         $this->touch['version/servicedispatcher']   = $this->version().'/ServiceEventDispatcherController.php';
+        $this->touch['version/serviceroleaccess']   = $this->version().'/ServiceRoleAccessController.php';
         $this->touch['version/servicemiddleware']   = $this->version().'/ServiceMiddlewareController.php';
         $this->touch['version/base']                = $this->version().'/ServiceBaseController.php';
         $this->touch['version/base']                = $this->version().'/ServiceBaseController.php';

@@ -44,6 +44,11 @@ class StaticPathList {
     public static $repository='Repository';
 
     /**
+     * @var $listener
+     */
+    public static $listener='Listener';
+
+    /**
      * @var $storage
      */
     public static $storage='Storage';
