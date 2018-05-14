@@ -38,6 +38,7 @@ class UrlParseApplication extends ApplicationProvider{
 
         //we make url parse resolving with resolved
         return (new UrlParseParamResolved)->urlParamResolve($this);
+
     }
 
     /**

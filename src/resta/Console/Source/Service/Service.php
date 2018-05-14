@@ -47,10 +47,7 @@ class Service extends ConsoleOutputter {
 
         Utils::chmod($this->controller());
 
-        echo $this->classical('---------------------------------------------------------------------------');
-        echo $this->bluePrint('Endpoint Named ['.$this->argument['service'].'] Has Been Successfully Created in the '.$this->argument['project'].'');
-        echo $this->classical('---------------------------------------------------------------------------');
-        echo $this->cyan('   You can see in src/app/'.$this->argument['project'].'/'.Utils::getAppVersion($this->argument['project']).'/__Call your project   ');
-        echo $this->classical('---------------------------------------------------------------------------');
+        return $this->info('Service Named "'.$this->argument['service'].'" Has Been Successfully Created in the '.$this->argument['project'].'');
+
     }
 }

@@ -31,6 +31,11 @@ class Command extends ConsoleOutputter {
      */
     public function create(){
 
+        $this->directory['modelDir']=$this->command();
+
+        //set project directory
+        $this->file->makeDirectory($this);
+
         $this->touch['command/file']        = $this->command().'/'.$this->argument['command'].'.php';
 
         $this->file->touch($this);

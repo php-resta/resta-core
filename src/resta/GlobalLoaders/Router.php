@@ -43,9 +43,8 @@ class Router extends ApplicationProvider  {
     public function substractMethodNameFromRouteParameters($method){
 
         $this->register('url',                 'method',$this->resolveMethod($method));
-        $this->register('routeParameters',             $this->routeParametersAssign($this->resolveMethod($method)));
         $this->register('url','method',         $this->singleton()->url['method']);
-        $this->register('routeParameters',             $this->routeParametersAssign($this->resolveMethod($method)));
+        $this->register('routeParametersReal',             $this->routeParametersAssign($this->resolveMethod($method)));
 
     }
 

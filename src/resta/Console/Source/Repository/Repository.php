@@ -56,11 +56,8 @@ class Repository extends ConsoleOutputter {
         //set annotations
         $this->setAnnotations();
 
-        echo $this->classical('---------------------------------------------------------------------------');
-        echo $this->bluePrint('Repository Named ['.$this->argument['repository'].'] Has Been Successfully Created');
-        echo $this->classical('---------------------------------------------------------------------------');
-        echo $this->cyan('   You can see in repository directory your repository   ');
-        echo $this->classical('---------------------------------------------------------------------------');
+        echo $this->info('Repository Named "'.$this->argument['repository'].'" Has Been Successfully Created');
+
     }
 
     /**
@@ -82,11 +79,7 @@ class Repository extends ConsoleOutputter {
 
             Utils::chmod($this->repository());
 
-            echo $this->classical('---------------------------------------------------------------------------');
-            echo $this->bluePrint('Repository Named ['.$this->argument['source'].'] Has Been Successfully Created');
-            echo $this->classical('---------------------------------------------------------------------------');
-            echo $this->cyan('   You can see in repository directory your repository   ');
-            echo $this->classical('---------------------------------------------------------------------------');
+            echo $this->info('Repository Named "'.$this->argument['source'].'" Has Been Successfully Created');
 
             return true;
         }

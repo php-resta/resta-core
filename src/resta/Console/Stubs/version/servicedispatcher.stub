@@ -18,11 +18,10 @@ class ServiceEventDispatcherController extends Base
     ];
 
     /**
-     * @method handle
-     * @return mixed
+     * @return array
      */
     public function handle(){
 
-       //make dispatcher
+        return [];
     }
 }

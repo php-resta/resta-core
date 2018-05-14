@@ -46,10 +46,6 @@ class Exception extends ConsoleOutputter {
 
         Utils::chmod($this->optional());
 
-        echo $this->classical('---------------------------------------------------------------------------');
-        echo $this->bluePrint('Exception Named ['.$exception.'] Has Been Successfully Created');
-        echo $this->classical('---------------------------------------------------------------------------');
-        echo $this->cyan('   You can see in repository directory your '.$this->directory['exceptionDir'].'   ');
-        echo $this->classical('---------------------------------------------------------------------------');
+        return $this->info('Exception Named "'.$exception.'" Has Been Successfully Created');
     }
 }

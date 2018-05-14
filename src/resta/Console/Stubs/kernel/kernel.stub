@@ -16,7 +16,13 @@ class Kernel {
          * services
          * all service names
          */
-        'Services' => []
+        'Services' => [],
+
+        /**
+         * services
+         * all service names
+         */
+        'Repositories' => []
 
         ];
     }

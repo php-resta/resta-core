@@ -14,6 +14,14 @@ class ServiceMiddlewareController extends ServiceBaseController {
         ];
     }
 
+    /**
+     * @return array
+     */
+    public function after(){
+
+        return [];
+    }
+
      /**
       * @return array
       */
@@ -23,13 +31,4 @@ class ServiceMiddlewareController extends ServiceBaseController {
             'all'=>['hook']
          ];
      }
-
-     /**
-      * @return array
-      */
-     public function after(){
-
-        return [];
-     }
-
 }

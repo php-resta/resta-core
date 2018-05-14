@@ -1,6 +1,6 @@
 <?php
 
-namespace Resta\Foundation;
+namespace Resta\Container;
 
 use Resta\Console\ConsoleBindings;
 use Resta\Contracts\ApplicationContracts;

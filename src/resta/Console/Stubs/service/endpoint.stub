@@ -13,8 +13,7 @@ class __service__Service extends App {
      public $forbidden=false;
 
     /**
-     * @method getIndexAction
-     * @return array
+     * @return mixed|array
      */
     public function getIndex__methodPrefix__(){
 

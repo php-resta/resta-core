@@ -3,6 +3,7 @@
 namespace Resta;
 
 use Symfony\Component\Yaml\Yaml;
+use Resta\Container\ContainerResolve;
 
 class Utils {
 

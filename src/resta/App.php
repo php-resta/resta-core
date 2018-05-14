@@ -221,7 +221,7 @@ class App {
 
         $kernel=self::getAppInstance()->app->kernel;
 
-        $saltRouteParameters=$kernel->routeParameters;
+        $saltRouteParameters=$kernel->routeParametersReal;
         $urlMethod=strtolower($kernel->url['method']);
 
         $serviceConfRouteParameters=[];

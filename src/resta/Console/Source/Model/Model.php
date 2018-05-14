@@ -35,6 +35,15 @@ class Model extends ConsoleOutputter {
         //lower case for table
         $this->argument['table']=strtolower($this->argument['table']);
 
+        $this->directory['modelDir']=$this->version().'/Model';
+        $this->directory['builderDir']=$this->directory['modelDir'].'/Builder';
+
+        //set project directory
+        $this->file->makeDirectory($this);
+
+        //set project directory
+        $this->file->makeDirectory($this);
+
         //model set
         $this->touch['model/model']     = $this->model().'/'.$this->argument['file'].'.php';
         $this->touch['model/builder']   = $this->model().'/Builder/'.$this->argument['file'].'Builder.php';

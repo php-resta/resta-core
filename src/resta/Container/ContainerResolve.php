@@ -1,6 +1,6 @@
 <?php
 
-namespace Resta;
+namespace Resta\Container;
 
 /**
  * Class ContainerResolve
@@ -68,7 +68,7 @@ class ContainerResolve {
             if($parameter->getName()=="route"){
 
                 // We do a custom bind for the route
-                $this->routeParameterProcess($parameter->getDefaultValue());
+                $param=$this->routeParameterProcess($parameter->getDefaultValue(),$param);
             }
 
         }
@@ -78,13 +78,30 @@ class ContainerResolve {
 
     /**
      * @param $routeParams
+     * @param $param
      */
-    private function routeParameterProcess($routeParams){
+    private function routeParameterProcess($routeParams,$param){
 
         // We record the route parameter with
         // the controller method in the serviceConf variable in the kernel..
         $method=strtolower(app()->singleton()->url['method']);
         app()->singleton()->bound->register('serviceConf','routeParameters',[$method=>$routeParams]);
+
+        $param['route']=route();
+
+        $routeList=[];
+        foreach ($routeParams as $routeKey=>$routeVal){
+            if(!isset($param['route'][$routeVal])){
+                $routeList[$routeVal]=null;
+            }
+            else{
+                $routeList[$routeVal]=strtolower($param['route'][$routeVal]);
+            }
+        }
+
+        $param['route']=$routeList;
+
+        return $param;
     }
 
     /**

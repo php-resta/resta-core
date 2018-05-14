@@ -2,6 +2,8 @@
 
 namespace Resta\Foundation;
 
+use Resta\Container\Container;
+
 class Kernel extends Container {
 
     /**

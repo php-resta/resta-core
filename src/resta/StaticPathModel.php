@@ -191,6 +191,7 @@ class StaticPathModel extends StaticPathList {
 
     public static function appServiceLog(){
 
+
         return self::appVersionRoot().'\ServiceLogController';
     }
 

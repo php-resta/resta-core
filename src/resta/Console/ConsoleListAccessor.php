@@ -240,7 +240,7 @@ trait ConsoleListAccessor {
      */
     public function command(){
 
-        return $this->kernel().'/'.StaticPathModel::$command;
+        return $this->optional().'/'.StaticPathModel::$command;
     }
 
 
