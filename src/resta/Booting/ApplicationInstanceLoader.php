@@ -21,8 +21,8 @@ class ApplicationInstanceLoader extends ApplicationProvider {
 
         //For the application, we create the object that the register method,
         // which is the container center, is connected to by the kernel objesine register method.
-        $registeAppBound=$this->makeBind(RegisterAppBound::class);
-        $registeAppBound->register('bound',$registeAppBound);
+        $registerAppBound=$this->makeBind(RegisterAppBound::class);
+        $registerAppBound->register('bound',$registerAppBound);
         $this->register('appClass',new \application());
 
         //we register the general application instance object.

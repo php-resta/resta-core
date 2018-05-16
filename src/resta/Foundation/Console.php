@@ -28,7 +28,6 @@ class Console extends Kernel {
     public function handle(ApplicationContracts $app){
 
         $this->app=$app;
-
         return $this->consoleProcess();
     }
 
@@ -55,12 +54,14 @@ class Console extends Kernel {
      */
     public function checkConsoleNamespace(callable $callback){
 
-        //
+        // we check that they are in
+        // the console to run the console commands in the kernel.
         if(Utils::isNamespaceExists($this->consoleClassNamespace)){
             return call_user_func($callback);
         }
 
-        //
+        // if the kernel console is not found
+        // then we check the existence of the specific application command and run it if it is.
         return (new CustomConsoleProcess($this->getConsoleArgumentsWithKey(),$this))->handle();
 
     }

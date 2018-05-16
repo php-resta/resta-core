@@ -131,6 +131,8 @@ class App {
         $getCalledClass=str_replace('\\'.class_basename($arg[0]),'',get_class($arg[0]));
         $getCalledClass=class_basename($getCalledClass);
 
+        $service=str_replace($getCalledClass,'',$service);
+
         //run service for endpoint
         $serviceSource=StaticPathModel::appSourceEndpoint().'\\'.$getCalledClass.'\\'.$service.'\Main';
         return app()->makeBind($serviceSource);
@@ -221,7 +223,7 @@ class App {
 
         $kernel=self::getAppInstance()->app->kernel;
 
-        $saltRouteParameters=$kernel->routeParametersReal;
+        $saltRouteParameters=$kernel->routeParameters;
         $urlMethod=strtolower($kernel->url['method']);
 
         $serviceConfRouteParameters=[];

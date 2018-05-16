@@ -81,7 +81,7 @@ class Source extends ConsoleOutputter {
     private function setAnnotations(){
 
         return Utils::changeClass(StaticPathModel::appAnnotation($this->projectName(),true).'',
-            ['Trait ServiceAnnotationsController'=>'Trait ServiceAnnotationsController'.PHP_EOL.' * @method \\'.Utils::getNamespace($this->directory['sourceMainPath'].'/Main').' '.strtolower($this->argument['source']).''.$this->argument['sourcePath']
+            ['Trait ServiceAnnotationsController'=>'Trait ServiceAnnotationsController'.PHP_EOL.' * @method \\'.Utils::getNamespace($this->directory['sourceMainPath'].'/Main').' '.strtolower($this->argument['service']).''.$this->argument['source'].''.$this->argument['sourcePath']
             ]);
     }
 }

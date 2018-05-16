@@ -16,12 +16,4 @@ class ServiceEventDispatcherController extends Base
             'App\Project\EventListener',
         ],
     ];
-
-    /**
-     * @return array
-     */
-    public function handle(){
-
-        return [];
-    }
 }

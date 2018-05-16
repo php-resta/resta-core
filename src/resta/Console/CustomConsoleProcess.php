@@ -18,6 +18,7 @@ class CustomConsoleProcess extends ConsoleOutputter{
     public function handle(){
 
         $commandNamespace=Utils::getNamespace($this->command()).'\\'.$this->app->getConsoleClass();
-        return (new $commandNamespace($this->argument,$this->app->app))->{strtolower($this->app->getConsoleClassMethod())}();
+        $commandClassResolved=app()->makeBind($commandNamespace,['argument'=>$this->argument,'app'=>$this->app->app]);
+        return Utils::callBind([$commandClassResolved,strtolower($this->app->getConsoleClassMethod())],appInstance()->providerBinding());
     }
 }

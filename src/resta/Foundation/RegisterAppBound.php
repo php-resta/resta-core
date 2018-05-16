@@ -20,14 +20,12 @@ class RegisterAppBound extends ApplicationProvider {
      * @param $key
      * @param $object
      * @param null $concrete
-     * @param bool $unregister
      * @return mixed|void
      */
-    public function register($key,$object,$concrete=null,$unregister=false){
+    public function register($key,$object,$concrete=null){
 
         // we assign the values ​​required
         // for register to the global value variable.
-        $this->unregister           = $unregister;
         $this->values['key']        = $key;
         $this->values['object']     = $object;
         $this->values['concrete']   = $concrete;
@@ -46,6 +44,27 @@ class RegisterAppBound extends ApplicationProvider {
 
         // we are just doing global instance here.
         $this->setAppInstance($this->singleton());
+    }
+
+    /**
+     * @param $instance
+     * @param $key
+     * @param null $object
+     * @return mixed
+     */
+    public function terminate($key,$object=null){
+
+        // object null is
+        // sent to just terminate a key.
+        if($object===null){
+            unset(app()->singleton()->{$key});
+            return false;
+        }
+
+        // It is used to delete
+        // both key and sequence members.
+        unset(app()->singleton()->{$key}[$object]);
+
     }
 
     /**
@@ -82,23 +101,8 @@ class RegisterAppBound extends ApplicationProvider {
         // or values deleted
         if(false===$withConcrete){
 
-            //unregister without concrete
-            if($this->unregister){
-                unset( $instance->{$this->values['key']});
-                return false;
-            }
-
             //values registered without concrete
             $instance->{$this->values['key']}=$this->values['object'];
-            return false;
-        }
-
-        // values recorded with concrete.
-        // or values deleted
-        if($this->unregister){
-
-            //unregister without concrete
-            unset($instance->{$this->values['key']}[$this->values['object']]);
             return false;
         }
 

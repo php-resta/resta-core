@@ -2,7 +2,6 @@
 
 namespace App\__project__\__version__\Optional\Repository\__repository__;
 
-use Resta\StaticPathModel;
 use Resta\Utils;
 
 /**
@@ -25,7 +24,7 @@ trait __repository__Trait {
      */
     protected function getRepositorySourcePath(){
 
-        return StaticPathModel::appRepository().'\\'.$this->getRepositoryName().'\Source\\'.$this->adapter;
+        return app()->namespace()->optionalRepository().'\\'.$this->getRepositoryName().'\Source\\'.$this->adapter;
     }
 
     /**

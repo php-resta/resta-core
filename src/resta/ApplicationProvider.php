@@ -51,10 +51,20 @@ class ApplicationProvider {
      * @param bool $unregister
      * @return mixed
      */
-    public function register($key,$object,$concrete=null,$unregister=false){
+    public function register($key,$object,$concrete=null){
 
         //register app bound
-        return $this->app()->bound->register($key,$object,$concrete,$unregister);
+        return $this->app()->bound->register($key,$object,$concrete);
+    }
+
+    /**
+     * @param $key
+     * @param null $object
+     */
+    public function terminate($key,$object=null){
+
+        //terminate app bound
+        return $this->app()->bound->terminate($key,$object);
     }
 
     /**

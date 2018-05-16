@@ -44,7 +44,8 @@ class Router extends ApplicationProvider  {
 
         $this->register('url',                 'method',$this->resolveMethod($method));
         $this->register('url','method',         $this->singleton()->url['method']);
-        $this->register('routeParametersReal',             $this->routeParametersAssign($this->resolveMethod($method)));
+        $this->terminate('routeParameters');
+        $this->register('routeParameters',             $this->routeParametersAssign($this->resolveMethod($method)));
 
     }
 
