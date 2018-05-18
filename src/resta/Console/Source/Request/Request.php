@@ -35,10 +35,17 @@ class Request extends ConsoleOutputter {
 
         $request=$this->argument['request'];
 
+
+
         $this->directory['requestDir']=$this->optional().'/'.StaticPathModel::$sourcePath.'/'.StaticPathModel::$sourceRequest;
 
         //set project directory
         $this->file->makeDirectory($this);
+
+        if(!file_exists($this->sourceRequestDir().'/Request.php')){
+            $this->touch['source/request']              = $this->sourceRequestDir().'/Request.php';
+        }
+
 
         $this->touch['source/requestFile']        =$this->directory['requestDir'].'/'.$request.'Request.php';
 

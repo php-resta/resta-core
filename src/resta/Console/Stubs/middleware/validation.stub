@@ -2,9 +2,11 @@
 
 namespace App\__project__\__version__\Middleware;
 
+use Store\Contracts\HandleTraitContract;
+
 use Store\Services\Validator;
 
-class Validation {
+class Validation implements HandleTraitContract {
 
     /**
      * @return void

@@ -12,4 +12,11 @@ trait Request {
      * @var array $autoInject
      */
     protected $autoInject=[];
+
+    /**
+     * @return array
+     */
+    public function all(){
+        return $this->inputs;
+    }
 }

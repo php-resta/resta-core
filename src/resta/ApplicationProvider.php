@@ -179,7 +179,7 @@ class ApplicationProvider {
      */
     public function httpMethod(){
 
-        return $this->app()->httpMethod;
+        return strtolower($this->app()->httpMethod);
     }
 
     /**

@@ -172,7 +172,7 @@ if (!function_exists('route')) {
 if (!function_exists('exception')) {
 
     /**
-     * @return \Store\Exception\ExceptionContracts
+     * @return \Resta\Contracts\ExceptionContracts
      */
     function exception()
     {
