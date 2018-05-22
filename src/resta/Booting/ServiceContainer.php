@@ -9,7 +9,6 @@ use Resta\UrlParse\UrlParseApplication;
 class ServiceContainer extends ApplicationProvider {
 
     /**
-     * @method boot
      * @return void
      */
     public function boot(){

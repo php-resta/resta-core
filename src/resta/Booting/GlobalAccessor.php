@@ -8,7 +8,6 @@ use Resta\GlobalLoaders\GlobalAccessor as Accessor;
 class GlobalAccessor extends ApplicationProvider {
 
     /**
-     * @method boot
      * @return void
      */
     public function boot(){

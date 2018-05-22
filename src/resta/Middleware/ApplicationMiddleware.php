@@ -51,7 +51,7 @@ class ApplicationMiddleware extends ApplicationProvider {
             $middlewareClass=$this->singleton()->middlewareClass;
 
             //middleware definitions.
-            $this->middleware['namespace']          = middleware.'\\'.$middlewareName;
+            $this->middleware['namespace']          = StaticPathModel::appMiddlewarePath().'\\'.$middlewareName;
             $this->middleware['key']                = $middleKey;
             $this->middleware['class']              = $middlewareClass;
             $this->middleware['middlewareName']     = $middleVal;

@@ -11,14 +11,14 @@ use Resta\ApplicationProvider;
 class UrlParseApplication extends ApplicationProvider{
 
     /**
-     * @var $query
-     */
-    public $query;
-
-    /**
      * @var array
      */
     public $urlList=[];
+
+    /**
+     * @var array $urlNames
+     */
+    protected $urlNames=['project','namespace','endpoint','method'];
 
 
     /**
@@ -27,14 +27,9 @@ class UrlParseApplication extends ApplicationProvider{
      */
     public function handle(){
 
-        //symfony request getPathInfo
-        $this->query=$this->app->kernel()->request->getPathInfo();
-
         //convert array for query
-        $query=$this->convertArrayForQuery();
-
         //assign url list
-        $this->assignUrlList($query);
+        $this->assignUrlList();
 
         //we make url parse resolving with resolved
         return (new UrlParseParamResolved)->urlParamResolve($this);
@@ -49,14 +44,15 @@ class UrlParseApplication extends ApplicationProvider{
 
         //convert array for query
         //we are removing the first empty element from the array due to the slash sign.
-        $arrayForQuery=explode("/",$this->query);
+        $arrayForQuery=explode("/",$this->request()->getPathInfo());
         array_shift($arrayForQuery);
 
         //we set the first letter of the array elements
         //to be big according to the project standards
-        return array_map(function($query){
-            return ucfirst($query);
-        },$arrayForQuery);
+        return array_map(
+            function($query) {
+                return ucfirst($query);
+                },$arrayForQuery);
     }
 
 
@@ -64,7 +60,14 @@ class UrlParseApplication extends ApplicationProvider{
      * @method assignUrlList
      * @param array $query
      */
-    public function assignUrlList($query=array()){
+    public function assignUrlList(){
+
+        $query=$this->convertArrayForQuery();
+
+        // We treat the url parameters in the size of
+        // the application usage and get the values
+        // ​​to be processed throughout the application in query format.
+        $query=$this->convertArrayForQuery();
 
         //determines the application name for your project
         $this->urlList['project']=(strlen($query[0])>0) ? $query[0] : null;
@@ -81,7 +84,7 @@ class UrlParseApplication extends ApplicationProvider{
         //determines the endpoint method for your project
         $this->urlList['parameters']=array_slice($query,3);
 
-        //
+        //url global instance
         $this->singleton()->urlGlobalInstance->definitor($this->urlList);
 
 

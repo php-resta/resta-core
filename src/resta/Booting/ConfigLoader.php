@@ -7,6 +7,9 @@ use Resta\Config\ConfigLoader as Config;
 
 class ConfigLoader extends ApplicationProvider {
 
+    /**
+     * @return void
+     */
     public function boot(){
 
         $this->app->bind('config',function(){

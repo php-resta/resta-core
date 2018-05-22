@@ -38,7 +38,7 @@ class CheckEnvironmentFile extends ApplicationProvider {
         //the application will automatically throw an exception
         //if there is no env key in the parse variables.
         if(!isset($environment['env'])){
-            throw new \InvalidArgumentException('The env key missing on your environment');
+            exception()->invalidArgument('The env key missing on your environment');
         }
 
         //and finally save the environment

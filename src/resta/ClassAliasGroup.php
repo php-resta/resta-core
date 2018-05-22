@@ -29,4 +29,17 @@ class ClassAliasGroup {
        return [];
 
    }
+
+    /**
+     * @param $object
+     * @param $name
+     * @return void
+     */
+   public static function setAlias($object,$name){
+
+       if((new $object) instanceof  $name === false){
+           class_alias($object,$name);
+       }
+
+   }
 }

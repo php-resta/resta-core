@@ -136,7 +136,6 @@ class StaticPathModel extends StaticPathList {
     }
 
     public static function appBase(){
-
         return self::appVersionRoot().'\\ServiceBaseController';
     }
 
@@ -149,7 +148,6 @@ class StaticPathModel extends StaticPathList {
     }
 
     public static function appMiddleware(){
-
         return self::appVersionRoot().'\\ServiceMiddlewareController';
     }
 
@@ -170,28 +168,22 @@ class StaticPathModel extends StaticPathList {
     }
 
     public static function appRepository($app=null){
-
         return self::appVersionRoot($app).'\\'.self::$optional.'\\'.self::$repository;
     }
 
     public static function appSourceEndpoint($app=null){
-
         return self::appVersionRoot($app).'\\'.self::$optional.'\\'.self::$sourcePath.'\Endpoint';
     }
 
     public static function appBuilder($app=null){
-
         return self::appVersionRoot($app).'\\'.self::$model.'\\'.self::$builder;
     }
 
     public static function appLog(){
-
         return self::getAppStorage().'/'.self::$log;
     }
 
     public static function appServiceLog(){
-
-
         return self::appVersionRoot().'\ServiceLogController';
     }
 
