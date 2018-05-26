@@ -117,7 +117,6 @@ class ApplicationMiddleware extends ApplicationProvider {
      * @return bool
      */
     private function checkNamespaceAndSpecificCondition(){
-
         return Utils::isNamespaceExists($this->middleware['namespace']) && $this->specificMiddlewareCondition($this->middleware['key']);
     }
 }

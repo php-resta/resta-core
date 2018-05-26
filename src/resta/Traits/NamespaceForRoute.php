@@ -57,7 +57,7 @@ trait NamespaceForRoute {
      * @method resolveMethod
      */
     public function resolveMethod($method){
-
+        
         $method=str_replace($this->httpMethod(),'',$method);
         $method=str_replace(StaticPathModel::$methodPrefix,'',$method);
         return $method;
@@ -86,7 +86,7 @@ trait NamespaceForRoute {
      */
     public function getPrefixMethod(){
 
-        return ucfirst($this->method()).''.StaticPathModel::$methodPrefix;
+        return $this->method().''.StaticPathModel::$methodPrefix;
     }
 
     /**

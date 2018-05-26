@@ -63,7 +63,6 @@ class ExcludeMiddleware extends ApplicationProvider {
      * @return bool
      */
     private function existMethod(){
-
         return Utils::existMethod($this->excludeList['middleware']['class'],'exclude');
     }
 
@@ -84,7 +83,6 @@ class ExcludeMiddleware extends ApplicationProvider {
      * @return mixed|void
      */
     private function excludeForAll($excludeKey,$excludeVal,callable $callback){
-
         return ($excludeKey=="all") ? $this->inArrayExclude($excludeVal) : call_user_func($callback);
     }
 
