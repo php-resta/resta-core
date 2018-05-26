@@ -89,11 +89,6 @@ class Kernel extends Container {
         //pre-loaders are the most necessary classes for the system.
         $this->bootstrappers($this,$group);
 
-
-
-
     }
-
-
 
 }

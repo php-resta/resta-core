@@ -4,7 +4,6 @@ namespace Resta\Console;
 
 use Resta\FileProcess;
 use Resta\StaticPathModel;
-use Resta\Contracts\ApplicationContracts;
 
 class ConsoleOutputter {
 
@@ -53,7 +52,7 @@ class ConsoleOutputter {
      */
     public $touch=array();
 
-    public function __construct($argument,ApplicationContracts $app) {
+    public function __construct($argument,$app) {
 
 
         // Set up shell colors

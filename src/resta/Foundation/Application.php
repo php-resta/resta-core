@@ -6,10 +6,7 @@ use App\AppKernel;
 use Resta\ClosureDispatcher;
 use Resta\Contracts\ApplicationContracts;
 use Resta\Contracts\ApplicationHelpersContracts;
-use Resta\StaticPathModel;
 use Resta\Traits\ApplicationPath;
-use Resta\Utils;
-use Resta\App;
 
 class Application extends Kernel implements ApplicationContracts,ApplicationHelpersContracts {
 

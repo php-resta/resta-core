@@ -3,12 +3,12 @@
 namespace Resta\Container;
 
 use Resta\Console\ConsoleBindings;
-use Resta\Contracts\ApplicationContracts;
+use Resta\Contracts\ContainerContracts;
 use Resta\GlobalLoaders\GlobalAssignerForBind;
 use Resta\GlobalLoaders\KernelAssigner;
 use Resta\Utils;
 
-class Container implements ApplicationContracts {
+class Container implements ContainerContracts {
 
     /**
      * @var $singleton

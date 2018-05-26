@@ -3,13 +3,14 @@
 namespace Resta;
 
 use Resta\Contracts\ApplicationContracts;
+use Resta\Contracts\ContainerContracts;
 use Resta\StaticPathModel;
 use Resta\Response\ResponseOutManager;
 
 class ApplicationProvider {
 
     /**
-     * @var $app \Resta\Contracts\ApplicationContracts
+     * @var $app \Resta\Contracts\ApplicationContracts|ContainerContracts
      */
     public $app;
 
@@ -20,12 +21,12 @@ class ApplicationProvider {
 
     /**
      * constructor.
-     * @param $app \Resta\Contracts\ApplicationContracts
+     * @param $app \Resta\Contracts\ApplicationContracts|ContainerContracts
      */
     public function __construct(ApplicationContracts $app)
     {
         /**
-         * @var $app \Resta\Contracts\ApplicationContracts
+         * @var $app \Resta\Contracts\ApplicationContracts|ContainerContracts
          */
         $this->app=$app;
 
