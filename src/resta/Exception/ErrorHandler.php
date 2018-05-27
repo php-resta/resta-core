@@ -2,8 +2,8 @@
 
 namespace Resta\Exception;
 
-use Resta\ApplicationProvider;
 use Resta\StaticPathModel;
+use Resta\ApplicationProvider;
 
 class ErrorHandler extends ApplicationProvider {
 

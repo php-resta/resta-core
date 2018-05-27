@@ -2,10 +2,9 @@
 
 namespace Resta\Traits;
 
-use Resta\Contracts\StaticPathContracts;
-use Resta\StaticNamespaceRepository;
-use Resta\StaticPathModel;
 use Resta\StaticPathRepository;
+use Resta\StaticNamespaceRepository;
+use Resta\Contracts\StaticPathContracts;
 use Resta\Contracts\StaticNamespaceContracts;
 
 trait ApplicationPath {

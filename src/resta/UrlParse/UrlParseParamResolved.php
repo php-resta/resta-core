@@ -2,10 +2,6 @@
 
 namespace Resta\UrlParse;
 
-/**
- * Class UrlParseParamResolved
- * @package Resta\UrlParse
- */
 class UrlParseParamResolved extends UrlParseException {
 
     /**

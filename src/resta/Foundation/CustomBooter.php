@@ -2,8 +2,8 @@
 
 namespace Resta\Foundation;
 
-use Resta\StaticPathModel;
 use Resta\Utils;
+use Resta\StaticPathModel;
 
 class CustomBooter {
 

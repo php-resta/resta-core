@@ -4,10 +4,6 @@ namespace Resta\UrlParse;
 
 use Resta\StaticPathModel;
 
-/**
- * Class UrlParseException
- * @package Resta\UrlParse
- */
 class UrlParseException {
 
     /**

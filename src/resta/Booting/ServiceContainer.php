@@ -2,8 +2,8 @@
 
 namespace Resta\Booting;
 
-use Resta\ApplicationProvider;
 use Resta\StaticPathModel;
+use Resta\ApplicationProvider;
 use Resta\UrlParse\UrlParseApplication;
 
 class ServiceContainer extends ApplicationProvider {

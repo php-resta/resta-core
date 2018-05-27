@@ -4,10 +4,6 @@ namespace Resta\UrlParse;
 
 use Resta\ApplicationProvider;
 
-/**
- * Class UrlParseApplication
- * @package Resta\UrlParse
- */
 class UrlParseApplication extends ApplicationProvider{
 
     /**

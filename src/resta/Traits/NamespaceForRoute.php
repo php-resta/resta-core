@@ -2,10 +2,9 @@
 
 namespace Resta\Traits;
 
-use Resta\GlobalLoaders\Route;
-use Resta\Routing\CheckEndpointForAutoService;
-use Resta\StaticPathModel;
 use Resta\Utils;
+use Resta\StaticPathModel;
+use Resta\Routing\CheckEndpointForAutoService;
 
 trait NamespaceForRoute {
 

@@ -4,7 +4,6 @@ namespace Resta\Routing;
 
 use Resta\ApplicationProvider;
 use Resta\Contracts\ApplicationContracts;
-use Resta\Utils;
 
 class KernelRouterProcess extends ApplicationProvider {
 

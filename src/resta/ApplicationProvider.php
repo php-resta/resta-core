@@ -2,10 +2,9 @@
 
 namespace Resta;
 
-use Resta\Contracts\ApplicationContracts;
-use Resta\Contracts\ContainerContracts;
-use Resta\StaticPathModel;
 use Resta\Response\ResponseOutManager;
+use Resta\Contracts\ContainerContracts;
+use Resta\Contracts\ApplicationContracts;
 
 class ApplicationProvider {
 

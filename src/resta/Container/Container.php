@@ -2,11 +2,11 @@
 
 namespace Resta\Container;
 
+use Resta\Utils;
 use Resta\Console\ConsoleBindings;
 use Resta\Contracts\ContainerContracts;
-use Resta\GlobalLoaders\GlobalAssignerForBind;
 use Resta\GlobalLoaders\KernelAssigner;
-use Resta\Utils;
+use Resta\GlobalLoaders\GlobalAssignerForBind;
 
 class Container implements ContainerContracts {
 

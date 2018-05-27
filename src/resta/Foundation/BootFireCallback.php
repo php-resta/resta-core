@@ -2,8 +2,8 @@
 
 namespace Resta\Foundation;
 
-use Resta\ApplicationProvider;
 use Resta\Utils;
+use Resta\ApplicationProvider;
 
 class BootFireCallback extends ApplicationProvider {
 

@@ -5,10 +5,6 @@ namespace Resta;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 
-/**
- * Class FileSystem
- * @package Resta
- */
 class FileProcess {
 
     /**

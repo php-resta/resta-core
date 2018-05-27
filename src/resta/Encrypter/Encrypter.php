@@ -2,11 +2,11 @@
 
 namespace Resta\Encrypter;
 
-use Resta\ApplicationProvider;
+use Resta\Utils;
 use Defuse\Crypto\Key;
 use Defuse\Crypto\Crypto;
 use Resta\StaticPathModel;
-use Resta\Utils;
+use Resta\ApplicationProvider;
 
 class Encrypter extends ApplicationProvider {
 

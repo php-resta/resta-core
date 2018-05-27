@@ -13,9 +13,9 @@ class Middleware extends ApplicationProvider {
      */
     public function boot(){
 
-        //When your application is requested, the middleware classes are running before all bootstrapper executables.
-        //Thus, if you make http request your application, you can verify with an intermediate middleware layer
-        //and throw an exception.
+        // When your application is requested, the middleware classes are running before all bootstrapper executables.
+        // Thus, if you make http request your application, you can verify with an intermediate middleware layer
+        // and throw an exception.
         $this->app->bind('middleware',function(){
             return ApplicationMiddleware::class;
         });

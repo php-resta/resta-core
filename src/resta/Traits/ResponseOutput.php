@@ -2,9 +2,8 @@
 
 namespace Resta\Traits;
 
-use Resta\Logger\LoggerService;
-use Resta\Routing\KernelRouterProcess;
 use Resta\StaticPathModel;
+use Resta\Routing\KernelRouterProcess;
 
 trait ResponseOutput {
 

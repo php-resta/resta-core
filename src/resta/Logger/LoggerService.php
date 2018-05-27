@@ -2,8 +2,8 @@
 
 namespace Resta\Logger;
 
-use Resta\ApplicationProvider;
 use Resta\StaticPathModel;
+use Resta\ApplicationProvider;
 
 class LoggerService extends ApplicationProvider {
 

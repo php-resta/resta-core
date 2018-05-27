@@ -2,9 +2,9 @@
 
 namespace Resta\Middleware;
 
-use Resta\ApplicationProvider;
-use Resta\StaticPathModel;
 use Resta\Utils;
+use Resta\StaticPathModel;
+use Resta\ApplicationProvider;
 
 class ExcludeMiddleware extends ApplicationProvider {
 

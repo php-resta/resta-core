@@ -2,8 +2,8 @@
 
 namespace Resta\Response;
 
-use Resta\ApplicationProvider;
 use Resta\StaticPathModel;
+use Resta\ApplicationProvider;
 
 class ResponseApplication extends ApplicationProvider {
 

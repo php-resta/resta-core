@@ -2,10 +2,6 @@
 
 namespace Resta;
 
-/**
- * Class ClosureDispatcher
- * @package Resta
- */
 class ClosureDispatcher {
 
     /**

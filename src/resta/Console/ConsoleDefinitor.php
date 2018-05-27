@@ -2,7 +2,6 @@
 
 namespace Resta\Console;
 
-
 use Resta\ApplicationProvider;
 
 class ConsoleDefinitor extends ApplicationProvider {

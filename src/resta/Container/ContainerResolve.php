@@ -2,10 +2,6 @@
 
 namespace Resta\Container;
 
-/**
- * Class ContainerResolve
- * @package Resta
- */
 class ContainerResolve {
 
     /**
@@ -73,6 +69,8 @@ class ContainerResolve {
             // bind it to the param variable.
             $parameterName=$parameter->getName();
             $parameterResolve=app()->makeBind($containers[$parameter->getType()->getName()]);
+
+            //return result for parameter of the container
             return [$parameterName=>$parameterResolve];
 
         }

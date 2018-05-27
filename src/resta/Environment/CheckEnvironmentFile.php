@@ -2,9 +2,9 @@
 
 namespace Resta\Environment;
 
-use Resta\ApplicationProvider;
-use Resta\StaticPathModel;
 use Resta\Utils;
+use Resta\StaticPathModel;
+use Resta\ApplicationProvider;
 
 class CheckEnvironmentFile extends ApplicationProvider {
 

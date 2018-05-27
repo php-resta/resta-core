@@ -3,7 +3,6 @@
 namespace Resta\Routing;
 
 use Resta\ApplicationProvider;
-use Resta\StaticPathModel;
 
 class CheckEndpointForAutoService extends ApplicationProvider{
 

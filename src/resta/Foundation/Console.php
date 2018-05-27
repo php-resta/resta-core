@@ -2,11 +2,11 @@
 
 namespace Resta\Foundation;
 
-use Resta\Console\ConsoleArguments;
-use Resta\Console\Source\Service\Service;
 use Resta\Utils;
+use Resta\Console\ConsoleArguments;
 use Resta\Console\CustomConsoleProcess;
 use Resta\Contracts\ApplicationContracts;
+use Resta\Console\Source\Service\Service;
 
 class Console extends Kernel {
 

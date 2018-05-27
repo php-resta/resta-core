@@ -8,7 +8,6 @@ use Resta\Traits\ApplicationPath;
 use Resta\Contracts\ApplicationContracts;
 use Resta\Contracts\ApplicationHelpersContracts;
 
-
 class Application extends Kernel implements ApplicationContracts,ApplicationHelpersContracts {
 
     //get app paths

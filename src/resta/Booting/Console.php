@@ -3,7 +3,6 @@
 namespace Resta\Booting;
 
 use Resta\ApplicationProvider;
-use Resta\GlobalLoaders\ForAppAndConsole;
 use Resta\Console\ConsoleDefinitor;
 
 class Console extends ApplicationProvider {

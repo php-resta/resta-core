@@ -3,9 +3,9 @@
 namespace Resta\Console;
 
 use Resta\ApplicationProvider;
+use Resta\Config\ConfigLoader as Config;
 use Resta\Environment\EnvironmentConfiguration;
 use Resta\Encrypter\Encrypter as EncrypterProvider;
-use Resta\Config\ConfigLoader as Config;
 
 class ConsoleBindings extends ApplicationProvider {
 

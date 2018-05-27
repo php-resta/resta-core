@@ -2,10 +2,10 @@
 
 namespace Resta\Routing;
 
-use Resta\ApplicationProvider;
-use Resta\GlobalLoaders\Route;
-use Resta\Traits\NamespaceForRoute;
 use Resta\Utils;
+use Resta\GlobalLoaders\Route;
+use Resta\ApplicationProvider;
+use Resta\Traits\NamespaceForRoute;
 
 class RouteApplication extends ApplicationProvider {
 

@@ -2,18 +2,14 @@
 
 namespace Resta;
 
-use Resta\Config\ConfigProcess;
-use Store\Services\Cache;
-use Store\Services\HttpSession as Session;
-use Store\Services\Redis as Redis;
-use Store\Services\AppCollection as Collection;
-use Store\Services\DateCollection as Date;
 use Lingua\Lingua;
+use Store\Services\Cache;
+use Resta\Config\ConfigProcess;
+use Store\Services\Redis as Redis;
+use Store\Services\HttpSession as Session;
+use Store\Services\DateCollection as Date;
+use Store\Services\AppCollection as Collection;
 
-/**
- * Class App
- * @package Resta
- */
 class App {
 
     /**
