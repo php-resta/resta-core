@@ -9,6 +9,13 @@ class StaticNamespaceRepository extends StaticPathRepository implements StaticNa
     /**
      * @return mixed
      */
+    public function version(){
+        return Utils::getNamespace($this->appVersion());
+    }
+
+    /**
+     * @return mixed
+     */
     public function optionalException(){
         return Utils::getNamespace($this->appOptionalException());
     }

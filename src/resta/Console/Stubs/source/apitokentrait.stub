@@ -33,7 +33,7 @@ trait ClientApiTokenTrait {
      */
     private function headerProcess(){
 
-        $clientHeaders=$this->getClientHeaders();
+        $clientHeaders=headers();
         $getToken=(isset($clientHeaders[$this->tokenKey])) ? $clientHeaders[$this->tokenKey][0] : null;
         $this->jwtProcess($getToken);
     }

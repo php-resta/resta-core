@@ -95,6 +95,16 @@ class StaticPathList {
     public static $optional='Optional';
 
     /**
+     * @var $events
+     */
+    public static $events='Events';
+
+    /**
+     * @var $listeners
+     */
+    public static $listeners='Listeners';
+
+    /**
      * @var $optionalException
      */
     public static $optionalException='Exception';

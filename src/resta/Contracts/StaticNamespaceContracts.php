@@ -7,6 +7,11 @@ interface StaticNamespaceContracts {
     /**
      * @return mixed
      */
+    public function version();
+
+    /**
+     * @return mixed
+     */
     public function optionalException();
 
     /**

@@ -1,0 +1,14 @@
+<?php
+
+namespace App\__project__\__version__\Optional\__source__;
+
+class __event__ {
+
+    /**
+     * __event__ constructor.
+     */
+    public function __construct(){
+
+    }
+
+}

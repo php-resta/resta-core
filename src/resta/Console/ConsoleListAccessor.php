@@ -104,6 +104,22 @@ trait ConsoleListAccessor {
         return $this->version().'/'.StaticPathModel::$optional;
     }
 
+    /**
+     * @return mixed
+     */
+    public function events(){
+
+        return $this->optional().'/'.StaticPathModel::$events;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function listeners(){
+
+        return $this->optional().'/'.StaticPathModel::$listeners;
+    }
+
 
     /**
      * @return mixed
