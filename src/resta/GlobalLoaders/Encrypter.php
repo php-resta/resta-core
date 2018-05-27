@@ -13,7 +13,7 @@ class Encrypter extends ApplicationProvider  {
 
         //we are assigning a singleton object
         //so that we can use our application key in the project.
-       $this->register('applicationKey',$key[0]);
+       $this->register('applicationKey',current($key));
     }
 
 }

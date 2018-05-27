@@ -2,10 +2,9 @@
 
 namespace Resta\GlobalLoaders;
 
+use Resta\StaticPathModel;
 use Resta\ApplicationProvider;
 use Resta\Middleware\ExcludeMiddleware;
-use Resta\StaticPathModel;
-use Resta\Traits\InstanceRegister;
 
 class Middleware extends ApplicationProvider  {
 

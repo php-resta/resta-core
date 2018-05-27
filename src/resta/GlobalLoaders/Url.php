@@ -3,8 +3,6 @@
 namespace Resta\GlobalLoaders;
 
 use Resta\ApplicationProvider;
-use Resta\StaticPathModel;
-use Resta\Traits\InstanceRegister;
 
 class Url extends ApplicationProvider  {
 

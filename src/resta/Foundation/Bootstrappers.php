@@ -6,10 +6,6 @@ use Resta\App;
 use Resta\ClassAliasGroup;
 use Resta\Foundation\RegisterAppBound;
 
-/**
- * Class Bootstrappers
- * @package Resta\Foundation
- */
 class Bootstrappers {
 
     /**
@@ -33,7 +29,7 @@ class Bootstrappers {
     protected $pusher=array();
 
     /**
-     * @var array $pusherStacks
+     * @var $pusherStacks array
      */
     public $pusherStacks=array();
 

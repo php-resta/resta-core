@@ -2,9 +2,9 @@
 
 namespace Resta\GlobalLoaders;
 
+use Resta\Utils;
 use Resta\ApplicationProvider;
 use Resta\Traits\InstanceRegister;
-use Resta\Utils;
 
 class Config extends ApplicationProvider  {
 

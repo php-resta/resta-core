@@ -3,13 +3,12 @@
 namespace Resta\GlobalLoaders;
 
 use Resta\App;
-use Resta\ApplicationProvider;
+use Resta\Utils;
 use Resta\FileProcess;
 use Resta\StaticPathModel;
-use Resta\Traits\NamespaceForRoute;
-use Resta\Traits\InstanceRegister;
-use Resta\Utils;
+use Resta\ApplicationProvider;
 use Symfony\Component\Yaml\Yaml;
+use Resta\Traits\NamespaceForRoute;
 
 class Router extends ApplicationProvider  {
 

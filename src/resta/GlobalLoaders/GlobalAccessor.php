@@ -2,13 +2,12 @@
 
 namespace Resta\GlobalLoaders;
 
-use Resta\Response\ResponseApplication;
 use Resta\StaticPathModel;
-use Resta\Traits\InstanceRegister;
-use Symfony\Component\HttpFoundation\Request;
 use Resta\ApplicationProvider;
+use Resta\Traits\InstanceRegister;
 use Store\Services\RequestService;
-
+use Resta\Response\ResponseApplication;
+use Symfony\Component\HttpFoundation\Request;
 
 class GlobalAccessor extends ApplicationProvider  {
 

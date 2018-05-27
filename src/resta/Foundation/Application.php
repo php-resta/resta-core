@@ -4,9 +4,10 @@ namespace Resta\Foundation;
 
 use App\AppKernel;
 use Resta\ClosureDispatcher;
+use Resta\Traits\ApplicationPath;
 use Resta\Contracts\ApplicationContracts;
 use Resta\Contracts\ApplicationHelpersContracts;
-use Resta\Traits\ApplicationPath;
+
 
 class Application extends Kernel implements ApplicationContracts,ApplicationHelpersContracts {
 

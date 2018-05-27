@@ -2,13 +2,7 @@
 
 namespace Resta\GlobalLoaders;
 
-use Monolog\Handler\StreamHandler;
-use Resta\Traits\LoggerTraits;
-use Resta\Traits\InstanceRegister;
-use Store\Services\Redis as Redis;
 use Resta\ApplicationProvider;
-use Resta\StaticPathModel;
-use Monolog\Logger as Log;
 
 class Logger extends ApplicationProvider  {
 
