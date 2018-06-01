@@ -19,4 +19,12 @@ trait Request {
     public function all(){
         return $this->inputs;
     }
+
+    /**
+     * @return void
+     */
+    public function rule(){
+
+        //
+    }
 }

@@ -2,7 +2,6 @@
 
 namespace Resta\Foundation;
 
-use App\AppKernel;
 use Resta\ClosureDispatcher;
 use Resta\Traits\ApplicationPath;
 use Resta\Contracts\ApplicationContracts;
@@ -58,8 +57,8 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
 
             //We create kernel bootstrapping objects
             //that can be changed by you with the closure dispatcher method.
-            return $this->makeBind(ClosureDispatcher::class,['bind'=>new AppKernel()])->call(function() use ($maker){
-                return $this->{$maker};
+            return $this->makeBind(ClosureDispatcher::class,['bind'=>new KernelBootManager()])->call(function() use ($maker){
+                return $this->handle($maker);
             });
         }
 
