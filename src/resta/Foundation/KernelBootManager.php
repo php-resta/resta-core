@@ -2,9 +2,9 @@
 
 namespace Resta\Foundation;
 
-use App\AppKernel;
+use App\Manifest;
 
-class KernelBootManager extends AppKernel {
+class KernelBootManager extends Manifest {
 
     /**
      * @var array $makerList
