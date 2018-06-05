@@ -159,7 +159,7 @@ trait NamespaceForRoute {
             $this->endpoint(),
 
             //call file
-            $this->endpoint().''.StaticPathModel::$callClassPrefix
+            $this->namespaceIdentifier()
         ]);
 
         //check namespace exists
@@ -193,6 +193,28 @@ trait NamespaceForRoute {
         //Here we do the namespace control for the auto service. There is no endpoint available,
         //but if there is an auto service recognized by the system, this auto service will be the endpoint.
         return $this->makeBind(CheckEndpointForAutoService::class);
+    }
+
+    /**
+     * @return string
+     */
+    private function namespaceIdentifier(){
+
+        //default endpoint indicator.
+        $endpoint=$this->endpoint().''.StaticPathModel::$callClassPrefix;
+
+        //service endpoint indicator.
+        $namespace=$this->url['namespace'];
+
+        // if namespace is service
+        // default endpoint indicator
+        if($namespace=="Service"){
+            return $endpoint;
+        }
+
+        //call service endpoint indicator.
+        return $namespace.''.$endpoint;
+
     }
 
 

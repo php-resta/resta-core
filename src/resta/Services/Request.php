@@ -11,7 +11,7 @@ class Request extends RequestClient implements HandleContracts {
     /**
      * @var array $origin
      */
-    protected $origin=[];
+    public $origin=[];
 
     /**
      * @var array $inputs
@@ -64,8 +64,8 @@ class Request extends RequestClient implements HandleContracts {
                 if($value===null){
                     $this->{$key}=$method($key);
                     $this->inputs[$key]=$this->{$key};
-                    $this->origin[$key]=$this->{$key};
                 }
+
 
                 //if there is method for key
                 $requestMethod=$method.''.ucfirst($key);
@@ -109,6 +109,7 @@ class Request extends RequestClient implements HandleContracts {
     private function initClient($method){
         foreach($method() as $key=>$value){
             $this->inputs[$key]=$value;
+            $this->origin[$key]=$value;
         }
 
         $this->autoInjection();

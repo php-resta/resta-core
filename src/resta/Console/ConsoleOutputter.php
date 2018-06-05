@@ -5,7 +5,7 @@ namespace Resta\Console;
 use Resta\FileProcess;
 use Resta\StaticPathModel;
 
-class ConsoleOutputter {
+class ConsoleOutputter extends ConsolePrepare {
 
     /**
      * @var array
@@ -52,6 +52,12 @@ class ConsoleOutputter {
      */
     public $touch=array();
 
+    /**
+     * ConsoleOutputter constructor.
+     * @param $argument
+     * @param $app
+     * @param $command
+     */
     public function __construct($argument,$app) {
 
 
@@ -121,8 +127,6 @@ class ConsoleOutputter {
     public function info($string, $foreground_color = 'blue', $background_color = 'white') {
 
         if(isset($this->argument['commandCall'])) return $string;
-
-        dd($string);
 
         $colored_string = "";
 
@@ -364,5 +368,13 @@ class ConsoleOutputter {
             }
         }
         return $input;
+    }
+
+    /**
+     * @param $commander
+     * @return string
+     */
+    public function exception($commander){
+        return $this->error('[['.$commander['argument'].']] parameter is missing for commander');
     }
 }

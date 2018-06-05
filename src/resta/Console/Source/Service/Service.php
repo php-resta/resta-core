@@ -24,7 +24,7 @@ class Service extends ConsoleOutputter {
     /**
      * @var $command_create
      */
-    public $command_create='php api service create [project] service:[endpoint]';
+    public $command_create='php api service create [project] service:[endpoint] namespace?:[namespace]';
 
     /**
      * @method create
@@ -35,9 +35,16 @@ class Service extends ConsoleOutputter {
         $this->argument['methodPrefix'] = StaticPathModel::$methodPrefix;
         $this->directory['endpoint']    = $this->controller().'/'.$this->argument['service'];
 
+        if(isset($this->argument['namespace'])){
+            $this->argument['serviceClass']=$this->argument['namespace'].''.$this->argument['service'];
+        }
+        else{
+            $this->argument['serviceClass']=$this->argument['service'];
+        }
+
         $this->file->makeDirectory($this);
 
-        $this->touch['service/endpoint']        = $this->directory['endpoint'].'/'.$this->argument['service'].'Service.php';
+        $this->touch['service/endpoint']        = $this->directory['endpoint'].'/'.$this->argument['serviceClass'].'Service.php';
         $this->touch['service/app']             = $this->directory['endpoint'].'/App.php';
         $this->touch['service/developer']       = $this->directory['endpoint'].'/Developer.php';
         $this->touch['service/conf']            = $this->directory['endpoint'].'/ServiceConf.php';

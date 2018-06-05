@@ -21,9 +21,9 @@ class __command__ extends ConsoleOutputter {
     protected $define='__command__';
 
     /**
-     * @var $command_create
+     * @var $commandRule array
      */
-    protected $command_create='php api __command__';
+    protected $commandRule=[];
 
     /**
      * @method handle

@@ -62,18 +62,18 @@ class FileProcess {
 
         foreach ($data->touch as $execution=>$touch){
 
-            if(file_exists($touch)){
+            if(!file_exists($touch)){
+                $this->fs->touch($touch);
 
-                throw new \LogicException('this key file is already available');
+                $executionPath=$stubPath.'/'.$execution.'.stub';
+                if(file_exists($executionPath)){
+
+                    $this->fopenprocess($executionPath,$touch,$data);
+                }
             }
 
-            $this->fs->touch($touch);
 
-            $executionPath=$stubPath.'/'.$execution.'.stub';
-            if(file_exists($executionPath)){
 
-                $this->fopenprocess($executionPath,$touch,$data);
-            }
 
         }
     }

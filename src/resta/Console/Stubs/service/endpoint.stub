@@ -2,7 +2,7 @@
 
 namespace App\__project__\__version__\__controller__\__service__;
 
-class __service__Service extends App {
+class __serviceClass__Service extends App {
 
     /**
      * Production forbidden.
@@ -18,7 +18,7 @@ class __service__Service extends App {
     public function getIndex__methodPrefix__(){
 
         return [
-            'endpoint'=>'__service__'
+            'endpoint'=>'__serviceClass__'
         ];
     }
 }
