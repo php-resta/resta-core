@@ -4,7 +4,6 @@ namespace Resta\GlobalLoaders;
 
 use Resta\Utils;
 use Resta\ApplicationProvider;
-use Resta\Traits\InstanceRegister;
 
 class KernelAssigner extends ApplicationProvider  {
 

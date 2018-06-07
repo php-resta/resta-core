@@ -4,7 +4,6 @@ namespace Resta\GlobalLoaders;
 
 use Resta\StaticPathModel;
 use Resta\ApplicationProvider;
-use Resta\Traits\InstanceRegister;
 use Store\Services\RequestService;
 use Resta\Response\ResponseApplication;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,6 +11,8 @@ use Symfony\Component\HttpFoundation\Request;
 class GlobalAccessor extends ApplicationProvider  {
 
     /**
+     * register global request handles to kernel
+     *
      * @method handle
      */
     public function handle(){

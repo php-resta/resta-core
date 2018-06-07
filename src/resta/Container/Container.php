@@ -278,6 +278,9 @@ class Container implements ContainerContracts {
             //By singleton checking, we solve the dependency injection of the given class.
             //Thus, each class can be called together with its dependency.
             self::$instance[$class]=Utils::makeBind($class,$this->applicationProviderBinding($this,self::$bindParams[$class]));
+            $this->singleton()->makeBind[class_basename($class)]=self::$instance[$class];
+
+            //return makeBind class
             return self::$instance[$class];
         }
 

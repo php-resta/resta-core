@@ -22,9 +22,9 @@ class Repository extends ConsoleOutputter {
     public $define='repository';
 
     /**
-     * @var $command_create
+     * @var $commandRule
      */
-    public $command_create='php api repository create [project] repository:[repository] source?:[source]';
+    public $commandRule=['repository','?source'];
 
     /**
      * @method create

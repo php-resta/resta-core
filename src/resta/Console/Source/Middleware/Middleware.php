@@ -22,9 +22,9 @@ class Middleware extends ConsoleOutputter {
     public $define='Middleware create';
 
     /**
-     * @var $command_create
+     * @var $commandRule
      */
-    public $command_create='php api middleware create [project] middleware:[middleware]';
+    public $commandRule=['middleware'];
 
     /**
      * @method create

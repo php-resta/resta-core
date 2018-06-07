@@ -22,9 +22,9 @@ class Env extends ConsoleOutputter {
     public $define='env create';
 
     /**
-     * @var $command_create
+     * @var $commandRule
      */
-    public $command_create='php api env create [project]';
+    public $commandRule=[];
 
     /**
      * @method create
@@ -40,6 +40,6 @@ class Env extends ConsoleOutputter {
 
         Utils::chmod(StaticPathModel::appPath());
 
-        return $this->info('Your Environment File Has Been Successfully Created');
+        echo $this->info('Your Environment File Has Been Successfully Created');
     }
 }

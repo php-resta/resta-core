@@ -22,9 +22,9 @@ class Autoservice extends ConsoleOutputter {
     public $define='Auto service';
 
     /**
-     * @var $command_create
+     * @var $commandRule
      */
-    public $command_create='php api autoservice create';
+    public $commandRule=[];
 
     /**
      * @method create

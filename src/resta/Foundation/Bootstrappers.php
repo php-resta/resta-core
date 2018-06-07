@@ -135,6 +135,10 @@ class Bootstrappers {
         $registerAppBound=$this->concrete->makeBind(RegisterAppBound::class);
         $registerAppBound->register('bound',$registerAppBound);
 
+        //We add manifest configuration variables to the manifest property in the kernel.
+        $bootManager=require(root.'/bootstrapper/Manifest/BootManager.php');
+        $registerAppBound->register('manifest','bootManager',$bootManager);
+
         // We are saving the application class to
         // the container object for the appClass value.
         $this->concrete->kernel()->bound->register('appClass',new \application());

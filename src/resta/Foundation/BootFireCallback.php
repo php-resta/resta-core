@@ -28,13 +28,15 @@ class BootFireCallback extends ApplicationProvider {
         //the booter path.
         $app=pos($booter);
 
-        //we get our object-protected boot lists
-        //directly in the application class with the help of public access method.
-        $booter=(new CustomBooter(self::getBooter($booter)))->customBootstrappers($booter);
+        // We get instance for customBooter class
+        // we get our object-protected boot lists
+        // directly in the application class with the help of public access method.
+        $customBooter   = $app->makeBind(CustomBooter::class,['boot'=>self::getBooter($booter)]);
+        $boot           = ($customBooter)->customBootstrappers($booter);
 
         // and as a result we now use
         //the instance properties of our boot lists to include our implementation.
-        foreach ($booter as $bootstrapper){
+        foreach ($boot as $bootstrapper){
 
             //set makeBuild for kernel boots
             Utils::makeBind($bootstrapper,$app->applicationProviderBinding($app))

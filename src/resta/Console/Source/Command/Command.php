@@ -21,9 +21,9 @@ class Command extends ConsoleOutputter {
     public $define='command';
 
     /**
-     * @var $command_create
+     * @var $commandRule
      */
-    public $command_create='php api command create [project] command:[commandName]';
+    public $commandRule=['command'];
 
     /**
      * @method create

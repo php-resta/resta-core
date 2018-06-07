@@ -23,9 +23,9 @@ class Request extends ConsoleOutputter {
     public $define='Request create';
 
     /**
-     * @var $command_create
+     * @var $commandRule
      */
-    public $command_create='php api request create [projectName] request:[requestName]';
+    public $commandRule=['request'];
 
     /**
      * @method create

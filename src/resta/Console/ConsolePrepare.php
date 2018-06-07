@@ -33,11 +33,9 @@ class ConsolePrepare implements ConsolePrepareContracts {
 
         $commandRule=$commander['commandRule'];
 
-        $list=[];
-
         foreach ($commandRule as $key=>$value){
             if(!preg_match('@\?.+@is',$value)){
-                if(!isset($commander['arguments'][$value])){
+                if(!isset($commander['arguments'][$value]) OR $commander['arguments'][$value]==""){
                     return [
                         'status'=>false,
                         'argument'=>$value,

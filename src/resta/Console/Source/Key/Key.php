@@ -24,9 +24,9 @@ class Key extends ConsoleOutputter {
     public $define='Key generate on console';
 
     /**
-     * @var $command_create
+     * @var $commandRule
      */
-    public $command_create='php api key generate';
+    public $commandRule=[];
 
     /**
      * @method generate
@@ -43,6 +43,6 @@ class Key extends ConsoleOutputter {
         //set key file touch
         $this->file->touch($this);
 
-        return $this->info('Your Application Key File Has Been Successfully Created');
+        echo $this->info('Your Application Key File Has Been Successfully Created');
     }
 }

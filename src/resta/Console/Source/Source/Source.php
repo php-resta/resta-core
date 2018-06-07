@@ -22,9 +22,9 @@ class Source extends ConsoleOutputter {
     public $define='Source create';
 
     /**
-     * @var $command_create
+     * @var $commandRule
      */
-    public $command_create='php api source create [project] service:[endpoint] source:[source] file:[file]';
+    public $commandRule=['service','source','?file'];
 
     /**
      * @method create

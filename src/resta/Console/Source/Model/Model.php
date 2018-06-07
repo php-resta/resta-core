@@ -22,9 +22,9 @@ class Model extends ConsoleOutputter {
     public $define='Model creating';
 
     /**
-     * @var $command_create
+     * @var $commandRule
      */
-    public $command_create='php api model create [project] file:[file] table:[table]';
+    public $commandRule=['file','table'];
 
     /**
      * @method create

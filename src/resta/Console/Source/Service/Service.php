@@ -22,9 +22,9 @@ class Service extends ConsoleOutputter {
     public $define='Service create';
 
     /**
-     * @var $command_create
+     * @var array
      */
-    public $command_create='php api service create [project] service:[endpoint] namespace?:[namespace]';
+    protected $commandRule=['service','?namespace'];
 
     /**
      * @method create

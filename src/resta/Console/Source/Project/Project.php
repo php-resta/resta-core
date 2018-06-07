@@ -23,9 +23,9 @@ class Project extends ConsoleOutputter {
     public $define='Project Set';
 
     /**
-     * @var $command_create
+     * @var $commandRule
      */
-    public $command_create='php api project create [projectName]';
+    public $commandRule=[];
 
     /**
      * @method create

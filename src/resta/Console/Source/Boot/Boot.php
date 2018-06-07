@@ -22,9 +22,9 @@ class Boot extends ConsoleOutputter {
     public $define='Boot create';
 
     /**
-     * @var $command_create
+     * @var $commandRule
      */
-    public $command_create='php api boot create [boot]';
+    public $commandRule=[];
 
     /**
      * @method create

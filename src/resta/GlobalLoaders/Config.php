@@ -2,13 +2,13 @@
 
 namespace Resta\GlobalLoaders;
 
-use Resta\Utils;
 use Resta\ApplicationProvider;
-use Resta\Traits\InstanceRegister;
 
 class Config extends ApplicationProvider  {
 
     /**
+     * register config classess to kernel
+     *
      * @param array $files
      */
     public function setConfig($files=array()){
@@ -16,8 +16,7 @@ class Config extends ApplicationProvider  {
         foreach($files as $key=>$file){
 
             $this->register('appConfig',strtolower($key),[
-
-                'namespace' =>'App\\'.app.'\\'.Utils::getAppVersion(app).'\Config\\'.$key,
+                'namespace' =>app()->namespace()->config().'\\'.$key,
                 'file'      =>$file
             ]);
 

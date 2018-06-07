@@ -23,9 +23,9 @@ class Event extends ConsoleOutputter {
     public $define='Event';
 
     /**
-     * @var $command_create
+     * @var $commandRule
      */
-    public $command_create='php api event generate [project]';
+    public $commandRule=[];
 
     /**
      * @method create

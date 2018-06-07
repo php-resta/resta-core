@@ -22,7 +22,6 @@ class Router extends ApplicationProvider  {
      */
     public function route($unset=false){
 
-        //
         if(file_exists($serviceDummy=StaticPathModel::getServiceDummy())){
             $serviceDummy=Yaml::parse(file_get_contents($serviceDummy));
         }

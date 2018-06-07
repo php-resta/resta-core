@@ -3,11 +3,12 @@
 namespace Resta\GlobalLoaders;
 
 use Resta\ApplicationProvider;
-use Resta\Traits\InstanceRegister;
 
 class Environment extends ApplicationProvider  {
 
     /**
+     * register environment variables to kernel
+     *
      * @method environment
      * @param null $environment
      */

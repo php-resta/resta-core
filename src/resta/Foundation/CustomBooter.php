@@ -10,7 +10,17 @@ class CustomBooter {
     /**
      * @var string
      */
-    public $boot;
+    protected $boot;
+
+    /**
+     * @var array
+     */
+    protected $booterList=[];
+
+    /**
+     * @var string
+     */
+    protected $customBooter='originGroups';
 
     /**
      * CustomBooter constructor.
@@ -29,13 +39,13 @@ class CustomBooter {
      */
     public function customBootstrappers($booter){
 
-        //if the boot list belongs to the middlewaregroups list,
-        //then we can custom boot our custom boot objects by adding them at the end of this class.
-        if(array_pop($booter)=="middlewareGroups"){
-            return $this->addMiddlewareGroupsForCustomBooter($booter);
+        //if the boot list belongs to the custom booter,
+        //then we can boot our custom boot objects by adding them at the end of this class.
+        if(array_pop($booter)==$this->customBooter){
+            return $this->addCustomBooter($booter);
         }
 
-        //If the boot list does not belong to the middlewaregroups list,
+        //If the boot list does not belong to the booter list,
         //we normally send the boot list exactly as it is.
         return $this->getBooterList($booter);
     }
@@ -44,25 +54,44 @@ class CustomBooter {
      * @param $booter
      * @return array|mixed
      */
-    private function addMiddlewareGroupsForCustomBooter($booter){
+    private function addCustomBooter($booter){
 
-        //normally we will assign a variable to our MiddlewareGroups list.
+        //normally we will assign a variable to our booterList list.
         $booterList=$this->getBooterList($booter);
 
         //Now, let's get our custom boot list.
-        //Let's assign the final state to our middlewaregroups list along with our custom boot list.
+        //Let's assign the final state to our booterList list along with our custom boot list.
         foreach (array_keys($this->getBootDirectory()) as $customBoots){
 
             //Your custom boot objects in
             //the boot directory should not be in the middlewaregroups list.
             if(false===pos($booter)->console() && !in_array('Boot\\'.$customBoots,$booterList)){
-                $booterList[]='Boot\\'.$customBoots;
+                $this->booterManifest($customBoots,$booter);
             }
         }
 
-        //return $booter
-        return $booterList;
+        //The booterList property combines booterList variables.
+        return array_merge($booterList,$this->booterList);
 
+    }
+
+    /**
+     * @param $customBoots
+     * @param $booter
+     */
+    private function booterManifest($customBoots,$booter){
+
+        // custom boot class
+        $booterManifest='Boot\\'.$customBoots;
+
+        // We get the manifest values from the kernel.
+        $manifest=pos($booter)->singleton()->manifest;
+
+        // We check if the manifest directory exists in the BootManager class.
+        // if it is present as a manifest, the booter is added to the list.
+        if(isset($manifest['bootManager'][$booterManifest])){
+            $this->booterList[]=$booterManifest;
+        }
     }
 
     /**
@@ -81,7 +110,6 @@ class CustomBooter {
     private function getBooterList($booter){
 
         //We specify the method call for the booter list.
-        return $booter[0]->bootFire(null,$this->boot);
+        return pos($booter)->bootFire(null,$this->boot);
     }
-
 }

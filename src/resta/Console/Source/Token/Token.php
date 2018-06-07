@@ -22,9 +22,9 @@ class Token extends ConsoleOutputter {
     public $define='Token Generator';
 
     /**
-     * @var $command_create
+     * @var $commandRule
      */
-    public $command_create='php api token create [projectName] key:[clientKey]';
+    public $commandRule=['key'];
 
     /**
      * @method create

@@ -3,10 +3,10 @@
 namespace Resta\Foundation;
 
 use Resta\Utils;
+use Resta\ClosureDispatcher;
 use Resta\Console\ConsoleArguments;
 use Resta\Console\CustomConsoleProcess;
 use Resta\Contracts\ApplicationContracts;
-use Resta\Console\Source\Service\Service;
 
 class Console extends Kernel {
 
@@ -44,7 +44,14 @@ class Console extends Kernel {
         //If the console executor is a custom console application; in this case we look at the kernel directory inside the application.
         //If the console class is not available on the kernel of resta, then the system will run the command class in the application.
         return $this->checkConsoleNamespace(function(){
-            return (new $this->consoleClassNamespace($this->getConsoleArgumentsWithKey(),$this))->{$this->getConsoleClassMethod()}();
+
+            // we get the instance data of the kernel command class of the system.
+            $commander=(new $this->consoleClassNamespace($this->getConsoleArgumentsWithKey(),$this));
+
+            // we check the command rules of each command class.
+            return $this->prepareCommander($commander,function($commander){
+               return $commander->{$this->getConsoleClassMethod()}();
+            });
         });
 
     }
@@ -65,5 +72,25 @@ class Console extends Kernel {
         // then we check the existence of the specific application command and run it if it is.
         return (new CustomConsoleProcess($this->getConsoleArgumentsWithKey(),$this))->handle();
 
+    }
+
+    /**
+     * @param $commander
+     * @param callable $callback
+     * @return mixed
+     */
+    public function prepareCommander($commander,callable $callback){
+
+        // closure binding custom command,move custom namespace as specific
+        // call prepare commander firstly for checking command builder
+        $closureCommand     = app()->makeBind(ClosureDispatcher::class,['bind'=>$commander]);
+        $prepareCommander   = $commander->prepareCommander($closureCommand);
+
+        if(!$prepareCommander['status']){
+            return $commander->exception($prepareCommander);
+        }
+
+        //callback custom console
+        return call_user_func_array($callback,[$commander]);
     }
 }

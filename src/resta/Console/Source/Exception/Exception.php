@@ -22,9 +22,9 @@ class Exception extends ConsoleOutputter {
     public $define='Exception create';
 
     /**
-     * @var $command_create
+     * @var $commandRule
      */
-    public $command_create='php api exception create [projectName] exception:[exceptionName]';
+    public $commandRule=['exception'];
 
     /**
      * @method create

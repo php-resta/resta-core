@@ -7,6 +7,8 @@ use Resta\ApplicationProvider;
 class Encrypter extends ApplicationProvider  {
 
     /**
+     * register application key to kernel
+     *
      * @param $key
      */
     public function applicationKey($key){
