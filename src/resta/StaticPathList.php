@@ -183,6 +183,11 @@ class StaticPathList {
      */
     public static $store='Store';
 
+    /**
+     * @var $boot
+     */
+    public static $boot='Boot';
+
 
     /**
      * @var $store

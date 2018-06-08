@@ -3,14 +3,20 @@
 namespace Resta\Foundation;
 
 use Resta\Utils;
+use Resta\StaticPathList;
 use Resta\StaticPathModel;
 
 class CustomBooter {
 
     /**
-     * @var string
+     * @var null
      */
     protected $boot;
+
+    /**
+     * @var null
+     */
+    protected $bootNamespace;
 
     /**
      * @var array
@@ -63,10 +69,13 @@ class CustomBooter {
         //Let's assign the final state to our booterList list along with our custom boot list.
         foreach (array_keys($this->getBootDirectory()) as $customBoots){
 
+            //We assign the namespace data of the bootable class to the bootNamespace property.
+            if($this->bootNamespace===null) $this->bootNamespace=''.StaticPathList::$boot.'\\'.$customBoots;
+
             //Your custom boot objects in
             //the boot directory should not be in the middlewaregroups list.
-            if(false===pos($booter)->console() && !in_array('Boot\\'.$customBoots,$booterList)){
-                $this->booterManifest($customBoots,$booter);
+            if(false===pos($booter)->console() && !in_array($this->bootNamespace,$booterList)){
+                $this->booterManifest($booter);
             }
         }
 
@@ -76,13 +85,12 @@ class CustomBooter {
     }
 
     /**
-     * @param $customBoots
      * @param $booter
      */
-    private function booterManifest($customBoots,$booter){
+    private function booterManifest($booter){
 
         // custom boot class
-        $booterManifest='Boot\\'.$customBoots;
+        $booterManifest=$this->bootNamespace;
 
         // We get the manifest values from the kernel.
         $manifest=pos($booter)->singleton()->manifest;
@@ -90,7 +98,7 @@ class CustomBooter {
         // We check if the manifest directory exists in the BootManager class.
         // if it is present as a manifest, the booter is added to the list.
         if(isset($manifest['bootManager'][$booterManifest])){
-            $this->booterList[]=$booterManifest;
+            $this->booterList['custom'][]=$booterManifest;
         }
     }
 

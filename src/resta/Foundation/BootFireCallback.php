@@ -2,7 +2,6 @@
 
 namespace Resta\Foundation;
 
-use Resta\Utils;
 use Resta\ApplicationProvider;
 
 class BootFireCallback extends ApplicationProvider {
@@ -36,12 +35,7 @@ class BootFireCallback extends ApplicationProvider {
 
         // and as a result we now use
         //the instance properties of our boot lists to include our implementation.
-        foreach ($boot as $bootstrapper){
-
-            //set makeBuild for kernel boots
-            Utils::makeBind($bootstrapper,$app->applicationProviderBinding($app))
-                ->boot();
-        }
+        (new FinalBooting($app,$boot))->handle();
     }
 
     /**
