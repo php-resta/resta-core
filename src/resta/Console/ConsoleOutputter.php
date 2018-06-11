@@ -107,7 +107,8 @@ class ConsoleOutputter extends ConsolePrepare {
                 $this->argument['project']=$this->argument['project'].'\\'.$this->argument['group'];
             }
 
-            $this->project=StaticPathModel::appPath().'/'.$this->argument['project'];
+            $this->project=StaticPathModel::appPath().'/'.str_replace('\\','/',$this->argument['project']);
+            
 
         }
 

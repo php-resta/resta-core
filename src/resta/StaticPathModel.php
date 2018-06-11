@@ -42,7 +42,7 @@ class StaticPathModel extends StaticPathList {
     public static function getAppStorage(){
 
         //get app path for application
-        return self::appPath().'/'.app.'/Storage';
+        return self::appPath().'/'.str_replace("\\","/",app).'/Storage';
     }
 
     public static function getAutoServiceNamespace(){
@@ -86,7 +86,7 @@ class StaticPathModel extends StaticPathList {
 
         if($path){
 
-            return self::appPath().'/'.$app.'/'.Utils::getAppVersion($app).'';
+            return self::appPath().'/'.str_replace("\\","/",$app).'/'.Utils::getAppVersion($app).'';
         }
         return self::$autoloadNamespace.'\\'.$app.'\\'.Utils::getAppVersion($app).'';
     }
