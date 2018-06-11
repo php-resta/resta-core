@@ -60,8 +60,18 @@ class StaticPathModel extends StaticPathList {
 
         if(defined('app')){
 
+            $appProject=explode("\\",app);
+            $app=str_replace("\\","",app);
+            $environmentFile=self::appPath().'/'.strtolower($app).'.yaml';
+
+            if(file_exists($environmentFile)){
+                //get app path for application
+                return $environmentFile;
+            }
+
             //get app path for application
-            return self::appPath().'/'.strtolower(app).'.yaml';
+            return self::appPath().'/'.strtolower(current($appProject)).'.yaml';
+
         }
 
     }

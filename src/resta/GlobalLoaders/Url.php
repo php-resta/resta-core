@@ -13,9 +13,11 @@ class Url extends ApplicationProvider  {
     public function definitor($urlList){
 
         //We define global URL objects globally for the application.
-        define('app',               $urlList['project']);
+        define('group',             $urlList['namespace'].'');
+        define('app',               $urlList['project'].'\\'.group);
         define('endpoint',          $urlList['endpoint']);
         define('method',            $urlList['method']);
+        
 
         //route parameters kernel object register
         $this->register('routeParameters',$urlList['parameters']);

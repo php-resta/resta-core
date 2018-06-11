@@ -97,8 +97,18 @@ class ConsoleOutputter extends ConsolePrepare {
         $table=require_once ('ConsoleTable.php');
         $this->table=new \console_table();
 
+
         if(isset($this->argument['project'])){
+
+            if($this->argument['group']===null){
+                $this->argument['project']=$this->argument['project'].'\Main';
+            }
+            else{
+                $this->argument['project']=$this->argument['project'].'\\'.$this->argument['group'];
+            }
+
             $this->project=StaticPathModel::appPath().'/'.$this->argument['project'];
+
         }
 
     }
@@ -130,5 +140,22 @@ class ConsoleOutputter extends ConsolePrepare {
      */
     public function exception($commander){
         return $this->error('[['.$commander['argument'].']] parameter is missing for commander');
+    }
+
+    /**
+     * @param $data
+     */
+    public function checkGroupArgument($data,$seperate="\\"){
+
+        $dataParse=explode("\\",$data);
+
+        if(isset($this->argument['group'])){
+            $argument=current($dataParse).''.$seperate.''.$this->argument['group'];
+        }
+        else{
+            $argument=current($dataParse);
+        }
+
+        return $argument;
     }
 }

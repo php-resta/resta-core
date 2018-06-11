@@ -118,6 +118,6 @@ class Project extends ConsoleOutputter {
 
         Utils::chmod($this->project);
 
-        return $this->info('Project Named "'.$this->argument['project'].'" Has Been Successfully Created');
+        echo $this->info('Project Named "'.$this->argument['project'].'" Has Been Successfully Created');
     }
 }

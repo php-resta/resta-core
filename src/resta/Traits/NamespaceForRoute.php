@@ -13,7 +13,7 @@ trait NamespaceForRoute {
      */
     public function project(){
 
-        return $this->url['project'];
+        return app;
     }
 
 
@@ -31,7 +31,7 @@ trait NamespaceForRoute {
      */
     public function endpoint(){
 
-        return $this->url['endpoint'];
+        return endpoint;
     }
 
     /**
@@ -39,7 +39,7 @@ trait NamespaceForRoute {
      */
     public function urlMethod(){
 
-        return $this->url['method'];
+        return method;
     }
 
 
@@ -161,7 +161,7 @@ trait NamespaceForRoute {
             //call file
             $this->namespaceIdentifier()
         ]);
-
+        
         //check namespace exists
         if(file_exists(Utils::getPathFromNamespace($namespace)) && Utils::isNamespaceExists($namespace)){
             return $namespace;
@@ -203,17 +203,7 @@ trait NamespaceForRoute {
         //default endpoint indicator.
         $endpoint=$this->endpoint().''.StaticPathModel::$callClassPrefix;
 
-        //service endpoint indicator.
-        $namespace=$this->url['namespace'];
-
-        // if namespace is service
-        // default endpoint indicator
-        if($namespace=="Service"){
-            return $endpoint;
-        }
-
-        //call service endpoint indicator.
-        return $namespace.''.$endpoint;
+        return $endpoint;
 
     }
 

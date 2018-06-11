@@ -222,3 +222,23 @@ if (!function_exists('call')) {
         return app()->namespace()->call($call);
     }
 }
+
+if (!function_exists('faker')) {
+
+
+    /**
+     * @param null $locale
+     * @return \Faker\Generator
+     */
+    function faker($locale=null)
+    {
+        if($locale===null){
+            $faker=\Faker\Factory::create();
+        }
+        else{
+            $faker=\Faker\Factory::create($locale);
+        }
+
+        return $faker;
+    }
+}

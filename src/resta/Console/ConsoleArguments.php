@@ -105,6 +105,15 @@ trait ConsoleArguments {
     public function defineAppnameForCustomConsole(){
 
         $arguments=$this->getArguments();
-        if(!defined('app') and isset($arguments[2])) define('app',$arguments[2]);
+        $getConsoleArgumentsWithKey=$this->getConsoleArgumentsWithKey();
+
+        if(isset($getConsoleArgumentsWithKey['group'])){
+            $app=$arguments[2].'\\'.$getConsoleArgumentsWithKey['group'];
+        }
+        else{
+            $app=$arguments[2].'\Main';
+        }
+
+        if(!defined('app') and isset($arguments[2])) define('app',$app);
     }
 }

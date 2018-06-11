@@ -54,7 +54,7 @@ class Service extends ConsoleOutputter {
 
         Utils::chmod($this->controller());
 
-        return $this->info('Service Named "'.$this->argument['service'].'" Has Been Successfully Created in the '.$this->argument['project'].'');
+        echo $this->info('Service Named "'.$this->argument['service'].'" Has Been Successfully Created in the '.$this->argument['project'].'');
 
     }
 }

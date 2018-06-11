@@ -55,7 +55,7 @@ class Model extends ConsoleOutputter {
 
         Utils::chmod($this->model());
 
-        return $this->info('Model Has Been Succesfully Created');
+        echo $this->info('Model Has Been Succesfully Created');
     }
 
     /**

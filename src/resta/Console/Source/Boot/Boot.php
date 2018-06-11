@@ -32,7 +32,11 @@ class Boot extends ConsoleOutputter {
      */
     public function create(){
 
-        $this->touch['main/boot']        = StaticPathModel::bootDir().'/'.$this->argument['project'].'.php';
+        $bootName=explode("\\",$this->argument['project']);
+
+        $this->argument['boot']=current($bootName);
+
+        $this->touch['main/boot']        = StaticPathModel::bootDir().'/'.$this->argument['boot'].'.php';
 
         $this->file->touch($this);
 

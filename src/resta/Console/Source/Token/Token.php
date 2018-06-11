@@ -39,6 +39,6 @@ class Token extends ConsoleOutputter {
         //
         $key=lcfirst($this->argument['key']);
 
-        return $this->info($resolveClientApiToken->createToken($key));
+        echo $this->info($resolveClientApiToken->createToken($key));
     }
 }

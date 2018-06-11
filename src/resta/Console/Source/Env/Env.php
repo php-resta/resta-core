@@ -32,8 +32,10 @@ class Env extends ConsoleOutputter {
      */
     public function create(){
 
+        $envFile= $this->checkGroupArgument($this->argument['project'],'');
+
         //key generate file
-        $this->touch['main/env']= StaticPathModel::appPath().'/'.strtolower($this->argument['project']).'.yaml';
+        $this->touch['main/env']= StaticPathModel::appPath().'/'.strtolower($envFile).'.yaml';
 
         //set key file touch
         $this->file->touch($this);
