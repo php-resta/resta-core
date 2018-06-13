@@ -58,8 +58,6 @@ class UrlParseApplication extends ApplicationProvider{
      */
     public function assignUrlList(){
 
-        $query=$this->convertArrayForQuery();
-
         // We treat the url parameters in the size of
         // the application usage and get the values
         // ​​to be processed throughout the application in query format.
@@ -67,6 +65,12 @@ class UrlParseApplication extends ApplicationProvider{
 
         foreach ($query as $key=>$value){
             $this->urlList[$this->urlNames[$key]]=(strlen($value)>0) ? $value : null;
+        }
+
+        // If there is no method key in the urlList property,
+        // then by default we assign the index to the method property.
+        if(!isset($this->urlList['method'])){
+            $this->urlList['method']='index';
         }
 
         //determines the endpoint method for your project

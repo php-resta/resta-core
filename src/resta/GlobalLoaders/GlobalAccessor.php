@@ -52,6 +52,7 @@ class GlobalAccessor extends ApplicationProvider  {
 
         //We determine with the kernel object which HTTP method the requested from the client
         $this->register('httpMethod',ucfirst(strtolower($this->app->kernel()->request->getRealMethod())));
+
     }
 
 }
