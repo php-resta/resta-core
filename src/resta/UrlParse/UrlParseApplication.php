@@ -64,7 +64,11 @@ class UrlParseApplication extends ApplicationProvider{
         $query=$this->convertArrayForQuery();
 
         foreach ($query as $key=>$value){
-            $this->urlList[$this->urlNames[$key]]=(strlen($value)>0) ? $value : null;
+
+            if(isset($this->urlNames[$key])){
+                $this->urlList[$this->urlNames[$key]]=(strlen($value)>0) ? $value : null;
+            }
+
         }
 
         // If there is no method key in the urlList property,
