@@ -1,21 +1,16 @@
 <?php
 
-namespace Resta\Foundation;
+namespace Resta\Console;
 
 use Resta\Utils;
 use Resta\ClosureDispatcher;
-use Resta\Console\ConsoleArguments;
-use Resta\Console\CustomConsoleProcess;
+use Resta\ApplicationProvider;
 use Resta\Contracts\ApplicationContracts;
 
-class Console extends Kernel {
+class Console extends ApplicationProvider {
 
+    //get console arguments
     use ConsoleArguments;
-
-    /**
-     * @var $app
-     */
-    public $app;
 
     /**
      * @var $consoleClassNamespace
@@ -23,12 +18,10 @@ class Console extends Kernel {
     public $consoleClassNamespace;
 
     /**
-     * @param ApplicationContracts $app
      * @return mixed
      */
-    public function handle(ApplicationContracts $app){
+    public function handle(){
 
-        $this->app=$app;
         return $this->consoleProcess();
     }
 
@@ -50,7 +43,7 @@ class Console extends Kernel {
 
             // we check the command rules of each command class.
             return $this->prepareCommander($commander,function($commander){
-               return $commander->{$this->getConsoleClassMethod()}();
+                return $commander->{$this->getConsoleClassMethod()}();
             });
         });
 
@@ -87,7 +80,8 @@ class Console extends Kernel {
         $prepareCommander   = $commander->prepareCommander($closureCommand);
 
         if(!$prepareCommander['status']){
-            return $commander->exception($prepareCommander);
+            echo $commander->exception($prepareCommander);
+            die();
         }
 
         //callback custom console

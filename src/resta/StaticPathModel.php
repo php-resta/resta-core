@@ -14,7 +14,6 @@ class StaticPathModel extends StaticPathList {
         return root.'/src/boot';
     }
 
-
     /**
      * @method appPath
      * @return mixed
@@ -42,15 +41,17 @@ class StaticPathModel extends StaticPathList {
     public static function getAppStorage(){
 
         //get app path for application
-        return self::appPath().'/'.str_replace("\\","/",app).'/Storage';
+        return self::appPath().'/'.self::slashToBackSlash(app).'/Storage';
     }
 
+    /**
+     * @return string
+     */
     public static function getAutoServiceNamespace(){
 
+        //get auto service for application
         return ''.self::$store.'\Autoservice';
     }
-
-
 
     /**
      * @method getEnvironmentFile
@@ -86,14 +87,17 @@ class StaticPathModel extends StaticPathList {
 
         if($path){
 
-            return self::appPath().'/'.str_replace("\\","/",$app).'/'.Utils::getAppVersion($app).'';
+            return self::appPath().'/'.self::slashToBackSlash($app).'/'.Utils::getAppVersion($app).'';
         }
         return self::$autoloadNamespace.'\\'.$app.'\\'.Utils::getAppVersion($app).'';
     }
 
+    /**
+     * @return string
+     */
     public static function endpointPath(){
 
-        return self::appPath().'/'.app.'/'.Utils::getAppVersion(app).'/'.self::$controller.'/'.endpoint;
+        return self::appPath().'/'.self::slashToBackSlash(app).'/'.Utils::getAppVersion(app).'/'.self::$controller.'/'.endpoint;
     }
 
     /**
@@ -123,7 +127,7 @@ class StaticPathModel extends StaticPathList {
 
         //get app config path for application
         if(false===$namespace){
-            return self::appPath().'/'.app.'/'.Utils::getAppVersion(app).'/'.self::$config;
+            return self::appPath().'/'.self::slashToBackSlash(app).'/'.Utils::getAppVersion(app).'/'.self::$config;
         }
         return self::$autoloadNamespace.'\\'.app.'\\'.Utils::getAppVersion(app).'\\'.self::$config;
     }
@@ -141,10 +145,18 @@ class StaticPathModel extends StaticPathList {
         return $httpHeaders::$httpHeaders;
     }
 
+    /**
+     * @return string
+     */
     public static function appBase(){
         return self::appVersionRoot().'\\ServiceBaseController';
     }
 
+    /**
+     * @param null $app
+     * @param bool $path
+     * @return string
+     */
     public static function appAnnotation($app=null,$path=false){
 
         if($path){
@@ -153,6 +165,9 @@ class StaticPathModel extends StaticPathList {
         return self::appVersionRoot($app).'\\ServiceAnnotationsController';
     }
 
+    /**
+     * @return string
+     */
     public static function appMiddleware(){
         return self::appVersionRoot().'\\ServiceMiddlewareController';
     }
@@ -173,24 +188,49 @@ class StaticPathModel extends StaticPathList {
         return self::$autoloadNamespace.'\\'.app.'\\'.Utils::getAppVersion(app).'\\'.self::$middleware;
     }
 
+    /**
+     * @param null $app
+     * @return string
+     */
     public static function appRepository($app=null){
         return self::appVersionRoot($app).'\\'.self::$optional.'\\'.self::$repository;
     }
 
+    /**
+     * @param null $app
+     * @return string
+     */
     public static function appSourceEndpoint($app=null){
         return self::appVersionRoot($app).'\\'.self::$optional.'\\'.self::$sourcePath.'\Endpoint';
     }
 
+    /**
+     * @param null $app
+     * @return string
+     */
     public static function appBuilder($app=null){
         return self::appVersionRoot($app).'\\'.self::$model.'\\'.self::$builder;
     }
 
+    /**
+     * @return string
+     */
     public static function appLog(){
         return self::getAppStorage().'/'.self::$log;
     }
 
+    /**
+     * @return string
+     */
     public static function appServiceLog(){
         return self::appVersionRoot().'\ServiceLogController';
+    }
+
+    /**
+     * @param $data
+     */
+    private static function slashToBackSlash($data){
+        return str_replace("\\","/",$data);
     }
 
 }

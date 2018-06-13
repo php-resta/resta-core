@@ -27,10 +27,9 @@ class __command__ extends ConsoleOutputter {
 
     /**
      * @method handle
-     * @return mixed
      */
     public function handle(){
 
-        return $this->info('__command__');
+        echo $this->info('__command__');
     }
 }

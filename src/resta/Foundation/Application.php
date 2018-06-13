@@ -78,4 +78,18 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
         return $this->console;
     }
 
+    /**
+     * @return bool
+     */
+    public function runningInConsole()
+    {
+        if($this->console()){
+
+            //Determine if the application is running in the console.
+            return php_sapi_name() === 'cli' || php_sapi_name() === 'phpdbg';
+        }
+
+        return false;
+    }
+
 }

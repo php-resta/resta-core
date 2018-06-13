@@ -11,7 +11,7 @@ class LoggerService extends ApplicationProvider {
 
         //We are getting the path to
         //the service log file in the project's version directory.
-        $appBase=$this->makeBind(StaticPathModel::appServiceLog());
+        $appBase=$this->makeBind(app()->namespace()->logger());
 
         //The service log class must have an adapter object.
         $logAdapter=$appBase->adapter;

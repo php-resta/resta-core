@@ -5,6 +5,27 @@ namespace Resta\Contracts;
 interface StaticPathContracts {
 
     /**
+     * @param null $app
+     * @return mixed
+     */
+    public function app($app=null);
+
+    /**
+     * @return mixed
+     */
+    public function appLanguage();
+
+    /**
+     * @return mixed
+     */
+    public function appStorage();
+
+    /**
+     * @return mixed
+     */
+    public function config();
+
+    /**
      * @return mixed
      */
     public function encrypterFile();
@@ -17,12 +38,47 @@ interface StaticPathContracts {
     /**
      * @return mixed
      */
-    public function appStorage();
+    public function kernel();
 
     /**
      * @return mixed
      */
-    public function appLanguage();
+    public function logger();
+
+    /**
+     * @return mixed
+     */
+    public function middleware();
+
+    /**
+     * @return mixed
+     */
+    public function migration();
+
+    /**
+     * @return mixed
+     */
+    public function model();
+
+    /**
+     * @return mixed
+     */
+    public function optionalWebservice();
+
+    /**
+     * @return mixed
+     */
+    public function optionalJob();
+
+    /**
+     * @return mixed
+     */
+    public function optionalException();
+
+    /**
+     * @return mixed
+     */
+    public function optionalSource();
 
     /**
      * @return mixed
@@ -30,14 +86,13 @@ interface StaticPathContracts {
     public function appResourche();
 
     /**
-     * @param null $app
      * @return mixed
      */
-    public function app($app=null);
+    public function serviceContainer();
 
     /**
      * @param null $app
      * @return mixed
      */
-    public function appVersion($app=null);
+    public function version($app=null);
 }

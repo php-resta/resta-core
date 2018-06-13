@@ -5,9 +5,48 @@ namespace Resta\Contracts;
 interface StaticNamespaceContracts {
 
     /**
+     * @param null $endpoint
+     * @param array $bind
      * @return mixed
      */
-    public function version();
+    public function call($endpoint=null,$bind=array());
+
+    /**
+     * @param null $command
+     * @param array $argument
+     * @return mixed
+     */
+    public function command($command=null,$argument=array());
+
+    /**
+     * @return mixed
+     */
+    public function config();
+
+    /**
+     * @return mixed
+     */
+    public function kernel();
+
+    /**
+     * @return mixed
+     */
+    public function logger();
+
+    /**
+     * @return mixed
+     */
+    public function middleware();
+
+    /**
+     * @return mixed
+     */
+    public function migration();
+
+    /**
+     * @return mixed
+     */
+    public function model();
 
     /**
      * @return mixed
@@ -17,12 +56,12 @@ interface StaticNamespaceContracts {
     /**
      * @return mixed
      */
-    public function optionalRepository();
+    public function optionalJob();
 
     /**
      * @return mixed
      */
-    public function optionalJob();
+    public function optionalRepository();
 
     /**
      * @return mixed
@@ -37,40 +76,10 @@ interface StaticNamespaceContracts {
     /**
      * @return mixed
      */
-    public function config();
-
-    /**
-     * @param null $endpoint
-     * @param array $bind
-     * @return mixed
-     */
-    public function call($endpoint=null,$bind=array());
+    public function serviceContainer();
 
     /**
      * @return mixed
      */
-    public function middleware();
-
-    /**
-     * @return mixed
-     */
-    public function model();
-
-    /**
-     * @return mixed
-     */
-    public function migration();
-
-    /**
-     * @return mixed
-     */
-    public function kernel();
-
-    /**
-     * @param null $command
-     * @param array $argument
-     * @return mixed
-     */
-    public function command($command=null,$argument=array());
-
+    public function version();
 }

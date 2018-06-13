@@ -4,49 +4,7 @@ namespace Resta;
 
 use Resta\Contracts\StaticNamespaceContracts;
 
-class StaticNamespaceRepository extends StaticPathRepository implements StaticNamespaceContracts {
-
-    /**
-     * @return mixed
-     */
-    public function version(){
-        return Utils::getNamespace($this->appVersion());
-    }
-
-    /**
-     * @return mixed
-     */
-    public function optionalException(){
-        return Utils::getNamespace($this->appOptionalException());
-    }
-
-    /**
-     * @return mixed
-     */
-    public function optionalRepository(){
-        return Utils::getNamespace($this->appOptionalRepository());
-    }
-
-    /**
-     * @return mixed
-     */
-    public function optionalJob(){
-        return Utils::getNamespace($this->appOptionalJob());
-    }
-
-    /**
-     * @return mixed
-     */
-    public function optionalSource(){
-        return Utils::getNamespace($this->appOptionalSource());
-    }
-
-    /**
-     * @return mixed
-     */
-    public function optionalWebservice(){
-        return Utils::getNamespace($this->appOptionalWebservice());
-    }
+class StaticNamespaceRepository extends StaticPathRepository {
 
     /**
      * @param null $endpoint
@@ -63,41 +21,6 @@ class StaticNamespaceRepository extends StaticPathRepository implements StaticNa
 
         return app()->makeBind($endpointCall,$bind);
 
-    }
-
-    /**
-     * @return mixed
-     */
-    public function middleware(){
-        return Utils::getNamespace($this->appMiddleware());
-    }
-
-    /**
-     * @return mixed
-     */
-    public function model(){
-        return Utils::getNamespace($this->appModel());
-    }
-
-    /**
-     * @return mixed
-     */
-    public function migration(){
-        return Utils::getNamespace($this->appMigration());
-    }
-
-    /**
-     * @return mixed
-     */
-    public function config(){
-        return Utils::getNamespace($this->appConfig());
-    }
-
-    /**
-     * @return mixed
-     */
-    public function kernel(){
-        return Utils::getNamespace($this->appKernel());
     }
 
     /**
@@ -119,4 +42,95 @@ class StaticNamespaceRepository extends StaticPathRepository implements StaticNa
         return new $commandCall($argumentList,app());
     }
 
+
+    /**
+     * @return mixed
+     */
+    public function config(){
+        return Utils::getNamespace(parent::config());
+    }
+
+    /**
+     * @return mixed
+     */
+    public function kernel(){
+        return Utils::getNamespace(parent::kernel());
+    }
+
+    /**
+     * @return mixed
+     */
+    public function logger(){
+        return Utils::getNamespace(parent::logger());
+    }
+
+    /**
+     * @return mixed
+     */
+    public function middleware(){
+        return Utils::getNamespace(parent::middleware());
+    }
+
+    /**
+     * @return mixed
+     */
+    public function migration(){
+        return Utils::getNamespace(parent::migration());
+    }
+
+    /**
+     * @return mixed
+     */
+    public function model(){
+        return Utils::getNamespace(parent::model());
+    }
+
+    /**
+     * @return mixed
+     */
+    public function optionalException(){
+        return Utils::getNamespace(parent::optionalException());
+    }
+
+    /**
+     * @return mixed
+     */
+    public function optionalJob(){
+        return Utils::getNamespace(parent::optionalJob());
+    }
+
+    /**
+     * @return mixed
+     */
+    public function optionalRepository(){
+        return Utils::getNamespace($this->appOptionalRepository());
+    }
+
+    /**
+     * @return mixed
+     */
+    public function optionalSource(){
+        return Utils::getNamespace(parent::optionalSource());
+    }
+
+    /**
+     * @return mixed
+     */
+    public function optionalWebservice(){
+        return Utils::getNamespace(parent::optionalWebservice());
+    }
+
+    /**
+     * @return mixed
+     */
+    public function serviceContainer(){
+        return Utils::getNamespace(parent::serviceContainer());
+    }
+
+    /**
+     * @return mixed
+     */
+    public function version(){
+        return Utils::getNamespace(parent::version());
+    }
 }

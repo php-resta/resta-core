@@ -3,7 +3,7 @@
 namespace Resta\Booting;
 
 use Resta\ApplicationProvider;
-use Resta\Console\ConsoleDefinitor;
+use Resta\Console\Console as ConsoleManager;
 
 class Console extends ApplicationProvider {
 
@@ -15,13 +15,13 @@ class Console extends ApplicationProvider {
 
         //if the console is true
         //console app runner
-        if($this->app->console()){
+        if($this->app->runningInConsole()){
 
             //If the second parameter is sent true to the application builder,
             //all operations are performed by the console and the custom bootings are executed
-            $this->app->bind('appConsole',ConsoleDefinitor::class,true);
+            $this->app->bind('appConsole',ConsoleManager::class,true);
         }
-
     }
+
 
 }

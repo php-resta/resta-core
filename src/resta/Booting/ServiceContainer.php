@@ -16,7 +16,7 @@ class ServiceContainer extends ApplicationProvider {
         //With url parsing,the application route for
         //the rest project is determined after the route variables from the URL are assigned to the kernel url object.
         $this->app->bind('container',function(){
-            return StaticPathModel::appVersionRoot().'\ServiceContainerController';
+            return app()->namespace()->serviceContainer();
         },true);
 
 

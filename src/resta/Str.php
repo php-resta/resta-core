@@ -668,4 +668,11 @@ class Str
 
         return $languageSpecific[$language] ?? null;
     }
+
+    /**
+     * @param $data
+     */
+    public static function slashToBackSlash($data){
+        return str_replace("\\","/",$data);
+    }
 }

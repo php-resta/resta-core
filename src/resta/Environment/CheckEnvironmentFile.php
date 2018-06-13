@@ -61,7 +61,7 @@ class CheckEnvironmentFile extends ApplicationProvider {
     public function getEnvironmentPath(){
 
         //We call environment path with this method
-        return StaticPathModel::getEnvironmentFile();
+        return app()->path()->environmentFile();
     }
 
     /**

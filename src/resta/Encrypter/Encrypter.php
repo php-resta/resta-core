@@ -5,7 +5,6 @@ namespace Resta\Encrypter;
 use Resta\Utils;
 use Defuse\Crypto\Key;
 use Defuse\Crypto\Crypto;
-use Resta\StaticPathModel;
 use Resta\ApplicationProvider;
 
 class Encrypter extends ApplicationProvider {
@@ -17,13 +16,16 @@ class Encrypter extends ApplicationProvider {
      */
     public function handle(){
 
+        //get encrypter file
+        $encrypterFile=app()->path()->encrypterFile();
+
         //throws an exception it there is no encrypter file
-        if(!file_exists(StaticPathModel::getEncrypter())){
+        if(!file_exists($encrypterFile)){
             throw new \InvalidArgumentException('The Application key is invalid');
         }
 
         //We invite our existing encrypter file
-        $appKeyFile=Utils::getYaml(StaticPathModel::getEncrypter());
+        $appKeyFile=Utils::getYaml($encrypterFile);
 
         //we are checking two values ​​for key comparison.1.st separated value encryption
         //key second separated value crypto closure value

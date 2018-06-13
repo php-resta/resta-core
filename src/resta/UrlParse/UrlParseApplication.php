@@ -65,17 +65,9 @@ class UrlParseApplication extends ApplicationProvider{
         // ​​to be processed throughout the application in query format.
         $query=$this->convertArrayForQuery();
 
-        //determines the application name for your project
-        $this->urlList['project']=(strlen($query[0])>0) ? $query[0] : null;
-
-        //determines the namespace for your project
-        $this->urlList['namespace']=(isset($query[1])) ? $query[1] : null;
-
-        //determines the endpoint for your project
-        $this->urlList['endpoint']=(isset($query[2])) ? $query[2] : null;
-
-        //determines the endpoint method for your project
-        $this->urlList['method']=(isset($query[3])) ? $query[3] : 'index';
+        foreach ($query as $key=>$value){
+            $this->urlList[$this->urlNames[$key]]=(strlen($value)>0) ? $value : null;
+        }
 
         //determines the endpoint method for your project
         $this->urlList['parameters']=array_slice($query,3);

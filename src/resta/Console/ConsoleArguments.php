@@ -54,10 +54,6 @@ trait ConsoleArguments {
 
         $listKey=[];
 
-        if(count($getConsoleClassRealArguments)===0){
-            return $listKey;
-        }
-
         foreach($getConsoleClassRealArguments as $key=>$value){
 
             if($key=="0"){
