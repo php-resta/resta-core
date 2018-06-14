@@ -21,6 +21,11 @@ class ConfigLoader extends ApplicationProvider {
         //The config object is a kernel object
         //that can be used to call all class and array files in the config directory of the project.
         $this->singleton()->configGlobalInstance->setConfig($configFiles);
+
+        // Finally, we will set
+        // the application's timezone and encoding based on the configuration
+        date_default_timezone_set(config('app.timezone'));
+        mb_internal_encoding('UTF-8');
     }
 
 }

@@ -63,6 +63,9 @@ class Bootstrappers {
         $this->pusher       = $pusher;
         $this->bootstrapper = $bootstrapper;
 
+        //we boot the initial instance for the application.
+        if($this->ifExistPusher()) (new ApplicationPreLoader($this->concrete))->handle();
+
         //call bootstrapper process
         $this->callBootstrapperProcess();
 
@@ -100,9 +103,6 @@ class Bootstrappers {
      * @param array $customBootstrapers
      */
     public function callBootstrapperProcess($customBootstrapers=[]){
-
-        //we boot the initial installs for the application.
-        if($this->ifExistPusher()) (new ApplicationPreLoader($this->concrete))->handle();
 
         // here we check that a special bootstrappers list will work and we identify the onion identifier.
         // we are peeling onion class by classifying onion class.

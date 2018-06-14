@@ -56,12 +56,6 @@ class ConsoleBindings extends ApplicationProvider {
         //Thus, we get the binding objects required for the console independently of the http method installation.
         if(isset($this->bindings[$object])){
             $this->app->{$appMakeBind}($object,$this->bindings[$object]);
-
-            //We do a definition for console called appInstance and
-            //it has to instance an example of the entire resta kernel.
-            if(isset($this->bindings['container'])){
-                $this->singleton()->appClass->createAppInstance($this);
-            }
         }
     }
 

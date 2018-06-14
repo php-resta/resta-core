@@ -3,8 +3,9 @@
 namespace Resta\Foundation;
 
 use Resta\Container\Container;
+use Resta\Contracts\KernelContracts;
 
-class Kernel extends Container {
+class Kernel extends Container implements KernelContracts {
 
     /**
      * @var $boot
@@ -21,7 +22,6 @@ class Kernel extends Container {
      */
     protected $originGroups=[
 
-        'Resta\Booting\ApplicationInstanceLoader',
         'Resta\Booting\GlobalAccessor',
         'Resta\Booting\Exception',
         'Resta\Booting\UrlParse',

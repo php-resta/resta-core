@@ -95,6 +95,7 @@ class Project extends ConsoleOutputter {
         $this->touch['controller/index']            = $this->controller().'/index.html';
         $this->touch['config/hateoas']              = $this->config().'/Hateoas.php';
         $this->touch['config/redis']                = $this->config().'/Redis.php';
+        $this->touch['config/app']                  = $this->config().'/App.php';
         $this->touch['config/aliasgroup']           = $this->config().'/AliasGroup.php';
         $this->touch['config/cors']                 = $this->config().'/Cors.php';
         $this->touch['config/database']             = $this->config().'/Database.php';

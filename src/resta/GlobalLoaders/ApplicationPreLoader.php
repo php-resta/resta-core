@@ -15,6 +15,9 @@ class ApplicationPreLoader extends ApplicationProvider  {
      */
     public function handle(){
 
+        //we define the general application instance object.
+        define('appInstance',(base64_encode(serialize($this))));
+
         //main loader for application
         $this->mainLoader();
     }
