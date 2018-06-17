@@ -4,8 +4,9 @@ namespace Boot;
 
 use Resta\ApplicationProvider;
 use Store\Traits\Annotations;
+use Resta\Contracts\BootContracts;
 
-class __boot__ extends ApplicationProvider  {
+class __boot__ extends ApplicationProvider implements BootContracts  {
 
     use Annotations;
 
