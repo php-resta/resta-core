@@ -2,13 +2,16 @@
 
 namespace Resta\Container;
 
+use Resta\Container\NameContainers\RouteContainer as Route;
+use Resta\Container\NameContainers\SpecialNameContainer;
+
 class GraceContainer {
 
     /**
      * @var array $nameContainers
      */
     protected $nameContainers=[
-        'route'=>RouteContainer::class
+        'route'=>Route::class
     ];
 
     /**
@@ -25,6 +28,19 @@ class GraceContainer {
             return app()->makeBind(RepositoryContainer::class)->handle($parameter,$param);
         }
 
+        // In particular, name container values can be specified and
+        // they are injected directly into the methods contextually.
+        return $this->getNameContainers($parameter,$param);
+
+    }
+
+    /**
+     * @param $parameter
+     * @param $param
+     * @return mixed
+     */
+    protected function getNameContainers($parameter,$param){
+
         // If the parameter contains a route variable.
         // We do a custom bind for the route
         if(isset($this->nameContainers[$parameter->getName()])){
@@ -32,7 +48,14 @@ class GraceContainer {
             // we do the name control for the container here,
             // and if we have the name container we are checking, we make a handle makebind.
             $nameContainers=$this->nameContainers[$parameter->getName()];
-            return app()->makeBind($nameContainers)->handle($parameter->getDefaultValue(),$param);
+            return app()->makeBind($nameContainers)->resolveContainer($parameter->getDefaultValue(),$param);
+        }
+
+        // In particular, name container values can be specified and
+        // they are injected directly into the methods contextually.
+        if(isset(app()->singleton()->serviceContainer[$parameter->getName()])){
+            return app()->makeBind(SpecialNameContainer::class)->resolveContainer($parameter,$param);
+
         }
 
     }

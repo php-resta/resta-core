@@ -1,5 +1,55 @@
 <?php
 
 return [
-    'timezone' => environment('timezone','UTC')
+
+    /*
+    |--------------------------------------------------------------------------
+    | Application Timezone
+    |--------------------------------------------------------------------------
+    |
+    | Here you may specify the default timezone for your application, which
+    | will be used by the PHP date and date-time functions. We have gone
+    | ahead and set this to a sensible default for you out of the box.
+    |
+    */
+    'timezone' => environment('timezone','UTC'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Application Stop Watch
+    |--------------------------------------------------------------------------
+    |
+    | Here you may specify the stopwatch for your application,
+    | The Stopwatch component provides a way to profile code.The Stopwatch component provides
+    | an easy and consistent way to measure execution time of certain parts
+    | of code so that you don't constantly have to parse micro time by yourself
+    |
+    */
+    'watch' => environment('watch',false),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Application Hateoas
+    |--------------------------------------------------------------------------
+    |
+    | This architectural style lets you use hypermedia links in the response contents so that
+    | the client can dynamically navigate to the appropriate resource by traversing the hypermedia links.
+    | This is conceptually the same as a web user navigating through web pages by clicking
+    | the appropriate hyperlinks in order to achieve a final goal.
+    |
+    */
+    'hateoas' => environment('hateoas',false),
+
+    /*
+   |--------------------------------------------------------------------------
+   | Application Logger
+   |--------------------------------------------------------------------------
+   |
+   | To help you learn more about what's happening within your application
+   | System provides robust logging services that allow you to log messages to files
+   | By default, the value is true, you can change it according to your environment.
+   | The Logger service is managed in the ServiceLog file in your application directory.
+   |
+   */
+    'logger' => environment('logger',true),
 ];

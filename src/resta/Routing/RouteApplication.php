@@ -99,7 +99,10 @@ class RouteApplication extends ApplicationProvider {
     private function getCallBindController(){
 
         //we finally process the method of the class invoked by the user as a process and prepare it for the response
-        return Utils::callBind([$this->instanceController(),$this->checkIfExistsMethod()],$this->providerBinding());
+        return app()->makeBind(RouteWatch::class)->watch(function(){
+            return Utils::callBind([$this->instanceController(),$this->checkIfExistsMethod()],$this->providerBinding());
+        });
+
     }
 
     /**

@@ -70,7 +70,7 @@ class CustomBooter {
         foreach (array_keys($this->getBootDirectory()) as $customBoots){
 
             //We assign the namespace data of the bootable class to the bootNamespace property.
-            if($this->bootNamespace===null) $this->bootNamespace=''.StaticPathList::$boot.'\\'.$customBoots;
+            $this->bootNamespace=''.StaticPathList::$boot.'\\'.$customBoots;
 
             //Your custom boot objects in
             //the boot directory should not be in the middlewaregroups list.

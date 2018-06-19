@@ -38,18 +38,38 @@ class LoggerService extends ApplicationProvider {
         //we get the log object that was previously assigned.
         $log=$this->singleton()->log;
 
-        //this object is obtained directly as an array and specifies
-        //the adapter value for the first key log. The value of the directory stores
-        //the instance value of the service log class. From there,
-        //we call the method specified by the adapter in the service log class
-        //and log the application in the customized mode for the application.
-        //The service log class uses the monolog class.
+        // this object is obtained directly as an array and specifies
+        // the adapter value for the first key log. The value of the directory stores
+        // the instance value of the service log class. From there,
+        // we call the method specified by the adapter in the service log class
+        // and log the application in the customized mode for the application.
+        // The service log class uses the monolog class.
         if(method_exists($base=current($log),$adapter=key($log))){
             call_user_func_array([$base,$adapter],[$printer,$file,$type]);
         }
 
         //printer back
         return $printer;
+    }
+
+    /**
+     * @param $printer
+     * @param callable $callback
+     * @return mixed
+     */
+    public function checkLoggerConfiguration($printer,callable $callback){
+
+        //set log for printer
+        if(config('app.logger') && isset($this->singleton()->log)){
+
+            // log type level
+            // logger service handler
+            $type=($this->getSuccess()) ? 'info' : 'error';
+            return $this->logHandler($printer,'access',$type);
+        }
+
+        //return closure object with printer
+        return call_user_func_array($callback,[$printer]);
     }
 
 }
