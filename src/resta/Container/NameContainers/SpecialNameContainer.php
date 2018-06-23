@@ -15,9 +15,14 @@ class SpecialNameContainer {
         if(class_exists($specialNameContainer)){
 
             $resolveSpecialNameContainer=app()->makeBind($specialNameContainer);
+
             //
             if(method_exists($resolveSpecialNameContainer,'getNameContainer')){
-                $param[$parameter->getName()]=$resolveSpecialNameContainer->getNameContainer($parameter->getDefaultValue());
+
+                $getParams=($parameter->isDefaultValueAvailable()) ? $parameter->getDefaultValue() : null;
+                $param[$parameter->getName()]=$resolveSpecialNameContainer->getNameContainer($getParams);
+
+                //return $param
                 return $param;
             }
         }

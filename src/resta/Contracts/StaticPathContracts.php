@@ -18,6 +18,11 @@ interface StaticPathContracts {
     /**
      * @return mixed
      */
+    public function appLog();
+
+    /**
+     * @return mixed
+     */
     public function appStorage();
 
     /**

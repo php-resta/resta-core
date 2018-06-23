@@ -2,7 +2,9 @@
 
 namespace App\__project__\Kernel;
 
-class Kernel {
+use Store\Contracts\HandleTraitContract;
+
+class Kernel implements HandleTraitContract {
 
     /**
      * @method handle

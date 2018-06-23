@@ -61,6 +61,13 @@ class StaticPathRepository {
     }
 
     /**
+     * @return mixed
+     */
+    public function appLog(){
+        return StaticPathModel::getAppStorage().'/'.StaticPathList::$log;
+    }
+
+    /**
      * @param null $app
      * @return mixed
      */

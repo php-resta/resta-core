@@ -3,10 +3,9 @@
 namespace App\__project__\__version__;
 
 use Monolog\Logger;
-use Resta\StaticPathModel;
 use Monolog\Handler\StreamHandler;
 
-class ServiceLogController extends ServiceBaseController
+class ServiceLogController
 {
     /**
      * @var $adapter
@@ -22,7 +21,7 @@ class ServiceLogController extends ServiceBaseController
     public function file($output,$file="access",$type="info") {
 
         //log register path
-        $filePath=StaticPathModel::appLog().'/'.$file.'.log';
+        $filePath=app()->path()->appLog().'/'.$file.'.log';
 
         //monologue library and make the necessary adjustments.
         $log = new Logger('monolog');
