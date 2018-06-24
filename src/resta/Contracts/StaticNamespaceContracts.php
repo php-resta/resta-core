@@ -56,7 +56,17 @@ interface StaticNamespaceContracts {
     /**
      * @return mixed
      */
+    public function optionalEvents();
+
+    /**
+     * @return mixed
+     */
     public function optionalJob();
+
+    /**
+     * @return mixed
+     */
+    public function optionalListeners();
 
     /**
      * @return mixed
@@ -77,6 +87,12 @@ interface StaticNamespaceContracts {
      * @return mixed
      */
     public function serviceContainer();
+
+    /**
+     * @return mixed
+     */
+    public function serviceEventDispatcher();
+
 
     /**
      * @return mixed

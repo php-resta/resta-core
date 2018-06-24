@@ -18,6 +18,13 @@ if (!function_exists('environment')) {
     }
 }
 
+if (!function_exists('event')) {
+    function event($event=null)
+    {
+        return app()->singleton()->bindings['event-dispatcher']->dispatcher($event);
+    }
+}
+
 if (!function_exists('appInstance')) {
 
     /**

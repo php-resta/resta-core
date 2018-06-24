@@ -2,8 +2,15 @@
 
 namespace App\__project__\__version__\Optional\__sourcelisten__;
 
-class __event__ {
+use __eventNamespace__;
 
+class __eventListen__ {
 
+    /**
+     * @param __eventMain__ $__eventMain__
+     */
+    public function handle(__eventMain__ $__eventMain__) {
+
+    }
 
 }

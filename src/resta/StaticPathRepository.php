@@ -107,9 +107,27 @@ class StaticPathRepository {
      * @param null $app
      * @return mixed
      */
+    public function appOptionalEvents($app=null){
+
+        return $this->appVersion($app).'/'.StaticPathList::$optional.'/'.StaticPathList::$events;
+    }
+
+    /**
+     * @param null $app
+     * @return mixed
+     */
     public function appOptionalJob($app=null){
 
         return $this->appVersion($app).'/'.StaticPathList::$optional.'/'.StaticPathList::$job;
+    }
+
+    /**
+     * @param null $app
+     * @return mixed
+     */
+    public function appOptionalListeners($app=null){
+
+        return $this->appVersion($app).'/'.StaticPathList::$optional.'/'.StaticPathList::$listeners;
     }
 
     /**
@@ -153,6 +171,15 @@ class StaticPathRepository {
     public function appServiceContainer($app=null){
 
         return $this->appVersion($app).'/ServiceContainerController';
+    }
+
+    /**
+     * @param null $app
+     * @return mixed
+     */
+    public function appServiceEventDispatcher($app=null){
+
+        return $this->appVersion($app).'/ServiceEventDispatcherController';
     }
 
     /**

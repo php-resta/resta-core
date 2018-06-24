@@ -95,9 +95,24 @@ class StaticNamespaceRepository extends StaticPathRepository {
     /**
      * @return mixed
      */
+    public function optionalEvents(){
+        return Utils::getNamespace(parent::optionalEvents());
+    }
+
+    /**
+     * @return mixed
+     */
     public function optionalJob(){
         return Utils::getNamespace(parent::optionalJob());
     }
+
+    /**
+     * @return mixed
+     */
+    public function optionalListeners(){
+        return Utils::getNamespace(parent::optionalListeners());
+    }
+
 
     /**
      * @return mixed
@@ -125,6 +140,13 @@ class StaticNamespaceRepository extends StaticPathRepository {
      */
     public function serviceContainer(){
         return Utils::getNamespace(parent::serviceContainer());
+    }
+
+    /**
+     * @return mixed
+     */
+    public function serviceEventDispatcher(){
+        return Utils::getNamespace(parent::ServiceEventDispatcher());
     }
 
     /**

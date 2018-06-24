@@ -2,13 +2,24 @@
 
 namespace App\__project__\__version__\Optional\__source__;
 
-class __event__ {
+class __eventMain__ {
 
     /**
-     * __event__ constructor.
+     * __eventMain__ constructor.
      */
     public function __construct(){
 
+        //
+    }
+
+    /**
+     * Get the channels the event should be broadcast on.
+     *
+     * @return array
+     */
+    public function broadcastOn() {
+
+        return [];
     }
 
 }

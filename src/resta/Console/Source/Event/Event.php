@@ -42,13 +42,21 @@ class Event extends ConsoleOutputter {
             return $this->listen;
         });
 
+        $this->directory['eventsDir']=$this->events();
+        $this->directory['eventsListenDir']=$this->listeners();
+
+        //set project directory
+        $this->file->makeDirectory($this);
+        
+
 
         foreach ($listeners as $event=>$listens){
 
-            $this->argument['event']=ucfirst($event);
 
-            $this->directory['eventsDir']=$this->events();
-            $this->directory['eventsListenDir']=$this->listeners();
+            $this->argument['eventMain']=ucfirst($event);
+
+            $this->argument['eventNamespace']=app()->namespace()->optionalEvents().'\\'.$this->argument['eventMain'];
+
 
             $mainFile=$this->directory['eventsDir'].'/'.ucfirst($event).'.php';
 
@@ -56,30 +64,32 @@ class Event extends ConsoleOutputter {
                 $this->touch['event/main']=$mainFile;
             }
 
+            //set project touch
+            $this->file->touch($this);
+
 
             foreach ($listens as $listen){
 
                 $listenFile=$this->directory['eventsListenDir'].'/'.ucfirst($listen).'.php';
 
-                $this->argument['event']=ucfirst($listen);
+                $this->argument['eventListen']=ucfirst($listen);
 
                 if(!file_exists($listenFile)){
                     $this->touch['event/listen']=$listenFile;
+
+                    //set project touch
+                    $this->file->touch($this);
                 }
+
+
             }
 
 
         }
 
 
-        //set project directory
-        $this->file->makeDirectory($this);
-
-        //set project touch
-        $this->file->touch($this);
-
         Utils::chmod($this->optional());
 
-        return $this->info('the events have been successfully generated.');
+        echo $this->info('the events have been successfully generated.');
     }
 }
