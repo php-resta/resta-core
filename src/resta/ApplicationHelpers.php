@@ -19,8 +19,15 @@ if (!function_exists('environment')) {
 }
 
 if (!function_exists('event')) {
+
+    /**
+     * @return \Resta\Event\EventManager
+     */
     function event($event=null)
     {
+        if($event===null){
+            return app()->singleton()->bindings['event-dispatcher'];
+        }
         return app()->singleton()->bindings['event-dispatcher']->dispatcher($event);
     }
 }

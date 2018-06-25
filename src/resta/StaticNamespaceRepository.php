@@ -113,6 +113,13 @@ class StaticNamespaceRepository extends StaticPathRepository {
         return Utils::getNamespace(parent::optionalListeners());
     }
 
+    /**
+     * @return mixed
+     */
+    public function optionalSubscribers(){
+        return Utils::getNamespace(parent::optionalSubscribers());
+    }
+
 
     /**
      * @return mixed

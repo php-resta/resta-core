@@ -71,6 +71,12 @@ interface StaticNamespaceContracts {
     /**
      * @return mixed
      */
+    public function optionalSubscribers();
+
+
+    /**
+     * @return mixed
+     */
     public function optionalRepository();
 
     /**

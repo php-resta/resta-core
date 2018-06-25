@@ -38,19 +38,24 @@ class Event extends ConsoleOutputter {
 
         $eventDispatcher=app()->namespace()->version().'\ServiceEventDispatcherController';
 
-        $listeners=app()->makeBind(ClosureDispatcher::class,['bind'=>new $eventDispatcher])->call(function(){
-            return $this->listen;
+        $eventDispatchers=app()->makeBind(ClosureDispatcher::class,['bind'=>new $eventDispatcher])->call(function(){
+            return [
+              'listen'      => $this->listen,
+              'subscriber'  => $this->subscribe
+            ];
         });
 
-        $this->directory['eventsDir']=$this->events();
-        $this->directory['eventsListenDir']=$this->listeners();
+
+        $this->directory['eventsDir']=app()->path()->optionalEvents();
+        $this->directory['eventsListenDir']=app()->path()->optionalListeners();
+        $this->directory['eventsListenSubscriberDir']=app()->path()->optionalSubscribers();
 
         //set project directory
         $this->file->makeDirectory($this);
         
 
 
-        foreach ($listeners as $event=>$listens){
+        foreach ($eventDispatchers['listen'] as $event=>$listens){
 
 
             $this->argument['eventMain']=ucfirst($event);
@@ -85,6 +90,22 @@ class Event extends ConsoleOutputter {
             }
 
 
+        }
+
+        foreach ($eventDispatchers['subscriber'] as $subscriber){
+
+            $eventSubscriberName=''.ucfirst($subscriber);
+
+            $subscriberFile=$this->directory['eventsListenSubscriberDir'].'/'.$eventSubscriberName.'.php';
+
+            $this->argument['eventSubscriber']=$eventSubscriberName;
+
+            if(!file_exists($subscriberFile)){
+                $this->touch['event/subscriber']=$subscriberFile;
+
+                //set project touch
+                $this->file->touch($this);
+            }
         }
 
 

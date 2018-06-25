@@ -1,0 +1,54 @@
+<?php
+
+namespace App\__project__\__version__\Optional\__sourcelisten__\Subscribers;
+
+use App\__project__\__version__\ServiceAnnotationsController;
+
+class __eventSubscriber__ {
+
+    //get service annotations
+    use ServiceAnnotationsController;
+
+    /**
+     * @var $param
+     */
+    public $param;
+
+    /**
+     * __eventSubscriber__ constructor.
+     * @param $param
+     */
+    public function __construct($param){
+        $this->param=$param;
+    }
+
+    /**
+     * @return void|mixed
+     */
+    public function onLogin(){
+
+        //onLogin method handler
+    }
+
+    /**
+     * @return void|mixed
+     */
+    public function onLogout(){
+
+        //onLogout method handler
+    }
+
+    /***
+     * @param \Resta\Event\EventManager $event
+     */
+    public function subscriber($event){
+
+        $event->addSubscriber([
+
+           'login'=>'onLogin',
+           'logout'=>'onLogout'
+
+        ]);
+    }
+
+}

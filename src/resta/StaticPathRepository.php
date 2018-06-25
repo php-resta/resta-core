@@ -134,6 +134,15 @@ class StaticPathRepository {
      * @param null $app
      * @return mixed
      */
+    public function appOptionalSubscribers($app=null){
+
+        return $this->appVersion($app).'/'.StaticPathList::$optional.'/'.StaticPathList::$listeners.'/'.StaticPathList::$subscribers;
+    }
+
+    /**
+     * @param null $app
+     * @return mixed
+     */
     public function appOptionalRepository($app=null){
 
         return $this->appVersion($app).'/'.StaticPathList::$optional.'/'.StaticPathList::$repository;

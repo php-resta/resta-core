@@ -105,6 +105,11 @@ class StaticPathList {
     public static $listeners='Listeners';
 
     /**
+     * @var $subscribers
+     */
+    public static $subscribers='Subscribers';
+
+    /**
      * @var $optionalException
      */
     public static $optionalException='Exception';
