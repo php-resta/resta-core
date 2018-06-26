@@ -7,36 +7,38 @@ use Resta\Utils;
 class EventHandler {
 
     /**
-     * @param $event
+     * @var array $dispatches
      */
-    public function dispatcher($event){
+    protected $dispatches=[];
 
-        //get event name by class_basename
-        $eventName=lcfirst(class_basename($event));
+    /**
+     * @param $event
+     * @param null $callable
+     */
+    public function dispatcher($event,$callable=null){
 
+        // we will assign global dispatcher variables so that
+        // we can see these values will make it easier for us to readability.
+        $this->assignerDispatches($event,$callable);
+
+        //get event listeners
         $listeners=$this->getListeners();
 
         //check event name on the event listen
-        if(isset($listeners[$eventName])){
+        if(isset($listeners[$this->dispatches['eventName']])){
 
             // we loop through all the listen objects and call the handle method.
             // so that all events will be processed through the event auxiliary method.
-            foreach ($listeners[$eventName] as $key=>$listen){
+            foreach ($listeners[$this->dispatches['eventName']] as $key=>$listen){
 
-                if($key==="subscriber"){
-
-                    //If subscriber method exists; in this case we are running a subscribe event.
-                    $subscriberCallMethod=$listeners[$eventName]['subscriber'][$event->param];
-                    $event->$subscriberCallMethod();
-                }
-                else{
+                // if the key variable contains a subscriber string,
+                // then we run the subscriber process.
+                $this->eventSubscriberProcess($key,$listeners,function() use($listen) {
 
                     // the listening object will be resolved to the namespace value
                     // in the listeners array and then the service container method via dependency injection.
-                    $listenNamespace=app()->namespace()->optionalListeners().'\\'.ucfirst($listen);
-                    Utils::callBind([$listenNamespace,'handle'],[ucfirst($eventName)=>$event]);
-                }
-
+                    $this->eventListen($listen);
+                });
             }
         }
     }

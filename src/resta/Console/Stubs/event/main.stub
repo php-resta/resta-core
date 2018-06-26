@@ -5,11 +5,17 @@ namespace App\__project__\__version__\Optional\__source__;
 class __eventMain__ {
 
     /**
-     * __eventMain__ constructor.
+     * @var $param
      */
-    public function __construct(){
+    public $param;
 
-        //
+    /**
+     * __eventMain__ constructor.
+     * @param null $param
+     */
+    public function __construct($param=null){
+
+        $this->param=$param;
     }
 
     /**
