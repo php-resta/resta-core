@@ -6,10 +6,10 @@ interface EventDispatcherContracts
 {
     /**
      * @param $event
-     * @param callable|null $callable
+     * @param null $callable
      * @return mixed
      */
-    public function dispatcher($event, callable $callable = null);
+    public function dispatcher($event, $callable = null);
 
     /**
      * @param array $listener
