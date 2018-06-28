@@ -143,5 +143,16 @@ class EventManager extends EventHandler implements HandleContracts {
         return isset($this->dispatches['callableResult'])
             && property_exists($this->dispatches['event'],'param');
     }
+
+    /**
+     * @return mixed
+     */
+    protected function getListeners(){
+
+        if(isset(app()->singleton()->events)) {
+            return app()->singleton()->events;
+        }
+        return $this->listen;
+    }
 }
 

@@ -3,12 +3,13 @@
 namespace Resta\Booting;
 
 use Resta\ApplicationProvider;
+use Resta\Contracts\BootContracts;
 use Resta\GlobalLoaders\GlobalAccessor as Accessor;
 
-class GlobalAccessor extends ApplicationProvider {
+class GlobalAccessor extends ApplicationProvider implements BootContracts {
 
     /**
-     * @return void
+     * @return mixed|void
      */
     public function boot(){
 

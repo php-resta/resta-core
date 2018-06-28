@@ -3,13 +3,13 @@
 namespace Resta\Booting;
 
 use Resta\ApplicationProvider;
+use Resta\Contracts\BootContracts;
 use Resta\Console\Console as ConsoleManager;
 
-class Console extends ApplicationProvider {
+class Console extends ApplicationProvider implements BootContracts {
 
     /**
-     * @method boot
-     * @return void
+     * @return mixed|void
      */
     public function boot(){
 

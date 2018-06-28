@@ -3,17 +3,19 @@
 namespace Resta\Booting;
 
 use Resta\ApplicationProvider;
+use Resta\Contracts\BootContracts;
 use Resta\Event\EventManager as Event;
 
-class EventDispatcher extends ApplicationProvider {
+class EventDispatcher extends ApplicationProvider implements BootContracts {
 
     /**
-     * @return void
+     * @return mixed|void
      */
     public function boot(){
 
-        //This is your application's config installer.
-        //You can easily access the config variables with the config installer.
+        // the eventDispatcher component provides tools
+        // that allow your application components to communicate
+        // with each other by dispatching events and listening to them.
         $this->app->bind('event-dispatcher',function(){
             return app()->namespace()->serviceEventDispatcher();
         },true);

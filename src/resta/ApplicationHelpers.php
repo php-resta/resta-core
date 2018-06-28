@@ -198,14 +198,12 @@ if (!function_exists('exception')) {
 if (!function_exists('logger')) {
 
     /**
-     * @param $output
-     * @param $file
-     * @param string $type
-     * @return mixed
+     * @param $file null
+     * @return \Resta\Logger\LoggerHandler
      */
-    function logger($output,$file,$type="access")
+    function logger($file=null)
     {
-        return app()->singleton()->appClass->logger($output,$file,$type);
+        return app()->makeBind(\Resta\Logger\LoggerHandler::class,['file'=>$file]);
     }
 }
 

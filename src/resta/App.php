@@ -248,17 +248,6 @@ class App {
     }
 
     /**
-     * @param $output
-     * @param $file
-     * @param $type
-     * @return mixed
-     */
-    public function logger($output,$file,$type){
-
-        return app()->singleton()->loggerService->logHandler($output,$file,$type);
-    }
-
-    /**
      * @param $data
      * @param array $select
      * @return mixed|string

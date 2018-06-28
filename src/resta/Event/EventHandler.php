@@ -3,8 +3,9 @@
 namespace Resta\Event;
 
 use Resta\Utils;
+use Resta\Contracts\EventDispatcherContracts;
 
-class EventHandler {
+class EventHandler extends EventDetached implements EventDispatcherContracts {
 
     /**
      * @var array $dispatches
@@ -56,26 +57,15 @@ class EventHandler {
     }
 
     /**
-     * @param array $listener
+     * @param array $subscriber
      */
-    public function addSubscriber($listener=array()){
+    public function addSubscriber($subscriber=array()){
 
         // To take advantage of an existing event,
         // you need to connect a listener to the dispatcher
         // so that it can be notified when the event is dispatched.
         // A call to the dispatcher's addListener() method associates any valid PHP callable to an event:
-        $this->listen=array_merge($this->getListeners(),[$this->event=>['subscriber'=>$listener]]);
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getListeners(){
-
-        if(isset(app()->singleton()->events)) {
-            return app()->singleton()->events;
-        }
-        return $this->listen;
+        $this->listen=array_merge($this->getListeners(),[$this->event=>['subscriber'=>$subscriber]]);
     }
 
 }

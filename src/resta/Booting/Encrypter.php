@@ -3,12 +3,13 @@
 namespace Resta\Booting;
 
 use Resta\ApplicationProvider;
+use Resta\Contracts\BootContracts;
 use Resta\Encrypter\Encrypter as EncrypterProvider;
 
-class Encrypter extends ApplicationProvider {
+class Encrypter extends ApplicationProvider implements BootContracts {
 
     /**
-     * @return void
+     * @return mixed|void
      */
     public function boot(){
 

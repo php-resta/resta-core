@@ -4,7 +4,7 @@ namespace Resta\UrlParse;
 
 use Resta\ApplicationProvider;
 
-class UrlParseApplication extends ApplicationProvider{
+class UrlParseApplication extends ApplicationProvider {
 
     /**
      * @var array
