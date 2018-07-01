@@ -2,6 +2,7 @@
 
 namespace Resta\UrlParse;
 
+use Resta\StaticPathList;
 use Resta\ApplicationProvider;
 
 class UrlParseApplication extends ApplicationProvider {
@@ -66,7 +67,16 @@ class UrlParseApplication extends ApplicationProvider {
         foreach ($query as $key=>$value){
 
             if(isset($this->urlNames[$key])){
-                $this->urlList[$this->urlNames[$key]]=(strlen($value)>0) ? $value : null;
+
+                if($this->urlNames[$key]=="namespace"){
+
+                    $projectPrefixNamespace=str_replace("/","\\",StaticPathList::$projectPrefix);
+                    $this->urlList[$this->urlNames[$key]]=(strlen($value)>0) ? $projectPrefixNamespace.'\\'.$value : null;
+                }
+                else{
+                    $this->urlList[$this->urlNames[$key]]=(strlen($value)>0) ? $value : null;
+                }
+
             }
 
         }

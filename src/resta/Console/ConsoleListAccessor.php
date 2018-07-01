@@ -7,6 +7,10 @@ use Resta\Utils;
 
 trait ConsoleListAccessor {
 
+    public function projectPath(){
+        return str_replace($this->projectPrefix,"",$this->project);
+    }
+
     public function projectName(){
 
         $projectParse=explode("/",$this->project);
@@ -20,7 +24,7 @@ trait ConsoleListAccessor {
         if($this->project===null){
             throw new \InvalidArgumentException('Project name is invalid');
         }
-        return $this->project.'/'.StaticPathModel::$kernel;
+        return $this->projectPath().''.StaticPathModel::$kernel;
     }
 
     /**

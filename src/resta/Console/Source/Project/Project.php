@@ -33,6 +33,8 @@ class Project extends ConsoleOutputter {
      */
     public function create(){
 
+        $this->argument['kernelDir']=Utils::getNamespace($this->kernel());
+
         //get project directory all path
         $this->directory['kernelDir']               = $this->kernel();
         //$this->directory['repositoryDir']           = $this->repository();
@@ -118,6 +120,7 @@ class Project extends ConsoleOutputter {
         $this->file->touch($this);
 
         Utils::chmod($this->project);
+        Utils::chmod($this->projectPath());
 
         echo $this->info('Project Named "'.$this->argument['project'].'" Has Been Successfully Created');
     }

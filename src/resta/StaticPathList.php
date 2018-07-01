@@ -17,6 +17,11 @@ class StaticPathList {
     /**
      * @var string
      */
+    public static $projectPrefix='Api';
+
+    /**
+     * @var string
+     */
     public static $methodPrefix='Action';
 
     /**
