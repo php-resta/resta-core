@@ -35,6 +35,8 @@ class Service extends ConsoleOutputter {
         $this->argument['methodPrefix'] = StaticPathModel::$methodPrefix;
         $this->directory['endpoint']    = $this->controller().'/'.$this->argument['service'];
 
+        $this->argument['controllerNamespace']=Utils::getNamespace($this->directory['endpoint']);
+
         if(isset($this->argument['namespace'])){
             $this->argument['serviceClass']=$this->argument['namespace'].''.$this->argument['service'];
         }

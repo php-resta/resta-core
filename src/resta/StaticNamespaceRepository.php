@@ -2,6 +2,7 @@
 
 namespace Resta;
 
+use function GuzzleHttp\Psr7\parse_header;
 use Resta\Contracts\StaticNamespaceContracts;
 
 class StaticNamespaceRepository extends StaticPathRepository {
@@ -120,14 +121,6 @@ class StaticNamespaceRepository extends StaticPathRepository {
         return Utils::getNamespace(parent::optionalSubscribers());
     }
 
-
-    /**
-     * @return mixed
-     */
-    public function optionalRepository(){
-        return Utils::getNamespace($this->appOptionalRepository());
-    }
-
     /**
      * @return mixed
      */
@@ -140,6 +133,13 @@ class StaticNamespaceRepository extends StaticPathRepository {
      */
     public function optionalWebservice(){
         return Utils::getNamespace(parent::optionalWebservice());
+    }
+
+    /**
+     * @return mixed
+     */
+    public function repository(){
+        return Utils::getNamespace(parent::repository());
     }
 
     /**

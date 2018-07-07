@@ -5,6 +5,30 @@ namespace Resta;
 class StaticPathModel extends StaticPathList {
 
     /**
+     * @param null $group
+     */
+    public static function projectPrefix($group=null){
+
+        if($group!==null){
+            return self::$projectPrefix.'/'.$group;
+        }
+
+        if(defined('group')){
+            return str_replace("\\","/",group);
+        }
+
+    }
+
+    /**
+     * @param $prefix
+     * @param $path
+     * @return mixed
+     */
+    public static function projectPath($prefix,$path){
+        return str_replace($prefix.'',"",$path);
+    }
+
+    /**
      * @method bootDir
      * @return mixed
      */
@@ -41,7 +65,7 @@ class StaticPathModel extends StaticPathList {
     public static function getAppStorage(){
 
         //get app path for application
-        return self::appPath().'/'.self::slashToBackSlash(app).'/Storage';
+        return self::projectPath(self::projectPrefix(),self::appPath().'/'.self::slashToBackSlash(app).''.self::$storage);
     }
 
     /**
@@ -193,7 +217,7 @@ class StaticPathModel extends StaticPathList {
      * @return string
      */
     public static function appRepository($app=null){
-        return self::appVersionRoot($app).'\\'.self::$optional.'\\'.self::$repository;
+        return 'asa';
     }
 
     /**

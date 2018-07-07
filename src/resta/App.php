@@ -99,7 +99,7 @@ class App {
         //If we then configure the name of the simple repository to be an adapter
         //then we will give the user an example of the adapter class in each repository call.
         $repositoryAdapterName  = $repositoryName.'Adapter';
-        $repositoryNamespace    = StaticPathModel::appRepository().'\\'.$repositoryName.'\\'.$repositoryAdapterName;
+        $repositoryNamespace    = app()->namespace()->repository().'\\'.$repositoryName.'\\'.$repositoryAdapterName;
 
         if($namespace) return $repositoryNamespace;
 

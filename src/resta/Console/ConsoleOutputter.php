@@ -104,7 +104,7 @@ class ConsoleOutputter extends ConsolePrepare {
 
             if($this->argument['group']===null){
 
-                $this->projectPrefix=StaticPathList::$projectPrefix.'/Main';
+                $this->projectPrefix=StaticPathModel::projectPrefix('Main');
 
                 $projectPrefixNamespace=str_replace("/","\\",$this->projectPrefix);
 
@@ -112,7 +112,7 @@ class ConsoleOutputter extends ConsolePrepare {
             }
             else{
 
-                $this->projectPrefix=StaticPathList::$projectPrefix.'/'.$this->argument['group'];
+                $this->projectPrefix=StaticPathModel::projectPrefix($this->argument['group']);
 
                 $projectPrefixNamespace=str_replace("/","\\",$this->projectPrefix);
 

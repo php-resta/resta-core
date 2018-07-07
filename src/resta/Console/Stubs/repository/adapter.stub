@@ -1,13 +1,9 @@
 <?php
 
-namespace App\__project__\__version__\Optional\Repository\__repository__;
+namespace __repositoryNamespace__;
 
 use App\__project__\__version__\ServiceBaseController;
 
-/**
- * Class __repository__Adapter
- * @package App\__project__\__version__\Optional\Repository\__repository__
- */
 class __repository__Adapter extends ServiceBaseController {
 
     use __repository__Trait;

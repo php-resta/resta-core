@@ -8,7 +8,7 @@ use Resta\Utils;
 trait ConsoleListAccessor {
 
     public function projectPath(){
-        return str_replace($this->projectPrefix,"",$this->project);
+        return StaticPathModel::projectPath($this->projectPrefix,$this->project);
     }
 
     public function projectName(){
@@ -32,7 +32,7 @@ trait ConsoleListAccessor {
      */
     public function storage(){
 
-        return $this->project.'/'.StaticPathModel::$storage;
+        return $this->projectPath().''.StaticPathModel::$storage;
     }
 
     /**
@@ -164,7 +164,7 @@ trait ConsoleListAccessor {
      */
     public function repository(){
 
-        return $this->optional().'/'.StaticPathModel::$repository;
+        return app()->path()->repository();
     }
 
     /**

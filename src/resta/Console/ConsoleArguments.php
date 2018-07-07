@@ -105,9 +105,11 @@ trait ConsoleArguments {
 
         if(isset($getConsoleArgumentsWithKey['group'])){
             $app=$arguments[2].'\\'.$getConsoleArgumentsWithKey['group'];
+            define('group',$getConsoleArgumentsWithKey['group']);
         }
         else{
             $app=$arguments[2].'\Main';
+            define('group','Main');
         }
 
         if(!defined('app') and isset($arguments[2])) define('app',$app);

@@ -32,11 +32,16 @@ class Repository extends ConsoleOutputter {
      */
     public function create(){
 
-        if($this->sourceCreate()) return true;
-
         $repository=$this->argument['repository'];
 
-        $this->directory['repositoryDir']=$this->repository().'/'.$repository;
+        $repositoryPath=$this->repository().'/'.$repository;
+
+        $this->argument['repositoryNamespace']=Utils::getNamespace($repositoryPath);
+
+        if($this->sourceCreate()) return true;
+
+        $this->directory['repositoryDir']=$repositoryPath;
+
         $this->directory['repositorySourceDir']=$this->repository().'/'.$repository.'/Source/Main';
 
         //set project directory

@@ -24,6 +24,6 @@ class __exception__Exception extends \Exception
          * You can run the event directly when the exception is thrown.
          * As an example you can log.
         */
-        //logger([],'logFile','logType');
+        //logger()->emergency('user exception');
     }
 }

@@ -13,7 +13,7 @@ class RepositoryContainer {
         // We will use a custom bind for the repository classes
         // and bind the repository contract with the repository adapter class.
         $parameterName  = $parameter->getType()->getName();
-        $repository     = app()->namespace()->optionalRepository();
+        $repository     = app()->namespace()->repository();
 
         $parameterNameWord  = str_replace('\\','',$parameterName);
         $repositoryWord     = str_replace('\\','',$repository);
@@ -28,6 +28,7 @@ class RepositoryContainer {
 
             $param[$parameter->getName()]=app()->makeBind($getRepositoryAdapter)->adapter();
         }
+
 
         return $param;
 

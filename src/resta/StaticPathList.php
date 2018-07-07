@@ -57,7 +57,7 @@ class StaticPathList {
     /**
      * @var $controller
      */
-    public static $controller='__Call';
+    public static $controller='Controller';
 
     /**
      * @var $platform

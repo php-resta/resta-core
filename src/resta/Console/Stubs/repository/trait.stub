@@ -1,13 +1,9 @@
 <?php
 
-namespace App\__project__\__version__\Optional\Repository\__repository__;
+namespace __repositoryNamespace__;
 
 use Resta\Utils;
 
-/**
- * Trait __repository__
- * @package App\__project__\__version__\Optional\Repository\__repository__
- */
 trait __repository__Trait {
 
     /**
@@ -24,7 +20,7 @@ trait __repository__Trait {
      */
     protected function getRepositorySourcePath(){
 
-        return app()->namespace()->optionalRepository().'\\'.$this->getRepositoryName().'\Source\\'.$this->adapter;
+        return app()->namespace()->repository().'\\'.$this->getRepositoryName().'\Source\\'.$this->adapter;
     }
 
     /**

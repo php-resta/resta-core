@@ -143,9 +143,13 @@ class StaticPathRepository {
      * @param null $app
      * @return mixed
      */
-    public function appOptionalRepository($app=null){
+    public function appRepository($app=null){
 
-        return $this->appVersion($app).'/'.StaticPathList::$optional.'/'.StaticPathList::$repository;
+        $projectPrefix      = StaticPathModel::projectPrefix();
+        $repositoryPath     = $this->app().'/'.StaticPathList::$repository;
+
+        return StaticPathModel::projectPath($projectPrefix.'/',$repositoryPath);
+
     }
 
     /**
