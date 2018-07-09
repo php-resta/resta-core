@@ -2,7 +2,7 @@
 
 namespace Resta\Foundation;
 
-use App\Manifest;
+use Bootstrapper\Manifest;
 
 class KernelBootManager extends Manifest {
 

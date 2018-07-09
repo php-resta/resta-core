@@ -18,6 +18,15 @@ class StaticPathRepository {
      * @param null $app
      * @return mixed
      */
+    public function appBuilder($app=null){
+
+        return app()->path()->model().'/'.StaticPathList::$builder;
+    }
+
+    /**
+     * @param null $app
+     * @return mixed
+     */
     public function appCall($app=null){
 
         return $this->appVersion($app).'/'.StaticPathList::$controller;
@@ -175,6 +184,15 @@ class StaticPathRepository {
      */
     public function appResourche(){
         return StaticPathModel::getAppStorage().'/'.StaticPathList::$resource;
+    }
+
+    /**
+     * @param null $app
+     * @return mixed
+     */
+    public function appServiceAnnotations($app=null){
+
+        return $this->appVersion($app).'/'.StaticPathList::$serviceAnnotations;
     }
 
     /**

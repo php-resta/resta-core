@@ -4,6 +4,7 @@ namespace Resta\UrlParse;
 
 use Resta\StaticPathList;
 use Resta\ApplicationProvider;
+use Resta\Utils;
 
 class UrlParseApplication extends ApplicationProvider {
 
@@ -17,19 +18,36 @@ class UrlParseApplication extends ApplicationProvider {
      */
     protected $urlNames=['project','namespace','endpoint','method'];
 
-
     /**
-     * @method handle
-     * @return array
+     * @method assignUrlList
+     * @param array $query
      */
-    public function handle(){
+    public function assignUrlList(){
 
-        //convert array for query
-        //assign url list
-        $this->assignUrlList();
+        // We treat the url parameters in the size of
+        // the application usage and get the values
+        // ​​to be processed throughout the application in query format.
+        $query=$this->convertArrayForQuery();
 
-        //we make url parse resolving with resolved
-        return (new UrlParseParamResolved)->urlParamResolve($this);
+        foreach ($query as $key=>$value){
+
+            //set url list for urlNames property
+            if(isset($this->urlNames[$key])){
+                $this->getUrlListValues($key,$value);
+            }
+        }
+
+        // If there is no method key in the urlList property,
+        // then by default we assign the index to the method property.
+        if(!isset($this->urlList['method'])){
+            $this->urlList['method']='index';
+        }
+
+        //determines the endpoint method for your project
+        $this->urlList['parameters']=array_slice($query,3);
+
+        //url global instance
+        $this->singleton()->urlGlobalInstance->definitor($this->urlList);
 
     }
 
@@ -49,50 +67,44 @@ class UrlParseApplication extends ApplicationProvider {
         return array_map(
             function($query) {
                 return ucfirst($query);
-                },$arrayForQuery);
+            },$arrayForQuery);
+    }
+
+    /**
+     * @param $key
+     * @param $value
+     */
+    private function getUrlListValues($key,$value){
+
+        if($this->urlNames[$key]=="namespace"){
+
+            // If the key value of the url is specified as a namespace,
+            // then in this case we are converting this group value to namespace format.
+            $projectPrefixNamespace=Utils::slashToBackSlash(StaticPathList::$projectPrefix);
+            $this->urlList[$this->urlNames[$key]]=(strlen($value)>0) ? $projectPrefixNamespace.'\\'.$value : null;
+        }
+        else{
+
+            //If the value from the url is an external value, the default format is applied.
+            $this->urlList[$this->urlNames[$key]]=(strlen($value)>0) ? $value : null;
+        }
     }
 
 
     /**
-     * @method assignUrlList
-     * @param array $query
+     * @method handle
+     * @return array
      */
-    public function assignUrlList(){
+    public function handle(){
 
-        // We treat the url parameters in the size of
-        // the application usage and get the values
-        // ​​to be processed throughout the application in query format.
-        $query=$this->convertArrayForQuery();
+        //convert array for query
+        //assign url list
+        $this->assignUrlList();
 
-        foreach ($query as $key=>$value){
-
-            if(isset($this->urlNames[$key])){
-
-                if($this->urlNames[$key]=="namespace"){
-
-                    $projectPrefixNamespace=str_replace("/","\\",StaticPathList::$projectPrefix);
-                    $this->urlList[$this->urlNames[$key]]=(strlen($value)>0) ? $projectPrefixNamespace.'\\'.$value : null;
-                }
-                else{
-                    $this->urlList[$this->urlNames[$key]]=(strlen($value)>0) ? $value : null;
-                }
-
-            }
-
-        }
-
-        // If there is no method key in the urlList property,
-        // then by default we assign the index to the method property.
-        if(!isset($this->urlList['method'])){
-            $this->urlList['method']='index';
-        }
-
-        //determines the endpoint method for your project
-        $this->urlList['parameters']=array_slice($query,3);
-
-        //url global instance
-        $this->singleton()->urlGlobalInstance->definitor($this->urlList);
-
+        //we make url parse resolving with resolved
+        return (new UrlParseParamResolved)->urlParamResolve($this);
 
     }
+
+
 }

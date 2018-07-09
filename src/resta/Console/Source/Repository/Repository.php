@@ -97,8 +97,8 @@ class Repository extends ConsoleOutputter {
      */
     private function setAnnotations(){
 
-        return Utils::changeClass(StaticPathModel::appAnnotation($this->projectName(),true).'',
-            ['Trait ServiceAnnotationsController'=>'Trait ServiceAnnotationsController'.PHP_EOL.' * @method \\'.StaticPathModel::appRepository($this->projectName()).'\\'.$this->argument['repository'].'\\'.$this->argument['repository'].'Contract '.strtolower($this->argument['repository']).'Repository'
+        return Utils::changeClass(app()->path()->serviceAnnotations().'.php',
+            ['Trait ServiceAnnotationsController'=>'Trait ServiceAnnotationsController'.PHP_EOL.' * @method \\'.app()->namespace()->repository().'\\'.$this->argument['repository'].'\\'.$this->argument['repository'].'Contract '.strtolower($this->argument['repository']).'Repository'
             ]);
     }
 }

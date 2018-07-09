@@ -5,6 +5,11 @@ namespace Resta\Contracts;
 interface StaticNamespaceContracts {
 
     /**
+     * @return mixed
+     */
+    public function builder();
+
+    /**
      * @param null $endpoint
      * @param array $bind
      * @return mixed
@@ -88,6 +93,11 @@ interface StaticNamespaceContracts {
      * @return mixed
      */
     public function optionalWebservice();
+
+    /**
+     * @return mixed
+     */
+    public function serviceAnnotations();
 
     /**
      * @return mixed

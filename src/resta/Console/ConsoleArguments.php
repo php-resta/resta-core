@@ -104,12 +104,12 @@ trait ConsoleArguments {
         $getConsoleArgumentsWithKey=$this->getConsoleArgumentsWithKey();
 
         if(isset($getConsoleArgumentsWithKey['group'])){
-            $app=$arguments[2].'\\'.$getConsoleArgumentsWithKey['group'];
+            $app=$arguments[2].'\\Api\\'.$getConsoleArgumentsWithKey['group'];
             define('group',$getConsoleArgumentsWithKey['group']);
         }
         else{
-            $app=$arguments[2].'\Main';
-            define('group','Main');
+            $app=$arguments[2].'\Api\Main';
+            define('group','Api\Main');
         }
 
         if(!defined('app') and isset($arguments[2])) define('app',$app);

@@ -33,18 +33,6 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
     }
 
     /**
-     * @method handle
-     * @return string
-     */
-    public function handle(){
-
-        //This is the main calling place of your application.
-        //If you come via http, the kernel response value is evaulated.
-        //If you come via console, the kernel console value is evaulated.
-        return ($this->console) ? $this->kernel->console : $this->kernel->response;
-    }
-
-    /**
      * @param null $boot
      * @param null $maker
      * @return mixed
@@ -76,6 +64,18 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
         //Controlling the console object is
         //intended to make sure that the kernel bootstrap classes do not work.
         return $this->console;
+    }
+
+    /**
+     * @method handle
+     * @return string
+     */
+    public function handle(){
+
+        //This is the main calling place of your application.
+        //If you come via http, the kernel response value is evaulated.
+        //If you come via console, the kernel console value is evaulated.
+        return ($this->console) ? $this->kernel->console : $this->kernel->response;
     }
 
     /**

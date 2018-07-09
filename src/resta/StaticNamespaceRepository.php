@@ -8,6 +8,13 @@ use Resta\Contracts\StaticNamespaceContracts;
 class StaticNamespaceRepository extends StaticPathRepository {
 
     /**
+     * @return mixed
+     */
+    public function builder(){
+        return Utils::getNamespace(parent::builder());
+    }
+
+    /**
      * @param null $endpoint
      * @param array $bind
      * @return mixed|string
@@ -140,6 +147,13 @@ class StaticNamespaceRepository extends StaticPathRepository {
      */
     public function repository(){
         return Utils::getNamespace(parent::repository());
+    }
+
+    /**
+     * @return mixed
+     */
+    public function serviceAnnotations(){
+        return Utils::getNamespace(parent::serviceAnnotations());
     }
 
     /**

@@ -299,6 +299,14 @@ class Utils {
         return true;
     }
 
+    /**
+     * @param $data
+     * @return mixed
+     */
+    public static function slashToBackSlash($data){
+        return str_replace("/","\\",$data);
+    }
+
 
 
 
