@@ -13,25 +13,53 @@ class EventManager extends EventHandler implements HandleContracts {
     protected $event;
 
     /**
-     * @return mixed|void
+     * @param $event
+     * @param $callable
      */
-    public function handle(){
+    protected function assignerDispatches($event,$callable){
 
-        //set constant event-dispatcher
-        define('event-dispatcher',true);
+        //set to dispatches event variable
+        $this->dispatches['event']=$event;
 
-        // we get the event dispatcher object from
-        // the registered bindings object.
-        // we apply this value to the registered object
-        // because it is used in outgoing simple calls.
-        $dispatcher=app()->singleton()->bindings['event-dispatcher'];
+        //if callback is used in the normal dispatcher method.
+        if(is_callable($callable)){
+            $this->dispatches['callableResult']=call_user_func($callable);
+        }
 
-        //get subscribe event list with event subscribe handler
-        $dispatcherList=$this->eventSubscribeHandler($dispatcher);
+        //get event name by class_basename
+        $this->dispatches['eventName']=lcfirst(class_basename($event));
+    }
 
-        //we save to kernel object value of the event-dispatcher
-        appInstance()->register('events',$dispatcherList);
+    /**
+     * @return bool
+     */
+    protected function checkCallableResultAndParam(){
 
+        //callback object and param property control.
+        return isset($this->dispatches['callableResult'])
+            && property_exists($this->dispatches['event'],'param');
+    }
+
+    /**
+     * @param $listen
+     */
+    protected function eventListen($listen){
+
+        // the listening object will be resolved to the namespace value
+        // in the listeners array and then the service container method via dependency injection.
+        $listenNamespace=app()->namespace()->optionalListeners().'\\'.ucfirst($listen);
+
+        // if the callback comes,
+        // we will set the callback object in the param property of the event object.
+        if($this->checkCallableResultAndParam()){
+            $this->dispatches['event']->param=$this->dispatches['callableResult'];
+        }
+
+        // we call it with the bind property of
+        // the handle method in the last stage for listen object.
+        Utils::callBind([$listenNamespace,'handle'],[
+            ucfirst($this->dispatches['eventName'])=>$this->dispatches['event']
+        ]);
     }
 
     /**
@@ -62,7 +90,6 @@ class EventManager extends EventHandler implements HandleContracts {
         //get listeners
         return $this->getListeners();
     }
-
 
     /**
      * @param $key
@@ -95,56 +122,6 @@ class EventManager extends EventHandler implements HandleContracts {
     }
 
     /**
-     * @param $event
-     * @param $callable
-     */
-    protected function assignerDispatches($event,$callable){
-
-        //set to dispatches event variable
-        $this->dispatches['event']=$event;
-
-        //if callback is used in the normal dispatcher method.
-        if(is_callable($callable)){
-            $this->dispatches['callableResult']=call_user_func($callable);
-        }
-
-        //get event name by class_basename
-        $this->dispatches['eventName']=lcfirst(class_basename($event));
-    }
-
-    /**
-     * @param $listen
-     */
-    protected function eventListen($listen){
-
-        // the listening object will be resolved to the namespace value
-        // in the listeners array and then the service container method via dependency injection.
-        $listenNamespace=app()->namespace()->optionalListeners().'\\'.ucfirst($listen);
-
-        // if the callback comes,
-        // we will set the callback object in the param property of the event object.
-        if($this->checkCallableResultAndParam()){
-            $this->dispatches['event']->param=$this->dispatches['callableResult'];
-        }
-
-        // we call it with the bind property of
-        // the handle method in the last stage for listen object.
-        Utils::callBind([$listenNamespace,'handle'],[
-            ucfirst($this->dispatches['eventName'])=>$this->dispatches['event']
-        ]);
-    }
-
-    /**
-     * @return bool
-     */
-    protected function checkCallableResultAndParam(){
-
-        //callback object and param property control.
-        return isset($this->dispatches['callableResult'])
-            && property_exists($this->dispatches['event'],'param');
-    }
-
-    /**
      * @return mixed
      */
     protected function getListeners(){
@@ -153,6 +130,27 @@ class EventManager extends EventHandler implements HandleContracts {
             return app()->singleton()->events;
         }
         return $this->listen;
+    }
+
+    /**
+     * @return mixed|void
+     */
+    public function handle(){
+
+        //set constant event-dispatcher
+        define('event-dispatcher',true);
+
+        // we get the event dispatcher object from
+        // the registered bindings object.
+        // we apply this value to the registered object
+        // because it is used in outgoing simple calls.
+        $dispatcher=app()->singleton()->bindings['event-dispatcher'];
+
+        //get subscribe event list with event subscribe handler
+        $dispatcherList=$this->eventSubscribeHandler($dispatcher);
+
+        //we save to kernel object value of the event-dispatcher
+        appInstance()->register('events',$dispatcherList);
     }
 }
 

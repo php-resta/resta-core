@@ -27,8 +27,8 @@ class Kernel extends Container implements KernelContracts {
         'Resta\Booting\UrlParse',
         'Resta\Booting\LogProvider',
         'Resta\Booting\Environment',
-        'Resta\Booting\Encrypter',
         'Resta\Booting\ConfigLoader',
+        'Resta\Booting\Encrypter',
         'Resta\Booting\ServiceContainer',
         'Resta\Booting\EventDispatcher',
         'Resta\Booting\Console',
@@ -49,7 +49,6 @@ class Kernel extends Container implements KernelContracts {
 
     ];
 
-
     /**
      * @method bootstrappers
      * @param $app \Resta\Contracts\ApplicationContracts
@@ -65,7 +64,6 @@ class Kernel extends Container implements KernelContracts {
             //makeBuild for service Container
             pos($boot)->bootFire($boot);
         });
-
     }
 
     /**
@@ -89,7 +87,5 @@ class Kernel extends Container implements KernelContracts {
         //system booting for app
         //pre-loaders are the most necessary classes for the system.
         $this->bootstrappers($this,$group);
-
     }
-
 }

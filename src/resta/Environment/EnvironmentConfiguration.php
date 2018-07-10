@@ -7,19 +7,6 @@ use Resta\ApplicationProvider;
 class EnvironmentConfiguration extends ApplicationProvider {
 
     /**
-     * @method handle
-     */
-    public function handle(){
-
-        //where we do the checks for the environment file type,
-        //and if no configuration file is found, the system throws an exception.
-        $environment=$this->makeBind(CheckEnvironmentFile::class)->checkConfiguration();
-
-        //We are globalizing environment variables.
-        $this->singleton()->environmentGlobalInstance->environment($environment);
-    }
-
-    /**
      * @param array $var
      * @param $environment null
      * @return mixed
@@ -49,5 +36,16 @@ class EnvironmentConfiguration extends ApplicationProvider {
         return $var[1];
     }
 
+    /**
+     * @method handle
+     */
+    public function handle(){
 
+        //where we do the checks for the environment file type,
+        //and if no configuration file is found, the system throws an exception.
+        $environment=$this->makeBind(CheckEnvironmentFile::class)->checkConfiguration();
+
+        //We are globalizing environment variables.
+        $this->singleton()->environmentGlobalInstance->environment($environment);
+    }
 }

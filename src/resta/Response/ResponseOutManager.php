@@ -18,18 +18,18 @@ class ResponseOutManager  {
     }
 
     /**
-     * @method xml
-     * @return void
-     */
-    public function xml(){
-        $this->app->response='xml';
-    }
-
-    /**
      * @method json
      * @return json
      */
     public function json(){
         $this->app->response='json';
+    }
+
+    /**
+     * @method xml
+     * @return void
+     */
+    public function xml(){
+        $this->app->response='xml';
     }
 }

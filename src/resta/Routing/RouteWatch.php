@@ -3,7 +3,6 @@
 namespace Resta\Routing;
 
 use Resta\ApplicationProvider;
-use Symfony\Component\Stopwatch\Stopwatch;
 
 class RouteWatch extends ApplicationProvider {
 
@@ -15,7 +14,7 @@ class RouteWatch extends ApplicationProvider {
 
         if(config('app.watch')){
 
-            // the Stopwatch component provides
+            // the memory usage component provides
             // a way to profile code.
             $memoryUsage = memory_get_usage();
 

@@ -28,24 +28,6 @@ class CheckEnvironmentFile extends ApplicationProvider {
     }
 
     /**
-     * @return mixed
-     */
-    public function identifierEnvironment(){
-
-        //We parse our environment variables through the yaml file.
-        $environment=$this->getEnvironment(true);
-
-        //the application will automatically throw an exception
-        //if there is no env key in the parse variables.
-        if(!isset($environment['env'])){
-            exception()->invalidArgument('The env key missing on your environment');
-        }
-
-        //and finally save the environment
-        return $environment;
-    }
-
-    /**
      * @param bool $status
      * @return mixed
      */
@@ -73,6 +55,21 @@ class CheckEnvironmentFile extends ApplicationProvider {
         return Utils::getYaml($this->getEnvironmentPath());
     }
 
+    /**
+     * @return mixed
+     */
+    public function identifierEnvironment(){
 
+        //We parse our environment variables through the yaml file.
+        $environment=$this->getEnvironment(true);
 
+        //the application will automatically throw an exception
+        //if there is no env key in the parse variables.
+        if(!isset($environment['env'])){
+            exception()->invalidArgument('The env key missing on your environment');
+        }
+
+        //and finally save the environment
+        return $environment;
+    }
 }

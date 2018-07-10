@@ -59,6 +59,14 @@ class ConfigProcess {
     }
 
     /**
+     * @param string $explode
+     * @return array
+     */
+    protected function configExplode($explode="."){
+        return explode($explode,$this->config);
+    }
+
+    /**
      * @param $confi
      */
     protected function configProcessResult($config){
@@ -86,13 +94,4 @@ class ConfigProcess {
     public function get(){
         return $this->config();
     }
-
-    /**
-     * @param string $explode
-     * @return array
-     */
-    protected function configExplode($explode="."){
-        return explode($explode,$this->config);
-    }
-
 }

@@ -16,6 +16,16 @@ class KernelRouterProcess extends ApplicationProvider {
     ];
 
     /**
+     * @method pickRouter
+     * @return mixed|void
+     */
+    private function pickRouter(){
+
+        $singleton=$this->singleton();
+        $singleton->routerSpecifications['router']=(isset($singleton->pick)) ? $singleton->pick[0] : $singleton->router;
+    }
+
+    /**
      * @return mixed
      */
     public function router(){
@@ -50,16 +60,6 @@ class KernelRouterProcess extends ApplicationProvider {
     }
 
     /**
-     * @method pickRouter
-     * @return mixed|void
-     */
-    private function pickRouter(){
-
-        $singleton=$this->singleton();
-        $singleton->routerSpecifications['router']=(isset($singleton->pick)) ? $singleton->pick[0] : $singleton->router;
-    }
-
-    /**
      * @method stackRouter
      * @return mixed|void
      */
@@ -74,7 +74,6 @@ class KernelRouterProcess extends ApplicationProvider {
         if(!isset($singleton->pick)){
             $singleton->routerSpecifications['router']=(isset($singleton->stack)) ? $singleton->stack : $singleton->router;
         }
-
     }
 
 }

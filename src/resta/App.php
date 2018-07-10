@@ -141,7 +141,7 @@ class App {
     private static function builder($service){
 
         //We are making a namespace assignment for the builder.
-        $builder=StaticPathModel::appBuilder().'\\'.$service;
+        $builder=app()->namespace()->builder().'\\'.$service;
 
         //We are getting builder instance.
         return app()->makeBind($builder);

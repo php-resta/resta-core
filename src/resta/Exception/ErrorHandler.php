@@ -95,6 +95,8 @@ class ErrorHandler extends ApplicationProvider {
             $environment=($this->app->kernel()->applicationKey===null) ? 'production' : environment();
         }
 
+        if(!file_exists(app()->path()->environmentFile())) $environment='production';
+
         $appException=$appExceptionSuccess+$exception::$environment($errNo,$errStrReal,$errFile,$errLine,$errType,$errContext);
 
         //set json app exception

@@ -21,7 +21,7 @@ class Encrypter extends ApplicationProvider {
 
         //throws an exception it there is no encrypter file
         if(!file_exists($encrypterFile)){
-            throw new \InvalidArgumentException('The Application key is invalid');
+            exception()->domain('The Application key is invalid');
         }
 
         //We invite our existing encrypter file
