@@ -26,18 +26,6 @@ class LoggerHandler implements LoggerInterface {
     }
 
     /**
-     * Log an emergency message to the logs.
-     *
-     * @param  mixed  $message
-     * @param  array  $context
-     * @return void
-     */
-    public function emergency($message, array $context = []) {
-
-        return $this->writeLog(__FUNCTION__,$message,$context);
-    }
-
-    /**
      * Log an alert message to the logs.
      *
      * @param  mixed  $message
@@ -62,6 +50,30 @@ class LoggerHandler implements LoggerInterface {
     }
 
     /**
+     * Log a debug message to the logs.
+     *
+     * @param  mixed  $message
+     * @param  array  $context
+     * @return void
+     */
+    public function debug($message, array $context = []) {
+
+        return $this->writeLog(__FUNCTION__,$message,$context);
+    }
+
+    /**
+     * Log an emergency message to the logs.
+     *
+     * @param  mixed  $message
+     * @param  array  $context
+     * @return void
+     */
+    public function emergency($message, array $context = []) {
+
+        return $this->writeLog(__FUNCTION__,$message,$context);
+    }
+
+    /**
      * Log an error message to the logs.
      *
      * @param  mixed  $message
@@ -69,30 +81,6 @@ class LoggerHandler implements LoggerInterface {
      * @return void
      */
     public function error($message, array $context = []) {
-
-        return $this->writeLog(__FUNCTION__,$message,$context);
-    }
-
-    /**
-     * Log a warning message to the logs.
-     *
-     * @param  mixed  $message
-     * @param  array  $context
-     * @return void
-     */
-    public function warning($message, array $context = []) {
-
-        return $this->writeLog(__FUNCTION__,$message,$context);
-    }
-
-    /**
-     * Log a notice to the logs.
-     *
-     * @param  mixed  $message
-     * @param  array  $context
-     * @return void
-     */
-    public function notice($message, array $context = []) {
 
         return $this->writeLog(__FUNCTION__,$message,$context);
     }
@@ -110,18 +98,6 @@ class LoggerHandler implements LoggerInterface {
     }
 
     /**
-     * Log a debug message to the logs.
-     *
-     * @param  mixed  $message
-     * @param  array  $context
-     * @return void
-     */
-    public function debug($message, array $context = []) {
-
-        return $this->writeLog(__FUNCTION__,$message,$context);
-    }
-
-    /**
      * Log a message to the logs.
      *
      * @param  mixed  $level
@@ -131,6 +107,30 @@ class LoggerHandler implements LoggerInterface {
      */
     public function log($level, $message, array $context = []) {
 
+    }
+
+    /**
+     * Log a notice to the logs.
+     *
+     * @param  mixed  $message
+     * @param  array  $context
+     * @return void
+     */
+    public function notice($message, array $context = []) {
+
+        return $this->writeLog(__FUNCTION__,$message,$context);
+    }
+
+    /**
+     * Log a warning message to the logs.
+     *
+     * @param  mixed  $message
+     * @param  array  $context
+     * @return void
+     */
+    public function warning($message, array $context = []) {
+
+        return $this->writeLog(__FUNCTION__,$message,$context);
     }
 
     /**
@@ -147,6 +147,4 @@ class LoggerHandler implements LoggerInterface {
 
         $this->logger->logHandler($message,$file,$level);
     }
-
-
 }

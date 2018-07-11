@@ -35,8 +35,8 @@ class StaticPathRepository {
     /**
      * @return mixed
      */
-    public function appCommand(){
-        return $this->appKernel().'\\'.StaticPathList::$command;
+    public function appCommand($app=null){
+        return $this->appVersion($app).'/'.StaticPathList::$optional.'/'.StaticPathList::$command.'';
     }
 
     /**
@@ -211,6 +211,15 @@ class StaticPathRepository {
     public function appServiceEventDispatcher($app=null){
 
         return $this->appVersion($app).'/ServiceEventDispatcherController';
+    }
+
+    /**
+     * @param null $app
+     * @return mixed
+     */
+    public function appServiceMiddleware($app=null){
+
+        return $this->appVersion($app).'/'.StaticPathList::$serviceMiddleware;
     }
 
     /**

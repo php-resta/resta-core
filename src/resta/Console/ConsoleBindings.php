@@ -18,17 +18,18 @@ class ConsoleBindings extends ApplicationProvider {
     private $bindings;
 
     /**
-     * @param $object
-     * @param $container
+     * @method bindConsoleShared
      * @return void
      */
-    public function console($object,$container){
+    private function bindConsoleShared(){
 
-        //If the console argument is an operator that exists in the resta kernel,
-        //we run a callback method to check it. The bindings for the custom application commander will be run.
-        $this->checkMainConsoleRunner(function() use($object,$container) {
-            $this->bindForAppCommand($object,$container);
-        });
+        //We assign the values assigned to the console object to the bindings array.
+        //The console object represents the classes to be bound for the kernel object console.
+        //if the array returns false on an if condition, the array will be automatically detected as empty.
+        if(isset($this->singleton()->consoleShared) and is_array($this->singleton()->consoleShared)){
+            return $this->singleton()->consoleShared;
+        }
+        return [];
     }
 
     /**
@@ -60,17 +61,16 @@ class ConsoleBindings extends ApplicationProvider {
     }
 
     /**
-     * @method bindConsoleShared
+     * @param $object
+     * @param $container
      * @return void
      */
-    private function bindConsoleShared(){
+    public function console($object,$container){
 
-        //We assign the values assigned to the console object to the bindings array.
-        //The console object represents the classes to be bound for the kernel object console.
-        //if the array returns false on an if condition, the array will be automatically detected as empty.
-        if(isset($this->singleton()->consoleShared) and is_array($this->singleton()->consoleShared)){
-            return $this->singleton()->consoleShared;
-        }
-        return [];
+        //If the console argument is an operator that exists in the resta kernel,
+        //we run a callback method to check it. The bindings for the custom application commander will be run.
+        $this->checkMainConsoleRunner(function() use($object,$container) {
+            $this->bindForAppCommand($object,$container);
+        });
     }
 }

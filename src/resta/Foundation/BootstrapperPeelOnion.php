@@ -31,6 +31,87 @@ class BootstrapperPeelOnion {
     ];
 
     /**
+     * @return null
+     */
+    private function appRegisterForOnion(){
+
+        // We assign the first value of
+        // the onionList variable to the group variable.
+        $group=current($this->onionList);
+
+        // If the peelings variable does not have a kernel,
+        // we first assign an instance of this class to the initial value of the array.
+        if(!isset(app()->singleton()->peelings)){
+            app()->singleton()->bound->register('peelings','0',$this);
+        }
+
+        // we will then use the keys of
+        // the peelings feature to sort and increase the last value 1.
+        $keys=array_keys(app()->singleton()->peelings);
+
+        // and since we can not peel,
+        // we will include the onion property in the process class respectively and run it as before yada after.
+        $bootstrapperPeelOnionProcess = new BootstrapperPeelOnionProcess($this->onionTypes[$group],$this->onionList);
+
+        // and we assign this running onion process property to the peelings variable on the kernel.
+        app()->singleton()->bound->register('peelings',end($keys)+1,$bootstrapperPeelOnionProcess);
+
+        //If the peelingsAfter object is not in the kernel.
+        if(!isset(app()->singleton()->peelingsAfter)){
+
+            //we assign the last saved after object to the peelingsAfter variable independently in the kernel.
+            $bootstrapperPeelAfterOnionProcess  = new BootstrapperPeelOnionProcess('after',$this->onionList);
+            app()->singleton()->bound->register('peelingsAfter',$bootstrapperPeelAfterOnionProcess);
+        }
+
+        return true;
+    }
+
+    /**
+     * @param $peelings
+     */
+    private function getPeelings($peelings){
+
+        $peelList=[];
+
+        // We are removing
+        // the first bootings class of the peelings object.
+        $peelOnion=array_shift($peelings);
+
+        // After we check the peel objects in the list for core,
+        // we hold the core objects in a row.
+        foreach ($peelings as $peelKey=>$peelObje){
+
+            if($peelObje->onionType=='core'){
+                $peelList['core'][]=$peelObje;
+            }
+            else{
+                $peelList['peel'][]=$peelObje;
+            }
+        }
+
+        //set after peelings
+        $peelList['peel'][]=app()->singleton()->peelingsAfter;
+
+        //We return the peel list as an object.
+        return (object)$peelList;
+    }
+
+    /**
+     * @return StdClass
+     */
+    private function objectCaller(){
+
+        // We throw the stdClass object runs
+        // and return the object.
+        $object = new \StdClass;
+        $object->runs = [];
+
+        //return object
+        return $object;
+    }
+
+    /**
      * @param $onion
      * @param callable $callback
      */
@@ -90,86 +171,4 @@ class BootstrapperPeelOnion {
                 return $object;
         });
     }
-
-    /**
-     * @param $peelings
-     */
-    private function getPeelings($peelings){
-
-        $peelList=[];
-
-        // We are removing
-        // the first bootings class of the peelings object.
-        $peelOnion=array_shift($peelings);
-
-        // After we check the peel objects in the list for core,
-        // we hold the core objects in a row.
-        foreach ($peelings as $peelKey=>$peelObje){
-
-            if($peelObje->onionType=='core'){
-                $peelList['core'][]=$peelObje;
-            }
-            else{
-                $peelList['peel'][]=$peelObje;
-            }
-        }
-
-        //set after peelings
-        $peelList['peel'][]=app()->singleton()->peelingsAfter;
-
-        //We return the peel list as an object.
-        return (object)$peelList;
-    }
-
-    /**
-     * @return StdClass
-     */
-    private function objectCaller(){
-
-        // We throw the stdClass object runs
-        // and return the object.
-        $object = new \StdClass;
-        $object->runs = [];
-
-        //return object
-        return $object;
-    }
-
-    /**
-     * @return null
-     */
-    private function appRegisterForOnion(){
-
-        // We assign the first value of
-        // the onionList variable to the group variable.
-        $group=current($this->onionList);
-
-        // If the peelings variable does not have a kernel,
-        // we first assign an instance of this class to the initial value of the array.
-        if(!isset(app()->singleton()->peelings)){
-            app()->singleton()->bound->register('peelings','0',$this);
-        }
-
-        // we will then use the keys of
-        // the peelings feature to sort and increase the last value 1.
-        $keys=array_keys(app()->singleton()->peelings);
-
-        // and since we can not peel,
-        // we will include the onion property in the process class respectively and run it as before yada after.
-        $bootstrapperPeelOnionProcess = new BootstrapperPeelOnionProcess($this->onionTypes[$group],$this->onionList);
-
-        // and we assign this running onion process property to the peelings variable on the kernel.
-        app()->singleton()->bound->register('peelings',end($keys)+1,$bootstrapperPeelOnionProcess);
-
-        //If the peelingsAfter object is not in the kernel.
-        if(!isset(app()->singleton()->peelingsAfter)){
-
-            //we assign the last saved after object to the peelingsAfter variable independently in the kernel.
-            $bootstrapperPeelAfterOnionProcess  = new BootstrapperPeelOnionProcess('after',$this->onionList);
-            app()->singleton()->bound->register('peelingsAfter',$bootstrapperPeelAfterOnionProcess);
-        }
-
-        return true;
-    }
-
 }

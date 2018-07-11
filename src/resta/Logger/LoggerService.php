@@ -7,6 +7,26 @@ use Resta\ApplicationProvider;
 
 class LoggerService extends ApplicationProvider {
 
+    /**
+     * @param $printer
+     * @param callable $callback
+     * @return mixed
+     */
+    public function checkLoggerConfiguration($printer,callable $callback){
+
+        //set log for printer
+        if(config('app.logger') && isset($this->singleton()->log)){
+
+            // log type level
+            // logger service handler
+            $type=($this->getSuccess()) ? 'info' : 'error';
+            return $this->logHandler($printer,'access',$type);
+        }
+
+        //return closure object with printer
+        return call_user_func_array($callback,[$printer]);
+    }
+
     public function handle(){
 
         //We are getting the path to
@@ -52,24 +72,6 @@ class LoggerService extends ApplicationProvider {
         return $printer;
     }
 
-    /**
-     * @param $printer
-     * @param callable $callback
-     * @return mixed
-     */
-    public function checkLoggerConfiguration($printer,callable $callback){
 
-        //set log for printer
-        if(config('app.logger') && isset($this->singleton()->log)){
-
-            // log type level
-            // logger service handler
-            $type=($this->getSuccess()) ? 'info' : 'error';
-            return $this->logHandler($printer,'access',$type);
-        }
-
-        //return closure object with printer
-        return call_user_func_array($callback,[$printer]);
-    }
 
 }

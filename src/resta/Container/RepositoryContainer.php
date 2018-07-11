@@ -29,10 +29,7 @@ class RepositoryContainer {
             $param[$parameter->getName()]=app()->makeBind($getRepositoryAdapter)->adapter();
         }
 
-
         return $param;
-
-
     }
 
 }

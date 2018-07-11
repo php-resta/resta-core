@@ -22,6 +22,45 @@ class ContainerResolve {
     }
 
     /**
+     * @param $containers
+     * @param $parameter
+     * @return array
+     */
+    private function checkParameterForContainer($containers,$parameter){
+
+        // if the parameter is an object and
+        // this object is a service container object
+        // then the parameter will bind.
+        if($parameter->getType()!==null && isset($containers[$parameter->getType()->getName()])){
+
+            // Unpack the container object and
+            // bind it to the param variable.
+            $parameterName=$parameter->getName();
+            $parameterResolve=app()->makeBind($containers[$parameter->getType()->getName()]);
+
+            //return result for parameter of the container
+            return [$parameterName=>$parameterResolve];
+
+        }
+
+        return [];
+    }
+
+    /**
+     * @return mixed|void
+     */
+    private function getContainers(){
+        return app()->singleton()->serviceContainer;
+    }
+
+    /**
+     * @param $class
+     */
+    private function getReflectionMethod($class){
+        return new \ReflectionMethod($class[0],$class[1]);
+    }
+
+    /**
      * @param $class
      * @param $param
      */
@@ -51,45 +90,5 @@ class ContainerResolve {
         }
 
         return $param;
-    }
-
-    /**
-     * @param $containers
-     * @param $parameter
-     * @return array
-     */
-    private function checkParameterForContainer($containers,$parameter){
-
-        // if the parameter is an object and
-        // this object is a service container object
-        // then the parameter will bind.
-        if($parameter->getType()!==null && isset($containers[$parameter->getType()->getName()])){
-
-            // Unpack the container object and
-            // bind it to the param variable.
-            $parameterName=$parameter->getName();
-            $parameterResolve=app()->makeBind($containers[$parameter->getType()->getName()]);
-
-            //return result for parameter of the container
-            return [$parameterName=>$parameterResolve];
-
-        }
-
-        return [];
-    }
-
-
-    /**
-     * @param $class
-     */
-    private function getReflectionMethod($class){
-        return new \ReflectionMethod($class[0],$class[1]);
-    }
-
-    /**
-     * @return mixed|void
-     */
-    private function getContainers(){
-        return app()->singleton()->serviceContainer;
     }
 }

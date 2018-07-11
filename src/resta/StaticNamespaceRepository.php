@@ -173,6 +173,13 @@ class StaticNamespaceRepository extends StaticPathRepository {
     /**
      * @return mixed
      */
+    public function serviceMiddleware(){
+        return Utils::getNamespace(parent::serviceMiddleware());
+    }
+
+    /**
+     * @return mixed
+     */
     public function version(){
         return Utils::getNamespace(parent::version());
     }

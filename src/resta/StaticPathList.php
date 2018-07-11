@@ -55,6 +55,11 @@ class StaticPathList {
     public static $serviceAnnotations='ServiceAnnotationsController';
 
     /**
+     * @var $repository
+     */
+    public static $serviceMiddleware='ServiceMiddlewareController';
+
+    /**
      * @var $storage
      */
     public static $storage='Storage';

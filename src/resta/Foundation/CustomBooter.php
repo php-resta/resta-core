@@ -40,23 +40,6 @@ class CustomBooter {
     }
 
     /**
-     * @param $booter array
-     * @return mixed
-     */
-    public function customBootstrappers($booter){
-
-        //if the boot list belongs to the custom booter,
-        //then we can boot our custom boot objects by adding them at the end of this class.
-        if(array_pop($booter)==$this->customBooter){
-            return $this->addCustomBooter($booter);
-        }
-
-        //If the boot list does not belong to the booter list,
-        //we normally send the boot list exactly as it is.
-        return $this->getBooterList($booter);
-    }
-
-    /**
      * @param $booter
      * @return array|mixed
      */
@@ -82,6 +65,23 @@ class CustomBooter {
         //The booterList property combines booterList variables.
         return array_merge($booterList,$this->booterList);
 
+    }
+
+    /**
+     * @param $booter array
+     * @return mixed
+     */
+    public function customBootstrappers($booter){
+
+        //if the boot list belongs to the custom booter,
+        //then we can boot our custom boot objects by adding them at the end of this class.
+        if(array_pop($booter)==$this->customBooter){
+            return $this->addCustomBooter($booter);
+        }
+
+        //If the boot list does not belong to the booter list,
+        //we normally send the boot list exactly as it is.
+        return $this->getBooterList($booter);
     }
 
     /**

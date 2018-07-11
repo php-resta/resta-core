@@ -8,17 +8,6 @@ use Resta\ApplicationProvider;
 class KernelAssigner extends ApplicationProvider  {
 
     /**
-     * @return mixed|void
-     */
-    public function container(){
-
-        //We are initializing the array property for the service container object.
-        if(!isset($this->singleton()->serviceContainer)){
-            $this->register('serviceContainer',[]);
-        }
-    }
-
-    /**
      * @param $object
      * @param $callback
      * @return mixed|void
@@ -33,28 +22,14 @@ class KernelAssigner extends ApplicationProvider  {
     }
 
     /**
-     * @param $object
-     * @param $concrete
+     * @return mixed|void
      */
-    public function setKernelObject($object,$concrete,$value=null){
+    public function container(){
 
-        //if a pre loader class wants to have before kernel values,
-        //it must return a callback to the bind method
-        $concrete=$this->getConcrete($concrete);
-
-        //the value is directly assigned to the kernel object.
-        //The value is moved throughout the application in the kernel of the application object.
-        if($value===null){
-            $this->setKernel($object,$concrete);
+        //We are initializing the array property for the service container object.
+        if(!isset($this->singleton()->serviceContainer)){
+            $this->register('serviceContainer',[]);
         }
-
-        //The service container value is moved differently from the value directly assigned to the kernel object.
-        //The application container is booted directly with the service container custom class
-        //in the version section of the your application.
-        if($value==="serviceContainer"){
-            $this->setServiceContainer($object,$concrete);
-        }
-
     }
 
     /**
@@ -88,6 +63,31 @@ class KernelAssigner extends ApplicationProvider  {
      * @param $object
      * @param $concrete
      */
+    public function setKernelObject($object,$concrete,$value=null){
+
+        //if a pre loader class wants to have before kernel values,
+        //it must return a callback to the bind method
+        $concrete=$this->getConcrete($concrete);
+
+        //the value is directly assigned to the kernel object.
+        //The value is moved throughout the application in the kernel of the application object.
+        if($value===null){
+            $this->setKernel($object,$concrete);
+        }
+
+        //The service container value is moved differently from the value directly assigned to the kernel object.
+        //The application container is booted directly with the service container custom class
+        //in the version section of the your application.
+        if($value==="serviceContainer"){
+            $this->setServiceContainer($object,$concrete);
+        }
+
+    }
+
+    /**
+     * @param $object
+     * @param $concrete
+     */
     private function setServiceContainer($object,$concrete){
 
         //We check that the concrete object
@@ -99,5 +99,4 @@ class KernelAssigner extends ApplicationProvider  {
             $this->register('serviceContainer',$object,$concrete);
         }
     }
-
 }

@@ -30,26 +30,6 @@ class FinalBooting implements HandleContracts {
     }
 
     /**
-     * @param $app
-     * @param $boot
-     * @return mixed|void
-     */
-    public function handle(){
-
-        //we remove the custom data from the boot list and boot normally.
-        $defaultBoot = Collection::make($this->boot)->except('custom')->all();
-
-        // and as a result we now use
-        //the instance properties of our boot lists to include our implementation.
-        $this->bootstrapper($defaultBoot);
-
-        //custom boot according to manifest bootManager
-        $this->customBootManifest(function($boot){
-            $this->bootstrapper($boot);
-        });
-    }
-
-    /**
      * @param $boots
      * @return void|mixed
      */
@@ -79,4 +59,23 @@ class FinalBooting implements HandleContracts {
         }
     }
 
+    /**
+     * @param $app
+     * @param $boot
+     * @return mixed|void
+     */
+    public function handle(){
+
+        //we remove the custom data from the boot list and boot normally.
+        $defaultBoot = Collection::make($this->boot)->except('custom')->all();
+
+        // and as a result we now use
+        //the instance properties of our boot lists to include our implementation.
+        $this->bootstrapper($defaultBoot);
+
+        //custom boot according to manifest bootManager
+        $this->customBootManifest(function($boot){
+            $this->bootstrapper($boot);
+        });
+    }
 }

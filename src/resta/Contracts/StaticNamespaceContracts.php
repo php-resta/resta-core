@@ -109,6 +109,10 @@ interface StaticNamespaceContracts {
      */
     public function serviceEventDispatcher();
 
+    /**
+     * @return mixed
+     */
+    public function serviceMiddleware();
 
     /**
      * @return mixed

@@ -13,6 +13,8 @@ class Config extends ApplicationProvider  {
      */
     public function setConfig($files=array()){
 
+        // we are saving all files in
+        // the config directory of each application.
         foreach($files as $key=>$file){
 
             $this->register('appConfig',strtolower($key),[

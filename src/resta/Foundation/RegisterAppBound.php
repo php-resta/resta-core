@@ -48,23 +48,21 @@ class RegisterAppBound extends ApplicationProvider {
 
     /**
      * @param $instance
-     * @param $key
-     * @param null $object
-     * @return mixed
+     * @param bool $withConcrete
      */
-    public function terminate($key,$object=null){
+    private function registerProcess($instance,$withConcrete=false){
 
-        // object null is
-        // sent to just terminate a key.
-        if($object===null){
-            unset(app()->singleton()->{$key});
+        // values recorded without concrete.
+        // or values deleted
+        if(false===$withConcrete){
+
+            //values registered without concrete
+            $instance->{$this->values['key']}=$this->values['object'];
             return false;
         }
 
-        // It is used to delete
-        // both key and sequence members.
-        unset(app()->singleton()->{$key}[$object]);
-
+        //values registered with concrete
+        $instance->{$this->values['key']}[$this->values['object']]=$this->values['concrete'];
     }
 
     /**
@@ -93,22 +91,21 @@ class RegisterAppBound extends ApplicationProvider {
 
     /**
      * @param $instance
-     * @param bool $withConcrete
+     * @param $key
+     * @param null $object
+     * @return mixed
      */
-    private function registerProcess($instance,$withConcrete=false){
+    public function terminate($key,$object=null){
 
-        // values recorded without concrete.
-        // or values deleted
-        if(false===$withConcrete){
-
-            //values registered without concrete
-            $instance->{$this->values['key']}=$this->values['object'];
+        // object null is
+        // sent to just terminate a key.
+        if($object===null){
+            unset(app()->singleton()->{$key});
             return false;
         }
 
-        //values registered with concrete
-        $instance->{$this->values['key']}[$this->values['object']]=$this->values['concrete'];
+        // It is used to delete
+        // both key and sequence members.
+        unset(app()->singleton()->{$key}[$object]);
     }
-
-
 }

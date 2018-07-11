@@ -19,26 +19,6 @@ class GraceContainer {
      * @param $param
      * @return mixed
      */
-    public function graceContainerBuilder($parameter,$param){
-
-        // if the parameter is an object
-        // but not a container object.
-        // we do some useful logic bind for user benefit.
-        if($parameter->getType()!==null){
-            return app()->makeBind(RepositoryContainer::class)->handle($parameter,$param);
-        }
-
-        // In particular, name container values can be specified and
-        // they are injected directly into the methods contextually.
-        return $this->getNameContainers($parameter,$param);
-
-    }
-
-    /**
-     * @param $parameter
-     * @param $param
-     * @return mixed
-     */
     protected function getNameContainers($parameter,$param){
 
         // If the parameter contains a route variable.
@@ -57,7 +37,24 @@ class GraceContainer {
             return app()->makeBind(SpecialNameContainer::class)->resolveContainer($parameter,$param);
 
         }
-
     }
 
+    /**
+     * @param $parameter
+     * @param $param
+     * @return mixed
+     */
+    public function graceContainerBuilder($parameter,$param){
+
+        // if the parameter is an object
+        // but not a container object.
+        // we do some useful logic bind for user benefit.
+        if($parameter->getType()!==null){
+            return app()->makeBind(RepositoryContainer::class)->handle($parameter,$param);
+        }
+
+        // In particular, name container values can be specified and
+        // they are injected directly into the methods contextually.
+        return $this->getNameContainers($parameter,$param);
+    }
 }

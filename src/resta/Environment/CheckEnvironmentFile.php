@@ -40,7 +40,7 @@ class CheckEnvironmentFile extends ApplicationProvider {
     /**
      * @return mixed
      */
-    public function getEnvironmentPath(){
+    private function getEnvironmentPath(){
 
         //We call environment path with this method
         return app()->path()->environmentFile();
@@ -49,7 +49,7 @@ class CheckEnvironmentFile extends ApplicationProvider {
     /**
      * @return mixed
      */
-    public function getEnvironmentVariables(){
+    private function getEnvironmentVariables(){
 
         //We call environment variables path with this method
         return Utils::getYaml($this->getEnvironmentPath());
@@ -58,7 +58,7 @@ class CheckEnvironmentFile extends ApplicationProvider {
     /**
      * @return mixed
      */
-    public function identifierEnvironment(){
+    private function identifierEnvironment(){
 
         //We parse our environment variables through the yaml file.
         $environment=$this->getEnvironment(true);

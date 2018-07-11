@@ -18,11 +18,21 @@ class Console extends ApplicationProvider {
     public $consoleClassNamespace;
 
     /**
-     * @return mixed
+     * @param $namespace
+     * @param callable $callback
      */
-    public function handle(){
+    public function checkConsoleNamespace(callable $callback){
 
-        return $this->consoleProcess();
+        // we check that they are in
+        // the console to run the console commands in the kernel.
+        if(Utils::isNamespaceExists($this->consoleClassNamespace)){
+            return call_user_func($callback);
+        }
+
+        // if the kernel console is not found
+        // then we check the existence of the specific application command and run it if it is.
+        return (new CustomConsoleProcess($this->getConsoleArgumentsWithKey(),$this))->handle();
+
     }
 
     /**
@@ -50,21 +60,12 @@ class Console extends ApplicationProvider {
     }
 
     /**
-     * @param $namespace
-     * @param callable $callback
+     * @return mixed
      */
-    public function checkConsoleNamespace(callable $callback){
+    public function handle(){
 
-        // we check that they are in
-        // the console to run the console commands in the kernel.
-        if(Utils::isNamespaceExists($this->consoleClassNamespace)){
-            return call_user_func($callback);
-        }
-
-        // if the kernel console is not found
-        // then we check the existence of the specific application command and run it if it is.
-        return (new CustomConsoleProcess($this->getConsoleArgumentsWithKey(),$this))->handle();
-
+        //run console process
+        return $this->consoleProcess();
     }
 
     /**

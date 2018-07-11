@@ -45,8 +45,9 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
 
             //We create kernel bootstrapping objects
             //that can be changed by you with the closure dispatcher method.
-            return $this->makeBind(ClosureDispatcher::class,['bind'=>new KernelBootManager()])->call(function() use ($maker){
-                return $this->handle($maker);
+            return $this->makeBind(ClosureDispatcher::class,['bind'=>new KernelBootManager()])
+                ->call(function() use ($maker){
+                    return $this->handle($maker);
             });
         }
 
@@ -75,7 +76,7 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
         //This is the main calling place of your application.
         //If you come via http, the kernel response value is evaulated.
         //If you come via console, the kernel console value is evaulated.
-        return ($this->console) ? $this->kernel->console : $this->kernel->response;
+        return ($this->console()) ? $this->kernel->console : $this->kernel->response;
     }
 
     /**

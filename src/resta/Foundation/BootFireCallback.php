@@ -7,15 +7,13 @@ use Resta\ApplicationProvider;
 class BootFireCallback extends ApplicationProvider {
 
     /**
-     * @param array $kernel
-     * @param callable $callback
-     * @return mixed
+     * @param $booter
+     * @return string
      */
-    public static function setBootFire($kernel=array(),callable $callback){
+    public static function getBooter($booter){
 
-        //The boot method to be executed can be specified by the user.
-        //We use this method to know how to customize it.
-        return call_user_func_array($callback,[self::setParametersForKernelCallback($kernel)]);
+        //get booter
+        return end($booter);
     }
 
     /**
@@ -39,6 +37,18 @@ class BootFireCallback extends ApplicationProvider {
     }
 
     /**
+     * @param array $kernel
+     * @param callable $callback
+     * @return mixed
+     */
+    public static function setBootFire($kernel=array(),callable $callback){
+
+        //The boot method to be executed can be specified by the user.
+        //We use this method to know how to customize it.
+        return call_user_func_array($callback,[self::setParametersForKernelCallback($kernel)]);
+    }
+
+    /**
      * @param $kernel
      * @return array7
      */
@@ -46,14 +56,5 @@ class BootFireCallback extends ApplicationProvider {
 
         $kernel[]=self::class;
         return $kernel;
-    }
-
-    /**
-     * @param $booter
-     * @return string
-     */
-    public static function getBooter($booter){
-
-        return end($booter);
     }
 }
