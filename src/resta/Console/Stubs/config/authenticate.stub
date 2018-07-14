@@ -1,0 +1,30 @@
+<?php
+
+namespace App\__project__\__version__\Config;
+
+use Store\Contracts\HandleTraitContract;
+
+class Authenticate implements HandleTraitContract
+{
+    /**
+     * authenticate settings.
+     * access database user object for every service.
+     * @return array
+     */
+    public function handle()
+    {
+        //user object
+        return [
+            'guard'=>[
+                'default'=>[
+                    'driver'            => 'eloquent',
+                    'model'             => 'default',
+                    'credentials'       => ['username','password'],
+                ],
+
+            ],
+
+        ];
+    }
+}
+

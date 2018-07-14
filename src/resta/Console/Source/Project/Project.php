@@ -101,6 +101,7 @@ class Project extends ConsoleOutputter {
         $this->touch['config/aliasgroup']           = $this->config().'/AliasGroup.php';
         $this->touch['config/cors']                 = $this->config().'/Cors.php';
         $this->touch['config/database']             = $this->config().'/Database.php';
+        $this->touch['config/authenticate']         = $this->config().'/Authenticate.php';
         //$this->touch['job/index']                   = $this->job().'/index.html';
         //$this->touch['migration/index']             = $this->migration().'/index.html';
         //$this->touch['builder/index']               = $this->builder().'/index.html';

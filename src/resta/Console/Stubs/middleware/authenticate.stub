@@ -11,6 +11,8 @@ class Authenticate implements HandleTraitContract {
      */
     public function handle() {
 
-        //do somethings
+        if(auth()->check()===false){
+            exception()->domain('Authenticate permission error');
+        }
     }
 }

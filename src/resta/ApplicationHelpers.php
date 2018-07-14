@@ -1,5 +1,15 @@
 <?php
 
+if (!function_exists('auth')) {
+    /**
+     * @return \Resta\Authenticate\AuthenticateContract
+     */
+    function auth()
+    {
+       return app()->makeBind(\Resta\Authenticate\AuthenticateProvider::class);
+    }
+}
+
 if (!function_exists('dd')) {
     function dd()
     {
