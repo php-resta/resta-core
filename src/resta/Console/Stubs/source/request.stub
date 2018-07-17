@@ -23,7 +23,7 @@ trait Request {
     /**
      * @return void
      */
-    public function rule(){
+    protected function rule(){
 
         //
     }

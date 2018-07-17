@@ -79,12 +79,84 @@ class Request extends RequestClient implements HandleContracts {
             }
         }
 
-        $this->autoInjection();
+        $this->checkHttpMethod($method);
 
         $this->capsule();
 
         $this->validation();
 
+        $this->autoInjection();
+
+        $this->fakerManager();
+
+        $this->expectedInputs();
+
+
+    }
+
+    private function fakerManager(){
+
+        if(method_exists($this,'faker')){
+
+            $this->fakerMethod($this->faker());
+
+        }
+        else{
+
+            if(property_exists($this,'faker') && is_array($this->faker) && count($this->faker)){
+
+                $this->fakerMethod($this->faker);
+            }
+
+        }
+    }
+
+    /**
+     * @param $faker
+     */
+    private function fakerMethod($faker){
+
+        foreach ($faker as $fake){
+
+            $fakerMethodName=$fake.'Faker';
+
+            if(method_exists($this,$fakerMethodName)){
+
+                if(!isset($this->inputs[$fake])){
+                    $this->inputs[$fake]=$this->{$fakerMethodName}();
+                }
+            }
+
+        }
+
+    }
+
+    /**
+     * @return void|mixed
+     */
+    private function expectedInputs(){
+
+        if(property_exists($this,'expected') && is_array($this->expected) && count($this->expected)){
+
+           foreach ($this->expected as $expected){
+               if(!isset($this->inputs[$expected])){
+                   exception()->invalidArgument('You absolutely have to send the value '.$expected);
+               }
+           }
+        }
+    }
+
+    /**
+     * @param $method
+     * @return void|mixed
+     */
+    private function checkHttpMethod($method){
+
+        if(property_exists($this,'http') && is_array($this->http) && count($this->http)){
+            if(!in_array($method,$this->http)){
+                exception()->badMethodCall('Invalid http method process for '.class_basename($this).'. it is accepted http methods ['.implode(",",$this->http).'] ');
+            }
+        }
     }
 
     /**
@@ -111,8 +183,6 @@ class Request extends RequestClient implements HandleContracts {
             $this->inputs[$key]=$value;
             $this->origin[$key]=$value;
         }
-
-        $this->autoInjection();
     }
 
     /**
@@ -127,13 +197,14 @@ class Request extends RequestClient implements HandleContracts {
      */
     protected function autoInjection(){
 
-        $autoInject=$this->getObjects()['autoInject'];
+        $getObjects     = $this->getObjects();
+        $autoInject     = $getObjects['autoInject'];
 
         if(count($autoInject)){
-            foreach($autoInject as $key=>$autoMethod){
-                $autoMethod='auto'.ucfirst($autoMethod);
+            foreach($autoInject as $key=>$method){
+                $autoMethod='auto'.ucfirst($method);
                 if(method_exists($this,$autoMethod)){
-                    $this->inputs[$key]=$this->{$autoMethod}();
+                    $this->inputs[$method]=$this->{$autoMethod}();
                 }
 
             }

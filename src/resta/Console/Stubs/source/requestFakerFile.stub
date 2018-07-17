@@ -1,0 +1,14 @@
+<?php
+
+namespace App\__project__\__version__\Optional\Source\Request\__request__;
+
+trait __request__RequestFaker {
+
+    /**
+     * faker manager for inputs
+     * @var array
+     */
+    protected $faker=[];
+
+    //
+}

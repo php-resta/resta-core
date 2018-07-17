@@ -1,0 +1,10 @@
+<?php
+
+namespace App\__project__\__version__\Optional\Source\Request;
+
+use Resta\Services\Request as RequestClient;
+
+class RequestProvider extends RequestClient  {
+
+
+}
