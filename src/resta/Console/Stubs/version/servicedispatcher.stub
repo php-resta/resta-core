@@ -25,14 +25,4 @@ class ServiceEventDispatcherController extends EventManager
     protected $subscribe = [
         'checkUserLoginOut'
     ];
-
-    /**
-     * Register any other events for your application.
-     *
-     * @return void
-     */
-    public function handle(){
-
-        parent::handle();
-    }
 }

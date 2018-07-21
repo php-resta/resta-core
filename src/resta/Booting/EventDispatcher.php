@@ -16,7 +16,7 @@ class EventDispatcher extends ApplicationProvider implements BootContracts {
         // the eventDispatcher component provides tools
         // that allow your application components to communicate
         // with each other by dispatching events and listening to them.
-        $this->app->bind('event-dispatcher',function(){
+        $this->app->bind('eventDispatcher',function(){
             return app()->namespace()->serviceEventDispatcher();
         },true);
     }

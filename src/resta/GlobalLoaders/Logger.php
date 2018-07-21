@@ -11,7 +11,7 @@ class Logger extends ApplicationProvider  {
      * @param $adapter
      * @param $loggerService
      */
-    public function adapterProcess($base,$adapter,$loggerService){
+    public function setLogger($base,$adapter,$loggerService){
 
         //We take the adapter attribute for the log log
         //from the service log class and save it to the kernel object.

@@ -53,9 +53,12 @@ class KernelAssigner extends ApplicationProvider  {
         //is an object that can be retrieved.
         if(!isset($this->singleton()->{$object}) && class_exists($concrete)){
 
+            //get global object instance
+            $globalObjectInstance=$this->getGlobalObjectInstance($object);
+
             //the value corresponding to the bind value for the global object is assigned and
             //the makeBind method is called for the dependency injection.
-            $this->singleton()->{$object}=$this->makeBind($concrete)->handle();
+            $this->singleton()->{$object}=$this->makeBind($concrete)->handle($globalObjectInstance);
         }
     }
 
@@ -98,5 +101,19 @@ class KernelAssigner extends ApplicationProvider  {
             //the makeBind method is called for the dependency method.
             $this->register('serviceContainer',$object,$concrete);
         }
+    }
+
+    /**
+     * @param $object
+     * @return null
+     */
+    private function getGlobalObjectInstance($object){
+
+        $globalObject           = $object.'GlobalInstance';
+        $issetGlobalObject      = (isset($this->singleton()->{$globalObject}));
+
+        return ($issetGlobalObject) ? $this->singleton()->{$globalObject} : null;
+
+
     }
 }

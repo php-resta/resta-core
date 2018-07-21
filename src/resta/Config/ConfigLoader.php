@@ -5,14 +5,14 @@ namespace Resta\Config;
 use Resta\Utils;
 use Resta\StaticPathModel;
 use Resta\ApplicationProvider;
+use Resta\GlobalLoaders\Config as ConfigGlobalInstance;
 
 class ConfigLoader extends ApplicationProvider {
 
     /**
-     * @method handle
-     * @return mixed
+     * @param ConfigGlobalInstance $config
      */
-    public function handle(){
+    public function handle(ConfigGlobalInstance $config){
 
         //We run a glob function for all of the config files,
         //where we pass namespace and paths to a kernel object and process them.
@@ -20,7 +20,7 @@ class ConfigLoader extends ApplicationProvider {
 
         //The config object is a kernel object
         //that can be used to call all class and array files in the config directory of the project.
-        $this->singleton()->configGlobalInstance->setConfig($configFiles);
+        $config->setConfig($configFiles);
 
         // Finally, we will set
         // the application's timezone and encoding based on the configuration

@@ -11,7 +11,7 @@ class Encrypter extends ApplicationProvider  {
      *
      * @param $key
      */
-    public function applicationKey($key){
+    public function setApplicationKey($key){
 
         //we are assigning a singleton object
         //so that we can use our application key in the project.

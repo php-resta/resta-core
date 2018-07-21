@@ -5,6 +5,7 @@ namespace Resta\Middleware;
 use Resta\Utils;
 use Resta\StaticPathModel;
 use Resta\ApplicationProvider;
+use Resta\GlobalLoaders\Middleware as MiddlewareGlobalInstance;
 
 class ApplicationMiddleware extends ApplicationProvider {
 
@@ -14,17 +15,26 @@ class ApplicationMiddleware extends ApplicationProvider {
     protected $middleware=array();
 
     /**
-     * @param bool $after
+     * @var bool
      */
-    public function handle($after=false){
+    public $after=false;
+
+    /**
+     * @param MiddlewareGlobalInstance $middleware
+     */
+    public function handle(MiddlewareGlobalInstance $middleware){
+
+        //set define for middleware
+        define('middleware',true);
 
         // If the after variable is sent normally,
         // the handle method will be executed.
         // If true, then the middleware will be executed.
-        $middlewareMethod=($after===false) ? 'handle' : 'after';
+        $middlewareMethod=($this->after===false) ? 'handle' : 'after';
 
-        //The app instance is a global application example, and a hash is loaded as this hash.
-        $this->singleton()->middlewareGlobalInstance->setAppInstance();
+        // the app instance is a global application example,
+        // and a hash is loaded as this hash.
+        $middleware->setMiddleware();
 
         //When your application is requested, the middleware classes are running before all bootstrapper executables.
         //Thus, if you make http request your application, you can verify with an intermediate middleware layer
@@ -51,7 +61,7 @@ class ApplicationMiddleware extends ApplicationProvider {
             $middlewareClass=$this->singleton()->middlewareClass;
 
             //middleware definitions.
-            $this->middleware['namespace']          = StaticPathModel::appMiddlewarePath().'\\'.$middlewareName;
+            $this->middleware['namespace']          = app()->namespace()->middleware().'\\'.$middlewareName;
             $this->middleware['key']                = $middleKey;
             $this->middleware['class']              = $middlewareClass;
             $this->middleware['middlewareName']     = $middleVal;

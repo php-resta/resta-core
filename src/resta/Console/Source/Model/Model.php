@@ -55,7 +55,7 @@ class Model extends ConsoleOutputter {
 
         Utils::chmod($this->model());
 
-        echo $this->info('Model Has Been Succesfully Created');
+        echo $this->classical(' > Model called as "'.$this->argument['file'].'" has been successfully created in the '.app()->namespace()->model().'');
     }
 
     /**

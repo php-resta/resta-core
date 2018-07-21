@@ -4,6 +4,7 @@ namespace Resta\Logger;
 
 use Resta\StaticPathModel;
 use Resta\ApplicationProvider;
+use Resta\GlobalLoaders\Logger as LoggerGlobalInstance;
 
 class LoggerService extends ApplicationProvider {
 
@@ -27,7 +28,13 @@ class LoggerService extends ApplicationProvider {
         return call_user_func_array($callback,[$printer]);
     }
 
-    public function handle(){
+    /**
+     * @param LoggerGlobalInstance $logger
+     */
+    public function handle(LoggerGlobalInstance $logger){
+
+        //set define for logger
+        define('logger',true);
 
         //We are getting the path to
         //the service log file in the project's version directory.
@@ -43,8 +50,9 @@ class LoggerService extends ApplicationProvider {
             $logAdapter=$appBase->adapter();
         }
 
-        //we send the resulting adapter property as a reference to the bind automatic instance class.
-        $this->singleton()->loggerGlobalInstance->adapterProcess($appBase,$logAdapter,$this);
+        // we send the resulting adapter property as
+        // a reference to the bind automatic instance class.
+        $logger->setLogger($appBase,$logAdapter,$this);
     }
 
     /**

@@ -57,10 +57,6 @@ class Request extends ConsoleOutputter {
 
         Utils::chmod($this->optional());
 
-        echo $this->classical('---------------------------------------------------------------------------');
-        echo $this->bluePrint('Request Named ['.$request.'] Has Been Successfully Created');
-        echo $this->classical('---------------------------------------------------------------------------');
-        echo $this->cyan('   You can see in repository directory your '.$this->directory['requestDir'].'   ');
-        echo $this->classical('---------------------------------------------------------------------------');
+        echo $this->classical(' > Request called as "'.$request.'" has been successfully created in the '.app()->namespace()->optionalSource().'');
     }
 }

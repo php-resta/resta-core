@@ -102,7 +102,7 @@ class ConsoleOutputter extends ConsolePrepare {
         if(isset($this->argument['project'])){
             
 
-            if($this->argument['group']===null){
+            if(!isset($this->argument['group'])){
 
                 $this->projectPrefix=StaticPathModel::projectPrefix('Main');
 

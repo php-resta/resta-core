@@ -4,8 +4,9 @@ namespace Resta\Event;
 
 use Resta\Utils;
 use Resta\Contracts\HandleContracts;
+use Resta\GlobalLoaders\EventDispatcher as EventDispatcherGlobalInstance;
 
-class EventManager extends EventHandler implements HandleContracts {
+class EventManager extends EventHandler {
 
     /**
      * @var $event
@@ -133,9 +134,10 @@ class EventManager extends EventHandler implements HandleContracts {
     }
 
     /**
+     * @param EventDispatcherGlobalInstance $eventDispatcher
      * @return mixed|void
      */
-    public function handle(){
+    public function handle(EventDispatcherGlobalInstance $eventDispatcher){
 
         //set constant event-dispatcher
         define('event-dispatcher',true);
@@ -144,13 +146,13 @@ class EventManager extends EventHandler implements HandleContracts {
         // the registered bindings object.
         // we apply this value to the registered object
         // because it is used in outgoing simple calls.
-        $dispatcher=app()->singleton()->bindings['event-dispatcher'];
+        $dispatcher=app()->singleton()->bindings['eventDispatcher'];
 
         //get subscribe event list with event subscribe handler
         $dispatcherList=$this->eventSubscribeHandler($dispatcher);
 
         //we save to kernel object value of the event-dispatcher
-        appInstance()->register('events',$dispatcherList);
+        $eventDispatcher->setEventDispatcher($dispatcherList);
     }
 }
 

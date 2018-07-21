@@ -109,7 +109,10 @@ trait ConsoleArguments {
         }
         else{
             $app=$arguments[2].'\Api\Main';
-            define('group','Api\Main');
+            if(!defined('group')){
+                define('group','Api\Main');
+            }
+
         }
 
         if(!defined('app') and isset($arguments[2])) define('app',$app);

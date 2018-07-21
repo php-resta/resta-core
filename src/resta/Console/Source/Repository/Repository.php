@@ -61,7 +61,7 @@ class Repository extends ConsoleOutputter {
         //set annotations
         $this->setAnnotations();
 
-        echo $this->info('Repository Named "'.$this->argument['repository'].'" Has Been Successfully Created');
+        echo $this->classical(' > Repository called as "'.$this->argument['repository'].'" has been successfully created in the '.app()->namespace()->repository().'');
 
     }
 

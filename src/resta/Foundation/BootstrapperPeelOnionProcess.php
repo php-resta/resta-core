@@ -62,7 +62,7 @@ class BootstrapperPeelOnionProcess implements LayerInterface {
      * @return mixed|void
      */
     private function afterPeel(){
-        return app()->singleton()->bindings['middleware']->handle(true);
+        return app()->singleton()->bindings['middleware']->after=true;
     }
 
 

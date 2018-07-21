@@ -8,14 +8,12 @@ class Environment extends ApplicationProvider  {
 
     /**
      * register environment variables to kernel
-     *
-     * @method environment
-     * @param null $environment
+     * @param null $configuration
      */
-    public function environment($environment=null){
+    public function set($configuration=null){
 
-        $this->register('env',(count($environment)) ? $environment['env'] : 'production');
-        $this->register('var',$environment);
+        $this->register('env',(count($configuration)) ? $configuration['env'] : 'production');
+        $this->register('var',$configuration);
     }
 
 }

@@ -6,15 +6,20 @@ use Resta\Utils;
 use Defuse\Crypto\Key;
 use Defuse\Crypto\Crypto;
 use Resta\ApplicationProvider;
+use Resta\GlobalLoaders\Encrypter as EncrypterGlobalInstance;
 
 class Encrypter extends ApplicationProvider {
 
     /**
      * @return mixed
+     * @param EncrypterGlobalInstance $encrypter
      * @throws \Defuse\Crypto\Exception\EnvironmentIsBrokenException
      * @throws \Defuse\Crypto\Exception\WrongKeyOrModifiedCiphertextException
      */
-    public function handle(){
+    public function handle(EncrypterGlobalInstance $encrypter){
+
+        //set define for encrypter
+        define('encrypter',true);
 
         //get encrypter file
         $encrypterFile=app()->path()->encrypterFile();
@@ -33,7 +38,7 @@ class Encrypter extends ApplicationProvider {
 
         //we are assigning a singleton object
         //so that we can use our application key in the project.
-        $this->singleton()->encrypterGlobalInstance->applicationKey($appKey);
+        $encrypter->setApplicationKey($appKey);
 
         //If the crypto decrypts when we get a false error, we stop the automatic application
         return Crypto::Decrypt($appKey[0], unserialize(base64_decode($appKey[1])));
