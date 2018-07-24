@@ -46,6 +46,6 @@ class Exception extends ConsoleOutputter {
 
         Utils::chmod($this->optional());
 
-        echo $this->info('Exception Named "'.$exception.'" Has Been Successfully Created');
+        echo $this->classical(' > Exception called as "'.$this->argument['exception'].'" has been successfully created in the '.app()->namespace()->optionalException().'');
     }
 }

@@ -39,10 +39,7 @@ class Middleware extends ConsoleOutputter {
 
         chmod($this->touch['middleware/middleware'],0777);
 
-        echo $this->classical('---------------------------------------------------------------------------');
-        echo $this->bluePrint('Middleware Named ['.$this->argument['middleware'].'] Has Been Successfully Created in the '.$this->argument['project'].'');
-        echo $this->classical('---------------------------------------------------------------------------');
-        echo $this->cyan('   You can see in src/app/'.$this->argument['project'].'/'.Utils::getAppVersion($this->argument['project']).'/Middleware your middleware   ');
-        echo $this->classical('---------------------------------------------------------------------------');
+        echo $this->classical(' > Middleware called as "'.$this->argument['middleware'].'" has been successfully created in the '.app()->namespace()->middleware().'');
+
     }
 }

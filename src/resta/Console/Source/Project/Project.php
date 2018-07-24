@@ -123,6 +123,6 @@ class Project extends ConsoleOutputter {
         Utils::chmod($this->project);
         Utils::chmod($this->projectPath());
 
-        echo $this->info('Project Named "'.$this->argument['project'].'" Has Been Successfully Created');
+        echo $this->classical(' > Application called as "'.$this->projectName().'" has been successfully created in the '.$this->projectPath().'');
     }
 }

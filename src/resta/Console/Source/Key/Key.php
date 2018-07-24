@@ -43,6 +43,6 @@ class Key extends ConsoleOutputter {
         //set key file touch
         $this->file->touch($this);
 
-        echo $this->info('Your Application Key File Has Been Successfully Created');
+        echo $this->classical(' > Your application key file has been successfully created in the '.StaticPathModel::appPath().'');
     }
 }

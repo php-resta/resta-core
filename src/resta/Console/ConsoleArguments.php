@@ -53,6 +53,7 @@ trait ConsoleArguments {
         $getConsoleClassRealArguments=$this->getConsoleClassRealArguments();
 
         $listKey=[];
+        $listKey['project']=null;
 
         foreach($getConsoleClassRealArguments as $key=>$value){
 
@@ -108,7 +109,11 @@ trait ConsoleArguments {
             define('group',$getConsoleArgumentsWithKey['group']);
         }
         else{
-            $app=$arguments[2].'\Api\Main';
+
+            if(isset($arguments[2])){
+                $app=$arguments[2].'\Api\Main';
+            }
+
             if(!defined('group')){
                 define('group','Api\Main');
             }

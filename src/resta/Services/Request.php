@@ -170,7 +170,7 @@ class Request extends RequestClient implements HandleContracts {
             // the exception will be thrown.
             foreach ($this->expected as $expected){
                 if(!isset($this->inputs[$expected])){
-                    exception()->invalidArgument('You absolutely have to send the value '.$expected);
+                    exception()->invalidArgument('You absolutely have to send the value '.$expected.' for request object');
                 }
             }
         }

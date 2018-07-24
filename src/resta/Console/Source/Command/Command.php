@@ -42,11 +42,7 @@ class Command extends ConsoleOutputter {
 
         Utils::chmod(root);
 
-        echo $this->classical('---------------------------------------------------------------------------');
-        echo $this->bluePrint('Command Class Named ['.$this->argument['command'].'] Has Been Successfully Created');
-        echo $this->classical('---------------------------------------------------------------------------');
-        echo $this->cyan('   You can see in '.$this->command().' your command class   ');
-        echo $this->classical('---------------------------------------------------------------------------');
+        echo $this->classical(' > Commander called as "'.$this->argument['command'].'" has been successfully created in the '.app()->namespace()->command().'');
 
     }
 }

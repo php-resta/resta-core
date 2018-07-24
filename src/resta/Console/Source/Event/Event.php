@@ -111,6 +111,6 @@ class Event extends ConsoleOutputter {
 
         Utils::chmod($this->optional());
 
-        echo $this->info('the events have been successfully generated.');
+        echo $this->classical(' > Your events has been successfully created in the '.app()->namespace()->optionalEvents().'');
     }
 }

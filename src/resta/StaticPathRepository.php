@@ -235,7 +235,12 @@ class StaticPathRepository {
      */
     public function appVersion($app=null){
 
-        return $this->app($app).'/'.Utils::getAppVersion(app);
+        if(defined('app')){
+            return $this->app($app).'/'.Utils::getAppVersion(app);
+        }
+
+        return null;
+
     }
 
     /**
