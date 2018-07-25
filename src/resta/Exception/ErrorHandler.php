@@ -13,6 +13,7 @@ class ErrorHandler extends ApplicationProvider {
      */
     public function handle(){
 
+        //sets which php errors are reported
         error_reporting(0);
 
         //This function can be used for defining your own way of handling errors during runtime,
@@ -37,24 +38,23 @@ class ErrorHandler extends ApplicationProvider {
      */
     public function setErrorHandler($errNo=null, $errStr=null, $errFile=null, $errLine=null, $errContext=null){
 
-        /**
-         * @var $exception \Store\Config\Exception
-         * get App Exception Config Class
-         */
+        // in general we will use the exception class
+        // in the store/config directory to make it possible
+        // to change the user-based exceptions.
         $exception=StaticPathModel::$store.'\Config\Exception';
 
-        //constant object
-        $errType='Undefined';
-        $errStrReal='';
+        //constant object as default
+        $errType        = 'Undefined';
+        $errStrReal     = $errStr;
 
-        //Catch exception via preg match
+        // catch exception via preg match
+        // and then clear the Uncaught statement from inside.
         if(preg_match('@(.*?):@is',$errStr,$errArr)){
             $errType=trim(str_replace('Uncaught','',$errArr[1]));
         }
 
-        $errStrReal=$errStr;
-
-        if(preg_match('@Uncaught@is',$errStr) && preg_match('@(.*?):(.*?)\sin\s@is',$errStr,$errStrRealArray)){
+        if(preg_match('@Uncaught@is',$errStr)
+            && preg_match('@(.*?):(.*?)\sin\s@is',$errStr,$errStrRealArray)){
             $errStrReal=trim($errStrRealArray[2]);
         }
 

@@ -1,14 +1,8 @@
 <?php
 
-namespace Store\Autoservice\__project__;
+namespace Store\Autoservice\__autoservice__;
 
-use Resta\ApplicationProvider;
-
-/**
- * Class __project__Service
- * @package Store\Autoservice\__project__
- */
-class __project__Service extends ApplicationProvider {
+class __autoservice__Service {
 
     /**
      * @return array
@@ -16,7 +10,7 @@ class __project__Service extends ApplicationProvider {
     public function getIndex__methodPrefix__(){
 
         return [
-            '__project__service'=>'do somethings'
+            '__autoservice__service'=>'do somethings'
         ];
     }
 

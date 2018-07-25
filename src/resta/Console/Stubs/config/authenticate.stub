@@ -20,6 +20,8 @@ class Authenticate implements HandleTraitContract
                     'driver'            => 'eloquent',
                     'model'             => 'default',
                     'credentials'       => ['username','password'],
+                    'http'              => ['login'=>'post'],
+                    'addToWhere'        => null,
                 ],
 
             ],

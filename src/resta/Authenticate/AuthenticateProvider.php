@@ -6,10 +6,8 @@ use Resta\Authenticate\Resource\AuthLoginManager;
 
 class AuthenticateProvider extends ConfigProvider implements AuthenticateContract {
 
-    /**
-     * @var array $params
-     */
-    public $params=[];
+    //get auth response,auth exception and auth token
+    use AuthenticateResponse,AuthenticateException,AuthenticateToken;
 
     /**
      * @var string
@@ -52,6 +50,10 @@ class AuthenticateProvider extends ConfigProvider implements AuthenticateContrac
      */
     public function login($credentials=array(),$objectReturn=false){
 
+        // we will determine whether
+        // the http path is correct for this method.
+        $this->getExceptionForLoginHttp();
+
         // we invoke the login manager and the properties
         // that this class creates will inform us about user input.
         $loginManager = new AuthLoginManager($credentials,$this);
@@ -62,7 +64,7 @@ class AuthenticateProvider extends ConfigProvider implements AuthenticateContrac
 
         // the login value stored in the params property of the login manager object will return a builder object.
         // we will return the value of the login state as a boolean using the count method of this builder object.
-        return ($this->params['loginStatus']) ? true : false;
+        return $this->getResult();
     }
 
     /**
@@ -80,5 +82,4 @@ class AuthenticateProvider extends ConfigProvider implements AuthenticateContrac
 
         return true;
     }
-
 }

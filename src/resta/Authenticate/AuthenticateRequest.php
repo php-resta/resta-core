@@ -16,10 +16,47 @@ class AuthenticateRequest extends RequestClient {
     protected $autoInject=[];
 
     /**
-     * @return array
+     * The values ​​expected by the server.
+     * @var array
      */
-    public function all(){
-        return $this->inputs;
+    protected $expected=[];
+
+    /**
+     * mandatory http method.
+     * @var array
+     */
+    protected $http=[];
+
+    /**
+     * AuthenticateRequest constructor.
+     * @param $credentials
+     */
+    public function __construct($credentials) {
+
+        //
+        foreach ($credentials as $credential){
+            $this->expected[]=$credential;
+        }
+
+        //
+        parent::__construct();
+    }
+
+    /**
+     * @param $credentials
+     */
+    public function credentials($credentials){
+
+        $credentials=[];
+
+        foreach ($this->inputs as $inputKey=>$inputValue){
+
+            if(in_array($inputKey,$this->expected)){
+                $credentials[$inputKey]=$inputValue;
+            }
+        }
+
+        return $credentials;
     }
 
     /**
@@ -29,10 +66,4 @@ class AuthenticateRequest extends RequestClient {
 
         //
     }
-
-    public function auth(){
-
-    }
-
-
 }

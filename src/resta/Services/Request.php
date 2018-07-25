@@ -286,6 +286,10 @@ class Request extends RequestClient implements HandleContracts {
      */
     private function requestProperties(){
 
+        // contrary to capsule method,
+        // expected values must be in the key being sent.
+        $this->expectedInputs();
+
         // this method determines
         // how the request object will be requested,
         $this->checkHttpMethod();
@@ -306,10 +310,6 @@ class Request extends RequestClient implements HandleContracts {
         // the context of any key method when access is granted,
         // it can be filled with fake method.
         $this->fakerManager();
-
-        // contrary to capsule method,
-        // expected values must be in the key being sent.
-        $this->expectedInputs();
     }
 
     /**

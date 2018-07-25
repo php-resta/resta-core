@@ -108,6 +108,26 @@ class ConfigProvider {
     }
 
     /**
+     * @return string
+     */
+    public function getHttp(){
+
+        return $this->config['guard'][$this->guard]['http'];
+    }
+
+    /**
+     * @return string
+     */
+    public function getAddToWhere(){
+
+        if(isset($this->config['guard'][$this->guard]['addToWhere'])){
+            return $this->config['guard'][$this->guard]['addToWhere'];
+        }
+        return null;
+
+    }
+
+    /**
      * @return void|mixed
      */
     protected function setAuthenticateNeeds(){
@@ -127,4 +147,5 @@ class ConfigProvider {
 
         return $this;
     }
+
 }

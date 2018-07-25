@@ -26,7 +26,7 @@ class AuthLoginCredentialsManager {
 
         // the request object will help you process
         // the credentials and get them correctly.
-        $this->request=new AuthenticateRequest();
+        $this->request=new AuthenticateRequest($this->credentials);
 
         //request handle
         $this->handle();
@@ -39,7 +39,7 @@ class AuthLoginCredentialsManager {
 
         // with the request object we get
         // the credentials values through the all method.
-        $this->credentials=$this->request->all();
+        $this->credentials=$this->request->credentials($this->credentials);
     }
 
     /**
