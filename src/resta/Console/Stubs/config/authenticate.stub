@@ -22,6 +22,7 @@ class Authenticate implements HandleTraitContract
                     'credentials'       => ['username','password'],
                     'http'              => ['login'=>'post'],
                     'addToWhere'        => null,
+                    'token'             => null,
                 ],
 
             ],

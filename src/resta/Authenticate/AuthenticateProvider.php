@@ -2,6 +2,7 @@
 
 namespace Resta\Authenticate;
 
+use Resta\Authenticate\Resource\AuthCheckManager;
 use Resta\Authenticate\Resource\AuthLoginManager;
 
 class AuthenticateProvider extends ConfigProvider implements AuthenticateContract {
@@ -19,7 +20,23 @@ class AuthenticateProvider extends ConfigProvider implements AuthenticateContrac
      */
     public function check(){
 
-        return true;
+        $headers=headers();
+
+        if(isset($headers['token'])){
+
+            // we send the user-supplied token value
+            // to the authCheckManager object.
+            $token=$headers['token'][0];
+            new AuthCheckManager($this,$token);
+
+            // as a result we send output according to
+            // the boolean value from the checkResult method.
+            return $this->getCheckResult();
+        }
+
+        //return false
+        return false;
+
     }
 
     /**

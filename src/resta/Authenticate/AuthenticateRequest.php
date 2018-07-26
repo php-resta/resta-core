@@ -33,12 +33,11 @@ class AuthenticateRequest extends RequestClient {
      */
     public function __construct($credentials) {
 
-        //
+        //credentials loop for expected property
         foreach ($credentials as $credential){
             $this->expected[]=$credential;
         }
 
-        //
         parent::__construct();
     }
 

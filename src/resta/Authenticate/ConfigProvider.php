@@ -128,6 +128,18 @@ class ConfigProvider {
     }
 
     /**
+     * @return string
+     */
+    public function getConfigToken(){
+
+        if(isset($this->config['guard'][$this->guard]['token'])){
+            return $this->config['guard'][$this->guard]['token'];
+        }
+        return null;
+
+    }
+
+    /**
      * @return void|mixed
      */
     protected function setAuthenticateNeeds(){

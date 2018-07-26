@@ -10,6 +10,28 @@ trait AuthenticateResponse {
     public $params=[];
 
     /**
+     * @return bool
+     */
+    private function checkStatus(){
+        return isset($this->params['status']) && $this->params['status'];
+    }
+
+    /**
+     * @return void|mixed
+     */
+    protected function getCheckResult(){
+
+        // if the status value is true,
+        // we send output generated from the token value.
+        if($this->checkStatus()){
+            return true;
+        }
+
+        //return false
+        return false;
+    }
+
+    /**
      * @return array
      */
     protected function getResult(){
@@ -18,7 +40,7 @@ trait AuthenticateResponse {
 
         // if the status value is true,
         // we send output generated from the token value.
-        if(isset($this->params['status']) && $this->params['status']){
+        if($this->checkStatus()){
             $result['message']                  = 'token success';
             $result['token']                    = $this->params['token'];
 
@@ -26,11 +48,13 @@ trait AuthenticateResponse {
             return $result;
         }
 
+        //in the params property, we set the exception type according to the exception value.
+        $exceptionType=(isset($this->params['exception'])) ? $this->params['exception'] : 'credentials';
+
         // if the status is unsuccessful,
         // the direct exception will be thrown away.
-        exception()->domain('credentials fail for authenticate');
-
-
+        $this->exceptionManager($exceptionType);
     }
+
 
 }

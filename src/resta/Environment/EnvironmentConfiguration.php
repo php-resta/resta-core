@@ -43,7 +43,7 @@ class EnvironmentConfiguration extends ApplicationProvider {
     public function handle(EnvironmentGlobalInstance $environment){
 
         //set define for config
-        define ('config',true);
+        define ('environment',true);
 
         //where we do the checks for the environment file type,
         //and if no configuration file is found, the system throws an exception.

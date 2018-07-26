@@ -2,22 +2,12 @@
 
 namespace Resta\Authenticate\Resource;
 
-class AuthLoginManager {
-
-    /**
-     * @var $auth
-     */
-    protected $auth;
+class AuthLoginManager extends ResourceManager {
 
     /**
      * @var $credentials
      */
     protected $credentials;
-
-    /**
-     * @var $driverBuilderInstance
-     */
-    protected $driverBuilderInstance;
 
     /**
      * AuthLoginManager constructor.
@@ -26,32 +16,23 @@ class AuthLoginManager {
      */
     public function __construct($credentials,$auth) {
 
-        //authenticate instance
-        $this->auth=$auth;
+        parent::__construct($auth);
 
         // where the control mechanism of the credentials
         // values received from the user-defined yada config setting is made.
         $this->credentials=new AuthLoginCredentialsManager($this->auth->getCredentials());
 
-        // for the builder, we get the namespace value from the auth object.
-        // this namespace will take us to the query builder application.
-        $driverBuilder=$this->auth->getDriverBuilderNamespace();
-
-        // we get the instance value of
-        // the imported builder object.
-        $this->driverBuilderInstance=new $driverBuilder();
-
-        //query handle
+        //query login
         $this->loginProcess();
     }
 
     /**
      * @return void|mixed
      */
-    public function loginProcess(){
+    private function loginProcess(){
 
         // Finally, we attempt to login the user by running
         // the login method of the builder object.
-        $this->driverBuilderInstance->login($this->auth,$this->credentials->get());
+        $this->driverBuilderInstance->login($this->credentials->get());
     }
 }

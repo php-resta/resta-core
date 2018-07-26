@@ -2,9 +2,9 @@
 
 namespace Resta\UrlParse;
 
+use Resta\Utils;
 use Resta\StaticPathList;
 use Resta\ApplicationProvider;
-use Resta\Utils;
 
 class UrlParseApplication extends ApplicationProvider {
 
