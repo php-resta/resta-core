@@ -5,14 +5,22 @@ namespace Resta\Authenticate\Driver;
 interface BuilderContract {
 
     /**
+     * @param $token
+     * @return mixed
+     */
+    public function check($token);
+
+    /**
      * @param $credentials
      * @return mixed
      */
     public function login($credentials);
 
     /**
-     * @param $token
+     * @param $credentials
      * @return mixed
      */
-    public function check($token);
+    public function logout($credentials);
+
+
 }

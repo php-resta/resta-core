@@ -10,6 +10,16 @@ if (!function_exists('auth')) {
     }
 }
 
+if (!function_exists('fingerPrint')) {
+
+    function fingerPrint()
+    {
+        return md5(sha1(implode("|",[
+            request()->getClientIp(),$_SERVER['HTTP_USER_AGENT']
+        ])));
+    }
+}
+
 if (!function_exists('dd')) {
     function dd()
     {

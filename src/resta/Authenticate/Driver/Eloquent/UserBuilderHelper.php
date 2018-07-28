@@ -31,8 +31,58 @@ class UserBuilderHelper {
         $driver=$this->query['driver'];
 
         //token query for builder
-        return $driver::where('token',$token);
+        return $driver::where(function($query) use($token) {
 
+            //where query for token
+            $query->where('token',$token);
+
+            // if the addToWhereClosure value is a closure,
+            // then in this case we actually run
+            // the closure object and add it to the query value.
+            $this->queryAddToWhere($query);
+        });
+
+    }
+
+    /**
+     * @param $token
+     */
+    protected function logoutQuery($token){
+
+        //we get the model specified for the builder.
+        $driver=$this->query['driver'];
+
+        //token query for builder
+        $query=$driver::where(function($query) use($token) {
+
+            //where query for token
+            $query->where('token',$token);
+
+            // if the addToWhereClosure value is a closure,
+            // then in this case we actually run
+            // the closure object and add it to the query value.
+            $this->queryAddToWhere($query);
+
+        });
+
+        //query for token null value
+        $query->update(['token'=>null]);
+
+        return $query;
+
+    }
+
+    /**
+     * @param $query
+     */
+    protected function queryAddToWhere($query){
+
+        // if the addToWhereClosure value is a closure,
+        // then in this case we actually run
+        // the closure object and add it to the query value.
+        if(is_callable($this->query['addToWhere'])){
+            $this->query['addToWhere']($query);
+        }
     }
 
     /**
@@ -57,9 +107,7 @@ class UserBuilderHelper {
             // if the addToWhereClosure value is a closure,
             // then in this case we actually run
             // the closure object and add it to the query value.
-            if(is_callable($this->query['addToWhere'])){
-                $this->query['addToWhere']($query);
-            }
+            $this->queryAddToWhere($query);
         });
     }
 
@@ -78,6 +126,7 @@ class UserBuilderHelper {
             // we update the token value.
             // if there is no update, we reset the status value to 0.
             $update=$this->auth->params['builder']->update(['token'=>$this->auth->params['token']]);
+
             if(!$update){
                 $this->auth->params['status']=0;
                 $this->auth->params['exception']='update';

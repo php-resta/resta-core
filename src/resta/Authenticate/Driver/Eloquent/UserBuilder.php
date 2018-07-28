@@ -3,8 +3,12 @@
 namespace Resta\Authenticate\Driver\Eloquent;
 
 use Resta\Authenticate\Driver\BuilderContract;
+use Resta\Authenticate\Driver\BuilderParamGenerator;
 
 class UserBuilder extends UserBuilderHelper implements BuilderContract {
+
+    //get param generator
+    use BuilderParamGenerator;
 
     /**
      * @var $app
@@ -24,6 +28,21 @@ class UserBuilder extends UserBuilderHelper implements BuilderContract {
     }
 
     /**
+     * @param $token
+     */
+    public function check($token){
+
+        // using the driver object we write the query builder statement.
+        // we do the values of the query with the token that are sent.
+        $query=$this->checkQuery($token);
+
+        // with query we bind the returned values to the params property of the auth object.
+        // and so the auth object will make a final return with these values.
+        $this->paramValues('check',$query);
+
+    }
+
+    /**
      * @param $credentials
      * @return mixed|void
      */
@@ -35,10 +54,7 @@ class UserBuilder extends UserBuilderHelper implements BuilderContract {
 
         // with query we bind the returned values to the params property of the auth object.
         // and so the auth object will make a final return with these values.
-        $this->auth->params['type']        = 'login';
-        $this->auth->params['builder']     = $query;
-        $this->auth->params['data']        = $query->first();
-        $this->auth->params['status']      = $query->count();
+        $this->paramValues('login',$query);
 
         // when the query succeeds,
         // we update the token value.
@@ -48,18 +64,15 @@ class UserBuilder extends UserBuilderHelper implements BuilderContract {
     /**
      * @param $token
      */
-    public function check($token){
+    public function logout($token){
 
         // using the driver object we write the query builder statement.
         // we do the values of the query with the token that are sent.
-        $query=$this->checkQuery($token);
+        $query=$this->logoutQuery($token);
 
         // with query we bind the returned values to the params property of the auth object.
         // and so the auth object will make a final return with these values.
-        $this->auth->params['type']        = 'check';
-        $this->auth->params['builder']     = $query;
-        $this->auth->params['data']        = $query->first();
-        $this->auth->params['status']      = $query->count();
+        $this->paramValues('logout',$query);
 
     }
 }

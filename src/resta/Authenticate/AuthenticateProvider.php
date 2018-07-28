@@ -4,11 +4,12 @@ namespace Resta\Authenticate;
 
 use Resta\Authenticate\Resource\AuthCheckManager;
 use Resta\Authenticate\Resource\AuthLoginManager;
+use Resta\Authenticate\Resource\AuthLogoutManager;
 
 class AuthenticateProvider extends ConfigProvider implements AuthenticateContract {
 
-    //get auth response,auth exception and auth token
-    use AuthenticateResponse,AuthenticateException,AuthenticateToken;
+    //get auth response,auth exception,auth token and auth basic
+    use AuthenticateResponse,AuthenticateException,AuthenticateToken,AuthenticateBasic;
 
     /**
      * @var string
@@ -20,22 +21,18 @@ class AuthenticateProvider extends ConfigProvider implements AuthenticateContrac
      */
     public function check(){
 
-        $headers=headers();
-
-        if(isset($headers['token'])){
+        // header to determine whether
+        // the token value is present and return a callback.
+        return $this->checkTokenViaHeaders(function($token){
 
             // we send the user-supplied token value
             // to the authCheckManager object.
-            $token=$headers['token'][0];
             new AuthCheckManager($this,$token);
 
             // as a result we send output according to
             // the boolean value from the checkResult method.
             return $this->getCheckResult();
-        }
-
-        //return false
-        return false;
+        });
 
     }
 
@@ -57,7 +54,11 @@ class AuthenticateProvider extends ConfigProvider implements AuthenticateContrac
      */
     public function id(){
 
-        return true;
+        // we obtain the id value obtained via
+        // authenticate availability with the help of callback object.
+        return $this->checkParamsViaAvailability('authId',function($id){
+            return $id;
+        });
     }
 
     /**
@@ -69,7 +70,7 @@ class AuthenticateProvider extends ConfigProvider implements AuthenticateContrac
 
         // we will determine whether
         // the http path is correct for this method.
-        $this->getExceptionForLoginHttp();
+        $this->checkProcessHttpMethod('login');
 
         // we invoke the login manager and the properties
         // that this class creates will inform us about user input.
@@ -89,7 +90,30 @@ class AuthenticateProvider extends ConfigProvider implements AuthenticateContrac
      */
     public function logout(){
 
-        return true;
+        // header to determine whether
+        // the token value is present and return a callback.
+        return $this->checkTokenViaHeaders(function($token){
+
+            // we send the user-supplied token value
+            // to the authCheckManager object.
+            new AuthLogoutManager($this,$token);
+
+            // as a result we send output according to
+            // the boolean value from the checkResult method.
+            return $this->getCheckResult();
+        });
+    }
+
+    /**
+     * @return bool
+     */
+    public function token(){
+
+        // we obtain the token value obtained via
+        // authenticate availability with the help of callback object.
+        return $this->checkParamsViaAvailability('authToken',function($token){
+            return $token;
+        });
     }
 
     /**
@@ -97,6 +121,22 @@ class AuthenticateProvider extends ConfigProvider implements AuthenticateContrac
      */
     public function user(){
 
-        return true;
+        // we obtain the user value obtained via
+        // authenticate availability with the help of callback object.
+        return $this->checkParamsViaAvailability('auth',function($user){
+            return $user;
+        });
+    }
+
+    /**
+     * @return bool
+     */
+    public function userData(){
+
+        // we obtain the data value obtained via
+        // authenticate availability with the help of callback object.
+        return $this->checkParamsViaAvailability('data',function($data){
+            return $data;
+        });
     }
 }

@@ -39,7 +39,18 @@ interface AuthenticateContract {
     public function store($store);
 
     /**
+     * @param $store
+     * @return mixed
+     */
+    public function token();
+
+    /**
      * @return mixed
      */
     public function user();
+
+    /**
+     * @return mixed
+     */
+    public function userData();
 }
