@@ -32,6 +32,21 @@ trait AuthenticateResponse {
     }
 
     /**
+     * @return void|mixed
+     */
+    protected function getLogoutResult(){
+
+        // if the status value is true,
+        // we send output generated from the token value.
+        if($this->checkStatus()){
+            return true;
+        }
+
+        //logout exception
+       $this->logoutException();
+    }
+
+    /**
      * @return array
      */
     protected function getResult(){

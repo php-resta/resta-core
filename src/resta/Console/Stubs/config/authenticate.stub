@@ -11,8 +11,8 @@ class Authenticate implements HandleTraitContract
      * access database user object for every service.
      * @return array
      */
-    public function handle()
-    {
+    public function handle() : array {
+
         //user object
         return [
             'guard'=>[
@@ -21,6 +21,7 @@ class Authenticate implements HandleTraitContract
                     'model'             => 'default',
                     'credentials'       => ['username','password'],
                     'http'              => ['login'=>'post'],
+                    'key'               => 'token',
                     'addToWhere'        => null,
                     'token'             => null,
                 ],

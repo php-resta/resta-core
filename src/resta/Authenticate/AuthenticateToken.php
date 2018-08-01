@@ -5,6 +5,11 @@ namespace Resta\Authenticate;
 trait AuthenticateToken {
 
     /**
+     * @var null
+     */
+    public $credentialHash=null;
+
+    /**
      * @return string
      */
     public function getTokenData(){
@@ -20,7 +25,7 @@ trait AuthenticateToken {
             // we refer to the token closure feature on the config to enable
             // the creation of user-based tokens on the application side.
             return $this->tokenForConfig($authData,function() use($authData){
-                return md5(sha1($authData->id.'__'.time().'__'.fingerPrint()));
+                return md5(sha1($authData->id.'__'.$this->credentialHash.'__'.time().'__'.fingerPrint()));
             });
         }
 

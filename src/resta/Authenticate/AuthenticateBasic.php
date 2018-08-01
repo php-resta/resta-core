@@ -29,7 +29,7 @@ trait AuthenticateBasic {
         // we will determine whether
         // the http path is correct for this method.
         if(isset($getHttp[$type]) and $getHttp[$type]!==appInstance()->httpMethod()){
-            $this->getExceptionForLoginHttp($getHttp);
+            $this->getExceptionForHttp($getHttp[$type]);
         }
     }
 
@@ -41,13 +41,17 @@ trait AuthenticateBasic {
         //get headers
         $headers=headers();
 
+        //get token key from config
+        $tokenKey=$this->getTokenKey();
+
         // if there is a token in the headers,
         // we return the callback.
-        if(isset($headers['token'])){
-            return call_user_func_array($callback,[$headers['token'][0]]);
+        if(isset($headers[$tokenKey])){
+            return call_user_func_array($callback,[$headers[$tokenKey][0]]);
         }
 
-        return false;
+        //token exception
+        $this->tokenException();
     }
 
 }

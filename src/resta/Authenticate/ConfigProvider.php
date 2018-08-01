@@ -56,9 +56,45 @@ class ConfigProvider {
     /**
      * @return string
      */
+    public function getAddToWhere(){
+
+        if(isset($this->config['guard'][$this->guard]['addToWhere'])){
+            return $this->config['guard'][$this->guard]['addToWhere'];
+        }
+        return null;
+
+    }
+
+    /**
+     * @return string
+     */
+    public function getConfigToken(){
+
+        if(isset($this->config['guard'][$this->guard]['token'])){
+            return $this->config['guard'][$this->guard]['token'];
+        }
+        return null;
+    }
+
+    /**
+     * @return string
+     */
     public function getCredentials(){
 
         return $this->config['guard'][$this->guard]['credentials'];
+    }
+
+    /**
+     * @return string
+     */
+    public function getDriverBuilderNamespace(){
+
+        $model=$this->getModel();
+
+        if($model=="Default"){
+
+            return $this->driverDefaultNamespace.'\\'.$this->getDriver().'\\UserBuilder';
+        }
     }
 
     /**
@@ -87,14 +123,9 @@ class ConfigProvider {
     /**
      * @return string
      */
-    public function getDriverBuilderNamespace(){
+    public function getHttp(){
 
-        $model=$this->getModel();
-
-        if($model=="Default"){
-
-            return $this->driverDefaultNamespace.'\\'.$this->getDriver().'\\UserBuilder';
-        }
+        return $this->config['guard'][$this->guard]['http'];
     }
 
     /**
@@ -110,33 +141,9 @@ class ConfigProvider {
     /**
      * @return string
      */
-    public function getHttp(){
+    public function getTokenKey(){
 
-        return $this->config['guard'][$this->guard]['http'];
-    }
-
-    /**
-     * @return string
-     */
-    public function getAddToWhere(){
-
-        if(isset($this->config['guard'][$this->guard]['addToWhere'])){
-            return $this->config['guard'][$this->guard]['addToWhere'];
-        }
-        return null;
-
-    }
-
-    /**
-     * @return string
-     */
-    public function getConfigToken(){
-
-        if(isset($this->config['guard'][$this->guard]['token'])){
-            return $this->config['guard'][$this->guard]['token'];
-        }
-        return null;
-
+        return $this->config['guard'][$this->guard]['key'];
     }
 
     /**

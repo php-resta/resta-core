@@ -24,7 +24,7 @@ class Kernel implements HandleTraitContract {
          * services
          * all service names
          */
-        'Repositories' => []
+        'Repositories' => [],
 
         ];
     }

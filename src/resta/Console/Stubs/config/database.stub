@@ -10,8 +10,7 @@ class Database
      * access database object for every service.
      * @return array
      */
-    public function handle()
-    {
+    public function handle() : array {
 
         //default connection
         $connection='mysql';

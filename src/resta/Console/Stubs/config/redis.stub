@@ -10,8 +10,8 @@ class Redis
      * access redis object for every service.
      * @return array
      */
-    public function handle()
-    {
+    public function handle() : array {
+
         //redis array
         $redis=[];
 

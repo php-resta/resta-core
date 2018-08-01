@@ -23,6 +23,24 @@ class UserBuilderHelper {
     }
 
     /**
+     * @param $driver
+     * @return mixed
+     */
+    protected function callbackQueryWithoutCredentials($driver){
+
+        if($this->isCallableAddToWhere()){
+
+            return $driver::where(function($query) {
+
+                // if the addToWhereClosure value is a closure,
+                // then in this case we actually run
+                // the closure object and add it to the query value.
+                $this->queryAddToWhere($query);
+            });
+        }
+    }
+
+    /**
      * @param $token
      */
     protected function checkQuery($token){
@@ -41,7 +59,16 @@ class UserBuilderHelper {
             // the closure object and add it to the query value.
             $this->queryAddToWhere($query);
         });
+    }
 
+    /**
+     * @return bool
+     */
+    protected function isCallableAddToWhere(){
+
+        // addToWhere checks whether
+        // the config value is a callable value.
+        return is_callable($this->query['addToWhere']);
     }
 
     /**
@@ -65,9 +92,6 @@ class UserBuilderHelper {
 
         });
 
-        //query for token null value
-        $query->update(['token'=>null]);
-
         return $query;
 
     }
@@ -80,7 +104,7 @@ class UserBuilderHelper {
         // if the addToWhereClosure value is a closure,
         // then in this case we actually run
         // the closure object and add it to the query value.
-        if(is_callable($this->query['addToWhere'])){
+        if($this->isCallableAddToWhere()){
             $this->query['addToWhere']($query);
         }
     }
@@ -94,13 +118,20 @@ class UserBuilderHelper {
         //we get the model specified for the builder.
         $driver=$this->query['driver'];
 
+        if(count($credentials->get())==0){
+
+            // if the credential array is empty in the config section,
+            // then you must run the query with a callable value of addToWhere value.
+            return $this->callbackQueryWithoutCredentials($driver);
+        }
+
         // using the driver object we write the query builder statement.
         // we do the values of the query with the credentials that are sent.
         return $driver::where(function($query) use($credentials) {
 
             // with the callback method (eloquent model)
             // we write the where clause.
-            foreach ($credentials as $credential=>$credentialValue){
+            foreach ($credentials->get() as $credential=>$credentialValue){
                 $query->where($credential,$credentialValue);
             }
 
@@ -114,14 +145,14 @@ class UserBuilderHelper {
     /**
      * @return void|mixed
      */
-    protected function updateToken(){
+    protected function updateToken($token=null){
 
         //if query status value is true
         if($this->auth->params['status']){
 
             // we go to the method that produces
             // the classical token value and get the token value.
-            $this->auth->params['token']=$this->auth->getTokenData();
+            $this->auth->params['token']=($token===null) ? $this->auth->getTokenData() : $token;
 
             // we update the token value.
             // if there is no update, we reset the status value to 0.

@@ -17,7 +17,7 @@ class UserBuilder extends UserBuilderHelper implements BuilderContract {
 
     /**
      * UserBuilder constructor.
-     * @param $auth
+     * @param $auth \Resta\Authenticate\AuthenticateProvider
      */
     public function __construct($auth) {
 
@@ -43,7 +43,7 @@ class UserBuilder extends UserBuilderHelper implements BuilderContract {
     }
 
     /**
-     * @param $credentials
+     * @param $credentials \Resta\Authenticate\Resource\AuthLoginCredentialsManager
      * @return mixed|void
      */
     public function login($credentials){
@@ -55,6 +55,10 @@ class UserBuilder extends UserBuilderHelper implements BuilderContract {
         // with query we bind the returned values to the params property of the auth object.
         // and so the auth object will make a final return with these values.
         $this->paramValues('login',$query);
+
+        // we assign the credential hash value
+        // to the global of the authenticate object.
+        $this->auth->credentialHash=$credentials->getCredentialHash();
 
         // when the query succeeds,
         // we update the token value.
@@ -73,6 +77,9 @@ class UserBuilder extends UserBuilderHelper implements BuilderContract {
         // with query we bind the returned values to the params property of the auth object.
         // and so the auth object will make a final return with these values.
         $this->paramValues('logout',$query);
+
+        //token updating as null
+        $this->updateToken(md5(time()));
 
     }
 }

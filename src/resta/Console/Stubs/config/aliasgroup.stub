@@ -9,7 +9,7 @@ class AliasGroup
      * access alias classes for every service.
      * @return array
      */
-    public function handle() {
+    public function handle() : array {
 
         return [
             'tool' => 'App\__project__\__version__\ServiceToolsController'

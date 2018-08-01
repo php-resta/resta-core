@@ -10,12 +10,12 @@ class Hateoas  {
      * It means that hypertext should be used to find your way through the API.
      * @return array
      */
-    public function handle(){
+    public function handle() : array {
 
         return [
-                    'links'=>[
-                        'href'              => request()->getUri(),
-                    ]
-                ];
+                   'links'=>[
+                       'href'              => request()->getUri(),
+                   ]
+               ];
     }
 }

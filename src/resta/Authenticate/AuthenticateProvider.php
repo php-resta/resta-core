@@ -62,11 +62,11 @@ class AuthenticateProvider extends ConfigProvider implements AuthenticateContrac
     }
 
     /**
-     * @param array $credentials
+     * @param null $credentials
      * @param bool $objectReturn
      * @return $this|mixed
      */
-    public function login($credentials=array(),$objectReturn=false){
+    public function login($credentials=null,$objectReturn=false){
 
         // we will determine whether
         // the http path is correct for this method.
@@ -90,6 +90,10 @@ class AuthenticateProvider extends ConfigProvider implements AuthenticateContrac
      */
     public function logout(){
 
+        // we will determine whether
+        // the http path is correct for this method.
+        $this->checkProcessHttpMethod('logout');
+
         // header to determine whether
         // the token value is present and return a callback.
         return $this->checkTokenViaHeaders(function($token){
@@ -100,7 +104,7 @@ class AuthenticateProvider extends ConfigProvider implements AuthenticateContrac
 
             // as a result we send output according to
             // the boolean value from the checkResult method.
-            return $this->getCheckResult();
+            return $this->getLogoutResult();
         });
     }
 

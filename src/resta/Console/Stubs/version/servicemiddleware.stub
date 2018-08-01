@@ -12,7 +12,8 @@ class ServiceMiddlewareController implements HandleContracts {
     public function handle(){
 
         return [
-            'validation'=>'all'
+            'validation'=>'all',
+            //'authenticate'=>'all',
         ];
     }
 
@@ -30,7 +31,7 @@ class ServiceMiddlewareController implements HandleContracts {
      public function exclude(){
 
         return [
-            'all'=>['hook']
+            'all'=>['hook','login','logout']
          ];
      }
 }

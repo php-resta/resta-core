@@ -16,7 +16,7 @@ trait BuilderParamGenerator {
         // and so the auth object will make a final return with these values.
         $this->auth->params['type']        = $type;
         $this->auth->params['builder']     = $query;
-        $this->auth->params['status']      = $query->count();
+        $this->auth->params['status']      = ($query===null) ? 0 : $query->count();
 
         // if status is true,
         // we add values ​​for some user benefits to params global access.
