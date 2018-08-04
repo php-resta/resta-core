@@ -265,6 +265,28 @@ class Request extends RequestClient implements HandleContracts {
     }
 
     /**
+     * @param callable $callback
+     */
+    private function ifCallableRequestMethod($keyMethod,$key,callable $callback){
+
+        if(is_callable($keyMethod) & is_array($this->inputs[$key])){
+
+            foreach ($this->inputs[$key] as $ikey=>$input){
+
+                if(!isset($removeFirstKey)){
+                    $this->inputs[$key]=[];
+                }
+                $this->inputs[$key][$ikey]=$keyMethod($input);
+                $removeFirstKey=true;
+            }
+
+            return true;
+        }
+
+        return call_user_func($callback);
+    }
+
+    /**
      * @method initClient
      * @param $method
      * @return void
@@ -331,16 +353,37 @@ class Request extends RequestClient implements HandleContracts {
                     $this->inputs[$key]=$this->{$key};
                 }
 
-                //if there is method for key
+                // the method name to be used with
+                // the http method.
                 $requestMethod=$method.''.ucfirst($key);
-                if(method_exists($this,$requestMethod)){
-                    $this->inputs[$key]=$this->{$requestMethod}();
-                }
 
-                if(method_exists($this,$key)){
-                    $this->inputs[$key]=$this->{$key}();
-                }
+                // the request update to be performed using
+                // the method name to be used with the http method.
+                $this->setRequestInputs($requestMethod,$key);
+
+                // the request update to be performed using
+                // the method name to be used without the http method.
+                $this->setRequestInputs($key,$key);
+
             }
+        }
+    }
+
+    /**
+     * @param $method
+     * @param $key
+     */
+    private function setRequestInputs($method,$key){
+
+        if(method_exists($this,$method)){
+
+            $keyMethod=$this->{$method}();
+
+            // if the request objects contain an array value,
+            // then we assign the values ​​of the closure object specified by the user in this case.
+            $this->ifCallableRequestMethod($keyMethod,$key,function() use($keyMethod,$key){
+                $this->inputs[$key]=$keyMethod;
+            });
         }
     }
 
