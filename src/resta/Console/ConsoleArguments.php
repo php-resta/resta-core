@@ -106,7 +106,6 @@ trait ConsoleArguments {
 
         if(isset($getConsoleArgumentsWithKey['group'])){
             $app=$arguments[2].'\\Api\\'.$getConsoleArgumentsWithKey['group'];
-            define('group',$getConsoleArgumentsWithKey['group']);
         }
         else{
 

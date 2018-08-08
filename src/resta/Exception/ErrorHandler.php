@@ -2,10 +2,18 @@
 
 namespace Resta\Exception;
 
+use Resta\Str;
+use Resta\Utils;
 use Resta\StaticPathModel;
+use Resta\ClosureDispatcher;
 use Resta\ApplicationProvider;
 
 class ErrorHandler extends ApplicationProvider {
+
+    /**
+     * @var $lang
+     */
+    public $lang = null;
 
     /**
      * @method handle
@@ -46,11 +54,13 @@ class ErrorHandler extends ApplicationProvider {
         //constant object as default
         $errType        = 'Undefined';
         $errStrReal     = $errStr;
+        $errorClassNamespace = null;
 
         // catch exception via preg match
         // and then clear the Uncaught statement from inside.
         if(preg_match('@(.*?):@is',$errStr,$errArr)){
             $errType=trim(str_replace('Uncaught','',$errArr[1]));
+            $errorClassNamespace=$errType;
         }
 
         if(preg_match('@Uncaught@is',$errStr)
@@ -99,7 +109,27 @@ class ErrorHandler extends ApplicationProvider {
 
         if(!file_exists(app()->path()->environmentFile())) $environment='production';
 
-        $appException=$appExceptionSuccess+$exception::$environment($errNo,$errStrReal,$errFile,$errLine,$errType,$errContext);
+        $clone = clone $this;
+
+        if(class_exists($errorClassNamespace) && Str::startsWith($errorClassNamespace,'App')){
+
+            ClosureDispatcher::bind($errorClassNamespace)->call(function() use ($clone) {
+                if(property_exists($this,'lang')){
+                    $clone->lang=$this->lang;
+                }
+            });
+        }
+
+
+        $lang=$clone->lang;
+
+        $langMessage=trans('exception.'.$lang);
+
+        if($langMessage!==null){
+            $errStrReal=$langMessage;
+        }
+
+        $appException=$appExceptionSuccess+$exception::$environment($errNo,$errStrReal,$errFile,$errLine,$errType,$lang);
 
         //set json app exception
         $this->app->kernel()->router=$appException;

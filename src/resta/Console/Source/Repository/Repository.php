@@ -54,7 +54,9 @@ class Repository extends ConsoleOutputter {
         $this->touch['repository/sourcemain']       =$this->directory['repositorySourceDir'].'/'.$repository.'Main.php';
 
         //set project touch
-        $this->file->touch($this);
+        $this->file->touch($this,[
+            'stub'=>'Repository_Create'
+        ]);
 
         Utils::chmod($this->repository());
 

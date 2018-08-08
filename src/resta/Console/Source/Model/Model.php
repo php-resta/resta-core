@@ -49,7 +49,9 @@ class Model extends ConsoleOutputter {
         $this->touch['model/builder']   = $this->model().'/Builder/'.$this->argument['file'].'Builder.php';
 
         //set project touch
-        $this->file->touch($this);
+        $this->file->touch($this,[
+            'stub'=>'Model_Create'
+        ]);
 
         $this->setAnnotations();
 

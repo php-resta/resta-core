@@ -16,6 +16,6 @@ class ServiceBaseController extends ApplicationProvider
     public $orm='eloquent';
 
     //localization
-    public $locale='tr';
+    public $locale='en';
 
 }

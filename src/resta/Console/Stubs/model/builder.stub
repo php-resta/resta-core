@@ -15,6 +15,6 @@ class __file__Builder extends ServiceBaseController
     public function get__file__s(){
 
         //model all data
-        return __file__::all();
+        return __file__::all()->toArray();
     }
 }

@@ -96,6 +96,11 @@ interface StaticPathContracts {
     public function serviceContainer();
 
     /**
+     * @return mixed
+     */
+    public function stubs();
+
+    /**
      * @param null $app
      * @return mixed
      */

@@ -180,6 +180,13 @@ class StaticNamespaceRepository extends StaticPathRepository {
     /**
      * @return mixed
      */
+    public function stubs(){
+        return Utils::getNamespace(parent::stubs());
+    }
+
+    /**
+     * @return mixed
+     */
     public function version(){
         return Utils::getNamespace(parent::version());
     }

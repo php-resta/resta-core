@@ -15,6 +15,11 @@ class __exception__Exception extends \Exception
     protected $message = '__exception__ Exception';
 
     /**
+     * @var string $lang
+     */
+    protected $lang = '__exception__';
+
+    /**
      * @method event
      * @return mixed|void
      */

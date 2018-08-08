@@ -18,6 +18,14 @@ class ClosureDispatcher {
     }
 
     /**
+     * @param $bind
+     * @return ClosureDispatcher
+     */
+    public static function bind($bind){
+        return new self(new $bind);
+    }
+
+    /**
      * @param \Closure $closure
      * @return mixed
      */

@@ -59,6 +59,12 @@ class StaticPathRepository {
      * @return mixed
      */
     public function appKernel(){
+
+        $projectPrefix      = StaticPathModel::projectPrefix();
+        $kernel     = $this->app().'/'.StaticPathList::$kernel;
+
+        return StaticPathModel::projectPath($projectPrefix.'/',$kernel);
+
         return $this->app().'/'.StaticPathList::$kernel;
     }
 
@@ -227,6 +233,13 @@ class StaticPathRepository {
      */
     public function appStorage(){
         return StaticPathModel::getAppStorage();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function appStubs(){
+        return $this->appKernel().'/'.StaticPathList::$stub;
     }
 
     /**

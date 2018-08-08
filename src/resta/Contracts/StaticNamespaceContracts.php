@@ -117,5 +117,10 @@ interface StaticNamespaceContracts {
     /**
      * @return mixed
      */
+    public function stubs();
+
+    /**
+     * @return mixed
+     */
     public function version();
 }

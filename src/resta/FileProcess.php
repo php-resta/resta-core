@@ -13,11 +13,27 @@ class FileProcess {
     public $fs;
 
     /**
+     * @var $stubPath
+     */
+    public $stubPath;
+
+    /**
+     * @var $data
+     */
+    protected $data;
+
+    /**
+     * @var array
+     */
+    protected $stubList=array();
+
+    /**
      * FileProcess constructor.
      */
     public function __construct()
     {
         $this->fs=new Filesystem();
+        $this->stubPath=__DIR__.'/Console/Stubs';
     }
 
     /**
@@ -51,31 +67,83 @@ class FileProcess {
 
     }
 
+    /**
+     * @param $directory
+     * @return string
+     */
+    public function setDirectory($directory){
+
+        try {
+            $this->fs->mkdir($directory,'07777');
+        } catch (IOExceptionInterface $e) {
+            return "An error occurred while creating your directory at ".$e->getPath();
+        }
+    }
+
 
     /**
-     * @mkdir touch
      * @param $data
+     * @param array $complex
      */
-    public function touch($data){
+    public function touch($data,$complex=array()){
 
-        $stubPath=__DIR__.'/Console/Stubs';
+        $this->data=$data;
 
-        foreach ($data->touch as $execution=>$touch){
+        if(isset($complex['stub']) && isset($this->data->argument['stub'])){
 
-            if(!file_exists($touch)){
+            $this->stubManager($complex);
+        }
+
+
+        $execArray=(count($this->stubList)) ? $this->stubList : $this->data->touch;
+
+        foreach ($execArray as $execution=>$touch){
+
+            if(!file_exists($touch) && $touch!==null){
                 $this->fs->touch($touch);
 
-                $executionPath=$stubPath.'/'.$execution.'.stub';
+                $executionPath=$this->stubPath.'/'.$execution.'.stub';
                 if(file_exists($executionPath)){
-
                     $this->fopenprocess($executionPath,$touch,$data);
                 }
             }
-
-
-
-
         }
+    }
+
+    /**
+     * @param array $complex
+     */
+    private function stubManager($complex=array()){
+
+        $stubStructure      = explode("_",$complex['stub']);
+        $stubStructure[]    = $this->data->argument['stub'];
+
+        $stubberDirectoryList=app()->path()->stubs();
+
+        foreach ($stubStructure as $stubberDirectory){
+
+            $stubberDirectoryList=$stubberDirectoryList.'/'.$stubberDirectory;
+
+            $this->setDirectory($stubberDirectoryList);
+        }
+
+        foreach ($this->data->touch as $execution=>$executionFile){
+
+            $executionArray=explode("/",$execution);
+
+            $executionStub                      = end($executionArray).'';
+            $this->stubList[$executionStub]     = $executionFile;
+            $stubberFile                        = $stubberDirectoryList.'/'.$executionStub.'.stub';
+
+            $originalPath=$this->stubPath.'/'.$execution.'.stub';
+
+            if(!file_exists($stubberFile)){
+
+                $this->fs->copy($originalPath,$stubberFile);
+            }
+        }
+
+        $this->stubPath=$stubberDirectoryList;
     }
 
 
@@ -106,6 +174,34 @@ class FileProcess {
 
     }
 
+    /**
+     * @param $executionPath
+     * @param $path
+     * @param $param
+     * @return bool
+     */
+    public function stubCopy($executionPath,$path,$param){
+
+        $dt = fopen($executionPath, "r");
+        $content = fread($dt, filesize($executionPath));
+        fclose($dt);
+
+        foreach ($param->argument as $key=>$value){
+
+            $content=str_replace("__".$key."__",$value,$content);
+        }
+
+
+        $dt = fopen($path, "w");
+        fwrite($dt, $content);
+        fclose($dt);
+
+        return true;
+
+
+    }
+
+
 
     /**
      * @param null $file
@@ -114,7 +210,6 @@ class FileProcess {
     public function callFile($file=null){
 
         if(file_exists($file)){
-
             return require_once($file);
         }
 
