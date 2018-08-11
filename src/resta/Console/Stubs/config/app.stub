@@ -4,6 +4,56 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Application Hateoas
+    |--------------------------------------------------------------------------
+    |
+    | This architectural style lets you use hypermedia links in the response contents so that
+    | the client can dynamically navigate to the appropriate resource by traversing the hypermedia links.
+    | This is conceptually the same as a web user navigating through web pages by clicking
+    | the appropriate hyperlinks in order to achieve a final goal.
+    |
+    */
+    'hateoas' => environment('hateoas',false),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Application Locale Configuration
+    |--------------------------------------------------------------------------
+    |
+    | The application locale determines the default locale that will be used
+    | by the translation service provider. You are free to set this value
+    | to any of the locales which will be supported by the application.
+    |
+    */
+    'locale' => environment('locale','en'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Application Logger
+    |--------------------------------------------------------------------------
+    |
+    | To help you learn more about what's happening within your application
+    | System provides robust logging services that allow you to log messages to files
+    | By default, the value is true, you can change it according to your environment.
+    | The Logger service is managed in the ServiceLog file in your application directory.
+    |
+    */
+    'logger' => environment('logger',true),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Application Response Configuration
+    |--------------------------------------------------------------------------
+    |
+    | The application response determines the default output type that will be used
+    | by the result service endpoint. You are free to set this value
+    | to any of the response which will be supported by the application.
+    |
+    */
+    'response' => environment('response','json'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Application Timezone
     |--------------------------------------------------------------------------
     |
@@ -27,29 +77,7 @@ return [
     */
     'watch' => environment('watch',false),
 
-    /*
-    |--------------------------------------------------------------------------
-    | Application Hateoas
-    |--------------------------------------------------------------------------
-    |
-    | This architectural style lets you use hypermedia links in the response contents so that
-    | the client can dynamically navigate to the appropriate resource by traversing the hypermedia links.
-    | This is conceptually the same as a web user navigating through web pages by clicking
-    | the appropriate hyperlinks in order to achieve a final goal.
-    |
-    */
-    'hateoas' => environment('hateoas',false),
 
-    /*
-   |--------------------------------------------------------------------------
-   | Application Logger
-   |--------------------------------------------------------------------------
-   |
-   | To help you learn more about what's happening within your application
-   | System provides robust logging services that allow you to log messages to files
-   | By default, the value is true, you can change it according to your environment.
-   | The Logger service is managed in the ServiceLog file in your application directory.
-   |
-   */
-    'logger' => environment('logger',true),
+
+
 ];

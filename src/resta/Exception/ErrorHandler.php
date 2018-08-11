@@ -16,6 +16,63 @@ class ErrorHandler extends ApplicationProvider {
     public $lang = null;
 
     /**
+     * @var $exception
+     */
+    protected $exception;
+
+    /**
+     * @var $data array
+     */
+    protected $data=array();
+
+    /**
+     * @return mixed|string
+     */
+    private function getEnvironmentStatus(){
+
+        $environment=environment();
+
+        if(isset($this->app->kernel()->applicationKey)){
+
+            // application key, but if it has a null value
+            // then we move the environment value to the production environment.
+            $applicationKey = $this->app->kernel()->applicationKey;
+            $environment    = ($applicationKey===null) ? 'production' : environment();
+        }
+
+        return $environment;
+    }
+
+    /**
+     * @return void|mixed
+     */
+    private function getStatusFromContext(){
+
+        $exception=$this->exception;
+
+        $this->data['status']=$exception::exceptionTypeCodes($this->data['errType']);
+
+        $optionalException=str_replace("\\","\\\\",$this->app->namespace()->optionalException());
+
+        if(preg_match('@'.$optionalException.'@is',$this->data['errType'])){
+
+            //linux test
+            $trace=$this->data['errContext']['trace'];
+            if(preg_match('@Stack trace:\n#0(.*)\n#1@is',$trace,$traceArray)){
+                $traceFile=str_replace(root,'',$traceArray[1]);
+                if(preg_match('@(.*)\((\d+)\)@is',$traceFile,$traceResolve)){
+                    $this->data['errFile']=$traceResolve[1];
+                    $this->data['errLine']=(int)$traceResolve[2];
+                }
+            }
+            $instanceErrtype=new $this->data['errType'];
+            $this->data['status']=$exception::exceptionTypeCodes(current(class_parents($instanceErrtype)));
+
+            $this->data['errType']=class_basename($this->data['errType']);
+        }
+    }
+
+    /**
      * @method handle
      * return void
      */
@@ -23,6 +80,11 @@ class ErrorHandler extends ApplicationProvider {
 
         //sets which php errors are reported
         error_reporting(0);
+
+        // in general we will use the exception class
+        // in the store/config directory to make it possible
+        // to change the user-based exceptions.
+        $this->exception=StaticPathModel::$store.'\Config\Exception';
 
         //This function can be used for defining your own way of handling errors during runtime,
         //for example in applications in which you need to do cleanup of data/files when a critical error happens,
@@ -39,9 +101,9 @@ class ErrorHandler extends ApplicationProvider {
     /**
      * @param $errNo null
      * @param $errStr null
-     * @param $errFile null
-     * @param $errLine null
-     * @param $errContext null
+     * @param $this->data['errFile'] null
+     * @param $this->data['errLine'] null
+     * @param $this->data['errContext'] null
      * @return mixed
      */
     public function setErrorHandler($errNo=null, $errStr=null, $errFile=null, $errLine=null, $errContext=null){
@@ -49,112 +111,112 @@ class ErrorHandler extends ApplicationProvider {
         // in general we will use the exception class
         // in the store/config directory to make it possible
         // to change the user-based exceptions.
-        $exception=StaticPathModel::$store.'\Config\Exception';
+        $exception=$this->exception;
 
         //constant object as default
-        $errType        = 'Undefined';
-        $errStrReal     = $errStr;
-        $errorClassNamespace = null;
+        $this->data['errType']              = 'Undefined';
+        $this->data['errStrReal']           = $errStr;
+        $this->data['errorClassNamespace']  = null;
+        $this->data['errFile']              = $errFile;
+        $this->data['errLine']              = $errLine;
 
         // catch exception via preg match
         // and then clear the Uncaught statement from inside.
-        if(preg_match('@(.*?):@is',$errStr,$errArr)){
-            $errType=trim(str_replace('Uncaught','',$errArr[1]));
-            $errorClassNamespace=$errType;
-        }
+        $this->getUncaughtProcess();
 
-        if(preg_match('@Uncaught@is',$errStr)
-            && preg_match('@(.*?):(.*?)\sin\s@is',$errStr,$errStrRealArray)){
-            $errStrReal=trim($errStrRealArray[2]);
-        }
-
-        if($errType==="Undefined"){
-            $errStrReal=$errStr;
-        }
-        else{
-            $errContext['trace']=$errStr;
-        }
-
-        $status=$exception::exceptionTypeCodes($errType);
-
-        $optionalException=str_replace("\\","\\\\",$this->app->namespace()->optionalException());
-
-        if(preg_match('@'.$optionalException.'@is',$errType)){
-
-            //linux test
-            $trace=$errContext['trace'];
-            if(preg_match('@Stack trace:\n#0(.*)\n#1@is',$trace,$traceArray)){
-                $traceFile=str_replace(root,'',$traceArray[1]);
-                if(preg_match('@(.*)\((\d+)\)@is',$traceFile,$traceResolve)){
-                    $errFile=$traceResolve[1];
-                    $errLine=(int)$traceResolve[2];
-                }
-            }
-            $instanceErrtype=new $errType;
-            $status=$exception::exceptionTypeCodes(current(class_parents($instanceErrtype)));
-
-            $errType=class_basename($errType);
-        }
+        $this->getStatusFromContext();
 
         //set as the success object is false
-        $appExceptionSuccess=['success'=>(bool)false,'status'=>$status];
+        $appExceptionSuccess=['success'=>(bool)false,'status'=>$this->data['status']];
 
-        $environment='local';
+        //get lang message for exception
+        $this->getLangMessageForException();
 
-        if(isset($this->app->kernel()->applicationKey)){
-
-            //finally,set object for exception
-            $environment=($this->app->kernel()->applicationKey===null) ? 'production' : environment();
-        }
-
-        if(!file_exists(app()->path()->environmentFile())) $environment='production';
-
-        $clone = clone $this;
-
-        if(class_exists($errorClassNamespace) && Str::startsWith($errorClassNamespace,'App')){
-
-            ClosureDispatcher::bind($errorClassNamespace)->call(function() use ($clone) {
-                if(property_exists($this,'lang')){
-                    $clone->lang=$this->lang;
-                }
-            });
-        }
-
-
-        $lang=$clone->lang;
-
-        $langMessage=trans('exception.'.$lang);
-
-        if($langMessage!==null){
-            $errStrReal=$langMessage;
-        }
-
-        $appException=$appExceptionSuccess+$exception::$environment($errNo,$errStrReal,$errFile,$errLine,$errType,$lang);
+        $environment=$this->getEnvironmentStatus();
+        $appException=$appExceptionSuccess+$exception::$environment(
+                $errNo,
+                $this->data['errStrReal'],
+                $this->data['errFile'],
+                $this->data['errLine'],
+                $this->data['errType'],
+                $this->data['lang']
+            );
 
         //set json app exception
         $this->app->kernel()->router=$appException;
         echo $this->app->kernel()->out->handle();
         exit();
-
-
     }
-
 
     /**
      * @method fatalErrorShutdownHandler
      */
     public function fatalErrorShutdownHandler(){
 
+        //get fatal error
         $last_error = error_get_last();
 
         if($last_error!==null){
+            $this->setErrorHandler(
+                E_ERROR,
+                $last_error['message'],
+                $last_error['file'],
+                $last_error['line'],
+                []
+            );
+        }
+    }
 
-            // fatal error
-            $this->setErrorHandler(E_ERROR, $last_error['message'], $last_error['file'], $last_error['line'],[]);
+    /**
+     * @return void|mixed
+     */
+    private function getLangMessageForException(){
 
+        $clone = clone $this;
+
+        if(class_exists($this->data['errorClassNamespace'])
+            && Str::startsWith($this->data['errorClassNamespace'],'App')){
+
+            ClosureDispatcher::bind($this->data['errorClassNamespace'])->call(function() use ($clone) {
+                if(property_exists($this,'lang')){
+                    $clone->lang=$this->lang;
+                }
+            });
         }
 
+        $this->data['lang']=$lang=$clone->lang;
 
+        $langMessage=trans('exception.'.$lang);
+
+        if($langMessage!==null){
+            $this->data['errStrReal']=$langMessage;
+        }
+    }
+
+    /**
+     * @return void|mixed
+     */
+    private function getUncaughtProcess(){
+
+        // catch exception via preg match
+        // and then clear the Uncaught statement from inside.
+        if(preg_match('@(.*?):@is',$this->data['errStrReal'],$errArr)){
+
+            $this->data['errType']=trim(str_replace('Uncaught','',$errArr[1]));
+            $this->data['errorClassNamespace']=$this->data['errType'];
+        }
+
+        if(preg_match('@Uncaught@is',$this->data['errStrReal'])
+            && preg_match('@(.*?):(.*?)\sin\s@is',$this->data['errStrReal'],$errStrRealArray)){
+            $this->data['errStrReal']=trim($errStrRealArray[2]);
+        }
+
+        if($this->data['errType']==="Undefined"){
+            $this->data['errStrReal']=$errStr;
+        }
+        else{
+            $this->data['errContext']['trace']=$this->data['errStrReal'];
+        }
     }
 
 }

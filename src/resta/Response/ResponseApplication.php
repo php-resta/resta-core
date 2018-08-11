@@ -51,7 +51,7 @@ class ResponseApplication extends ApplicationProvider {
         }
 
         //For auto service, service base is instantiate and response object is accessed.
-        return $this->makeBind(StaticPathModel::appBase())->response;
+        return config('app.response');
     }
 
     /**

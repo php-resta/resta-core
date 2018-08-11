@@ -257,14 +257,8 @@ class App {
         //
         $lang=(new Lingua(app()->path()->appLanguage()));
 
-        //
-        $base=app()->makeBind(StaticPathModel::appBase());
+        $defaultLocale=config('app.locale');
 
-        $defaultLocale=property_exists($base,'locale') ? $base->locale : 'en';
-
-        if(method_exists($base,'locale')){
-            $defaultLocale=$base->locale();
-        }
 
         if(count($select)){
             return $lang->include(['default'])->locale($defaultLocale)->get($data,$select);

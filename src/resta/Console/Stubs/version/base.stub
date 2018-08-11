@@ -9,13 +9,4 @@ class ServiceBaseController extends ApplicationProvider
     //get service annotation
     use ServiceAnnotationsController;
 
-    //response object
-    public $response='json';
-
-    //orm type
-    public $orm='eloquent';
-
-    //localization
-    public $locale='en';
-
 }

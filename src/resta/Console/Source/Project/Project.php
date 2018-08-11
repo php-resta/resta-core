@@ -49,6 +49,7 @@ class Project extends ConsoleOutputter {
         $this->directory['resourceDir']             = $this->resource();
         $this->directory['resourceCacheDir']        = $this->resource().'/'.StaticPathModel::$cache;
         $this->directory['languageDir']             = $this->language();
+        $this->directory['languageEnDir']           = $this->language().'/en';
         $this->directory['sessionDir']              = $this->session();
         $this->directory['versionDir']              = $this->version();
         $this->directory['callDir']                 = $this->controller();
@@ -90,6 +91,8 @@ class Project extends ConsoleOutputter {
         $this->touch['node/index']                  = $this->node().'/index.html';
         $this->touch['stub/index']                  = $this->stub().'/index.html';
         $this->touch['language/index']              = $this->language().'/index.html';
+        $this->touch['language/exception']          = $this->language().'/en/exception.yaml';
+        $this->touch['language/default']            = $this->language().'/en/default.yaml';
         $this->touch['log/index']                   = $this->log().'/index.html';
         $this->touch['resource/index']              = $this->resource().'/index.html';
         $this->touch['resource/index']              = $this->resource().'/'.StaticPathModel::$cache.'/index.html';
@@ -103,6 +106,7 @@ class Project extends ConsoleOutputter {
         $this->touch['config/cors']                 = $this->config().'/Cors.php';
         $this->touch['config/database']             = $this->config().'/Database.php';
         $this->touch['config/authenticate']         = $this->config().'/Authenticate.php';
+        $this->touch['config/slack']                = $this->config().'/Slack.php';
         //$this->touch['job/index']                   = $this->job().'/index.html';
         //$this->touch['migration/index']             = $this->migration().'/index.html';
         //$this->touch['builder/index']               = $this->builder().'/index.html';

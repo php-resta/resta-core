@@ -1,0 +1,23 @@
+<?php
+
+namespace App\__project__\__version__\Config;
+
+use Store\Contracts\HandleTraitContract;
+
+class Slack implements HandleTraitContract
+{
+    /**
+     * slack push notification settings.
+     * the configurations allowed for slack.
+     * @return array
+     */
+    public function handle() : array {
+
+        return [
+            'default'=>[
+                'channel'   => null,
+                'hook'      => null
+            ]
+        ];
+    }
+}
