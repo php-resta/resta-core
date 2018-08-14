@@ -18,7 +18,6 @@ class UrlParseParamResolved extends UrlParseException {
 
         //check url parse data for exception
         $this->exception($this->url=$app->urlList);
-
         return $this->url;
     }
 }

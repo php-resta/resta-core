@@ -71,7 +71,7 @@ class RouteApplication extends ApplicationProvider {
 
         //we finally process the method of the class invoked by the user as a process and prepare it for the response
         return app()->makeBind(RouteWatch::class)->watch(function(){
-            return Utils::callBind([$this->instanceController(),$this->checkIfExistsMethod()],$this->providerBinding());
+            return Utils::callBind([$this->instanceController(),app()->singleton()->method],$this->providerBinding());
         });
 
     }
@@ -94,7 +94,7 @@ class RouteApplication extends ApplicationProvider {
 
         //The kernel object
         //we temporarily assigned on the instance of the class obtained by route
-        return $this->app->kernel()->instanceController;
+        return app()->singleton()->instanceController;
     }
 
     /**
@@ -105,7 +105,7 @@ class RouteApplication extends ApplicationProvider {
 
         //The kernel object
         //we temporarily assigned on the instance of the class obtained by route
-        return $this->app->kernel()->serviceDummy[strtolower(method)];
+        return app()->singleton()->serviceDummy[strtolower(method)];
     }
 
     /**
@@ -116,7 +116,7 @@ class RouteApplication extends ApplicationProvider {
     private function singletonEagerForRoute($unset=false){
 
         // get global router instance
-        $routerGlobalInstance=$this->singleton()->routerGlobalInstance;
+        $routerGlobalInstance=app()->singleton()->routerGlobalInstance;
 
         //the singleton eager class is a class built to temporarily prevent
         //the use of user-side kernel objects used by the resta.
@@ -125,6 +125,6 @@ class RouteApplication extends ApplicationProvider {
 
         //we update the existing route parameter to make a new assignment on
         //the kernel object to extract the method name from the original route parameters.
-        $routerGlobalInstance->substractMethodNameFromRouteParameters($this->checkIfExistsMethod());
+        $routerGlobalInstance->substractMethodNameFromRouteParameters($this->checkIfExistsMethod($routerGlobalInstance));
     }
 }

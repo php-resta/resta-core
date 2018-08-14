@@ -2,6 +2,7 @@
 
 namespace Resta\Logger;
 
+use Resta\Utils;
 use Resta\StaticPathModel;
 use Resta\ApplicationProvider;
 use Resta\GlobalLoaders\Logger as LoggerGlobalInstance;
@@ -36,9 +37,18 @@ class LoggerService extends ApplicationProvider {
         //set define for logger
         define('logger',true);
 
+        //we get the logger namespace value.
+        $loggerNamespace=app()->namespace()->logger();
+
+        // if the logger file does not exist
+        // we throw a domain exception.
+        if(Utils::isNamespaceExists($loggerNamespace)===false){
+            exception()->domain('Such a group was not created within the project.');
+        }
+
         //We are getting the path to
         //the service log file in the project's version directory.
-        $appBase=$this->makeBind(app()->namespace()->logger());
+        $appBase=$this->makeBind($loggerNamespace);
 
         //The service log class must have an adapter object.
         $logAdapter=$appBase->adapter;

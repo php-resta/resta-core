@@ -259,7 +259,6 @@ class App {
 
         $defaultLocale=config('app.locale');
 
-
         if(count($select)){
             return $lang->include(['default'])->locale($defaultLocale)->get($data,$select);
         }

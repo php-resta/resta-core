@@ -31,7 +31,7 @@ class ConfigProcess {
 
         // if the config variable is not sent,
         // we print the kernel config data directly.
-        if(null===$this->config) return (isset($kernelConfig)) ? $kernelConfig : [];
+        if(null===$this->config) return (isset($kernelConfig)) ? $kernelConfig : $this->config=null;
 
         // we are starting a array of
         // point-based logical processes for config data processing.

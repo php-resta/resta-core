@@ -3,10 +3,8 @@
 namespace Resta\Environment;
 
 use Resta\Utils;
-use Resta\StaticPathModel;
-use Resta\ApplicationProvider;
 
-class CheckEnvironmentFile extends ApplicationProvider {
+class CheckEnvironmentFile {
 
     /**
      * @method checkConfiguration

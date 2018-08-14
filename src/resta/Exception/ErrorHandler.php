@@ -186,7 +186,13 @@ class ErrorHandler extends ApplicationProvider {
 
         $this->data['lang']=$lang=$clone->lang;
 
-        $langMessage=trans('exception.'.$lang);
+        if($lang!==null){
+            $langMessage=trans('exception.'.$lang);
+        }
+        else{
+            $langMessage=null;
+        }
+
 
         if($langMessage!==null){
             $this->data['errStrReal']=$langMessage;
@@ -212,7 +218,7 @@ class ErrorHandler extends ApplicationProvider {
         }
 
         if($this->data['errType']==="Undefined"){
-            $this->data['errStrReal']=$errStr;
+            $this->data['errStrReal']=$this->data['errStrReal'];
         }
         else{
             $this->data['errContext']['trace']=$this->data['errStrReal'];

@@ -5,10 +5,9 @@ namespace Resta\Encrypter;
 use Resta\Utils;
 use Defuse\Crypto\Key;
 use Defuse\Crypto\Crypto;
-use Resta\ApplicationProvider;
 use Resta\GlobalLoaders\Encrypter as EncrypterGlobalInstance;
 
-class Encrypter extends ApplicationProvider {
+class Encrypter {
 
     /**
      * @return mixed

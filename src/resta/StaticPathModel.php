@@ -64,6 +64,8 @@ class StaticPathModel extends StaticPathList {
      */
     public static function getAppStorage(){
 
+        if(!defined('app')) define('app',null);
+
         //get app path for application
         return self::projectPath(self::projectPrefix(),self::appPath().'/'.self::slashToBackSlash(app).''.self::$storage);
     }

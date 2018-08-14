@@ -32,9 +32,14 @@ if (!function_exists('dd')) {
 if (!function_exists('environment')) {
     function environment()
     {
-        return \Resta\Environment\EnvironmentConfiguration::environment(
-            func_get_args(),app()->singleton()->var
-        );
+        if(property_exists(app()->singleton(),'var')){
+            return \Resta\Environment\EnvironmentConfiguration::environment(
+                func_get_args(),app()->singleton()->var
+            );
+        }
+
+        return 'production';
+
     }
 }
 

@@ -2,10 +2,9 @@
 
 namespace Resta\Environment;
 
-use Resta\ApplicationProvider;
 use Resta\GlobalLoaders\Environment as EnvironmentGlobalInstance;
 
-class EnvironmentConfiguration extends ApplicationProvider {
+class EnvironmentConfiguration {
 
     /**
      * @param array $var
@@ -47,7 +46,7 @@ class EnvironmentConfiguration extends ApplicationProvider {
 
         //where we do the checks for the environment file type,
         //and if no configuration file is found, the system throws an exception.
-        $configuration=$this->makeBind(CheckEnvironmentFile::class)->checkConfiguration();
+        $configuration=app()->makeBind(CheckEnvironmentFile::class)->checkConfiguration();
 
         //We are globalizing environment variables.
         $environment->set($configuration);

@@ -103,7 +103,7 @@ trait NamespaceForRoute {
      * @method checkIfExistsMethod
      * @return mixed
      */
-    public function checkIfExistsMethod(){
+    public function checkIfExistsMethod($globalInstance){
 
         //If controller does not have a method after checking whether the method specified in the controller class exists,
         //then by default we assign a default method value of indexAction.
@@ -111,13 +111,13 @@ trait NamespaceForRoute {
         if(method_exists($this->instanceController(),$this->getPrefixMethod())){
 
             //method value as normal
-            return $this->getPrefixMethod();
+            return $this->setViaDefine($this->getPrefixMethod(),$globalInstance);
         }
 
         //by default we assign a default method value of indexAction
         //this value must be a method value automatically named indexAction
         //if it does not come from the url discovery value
-        return $this->getPrefixIndexMethod();
+        return $this->setViaDefine($this->getPrefixIndexMethod(),$globalInstance);
 
     }
 
@@ -134,6 +134,24 @@ trait NamespaceForRoute {
 
     }
 
+    /**
+     * @param $method
+     * @param $globalInstance
+     * @return mixed
+     */
+    private function setViaDefine($method,$globalInstance){
+
+        // we are extracting httpMethod and prefix from
+        // the method variable so that we can extract the salt method name.
+        $deleteHttp         = str_replace($this->httpMethod(),'',$method);
+        $methodName         = str_replace(StaticPathModel::$methodPrefix,'',$deleteHttp);
+
+        //set as global method name
+        $globalInstance->setMethodNameViaDefine($methodName);
+
+        return $method;
+
+    }
 
     /**
      * @return mixed
