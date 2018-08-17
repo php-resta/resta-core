@@ -26,7 +26,7 @@ class EnvironmentConfiguration {
      * @param null $environment
      * @return string
      */
-    public static function getEnvironmentForVariables($var=array(),$environment=null){
+    private static function getEnvironmentForVariables($var=array(),$environment=null){
 
         //environment variable specified by the variable is checked in the defined file
         //and the value is returned accordingly.

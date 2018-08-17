@@ -47,8 +47,7 @@ class ConfigProcess {
             return $this->configProcessResult($configData);
         }
 
-        //if the submitted config does not match any value.
-        exception()->invalidArgument('The requested config is not available');
+        return null;
     }
 
     /**

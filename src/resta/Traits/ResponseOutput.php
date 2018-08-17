@@ -34,12 +34,12 @@ trait ResponseOutput {
 
         // If the log feature is available on the kernel,
         // we run the logger process.
-        if(isset($this->singleton()->log)){
+        if(isset(resta()->log)){
 
             // we can run logging after checking
             // the configuration for the logger process in the LoggerService class
             // so that,If logging is not allowed in the main configuration file, we will not log.
-            return $this->singleton()->loggerService->checkLoggerConfiguration($this->printer,function($printer){
+            return resta()->loggerService->checkLoggerConfiguration($this->printer,function($printer){
                 return $printer;
             });
         }
@@ -56,9 +56,9 @@ trait ResponseOutput {
      */
     private function dataIncludedForPrinter($printer){
 
-        if(isset(app()->singleton()->controllerWatch)){
+        if(isset(resta()->controllerWatch)){
 
-            $watch=app()->singleton()->controllerWatch;
+            $watch=resta()->controllerWatch;
             return array_merge($printer,['watch'=>['memory'=>$watch['memory']]]);
         }
 
@@ -111,8 +111,8 @@ trait ResponseOutput {
     private function metaAdd(){
 
         return [
-            'success'=>$this->getSuccess(),
-            'status'=>$this->getStatus(),
+            'success'=>appInstance()->getSuccess(),
+            'status'=>appInstance()->getStatus(),
         ];
     }
 
@@ -122,7 +122,7 @@ trait ResponseOutput {
      */
     public function getRouter(){
 
-        return $this->app->makeBind(KernelRouterProcess::class)->router();
+        return app()->makeBind(KernelRouterProcess::class)->router();
     }
 
     /**

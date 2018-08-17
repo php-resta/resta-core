@@ -2,9 +2,7 @@
 
 namespace Resta\GlobalLoaders;
 
-use Resta\ApplicationProvider;
-
-class Environment extends ApplicationProvider  {
+class Environment  {
 
     /**
      * register environment variables to kernel
@@ -12,8 +10,12 @@ class Environment extends ApplicationProvider  {
      */
     public function set($configuration=null){
 
-        $this->register('env',(count($configuration)) ? $configuration['env'] : 'production');
-        $this->register('var',$configuration);
+        //we are get the environment value
+        $environment=(count($configuration)) ? $configuration['env'] : 'production';
+
+        //we are doing global registration for env and var value.
+        appInstance()->register('env',$environment);
+        appInstance()->register('var',$configuration);
     }
 
 }

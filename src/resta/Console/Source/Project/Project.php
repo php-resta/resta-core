@@ -71,7 +71,7 @@ class Project extends ConsoleOutputter {
 
 
         //get project file all path
-        $this->touch['ignore']                      = $this->project.'/.gitignore';
+        //$this->touch['ignore']                      = $this->project.'/.gitignore';
         $this->touch['publish']                     = $this->project.'/publish.php';
         $this->touch['main/version']                = $this->project.'/version.php';
         //$this->touch['repository/index']            = $this->repository().'/index.html';
@@ -81,6 +81,7 @@ class Project extends ConsoleOutputter {
         //$this->touch['source/request']              = $this->sourceRequestDir().'/Request.php';
         //$this->touch['source/index3']               = $this->sourceSupportDir().'/index.html';
         $this->touch['kernel/kernel']               = $this->kernel().'/Kernel.php';
+        $this->touch['kernel/provider']               = $this->kernel().'/AppProvider.php';
         $this->touch['middleware/authenticate']     = $this->middleware().'/Authenticate.php';
         $this->touch['middleware/validation']       = $this->middleware().'/Validation.php';
         $this->touch['middleware/clientToken']      = $this->middleware().'/ClientApiToken.php';

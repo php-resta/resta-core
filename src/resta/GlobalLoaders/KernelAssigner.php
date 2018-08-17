@@ -58,7 +58,7 @@ class KernelAssigner extends ApplicationProvider  {
 
             //the value corresponding to the bind value for the global object is assigned and
             //the makeBind method is called for the dependency injection.
-            $this->singleton()->{$object}=$this->makeBind($concrete)->handle($globalObjectInstance);
+            $this->register($object,$this->makeBind($concrete)->handle($globalObjectInstance));
         }
     }
 

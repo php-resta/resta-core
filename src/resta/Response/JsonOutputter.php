@@ -2,11 +2,10 @@
 
 namespace Resta\Response;
 
-use Resta\ApplicationProvider;
 use Resta\Traits\ResponseOutput;
 use Symfony\Component\HttpFoundation\Response;
 
-class JsonOutputter extends ApplicationProvider {
+class JsonOutputter {
 
     //get response output
     use ResponseOutput;

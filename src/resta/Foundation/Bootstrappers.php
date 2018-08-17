@@ -29,7 +29,7 @@ class Bootstrappers {
     /**
      * @var $pusherStacks array
      */
-    public $pusherStacks=array();
+    protected $pusherStacks=array();
 
     /**
      * @var bootstrappers array

@@ -143,8 +143,8 @@ class ErrorHandler extends ApplicationProvider {
             );
 
         //set json app exception
-        $this->app->kernel()->router=$appException;
-        echo $this->app->kernel()->out->handle();
+        resta()->router=$appException;
+        echo resta()->out->handle();
         exit();
     }
 

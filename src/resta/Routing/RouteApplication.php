@@ -50,7 +50,7 @@ class RouteApplication extends ApplicationProvider {
         //In this case, the dummy object is checked as bool in the service conf object
         //and the equation is compared with the returned value.
         //If the boolean value is true at the end of the comparison, the dummy data screen is printed
-        return ($this->singleton()->serviceConf['dummy']) ? $this->checkDummy() : $this->getCallBindController();
+        return (resta()->serviceConf['dummy']) ? $this->checkDummy() : $this->getCallBindController();
     }
 
     /**
@@ -71,7 +71,7 @@ class RouteApplication extends ApplicationProvider {
 
         //we finally process the method of the class invoked by the user as a process and prepare it for the response
         return app()->makeBind(RouteWatch::class)->watch(function(){
-            return Utils::callBind([$this->instanceController(),app()->singleton()->method],$this->providerBinding());
+            return Utils::callBind([$this->instanceController(),resta()->method],$this->providerBinding());
         });
 
     }
@@ -94,7 +94,7 @@ class RouteApplication extends ApplicationProvider {
 
         //The kernel object
         //we temporarily assigned on the instance of the class obtained by route
-        return app()->singleton()->instanceController;
+        return resta()->instanceController;
     }
 
     /**
@@ -105,7 +105,7 @@ class RouteApplication extends ApplicationProvider {
 
         //The kernel object
         //we temporarily assigned on the instance of the class obtained by route
-        return app()->singleton()->serviceDummy[strtolower(method)];
+        return resta()->serviceDummy[strtolower(method)];
     }
 
     /**
@@ -116,7 +116,7 @@ class RouteApplication extends ApplicationProvider {
     private function singletonEagerForRoute($unset=false){
 
         // get global router instance
-        $routerGlobalInstance=app()->singleton()->routerGlobalInstance;
+        $routerGlobalInstance=resta()->routerGlobalInstance;
 
         //the singleton eager class is a class built to temporarily prevent
         //the use of user-side kernel objects used by the resta.

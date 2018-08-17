@@ -90,6 +90,15 @@ if (!function_exists('request')) {
     }
 }
 
+if (!function_exists('resta')) {
+
+
+    function resta()
+    {
+        return appInstance()->singleton();
+    }
+}
+
 if (!function_exists('response')) {
 
     /**

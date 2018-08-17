@@ -2,7 +2,6 @@
 
 namespace Resta\Event;
 
-use Resta\Utils;
 use Resta\Contracts\EventDispatcherContracts;
 
 class EventHandler extends EventDetached implements EventDispatcherContracts {

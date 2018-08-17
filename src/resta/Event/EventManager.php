@@ -3,7 +3,6 @@
 namespace Resta\Event;
 
 use Resta\Utils;
-use Resta\Contracts\HandleContracts;
 use Resta\GlobalLoaders\EventDispatcher as EventDispatcherGlobalInstance;
 
 class EventManager extends EventHandler {

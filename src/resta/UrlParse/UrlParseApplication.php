@@ -4,9 +4,8 @@ namespace Resta\UrlParse;
 
 use Resta\Utils;
 use Resta\StaticPathList;
-use Resta\ApplicationProvider;
 
-class UrlParseApplication extends ApplicationProvider {
+class UrlParseApplication {
 
     /**
      * @var array
@@ -47,7 +46,7 @@ class UrlParseApplication extends ApplicationProvider {
         $this->urlList['parameters']=array_slice($query,3);
 
         //url global instance
-        $this->singleton()->urlGlobalInstance->definitor($this->urlList);
+        resta()->urlGlobalInstance->definitor($this->urlList);
 
     }
 
@@ -59,7 +58,7 @@ class UrlParseApplication extends ApplicationProvider {
 
         //convert array for query
         //we are removing the first empty element from the array due to the slash sign.
-        $arrayForQuery=explode("/",$this->request()->getPathInfo());
+        $arrayForQuery=explode("/",request()->getPathInfo());
         array_shift($arrayForQuery);
 
         //we set the first letter of the array elements

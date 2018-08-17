@@ -79,9 +79,7 @@ class ApplicationMiddleware extends ApplicationProvider {
                         $this->makeBind($this->middleware['namespace'])->handle();
                     }
                 }
-
             });
-
         }
     }
 

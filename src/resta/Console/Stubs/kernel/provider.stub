@@ -1,0 +1,17 @@
+<?php
+
+namespace __kernelDir__;
+
+use Store\Contracts\HandleTraitContract;
+
+class AppProvider implements HandleTraitContract {
+
+    /**
+     * @method handle
+     * @return void|mixed
+     */
+    public function handle(){
+
+        //set provider code
+    }
+}

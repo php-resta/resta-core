@@ -3,11 +3,9 @@
 namespace Resta\Logger;
 
 use Resta\Utils;
-use Resta\StaticPathModel;
-use Resta\ApplicationProvider;
 use Resta\GlobalLoaders\Logger as LoggerGlobalInstance;
 
-class LoggerService extends ApplicationProvider {
+class LoggerService {
 
     /**
      * @param $printer
@@ -16,17 +14,20 @@ class LoggerService extends ApplicationProvider {
      */
     public function checkLoggerConfiguration($printer,callable $callback){
 
-        //set log for printer
-        if(config('app.logger') && isset($this->singleton()->log)){
-
-            // log type level
-            // logger service handler
-            $type=($this->getSuccess()) ? 'info' : 'error';
-            return $this->logHandler($printer,'access',$type);
+        // logger service handler
+        if(config('app.logger') && isset(resta()->log)){
+            return $this->logHandler($printer,'access',$this->getLoggerType());
         }
 
         //return closure object with printer
         return call_user_func_array($callback,[$printer]);
+    }
+
+    /**
+     * @return string
+     */
+    private function getLoggerType(){
+        return (appInstance()->getSuccess()) ? 'info' : 'error';
     }
 
     /**
@@ -48,10 +49,7 @@ class LoggerService extends ApplicationProvider {
 
         //We are getting the path to
         //the service log file in the project's version directory.
-        $appBase=$this->makeBind($loggerNamespace);
-
-        //The service log class must have an adapter object.
-        $logAdapter=$appBase->adapter;
+        $appBase=app()->makeBind($loggerNamespace);
 
         //in order to customize the adapter property contained in this file,
         //we can process it in a method so that we can specify a log adapter property
@@ -62,7 +60,7 @@ class LoggerService extends ApplicationProvider {
 
         // we send the resulting adapter property as
         // a reference to the bind automatic instance class.
-        $logger->setLogger($appBase,$logAdapter,$this);
+        $logger->setLogger($appBase,$appBase->adapter,$this);
     }
 
     /**
@@ -74,7 +72,7 @@ class LoggerService extends ApplicationProvider {
     public function logHandler($printer,$file="access",$type='info'){
 
         //we get the log object that was previously assigned.
-        $log=$this->singleton()->log;
+        $log=resta()->log;
 
         // this object is obtained directly as an array and specifies
         // the adapter value for the first key log. The value of the directory stores

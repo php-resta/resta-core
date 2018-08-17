@@ -5,6 +5,14 @@ namespace __controllerNamespace__;
 class __serviceClass__Service extends App {
 
     /**
+     * Production forbidden.
+     *
+     * if it is true,you can't access on the production
+     * restrictions method is comprehensive on app class
+     */
+     public $forbidden=false;
+
+    /**
      * @return mixed|array
      */
     public function getIndex__methodPrefix__(){

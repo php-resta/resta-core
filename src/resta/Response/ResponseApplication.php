@@ -3,9 +3,8 @@
 namespace Resta\Response;
 
 use Resta\StaticPathModel;
-use Resta\ApplicationProvider;
 
-class ResponseApplication extends ApplicationProvider {
+class ResponseApplication {
 
     /**
      * @var array
@@ -22,7 +21,7 @@ class ResponseApplication extends ApplicationProvider {
     public function getControllerInstance(){
 
         //we get the instanceController object from the router.
-        return $this->app->kernel()->instanceController;
+        return resta()->instanceController;
     }
 
     /**
@@ -33,7 +32,7 @@ class ResponseApplication extends ApplicationProvider {
 
         //we get the response type by checking the instanceController object from the router.
         //Each type of response is in the base class in project directory.
-        return ($this->getControllerInstance()===null) ? $this->app->kernel()->responseType :
+        return ($this->getControllerInstance()===null) ? resta()->responseType :
             $this->appBase();
     }
 
@@ -62,7 +61,7 @@ class ResponseApplication extends ApplicationProvider {
 
         //We resolve the response via the service container
         //and run the handle method.
-        return $this->makeBind($this->outPutter())->handle();
+        return app()->makeBind($this->outPutter())->handle();
     }
 
     /**
