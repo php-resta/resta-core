@@ -13,6 +13,7 @@ class ServiceMiddlewareController implements HandleContracts {
 
         return [
               //'authenticate'=>'all',
+              //'clientApiToken'=>'all',
               'validation'=>'all',
         ];
     }

@@ -37,7 +37,7 @@ class RegisterAppBound extends ApplicationProvider {
             // where we will assign both the global instance
             // and the registered application object.
             $this->setAppInstance($this->singleton());
-            $this->setAppInstance(app()->singleton());
+            $this->setAppInstance(resta());
 
             return false;
         }
@@ -100,12 +100,12 @@ class RegisterAppBound extends ApplicationProvider {
         // object null is
         // sent to just terminate a key.
         if($object===null){
-            unset(app()->singleton()->{$key});
+            unset(resta()->{$key});
             return false;
         }
 
         // It is used to delete
         // both key and sequence members.
-        unset(app()->singleton()->{$key}[$object]);
+        unset(resta()->{$key}[$object]);
     }
 }

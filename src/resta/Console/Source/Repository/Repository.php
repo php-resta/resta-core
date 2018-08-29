@@ -99,7 +99,7 @@ class Repository extends ConsoleOutputter {
      */
     private function setAnnotations(){
 
-        return Utils::changeClass(app()->path()->serviceAnnotations().'.php',
+        return Utils::changeClass(app()->path()->kernel().'/AppAnnotations.php',
             ['Trait ServiceAnnotationsController'=>'Trait ServiceAnnotationsController'.PHP_EOL.' * @method \\'.app()->namespace()->repository().'\\'.$this->argument['repository'].'\\'.$this->argument['repository'].'Contract '.strtolower($this->argument['repository']).'Repository'
             ]);
     }

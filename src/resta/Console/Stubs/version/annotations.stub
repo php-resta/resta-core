@@ -2,17 +2,12 @@
 
 namespace App\__project__\__version__;
 
-use Store\Traits\Annotations;
+use __kernelDir__\AppAnnotations;
 
 /**
  * Trait ServiceAnnotationsController
- * @method \Store\Services\HttpSession session
- * @method \Predis\Client redis
- * @method \Store\Services\AppCollection collection
- * @method \Store\Services\Cache cache
- * @package App\__project__\__version__
  */
 trait ServiceAnnotationsController
 {
-    use Annotations;
+    use AppAnnotations;
 }

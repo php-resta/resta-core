@@ -2,23 +2,39 @@
 
 namespace Resta\Response;
 
-use Resta\StaticPathModel;
+use Resta\ClosureDispatcher;
 
-class ResponseApplication {
+class ResponseApplication extends ResponseOutput {
 
     /**
-     * @var array
+     * @return mixed
      */
-    public $outputter=[
-        'json'  => 'Resta\Response\JsonOutputter',
-        'xml'   => 'Resta\Response\XmlOutputter'
-    ];
+    private function appResponseType(){
+
+        //get controller instance
+        $controllerInstance=$this->getControllerInstance();
+
+        //If our endpoint is provided without auto service,
+        //we get the response object from the existing kernel object without resampling our service base class.
+        //In this case we need to instantiate the service base class of the existing project for
+        //the auto service to be called.
+        return ClosureDispatcher::bind($controllerInstance)->call(function() use($controllerInstance){
+
+            if(property_exists($controllerInstance,'response')){
+                return $controllerInstance->response;
+            }
+
+            //For auto service, service base is instantiate and response object is accessed.
+            return config('app.response');
+        });
+
+    }
 
     /**
      * @method getControllerInstance
      * @return mixed
      */
-    public function getControllerInstance(){
+    private function getControllerInstance(){
 
         //we get the instanceController object from the router.
         return resta()->instanceController;
@@ -28,29 +44,12 @@ class ResponseApplication {
      * @method getResponseKind
      * @return mixed
      */
-    public function getResponseKind(){
+    private function getResponseKind(){
 
         //we get the response type by checking the instanceController object from the router.
         //Each type of response is in the base class in project directory.
         return ($this->getControllerInstance()===null) ? resta()->responseType :
-            $this->appBase();
-    }
-
-    /**
-     * @return mixed
-     */
-    public function appBase(){
-
-        //If our endpoint is provided without auto service,
-        //we get the response object from the existing kernel object without resampling our service base class.
-        //In this case we need to instantiate the service base class of the existing project for
-        //the auto service to be called.
-        if(property_exists($controllerInstance=$this->getControllerInstance(),'response')){
-            return $controllerInstance->response;
-        }
-
-        //For auto service, service base is instantiate and response object is accessed.
-        return config('app.response');
+            $this->appResponseType();
     }
 
     /**
@@ -59,19 +58,29 @@ class ResponseApplication {
      */
     public function handle(){
 
-        //We resolve the response via the service container
-        //and run the handle method.
-        return app()->makeBind($this->outPutter())->handle();
+        //definitor for singleton instance
+        define ('responseApp',true);
+
+        //get outputter for response
+        $outputter=$this->outPutter();
+
+        //if outputter is not null
+        if($outputter!==null){
+
+            //We resolve the response via the service container
+            //and run the handle method.
+            return app()->makeBind($outputter)->handle($this->getOutPutter());
+        }
     }
 
     /**
      * @method outPutter
      * @return mixed
      */
-    public function outPutter(){
+    private function outPutter(){
 
         //we get and handle the adapter classes in
         //the output array according to the base object.
-        return $this->outputter[$this->getResponseKind()];
+        return config('app.responseOutPutter.'.$this->getResponseKind());
     }
 }

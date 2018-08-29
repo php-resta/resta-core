@@ -3,6 +3,7 @@
 namespace Resta\Exception;
 
 use Resta\Contracts\ExceptionContracts;
+use Resta\Utils;
 
 class ExceptionManager implements ExceptionContracts {
 
@@ -106,10 +107,21 @@ class ExceptionManager implements ExceptionContracts {
         $nameNamespace=app()->namespace()->optionalException().'\\'.$nameException;
         $callNamespace=new $nameNamespace;
 
+
+        // we will set the information about the exception trace,
+        // and then bind it specifically to the event method.
+        $customExceptionTrace                       = Utils::trace(1);
+        $customExceptionTrace['exception']          = $nameNamespace;
+        $customExceptionTrace['parameters']['get']  = get();
+        $customExceptionTrace['parameters']['post'] = post();
+
+        // we register the custom exception trace value with the global kernel object.
+        appInstance()->register('exceptiontrace',$customExceptionTrace);
+
         //If the developer wants to execute an event when calling a special exception,
         //we process the event method.
         if(method_exists($callNamespace,'event')){
-            $callNamespace->event();
+            $callNamespace->event($customExceptionTrace);
         }
 
         //throw exception

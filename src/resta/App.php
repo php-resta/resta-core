@@ -18,28 +18,6 @@ class App {
     protected static $instance=[];
 
     /**
-     * @return \stdClass
-     */
-    public static function kernelBindObject(){
-        return new \stdClass;
-    }
-
-    /**
-     * @return mixed
-     */
-    public static function getAppInstance(){
-
-        //we save an instance for the entire application
-        //and add it to the helper file to be accessed from anywhere in the application.
-        if(!isset(self::$instance['appInstance'])){
-            self::$instance['appInstance']=unserialize(base64_decode(appInstance));
-            return self::$instance['appInstance'];
-        }
-        return self::$instance['appInstance'];
-
-    }
-
-    /**
      * @param $service
      * @param $arg
      */
@@ -64,12 +42,71 @@ class App {
     }
 
     /**
-     * @param $arg
-     * @return Session
+     * @param $service
+     * @return mixed
      */
-    private static function session($arg){
+    private static function builder($service){
 
-        return new Session();
+        //we are making a namespace assignment for the builder.
+        $builder=app()->namespace()->builder().'\\'.$service;
+
+        //we are getting builder instance.
+        return app()->makeBind($builder);
+    }
+
+    /**
+     * @param $arg
+     * @return Cache
+     */
+    private static function cache($arg){
+        return new Cache();
+    }
+
+    /**
+     * @param $arg
+     * @return Collection
+     */
+    private static function collection($arg){
+        return (new Collection());
+    }
+
+    /**
+     * @param null $config
+     * @return ConfigProcess
+     */
+    public function configLoaders($config=null){
+        return (new ConfigProcess($config))->get();
+    }
+
+    /**
+     * @param $instance
+     * @param $class
+     * @param array $bind
+     * @return mixed
+     */
+    public function container($instance,$class,$bind=array()){
+
+        if(!property_exists($instance->container(),$class)){
+            throw new \InvalidArgumentException('container object false for ('.$class.') object');
+        }
+
+        $container=$instance->container()->{$class};
+
+        if(!is_array($instance->container()->{$class}) AND Utils::isNamespaceExists($container)){
+            return $instance->makeBind($container,$bind);
+        }
+        return $instance->container()->{$class};
+    }
+
+    /**
+     * @param $object
+     */
+    public function createAppInstance($object){
+
+        if(!defined('appInstance')){
+            define('appInstance',(base64_encode(serialize($object))));
+        }
+
     }
 
     /**
@@ -83,6 +120,37 @@ class App {
         }
 
         return null;
+    }
+
+    /**
+     * @return mixed
+     */
+    public static function getAppInstance(){
+
+        //we save an instance for the entire application
+        //and add it to the helper file to be accessed from anywhere in the application.
+        if(!isset(self::$instance['appInstance'])){
+            self::$instance['appInstance']=unserialize(base64_decode(appInstance));
+            return self::$instance['appInstance'];
+        }
+        return self::$instance['appInstance'];
+
+    }
+
+    /**
+     * @return \stdClass
+     */
+    public static function kernelBindObject(){
+        return new \stdClass;
+    }
+
+    /**
+     * @param $arg
+     * @return Session
+     */
+    private static function session($arg){
+
+        return new Session();
     }
 
     /**
@@ -108,14 +176,6 @@ class App {
     }
 
     /**
-     * @param $arg
-     * @return Cache
-     */
-    private static function cache($arg){
-        return new Cache();
-    }
-
-    /**
      * @param $service
      * @param $arg
      * @return mixed
@@ -135,19 +195,6 @@ class App {
     }
 
     /**
-     * @param $service
-     * @return mixed
-     */
-    private static function builder($service){
-
-        //We are making a namespace assignment for the builder.
-        $builder=app()->namespace()->builder().'\\'.$service;
-
-        //We are getting builder instance.
-        return app()->makeBind($builder);
-    }
-
-    /**
      * @param $arg
      * @return \Predis\Client
      */
@@ -162,54 +209,6 @@ class App {
 
         return self::$instance['redis'];
 
-    }
-
-
-    /**
-     * @param $arg
-     * @return Collection
-     */
-    private static function collection($arg){
-
-        return (new Collection());
-    }
-
-    /**
-     * @param null $config
-     * @return ConfigProcess
-     */
-    public function configLoaders($config=null){
-
-        return (new ConfigProcess($config))->get();
-    }
-
-    /**
-     * @param $object
-     */
-    public function createAppInstance($object){
-
-        if(!defined('appInstance')){
-            define('appInstance',(base64_encode(serialize($object))));
-        }
-
-    }
-
-    /**
-     * @param $instance
-     * @param $class
-     * @param array $bind
-     * @return mixed
-     */
-    public function container($instance,$class,$bind=array()){
-
-        if(!property_exists($instance->container(),$class)){
-            throw new \InvalidArgumentException('container object false for ('.$class.') object');
-        }
-
-        if(!is_array($instance->container()->{$class}) AND Utils::isNamespaceExists($container=$instance->container()->{$class})){
-            return $instance->makeBind($container,$bind);
-        }
-        return $instance->container()->{$class};
     }
 
     /**

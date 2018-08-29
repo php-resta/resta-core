@@ -41,27 +41,27 @@ class BootstrapperPeelOnion {
 
         // If the peelings variable does not have a kernel,
         // we first assign an instance of this class to the initial value of the array.
-        if(!isset(app()->singleton()->peelings)){
-            app()->singleton()->bound->register('peelings','0',$this);
+        if(!isset(resta()->peelings)){
+            resta()->bound->register('peelings','0',$this);
         }
 
         // we will then use the keys of
         // the peelings feature to sort and increase the last value 1.
-        $keys=array_keys(app()->singleton()->peelings);
+        $keys=array_keys(resta()->peelings);
 
         // and since we can not peel,
         // we will include the onion property in the process class respectively and run it as before yada after.
         $bootstrapperPeelOnionProcess = new BootstrapperPeelOnionProcess($this->onionTypes[$group],$this->onionList);
 
         // and we assign this running onion process property to the peelings variable on the kernel.
-        app()->singleton()->bound->register('peelings',end($keys)+1,$bootstrapperPeelOnionProcess);
+        resta()->bound->register('peelings',end($keys)+1,$bootstrapperPeelOnionProcess);
 
         //If the peelingsAfter object is not in the kernel.
-        if(!isset(app()->singleton()->peelingsAfter)){
+        if(!isset(resta()->peelingsAfter)){
 
             //we assign the last saved after object to the peelingsAfter variable independently in the kernel.
             $bootstrapperPeelAfterOnionProcess  = new BootstrapperPeelOnionProcess('after',$this->onionList);
-            app()->singleton()->bound->register('peelingsAfter',$bootstrapperPeelAfterOnionProcess);
+            resta()->bound->register('peelingsAfter',$bootstrapperPeelAfterOnionProcess);
         }
 
         return true;
@@ -91,7 +91,7 @@ class BootstrapperPeelOnion {
         }
 
         //set after peelings
-        $peelList['peel'][]=app()->singleton()->peelingsAfter;
+        $peelList['peel'][]=resta()->peelingsAfter;
 
         //We return the peel list as an object.
         return (object)$peelList;

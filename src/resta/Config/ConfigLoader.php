@@ -3,8 +3,6 @@
 namespace Resta\Config;
 
 use Resta\Utils;
-use Resta\StaticPathModel;
-use Resta\Contracts\KernelBindContracts;
 use Resta\GlobalLoaders\Config as ConfigGlobalInstance;
 
 class ConfigLoader {

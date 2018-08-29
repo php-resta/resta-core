@@ -132,6 +132,14 @@ class ErrorHandler extends ApplicationProvider {
         //get lang message for exception
         $this->getLangMessageForException();
 
+        if(property_exists(resta(),'exceptiontrace')){
+
+            $customExceptionTrace=resta()->exceptiontrace;
+
+            $this->data['errFile']=$customExceptionTrace['file'];
+            $this->data['errLine']=$customExceptionTrace['line'];
+        }
+
         $environment=$this->getEnvironmentStatus();
         $appException=$appExceptionSuccess+$exception::$environment(
                 $errNo,
@@ -144,8 +152,18 @@ class ErrorHandler extends ApplicationProvider {
 
         //set json app exception
         resta()->router=$appException;
-        echo resta()->out->handle();
-        exit();
+
+        $restaOutHandle=resta()->out->handle();
+
+        if($restaOutHandle===null){
+            echo json_encode($appException);
+            exit();
+        }
+        else{
+            echo $restaOutHandle;
+            exit();
+        }
+
     }
 
     /**

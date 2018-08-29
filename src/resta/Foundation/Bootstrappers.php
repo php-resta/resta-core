@@ -35,7 +35,6 @@ class Bootstrappers {
      * @var bootstrappers array
      */
     protected $bootstrappers=[
-        'devEagerGroups',
         'originGroups',
         'middlewareGroups',
         'reflectionGroups'
@@ -126,11 +125,11 @@ class Bootstrappers {
     private function peelings(){
 
         //if there are peelings
-        if(isset(app()->singleton()->peelings)){
+        if(isset(resta()->peelings)){
 
             // We send the peelings property to
             // the bootstrapperPeelOnion class.
-            $peelings=app()->singleton()->peelings;
+            $peelings=resta()->peelings;
             pos($peelings)->onionRun($peelings);
         }
     }

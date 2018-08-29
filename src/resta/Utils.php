@@ -307,6 +307,16 @@ class Utils {
         return str_replace("/","\\",$data);
     }
 
+    /**
+     * @param int $key
+     * @return mixed
+     */
+    public static function trace($key=0){
+
+        $trace=debug_backtrace();
+        return $trace[$key];
+    }
+
 
 
 

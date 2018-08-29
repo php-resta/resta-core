@@ -46,6 +46,7 @@ class Service extends ConsoleOutputter {
         // we process the processes related to file creation operations.
         // and then create files related to the touch method of the file object as it is in the directory process.
         $this->touch['service/endpoint']        = $this->directory['endpoint'].'/'.$this->argument['serviceClass'].'Service.php';
+        $this->touch['service/acl']             = $this->directory['endpoint'].'/'.$this->argument['serviceClass'].'AclManagement.php';
         $this->touch['service/app']             = $this->directory['endpoint'].'/App.php';
         $this->touch['service/developer']       = $this->directory['endpoint'].'/Developer.php';
         $this->touch['service/conf']            = $this->directory['endpoint'].'/ServiceConf.php';

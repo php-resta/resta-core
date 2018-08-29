@@ -41,6 +41,7 @@ class Project extends ConsoleOutputter {
         //$this->directory['listenerDir']             = $this->listener();
         $this->directory['middleWareDir']           = $this->middleware();
         $this->directory['nodeDir']                 = $this->node();
+        $this->directory['webservice']              = $this->webservice();
         //$this->directory['onceDir']                 = $this->once();
         //$this->directory['commandDir']              = $this->command();
         $this->directory['stubDir']                 = $this->stub();
@@ -82,6 +83,7 @@ class Project extends ConsoleOutputter {
         //$this->touch['source/index3']               = $this->sourceSupportDir().'/index.html';
         $this->touch['kernel/kernel']               = $this->kernel().'/Kernel.php';
         $this->touch['kernel/provider']               = $this->kernel().'/AppProvider.php';
+        $this->touch['kernel/annotations']          = $this->kernel().'/AppAnnotations.php';
         $this->touch['middleware/authenticate']     = $this->middleware().'/Authenticate.php';
         $this->touch['middleware/validation']       = $this->middleware().'/Validation.php';
         $this->touch['middleware/clientToken']      = $this->middleware().'/ClientApiToken.php';
@@ -91,6 +93,7 @@ class Project extends ConsoleOutputter {
         //$this->touch['command/index']               = $this->command().'/index.html';
         $this->touch['node/index']                  = $this->node().'/index.html';
         $this->touch['stub/index']                  = $this->stub().'/index.html';
+        $this->touch['webservice/index']            = $this->webservice().'/index.html';
         $this->touch['language/index']              = $this->language().'/index.html';
         $this->touch['language/exception']          = $this->language().'/en/exception.yaml';
         $this->touch['language/default']            = $this->language().'/en/default.yaml';

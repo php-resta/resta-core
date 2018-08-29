@@ -22,7 +22,7 @@ class ClosureDispatcher {
      * @return ClosureDispatcher
      */
     public static function bind($bind){
-        return new self(new $bind);
+        return (is_object($bind)) ? new self($bind) : new self(new $bind);
     }
 
     /**
@@ -30,6 +30,7 @@ class ClosureDispatcher {
      * @return mixed
      */
     public function call(\Closure $closure) {
+
         if(!is_null($this->bind))
             $closure = \Closure::bind($closure, $this->bind, $this->bind);
 

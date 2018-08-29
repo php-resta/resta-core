@@ -13,9 +13,9 @@ class LogProvider extends ApplicationProvider implements BootContracts {
      */
     public function boot(){
 
-        // route operations are the last part of the system run. In this section,
-        // a route operation is passed through the url process and output is sent to the screen according to
-        // the method file to be called by the application
+        // to help you learn more about what's happening within your application,
+        // resta provides robust logging services that allow you to log messages to files,
+        // the system error log, and even to Slack to notify your entire team.
         $this->app->bind('logger',function(){
             return LoggerService::class;
         });

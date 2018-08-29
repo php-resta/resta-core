@@ -15,11 +15,6 @@ class Kernel extends Container implements KernelContracts {
     /**
      * @var array
      */
-    protected $devEagerGroups=[];
-
-    /**
-     * @var array
-     */
     protected $originGroups=[
 
         'Resta\Booting\GlobalAccessor',
