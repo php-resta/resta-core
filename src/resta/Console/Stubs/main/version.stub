@@ -2,8 +2,8 @@
 
 namespace App\__project__;
 
-class version {
-
+class version
+{
     /**
      * @var string
      */
@@ -13,8 +13,8 @@ class version {
      * @param $app null
      * @return string
      */
-    public function handle($app=null){
-
+    public function handle($app=null)
+    {
         //app instance
         if($app!==null){
 

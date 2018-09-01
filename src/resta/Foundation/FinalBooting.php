@@ -6,8 +6,8 @@ use Illuminate\Support\Collection;
 use Resta\Contracts\HandleContracts;
 use Resta\Contracts\ApplicationContracts;
 
-class FinalBooting implements HandleContracts {
-
+class FinalBooting implements HandleContracts
+{
     /**
      * @var $app
      */
@@ -23,8 +23,8 @@ class FinalBooting implements HandleContracts {
      * @param ApplicationContracts $app
      * @param $boot
      */
-    public function __construct(ApplicationContracts $app,$boot) {
-
+    public function __construct(ApplicationContracts $app,$boot)
+    {
         $this->app=$app;
         $this->boot=$boot;
     }
@@ -33,8 +33,8 @@ class FinalBooting implements HandleContracts {
      * @param $boots
      * @return void|mixed
      */
-    private function bootstrapper($boots){
-
+    private function bootstrapper($boots)
+    {
         //boot loop make bind calling
         foreach ($boots as $bootstrapper){
 
@@ -48,8 +48,8 @@ class FinalBooting implements HandleContracts {
      * @param callable $callback
      * @return void|mixed
      */
-    private function customBootManifest(callable $callback){
-
+    private function customBootManifest(callable $callback)
+    {
         //we make custom boot
         if(isset($this->boot['custom'])){
 
@@ -64,8 +64,8 @@ class FinalBooting implements HandleContracts {
      * @param $boot
      * @return mixed|void
      */
-    public function handle(){
-
+    public function handle()
+    {
         //we remove the custom data from the boot list and boot normally.
         $defaultBoot = Collection::make($this->boot)->except('custom')->all();
 

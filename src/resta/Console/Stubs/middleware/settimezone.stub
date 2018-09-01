@@ -4,13 +4,13 @@ namespace App\__project__\__version__\Middleware;
 
 use Store\Contracts\HandleTraitContract;
 
-class SetClientTimezone implements HandleTraitContract {
-
+class SetClientTimezone implements HandleTraitContract
+{
     /**
      * @return void
      */
-    public function handle() {
-
+    public function handle()
+    {
         //get client timezone via header information
         $headerTimezone=(isset($this->getClientHeaders()['timezone']))
                 ? $this->getClientHeaders()['timezone'][0] : 'Europe/Istanbul';

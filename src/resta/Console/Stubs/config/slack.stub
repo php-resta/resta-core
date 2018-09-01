@@ -11,8 +11,8 @@ class Slack implements HandleTraitContract
      * the configurations allowed for slack.
      * @return array
      */
-    public function handle() : array {
-
+    public function handle() : array
+    {
         return [
             'default'=>[
                 'channel'   => null,

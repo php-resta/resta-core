@@ -2,10 +2,11 @@
 
 namespace __repositoryNamespace__;
 
-interface __repository__Contract {
-
+interface __repository__Contract
+{
     /**
      * @return mixed
      */
     public function getRepository();
+
 }

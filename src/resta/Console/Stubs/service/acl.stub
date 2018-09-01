@@ -4,13 +4,13 @@ namespace __controllerNamespace__;
 
 use Resta\Contracts\RegisterContracts;
 
-class __serviceClass__AclManagement implements RegisterContracts {
-
+class __serviceClass__AclManagement implements RegisterContracts
+{
     /**
      * @return mixed|void
      */
-    public function register(){
-
+    public function register()
+    {
         //
     }
 }

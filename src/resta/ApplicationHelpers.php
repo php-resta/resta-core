@@ -10,6 +10,14 @@ if (!function_exists('auth')) {
     }
 }
 
+if (!function_exists('fullUrl')) {
+
+    function fullUrl()
+    {
+        return request()->getUri();
+    }
+}
+
 if (!function_exists('fingerPrint')) {
 
     function fingerPrint()

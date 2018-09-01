@@ -4,8 +4,8 @@ namespace Resta\Foundation;
 
 use Resta\GlobalLoaders\ApplicationPreLoader;
 
-class Bootstrappers {
-
+class Bootstrappers
+{
     /**
      * @var array $stack
      */
@@ -46,9 +46,9 @@ class Bootstrappers {
      * @param array $pusher
      * @param null $bootstrapper
      */
-    public function __construct($concrete=null,$pusher=array(),$bootstrapper=null) {
-
-        //If the user sets the bootstrapper variable to true,
+    public function __construct($concrete=null,$pusher=array(),$bootstrapper=null)
+    {
+        //if the user sets the bootstrapper variable to true,
         //we do not do anything.
         if($bootstrapper===true){
             throw new \LogicException('bootstrapper is not available');
@@ -73,16 +73,15 @@ class Bootstrappers {
         if($this->ifExistPusher()){
             $this->peelings();
         }
-
     }
 
     /**
      * @param bool $bootstrapper
      * @return mixed
      */
-    private function getBootstrappers($bootstrapper=false){
-
-        //If a bootstrapper variable is sent as false to the installer object,
+    private function getBootstrappers($bootstrapper=false)
+    {
+        //if a bootstrapper variable is sent as false to the installer object,
         //the bootstrapper will be assigned as false this variable directly.
         if(false===$this->bootstrapper){
             $bootstrapper=$this->bootstrapper;
@@ -101,8 +100,8 @@ class Bootstrappers {
     /**
      * @param array $customBootstrapers
      */
-    public function callBootstrapperProcess($customBootstrapers=[]){
-
+    public function callBootstrapperProcess($customBootstrapers=[])
+    {
         // here we check that a special bootstrappers list will work and we identify the onion identifier.
         // we are peeling onion class by classifying onion class.
         $this->getBootstrappersStack($customBootstrapers);
@@ -122,8 +121,8 @@ class Bootstrappers {
      * @method peelings
      * @return mixed|void
      */
-    private function peelings(){
-
+    private function peelings()
+    {
         //if there are peelings
         if(isset(resta()->peelings)){
 
@@ -138,8 +137,8 @@ class Bootstrappers {
      * @param null $callback
      * @return bool
      */
-    private function ifExistPusher($callback=null){
-
+    private function ifExistPusher($callback=null)
+    {
         // With the pusher event,
         // we are running a boot on condition
         // that it accepts an object and array logic belonging
@@ -158,14 +157,13 @@ class Bootstrappers {
         // Without the pusher,
         // the kernel bootstrapper feature of this system is the callback data.
         return call_user_func_array($callback,['callBootstrapperProcess']);
-
     }
 
     /**
      * @return void
      */
-    private function pusherHandle(){
-
+    private function pusherHandle()
+    {
         //pusher stack
         $pusherStack=[];
 
@@ -182,8 +180,8 @@ class Bootstrappers {
     /**
      * @param $customBootstrapers
      */
-    private function getBootstrappersStack($customBootstrapers){
-
+    private function getBootstrappersStack($customBootstrapers)
+    {
         // here we check that a special bootstrappers list will work and we identify the onion identifier.
         // we are peeling onion class by classifying onion class.
         $customBootstrapersCount            = count($customBootstrapers);
@@ -195,8 +193,8 @@ class Bootstrappers {
     /**
      * @return array|mixed
      */
-    public function getPusher(){
-
+    public function getPusher()
+    {
         // a public method
         // for the pushers collected.
         if(count($this->pusherStacks)){

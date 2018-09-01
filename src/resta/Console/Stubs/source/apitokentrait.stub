@@ -4,14 +4,14 @@ namespace App\__project__\__version__\Optional\Source\Support\Traits;
 
 use Store\Services\JsonWebToken;
 
-trait ClientApiTokenTrait {
-
+trait ClientApiTokenTrait
+{
     /**
      * @method handle
      * @return mixed
      */
-    public function handle() {
-
+    public function handle()
+    {
         //identify method name according to token format
         return ($this->tokenFormat==="get") ? $this->getProcess() : $this->headerProcess();
     }
@@ -19,20 +19,19 @@ trait ClientApiTokenTrait {
     /**
      * @return mixed
      */
-    private function getProcess(){
-
+    private function getProcess()
+    {
         //get token via query param for application
         //check jwt for api key belonging to client
         $getToken=get($this->tokenKey);
         $this->jwtProcess($getToken);
-
     }
 
     /**
      * @return mixed
      */
-    private function headerProcess(){
-
+    private function headerProcess()
+    {
         $clientHeaders=headers();
         $getToken=(isset($clientHeaders[$this->tokenKey])) ? $clientHeaders[$this->tokenKey][0] : null;
         $this->jwtProcess($getToken);
@@ -42,8 +41,8 @@ trait ClientApiTokenTrait {
      * @param $token
      * @return bool|object
      */
-    private function jwtProcess($token){
-
+    private function jwtProcess($token)
+    {
         $checkJwtToken=JsonWebToken::decode($token,$this->tokenSign);
         $webTokenArray=json_decode(json_encode($checkJwtToken),1);
 
@@ -60,8 +59,8 @@ trait ClientApiTokenTrait {
     /**
      * @return string
     */
-    public function createToken($key){
-
+    public function createToken($key)
+    {
         //check client token for key
         $tokens=$this->clientTokens();
         $getTokenValue=(isset($tokens[$key])) ? $tokens[$key] : null;

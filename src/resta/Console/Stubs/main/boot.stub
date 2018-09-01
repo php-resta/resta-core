@@ -6,15 +6,15 @@ use Resta\ApplicationProvider;
 use Store\Traits\Annotations;
 use Resta\Contracts\BootContracts;
 
-class __boot__ extends ApplicationProvider implements BootContracts  {
-
+class __boot__ extends ApplicationProvider implements BootContracts
+{
     use Annotations;
 
     /**
      * @method boot
      */
-    public function boot(){
-
+    public function boot()
+    {
         //do somethings
     }
 

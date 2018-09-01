@@ -3,6 +3,7 @@
 namespace Resta\Logger;
 
 use Psr\Log\LoggerInterface;
+use Resta\ClosureDispatcher;
 
 class LoggerHandler implements LoggerInterface {
 
@@ -17,12 +18,27 @@ class LoggerHandler implements LoggerInterface {
     protected $file;
 
     /**
+     * @var $adapter
+     */
+    protected $adapter;
+
+    /**
      * LoggerHandler constructor.
      */
     public function __construct($file=null) {
 
         $this->file=$file;
-        $this->logger=app()->singleton()->loggerService;
+        $this->logger=resta()->loggerService;
+    }
+
+    /**
+     * @param $adapter
+     * @return $this
+     */
+    public function adapter($adapter){
+
+        $this->adapter=$adapter;
+        return $this;
     }
 
     /**
@@ -144,6 +160,15 @@ class LoggerHandler implements LoggerInterface {
     protected function writeLog($level, $message, $context)
     {
         $file=($this->file===null) ? $level : $this->file;
+
+        if($this->adapter!==null){
+
+            $adapter=$this->adapter;
+
+            $adapter=ClosureDispatcher::bind($this->logger)->call(function() use($adapter){
+                return $this->adapter=$adapter;
+            });
+        }
 
         $this->logger->logHandler($message,$file,$level);
     }

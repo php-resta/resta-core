@@ -5,8 +5,8 @@ namespace Resta\Foundation;
 use Optimus\Onion\LayerInterface;
 use Resta\Middleware\ApplicationMiddleware;
 
-class BootstrapperPeelOnionProcess implements LayerInterface {
-
+class BootstrapperPeelOnionProcess implements LayerInterface
+{
     /**
      * @var $onionType
      */
@@ -22,7 +22,8 @@ class BootstrapperPeelOnionProcess implements LayerInterface {
      * @param null $onionType
      * @param null $onions
      */
-    public function __construct($onionType=null,$onions=null) {
+    public function __construct($onionType=null,$onions=null)
+    {
         $this->onionType=$onionType;
         $this->onions=$onions;
     }
@@ -54,14 +55,16 @@ class BootstrapperPeelOnionProcess implements LayerInterface {
     /**
      * @return mixed
      */
-    private function onionsProcess(){
+    private function onionsProcess()
+    {
         return array_pop($this->onions)->callBootstrapperProcess($this->onions);
     }
 
     /**
      * @return mixed|void
      */
-    private function afterPeel(){
+    private function afterPeel()
+    {
         return resta()->bindings['middleware']->after=true;
     }
 

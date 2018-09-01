@@ -18,8 +18,8 @@ class ServiceLogController
      * @param string $type
      * @throws \Exception
      */
-    public function file($output,$file="access",$type="info") {
-
+    public function file($output,$file="access",$type="info")
+    {
         //log register path
         $filePath=app()->path()->appLog().'/'.$file.'.log';
 
@@ -29,9 +29,5 @@ class ServiceLogController
 
         //We write to the specified file.
         $log->{$type}(json_encode($output));
-
     }
-
-
-
 }

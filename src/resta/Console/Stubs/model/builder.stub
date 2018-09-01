@@ -8,12 +8,11 @@ use Store\Packages\Database\Doctrine\Dbal\Connection as Db;
 
 class __file__Builder extends ServiceBaseController
 {
-
     /**
      * @return mixed
     */
-    public function get__file__s(){
-
+    public function get__file__s()
+    {
         //model all data
         return __file__::all()->toArray();
     }

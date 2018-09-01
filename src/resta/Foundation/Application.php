@@ -7,8 +7,8 @@ use Resta\Traits\ApplicationPath;
 use Resta\Contracts\ApplicationContracts;
 use Resta\Contracts\ApplicationHelpersContracts;
 
-class Application extends Kernel implements ApplicationContracts,ApplicationHelpersContracts {
-
+class Application extends Kernel implements ApplicationContracts,ApplicationHelpersContracts
+{
     //get app paths
     use ApplicationPath;
 
@@ -22,8 +22,8 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
      * @param bool $console
      * @return void
      */
-    public function __construct($console=false){
-
+    public function __construct($console=false)
+    {
         //get console status for cli
         $this->console=$console;
 
@@ -35,10 +35,10 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
     /**
      * @param null $boot
      * @param null $maker
-     * @return mixed
+     * @return mixed543ead73169d
      */
-    public function bootFire($boot=null,$maker=null){
-
+    public function bootFire($boot=null,$maker=null)
+    {
         //we can refer to this method
         //because we can boot classes in the middleware or bootstrappers array.
         if($boot===null && $maker!==null){
@@ -60,8 +60,8 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
      * @method console
      * @return bool|null
      */
-    public function console(){
-
+    public function console()
+    {
         //Controlling the console object is
         //intended to make sure that the kernel bootstrap classes do not work.
         return $this->console;
@@ -71,8 +71,8 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
      * @method handle
      * @return string
      */
-    public function handle(){
-
+    public function handle()
+    {
         //This is the main calling place of your application.
         //If you come via http, the kernel response value is evaulated.
         //If you come via console, the kernel console value is evaulated.

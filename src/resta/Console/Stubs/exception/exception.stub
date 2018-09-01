@@ -24,8 +24,8 @@ class __exception__Exception extends \Exception
      * @param $exception
      * @return mixed|void
      */
-    public function event($exception){
-
+    public function event($exception)
+    {
         /**
          * You can run the event directly when the exception is thrown.
          * As an example you can log.

@@ -2,13 +2,13 @@
 
 namespace Store\Autoservice\__autoservice__;
 
-class __autoservice__Service {
-
+class __autoservice__Service
+{
     /**
      * @return array
      */
-    public function getIndex__methodPrefix__(){
-
+    public function getIndex__methodPrefix__()
+    {
         return [
             '__autoservice__service'=>'do somethings'
         ];

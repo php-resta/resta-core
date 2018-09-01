@@ -19,7 +19,7 @@ class StaticNamespaceRepository extends StaticPathRepository {
      * @param array $bind
      * @return mixed|string
      */
-    public function call($endpoint=null,$bind=array()){
+    public function controller($endpoint=null,$bind=array()){
 
         $call=Utils::getNamespace($this->appCall());
 

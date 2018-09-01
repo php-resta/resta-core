@@ -11,14 +11,13 @@ class AutoServices implements HandleTraitContract
      * the place allowed for access every auto service.
      * @return array
      */
-    public function handle() : array {
-
+    public function handle() : array
+    {
         return [
             'hook'          => true,
             'login'         => true,
             'logout'        => true,
             'translate'     => true,
         ];
-
     }
 }

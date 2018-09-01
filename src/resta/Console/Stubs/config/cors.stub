@@ -9,9 +9,8 @@ class Cors
      * access via http parameters allowed for every service.
      * @return array
      */
-    public function handle() : array {
-
+    public function handle() : array
+    {
         return [];
-
     }
 }

@@ -4,8 +4,8 @@ namespace Resta\Foundation;
 
 use Optimus\Onion\Onion;
 
-class BootstrapperPeelOnion {
-
+class BootstrapperPeelOnion
+{
     /**
      * @var array $peelings
      */
@@ -33,8 +33,8 @@ class BootstrapperPeelOnion {
     /**
      * @return null
      */
-    private function appRegisterForOnion(){
-
+    private function appRegisterForOnion()
+    {
         // We assign the first value of
         // the onionList variable to the group variable.
         $group=current($this->onionList);
@@ -70,8 +70,8 @@ class BootstrapperPeelOnion {
     /**
      * @param $peelings
      */
-    private function getPeelings($peelings){
-
+    private function getPeelings($peelings)
+    {
         $peelList=[];
 
         // We are removing
@@ -100,8 +100,8 @@ class BootstrapperPeelOnion {
     /**
      * @return StdClass
      */
-    private function objectCaller(){
-
+    private function objectCaller()
+    {
         // We throw the stdClass object runs
         // and return the object.
         $object = new \StdClass;
@@ -115,8 +115,8 @@ class BootstrapperPeelOnion {
      * @param $onion
      * @param callable $callback
      */
-    public function onionBoot($onion,callable  $callback){
-
+    public function onionBoot($onion,callable  $callback)
+    {
         // we are globalizing the onion variable.
         $this->onionList=$onion;
 
@@ -130,8 +130,8 @@ class BootstrapperPeelOnion {
     /**
      * @param callable $callback
      */
-    private function onionProcess(callable $callback){
-
+    private function onionProcess(callable $callback)
+    {
         // if the current onionlist is present in the specified onions list we will peel.
         // otherwise we will have to make a normal bootstrapper.
         if(isset($this->onionTypes[current($this->onionList)])){
@@ -150,8 +150,8 @@ class BootstrapperPeelOnion {
      * @param $peelings
      * @return mixed|void
      */
-    public function onionRun($peelings){
-
+    public function onionRun($peelings)
+    {
         // We call the stdClass object and
         // use the peel property with this object..
         $this->object=$this->objectCaller();

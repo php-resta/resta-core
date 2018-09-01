@@ -5,8 +5,8 @@ namespace Resta\Foundation;
 use Resta\Container\Container;
 use Resta\Contracts\KernelContracts;
 
-class Kernel extends Container implements KernelContracts {
-
+class Kernel extends Container implements KernelContracts
+{
     /**
      * @var $boot
      */
@@ -50,8 +50,8 @@ class Kernel extends Container implements KernelContracts {
      * @param $app \Resta\Contracts\ApplicationContracts
      * @param $strappers bootstrappers
      */
-    protected function bootstrappers($app,$strappers){
-
+    protected function bootstrappers($app,$strappers)
+    {
         //The boot method to be executed can be specified by the user.
         //We use this method to know how to customize it.
         BootFireCallback::setBootFire([$app,$strappers],function($boot){
@@ -66,8 +66,8 @@ class Kernel extends Container implements KernelContracts {
      * @param $group
      * @param $booting
      */
-    public function callBootstrapperProcess($group,$booting,$onion=true){
-
+    public function callBootstrapperProcess($group,$booting,$onion=true)
+    {
         if($onion){
 
             // we will implement a special onion method here and

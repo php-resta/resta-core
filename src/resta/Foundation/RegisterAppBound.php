@@ -4,8 +4,8 @@ namespace Resta\Foundation;
 
 use Resta\ApplicationProvider;
 
-class RegisterAppBound extends ApplicationProvider {
-
+class RegisterAppBound extends ApplicationProvider
+{
     /**
      * @var $unregister
      */
@@ -22,8 +22,8 @@ class RegisterAppBound extends ApplicationProvider {
      * @param null $concrete
      * @return mixed|void
      */
-    public function register($key,$object,$concrete=null){
-
+    public function register($key,$object,$concrete=null)
+    {
         // we assign the values ​​required
         // for register to the global value variable.
         $this->values['key']        = $key;
@@ -50,8 +50,8 @@ class RegisterAppBound extends ApplicationProvider {
      * @param $instance
      * @param bool $withConcrete
      */
-    private function registerProcess($instance,$withConcrete=false){
-
+    private function registerProcess($instance,$withConcrete=false)
+    {
         // values recorded without concrete.
         // or values deleted
         if(false===$withConcrete){
@@ -68,8 +68,8 @@ class RegisterAppBound extends ApplicationProvider {
     /**
      * @return void
      */
-    private function setAppInstance($instance){
-
+    private function setAppInstance($instance)
+    {
         // for application instance
         // if the values ​​to be saved are to be saved without the concrete,
         // if it is an array.
@@ -95,8 +95,8 @@ class RegisterAppBound extends ApplicationProvider {
      * @param null $object
      * @return mixed
      */
-    public function terminate($key,$object=null){
-
+    public function terminate($key,$object=null)
+    {
         // object null is
         // sent to just terminate a key.
         if($object===null){

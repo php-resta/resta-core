@@ -4,38 +4,38 @@ namespace __repositoryNamespace__;
 
 use Resta\Utils;
 
-trait __repository__Trait {
-
+trait __repository__Trait
+{
     /**
      * @method adapter
      * @return mixed
      */
-    public function adapter(){
-
+    public function adapter()
+    {
         return $this->makeBind($this->getRepositorySourceAdapter());
     }
 
     /**
      * @return string
      */
-    protected function getRepositorySourcePath(){
-
+    protected function getRepositorySourcePath()
+    {
         return app()->namespace()->repository().'\\'.$this->getRepositoryName().'\Source\\'.$this->adapter;
     }
 
     /**
      * @return string
      */
-    protected function getRepositorySourceAdapter(){
-
+    protected function getRepositorySourceAdapter()
+    {
         return $this->getRepositorySourcePath().'\\'.$this->getRepositoryName().''.$this->adapter;
     }
 
     /**
      * @return mixed
      */
-    protected function getRepositoryName(){
-
+    protected function getRepositoryName()
+    {
         return str_replace('Adapter','',Utils::getJustClassName(__CLASS__));
     }
 

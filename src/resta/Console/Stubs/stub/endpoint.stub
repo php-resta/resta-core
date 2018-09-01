@@ -2,8 +2,8 @@
 
 namespace __controllerNamespace__;
 
-class __serviceClass__Service extends App {
-
+class __serviceClass__Service extends App
+{
     /**
      * Production forbidden.
      *
@@ -15,8 +15,8 @@ class __serviceClass__Service extends App {
     /**
      * @return mixed|array
      */
-    public function getIndex__methodPrefix__(){
-
+    public function getIndex__methodPrefix__()
+    {
         return [
             'endpoint'=>'__serviceClass__'
         ];

@@ -8,6 +8,11 @@ use Resta\GlobalLoaders\Logger as LoggerGlobalInstance;
 class LoggerService {
 
     /**
+     * @var $adapter
+     */
+    protected $adapter;
+
+    /**
      * @param $printer
      * @param callable $callback
      * @return mixed
@@ -74,13 +79,21 @@ class LoggerService {
         //we get the log object that was previously assigned.
         $log=resta()->log;
 
+        $base=current($log);
+
+        if($this->adapter!==null){
+
+            $log=[];
+            $log[$this->adapter]=$base;
+        }
+
         // this object is obtained directly as an array and specifies
         // the adapter value for the first key log. The value of the directory stores
         // the instance value of the service log class. From there,
         // we call the method specified by the adapter in the service log class
         // and log the application in the customized mode for the application.
         // The service log class uses the monolog class.
-        if(method_exists($base=current($log),$adapter=key($log))){
+        if(method_exists($base,$adapter=key($log))){
             call_user_func_array([$base,$adapter],[$printer,$file,$type]);
         }
 

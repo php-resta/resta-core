@@ -2,8 +2,8 @@
 
 namespace App\__project__\__version__\Optional\Source\Request;
 
-trait Request {
-
+trait Request
+{
     /**
      * With the auto injector,
      * all the indices in the array are executed as methods
@@ -16,15 +16,16 @@ trait Request {
     /**
      * @return array
      */
-    public function all(){
+    public function all()
+    {
         return $this->inputs;
     }
 
     /**
      * @return void
      */
-    protected function rule(){
-
+    protected function rule()
+    {
         //
     }
 }

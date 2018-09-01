@@ -6,13 +6,13 @@ use Store\Contracts\HandleTraitContract;
 
 use Store\Services\Validator;
 
-class Validation implements HandleTraitContract {
-
+class Validation implements HandleTraitContract
+{
     /**
      * @return void
      */
-    public function handle() {
-
+    public function handle()
+    {
         //check page on query
         $this->checkPageOnQuery();
 
@@ -23,8 +23,8 @@ class Validation implements HandleTraitContract {
     /**
      * @return bool
      */
-    private function checkPageOnQuery(){
-
+    private function checkPageOnQuery()
+    {
         //get page on query
         $page=get('page');
 
@@ -41,8 +41,8 @@ class Validation implements HandleTraitContract {
      * @param $query
      * @return bool
      */
-    private function checkValidForPost($query){
-
+    private function checkValidForPost($query)
+    {
         //where we are checking the $query data
         //that comes with the post data globally.
         if(!is_array($query)){
@@ -60,8 +60,8 @@ class Validation implements HandleTraitContract {
     /**
      * @param null $data
      */
-    private function checkPostQuery($data=null){
-
+    private function checkPostQuery($data=null)
+    {
         // query control is made
         // for the validator class.
         if(post($data)!==null){

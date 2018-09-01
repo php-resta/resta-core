@@ -4,14 +4,14 @@ namespace __kernelDir__;
 
 use Store\Contracts\HandleTraitContract;
 
-class Kernel implements HandleTraitContract {
-
+class Kernel implements HandleTraitContract
+{
     /**
      * @method handle
      * @return array
      */
-    public function handle(){
-
+    public function handle()
+    {
         return [
 
         /**

@@ -2,16 +2,16 @@
 
 namespace App\__project__\__version__\Config;
 
-class Hateoas  {
-
+class Hateoas
+{
     /**
      * @method handle
      * HATEOAS stands for Hypertext As The Engine Of Application State.
      * It means that hypertext should be used to find your way through the API.
      * @return array
      */
-    public function handle() : array {
-
+    public function handle() : array
+    {
         return [
                    'links'=>[
                        'href'              => request()->getUri(),

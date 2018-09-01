@@ -4,8 +4,8 @@ namespace Resta\Foundation;
 
 use Bootstrapper\Manifest;
 
-class KernelBootManager extends Manifest {
-
+class KernelBootManager extends Manifest
+{
     /**
      * @var array $makerList
      */
@@ -15,8 +15,8 @@ class KernelBootManager extends Manifest {
      * @param $maker
      * @return mixed
      */
-    protected function handle($maker){
-
+    protected function handle($maker)
+    {
         // As a parameter, the maker variable comes as
         // the name of the list to be booted.
         if(isset($this->{$maker})){
@@ -33,8 +33,8 @@ class KernelBootManager extends Manifest {
     /**
      * @return void
      */
-    private function revisionMaker(){
-
+    private function revisionMaker()
+    {
         if(count($this->makerList)){
 
             //We return to the boot list and perform a revision check.

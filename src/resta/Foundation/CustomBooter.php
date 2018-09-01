@@ -6,8 +6,8 @@ use Resta\Utils;
 use Resta\StaticPathList;
 use Resta\StaticPathModel;
 
-class CustomBooter {
-
+class CustomBooter
+{
     /**
      * @var null
      */
@@ -43,8 +43,8 @@ class CustomBooter {
      * @param $booter
      * @return array|mixed
      */
-    private function addCustomBooter($booter){
-
+    private function addCustomBooter($booter)
+    {
         //normally we will assign a variable to our booterList list.
         $booterList=$this->getBooterList($booter);
 
@@ -64,15 +64,14 @@ class CustomBooter {
 
         //The booterList property combines booterList variables.
         return array_merge($booterList,$this->booterList);
-
     }
 
     /**
      * @param $booter array
      * @return mixed
      */
-    public function customBootstrappers($booter){
-
+    public function customBootstrappers($booter)
+    {
         //if the boot list belongs to the custom booter,
         //then we can boot our custom boot objects by adding them at the end of this class.
         if(array_pop($booter)==$this->customBooter){
@@ -87,9 +86,9 @@ class CustomBooter {
     /**
      * @param $booter
      */
-    private function booterManifest($booter){
-
-        // custom boot class
+    private function booterManifest($booter)
+    {
+        //custom boot class
         $booterManifest=$this->bootNamespace;
 
         // We get the manifest values from the kernel.
@@ -105,8 +104,8 @@ class CustomBooter {
     /**
      * @return array
      */
-    private function getBootDirectory(){
-
+    private function getBootDirectory()
+    {
         //Let's get our boot objects through the glob method.
         return Utils::glob(StaticPathModel::bootDir());
     }
@@ -115,8 +114,8 @@ class CustomBooter {
      * @param $booter
      * @return mixed
      */
-    private function getBooterList($booter){
-
+    private function getBooterList($booter)
+    {
         //We specify the method call for the booter list.
         return pos($booter)->bootFire(null,$this->boot);
     }

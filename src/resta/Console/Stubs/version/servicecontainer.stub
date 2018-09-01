@@ -14,8 +14,8 @@ class ServiceContainerController extends ApplicationProvider implements HandleTr
      * @method handle
      * @return mixed|void
      */
-    public function handle(){
-
+    public function handle()
+    {
         $this->app->container('tool',function(){
             return ServiceToolsController::class;
         });

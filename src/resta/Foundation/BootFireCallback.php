@@ -4,14 +4,14 @@ namespace Resta\Foundation;
 
 use Resta\ApplicationProvider;
 
-class BootFireCallback extends ApplicationProvider {
-
+class BootFireCallback extends ApplicationProvider
+{
     /**
      * @param $booter
      * @return string
      */
-    public static function getBooter($booter){
-
+    public static function getBooter($booter)
+    {
         //get booter
         return end($booter);
     }
@@ -19,8 +19,8 @@ class BootFireCallback extends ApplicationProvider {
     /**
      * @param $booter
      */
-    public static function loadBootstrappers($booter){
-
+    public static function loadBootstrappers($booter)
+    {
         //We allocate our application class from
         //the booter path.
         $app=pos($booter);
@@ -41,8 +41,8 @@ class BootFireCallback extends ApplicationProvider {
      * @param callable $callback
      * @return mixed
      */
-    public static function setBootFire($kernel=array(),callable $callback){
-
+    public static function setBootFire($kernel=array(),callable $callback)
+    {
         //The boot method to be executed can be specified by the user.
         //We use this method to know how to customize it.
         return call_user_func_array($callback,[self::setParametersForKernelCallback($kernel)]);
@@ -52,8 +52,8 @@ class BootFireCallback extends ApplicationProvider {
      * @param $kernel
      * @return array7
      */
-    public static function setParametersForKernelCallback($kernel){
-
+    public static function setParametersForKernelCallback($kernel)
+    {
         $kernel[]=self::class;
         return $kernel;
     }
