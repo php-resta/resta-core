@@ -88,10 +88,10 @@ trait ConsoleArguments {
      */
     public function checkMainConsoleRunner(callable $callback){
 
-        if(Utils::isNamespaceExists($this->consoleClassNamespace())===false){
+        /**if(Utils::isNamespaceExists($this->consoleClassNamespace())===false){
             return call_user_func($callback);
         }
-        $this->defineAppnameForCustomConsole();
+        $this->defineAppnameForCustomConsole();*/
 
     }
 

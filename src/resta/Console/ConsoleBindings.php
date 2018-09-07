@@ -69,8 +69,9 @@ class ConsoleBindings extends ApplicationProvider {
 
         //If the console argument is an operator that exists in the resta kernel,
         //we run a callback method to check it. The bindings for the custom application commander will be run.
-        $this->checkMainConsoleRunner(function() use($object,$container) {
+        /**$this->checkMainConsoleRunner(function() use($object,$container) {
             $this->bindForAppCommand($object,$container);
-        });
+        });*/
+        $this->bindForAppCommand($object,$container);
     }
 }

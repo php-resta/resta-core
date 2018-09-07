@@ -104,6 +104,15 @@ class StaticPathRepository {
      * @param null $app
      * @return mixed
      */
+    public function appMigration($app=null){
+
+        return $this->appVersion($app).'/'.StaticPathList::$migration;
+    }
+
+    /**
+     * @param null $app
+     * @return mixed
+     */
     public function appModel($app=null){
 
         return $this->appVersion($app).'/'.StaticPathList::$model;
