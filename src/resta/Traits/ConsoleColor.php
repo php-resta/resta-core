@@ -49,6 +49,25 @@ trait ConsoleColor {
         return ''.$colored_string.'' . PHP_EOL;
     }
 
+    // Returns colored string information
+    public function red($string, $foreground_color = 'red', $background_color = 'white') {
+
+        if(isset($this->argument['commandCall'])) return $string;
+
+        $colored_string = "";
+
+        // Check if given foreground color found
+        if (isset($this->foreground_colors[$foreground_color])) {
+            $colored_string .= "\033[" . $this->foreground_colors[$foreground_color] . "m";
+        }
+
+
+        // Add string and end coloring
+        $colored_string .=  $string . "\033[0m";
+
+        return $colored_string;
+    }
+
 
     // Returns colored string information
     public function success($string, $foreground_color = 'white', $background_color = 'yellow') {

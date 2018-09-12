@@ -34,22 +34,84 @@ class Migration extends ConsoleOutputter {
     }
 
     /**
-     *
+     * @return mixed
      */
     public function push()
     {
-        $config = ['paths'=>[app()->path()->migration()],'database'=>config('database')];
+        $schema = $this->getSchema();
 
-        $schema = SchemaFacade::setConfig($config);
+        $pushResult = $schema->push();
 
-        dd($schema->push());
+        echo $this->info('Migration Applying Results :');
+
+        $this->table->setHeaders(['id','table','file','type','status','message','seeder']);
+
+        foreach ($pushResult as $key=>$value) {
+
+            $file = end(explode("/",$pushResult[$key]['file']));
+
+            if($pushResult[$key]['success']===true){
+
+                $this->table->addRow([
+                    $key,
+                    $pushResult[$key]['table'],
+                    $file,
+                    $pushResult[$key]['type'],
+                    'Success',
+                    'Ok',
+                    'No',
+                ]);
+            }
+            else{
+
+                $this->table->addRow([
+                    $key,
+                    $pushResult[$key]['table'],
+                    $file,
+                    $pushResult[$key]['type'],
+                    'Fail!',
+                    $pushResult[$key]['message'],
+                    'No',
+
+                ]);
+            }
+        }
+
+        echo $this->table->getTable();
     }
 
     /**
-     *
+     * @return mixed
      */
     public function create()
     {
-        //
+        $config = $this->getConfig();
+
+        $path = $config['paths'][0];
+
+        if(!file_exists($path)){
+
+            $this->file->fs->mkdir($path,0777);
+            $this->file->fs->chmod($path,0777,000,true);
+        }
+
+        return $this->getSchema()->stub($this->argument['table'],$this->argument['name'],'create');
+
+    }
+
+    /**
+     * @return array
+     */
+    private function getConfig()
+    {
+        return  ['paths'=>[app()->path()->migration()],'database'=>config('database')];
+    }
+
+    /**
+     * @return \Migratio\Contract\SchemaFacadeContract
+     */
+    private function getSchema()
+    {
+        return SchemaFacade::setConfig($this->getConfig());
     }
 }
