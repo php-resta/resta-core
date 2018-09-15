@@ -42,7 +42,7 @@ class Migration extends ConsoleOutputter {
 
         $pushResult = $schema->push();
 
-        echo $this->info('Migration Applying Results :');
+        echo $this->info('Migration Push Process :');
 
         $this->table->setHeaders(['id','table','file','type','status','message','seeder']);
 
@@ -94,6 +94,44 @@ class Migration extends ConsoleOutputter {
             $this->file->fs->mkdir($path,0777);
             $this->file->fs->chmod($path,0777,000,true);
         }
+
+        $migrationCreate = $this->getSchema()->stub($this->argument['table'],$this->argument['name'],'create');
+
+        echo $this->info('Migration Create Process :');
+
+        $this->table->setHeaders(['id','method','table','style','name','type','status','message']);
+
+        foreach ($migrationCreate['directory'] as $key=>$data){
+
+            $this->table->addRow([
+                $key,
+                'migration:create',
+                strtolower($data['table']),
+                'directory',
+                $data['directory'],
+                $data['type'],
+                ($data['success']) ? 'Ok' : 'Fail',
+                $data['message'],
+
+            ]);
+        }
+
+        foreach ($migrationCreate['file'] as $key=>$data){
+
+            $this->table->addRow([
+                $key,
+                'migration:create',
+                strtolower($data['table']),
+                'file',
+                $data['file'],
+                $data['type'],
+                ($data['success']) ? 'Ok' : 'Fail',
+                $data['message'],
+
+            ]);
+        }
+
+        echo $this->table->getTable();
 
         return $this->getSchema()->stub($this->argument['table'],$this->argument['name'],'create');
 

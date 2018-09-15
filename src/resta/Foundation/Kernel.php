@@ -24,9 +24,9 @@ class Kernel extends Container implements KernelContracts
         'Resta\Booting\Environment',
         'Resta\Booting\ConfigLoader',
         'Resta\Booting\Encrypter',
-        'Resta\Booting\AppProvider',
         'Resta\Booting\ServiceContainer',
         'Resta\Booting\EventDispatcher',
+        'Resta\Booting\AppProvider',
         'Resta\Booting\Console',
     ];
 
