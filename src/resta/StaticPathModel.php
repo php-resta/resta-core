@@ -252,11 +252,22 @@ class StaticPathModel extends StaticPathList {
         return self::appVersionRoot().'\ServiceLogController';
     }
 
+    public static function storePath()
+    {
+        return root.'/src/store';
+    }
+
+    public static function storeMigrationPath()
+    {
+        return self::storePath().'/Migrations';
+    }
+
     /**
      * @param $data
      */
     private static function slashToBackSlash($data){
         return str_replace("\\","/",$data);
     }
+
 
 }
