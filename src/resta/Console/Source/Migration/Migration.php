@@ -90,13 +90,18 @@ class Migration extends ConsoleOutputter {
 
         $path = $config['paths'][0];
 
+        //set type for stub
+        $tablePath = $path.'/'.$this->argument['table'];
+
+        $stubType = (!file_exists($tablePath)) ? 'create' : 'alter';
+
         if(!file_exists($path)){
 
             $this->file->fs->mkdir($path,0777);
             $this->file->fs->chmod($path,0777,000,true);
         }
 
-        $migrationCreate = $this->getSchema()->stub($this->argument['table'],$this->argument['name'],'create');
+        $migrationCreate = $this->getSchema()->stub($this->argument['table'],$this->argument['name'],$stubType);
 
         echo $this->info('Migration Create Process :');
 
@@ -133,8 +138,6 @@ class Migration extends ConsoleOutputter {
         }
 
         echo $this->table->getTable();
-
-        return $this->getSchema()->stub($this->argument['table'],$this->argument['name'],'create');
 
     }
 
