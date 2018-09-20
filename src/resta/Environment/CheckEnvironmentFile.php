@@ -50,7 +50,7 @@ class CheckEnvironmentFile {
     private function getEnvironmentVariables(){
 
         //We call environment variables path with this method
-        return Utils::getYaml($this->getEnvironmentPath());
+        return Utils::yaml($this->getEnvironmentPath())->get();
     }
 
     /**

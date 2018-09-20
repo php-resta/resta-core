@@ -262,7 +262,14 @@ class StaticPathRepository {
         }
 
         return null;
+    }
 
+    /**
+     * @return mixed
+     */
+    public function controller()
+    {
+        return Utils::getPathFromNamespace(app()->namespace()->controller(),false);
     }
 
     /**

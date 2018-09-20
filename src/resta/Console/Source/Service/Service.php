@@ -51,10 +51,13 @@ class Service extends ConsoleOutputter {
         $this->touch['service/developer']       = $this->directory['endpoint'].'/Developer.php';
         $this->touch['service/conf']            = $this->directory['endpoint'].'/ServiceConf.php';
         $this->touch['service/dummy']           = $this->directory['endpoint'].'/Dummy.yaml';
+        $this->touch['service/doc']             = $this->directory['endpoint'].'/Doc.yaml';
 
         $this->file->touch($this,[
             'stub'=>'Service_Create'
         ]);
+
+        $this->docUpdate();
 
         // after all the operations, we apply chmod to the controller directory.
         Utils::chmod($this->controller());
@@ -62,5 +65,31 @@ class Service extends ConsoleOutputter {
         // and as a result we print the result on the console screen.
         echo $this->classical(' > Service called as "'.$this->argument['service'].'" has been successfully created in the '.app()->namespace()->call().'');
 
+    }
+
+    /**
+     * @return void
+     */
+    private function docUpdate()
+    {
+        $docPath = app()->path()->controller().'/'.$this->argument['serviceClass'].'/Doc.yaml';
+
+        $doc = Utils::yaml($docPath);
+
+        $data = [
+
+            'index'=>[
+                'http'=>'get',
+                'params'=>[
+                    'page'=>[
+                        'required'=>false,
+                        'type'=>'numeric'
+                    ]
+                ],
+                'headers'=>[],
+            ]
+        ];
+
+        $doc->set($data);
     }
 }

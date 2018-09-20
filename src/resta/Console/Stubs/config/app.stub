@@ -4,6 +4,27 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Application Documentation Hook
+    |--------------------------------------------------------------------------
+    |
+    | These are the keys to be automatically included in the documentation parameters
+    | to be created for the application.With these keys, we prevent you from writing
+    | the same keys over and over to the file that will create your documentation.
+    |
+    */
+    'docHook' => [
+        'params'=> [
+            'token'=> [
+                'status'    => false,
+                'http'      => ['get','post'],
+                'required'  => true,
+                'type'      => 'string'
+            ]
+        ]
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Application Hateoas
     |--------------------------------------------------------------------------
     |

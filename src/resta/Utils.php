@@ -2,7 +2,7 @@
 
 namespace Resta;
 
-use Symfony\Component\Yaml\Yaml;
+use Resta\Services\YamlManager;
 use Resta\Container\ContainerResolve;
 
 class Utils {
@@ -154,9 +154,15 @@ class Utils {
         return implode("\\",$data);
     }
 
-    public static function getPathFromNamespace($class){
+    public static function getPathFromNamespace($class,$phpextension=true){
 
-        $default=root.'/'.str_replace("\\","/",$class).'.php';
+        if($phpextension){
+            $default=root.'/'.str_replace("\\","/",$class).'.php';
+        }
+        else{
+            $default=root.'/'.str_replace("\\","/",$class).'';
+        }
+
         return str_replace("/App",'/src/app',$default);
     }
 
@@ -184,9 +190,13 @@ class Utils {
         return ( count( $first ) == count( $second ) && !array_diff( $first, $second ) );
     }
 
-    public static function getYaml($path){
+    /**
+     * @param $path
+     * @return mixed|YamlManager
+     */
+    public static function yaml($path){
 
-        return Yaml::parse(file_get_contents($path));
+        return new YamlManager($path);
     }
 
     public static function glob($path,$filename=false){

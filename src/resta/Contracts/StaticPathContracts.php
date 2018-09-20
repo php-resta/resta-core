@@ -33,6 +33,11 @@ interface StaticPathContracts {
     /**
      * @return mixed
      */
+    public function controller();
+
+    /**
+     * @return mixed
+     */
     public function encrypterFile();
 
     /**

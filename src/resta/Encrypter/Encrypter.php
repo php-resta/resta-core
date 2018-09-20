@@ -29,7 +29,7 @@ class Encrypter {
         }
 
         //We invite our existing encrypter file
-        $appKeyFile=Utils::getYaml($encrypterFile);
+        $appKeyFile=Utils::yaml($encrypterFile)->get();
 
         //we are checking two values ​​for key comparison.1.st separated value encryption
         //key second separated value crypto closure value
