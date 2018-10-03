@@ -2,7 +2,7 @@
 
 namespace __controllerNamespace__;
 
-class __serviceClass__Service extends App
+class __serviceClass____callClassPrefix__ extends App
 {
     /**
      * @return mixed|array

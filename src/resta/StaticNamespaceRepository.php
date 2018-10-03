@@ -2,7 +2,6 @@
 
 namespace Resta;
 
-use function GuzzleHttp\Psr7\parse_header;
 use Resta\Contracts\StaticNamespaceContracts;
 
 class StaticNamespaceRepository extends StaticPathRepository {
@@ -25,7 +24,7 @@ class StaticNamespaceRepository extends StaticPathRepository {
 
         if($endpoint===null) return $call;
 
-        $endpointCall=$call.'\\'.ucfirst($endpoint).'\\'.ucfirst($endpoint).'Service';
+        $endpointCall=$call.'\\'.ucfirst($endpoint).'\\'.ucfirst($endpoint).''.StaticPathModel::$callClassPrefix;
 
         return app()->makeBind($endpointCall,$bind);
 

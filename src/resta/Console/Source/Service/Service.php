@@ -37,6 +37,7 @@ class Service extends ConsoleOutputter {
         $this->directory['endpoint']            = $this->controller().'/'.$this->argument['service'];
         $this->argument['controllerNamespace']  = Utils::getNamespace($this->directory['endpoint']);
         $this->argument['serviceClass']         = $this->argument['service'];
+        $this->argument['callClassPrefix']      = StaticPathModel::$callClassPrefix;
 
         // with the directory operation,
         // we get to the service directory, which is called the controller.
@@ -45,7 +46,7 @@ class Service extends ConsoleOutputter {
 
         // we process the processes related to file creation operations.
         // and then create files related to the touch method of the file object as it is in the directory process.
-        $this->touch['service/endpoint']        = $this->directory['endpoint'].'/'.$this->argument['serviceClass'].'Service.php';
+        $this->touch['service/endpoint']        = $this->directory['endpoint'].'/'.$this->argument['serviceClass'].''. $this->argument['callClassPrefix'].'.php';
         $this->touch['service/acl']             = $this->directory['endpoint'].'/'.$this->argument['serviceClass'].'AclManagement.php';
         $this->touch['service/app']             = $this->directory['endpoint'].'/App.php';
         $this->touch['service/developer']       = $this->directory['endpoint'].'/Developer.php';
