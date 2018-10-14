@@ -3,13 +3,12 @@
 namespace Resta\Middleware;
 
 use Resta\Utils;
-use Resta\StaticPathModel;
 use Resta\ApplicationProvider;
 
 class ExcludeMiddleware extends ApplicationProvider {
 
     /**
-     * @var $callback
+     * @var array $excludeList
      */
     protected $excludeList=array();
 
@@ -19,8 +18,9 @@ class ExcludeMiddleware extends ApplicationProvider {
     protected $result=true;
 
     /**
-     * @param $middlewareClass
+     * @param $middleware
      * @param callable $callback
+     * @return mixed
      */
     public function exclude($middleware,callable $callback){
 

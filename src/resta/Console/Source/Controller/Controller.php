@@ -1,30 +1,30 @@
 <?php
 
-namespace Resta\Console\Source\Service;
+namespace Resta\Console\Source\Controller;
 
 use Resta\Utils;
 use Resta\StaticPathModel;
 use Resta\Console\ConsoleOutputter;
 use Resta\Console\ConsoleListAccessor;
 
-class Service extends ConsoleOutputter {
+class Controller extends ConsoleOutputter {
 
     use ConsoleListAccessor;
 
     /**
      * @var $type
      */
-    public $type='service';
+    public $type='controller';
 
     /**
      * @var $define
      */
-    public $define='Service create';
+    public $define='Controller create';
 
     /**
      * @var array
      */
-    protected $commandRule=['service','?namespace'];
+    protected $commandRule=['controller','?namespace'];
 
     /**
      * @method create
@@ -32,17 +32,20 @@ class Service extends ConsoleOutputter {
      */
     public function create(){
 
+        $controller = $this->argument['controller'];
+
         //Processes related to argument variables via console.
         $this->argument['methodPrefix']         = StaticPathModel::$methodPrefix;
-        $this->directory['endpoint']            = $this->controller().'/'.$this->argument['service'];
+        $this->directory['endpoint']            = $this->controller().'/'.$controller;
         $this->argument['controllerNamespace']  = Utils::getNamespace($this->directory['endpoint']);
-        $this->argument['serviceClass']         = $this->argument['service'];
+        $this->argument['serviceClass']         = $controller;
         $this->argument['callClassPrefix']      = StaticPathModel::$callClassPrefix;
 
         // with the directory operation,
         // we get to the service directory, which is called the controller.
-        $this->directory['endpoint']            = $this->controller().'/'.$this->argument['service'];
+        $this->directory['endpoint']            = $this->controller().'/'.$controller;
         $this->file->makeDirectory($this);
+
 
         // we process the processes related to file creation operations.
         // and then create files related to the touch method of the file object as it is in the directory process.
@@ -64,7 +67,7 @@ class Service extends ConsoleOutputter {
         Utils::chmod($this->controller());
 
         // and as a result we print the result on the console screen.
-        echo $this->classical(' > Service called as "'.$this->argument['service'].'" has been successfully created in the '.app()->namespace()->call().'');
+        echo $this->classical(' > Controller called as "'.$controller.'" has been successfully created in the '.app()->namespace()->call().'');
 
     }
 

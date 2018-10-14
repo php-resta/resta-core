@@ -20,7 +20,6 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
     /**
      * Application constructor.
      * @param bool $console
-     * @return void
      */
     public function __construct($console=false)
     {
@@ -35,7 +34,7 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
     /**
      * @param null $boot
      * @param null $maker
-     * @return mixed543ead73169d
+     * @return mixed
      */
     public function bootFire($boot=null,$maker=null)
     {
@@ -57,8 +56,7 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
     }
 
     /**
-     * @method console
-     * @return bool|null
+     * @return bool|mixed|null
      */
     public function console()
     {
@@ -68,8 +66,7 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
     }
 
     /**
-     * @method handle
-     * @return string
+     * @return null
      */
     public function handle()
     {
