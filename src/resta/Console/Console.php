@@ -5,7 +5,6 @@ namespace Resta\Console;
 use Resta\Utils;
 use Resta\ClosureDispatcher;
 use Resta\ApplicationProvider;
-use Resta\Contracts\ApplicationContracts;
 
 class Console extends ApplicationProvider {
 
@@ -18,8 +17,8 @@ class Console extends ApplicationProvider {
     public $consoleClassNamespace;
 
     /**
-     * @param $namespace
      * @param callable $callback
+     * @return mixed
      */
     public function checkConsoleNamespace(callable $callback){
 
@@ -78,6 +77,9 @@ class Console extends ApplicationProvider {
         // closure binding custom command,move custom namespace as specific
         // call prepare commander firstly for checking command builder
         $closureCommand     = app()->makeBind(ClosureDispatcher::class,['bind'=>$commander]);
+
+        //assign commander method name
+        $closureCommand->prepareBind['methodName']=$this->getConsoleClassMethod();
         $prepareCommander   = $commander->prepareCommander($closureCommand);
 
         if(!$prepareCommander['status']){

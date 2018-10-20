@@ -13,13 +13,16 @@ class ConsolePrepare implements ConsolePrepareContracts {
 
     /**
      * @param $commander
+     * @return array|mixed
      */
     public function prepareCommander($commander){
 
-        $commander=$commander->call(function(){
+        $commander=$commander->call(function() use($commander){
+
             return [
-                'commandRule'=>$this->commandRule,
-                'arguments'=>$this->argument,
+                'commandRule'   => $this->commandRule,
+                'arguments'     => $this->argument,
+                'method'        => lcfirst($commander->prepareBind['methodName'])
             ];
         });
 
@@ -28,10 +31,13 @@ class ConsolePrepare implements ConsolePrepareContracts {
 
     /**
      * @param $commander
+     * @return array
      */
     protected function resolveParameters($commander){
 
-        $commandRule=$commander['commandRule'];
+        $methodCommanderRule     = $commander['commandRule'][$commander['method']];
+        $commandRule             = (isset($methodCommanderRule)) ? $methodCommanderRule :
+            $this->getDefaultCommandRules($commander['commandRule']);
 
         foreach ($commandRule as $key=>$value){
             if(!preg_match('@\?.+@is',$value)){
@@ -47,7 +53,23 @@ class ConsolePrepare implements ConsolePrepareContracts {
         return [
             'status'=>true,
         ];
+    }
 
+    /**
+     * @param $rules
+     * @return array
+     */
+    private function getDefaultCommandRules($rules)
+    {
+        $list = [];
 
+        foreach ($rules as $key=>$rule){
+
+            if(!is_array($rules[$key])){
+                $list[$key]=$rule;
+            }
+        }
+
+        return $list;
     }
 }

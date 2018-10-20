@@ -24,7 +24,9 @@ class Migration extends ConsoleOutputter {
     /**
      * @var $commandRule
      */
-    public $commandRule=[];
+    public $commandRule=['create'=>[
+        'name','table'
+    ]];
 
     /**
      *
