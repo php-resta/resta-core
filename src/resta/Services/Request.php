@@ -89,14 +89,14 @@ class Request extends RequestClient implements HandleContracts {
             // if the value does not exist in capsule, we will throw an exception.
             foreach ($this->inputs as $key=>$value){
                 if(!in_array($key,$this->capsule)){
-                    exception()->invalidArgument($key .' input  as value sent is not invalid ');
+                    exception()->unexpectedValue($key .' input  as value sent is not invalid ');
                 }
             }
 
             // all values are in the capsule but the values sent are too big;
             // in this case we will throw an exception again.
             if(Utils::isArrayEqual(array_keys($this->inputs),$this->capsule)===false){
-                exception()->invalidArgument('the values accepted by the server are not the same with values you sent');
+                exception()->unexpectedValue('the values accepted by the server are not the same with values you sent');
             }
         }
     }
@@ -119,8 +119,7 @@ class Request extends RequestClient implements HandleContracts {
 
                 //exception batMethodCall
                 exception()->badMethodCall(
-                    'Invalid http method process for '.class_basename($this).'. 
-                    it is accepted http methods ['.implode(",",$this->http).'] ');
+                    'Invalid http method process for '.class_basename($this).'.That is accepted http methods ['.implode(",",$this->http).'] ');
             }
         }
     }
@@ -170,7 +169,7 @@ class Request extends RequestClient implements HandleContracts {
             // the exception will be thrown.
             foreach ($this->expected as $expected){
                 if(!isset($this->inputs[$expected])){
-                    exception()->invalidArgument('You absolutely have to send the value '.$expected.' for request object');
+                    exception()->unexpectedValue('You absolutely have to send the value '.$expected.' for request object');
                 }
             }
         }

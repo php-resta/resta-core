@@ -103,6 +103,7 @@ class Project extends ConsoleOutputter {
         $this->touch['session/index']               = $this->session().'/index.html';
         $this->touch['controller/index']            = $this->controller().'/index.html';
         $this->touch['config/hateoas']              = $this->config().'/Hateoas.php';
+        $this->touch['config/response']             = $this->config().'/Response.php';
         $this->touch['config/redis']                = $this->config().'/Redis.php';
         $this->touch['config/app']                  = $this->config().'/App.php';
         $this->touch['config/autoservice']          = $this->config().'/AutoServices.php';

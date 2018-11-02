@@ -150,6 +150,9 @@ class ErrorHandler extends ApplicationProvider {
                 $this->data['lang']
             );
 
+        //Get or Set the HTTP response code
+        http_response_code($this->data['status']);
+
         //set json app exception
         resta()->router=$appException;
 

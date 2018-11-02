@@ -57,10 +57,7 @@ class ResponseOutput {
      */
     private function metaAdd(){
 
-        return [
-            'success'=>appInstance()->getSuccess(),
-            'status'=>appInstance()->getStatus(),
-        ];
+        return config('response.meta');
     }
 
     /**
@@ -84,7 +81,7 @@ class ResponseOutput {
     private function outputCapsule($data){
 
         return $this->hateoasCapsule([
-            'data'=>$data,
+            config('response.data')=>$data,
         ]);
     }
 
