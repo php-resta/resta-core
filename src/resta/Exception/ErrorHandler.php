@@ -52,6 +52,11 @@ class ErrorHandler extends ApplicationProvider {
 
         $this->data['status']=$exception::exceptionTypeCodes($this->data['errType']);
 
+        $this->terminate('responseSuccess');
+        $this->terminate('responseStatus');
+        $this->register('responseSuccess',(bool)false);
+        $this->register('responseStatus',$this->data['status']);
+
         $optionalException=str_replace("\\","\\\\",$this->app->namespace()->optionalException());
 
         if(preg_match('@'.$optionalException.'@is',$this->data['errType'])){
@@ -76,8 +81,8 @@ class ErrorHandler extends ApplicationProvider {
      * @method handle
      * return void
      */
-    public function handle(){
-
+    public function handle()
+    {
         //sets which php errors are reported
         error_reporting(0);
 
@@ -106,8 +111,8 @@ class ErrorHandler extends ApplicationProvider {
      * @param $this->data['errContext'] null
      * @return mixed
      */
-    public function setErrorHandler($errNo=null, $errStr=null, $errFile=null, $errLine=null, $errContext=null){
-
+    public function setErrorHandler($errNo=null, $errStr=null, $errFile=null, $errLine=null, $errContext=null)
+    {
         // in general we will use the exception class
         // in the store/config directory to make it possible
         // to change the user-based exceptions.
@@ -126,8 +131,16 @@ class ErrorHandler extends ApplicationProvider {
 
         $this->getStatusFromContext();
 
-        //set as the success object is false
-        $appExceptionSuccess=['success'=>(bool)false,'status'=>$this->data['status']];
+        if(is_array($meta=config('response.meta'))){
+
+            //set as the success object is false
+            $appExceptionSuccess=[];
+        }
+        else{
+
+            //set as the success object is false
+            $appExceptionSuccess=['success'=>(bool)false,'status'=>$this->data['status']];
+        }
 
         //get lang message for exception
         $this->getLangMessageForException();
@@ -150,6 +163,7 @@ class ErrorHandler extends ApplicationProvider {
                 $this->data['lang']
             );
 
+
         //Get or Set the HTTP response code
         http_response_code($this->data['status']);
 
@@ -157,6 +171,7 @@ class ErrorHandler extends ApplicationProvider {
         resta()->router=$appException;
 
         $restaOutHandle=resta()->out->handle();
+
 
         if($restaOutHandle===null){
             echo json_encode($appException);
@@ -172,12 +187,15 @@ class ErrorHandler extends ApplicationProvider {
     /**
      * @method fatalErrorShutdownHandler
      */
-    public function fatalErrorShutdownHandler(){
-
+    public function fatalErrorShutdownHandler()
+    {
         //get fatal error
-        $last_error = error_get_last();
+        $last_error =error_get_last();
 
         if($last_error!==null){
+
+            header('Content-type:application/json;charset=utf-8');
+
             $this->setErrorHandler(
                 E_ERROR,
                 $last_error['message'],
