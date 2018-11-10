@@ -194,6 +194,15 @@ class ErrorHandler extends ApplicationProvider {
 
         if($last_error!==null){
 
+            if(!defined('methodName')){
+
+                define('methodName',null);
+            }
+
+            if(isset(resta()->exceptionFile)){
+                $last_error['file'] = resta()->exceptionFile;
+                $last_error['line'] = resta()->exceptionLine;
+            }
             header('Content-type:application/json;charset=utf-8');
 
             $this->setErrorHandler(

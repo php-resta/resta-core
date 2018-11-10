@@ -20,7 +20,7 @@ class RegisterAppBound extends ApplicationProvider
      * @param $key
      * @param $object
      * @param null $concrete
-     * @return mixed|void
+     * @return bool|mixed
      */
     public function register($key,$object,$concrete=null)
     {
@@ -49,6 +49,7 @@ class RegisterAppBound extends ApplicationProvider
     /**
      * @param $instance
      * @param bool $withConcrete
+     * @return bool
      */
     private function registerProcess($instance,$withConcrete=false)
     {
@@ -66,7 +67,8 @@ class RegisterAppBound extends ApplicationProvider
     }
 
     /**
-     * @return void
+     * @param $instance
+     * @return bool
      */
     private function setAppInstance($instance)
     {

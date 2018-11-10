@@ -48,7 +48,6 @@ class ApplicationProvider {
      * @param $key
      * @param $object
      * @param null $concrete
-     * @param bool $unregister
      * @return mixed
      */
     public function register($key,$object,$concrete=null){
@@ -60,6 +59,7 @@ class ApplicationProvider {
     /**
      * @param $key
      * @param null $object
+     * @return mixed
      */
     public function terminate($key,$object=null){
 

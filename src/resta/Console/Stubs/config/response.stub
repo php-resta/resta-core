@@ -16,7 +16,6 @@ return [
         'meta'=>[
             'success'=>appInstance()->getSuccess(),
             'status'=>appInstance()->getStatus(),
-            'endpoint'=>strtolower(endpoint).'/'.methodName,
         ]
     ],
 

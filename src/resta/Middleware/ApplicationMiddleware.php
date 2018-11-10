@@ -3,12 +3,11 @@
 namespace Resta\Middleware;
 
 use Resta\Utils;
-use Resta\StaticPathModel;
 use Resta\ApplicationProvider;
 use Resta\GlobalLoaders\Middleware as MiddlewareGlobalInstance;
 
-class ApplicationMiddleware extends ApplicationProvider {
-
+class ApplicationMiddleware extends ApplicationProvider
+{
     /**
      * @var array $middleware
      */
@@ -22,8 +21,8 @@ class ApplicationMiddleware extends ApplicationProvider {
     /**
      * @param MiddlewareGlobalInstance $middleware
      */
-    public function handle(MiddlewareGlobalInstance $middleware){
-
+    public function handle(MiddlewareGlobalInstance $middleware)
+    {
         //set define for middleware
         define('middleware',true);
 
@@ -40,15 +39,16 @@ class ApplicationMiddleware extends ApplicationProvider {
         //Thus, if you make http request your application, you can verify with an intermediate middleware layer
         //and throw an exception.
         $resolveServiceMiddleware=$this->singleton()->middlewareClass->{$middlewareMethod}();
-        $this->serviceMiddleware($resolveServiceMiddleware);
+        $this->serviceMiddleware($middleware,$resolveServiceMiddleware);
 
     }
 
     /**
+     * @param $middlewareInstance MiddlewareGlobalInstance
      * @param array $middleware
      */
-    private function serviceMiddleware($middleware=array()){
-
+    private function serviceMiddleware($middlewareInstance,$middleware=array())
+    {
         //It will be run individually according to the rules of
         //the middleware classes specified for the service middleware middleware.
         foreach($middleware as $middleVal=>$middleKey){
@@ -66,16 +66,17 @@ class ApplicationMiddleware extends ApplicationProvider {
             $this->middleware['class']              = $middlewareClass;
             $this->middleware['middlewareName']     = $middleVal;
 
-            //middleware class for service middlware
+            //middleware class for service middleware
             //it will be handled according to the following rule.
             //The exclude class will return a callback and allocate the result as bool to the exclude variable.
             //If the exclude variable is true then the middleware will be run.
-            $excludeClass->exclude($this->middleware,function($exclude){
+            $excludeClass->exclude($this->middleware,function($exclude) use ($middlewareInstance,$middleVal){
 
                 if($exclude){
 
                     //The condition of a specific statement to be handled
                     if($this->checkNamespaceAndSpecificCondition()){
+                        $middlewareInstance->pointer($middleVal);
                         $this->makeBind($this->middleware['namespace'])->handle();
                     }
                 }

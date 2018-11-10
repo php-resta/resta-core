@@ -7,6 +7,25 @@ use Resta\Utils;
 
 class ExceptionManager implements ExceptionContracts {
 
+    public function __construct()
+    {
+        foreach (debug_backtrace() as $key=>$value){
+
+            appInstance()->register('exceptionFile',debug_backtrace()[1]['file']);
+            appInstance()->register('exceptionLine',debug_backtrace()[1]['line']);
+
+            if(isset($value['file'])){
+                if(preg_match('@'.resta()->url['project'].'@',$value['file'])){
+
+                    appInstance()->terminate('exceptionFile');
+                    appInstance()->terminate('exceptionLine');
+                    appInstance()->register('exceptionFile',$value['file']);
+                    appInstance()->register('exceptionLine',$value['line']);
+                }
+            }
+        }
+    }
+
     /**
      * @var array
      */
