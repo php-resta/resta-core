@@ -65,7 +65,8 @@ class Project extends ConsoleOutputter {
 
         Utils::chmod_r($this->projectPath(),0777,0777);
 
-        return;
+        echo $this->classical('asa');
+        return true;
 
 
         //get project file all path
