@@ -61,6 +61,12 @@ class Project extends ConsoleOutputter {
 
         Utils::chmod_r(StaticPathModel::appPath(),0777,0777);
 
+        touch($this->projectPath().'/asa.php');
+
+        Utils::chmod_r($this->projectPath(),0777,0777);
+
+        return;
+
 
         //get project file all path
         //$this->touch['publish']                     = $this->project.'/publish.php';

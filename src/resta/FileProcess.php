@@ -101,7 +101,7 @@ class FileProcess {
         foreach ($execArray as $execution=>$touch){
 
             if(!file_exists($touch) && $touch!==null){
-                $this->fs->touch($touch);
+                touch($touch);
 
                 $executionPath=$this->stubPath.'/'.$execution.'.stub';
                 if(file_exists($executionPath)){
