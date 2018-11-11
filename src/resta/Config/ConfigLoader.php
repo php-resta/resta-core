@@ -20,10 +20,14 @@ class ConfigLoader {
         //that can be used to call all class and array files in the config directory of the project.
         $config->setConfig($configFiles);
 
+
         // Finally, we will set
         // the application's timezone and encoding based on the configuration
-        date_default_timezone_set(config('app.timezone'));
-        mb_internal_encoding('UTF-8');
+        if(config('app')!==null){
+            date_default_timezone_set(config('app.timezone'));
+            mb_internal_encoding('UTF-8');
+        }
+
     }
 
 }
