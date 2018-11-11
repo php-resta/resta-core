@@ -214,6 +214,7 @@ class Utils {
     }
 
     public static function chmod($path) {
+
         $dir = new \DirectoryIterator($path);
         foreach ($dir as $item) {
             chmod($item->getPathname(), 0777);

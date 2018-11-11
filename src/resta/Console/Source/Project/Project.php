@@ -58,9 +58,6 @@ class Project extends ConsoleOutputter {
         //set project directory
         $this->file->makeDirectory($this);
 
-        Utils::chmod($this->project);
-        Utils::chmod($this->projectPath());
-
         //get project file all path
         $this->touch['publish']                     = $this->project.'/publish.php';
         $this->touch['main/version']                = $this->project.'/version.php';
@@ -106,8 +103,8 @@ class Project extends ConsoleOutputter {
         //set project touch
         $this->file->touch($this);
 
-        Utils::chmod($this->project);
-        Utils::chmod($this->projectPath());
+        //Utils::chmod($this->project);
+        //Utils::chmod($this->projectPath());
 
         echo $this->classical(' > Application called as "'.$this->projectName().'" has been successfully created in the '.$this->projectPath().'');
     }
