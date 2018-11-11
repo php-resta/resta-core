@@ -24,13 +24,19 @@ class Model extends ConsoleOutputter {
     /**
      * @var $commandRule
      */
-    public $commandRule=['file','table'];
+    public $commandRule=['model','?table'];
 
     /**
      * @method create
      * @return mixed
      */
     public function create(){
+
+        $this->argument['file']=$this->argument['model'];
+
+        if($this->argument['table']===null){
+            $this->argument['table']=$this->argument['file'].'s';
+        }
 
         //lower case for table
         $this->argument['table']=strtolower($this->argument['table']);
