@@ -59,8 +59,8 @@ class Project extends ConsoleOutputter {
         $this->file->makeDirectory($this);
 
         //get project file all path
-        $this->touch['publish']                     = $this->project.'/publish.php';
-        $this->touch['main/version']                = $this->project.'/version.php';
+        //$this->touch['publish']                     = $this->project.'/publish.php';
+        //$this->touch['main/version']                = $this->project.'/version.php';
         $this->touch['kernel/kernel']               = $this->kernel().'/Kernel.php';
         $this->touch['kernel/provider']               = $this->kernel().'/AppProvider.php';
         $this->touch['kernel/annotations']          = $this->kernel().'/AppAnnotations.php';
