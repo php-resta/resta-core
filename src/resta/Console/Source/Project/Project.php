@@ -31,8 +31,8 @@ class Project extends ConsoleOutputter {
      * @method create
      * @return mixed
      */
-    public function create(){
-
+    public function create()
+    {
         $this->argument['kernelDir']=Utils::getNamespace($this->kernel());
 
         //get project directory all path
@@ -55,8 +55,13 @@ class Project extends ConsoleOutputter {
         $this->directory['sourceSupportDir']        = $this->sourceSupportDir();
         $this->directory['sourceSupportTraitDir']   = $this->sourceSupportDir().'/Traits';
 
+
         //set project directory
         $this->file->makeDirectory($this);
+
+        Utils::chmod($this->projectPath());
+        Utils::chmod($this->project);
+
 
         //get project file all path
         //$this->touch['publish']                     = $this->project.'/publish.php';
@@ -103,8 +108,9 @@ class Project extends ConsoleOutputter {
         //set project touch
         $this->file->touch($this);
 
-        //Utils::chmod($this->project);
-        //Utils::chmod($this->projectPath());
+        Utils::chmod($this->projectPath());
+        Utils::chmod($this->project);
+
 
         echo $this->classical(' > Application called as "'.$this->projectName().'" has been successfully created in the '.$this->projectPath().'');
     }

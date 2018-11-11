@@ -58,7 +58,8 @@ class FileProcess {
         foreach ($data->directory as $directory){
 
             try {
-                $this->fs->mkdir($directory,'07777');
+                $this->fs->mkdir($directory,'0777');
+                chmod($directory,0777);
             } catch (IOExceptionInterface $e) {
                 return "An error occurred while creating your directory at ".$e->getPath();
             }
