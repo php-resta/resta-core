@@ -328,6 +328,26 @@ class Utils {
         return $trace[$key];
     }
 
+    public  static function chmod_r($dir, $dirPermissions, $filePermissions) {
+        $dp = opendir($dir);
+        while($file = readdir($dp)) {
+            if (($file == ".") || ($file == ".."))
+                continue;
+
+            $fullPath = $dir."/".$file;
+
+            if(is_dir($fullPath)) {
+                chmod($fullPath, $dirPermissions);
+                self::chmod_r($fullPath, $dirPermissions, $filePermissions);
+            } else {
+                chmod($fullPath, $filePermissions);
+            }
+
+        }
+        closedir($dp);
+    }
+
+
 
 
 
