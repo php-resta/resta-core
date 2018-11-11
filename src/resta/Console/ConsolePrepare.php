@@ -33,9 +33,12 @@ class ConsolePrepare implements ConsolePrepareContracts {
      * @param $commander
      * @return array
      */
-    protected function resolveParameters($commander){
+    protected function resolveParameters($commander)
+    {
+        if(isset($commander['commandRule'][$commander['method']])){
+            $methodCommanderRule     = $commander['commandRule'][$commander['method']];
+        }
 
-        $methodCommanderRule     = $commander['commandRule'][$commander['method']];
         $commandRule             = (isset($methodCommanderRule)) ? $methodCommanderRule :
             $this->getDefaultCommandRules($commander['commandRule']);
 
