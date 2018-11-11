@@ -58,9 +58,8 @@ class Project extends ConsoleOutputter {
         //set project directory
         $this->file->makeDirectory($this);
 
-        echo $this->classical('asa');
-        return;
-
+        Utils::chmod($this->project);
+        Utils::chmod($this->projectPath());
 
         //get project file all path
         $this->touch['publish']                     = $this->project.'/publish.php';
