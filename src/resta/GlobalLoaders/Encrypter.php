@@ -4,12 +4,11 @@ namespace Resta\GlobalLoaders;
 
 use Resta\ApplicationProvider;
 
-class Encrypter extends ApplicationProvider  {
-
+class Encrypter extends ApplicationProvider
+{
     /**
-     * register application key to kernel
-     *
      * @param $key
+     * @return void
      */
     public function setApplicationKey($key){
 

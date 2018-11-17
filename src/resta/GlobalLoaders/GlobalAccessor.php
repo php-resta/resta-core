@@ -2,21 +2,18 @@
 
 namespace Resta\GlobalLoaders;
 
-use Resta\StaticPathModel;
 use Resta\ApplicationProvider;
 use Store\Services\RequestService;
 use Resta\Response\ResponseApplication;
 use Symfony\Component\HttpFoundation\Request;
 
-class GlobalAccessor extends ApplicationProvider  {
-
+class GlobalAccessor extends ApplicationProvider
+{
     /**
-     * register global request handles to kernel
-     *
-     * @method handle
+     * @return void
      */
-    public function handle(){
-
+    public function handle()
+    {
         //get response success and status
         $this->register('instanceController',       null);
         $this->register('responseSuccess',          true);

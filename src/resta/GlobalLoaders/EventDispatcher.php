@@ -4,12 +4,11 @@ namespace Resta\GlobalLoaders;
 
 use Resta\ApplicationProvider;
 
-class EventDispatcher extends ApplicationProvider  {
-
+class EventDispatcher extends ApplicationProvider
+{
     /**
-     * register event dispatcher list to kernel
-     *
      * @param $dispatcher
+     * @return void
      */
     public function setEventDispatcher($dispatcher){
 

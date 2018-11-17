@@ -4,6 +4,7 @@ namespace Resta\Console\Source\Test;
 
 use Resta\Console\ConsoleOutputter;
 use Resta\Console\ConsoleListAccessor;
+use Resta\Utils;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 
@@ -33,7 +34,7 @@ class Test extends ConsoleOutputter {
     public function run()
     {
         $path = str_replace(root.'/','',app()->path()->controller()).'/'.$this->argument['controller'];
-        $process = new Process(array('vendor/bin/phpunit',$path));
+        $process = new Process(array('vendor/bin/phpunit','--bootstrap','index.php',$path));
         $process->run();
 
         // executes after the command finishes

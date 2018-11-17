@@ -4,15 +4,14 @@ namespace Resta\GlobalLoaders;
 
 use Resta\ApplicationProvider;
 
-class Config extends ApplicationProvider  {
-
+class Config extends ApplicationProvider
+{
     /**
-     * register config classess to kernel
-     *
      * @param array $files
+     * @return void
      */
-    public function setConfig($files=array()){
-
+    public function setConfig($files=array())
+    {
         // we are saving all files in
         // the config directory of each application.
         foreach($files as $key=>$file){
@@ -23,7 +22,6 @@ class Config extends ApplicationProvider  {
             ]);
 
         }
-
 
     }
 

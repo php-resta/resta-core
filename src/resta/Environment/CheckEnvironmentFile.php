@@ -10,8 +10,8 @@ class CheckEnvironmentFile {
      * @method checkConfiguration
      * @return mixed
      */
-    public function checkConfiguration(){
-
+    public function checkConfiguration()
+    {
         //if the env file does not exist, we automatically detect
         //that the environment variable is in the production environment.
         if(!file_exists($this->getEnvironmentPath())){
@@ -38,8 +38,8 @@ class CheckEnvironmentFile {
     /**
      * @return mixed
      */
-    private function getEnvironmentPath(){
-
+    private function getEnvironmentPath()
+    {
         //We call environment path with this method
         return app()->path()->environmentFile();
     }

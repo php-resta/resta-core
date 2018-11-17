@@ -4,14 +4,15 @@ namespace Resta\GlobalLoaders;
 
 use Resta\ApplicationProvider;
 
-class GlobalAssignerForBind extends ApplicationProvider  {
-
+class GlobalAssignerForBind extends ApplicationProvider
+{
     /**
      * @param $bindClass
      * @param $callback
+     * @return void
      */
-    public function getAssigner($bindClass,$callback){
-
+    public function getAssigner($bindClass,$callback)
+    {
         //set namespace for bind class
         $bindClassNamespace=__NAMESPACE__.'\\'.ucfirst($bindClass);
 

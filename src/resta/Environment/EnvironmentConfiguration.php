@@ -39,8 +39,8 @@ class EnvironmentConfiguration {
     /**
      * @param EnvironmentGlobalInstance $environment
      */
-    public function handle(EnvironmentGlobalInstance $environment){
-
+    public function handle(EnvironmentGlobalInstance $environment)
+    {
         //set define for config
         define ('environment',true);
 

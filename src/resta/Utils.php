@@ -347,6 +347,15 @@ class Utils {
         closedir($dp);
     }
 
+    /**
+     * @return bool
+     */
+    public static function isRequestConsole()
+    {
+        //Determine if the application is running in the console.
+        return php_sapi_name() === 'cli' || php_sapi_name() === 'phpdbg';
+    }
+
 
 
 

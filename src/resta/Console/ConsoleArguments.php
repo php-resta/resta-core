@@ -10,7 +10,11 @@ trait ConsoleArguments {
      * @method getArguments
      * @return array
      */
-    public function getArguments(){
+    public function getArguments()
+    {
+
+        //if there is no arguments constant
+        if(!defined('arguments'))  define ('arguments',['api']);
 
         //get psr standard console arguments
         return Utils::upperCase(arguments);
@@ -99,9 +103,11 @@ trait ConsoleArguments {
      * @method defineAppnameForCustomConsole
      * @return void
      */
-    public function defineAppnameForCustomConsole(){
+    public function defineAppnameForCustomConsole()
+    {
 
         $arguments=$this->getArguments();
+
         $getConsoleArgumentsWithKey=$this->getConsoleArgumentsWithKey();
 
         if(isset($getConsoleArgumentsWithKey['group'])){

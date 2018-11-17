@@ -7,14 +7,13 @@ use Resta\ClassAliasGroup;
 use Resta\ApplicationProvider;
 use Resta\Foundation\RegisterAppBound;
 
-class ApplicationPreLoader extends ApplicationProvider  {
-
+class ApplicationPreLoader extends ApplicationProvider
+{
     /**
-     * register pre loader variables to kernel
-     * @return void|mixed
+     * @return void
      */
-    public function handle(){
-
+    public function handle()
+    {
         //we define the general application instance object.
         define('appInstance',(base64_encode(serialize($this))));
 
@@ -23,10 +22,10 @@ class ApplicationPreLoader extends ApplicationProvider  {
     }
 
     /**
-     * @return void|mixed
+     * @return void
      */
-    private function mainLoader(){
-
+    private function mainLoader()
+    {
         //we can use this method to move an instance of the application class with the kernel object
         //and easily resolve an encrypted instance of all the kernel variables in our helper class.
         ClassAliasGroup::setAlias(App::class,'application');

@@ -19,6 +19,7 @@ class Middleware extends ApplicationProvider
 
     /**
      * @param $middleValue
+     * @return void
      */
     public function pointer($middleValue)
     {

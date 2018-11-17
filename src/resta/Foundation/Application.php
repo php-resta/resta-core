@@ -6,6 +6,7 @@ use Resta\ClosureDispatcher;
 use Resta\Traits\ApplicationPath;
 use Resta\Contracts\ApplicationContracts;
 use Resta\Contracts\ApplicationHelpersContracts;
+use Resta\Utils;
 
 class Application extends Kernel implements ApplicationContracts,ApplicationHelpersContracts
 {
@@ -84,7 +85,7 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
         if($this->console()){
 
             //Determine if the application is running in the console.
-            return php_sapi_name() === 'cli' || php_sapi_name() === 'phpdbg';
+            return Utils::isRequestConsole();
         }
 
         return false;

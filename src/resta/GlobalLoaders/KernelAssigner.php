@@ -5,15 +5,15 @@ namespace Resta\GlobalLoaders;
 use Resta\Utils;
 use Resta\ApplicationProvider;
 
-class KernelAssigner extends ApplicationProvider  {
-
+class KernelAssigner extends ApplicationProvider
+{
     /**
      * @param $object
      * @param $callback
-     * @return mixed|void
+     * @return void
      */
-    public function consoleShared($object,$callback){
-
+    public function consoleShared($object,$callback)
+    {
         //The console share is evaluated as a true variable to be assigned as the 3rd parameter in the classes to be bound.
         //The work to be done here is to bind the classes to be included in the console share privately.
         if($this->app->console()){
@@ -24,8 +24,8 @@ class KernelAssigner extends ApplicationProvider  {
     /**
      * @return mixed|void
      */
-    public function container(){
-
+    public function container()
+    {
         //We are initializing the array property for the service container object.
         if(!isset($this->singleton()->serviceContainer)){
             $this->register('serviceContainer',[]);
@@ -36,8 +36,8 @@ class KernelAssigner extends ApplicationProvider  {
      * @param $concrete
      * @return mixed
      */
-    private function getConcrete($concrete){
-
+    private function getConcrete($concrete)
+    {
         //if a pre loader class wants to have before kernel values,
         //it must return a callback to the bind method
         return Utils::callbackProcess($concrete);
@@ -46,9 +46,10 @@ class KernelAssigner extends ApplicationProvider  {
     /**
      * @param $object
      * @param $concrete
+     * @return void
      */
-    private function setKernel($object,$concrete){
-
+    private function setKernel($object,$concrete)
+    {
         //We check that the concrete object
         //is an object that can be retrieved.
         if(!isset($this->singleton()->{$object}) && class_exists($concrete)){
@@ -65,9 +66,11 @@ class KernelAssigner extends ApplicationProvider  {
     /**
      * @param $object
      * @param $concrete
+     * @param null $value
+     * @return void
      */
-    public function setKernelObject($object,$concrete,$value=null){
-
+    public function setKernelObject($object,$concrete,$value=null)
+    {
         //if a pre loader class wants to have before kernel values,
         //it must return a callback to the bind method
         $concrete=$this->getConcrete($concrete);
@@ -90,9 +93,10 @@ class KernelAssigner extends ApplicationProvider  {
     /**
      * @param $object
      * @param $concrete
+     * @return void
      */
-    private function setServiceContainer($object,$concrete){
-
+    private function setServiceContainer($object,$concrete)
+    {
         //We check that the concrete object
         //is an object that can be retrieved.
         if(isset($this->singleton()->serviceContainer) && !isset($this->singleton()->serviceContainer[$object])){
@@ -106,14 +110,13 @@ class KernelAssigner extends ApplicationProvider  {
     /**
      * @param $object
      * @return null
+     * @return void
      */
-    private function getGlobalObjectInstance($object){
-
+    private function getGlobalObjectInstance($object)
+    {
         $globalObject           = $object.'GlobalInstance';
         $issetGlobalObject      = (isset($this->singleton()->{$globalObject}));
 
         return ($issetGlobalObject) ? $this->singleton()->{$globalObject} : null;
-
-
     }
 }

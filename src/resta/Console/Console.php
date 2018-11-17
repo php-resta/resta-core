@@ -61,8 +61,8 @@ class Console extends ApplicationProvider {
     /**
      * @return mixed
      */
-    public function handle(){
-
+    public function handle()
+    {
         //run console process
         return $this->consoleProcess();
     }

@@ -4,11 +4,11 @@ namespace Resta\GlobalLoaders;
 
 use Resta\ApplicationProvider;
 
-class Url extends ApplicationProvider  {
-
+class Url extends ApplicationProvider
+{
     /**
-     * @param $urlList array
-     * @method definitor
+     * @param $urlList
+     * @return void
      */
     public function definitor($urlList){
 

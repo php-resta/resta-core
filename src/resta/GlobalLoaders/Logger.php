@@ -4,12 +4,13 @@ namespace Resta\GlobalLoaders;
 
 use Resta\ApplicationProvider;
 
-class Logger extends ApplicationProvider  {
-
+class Logger extends ApplicationProvider
+{
     /**
      * @param $base
      * @param $adapter
      * @param $loggerService
+     * @return void
      */
     public function setLogger($base,$adapter,$loggerService){
 

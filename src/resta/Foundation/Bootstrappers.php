@@ -54,6 +54,7 @@ class Bootstrappers
             throw new \LogicException('bootstrapper is not available');
         }
 
+
         //The concrete object is the callback class itself that is sent to this class.
         //Once the concrete object has been assigned, we run the bootstrappers sequence
         //and include it in the application.

@@ -11,8 +11,8 @@ class Console extends ApplicationProvider implements BootContracts {
     /**
      * @return mixed|void
      */
-    public function boot(){
-
+    public function boot()
+    {
         //if the console is true
         //console app runner
         if($this->app->runningInConsole()){
