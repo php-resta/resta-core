@@ -2,8 +2,10 @@
 
 namespace Resta\Console\Source\Test;
 
-use Resta\Console\ConsoleListAccessor;
 use Resta\Console\ConsoleOutputter;
+use Resta\Console\ConsoleListAccessor;
+use Symfony\Component\Process\Process;
+use Symfony\Component\Process\Exception\ProcessFailedException;
 
 class Test extends ConsoleOutputter {
 
@@ -17,19 +19,28 @@ class Test extends ConsoleOutputter {
     /**
      * @var $define
      */
-    public $define='Test';
+    public $define='test run on console';
 
     /**
-     * @var $command_create
+     * @var $commandRule
      */
-    public $command_create='php api test create';
+    public $commandRule=[];
 
     /**
-     * @method create
+     * @method generate
      * @return mixed
      */
-    public function create(){
+    public function run()
+    {
+        $path = str_replace(root.'/','',app()->path()->controller()).'/'.$this->argument['controller'];
+        $process = new Process(array('vendor/bin/phpunit',$path));
+        $process->run();
 
-        return $this->blue('test');
+        // executes after the command finishes
+        if (!$process->isSuccessful()) {
+            throw new ProcessFailedException($process);
+        }
+
+        echo $this->classical($process->getOutput());
     }
 }
