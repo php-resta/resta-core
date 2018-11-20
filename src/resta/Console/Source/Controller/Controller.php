@@ -57,7 +57,6 @@ class Controller extends ConsoleOutputter {
         $this->touch['service/dummy']           = $this->directory['endpoint'].'/Dummy.yaml';
         $this->touch['service/doc']             = $this->directory['endpoint'].'/Doc.yaml';
         $this->touch['service/readme']          = $this->directory['endpoint'].'/README.md';
-        $this->touch['service/test']            = $this->directory['endpoint'].'/'.$this->argument['serviceClass'].'Test.php';
 
         $this->file->touch($this,[
             'stub'=>'Service_Create'

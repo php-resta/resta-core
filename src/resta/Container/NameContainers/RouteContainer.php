@@ -4,6 +4,7 @@ namespace Resta\Container\NameContainers;
 
 use Resta\Str;
 use Resta\GlobalLoaders\Container;
+use Resta\Utils;
 
 class RouteContainer {
 
@@ -15,8 +16,8 @@ class RouteContainer {
     /**
      * @param $parameters
      */
-    private function checkRouteObligation($parameters){
-
+    private function checkRouteObligation($parameters)
+    {
         //check $parameters value for obligation
         foreach ($parameters as $parameterKey=>$parameter){
 
@@ -45,12 +46,17 @@ class RouteContainer {
     /**
      * @param $parameters
      * @param $param
+     * @return mixed
      */
-    public function resolveContainer($parameters,$param){
+    public function resolveContainer($parameters,$param)
+    {
 
         // we apply this method to obtain reliable
         // route data by checking the route requirement.
         $this->checkRouteObligation($parameters);
+
+        //get service configuration params for route
+        $serviceConf = Utils::getServiceConf();
 
         // we get the container global object with
         // the help of global loaders and register the route container.
@@ -60,6 +66,11 @@ class RouteContainer {
         //route helper method
         $param['route']=route();
 
+        // the user will determine
+        // if the route parameters are in
+        // accordance with the regular expression rule as a pattern.
+        $this->routePatternProcess($serviceConf,$param['route']);
+
         // when the route nameContainer is defined,
         // these keys must be absolute string data.
         $this->shouldBeStringRouteValues();
@@ -68,12 +79,40 @@ class RouteContainer {
         return $param;
     }
 
+    /**
+     * @param $serviceConf
+     * @param $params
+     */
+    private function routePatternProcess($serviceConf,$params)
+    {
+        if(isset($serviceConf['routeParameters'])){
+
+            $routeParameters = $serviceConf['routeParameters'];
+
+            $pattern = [];
+            if(isset($routeParameters[strtolower(httpMethod)][methodName]['pattern'])){
+                $pattern = $routeParameters[strtolower(httpMethod)][methodName]['pattern'];
+            }
+
+            foreach ($params as $key=>$param){
+
+                if(isset($pattern[$key])){
+
+                    if(!preg_match('@'.$pattern[$key].'$@is',$param)){
+                        exception()
+                            ->invalidArgument('route id value is not valid for configuration as pattern');
+                    }
+                }
+            }
+        }
+    }
+
 
     /**
-     * @return void|mixed
+     * @return mixed|void
      */
-    private function shouldBeStringRouteValues(){
-
+    private function shouldBeStringRouteValues()
+    {
         // we pass all the key values ​​of
         // the route data through the string control.
         foreach (route() as $routeKey=>$routeValue){

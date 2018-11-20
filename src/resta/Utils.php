@@ -8,15 +8,15 @@ use Resta\Container\ContainerResolve;
 class Utils {
 
     /**
-     * @var array
+     * @var array $bool
      */
     private static $bool=[];
 
     /**
-     * @return mixed
+     * @return \DI\Container
      */
-    public static function callBuild(){
-
+    public static function callBuild()
+    {
         //di-container
         return \DI\ContainerBuilder::buildDevContainer();
     }
@@ -25,25 +25,27 @@ class Utils {
     /**
      * @param null $class
      * @return mixed
+     * @throws \DI\DependencyException
+     * @throws \DI\NotFoundException
      */
-    public static function resolve($class=null){
-
+    public static function resolve($class=null)
+    {
         //class resolve
         if($class!==null){
             $container = self::callBuild();
             return $container->get($class);
         }
-
     }
 
-
     /**
-     * @param $class null
+     * @param null $class
      * @param array $param
-     * @return mixed
+     * @return mixed|null
+     * @throws \DI\DependencyException
+     * @throws \DI\NotFoundException
      */
-    public static function makeBind($class=null, $param=array()){
-
+    public static function makeBind($class=null, $param=array())
+    {
         if($class!==null){
 
             $container = self::callBuild();
@@ -51,14 +53,15 @@ class Utils {
         }
 
         return null;
-
     }
 
     /**
      * @param null $class
+     * @return null|object
+     * @throws \DI\DependencyException
      */
-    public static function injectOnBind($class=null){
-
+    public static function injectOnBind($class=null)
+    {
         if($class!==null){
 
             $container = self::callBuild();
@@ -70,12 +73,12 @@ class Utils {
 
 
     /**
-     * @param $class null
+     * @param null $class
      * @param array $param
      * @return mixed
      */
-    public static function callBind($class=null, $param=array()){
-
+    public static function callBind($class=null, $param=array())
+    {
         return (new ContainerResolve())->call($class,$param,function($call){
             return self::callBuild()->call($call->class,$call->param);
         });
@@ -83,11 +86,13 @@ class Utils {
     }
 
     /**
-     * @param $class null
+     * @param null $class
      * @return mixed
+     * @throws \DI\DependencyException
+     * @throws \DI\NotFoundException
      */
-    public static function get($class=null){
-
+    public static function get($class=null)
+    {
         $container = self::callBuild();
         return $container->get($class);
     }
@@ -97,8 +102,8 @@ class Utils {
      * @param bool $shift
      * @return array
      */
-    public static function upperCase($argument,$shift=true){
-
+    public static function upperCase($argument,$shift=true)
+    {
         if($shift){
             array_shift($argument);
         }
@@ -111,10 +116,10 @@ class Utils {
 
     /**
      * @param $argument
-     * @return array
+     * @return array|string
      */
-    public static function strtolower($argument){
-
+    public static function strtolower($argument)
+    {
         if(!is_array($argument)){
             return strtolower($argument);
         }
@@ -126,10 +131,11 @@ class Utils {
 
     /**
      * @param null $app
+     * @param null $appInstance
      * @return string
      */
-    public static function getAppVersion($app=null,$appInstance=null){
-
+    public static function getAppVersion($app=null,$appInstance=null)
+    {
         if(defined('app')){
 
             $versionClass='App\\'.$app.'\version';
@@ -140,7 +146,6 @@ class Utils {
             }
         }
 
-
         return 'V1';
     }
 
@@ -149,13 +154,18 @@ class Utils {
      * @param array $data
      * @return string
      */
-    public static function generatorNamespace($data=array()){
-
+    public static function generatorNamespace($data=array())
+    {
         return implode("\\",$data);
     }
 
-    public static function getPathFromNamespace($class,$phpextension=true){
-
+    /**
+     * @param $class
+     * @param bool $phpextension
+     * @return mixed
+     */
+    public static function getPathFromNamespace($class,$phpextension=true)
+    {
         if($phpextension){
             $default=root.'/'.str_replace("\\","/",$class).'.php';
         }
@@ -170,8 +180,8 @@ class Utils {
      * @param $namespace
      * @return bool
      */
-    public static function isNamespaceExists($namespace){
-
+    public static function isNamespaceExists($namespace)
+    {
         return (class_exists($namespace)) ? true : false;
     }
 
@@ -180,29 +190,41 @@ class Utils {
      * @param $method
      * @return bool
      */
-    public static function existMethod($class,$method){
-
+    public static function existMethod($class,$method)
+    {
         return method_exists($class,$method);
     }
 
-    public static function isArrayEqual($first,$second){
-
-        return ( count( $first ) == count( $second ) && !array_diff( $first, $second ) );
+    /**
+     * @param $first
+     * @param $second
+     * @return bool
+     */
+    public static function isArrayEqual($first,$second)
+    {
+        return (count( $first ) == count( $second ) && !array_diff( $first, $second ));
     }
 
     /**
      * @param $path
-     * @return mixed|YamlManager
+     * @return YamlManager
      */
-    public static function yaml($path){
-
+    public static function yaml($path)
+    {
         return new YamlManager($path);
     }
 
-    public static function glob($path,$filename=false){
+    /**
+     * @param $path
+     * @param bool $filename
+     * @return array
+     */
+    public static function glob($path,$filename=false)
+    {
+        $configList = [];
 
-        $configList=[];
         foreach (glob($path.'/*.php') as $config) {
+
             $configArray=str_replace(".php","",explode("/",$config));
             $configList[end($configArray)]=$config;
         }
@@ -210,39 +232,59 @@ class Utils {
         if($filename===true){
             return array_keys($configList);
         }
+
         return $configList;
     }
 
-    public static function chmod($path) {
-
+    /**
+     * @param $path
+     */
+    public static function chmod($path)
+    {
         $dir = new \DirectoryIterator($path);
+
         foreach ($dir as $item) {
+
             chmod($item->getPathname(), 0777);
+
             if ($item->isDir() && !$item->isDot()) {
                 self::chmod($item->getPathname());
             }
         }
     }
 
-    public static function getJustClassName($namespace,$seperator="\\"){
-
+    /**
+     * @param $namespace
+     * @param string $seperator
+     * @return mixed
+     */
+    public static function getJustClassName($namespace,$seperator="\\")
+    {
         $path = explode($seperator, $namespace);
         return array_pop($path);
     }
 
 
-    //fopen process
-    public static function changeClass($class,$param=array()){
+    /**
+     * @param $class
+     * @param array $param
+     * @return bool
+     */
+    public static function changeClass($class,$param=array())
+    {
         $executionPath=$class;
         $dt = fopen($executionPath, "r");
         $content = fread($dt, filesize($executionPath));
         fclose($dt);
+
         foreach ($param as $key=>$value){
             $content=str_replace($key,$value,$content);
         }
+
         $dt = fopen($executionPath, "w");
         fwrite($dt, $content);
         fclose($dt);
+
         return true;
     }
 
@@ -251,8 +293,8 @@ class Utils {
      * @param $callback
      * @return mixed
      */
-    public static function returnCallback($data,$callback){
-
+    public static function returnCallback($data,$callback)
+    {
         return call_user_func_array($callback,[$data]);
     }
 
@@ -260,10 +302,9 @@ class Utils {
      * @param $namespace
      * @return string
      */
-    public static function getNamespace($namespace){
-
+    public static function getNamespace($namespace)
+    {
         $rootDelete=str_replace(root.'/src/app/','',$namespace);
-
 
         return 'App\\'.self::generatorNamespace(
           explode('/',$rootDelete)
@@ -275,7 +316,8 @@ class Utils {
      * @param $callback
      * @return mixed
      */
-    public static function callbackProcess($callback){
+    public static function callbackProcess($callback)
+    {
         return (is_callable($callback)) ? call_user_func($callback) : $callback;
     }
 
@@ -284,13 +326,12 @@ class Utils {
      * @param $array2
      * @return bool
      */
-    public static function array_diff_key_recursive ($array1, $array2) {
-
+    public static function array_diff_key_recursive ($array1, $array2)
+    {
         if(count($array1)!==count($array2)) self::$bool[]=false;
 
         foreach ($array1 as $array1_key=>$array1_value){
 
-            //
             if(!is_array($array1_value)){
                 if(!array_key_exists($array1_key,$array2)) self::$bool[]=false;
             }
@@ -298,8 +339,11 @@ class Utils {
                 if(!array_key_exists($array1_key,$array2)) self::$bool[]=false;
 
                 if(!isset($array2[$array1_key]) OR !is_array($array2[$array1_key])) $array2[$array1_key]=[];
+
                 if(isset($array1_value[0])) $array1_value=$array1_value[0];
+
                 if(isset($array2[$array1_key][0])) $array2[$array1_key]=$array2[$array1_key][0];
+
                 self::array_diff_key_recursive($array1_value,$array2[$array1_key]);
             }
         }
@@ -314,7 +358,8 @@ class Utils {
      * @param $data
      * @return mixed
      */
-    public static function slashToBackSlash($data){
+    public static function slashToBackSlash($data)
+    {
         return str_replace("/","\\",$data);
     }
 
@@ -322,13 +367,19 @@ class Utils {
      * @param int $key
      * @return mixed
      */
-    public static function trace($key=0){
-
+    public static function trace($key=0)
+    {
         $trace=debug_backtrace();
         return $trace[$key];
     }
 
-    public  static function chmod_r($dir, $dirPermissions, $filePermissions) {
+    /**
+     * @param $dir
+     * @param $dirPermissions
+     * @param $filePermissions
+     */
+    public  static function chmod_r($dir, $dirPermissions, $filePermissions)
+    {
         $dp = opendir($dir);
         while($file = readdir($dp)) {
             if (($file == ".") || ($file == ".."))
@@ -354,6 +405,17 @@ class Utils {
     {
         //Determine if the application is running in the console.
         return php_sapi_name() === 'cli' || php_sapi_name() === 'phpdbg';
+    }
+
+    /**
+     * @return array
+     */
+    public static function getServiceConf()
+    {
+        if(property_exists(resta(),'serviceConf') && defined('methodName')){
+            return resta()->serviceConf;
+        }
+        return [];
     }
 
 
