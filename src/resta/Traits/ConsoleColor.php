@@ -2,11 +2,16 @@
 
 namespace Resta\Traits;
 
-trait ConsoleColor {
-
-    // Returns colored string
-    public function getColoredString($string, $foreground_color = null, $background_color = null) {
-
+trait ConsoleColor
+{
+    /**
+     * @param $string
+     * @param null $foreground_color
+     * @param null $background_color
+     * @return string
+     */
+    public function getColoredString($string, $foreground_color = null, $background_color = null)
+    {
         if(isset($this->argument['commandCall'])) return $string;
 
         $colored_string = "";
@@ -27,9 +32,14 @@ trait ConsoleColor {
     }
 
 
-    // Returns colored string information
-    public function info($string, $foreground_color = 'blue', $background_color = 'white') {
-
+    /**
+     * @param $string
+     * @param string $foreground_color
+     * @param string $background_color
+     * @return string
+     */
+    public function info($string, $foreground_color = 'blue', $background_color = 'white')
+    {
         if(isset($this->argument['commandCall'])) return $string;
 
         $colored_string = "";
@@ -49,9 +59,13 @@ trait ConsoleColor {
         return ''.$colored_string.'' . PHP_EOL;
     }
 
-    // Returns colored string information
-    public function red($string, $foreground_color = 'red', $background_color = 'white') {
-
+    /**
+     * @param $string
+     * @param string $foreground_color
+     * @return string
+     */
+    public function red($string, $foreground_color = 'red')
+    {
         if(isset($this->argument['commandCall'])) return $string;
 
         $colored_string = "";
@@ -60,7 +74,6 @@ trait ConsoleColor {
         if (isset($this->foreground_colors[$foreground_color])) {
             $colored_string .= "\033[" . $this->foreground_colors[$foreground_color] . "m";
         }
-
 
         // Add string and end coloring
         $colored_string .=  $string . "\033[0m";
@@ -69,9 +82,14 @@ trait ConsoleColor {
     }
 
 
-    // Returns colored string information
-    public function success($string, $foreground_color = 'white', $background_color = 'yellow') {
-
+    /**
+     * @param $string
+     * @param string $foreground_color
+     * @param string $background_color
+     * @return string
+     */
+    public function success($string, $foreground_color = 'white', $background_color = 'yellow')
+    {
         if(isset($this->argument['commandCall'])) return $string;
 
         $colored_string = "";
@@ -91,10 +109,14 @@ trait ConsoleColor {
         return ''.$colored_string.'' . PHP_EOL;
     }
 
-
-    // Returns colored string information
-    public function classical($string, $foreground_color = 'red', $background_color = 'white') {
-
+    /**
+     * @param $string
+     * @param string $foreground_color
+     * @param string $background_color
+     * @return string
+     */
+    public function classical($string, $foreground_color = 'red', $background_color = 'white')
+    {
         if(isset($this->argument['commandCall'])) return $string;
 
         $colored_string = "";
@@ -114,9 +136,14 @@ trait ConsoleColor {
         return ''.$colored_string.'' . PHP_EOL;
     }
 
-    // Returns colored string information
-    public function bluePrint($string, $foreground_color = 'blue', $background_color = 'white') {
-
+    /**
+     * @param $string
+     * @param string $foreground_color
+     * @param string $background_color
+     * @return string
+     */
+    public function bluePrint($string, $foreground_color = 'blue', $background_color = 'white')
+    {
         if(isset($this->argument['commandCall'])) return $string;
 
         $colored_string = "";
@@ -136,10 +163,14 @@ trait ConsoleColor {
         return ''.$colored_string.'' . PHP_EOL;
     }
 
-
-    // Returns colored string information
-    public function yellowPrint($string, $foreground_color = 'black', $background_color = 'yellow') {
-
+    /**
+     * @param $string
+     * @param string $foreground_color
+     * @param string $background_color
+     * @return string
+     */
+    public function yellowPrint($string, $foreground_color = 'black', $background_color = 'yellow')
+    {
         if(isset($this->argument['commandCall'])) return $string;
 
         $colored_string = "";
@@ -159,10 +190,14 @@ trait ConsoleColor {
         return ''.$colored_string.'' . PHP_EOL;
     }
 
-
-    // Returns colored string information
-    public function blue($string, $foreground_color = 'white', $background_color = 'blue') {
-
+    /**
+     * @param $string
+     * @param string $foreground_color
+     * @param string $background_color
+     * @return string
+     */
+    public function blue($string, $foreground_color = 'white', $background_color = 'blue')
+    {
         if(isset($this->argument['commandCall'])) return $string;
 
         $colored_string = "";
@@ -182,9 +217,14 @@ trait ConsoleColor {
         return ''.$colored_string.'' . PHP_EOL;
     }
 
-    // Returns colored string information
-    public function yellow($string, $foreground_color = 'blue', $background_color = 'yellow') {
-
+    /**
+     * @param $string
+     * @param string $foreground_color
+     * @param string $background_color
+     * @return string
+     */
+    public function yellow($string, $foreground_color = 'blue', $background_color = 'yellow')
+    {
         if(isset($this->argument['commandCall'])) return $string;
 
         $colored_string = "";
@@ -204,10 +244,14 @@ trait ConsoleColor {
         return ''.$colored_string.'' . PHP_EOL;
     }
 
-
-    // Returns colored string information
-    public function cyan($string, $foreground_color = 'magenta', $background_color = 'cyan') {
-
+    /**
+     * @param $string
+     * @param string $foreground_color
+     * @param string $background_color
+     * @return string
+     */
+    public function cyan($string, $foreground_color = 'magenta', $background_color = 'cyan')
+    {
         if(isset($this->argument['commandCall'])) return $string;
 
         $colored_string = "";
@@ -227,10 +271,14 @@ trait ConsoleColor {
         return ''.$colored_string.'' . PHP_EOL;
     }
 
-
-    // Returns colored string information
-    public function input($string, $foreground_color = 'blue', $background_color = 'light_gray') {
-
+    /**
+     * @param $string
+     * @param string $foreground_color
+     * @param string $background_color
+     * @return string
+     */
+    public function input($string, $foreground_color = 'blue', $background_color = 'light_gray')
+    {
         if(isset($this->argument['commandCall'])) return $string;
 
         $colored_string = "";
@@ -250,9 +298,14 @@ trait ConsoleColor {
         return ''.$colored_string.'';
     }
 
-    // Returns colored string information
-    public function error($string, $foreground_color = 'white', $background_color = 'red') {
-
+    /**
+     * @param $string
+     * @param string $foreground_color
+     * @param string $background_color
+     * @return string
+     */
+    public function error($string, $foreground_color = 'white', $background_color = 'red')
+    {
         if(isset($this->argument['commandCall'])) return $string;
 
         $colored_string = "";

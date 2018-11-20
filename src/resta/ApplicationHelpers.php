@@ -10,6 +10,18 @@ if (!function_exists('auth')) {
     }
 }
 
+if (!function_exists('controller')) {
+
+    /**
+     * @param null $controller
+     * @return mixed
+     */
+    function controller($controller=null)
+    {
+        return ($controller===null) ? app()->namespace()->controller() : app()->namespace()->controller($controller);
+    }
+}
+
 if (!function_exists('fullUrl')) {
 
     function fullUrl()

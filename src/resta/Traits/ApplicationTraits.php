@@ -2,7 +2,7 @@
 
 namespace Resta\Traits;
 
-trait ApplicationTraits {
-
-
+trait ApplicationTraits
+{
+    //
 }

@@ -4,9 +4,10 @@ namespace Resta\UrlParse;
 
 use Resta\ApplicationProvider;
 
-class UrlVersionIdentifier extends ApplicationProvider {
-
-    public function getAppVersion(){
-
+class UrlVersionIdentifier extends ApplicationProvider
+{
+    public function getAppVersion()
+    {
+        //
     }
 }

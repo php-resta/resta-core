@@ -4,22 +4,22 @@ namespace Resta\Traits;
 
 use Resta\StaticPathRepository;
 use Resta\StaticNamespaceRepository;
-use Resta\Contracts\StaticPathContracts;
-use Resta\Contracts\StaticNamespaceContracts;
 
-trait ApplicationPath {
-
+trait ApplicationPath
+{
     /**
-     * @return \StaticPathContracts
+     * @return StaticPathRepository
      */
-    public function path(){
+    public function path()
+    {
         return new StaticPathRepository();
     }
 
     /**
-     * @return \StaticNamespaceContracts
+     * @return StaticNamespaceRepository
      */
-    public function namespace(){
+    public function namespace()
+    {
         return new StaticNamespaceRepository();
     }
 

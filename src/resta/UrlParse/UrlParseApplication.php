@@ -5,8 +5,8 @@ namespace Resta\UrlParse;
 use Resta\Utils;
 use Resta\StaticPathList;
 
-class UrlParseApplication {
-
+class UrlParseApplication
+{
     /**
      * @var array
      */
@@ -18,11 +18,10 @@ class UrlParseApplication {
     protected $urlNames=['project','namespace','endpoint','method'];
 
     /**
-     * @method assignUrlList
-     * @param array $query
+     * @return void
      */
-    public function assignUrlList(){
-
+    public function assignUrlList()
+    {
         // We treat the url parameters in the size of
         // the application usage and get the values
         // ​​to be processed throughout the application in query format.
@@ -51,11 +50,10 @@ class UrlParseApplication {
     }
 
     /**
-     * @method convertArrayForQuery
      * @return array
      */
-    public function convertArrayForQuery(){
-
+    public function convertArrayForQuery()
+    {
         //convert array for query
         //we are removing the first empty element from the array due to the slash sign.
         $arrayForQuery=explode("/",request()->getPathInfo());
@@ -73,8 +71,8 @@ class UrlParseApplication {
      * @param $key
      * @param $value
      */
-    private function getUrlListValues($key,$value){
-
+    private function getUrlListValues($key,$value)
+    {
         if($this->urlNames[$key]=="namespace"){
 
             // If the key value of the url is specified as a namespace,
@@ -91,18 +89,16 @@ class UrlParseApplication {
 
 
     /**
-     * @method handle
-     * @return array
+     * @return mixed
      */
-    public function handle(){
-
+    public function handle()
+    {
         //convert array for query
         //assign url list
         $this->assignUrlList();
 
         //we make url parse resolving with resolved
         return (new UrlParseParamResolved)->urlParamResolve($this);
-
     }
 
 

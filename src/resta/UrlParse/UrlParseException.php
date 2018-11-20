@@ -4,15 +4,13 @@ namespace Resta\UrlParse;
 
 use Resta\StaticPathModel;
 
-class UrlParseException {
-
+class UrlParseException
+{
     /**
-     * @method exception
      * @param null $data
-     * @return mixed
      */
-    public function exception($data=null){
-
+    public function exception($data=null)
+    {
         //get app path for checking
         $appPath=StaticPathModel::appPath().'/'.$data['project'];
 
@@ -34,5 +32,4 @@ class UrlParseException {
             throw new \DomainException('No Endpoint');
         }
     }
-
 }
