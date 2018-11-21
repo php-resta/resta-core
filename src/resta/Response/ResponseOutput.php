@@ -2,10 +2,11 @@
 
 namespace Resta\Response;
 
+use Resta\Config\ConfigProcess;
 use Resta\Routing\KernelRouterProcess;
 
-class ResponseOutput {
-
+class ResponseOutput
+{
     /**
      * @var $printer
      */
@@ -13,9 +14,10 @@ class ResponseOutput {
 
     /**
      * @param $printer
+     * @return array
      */
-    private function dataIncludedForPrinter($printer){
-
+    private function dataIncludedForPrinter($printer)
+    {
         if(isset(resta()->controllerWatch)){
 
             $watch=resta()->controllerWatch;
@@ -27,70 +29,70 @@ class ResponseOutput {
     }
 
     /**
-     * @method getOutPut
      * @return mixed
      */
-    private function getRouter(){
+    private function getRouter()
+    {
         return app()->makeBind(KernelRouterProcess::class)->router();
     }
 
     /**
-     * @method getOutPutter
-     * @return mixed
+     * @return array
      */
-    protected function getOutPutter(){
+    protected function getOutPutter()
+    {
         return $this->printer($this->getRouter());
     }
 
     /**
-     * @param $data array
-     * @method hateoasCapsule
-     * @return mixed
+     * @param array $data
+     * @return array
      */
-    private function hateoasCapsule($data=array()){
+    private function hateoasCapsule($data=array())
+    {
         return (config('app.hateoas')) ? array_merge($data,config('hateoas')) : $data;
     }
 
     /**
-     * @method metaAdd
-     * @return array
+     * @return mixed
      */
-    private function metaAdd(){
-
+    private function metaAdd()
+    {
         return config('response.meta');
     }
 
     /**
      * @param $output
      * @param callable $callback
+     * @return mixed
      */
-    private function noInExceptionHateoas($output,callable $callback){
-
+    private function noInExceptionHateoas($output,callable $callback)
+    {
         if(isset($output['success']) && false===$output['success']){
             return $output;
         }
-
         return call_user_func($callback);
     }
 
     /**
-     * @method outputCapsule
      * @param $data
      * @return array
      */
-    private function outputCapsule($data){
+    private function outputCapsule($data)
+    {
+        $configResponseData = config('response.data');
 
         return $this->hateoasCapsule([
-            config('response.data')=>$data,
+            $configResponseData => $data,
         ]);
     }
 
     /**
      * @param $output
-     * @return array
+     * @return array|mixed
      */
-    private function printer($output){
-
+    private function printer($output)
+    {
         //if the system throws an exception,
         //we subtract the hateoas extension from the output value.
         $this->printer=$this->noInExceptionHateoas($output,function() use ($output){

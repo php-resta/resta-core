@@ -6,7 +6,6 @@ use Resta\ClosureDispatcher;
 use Resta\Traits\ApplicationPath;
 use Resta\Contracts\ApplicationContracts;
 use Resta\Contracts\ApplicationHelpersContracts;
-use Resta\Utils;
 
 class Application extends Kernel implements ApplicationContracts,ApplicationHelpersContracts
 {
@@ -40,7 +39,7 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
     public function bootFire($boot=null,$maker=null)
     {
         //we can refer to this method
-        //because we can boot classes in the middleware or bootstrappers array.
+        //because we can boot classes in the middleware or bootstrapper array.
         if($boot===null && $maker!==null){
 
             //We create kernel bootstrapping objects
@@ -72,23 +71,8 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
     public function handle()
     {
         //This is the main calling place of your application.
-        //If you come via http, the kernel response value is evaulated.
-        //If you come via console, the kernel console value is evaulated.
+        //If you come via http, the kernel response value is appraised.
+        //If you come via console, the kernel console value is appraised.
         return ($this->console()) ? null : $this->kernel->response;
     }
-
-    /**
-     * @return bool
-     */
-    public function runningInConsole()
-    {
-        if($this->console()){
-
-            //Determine if the application is running in the console.
-            return Utils::isRequestConsole();
-        }
-
-        return false;
-    }
-
 }

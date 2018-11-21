@@ -19,5 +19,4 @@ class Logger extends ApplicationProvider
         $this->register('loggerService',$loggerService);
         $this->register('log',$adapter,$base);
     }
-
 }

@@ -16,5 +16,4 @@ class Encrypter extends ApplicationProvider
         //so that we can use our application key in the project.
        $this->register('applicationKey',current($key));
     }
-
 }

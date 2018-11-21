@@ -6,8 +6,8 @@ use Resta\Utils;
 use Store\Services\RequestClient;
 use Resta\Contracts\HandleContracts;
 
-class Request extends RequestClient implements HandleContracts {
-
+class Request extends RequestClient implements HandleContracts
+{
     /**
      * @var array $origin
      */
@@ -36,8 +36,8 @@ class Request extends RequestClient implements HandleContracts {
     /**
      * RequestClient constructor.
      */
-    public function __construct() {
-
+    public function __construct()
+    {
         //We assign httpMethod constant to property to method name.
         $this->method=appInstance()->httpMethod();
 
@@ -50,8 +50,8 @@ class Request extends RequestClient implements HandleContracts {
     /**
      * @return void
      */
-    protected function autoInjection(){
-
+    protected function autoInjection()
+    {
         // we get the autoInject method from
         // the sequence obtained by getObjects.
         $getObjects     = $this->getObjects();
@@ -79,8 +79,8 @@ class Request extends RequestClient implements HandleContracts {
     /**
      * @return void
      */
-    private function capsule(){
-
+    private function capsule()
+    {
         //we are in capsule control.
         if($this->checkProperties('capsule')){
 
@@ -104,8 +104,8 @@ class Request extends RequestClient implements HandleContracts {
     /**
      * @return void|mixed
      */
-    private function checkHttpMethod(){
-
+    private function checkHttpMethod()
+    {
         //get http method
         $method=$this->method;
 
@@ -128,8 +128,8 @@ class Request extends RequestClient implements HandleContracts {
      * @param $properties
      * @return bool
      */
-    private function checkProperties($properties){
-
+    private function checkProperties($properties)
+    {
         // from the properties of the object properties to
         // the existing variables, control the array and at least one element.
         return (property_exists($this,$properties)
@@ -140,8 +140,8 @@ class Request extends RequestClient implements HandleContracts {
      * @param $except
      * @return $this
      */
-    public function except($except){
-
+    public function except($except)
+    {
         // the except parameter is a callable value.
         if(is_callable($except)){
             $call=call_user_func_array($except,[$this]);
@@ -159,8 +159,8 @@ class Request extends RequestClient implements HandleContracts {
     /**
      * @return void|mixed
      */
-    private function expectedInputs(){
-
+    private function expectedInputs()
+    {
         // expected method is executed.
         // this method is a must for http method values to be found in this property.
         if($this->checkProperties('expected')){
@@ -178,8 +178,8 @@ class Request extends RequestClient implements HandleContracts {
     /**
      * @return void|mixed
      */
-    private function fakerManager(){
-
+    private function fakerManager()
+    {
         // the first way in the faker method is to detect
         // the presence of the faker method and if so, to run this method.
         if(method_exists($this,'faker')){
@@ -200,8 +200,8 @@ class Request extends RequestClient implements HandleContracts {
      * @param $faker
      * @return void|mixed
      */
-    private function fakerMethod($faker){
-
+    private function fakerMethod($faker)
+    {
         //faker array object
         foreach ($faker as $fake){
 
@@ -223,29 +223,32 @@ class Request extends RequestClient implements HandleContracts {
     /**
      * @return array
      */
-    protected function get(){
+    protected function get()
+    {
         return $this->inputs;
     }
 
     /**
      * @return array
      */
-    private function getClientObjects(){
+    private function getClientObjects()
+    {
         return array_diff_key($this->getObjects(),['inputs'=>[]]);
     }
 
     /**
      * @return array
      */
-    private function getObjects(){
+    private function getObjects()
+    {
         return get_object_vars($this);
     }
 
     /**
      * @return void
      */
-    public function handle(){
-
+    public function handle()
+    {
         //get http method
         $method=$this->method;
 
@@ -264,10 +267,13 @@ class Request extends RequestClient implements HandleContracts {
     }
 
     /**
+     * @param $keyMethod
+     * @param $key
      * @param callable $callback
+     * @return bool|mixed
      */
-    private function ifCallableRequestMethod($keyMethod,$key,callable $callback){
-
+    private function ifCallableRequestMethod($keyMethod,$key,callable $callback)
+    {
         if(is_callable($keyMethod) & is_array($this->inputs[$key])){
 
             foreach ($this->inputs[$key] as $ikey=>$input){
@@ -290,8 +296,8 @@ class Request extends RequestClient implements HandleContracts {
      * @param $method
      * @return void
      */
-    private function initClient($method){
-
+    private function initClient($method)
+    {
         // we use the http method to write
         // the values to the inputs and origin properties.
         foreach($method() as $key=>$value){
@@ -305,8 +311,8 @@ class Request extends RequestClient implements HandleContracts {
     /**
      * @return void|mixed
      */
-    private function requestProperties(){
-
+    private function requestProperties()
+    {
         // contrary to capsule method,
         // expected values must be in the key being sent.
         $this->expectedInputs();
@@ -337,8 +343,8 @@ class Request extends RequestClient implements HandleContracts {
      * @param $method
      * @return void|mixed
      */
-    private function setClientObjects($method){
-
+    private function setClientObjects($method)
+    {
         // we update the input values ​​after
         // we receive and check the saved objects.
         foreach ($this->getClientObjects() as $key=>$value){
@@ -372,8 +378,8 @@ class Request extends RequestClient implements HandleContracts {
      * @param $method
      * @param $key
      */
-    private function setRequestInputs($method,$key){
-
+    private function setRequestInputs($method,$key)
+    {
         if(method_exists($this,$method)){
 
             $keyMethod=$this->{$method}();
@@ -389,8 +395,8 @@ class Request extends RequestClient implements HandleContracts {
     /**
      * @return void
      */
-    private function validation(){
-
+    private function validation()
+    {
         // we need to find the rule method
         // because we can not validate it.
         if(method_exists($this,'rule')){

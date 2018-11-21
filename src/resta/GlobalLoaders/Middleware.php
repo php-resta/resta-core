@@ -36,5 +36,4 @@ class Middleware extends ApplicationProvider
             $this->register('pointer','middlewareList',[$middleValue]);
         }
     }
-
 }

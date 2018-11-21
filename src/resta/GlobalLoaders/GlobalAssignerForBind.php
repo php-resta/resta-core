@@ -31,9 +31,6 @@ class GlobalAssignerForBind extends ApplicationProvider
             if(class_exists($call=call_user_func($callback))){
                 $this->register('bindings',$bindClass,$this->makeBind($call));
             }
-
         }
-
     }
-
 }

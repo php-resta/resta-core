@@ -3,11 +3,11 @@
 namespace Resta\Container\NameContainers;
 
 use Resta\Str;
-use Resta\GlobalLoaders\Container;
 use Resta\Utils;
+use Resta\GlobalLoaders\Container;
 
-class RouteContainer {
-
+class RouteContainer
+{
     /**
      * @var array $parameters
      */

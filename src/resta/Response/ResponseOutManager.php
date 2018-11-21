@@ -2,8 +2,8 @@
 
 namespace Resta\Response;
 
-class ResponseOutManager  {
-
+class ResponseOutManager
+{
     /**
      * @var $app
      */
@@ -13,23 +13,24 @@ class ResponseOutManager  {
      * ResponseOutManager constructor.
      * @param $app
      */
-    public function __construct($app) {
+    public function __construct($app)
+    {
         $this->app=$app;
     }
 
     /**
-     * @method json
-     * @return json
+     * @return void
      */
-    public function json(){
+    public function json()
+    {
         $this->app->response='json';
     }
 
     /**
-     * @method xml
      * @return void
      */
-    public function xml(){
+    public function xml()
+    {
         $this->app->response='xml';
     }
 }

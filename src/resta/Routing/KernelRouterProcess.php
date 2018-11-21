@@ -4,8 +4,8 @@ namespace Resta\Routing;
 
 use Resta\ApplicationProvider;
 
-class KernelRouterProcess extends ApplicationProvider {
-
+class KernelRouterProcess extends ApplicationProvider
+{
     /**
      * @var array $routerSpecification
      */
@@ -15,11 +15,10 @@ class KernelRouterProcess extends ApplicationProvider {
     ];
 
     /**
-     * @method pickRouter
-     * @return mixed|void
+     * @return mixed
      */
-    private function pickRouter(){
-
+    private function pickRouter()
+    {
         $singleton=$this->singleton();
         $singleton->routerSpecifications['router']=(isset($singleton->pick)) ? $singleton->pick[0] : $singleton->router;
     }
@@ -27,8 +26,8 @@ class KernelRouterProcess extends ApplicationProvider {
     /**
      * @return mixed
      */
-    public function router(){
-
+    public function router()
+    {
         //We are developing some features for the benefit of the user through route privatization.
         //These are the customizations that are available in the routerSpecification object.
         //By running these individually, we assign reference values to the router variable,
@@ -40,9 +39,10 @@ class KernelRouterProcess extends ApplicationProvider {
 
     /**
      * @param callable $callback
+     * @return mixed
      */
-    private function routerProcess(callable $callback){
-
+    private function routerProcess(callable $callback)
+    {
         //After running the router specification sequence one by one, we collect reference values for the kernel router.
         array_walk($this->routerSpecification,[$this,'routerSpecification']);
 
@@ -54,7 +54,8 @@ class KernelRouterProcess extends ApplicationProvider {
      * @param $specification
      * @param $key
      */
-    private function routerSpecification($specification,$key){
+    private function routerSpecification($specification,$key)
+    {
         $this->{$specification}();
     }
 
@@ -62,8 +63,8 @@ class KernelRouterProcess extends ApplicationProvider {
      * @method stackRouter
      * @return mixed|void
      */
-    private function stackRouter(){
-
+    private function stackRouter()
+    {
         //singleton object
         $singleton=$this->singleton();
 

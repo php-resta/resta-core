@@ -2,14 +2,15 @@
 
 namespace Resta\Container;
 
-class RepositoryContainer {
-
+class RepositoryContainer
+{
     /**
-     * @param $parameter
+     * @param $parameter \ReflectionParameter
      * @param $param
+     * @return mixed
      */
-    public function handle($parameter,$param){
-
+    public function handle($parameter,$param)
+    {
         // We will use a custom bind for the repository classes
         // and bind the repository contract with the repository adapter class.
         $parameterName  = $parameter->getType()->getName();
@@ -31,5 +32,4 @@ class RepositoryContainer {
 
         return $param;
     }
-
 }

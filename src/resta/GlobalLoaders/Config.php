@@ -20,9 +20,6 @@ class Config extends ApplicationProvider
                 'namespace' =>app()->namespace()->config().'\\'.$key,
                 'file'      =>$file
             ]);
-
         }
-
     }
-
 }

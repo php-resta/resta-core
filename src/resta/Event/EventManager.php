@@ -5,9 +5,9 @@ namespace Resta\Event;
 use Resta\Utils;
 use Resta\GlobalLoaders\EventDispatcher as EventDispatcherGlobalInstance;
 
-class EventManager extends EventHandler {
-
-    /**
+class EventManager extends EventHandler
+{
+    /**,
      * @var $event
      */
     protected $event;
@@ -16,8 +16,8 @@ class EventManager extends EventHandler {
      * @param $event
      * @param $callable
      */
-    protected function assignerDispatches($event,$callable){
-
+    protected function assignerDispatches($event,$callable)
+    {
         //set to dispatches event variable
         $this->dispatches['event']=$event;
 
@@ -33,8 +33,8 @@ class EventManager extends EventHandler {
     /**
      * @return bool
      */
-    protected function checkCallableResultAndParam(){
-
+    protected function checkCallableResultAndParam()
+    {
         //callback object and param property control.
         return isset($this->dispatches['callableResult'])
             && property_exists($this->dispatches['event'],'param');
@@ -43,8 +43,8 @@ class EventManager extends EventHandler {
     /**
      * @param $listen
      */
-    protected function eventListen($listen){
-
+    protected function eventListen($listen)
+    {
         // the listening object will be resolved to the namespace value
         // in the listeners array and then the service container method via dependency injection.
         $listenNamespace=app()->namespace()->optionalListeners().'\\'.ucfirst($listen);
@@ -64,9 +64,10 @@ class EventManager extends EventHandler {
 
     /**
      * @param $dispatcher
+     * @return mixed
      */
-    private function eventSubscribeHandler($dispatcher){
-
+    private function eventSubscribeHandler($dispatcher)
+    {
         //get subscriber directory namespace
         $subscriberDirectory=app()->namespace()->optionalSubscribers();
 
@@ -96,8 +97,8 @@ class EventManager extends EventHandler {
      * @param $listeners
      * @param callable $callable
      */
-    protected function eventSubscriberProcess($key,$listeners,callable $callable){
-
+    protected function eventSubscriberProcess($key,$listeners,callable $callable)
+    {
         if($key==="subscriber"){
 
             $event              = $this->dispatches['event'];
@@ -124,8 +125,8 @@ class EventManager extends EventHandler {
     /**
      * @return mixed
      */
-    protected function getListeners(){
-
+    protected function getListeners()
+    {
         if(isset(resta()->events)) {
             return resta()->events;
         }
@@ -134,10 +135,9 @@ class EventManager extends EventHandler {
 
     /**
      * @param EventDispatcherGlobalInstance $eventDispatcher
-     * @return mixed|void
      */
-    public function handle(EventDispatcherGlobalInstance $eventDispatcher){
-
+    public function handle(EventDispatcherGlobalInstance $eventDispatcher)
+    {
         //set constant event-dispatcher
         define('event-dispatcher',true);
 

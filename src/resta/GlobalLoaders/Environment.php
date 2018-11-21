@@ -18,7 +18,5 @@ class Environment extends ApplicationProvider
         //we are doing global registration for env and var value.
         $this->register('env',$environment);
         $this->register('var',$configuration);
-
     }
-
 }

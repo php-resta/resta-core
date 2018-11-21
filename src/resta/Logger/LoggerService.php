@@ -5,8 +5,8 @@ namespace Resta\Logger;
 use Resta\Utils;
 use Resta\GlobalLoaders\Logger as LoggerGlobalInstance;
 
-class LoggerService {
-
+class LoggerService
+{
     /**
      * @var $adapter
      */
@@ -17,8 +17,8 @@ class LoggerService {
      * @param callable $callback
      * @return mixed
      */
-    public function checkLoggerConfiguration($printer,callable $callback){
-
+    public function checkLoggerConfiguration($printer,callable $callback)
+    {
         // logger service handler
         if(config('app.logger') && isset(resta()->log)){
             return $this->logHandler($printer,'access',$this->getLoggerType());
@@ -31,20 +31,21 @@ class LoggerService {
     /**
      * @return string
      */
-    private function getLoggerType(){
+    private function getLoggerType()
+    {
         return (appInstance()->getSuccess()) ? 'info' : 'error';
     }
 
     /**
      * @param LoggerGlobalInstance $logger
      */
-    public function handle(LoggerGlobalInstance $logger){
-
+    public function handle(LoggerGlobalInstance $logger)
+    {
         //set define for logger
         define('logger',true);
 
         //we get the logger namespace value.
-        $loggerNamespace=app()->namespace()->logger();
+        $loggerNamespace = app()->namespace()->logger();
 
         // if the logger file does not exist
         // we throw a domain exception.
@@ -54,13 +55,13 @@ class LoggerService {
 
         //We are getting the path to
         //the service log file in the project's version directory.
-        $appBase=app()->makeBind($loggerNamespace);
+        $appBase = app()->makeBind($loggerNamespace);
 
         //in order to customize the adapter property contained in this file,
         //we can process it in a method so that we can specify a log adapter property
         //that is bounded by the state.
         if(method_exists($appBase,'adapter')){
-            $logAdapter=$appBase->adapter();
+            $appBase->adapter = $appBase->adapter();
         }
 
         // we send the resulting adapter property as
@@ -74,8 +75,8 @@ class LoggerService {
      * @param string $type
      * @return mixed
      */
-    public function logHandler($printer,$file="access",$type='info'){
-
+    public function logHandler($printer,$file="access",$type='info')
+    {
         //we get the log object that was previously assigned.
         $log=resta()->log;
 
@@ -100,7 +101,4 @@ class LoggerService {
         //printer back
         return $printer;
     }
-
-
-
 }

@@ -88,8 +88,8 @@ class ApplicationMiddleware extends ApplicationProvider
      * @param $key
      * @return bool
      */
-    private function specificMiddlewareCondition($key){
-
+    private function specificMiddlewareCondition($key)
+    {
         //If the all option is present,
         //it is automatically injected into all services for the middleware application.
         if($key==="all") return true;
@@ -113,8 +113,8 @@ class ApplicationMiddleware extends ApplicationProvider
     /**
      * @return array
      */
-    private function middlewareKeyOdds(){
-
+    private function middlewareKeyOdds()
+    {
         return [
           1=>[endpoint],
           2=>[endpoint,method],
@@ -125,7 +125,8 @@ class ApplicationMiddleware extends ApplicationProvider
     /**
      * @return bool
      */
-    private function checkNamespaceAndSpecificCondition(){
+    private function checkNamespaceAndSpecificCondition()
+    {
         return Utils::isNamespaceExists($this->middleware['namespace']) && $this->specificMiddlewareCondition($this->middleware['key']);
     }
 }

@@ -4,13 +4,13 @@ namespace Resta\Response;
 
 use Resta\ClosureDispatcher;
 
-class ResponseApplication extends ResponseOutput {
-
+class ResponseApplication extends ResponseOutput
+{
     /**
      * @return mixed
      */
-    private function appResponseType(){
-
+    private function appResponseType()
+    {
         //get controller instance
         $controllerInstance=$this->getControllerInstance();
 
@@ -27,25 +27,22 @@ class ResponseApplication extends ResponseOutput {
             //For auto service, service base is instantiate and response object is accessed.
             return config('app.response');
         });
-
     }
 
     /**
-     * @method getControllerInstance
      * @return mixed
      */
-    private function getControllerInstance(){
-
+    private function getControllerInstance()
+    {
         //we get the instanceController object from the router.
         return resta()->instanceController;
     }
 
     /**
-     * @method getResponseKind
      * @return mixed
      */
-    private function getResponseKind(){
-
+    private function getResponseKind()
+    {
         //we get the response type by checking the instanceController object from the router.
         //Each type of response is in the base class in project directory.
         return ($this->getControllerInstance()===null) ? resta()->responseType :
@@ -53,18 +50,17 @@ class ResponseApplication extends ResponseOutput {
     }
 
     /**
-     * @method handle
      * @return mixed
      */
-    public function handle(){
-
-        //definitor for singleton instance
+    public function handle()
+    {
+        //definition for singleton instance
         define ('responseApp',true);
 
-        //get outputter for response
+        //get out putter for response
         $outputter=$this->outPutter();
 
-        //if outputter is not null
+        //if out putter is not null
         if($outputter!==null){
 
             //We resolve the response via the service container
@@ -74,11 +70,10 @@ class ResponseApplication extends ResponseOutput {
     }
 
     /**
-     * @method outPutter
-     * @return mixed
+     * @return \Resta\Config\ConfigProcess
      */
-    private function outPutter(){
-
+    private function outPutter()
+    {
         //we get and handle the adapter classes in
         //the output array according to the base object.
         return config('app.responseOutPutter.'.$this->getResponseKind());

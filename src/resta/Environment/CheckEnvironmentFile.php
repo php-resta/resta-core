@@ -4,8 +4,8 @@ namespace Resta\Environment;
 
 use Resta\Utils;
 
-class CheckEnvironmentFile {
-
+class CheckEnvironmentFile
+{
     /**
      * @method checkConfiguration
      * @return mixed
@@ -47,8 +47,8 @@ class CheckEnvironmentFile {
     /**
      * @return mixed
      */
-    private function getEnvironmentVariables(){
-
+    private function getEnvironmentVariables()
+    {
         //We call environment variables path with this method
         return Utils::yaml($this->getEnvironmentPath())->get();
     }
@@ -56,8 +56,8 @@ class CheckEnvironmentFile {
     /**
      * @return mixed
      */
-    private function identifierEnvironment(){
-
+    private function identifierEnvironment()
+    {
         //We parse our environment variables through the yaml file.
         $environment=$this->getEnvironment(true);
 

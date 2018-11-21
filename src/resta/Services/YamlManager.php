@@ -4,8 +4,8 @@ namespace Resta\Services;
 
 use Symfony\Component\Yaml\Yaml;
 
-class YamlManager {
-
+class YamlManager
+{
     /**
      * @var $path
      */

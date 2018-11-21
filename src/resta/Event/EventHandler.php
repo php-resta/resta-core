@@ -4,30 +4,32 @@ namespace Resta\Event;
 
 use Resta\Contracts\EventDispatcherContracts;
 
-class EventHandler extends EventDetached implements EventDispatcherContracts {
-
+class EventHandler extends EventDetached implements EventDispatcherContracts
+{
     /**
-     * @var array $dispatches
+     * @var array
      */
     protected $dispatches=[];
 
     /**
      * @param array $listener
+     * @return mixed|void
      */
-    public function addListener($listener=array()){
-
+    public function addListener($listener=array())
+    {
         // To take advantage of an existing event,
         // you need to connect a listener to the dispatcher
         // so that it can be notified when the event is dispatched.
         // A call to the dispatcher's addListener() method associates any valid PHP callable to an event:
-        $this->listen=array_merge($this->getListeners(),$listener);
+        $this->listen = array_merge($this->getListeners(),$listener);
     }
 
     /**
      * @param array $subscriber
+     * @return mixed|void
      */
-    public function addSubscriber($subscriber=array()){
-
+    public function addSubscriber($subscriber=array())
+    {
         // To take advantage of an existing event,
         // you need to connect a listener to the dispatcher
         // so that it can be notified when the event is dispatched.
@@ -38,9 +40,10 @@ class EventHandler extends EventDetached implements EventDispatcherContracts {
     /**
      * @param $event
      * @param null $callable
+     * @return mixed|void
      */
-    public function dispatcher($event,$callable=null){
-
+    public function dispatcher($event,$callable=null)
+    {
         // we will assign global dispatcher variables so that
         // we can see these values will make it easier for us to readability.
         $this->assignerDispatches($event,$callable);

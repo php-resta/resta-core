@@ -2,15 +2,17 @@
 
 namespace Resta\Container;
 
-class ContainerResolve {
-
+class ContainerResolve
+{
     /**
      * @param $class
      * @param $param
      * @param callable $callback
+     * @return mixed
+     * @throws \ReflectionException
      */
-    public function call($class,$param,callable $callback){
-
+    public function call($class,$param,callable $callback)
+    {
         // We use the reflection class to solve
         // the parameters of the class's methods.
         $param=$this->reflectionMethodParameters($class,$param);
@@ -23,11 +25,11 @@ class ContainerResolve {
 
     /**
      * @param $containers
-     * @param $parameter
+     * @param $parameter \ReflectionParameter
      * @return array
      */
-    private function checkParameterForContainer($containers,$parameter){
-
+    private function checkParameterForContainer($containers,$parameter)
+    {
         // if the parameter is an object and
         // this object is a service container object
         // then the parameter will bind.
@@ -40,32 +42,36 @@ class ContainerResolve {
 
             //return result for parameter of the container
             return [$parameterName=>$parameterResolve];
-
         }
-
         return [];
     }
 
     /**
-     * @return mixed|void
+     * @return mixed
      */
-    private function getContainers(){
+    private function getContainers()
+    {
         return app()->singleton()->serviceContainer;
     }
 
     /**
      * @param $class
+     * @return \ReflectionMethod
+     * @throws \ReflectionException
      */
-    private function getReflectionMethod($class){
+    private function getReflectionMethod($class)
+    {
         return new \ReflectionMethod($class[0],$class[1]);
     }
 
     /**
      * @param $class
      * @param $param
+     * @return mixed
+     * @throws \ReflectionException
      */
-    private function reflectionMethodParameters($class,$param){
-
+    private function reflectionMethodParameters($class,$param)
+    {
         // With the reflection class we get the method.
         // and then we get the parameters in array.
         $reflection = $this->getReflectionMethod($class);

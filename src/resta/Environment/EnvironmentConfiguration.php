@@ -4,15 +4,15 @@ namespace Resta\Environment;
 
 use Resta\GlobalLoaders\Environment as EnvironmentGlobalInstance;
 
-class EnvironmentConfiguration {
-
+class EnvironmentConfiguration
+{
     /**
      * @param array $var
-     * @param $environment null
-     * @return mixed
+     * @param null $environment
+     * @return string
      */
-    public static function environment($var=array(),$environment=null){
-
+    public static function environment($var=array(),$environment=null)
+    {
         //environment is recognized as a production environment directly
         //if there is no env object in the environment variable.
         $isProduction=(isset($environment['env'])) ? $environment['env'] : 'production';
@@ -24,10 +24,10 @@ class EnvironmentConfiguration {
     /**
      * @param array $var
      * @param null $environment
-     * @return string
+     * @return mixed
      */
-    private static function getEnvironmentForVariables($var=array(),$environment=null){
-
+    private static function getEnvironmentForVariables($var=array(),$environment=null)
+    {
         //environment variable specified by the variable is checked in the defined file
         //and the value is returned accordingly.
         if(isset($environment[$var[0]])){

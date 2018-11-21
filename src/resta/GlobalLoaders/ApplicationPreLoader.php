@@ -31,7 +31,7 @@ class ApplicationPreLoader extends ApplicationProvider
         ClassAliasGroup::setAlias(App::class,'application');
 
         //For the application, we create the object that the register method,
-        // which is the container center, is connected to by the kernel objesine register method.
+        // which is the container center, is connected to by the kernel object register method.
         $registerAppBound=$this->app->makeBind(RegisterAppBound::class);
         $registerAppBound->register('bound',$registerAppBound);
 

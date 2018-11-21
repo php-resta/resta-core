@@ -51,7 +51,5 @@ class GlobalAccessor extends ApplicationProvider
         $this->register('httpMethod',ucfirst(strtolower($this->app->kernel()->request->getRealMethod())));
 
         define('httpMethod',strtoupper($this->singleton()->httpMethod));
-
     }
-
 }

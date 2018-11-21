@@ -50,7 +50,7 @@ class BootFireCallback extends ApplicationProvider
 
     /**
      * @param $kernel
-     * @return array7
+     * @return array
      */
     public static function setParametersForKernelCallback($kernel)
     {

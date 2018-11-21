@@ -21,5 +21,4 @@ class Container extends ApplicationProvider
         $this->register('serviceConf','routeParameters',[$method=>$parameters]);
 
     }
-
 }

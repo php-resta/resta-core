@@ -4,8 +4,8 @@ namespace Resta\Config;
 
 use Resta\Utils;
 
-class ConfigProcess {
-
+class ConfigProcess
+{
     /**
      * @var $config
      */
@@ -13,16 +13,21 @@ class ConfigProcess {
 
     /**
      * ConfigProcess constructor.
-     * @param $config null
+     * @param null $config
      */
-    public function __construct($config=null) {
+    public function __construct($config=null)
+    {
         $this->config=$config;
     }
 
     /**
-     * @return mixed
+     * @return mixed|null
+     * @throws \DI\DependencyException
+     * @throws \DI\NotFoundException
      */
-    protected function config(){
+    protected function config()
+    {
+        $kernelConfig = [];
 
         //we are getting the config data from the kernel object..
         if(isset(app()->singleton()->appConfig)){
@@ -31,7 +36,7 @@ class ConfigProcess {
 
         // if the config variable is not sent,
         // we print the kernel config data directly.
-        if(null===$this->config) return (isset($kernelConfig)) ? $kernelConfig : $this->config=null;
+        if(null===$this->config) return (is_array($kernelConfig) && count($kernelConfig)) ? $kernelConfig : null;
 
         // we are starting a array of
         // point-based logical processes for config data processing.
@@ -54,7 +59,8 @@ class ConfigProcess {
      * @param string $explode
      * @return array
      */
-    protected function configExplode($explode="."){
+    protected function configExplode($explode=".")
+    {
         return explode($explode,$this->config);
     }
 
@@ -62,8 +68,8 @@ class ConfigProcess {
      * @param $config
      * @return mixed
      */
-    protected function configProcessResult($config){
-
+    protected function configProcessResult($config)
+    {
         //config data if dotted.
         if(count($this->config)){
 
@@ -82,19 +88,24 @@ class ConfigProcess {
     }
 
     /**
-     * @return mixed
+     * @return mixed|null
+     * @throws \DI\DependencyException
+     * @throws \DI\NotFoundException
      */
-    public function get(){
+    public function get()
+    {
         return $this->config();
     }
 
     /**
      * @param $kernelConfig
      * @param $config
-     * @return array|mixed
+     * @return mixed
+     * @throws \DI\DependencyException
+     * @throws \DI\NotFoundException
      */
-    protected function getConfigData($kernelConfig,$config){
-
+    protected function getConfigData($kernelConfig,$config)
+    {
         //if the config data is a class instance, we get it as an object.
         if(Utils::isNamespaceExists($configFile=$kernelConfig[$config]['namespace'])){
             $configData=Utils::makeBind($configFile)->handle();

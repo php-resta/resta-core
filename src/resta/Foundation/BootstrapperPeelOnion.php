@@ -69,6 +69,7 @@ class BootstrapperPeelOnion
 
     /**
      * @param $peelings
+     * @return object
      */
     private function getPeelings($peelings)
     {
@@ -76,7 +77,7 @@ class BootstrapperPeelOnion
 
         // We are removing
         // the first bootings class of the peelings object.
-        $peelOnion=array_shift($peelings);
+        array_shift($peelings);
 
         // After we check the peel objects in the list for core,
         // we hold the core objects in a row.
@@ -98,7 +99,7 @@ class BootstrapperPeelOnion
     }
 
     /**
-     * @return StdClass
+     * @return \StdClass
      */
     private function objectCaller()
     {
@@ -114,6 +115,7 @@ class BootstrapperPeelOnion
     /**
      * @param $onion
      * @param callable $callback
+     * @return mixed|null
      */
     public function onionBoot($onion,callable  $callback)
     {
@@ -129,6 +131,7 @@ class BootstrapperPeelOnion
 
     /**
      * @param callable $callback
+     * @return mixed|null
      */
     private function onionProcess(callable $callback)
     {
@@ -146,9 +149,8 @@ class BootstrapperPeelOnion
     }
 
     /**
-     * @method onionRun
      * @param $peelings
-     * @return mixed|void
+     * @return mixed
      */
     public function onionRun($peelings)
     {

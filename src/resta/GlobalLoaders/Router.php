@@ -2,7 +2,6 @@
 
 namespace Resta\GlobalLoaders;
 
-use Resta\App;
 use Resta\FileProcess;
 use Resta\StaticPathModel;
 use Resta\ApplicationProvider;
@@ -15,10 +14,9 @@ class Router extends ApplicationProvider
     use NamespaceForRoute;
 
     /**
-     * @param bool $unset
      * @return void
      */
-    public function route($unset=false)
+    public function route()
     {
         if(file_exists($serviceDummy=StaticPathModel::getServiceDummy())){
             $serviceDummy=Yaml::parse(file_get_contents($serviceDummy));

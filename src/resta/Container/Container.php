@@ -8,8 +8,8 @@ use Resta\Contracts\ContainerContracts;
 use Resta\GlobalLoaders\KernelAssigner;
 use Resta\GlobalLoaders\GlobalAssignerForBind;
 
-class Container implements ContainerContracts {
-
+class Container implements ContainerContracts
+{
     /**
      * @var $singleton
      */
@@ -33,8 +33,8 @@ class Container implements ContainerContracts {
     /**
      * @return mixed
      */
-    public function kernel(){
-
+    public function kernel()
+    {
         //The kernel object system is the container backbone.
         //Binding binding and container loads are done with
         //the help of this object and distributed to the system.
@@ -43,33 +43,36 @@ class Container implements ContainerContracts {
 
     /**
      * @return mixed
+     * @throws \DI\DependencyException
+     * @throws \DI\NotFoundException
      */
-    public function kernelAssigner(){
-
+    public function kernelAssigner()
+    {
         //We will use the kernelAssigner class to resolve the singleton object state.
         return $this->makeBind(KernelAssigner::class);
     }
 
     /**
-     * @method serviceContainerObject
-     * @return void
+     * @throws \DI\DependencyException
+     * @throws \DI\NotFoundException
      */
-    private function serviceContainerObject(){
-
+    private function serviceContainerObject()
+    {
         //Since the objects that come to the build method are objects from the container method,
         //we need to automatically create a kernel object named serviceContainer in this method.
         $this->kernelAssigner()->container();
     }
 
     /**
-     * @method bind
-     * @param $object null
-     * @param $callback null
-     * @param $container false|true
+     * @param null $object
+     * @param null $callback
+     * @param bool $container
      * @return mixed
+     * @throws \DI\DependencyException
+     * @throws \DI\NotFoundException
      */
-    public function bind($object=null,$callback=null,$container=false){
-
+    public function bind($object=null,$callback=null,$container=false)
+    {
         //we check whether the boolean value of the singleton variable used
         //for booting does not reset every time the object variable to be assigned to the kernel variable is true
         $this->singleton();
@@ -92,27 +95,29 @@ class Container implements ContainerContracts {
     }
 
     /**
-     * @method container
-     * @param $object null
-     * @param $callback null
+     * @param null $object
+     * @param null $callback
      * @return mixed
+     * @throws \DI\DependencyException
+     * @throws \DI\NotFoundException
      */
-    public function container($object=null,$callback=null){
-
+    public function container($object=null,$callback=null)
+    {
         //If the bind method does not have parameters object and callback, the value is directly assigned to the kernel object.
         //Otherwise, when the bind object and callback are sent, the closure class inherits
         //the applicationProvider object and the makeBind method is called
         return $this->bind($object,$callback,'container');
-
     }
 
     /**
      * @param $eventName
      * @param $object
      * @return mixed
+     * @throws \DI\DependencyException
+     * @throws \DI\NotFoundException
      */
-    public function addEvent($eventName,$object){
-
+    public function addEvent($eventName,$object)
+    {
         //Since the objects that come to the build method are objects from the container method,
         //we need to automatically create a kernel object named serviceContainer in this method.
         $this->kernelAssigner()->event();
@@ -127,8 +132,8 @@ class Container implements ContainerContracts {
     /**
      * @method singleton
      */
-    public function singleton(){
-
+    public function singleton()
+    {
         if($this->singleton===false){
 
             //after first initializing, the singleton variable is set to true,
@@ -142,14 +147,15 @@ class Container implements ContainerContracts {
     }
 
     /**
-     * @method make
      * @param $object
      * @param $callback
-     * @param $sync false
+     * @param bool $sync
      * @return mixed
+     * @throws \DI\DependencyException
+     * @throws \DI\NotFoundException
      */
-    private function make($object,$callback,$sync=false){
-
+    private function make($object,$callback,$sync=false)
+    {
         //If the console object returns true,
         //we do not cancel binding operations
         //We are getting what applies to console with consoleKernelObject.
@@ -172,9 +178,11 @@ class Container implements ContainerContracts {
      * @param $object
      * @param bool $container
      * @return mixed
+     * @throws \DI\DependencyException
+     * @throws \DI\NotFoundException
      */
-    private function consoleKernelObject($object,$container=false){
-
+    private function consoleKernelObject($object,$container=false)
+    {
         //we use the console bindings class to specify the classes to be preloaded in the console application.
         //Thus, classes that can not be bound with http are called without closure in global loaders directory.
         $this->makeBind(ConsoleBindings::class)->console($object,$container);
@@ -186,9 +194,11 @@ class Container implements ContainerContracts {
     /**
      * @param $object
      * @param $callback
+     * @throws \DI\DependencyException
+     * @throws \DI\NotFoundException
      */
-    private function consoleShared($object,$callback){
-
+    private function consoleShared($object,$callback)
+    {
         //The console share is evaluated as a true variable to be assigned as the 3rd parameter in the classes to be bound.
         //The work to be done here is to bind the classes to be included in the console share privately.
         $this->kernelAssigner()->consoleShared($object,$callback);
@@ -197,9 +207,11 @@ class Container implements ContainerContracts {
     /**
      * @param $object
      * @param $callback
+     * @throws \DI\DependencyException
+     * @throws \DI\NotFoundException
      */
-    private function globalAssignerForBind($object,$callback){
-
+    private function globalAssignerForBind($object,$callback)
+    {
         //we automatically load a global loaders for the bind method
         //and assign it to the object name in the kernel object with bind,
         //which you can easily use in the booted classes for kernel object assignments.
@@ -208,14 +220,15 @@ class Container implements ContainerContracts {
     }
 
     /**
-     * @method build
      * @param $object
      * @param $callback
-     * @param $sync false
+     * @param bool $sync
      * @return mixed
+     * @throws \DI\DependencyException
+     * @throws \DI\NotFoundException
      */
-    public function build($object,$callback,$sync=false){
-
+    public function build($object,$callback,$sync=false)
+    {
         //If the console object returns true,
         //we do not cancel binding operations
         //We are getting what applies to console with consoleKernelObject.
@@ -237,9 +250,12 @@ class Container implements ContainerContracts {
      * @param $object
      * @param $callback
      * @param bool $container
+     * @return mixed
+     * @throws \DI\DependencyException
+     * @throws \DI\NotFoundException
      */
-    private function consoleKernelObjectChecker($object,$callback,$container=false){
-
+    private function consoleKernelObjectChecker($object,$callback,$container=false)
+    {
         //we check whether the callback value is a callable function.
         $isCallableForCallback=is_callable($callback);
 
@@ -261,15 +277,17 @@ class Container implements ContainerContracts {
      * @param $class
      * @param array $bind
      * @return mixed
+     * @throws \DI\DependencyException
+     * @throws \DI\NotFoundException
      */
-    public function makeBind($class,$bind=array()){
-
+    public function makeBind($class,$bind=array())
+    {
         //the context bind objects are checked again and the bind sequence submitted by
         //the user is checked and forced to re-instantiate the object.
         $this->contextualBindCleaner($class,$bind);
 
         //We do an instance check to get the static instance values of
-        //the classes to be resolved with the makebind method.
+        //the classes to be resolved with the make bind method.
         if(!isset(self::$instance[$class])){
 
             //bind params object
@@ -294,8 +312,8 @@ class Container implements ContainerContracts {
      * @param $class
      * @param $bind
      */
-    private function contextualBindCleaner($class,$bind){
-
+    private function contextualBindCleaner($class,$bind)
+    {
         //the context bind objects are checked again and the bind sequence submitted by
         //the user is checked and forced to re-instantiate the object.
         if(isset(self::$instance[$class]) && self::$bindParams[$class]!==$bind){
@@ -304,20 +322,16 @@ class Container implements ContainerContracts {
         }
     }
 
-
     /**
      * @param $make
      * @param array $bind
      * @return array
      */
-    public function applicationProviderBinding($make,$bind=array()){
-
+    public function applicationProviderBinding($make,$bind=array())
+    {
         //service container is an automatic application provider
         //that we can bind to the special class di in the dependency condition.
-        //This method is automatically added to the classes resolved by the entire makebind method.
+        //This method is automatically added to the classes resolved by the entire make bind method.
         return array_merge($bind,['app'=>$make]);
     }
-
-
-
 }

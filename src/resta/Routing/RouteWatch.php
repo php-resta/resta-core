@@ -4,14 +4,14 @@ namespace Resta\Routing;
 
 use Resta\ApplicationProvider;
 
-class RouteWatch extends ApplicationProvider {
-
+class RouteWatch extends ApplicationProvider
+{
     /**
      * @param callable $callback
      * @return mixed
      */
-    public function watch(callable $callback){
-
+    public function watch(callable $callback)
+    {
         if(config('app.watch')){
 
             // the memory usage component provides
@@ -21,7 +21,7 @@ class RouteWatch extends ApplicationProvider {
             //get controller output
             $controllerOutput=call_user_func($callback);
 
-            //save to kernel for a variable named conntrollerWatch
+            //save to kernel for a variable named controller Watch
             $this->register('controllerWatch', 'memory',memory_get_usage() - $memoryUsage);
         }
 

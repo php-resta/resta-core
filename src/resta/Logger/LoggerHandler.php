@@ -5,8 +5,8 @@ namespace Resta\Logger;
 use Psr\Log\LoggerInterface;
 use Resta\ClosureDispatcher;
 
-class LoggerHandler implements LoggerInterface {
-
+class LoggerHandler implements LoggerInterface
+{
     /**
      * @var $logger
      */
@@ -24,9 +24,10 @@ class LoggerHandler implements LoggerInterface {
 
     /**
      * LoggerHandler constructor.
+     * @param null $file
      */
-    public function __construct($file=null) {
-
+    public function __construct($file=null)
+    {
         $this->file=$file;
         $this->logger=resta()->loggerService;
     }
@@ -35,8 +36,8 @@ class LoggerHandler implements LoggerInterface {
      * @param $adapter
      * @return $this
      */
-    public function adapter($adapter){
-
+    public function adapter($adapter)
+    {
         $this->adapter=$adapter;
         return $this;
     }
@@ -48,8 +49,8 @@ class LoggerHandler implements LoggerInterface {
      * @param  array  $context
      * @return void
      */
-    public function alert($message, array $context = []) {
-
+    public function alert($message, array $context = [])
+    {
         return $this->writeLog(__FUNCTION__,$message,$context);
     }
 
@@ -60,8 +61,8 @@ class LoggerHandler implements LoggerInterface {
      * @param  array  $context
      * @return void
      */
-    public function critical($message, array $context = []) {
-
+    public function critical($message, array $context = [])
+    {
         return $this->writeLog(__FUNCTION__,$message,$context);
     }
 
@@ -72,8 +73,8 @@ class LoggerHandler implements LoggerInterface {
      * @param  array  $context
      * @return void
      */
-    public function debug($message, array $context = []) {
-
+    public function debug($message, array $context = [])
+    {
         return $this->writeLog(__FUNCTION__,$message,$context);
     }
 
@@ -84,8 +85,8 @@ class LoggerHandler implements LoggerInterface {
      * @param  array  $context
      * @return void
      */
-    public function emergency($message, array $context = []) {
-
+    public function emergency($message, array $context = [])
+    {
         return $this->writeLog(__FUNCTION__,$message,$context);
     }
 
@@ -96,8 +97,8 @@ class LoggerHandler implements LoggerInterface {
      * @param  array  $context
      * @return void
      */
-    public function error($message, array $context = []) {
-
+    public function error($message, array $context = [])
+    {
         return $this->writeLog(__FUNCTION__,$message,$context);
     }
 
@@ -108,8 +109,8 @@ class LoggerHandler implements LoggerInterface {
      * @param  array  $context
      * @return void
      */
-    public function info($message, array $context = []) {
-
+    public function info($message, array $context = [])
+    {
         return $this->writeLog(__FUNCTION__,$message,$context);
     }
 
@@ -132,8 +133,8 @@ class LoggerHandler implements LoggerInterface {
      * @param  array  $context
      * @return void
      */
-    public function notice($message, array $context = []) {
-
+    public function notice($message, array $context = [])
+    {
         return $this->writeLog(__FUNCTION__,$message,$context);
     }
 
@@ -144,8 +145,8 @@ class LoggerHandler implements LoggerInterface {
      * @param  array  $context
      * @return void
      */
-    public function warning($message, array $context = []) {
-
+    public function warning($message, array $context = [])
+    {
         return $this->writeLog(__FUNCTION__,$message,$context);
     }
 

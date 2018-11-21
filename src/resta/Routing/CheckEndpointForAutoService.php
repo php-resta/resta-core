@@ -4,15 +4,15 @@ namespace Resta\Routing;
 
 use Resta\ApplicationProvider;
 
-class CheckEndpointForAutoService extends ApplicationProvider{
-
+class CheckEndpointForAutoService extends ApplicationProvider
+{
     /**
      * @param $instance \Resta\Traits\NamespaceForRoute
      * @param callable|null $func
      * @return string
      */
-    public function getNamespaceForAutoService($instance,callable $func = null){
-
+    public function getNamespaceForAutoService($instance,callable $func = null)
+    {
         //get namespace for auto service
         $autoServiceNamespace=$instance->autoService();
 

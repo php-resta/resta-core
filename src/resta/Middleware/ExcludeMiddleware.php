@@ -5,8 +5,8 @@ namespace Resta\Middleware;
 use Resta\Utils;
 use Resta\ApplicationProvider;
 
-class ExcludeMiddleware extends ApplicationProvider {
-
+class ExcludeMiddleware extends ApplicationProvider
+{
     /**
      * @var array $excludeList
      */
@@ -22,9 +22,9 @@ class ExcludeMiddleware extends ApplicationProvider {
      * @param callable $callback
      * @return mixed
      */
-    public function exclude($middleware,callable $callback){
-
-        //set excludelist for paramteters
+    public function exclude($middleware,callable $callback)
+    {
+        //set exclude list for parameters
         $this->excludeList['callback']=$callback;
         $this->excludeList['middleware']=$middleware;
 
@@ -48,8 +48,8 @@ class ExcludeMiddleware extends ApplicationProvider {
      * @param $excludeKey
      * @param $excludeVal
      */
-    private function excludeProcess($excludeKey,$excludeVal){
-
+    private function excludeProcess($excludeKey,$excludeVal)
+    {
         $this->excludeForAll($excludeKey,$excludeVal,function() use ($excludeKey,$excludeVal){
 
             if($excludeKey==$this->excludeList['middleware']['middlewareName']){
@@ -62,15 +62,16 @@ class ExcludeMiddleware extends ApplicationProvider {
     /**
      * @return bool
      */
-    private function existMethod(){
+    private function existMethod()
+    {
         return Utils::existMethod($this->excludeList['middleware']['class'],'exclude');
     }
 
     /**
      * @param $exclude
      */
-    private function inArrayExclude($exclude){
-
+    private function inArrayExclude($exclude)
+    {
         if(in_array(Utils::strtolower(endpoint),$exclude)){
             $this->result=false;
         }
@@ -82,7 +83,8 @@ class ExcludeMiddleware extends ApplicationProvider {
      * @param callable $callback
      * @return mixed|void
      */
-    private function excludeForAll($excludeKey,$excludeVal,callable $callback){
+    private function excludeForAll($excludeKey,$excludeVal,callable $callback)
+    {
         return ($excludeKey=="all") ? $this->inArrayExclude($excludeVal) : call_user_func($callback);
     }
 

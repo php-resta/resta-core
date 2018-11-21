@@ -5,8 +5,8 @@ namespace Resta;
 use Resta\Services\YamlManager;
 use Resta\Container\ContainerResolve;
 
-class Utils {
-
+class Utils
+{
     /**
      * @var array $bool
      */
@@ -76,6 +76,7 @@ class Utils {
      * @param null $class
      * @param array $param
      * @return mixed
+     * @throws \ReflectionException
      */
     public static function callBind($class=null, $param=array())
     {
@@ -161,12 +162,12 @@ class Utils {
 
     /**
      * @param $class
-     * @param bool $phpextension
+     * @param bool $extension
      * @return mixed
      */
-    public static function getPathFromNamespace($class,$phpextension=true)
+    public static function getPathFromNamespace($class,$extension=true)
     {
-        if($phpextension){
+        if($extension){
             $default=root.'/'.str_replace("\\","/",$class).'.php';
         }
         else{
@@ -263,7 +264,6 @@ class Utils {
         $path = explode($seperator, $namespace);
         return array_pop($path);
     }
-
 
     /**
      * @param $class

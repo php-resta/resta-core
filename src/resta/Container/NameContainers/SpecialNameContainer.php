@@ -2,14 +2,15 @@
 
 namespace Resta\Container\NameContainers;
 
-class SpecialNameContainer {
-
+class SpecialNameContainer
+{
     /**
-     * @param $parameter
-     * @return array
+     * @param $parameter \ReflectionParameter
+     * @param $param
+     * @return mixed
      */
-    public function resolveContainer($parameter,$param){
-
+    public function resolveContainer($parameter,$param)
+    {
         //we get the custom name container value via serviceContainer.
         $specialNameContainer=app()->singleton()->serviceContainer[$parameter->getName()];
 
