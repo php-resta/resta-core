@@ -10,8 +10,8 @@ use Store\Services\HttpSession as Session;
 use Store\Services\DateCollection as Date;
 use Store\Services\AppCollection as Collection;
 
-class App {
-
+class App
+{
     /**
      * @var array
      */
@@ -20,9 +20,10 @@ class App {
     /**
      * @param $service
      * @param $arg
+     * @return mixed
      */
-    public static function annotationsLoaders($service,$arg){
-
+    public static function annotationsLoaders($service,$arg)
+    {
         //if $name starts with $needles for repository
         if(Str::endsWith($service,'Repository')){
             return self::repository($service);
@@ -45,8 +46,8 @@ class App {
      * @param $service
      * @return mixed
      */
-    private static function builder($service){
-
+    private static function builder($service)
+    {
         //we are making a namespace assignment for the builder.
         $builder=app()->namespace()->builder().'\\'.$service;
 
@@ -55,26 +56,29 @@ class App {
     }
 
     /**
-     * @param $arg
      * @return Cache
      */
-    private static function cache($arg){
+    private static function cache()
+    {
         return new Cache();
     }
 
     /**
-     * @param $arg
      * @return Collection
      */
-    private static function collection($arg){
+    private static function collection()
+    {
         return (new Collection());
     }
 
     /**
      * @param null $config
-     * @return ConfigProcess
+     * @return mixed|null
+     * @throws \DI\DependencyException
+     * @throws \DI\NotFoundException
      */
-    public function configLoaders($config=null){
+    public function configLoaders($config=null)
+    {
         return (new ConfigProcess($config))->get();
     }
 
@@ -84,8 +88,8 @@ class App {
      * @param array $bind
      * @return mixed
      */
-    public function container($instance,$class,$bind=array()){
-
+    public function container($instance,$class,$bind=array())
+    {
         if(!property_exists($instance->container(),$class)){
             throw new \InvalidArgumentException('container object false for ('.$class.') object');
         }
@@ -101,32 +105,30 @@ class App {
     /**
      * @param $object
      */
-    public function createAppInstance($object){
-
+    public function createAppInstance($object)
+    {
         if(!defined('appInstance')){
             define('appInstance',(base64_encode(serialize($object))));
         }
-
     }
 
     /**
      * @param $arg
-     * @return Session
+     * @return null
      */
-    private static function date($arg){
-
+    private static function date($arg)
+    {
         if(property_exists($class=pos($arg),'app')){
             return $class->makeBind(Date::class);
         }
-
         return null;
     }
 
     /**
      * @return mixed
      */
-    public static function getAppInstance(){
-
+    public static function getAppInstance()
+    {
         //we save an instance for the entire application
         //and add it to the helper file to be accessed from anywhere in the application.
         if(!isset(self::$instance['appInstance'])){
@@ -134,32 +136,31 @@ class App {
             return self::$instance['appInstance'];
         }
         return self::$instance['appInstance'];
-
     }
 
     /**
      * @return \stdClass
      */
-    public static function kernelBindObject(){
+    public static function kernelBindObject()
+    {
         return new \stdClass;
     }
 
     /**
-     * @param $arg
      * @return Session
      */
-    private static function session($arg){
-
+    private static function session()
+    {
         return new Session();
     }
 
     /**
      * @param $service
      * @param bool $namespace
-     * @return mixed
+     * @return string
      */
-    public static function repository($service,$namespace=false){
-
+    public static function repository($service,$namespace=false)
+    {
         //I can get the repository name from the magic method as a salt repository,
         //after which we will edit it as an adapter namespace.
         $repositoryName=ucfirst(preg_replace('@Repository@is','',$service));
@@ -180,8 +181,8 @@ class App {
      * @param $arg
      * @return mixed
      */
-    private static function source($service,$arg){
-
+    private static function source($service,$arg)
+    {
         //get Source path
         $service=ucfirst($service);
         $getCalledClass=str_replace('\\'.class_basename($arg[0]),'',get_class($arg[0]));
@@ -195,27 +196,25 @@ class App {
     }
 
     /**
-     * @param $arg
-     * @return \Predis\Client
+     * @return mixed
      */
-    private static function redis($arg){
-
+    private static function redis()
+    {
         if(!isset(self::$instance['redis'])){
 
             self::$instance['redis']=(new Redis())->client();
             return self::$instance['redis'];
 
         }
-
         return self::$instance['redis'];
-
     }
 
     /**
      * @param null $param
+     * @return array|null|string
      */
-    public function route($param=null){
-
+    public function route($param=null)
+    {
         $kernel=self::getAppInstance()->app->kernel;
 
         $saltRouteParameters=$kernel->routeParameters;
@@ -225,7 +224,6 @@ class App {
         if(isset($kernel->serviceConf['routeParameters'][$urlMethod])){
             $serviceConfRouteParameters=$kernel->serviceConf['routeParameters'][$urlMethod];
         }
-
 
         $list=[];
 
@@ -243,7 +241,6 @@ class App {
         }
 
         return (isset($list[$param])) ? strtolower($list[$param]) : null;
-
     }
 
     /**
@@ -251,9 +248,8 @@ class App {
      * @param array $select
      * @return mixed|string
      */
-    public function translator($data,$select=array()){
-
-        //
+    public function translator($data,$select=array())
+    {
         $lang=(new Lingua(app()->path()->appLanguage()));
 
         $defaultLocale=config('app.locale');
@@ -263,7 +259,6 @@ class App {
         }
 
         return $lang->include(['default'])->locale($defaultLocale)->get($data);
-
     }
 
 }

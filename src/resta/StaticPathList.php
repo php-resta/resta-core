@@ -2,8 +2,8 @@
 
 namespace Resta;
 
-class StaticPathList {
-
+class StaticPathList
+{
     /**
      * @var string
      */
@@ -140,7 +140,6 @@ class StaticPathList {
      */
     public static $webservice='Webservice';
 
-
     /**
      * @var $log
      */
@@ -157,13 +156,10 @@ class StaticPathList {
      */
     public static $cache='Cache';
 
-
     /**
      * @var $language
      */
     public static $language='Language';
-
-
     /**
      * @var $session
      */
@@ -174,12 +170,10 @@ class StaticPathList {
      */
     public static $middleware='Middleware';
 
-
     /**
      * @var $node
      */
     public static $node='Node';
-
 
     /**
      * @var $once
@@ -191,12 +185,10 @@ class StaticPathList {
      */
     public static $command='Command';
 
-
     /**
      * @var $stub
      */
     public static $stub='Stub';
-
 
     /**
      * @var $store
@@ -208,14 +200,8 @@ class StaticPathList {
      */
     public static $boot='Boot';
 
-
     /**
      * @var $store
      */
     public static $autoService='Autoservice';
-
-
-
-
-
 }

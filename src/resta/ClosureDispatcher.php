@@ -2,8 +2,8 @@
 
 namespace Resta;
 
-class ClosureDispatcher {
-
+class ClosureDispatcher
+{
     /**
      * @var $bind
      */
@@ -13,7 +13,8 @@ class ClosureDispatcher {
      * ClosureDispatcher constructor.
      * @param $bind
      */
-    public function __construct($bind) {
+    public function __construct($bind)
+    {
         $this->bind=$bind;
     }
 
@@ -21,7 +22,8 @@ class ClosureDispatcher {
      * @param $bind
      * @return ClosureDispatcher
      */
-    public static function bind($bind){
+    public static function bind($bind)
+    {
         return (is_object($bind)) ? new self($bind) : new self(new $bind);
     }
 
@@ -29,11 +31,10 @@ class ClosureDispatcher {
      * @param \Closure $closure
      * @return mixed
      */
-    public function call(\Closure $closure) {
-
+    public function call(\Closure $closure)
+    {
         if(!is_null($this->bind))
             $closure = \Closure::bind($closure, $this->bind, $this->bind);
-
         return $closure();
     }
 }

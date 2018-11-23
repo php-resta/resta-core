@@ -6,8 +6,8 @@ use Resta\Response\ResponseOutManager;
 use Resta\Contracts\ContainerContracts;
 use Resta\Contracts\ApplicationContracts;
 
-class ApplicationProvider {
-
+class ApplicationProvider
+{
     /**
      * @var $app \Resta\Contracts\ApplicationContracts|ContainerContracts
      */
@@ -31,7 +31,6 @@ class ApplicationProvider {
 
         //url object assign
         $this->url();
-
     }
 
     /**
@@ -50,8 +49,8 @@ class ApplicationProvider {
      * @param null $concrete
      * @return mixed
      */
-    public function register($key,$object,$concrete=null){
-
+    public function register($key,$object,$concrete=null)
+    {
         //register app bound
         return $this->app()->bound->register($key,$object,$concrete);
     }
@@ -61,8 +60,8 @@ class ApplicationProvider {
      * @param null $object
      * @return mixed
      */
-    public function terminate($key,$object=null){
-
+    public function terminate($key,$object=null)
+    {
         //terminate app bound
         return $this->app()->bound->terminate($key,$object);
     }
@@ -126,8 +125,8 @@ class ApplicationProvider {
      * @method url
      * @return mixed
      */
-    public function url(){
-
+    public function url()
+    {
         if(isset($this->app()->url)){
 
             //we assign the url object to the global kernel url object
@@ -139,10 +138,12 @@ class ApplicationProvider {
     /**
      * @param $class
      * @param array $bind
-     * @return mixed
+     * @return mixed|null
+     * @throws \DI\DependencyException
+     * @throws \DI\NotFoundException
      */
-    public function makeBind($class,$bind=array()){
-
+    public function makeBind($class,$bind=array())
+    {
         return Utils::makeBind($class,$this->providerBinding($bind));
     }
 
@@ -150,91 +151,84 @@ class ApplicationProvider {
      * @param array $bind
      * @return mixed
      */
-    public function providerBinding($bind=array()){
-
+    public function providerBinding($bind=array())
+    {
         return $this->app->applicationProviderBinding($this->app,$bind);
     }
 
     /**
-     * @method getStatus
      * @return mixed
      */
-    public function getStatus(){
-
+    public function getStatus()
+    {
         return $this->app()->responseStatus;
     }
 
     /**
-     * @method getSuccess
      * @return mixed
      */
-    public function getSuccess(){
-
+    public function getSuccess()
+    {
         return $this->app()->responseSuccess;
     }
 
     /**
-     * @method httpMethod
-     * @return mixed
+     * @return string
      */
-    public function httpMethod(){
-
+    public function httpMethod()
+    {
         return strtolower($this->app()->httpMethod);
     }
 
     /**
-     * @method routeParameters
      * @return mixed
      */
-    public function routeParameters(){
-
+    public function routeParameters()
+    {
         return $this->app()->routeParameters;
     }
 
     /**
-     * @method singleton
      * @return mixed
      */
-    public function singleton(){
-
+    public function singleton()
+    {
         return $this->app->singleton();
     }
 
     /**
-     * @method container
-     * @return mixed
+     * @return object
      */
-    public function container(){
-
+    public function container()
+    {
         return (object)$this->app()->serviceContainer;
     }
 
     /**
-     * @param $config null
-     * @method config
+     * @param null $config
      * @return mixed
      */
-    public function config($config=null){
-
+    public function config($config=null)
+    {
         return $this->singleton()->appClass->configLoaders($config);
-
     }
 
     /**
-     * @return \Resta\Response\ResponseOutManager
+     * @return ResponseOutManager
      */
-    public function response(){
-
+    public function response()
+    {
         $object=debug_backtrace()[2]['object'];
         return new ResponseOutManager($object);
     }
 
     /**
-     * @param $data
+     * @param null $data
+     * @param null $key
      * @return mixed
      */
-    public function pick($data=null,$key=null){
-
+    public function pick($data=null,$key=null)
+    {
         if($data===null) return $this->singleton()->pick;
 
         if($key===null){
@@ -243,15 +237,15 @@ class ApplicationProvider {
         else{
             $this->singleton()->pick[$key]=$data;
         }
-
     }
 
     /**
-     * @param $data
+     * @param null $data
+     * @param null $key
      * @return mixed
      */
-    public function stack($data=null,$key=null){
-
+    public function stack($data=null,$key=null)
+    {
         if($data===null) return $this->singleton()->stack;
 
         if($key===null){
@@ -260,6 +254,5 @@ class ApplicationProvider {
         else{
             $this->singleton()->stack[$key]=$data;
         }
-
     }
 }

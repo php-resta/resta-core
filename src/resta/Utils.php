@@ -71,7 +71,6 @@ class Utils
         return null;
     }
 
-
     /**
      * @param null $class
      * @param array $param
@@ -83,7 +82,6 @@ class Utils
         return (new ContainerResolve())->call($class,$param,function($call){
             return self::callBuild()->call($call->class,$call->param);
         });
-
     }
 
     /**
@@ -149,7 +147,6 @@ class Utils
 
         return 'V1';
     }
-
 
     /**
      * @param array $data

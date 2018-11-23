@@ -2,8 +2,8 @@
 
 namespace Resta;
 
-class autoloadRegister {
-
+class autoloadRegister
+{
     /**
      * @var $class
      */
@@ -14,12 +14,11 @@ class autoloadRegister {
      */
     private $classPath;
 
-
     /**
-     * spl autoload register
+     * @return void
      */
-    public function register(){
-
+    public function register()
+    {
         // Use default autoload implementation
         spl_autoload_register(function($class){
             $this->getRegisterCallBackVar($class);
@@ -29,33 +28,31 @@ class autoloadRegister {
 
     /**
      * @param $class
-     * getRegisterCallBackVar
      */
-    private function getRegisterCallBackVar($class){
-
+    private function getRegisterCallBackVar($class)
+    {
         $this->class=$class;
         $this->classPath=root.'/'.$this->class.'.php';
         $this->classPath=str_replace("\\","/",$this->classPath);
     }
 
     /**
-     * registerCallBackFormatter
+     * return mixed
      */
-    private function registerCallBackFormatter () {
-
+    private function registerCallBackFormatter ()
+    {
         $this->checkAliasClassFormatter($this->classPath,function() {
             require($this->classPath);
         });
     }
-
 
     /**
      * @param $class
      * @param $callback
      * @return mixed
      */
-    private function checkAliasClassFormatter($class,$callback){
-
+    private function checkAliasClassFormatter($class,$callback)
+    {
         $systemApp=[];
 
         if(defined('app')){
@@ -63,7 +60,8 @@ class autoloadRegister {
         }
 
         if(!file_exists($class)){
-            return $this->getAliasClassFormatter($class,$systemApp);
+            $this->getAliasClassFormatter($class,$systemApp);
+            return false;
         }
 
         return call_user_func($callback);
@@ -73,18 +71,17 @@ class autoloadRegister {
      * @param $class
      * @param $systemApp
      */
-    private function getAliasClassFormatter($class,$systemApp){
+    private function getAliasClassFormatter($class,$systemApp)
+    {
         $this->setAliasClassGroup($class,$systemApp);
-
     }
 
     /**
      * @param $class
      * @param $systemApp
-     * setAliasClassGroup
      */
-    private function setAliasClassGroup($class,$systemApp){
-
+    private function setAliasClassGroup($class,$systemApp)
+    {
         $alias=str_replace(root.'/','',$class);
         $alias=str_replace('.php','',$alias);
 
@@ -92,8 +89,6 @@ class autoloadRegister {
         if(array_key_exists($alias,$systemApp)){
             class_alias($systemApp[$alias],$alias);
         }
-
     }
-
 }
 

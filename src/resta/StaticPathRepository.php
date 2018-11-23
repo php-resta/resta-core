@@ -2,83 +2,85 @@
 
 namespace Resta;
 
-class StaticPathRepository {
-
+class StaticPathRepository
+{
     /**
      * @param null $app
-     * @return mixed
+     * @return string
      */
-    public function app($app=null){
-
+    public function app($app=null)
+    {
         $app=($app===null) ? $this->appDetector() : $app;
         return StaticPathModel::appPath().'/'.Str::slashToBackSlash($app);
     }
 
     /**
-     * @param null $app
-     * @return mixed
+     * @return string
      */
-    public function appBuilder($app=null){
-
+    public function appBuilder()
+    {
         return app()->path()->model().'/'.StaticPathList::$builder;
     }
 
     /**
      * @param null $app
-     * @return mixed
+     * @return string
      */
-    public function appCall($app=null){
-
+    public function appCall($app=null)
+    {
         return $this->appVersion($app).'/'.StaticPathList::$controller;
     }
 
     /**
-     * @return mixed
+     * @param null $app
+     * @return string
      */
-    public function appCommand($app=null){
+    public function appCommand($app=null)
+    {
         return $this->appVersion($app).'/'.StaticPathList::$optional.'/'.StaticPathList::$command.'';
     }
 
     /**
      * @param null $app
-     * @return mixed
+     * @return string
      */
-    public function appConfig($app=null){
-
+    public function appConfig($app=null)
+    {
         return $this->appVersion($app).'/'.StaticPathList::$config;
     }
 
     /**
-     * @return mixed|null
+     * @return null|string
      */
-    private function appDetector(){
+    private function appDetector()
+    {
         return (defined('app')) ? app : null;
     }
 
     /**
-     * @return mixed
+     * @return mixed|string
      */
-    public function appKernel(){
-
+    public function appKernel()
+    {
         $projectPrefix      = StaticPathModel::projectPrefix();
         $kernel     = $this->app().'/'.StaticPathList::$kernel;
 
         return StaticPathModel::projectPath($projectPrefix.'/',$kernel);
-
-        return $this->app().'/'.StaticPathList::$kernel;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function appLanguage(){
+    public function appLanguage()
+    {
         return StaticPathModel::getAppStorage().'/'.StaticPathList::$language;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function appLog(){
+    public function appLog()
+    {
         return StaticPathModel::getAppStorage().'/'.StaticPathList::$log;
     }
 
@@ -86,8 +88,8 @@ class StaticPathRepository {
      * @param null $app
      * @return mixed
      */
-    public function appLogger($app=null){
-
+    public function appLogger($app=null)
+    {
         return $this->appVersion($app).'/ServiceLogController';
     }
 
@@ -95,8 +97,8 @@ class StaticPathRepository {
      * @param null $app
      * @return mixed
      */
-    public function appMiddleware($app=null){
-
+    public function appMiddleware($app=null)
+    {
         return $this->appVersion($app).'/'.StaticPathList::$middleware;
     }
 
@@ -104,8 +106,8 @@ class StaticPathRepository {
      * @param null $app
      * @return mixed
      */
-    public function appMigration($app=null){
-
+    public function appMigration($app=null)
+    {
         return $this->appVersion($app).'/'.StaticPathList::$migration;
     }
 
@@ -113,8 +115,8 @@ class StaticPathRepository {
      * @param null $app
      * @return mixed
      */
-    public function appModel($app=null){
-
+    public function appModel($app=null)
+    {
         return $this->appVersion($app).'/'.StaticPathList::$model;
     }
 
@@ -122,8 +124,8 @@ class StaticPathRepository {
      * @param null $app
      * @return mixed
      */
-    public function appOptionalException($app=null){
-
+    public function appOptionalException($app=null)
+    {
         return $this->appVersion($app).'/'.StaticPathList::$optional.'/'.StaticPathList::$optionalException;
     }
 
@@ -131,8 +133,8 @@ class StaticPathRepository {
      * @param null $app
      * @return mixed
      */
-    public function appOptionalEvents($app=null){
-
+    public function appOptionalEvents($app=null)
+    {
         return $this->appVersion($app).'/'.StaticPathList::$optional.'/'.StaticPathList::$events;
     }
 
@@ -140,8 +142,8 @@ class StaticPathRepository {
      * @param null $app
      * @return mixed
      */
-    public function appOptionalJob($app=null){
-
+    public function appOptionalJob($app=null)
+    {
         return $this->appVersion($app).'/'.StaticPathList::$optional.'/'.StaticPathList::$job;
     }
 
@@ -149,8 +151,8 @@ class StaticPathRepository {
      * @param null $app
      * @return mixed
      */
-    public function appOptionalListeners($app=null){
-
+    public function appOptionalListeners($app=null)
+    {
         return $this->appVersion($app).'/'.StaticPathList::$optional.'/'.StaticPathList::$listeners;
     }
 
@@ -158,30 +160,28 @@ class StaticPathRepository {
      * @param null $app
      * @return mixed
      */
-    public function appOptionalSubscribers($app=null){
-
+    public function appOptionalSubscribers($app=null)
+    {
         return $this->appVersion($app).'/'.StaticPathList::$optional.'/'.StaticPathList::$listeners.'/'.StaticPathList::$subscribers;
     }
 
     /**
-     * @param null $app
      * @return mixed
      */
-    public function appRepository($app=null){
-
+    public function appRepository()
+    {
         $projectPrefix      = StaticPathModel::projectPrefix();
         $repositoryPath     = $this->app().'/'.StaticPathList::$repository;
 
         return StaticPathModel::projectPath($projectPrefix.'/',$repositoryPath);
-
     }
 
     /**
      * @param null $app
      * @return mixed
      */
-    public function appOptionalSource($app=null){
-
+    public function appOptionalSource($app=null)
+    {
         return $this->appVersion($app).'/'.StaticPathList::$optional.'/'.StaticPathList::$sourcePath;
     }
 
@@ -189,15 +189,16 @@ class StaticPathRepository {
      * @param null $app
      * @return mixed
      */
-    public function appOptionalWebservice($app=null){
-
+    public function appOptionalWebservice($app=null)
+    {
         return $this->appVersion($app).'/'.StaticPathList::$optional.'/'.StaticPathList::$webservice;
     }
 
     /**
      * @return mixed
      */
-    public function appResourche(){
+    public function appResourche()
+    {
         return StaticPathModel::getAppStorage().'/'.StaticPathList::$resource;
     }
 
@@ -205,8 +206,8 @@ class StaticPathRepository {
      * @param null $app
      * @return mixed
      */
-    public function appServiceAnnotations($app=null){
-
+    public function appServiceAnnotations($app=null)
+    {
         return $this->appVersion($app).'/'.StaticPathList::$serviceAnnotations;
     }
 
@@ -214,8 +215,8 @@ class StaticPathRepository {
      * @param null $app
      * @return mixed
      */
-    public function appServiceContainer($app=null){
-
+    public function appServiceContainer($app=null)
+    {
         return $this->appVersion($app).'/ServiceContainerController';
     }
 
@@ -223,8 +224,8 @@ class StaticPathRepository {
      * @param null $app
      * @return mixed
      */
-    public function appServiceEventDispatcher($app=null){
-
+    public function appServiceEventDispatcher($app=null)
+    {
         return $this->appVersion($app).'/ServiceEventDispatcherController';
     }
 
@@ -232,22 +233,24 @@ class StaticPathRepository {
      * @param null $app
      * @return mixed
      */
-    public function appServiceMiddleware($app=null){
-
+    public function appServiceMiddleware($app=null)
+    {
         return $this->appVersion($app).'/'.StaticPathList::$serviceMiddleware;
     }
 
     /**
      * @return mixed
      */
-    public function appStorage(){
+    public function appStorage()
+    {
         return StaticPathModel::getAppStorage();
     }
 
     /**
      * @return mixed
      */
-    public function appStubs(){
+    public function appStubs()
+    {
         return $this->appKernel().'/'.StaticPathList::$stub;
     }
 
@@ -255,12 +258,11 @@ class StaticPathRepository {
      * @param null $app
      * @return mixed
      */
-    public function appVersion($app=null){
-
+    public function appVersion($app=null)
+    {
         if(defined('app')){
             return $this->app($app).'/'.Utils::getAppVersion(app);
         }
-
         return null;
     }
 
@@ -275,14 +277,16 @@ class StaticPathRepository {
     /**
      * @return mixed
      */
-    public function encrypterFile(){
+    public function encrypterFile()
+    {
         return StaticPathModel::getEncrypter();
     }
 
     /**
      * @return mixed
      */
-    public function environmentFile(){
+    public function environmentFile()
+    {
         return StaticPathModel::getEnvironmentFile();
     }
 
@@ -291,7 +295,8 @@ class StaticPathRepository {
      * @param $arg
      * @return mixed
      */
-    public function __call($name,$arg){
+    public function __call($name,$arg)
+    {
         $appCall='app'.ucfirst($name);
         return $this->{$appCall}();
     }
