@@ -171,6 +171,9 @@ class LoggerHandler implements LoggerInterface
             });
         }
 
-        $this->logger->logHandler($message,$file,$level);
+        if($this->logger!==null){
+            $this->logger->logHandler($message,$file,$level);
+        }
+
     }
 }

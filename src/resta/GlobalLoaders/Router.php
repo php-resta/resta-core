@@ -23,7 +23,6 @@ class Router extends ApplicationProvider
         }
 
         //utils make bind via dependency injection named as service container
-        $this->register('logger',                   app()->namespace()->logger());
         $this->register('serviceConf',              (new FileProcess())->callFile(StaticPathModel::getServiceConf()));
         $this->register('serviceDummy',      (isset($serviceDummy)) ? $serviceDummy : []);
         $this->register('instanceController',       $this->makeBind($this->getControllerNamespace()));

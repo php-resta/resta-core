@@ -17,7 +17,7 @@ trait ConsoleArguments {
         if(!defined('arguments'))  define ('arguments',['api']);
 
         //get psr standard console arguments
-        return Utils::upperCase(arguments);
+        return resta()->consoleArguments = Utils::upperCase(arguments);
     }
 
     /**

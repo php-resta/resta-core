@@ -4,6 +4,7 @@ namespace Resta\Traits;
 
 trait ConsoleColor
 {
+
     /**
      * @param $string
      * @param null $foreground_color
@@ -12,6 +13,8 @@ trait ConsoleColor
      */
     public function getColoredString($string, $foreground_color = null, $background_color = null)
     {
+        $this->consoleLogger($string,'info');
+
         if(isset($this->argument['commandCall'])) return $string;
 
         $colored_string = "";
@@ -40,6 +43,8 @@ trait ConsoleColor
      */
     public function info($string, $foreground_color = 'blue', $background_color = 'white')
     {
+        $this->consoleLogger($string,'info');
+
         if(isset($this->argument['commandCall'])) return $string;
 
         $colored_string = "";
@@ -66,6 +71,8 @@ trait ConsoleColor
      */
     public function red($string, $foreground_color = 'red')
     {
+        $this->consoleLogger($string,'info');
+
         if(isset($this->argument['commandCall'])) return $string;
 
         $colored_string = "";
@@ -90,6 +97,8 @@ trait ConsoleColor
      */
     public function success($string, $foreground_color = 'white', $background_color = 'yellow')
     {
+        $this->consoleLogger($string,'info');
+
         if(isset($this->argument['commandCall'])) return $string;
 
         $colored_string = "";
@@ -117,6 +126,8 @@ trait ConsoleColor
      */
     public function classical($string, $foreground_color = 'red', $background_color = 'white')
     {
+        $this->consoleLogger($string,'info');
+
         if(isset($this->argument['commandCall'])) return $string;
 
         $colored_string = "";
@@ -144,6 +155,8 @@ trait ConsoleColor
      */
     public function bluePrint($string, $foreground_color = 'blue', $background_color = 'white')
     {
+        $this->consoleLogger($string,'info');
+
         if(isset($this->argument['commandCall'])) return $string;
 
         $colored_string = "";
@@ -171,6 +184,8 @@ trait ConsoleColor
      */
     public function yellowPrint($string, $foreground_color = 'black', $background_color = 'yellow')
     {
+        $this->consoleLogger($string,'info');
+
         if(isset($this->argument['commandCall'])) return $string;
 
         $colored_string = "";
@@ -198,6 +213,8 @@ trait ConsoleColor
      */
     public function blue($string, $foreground_color = 'white', $background_color = 'blue')
     {
+        $this->consoleLogger($string,'info');
+
         if(isset($this->argument['commandCall'])) return $string;
 
         $colored_string = "";
@@ -225,6 +242,8 @@ trait ConsoleColor
      */
     public function yellow($string, $foreground_color = 'blue', $background_color = 'yellow')
     {
+        $this->consoleLogger($string,'info');
+
         if(isset($this->argument['commandCall'])) return $string;
 
         $colored_string = "";
@@ -252,6 +271,8 @@ trait ConsoleColor
      */
     public function cyan($string, $foreground_color = 'magenta', $background_color = 'cyan')
     {
+        $this->consoleLogger($string,'info');
+
         if(isset($this->argument['commandCall'])) return $string;
 
         $colored_string = "";
@@ -279,6 +300,8 @@ trait ConsoleColor
      */
     public function input($string, $foreground_color = 'blue', $background_color = 'light_gray')
     {
+        $this->consoleLogger($string,'info');
+
         if(isset($this->argument['commandCall'])) return $string;
 
         $colored_string = "";
@@ -306,6 +329,8 @@ trait ConsoleColor
      */
     public function error($string, $foreground_color = 'white', $background_color = 'red')
     {
+        $this->consoleLogger($string,'error');
+
         if(isset($this->argument['commandCall'])) return $string;
 
         $colored_string = "";

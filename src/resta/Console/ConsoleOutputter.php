@@ -174,4 +174,15 @@ class ConsoleOutputter extends ConsolePrepare {
 
         return $argument;
     }
+
+    /**
+     * @param $string
+     */
+    public function consoleLogger($string,$level)
+    {
+        logger('console')->{$level}([
+            'argument'  => implode(" ",resta()->consoleArguments),
+            'result'    => $string,
+        ]);
+    }
 }

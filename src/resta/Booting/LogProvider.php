@@ -18,6 +18,6 @@ class LogProvider extends ApplicationProvider implements BootContracts
         // the system error log, and even to Slack to notify your entire team.
         $this->app->bind('logger',function(){
             return LoggerService::class;
-        });
+        },true);
     }
 }

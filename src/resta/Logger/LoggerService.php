@@ -48,9 +48,18 @@ class LoggerService
         $loggerNamespace = app()->namespace()->logger();
 
         // if the logger file does not exist
+        // or request console is true
         // we throw a domain exception.
         if(Utils::isNamespaceExists($loggerNamespace)===false){
-            exception()->domain('Such a group was not created within the project.');
+
+            //get checking console for logger
+            if(Utils::isRequestConsole()===false){
+
+                //throw exception via domain method
+                exception()->domain('Such a group was not created within the project.');
+            }
+
+            return false;
         }
 
         //We are getting the path to
@@ -77,28 +86,32 @@ class LoggerService
      */
     public function logHandler($printer,$file="access",$type='info')
     {
-        //we get the log object that was previously assigned.
-        $log=resta()->log;
+        if(isset(resta()->log)){
 
-        $base=current($log);
+            //we get the log object that was previously assigned.
+            $log=resta()->log;
 
-        if($this->adapter!==null){
+            $base=current($log);
 
-            $log=[];
-            $log[$this->adapter]=$base;
+            if($this->adapter!==null){
+
+                $log=[];
+                $log[$this->adapter]=$base;
+            }
+
+            // this object is obtained directly as an array and specifies
+            // the adapter value for the first key log. The value of the directory stores
+            // the instance value of the service log class. From there,
+            // we call the method specified by the adapter in the service log class
+            // and log the application in the customized mode for the application.
+            // The service log class uses the monolog class.
+            if(method_exists($base,$adapter=key($log))){
+                call_user_func_array([$base,$adapter],[$printer,$file,$type]);
+            }
+
+            //printer back
+            return $printer;
         }
 
-        // this object is obtained directly as an array and specifies
-        // the adapter value for the first key log. The value of the directory stores
-        // the instance value of the service log class. From there,
-        // we call the method specified by the adapter in the service log class
-        // and log the application in the customized mode for the application.
-        // The service log class uses the monolog class.
-        if(method_exists($base,$adapter=key($log))){
-            call_user_func_array([$base,$adapter],[$printer,$file,$type]);
-        }
-
-        //printer back
-        return $printer;
     }
 }
