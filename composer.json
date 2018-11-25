@@ -44,6 +44,16 @@
         "symfony/process": "^4.0",
         "zendframework/zend-validator": "^2.10",
         "aligurbuz/lingua": "^1.0",
-        "mobiledetect/mobiledetectlib": "^2.8"
+        "mobiledetect/mobiledetectlib": "^2.8",
+        "aligurbuz/migratio": "^2.0",
+        "phpunit/phpunit": "^6.3",
+        "optimus/onion": "~1.0",
+        "zendframework/zend-db": "^2.9",
+        "doctrine/dbal": "^2.7",
+        "symfony/stopwatch": "^4.1",
+        "fzaninotto/faker": "^1.7",
+        "ext-curl": "*",
+        "ext-dom": "*",
+        "ext-json": "*"
     }
 }
