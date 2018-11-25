@@ -56,10 +56,23 @@ return [
     | To help you learn more about what's happening within your application
     | System provides robust logging services that allow you to log messages to files
     | By default, the value is true, you can change it according to your environment.
-    | The Logger service is managed in the ServiceLog file in your application directory.
+    | The Logger service is managed in the config directory in your application directory.
     |
     */
     'logger' => environment('logger',true),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Console Logger
+    |--------------------------------------------------------------------------
+    |
+    | To help you learn more about what's happening within your application
+    | System provides robust logging services that allow you to log messages to files
+    | By default, the value is true, you can change it according to your environment.
+    | The Console logger service is managed in the config directory in your application directory.
+    |
+    */
+    'consoleLogger' => environment('consoleLogger',true),
 
     /*
     |--------------------------------------------------------------------------

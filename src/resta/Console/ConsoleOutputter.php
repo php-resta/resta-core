@@ -180,9 +180,13 @@ class ConsoleOutputter extends ConsolePrepare {
      */
     public function consoleLogger($string,$level)
     {
-        logger('console')->{$level}([
-            'argument'  => implode(" ",resta()->consoleArguments),
-            'result'    => $string,
-        ]);
+        if(config('app')!==null && config('app.consoleLogger')){
+
+            logger('console')->{$level}([
+                'argument'  => implode(" ",resta()->consoleArguments),
+                'result'    => $string,
+            ]);
+        }
+
     }
 }
