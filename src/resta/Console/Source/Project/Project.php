@@ -18,9 +18,11 @@ class Project extends ConsoleOutputter {
     public $type='project';
 
     /**
-     * @var $define
+     * @var array
      */
-    public $define='Project Set';
+    protected $runnableMethods = [
+        'create'=>'Creates Application Skeleton'
+    ];
 
     /**
      * @var $commandRule

@@ -19,6 +19,7 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
 
     /**
      * Application constructor.
+     *
      * @param bool $console
      */
     public function __construct($console=false)
@@ -32,11 +33,13 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
     }
 
     /**
+     * kernel boot manager method
+     *
      * @param null $boot
      * @param null $maker
      * @return mixed
      */
-    public function bootFire($boot=null,$maker=null)
+    protected function bootFire($boot=null,$maker=null)
     {
         //we can refer to this method
         //because we can boot classes in the middleware or bootstrapper array.
@@ -56,6 +59,8 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
     }
 
     /**
+     * console kernel object
+     *
      * @return bool|mixed|null
      */
     public function console()
@@ -66,6 +71,8 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
     }
 
     /**
+     * handle application
+     *
      * @return null
      */
     public function handle()
@@ -74,5 +81,15 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
         //If you come via http, the kernel response value is appraised.
         //If you come via console, the kernel console value is appraised.
         return ($this->console()) ? null : $this->kernel->response;
+    }
+
+    /**
+     * get command list from kernel
+     *
+     * @return array
+     */
+    public function getCommandList()
+    {
+        return $this->bootFire(null,'commandList');
     }
 }

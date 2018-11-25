@@ -17,14 +17,16 @@ class Autoservice extends ConsoleOutputter {
     public $type='auto-service';
 
     /**
-     * @var $define
+     * @var array
      */
-    public $define='Auto service';
+    protected $runnableMethods = [
+        'create'=>'Creates Auto-Controller'
+    ];
 
     /**
      * @var $commandRule
      */
-    public $commandRule=[];
+    protected $commandRule=[];
 
     /**
      * @method create

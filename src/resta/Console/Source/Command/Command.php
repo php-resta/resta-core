@@ -16,14 +16,16 @@ class Command extends ConsoleOutputter {
     public $type='command';
 
     /**
-     * @var $define
+     * @var array
      */
-    public $define='command';
+    protected $runnableMethods = [
+        'create'=>'Creates an application commander'
+    ];
 
     /**
      * @var $commandRule
      */
-    public $commandRule=['command'];
+    protected $commandRule=['command'];
 
     /**
      * @method create

@@ -17,9 +17,11 @@ class Exception extends ConsoleOutputter {
     public $type='exception';
 
     /**
-     * @var $define
+     * @var array
      */
-    public $define='Exception create';
+    protected $runnableMethods = [
+        'create'=>'Creates an exception file for application'
+    ];
 
     /**
      * @var $commandRule

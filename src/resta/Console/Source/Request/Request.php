@@ -18,9 +18,11 @@ class Request extends ConsoleOutputter {
     public $type='request';
 
     /**
-     * @var $define
+     * @var array
      */
-    public $define='Request create';
+    protected $runnableMethods = [
+        'create'=>'Creates request object'
+    ];
 
     /**
      * @var $commandRule

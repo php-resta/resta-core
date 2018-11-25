@@ -17,14 +17,16 @@ class Env extends ConsoleOutputter {
     public $type='env';
 
     /**
-     * @var $define
+     * @var array
      */
-    public $define='env create';
+    protected $runnableMethods = [
+        'create'=>'Creates an application environment file'
+    ];
 
     /**
      * @var $commandRule
      */
-    public $commandRule=[];
+    protected $commandRule=[];
 
     /**
      * @method create

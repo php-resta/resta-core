@@ -17,9 +17,11 @@ class Token extends ConsoleOutputter {
     public $type='token';
 
     /**
-     * @var $define
+     * @var array
      */
-    public $define='Token Generator';
+    protected $runnableMethods = [
+        'create'=>'Creates application token'
+    ];
 
     /**
      * @var $commandRule

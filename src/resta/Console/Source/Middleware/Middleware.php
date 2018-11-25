@@ -17,9 +17,11 @@ class Middleware extends ConsoleOutputter {
     public $type='middleware';
 
     /**
-     * @var $define
+     * @var array
      */
-    public $define='Middleware create';
+    protected $runnableMethods = [
+        'create'=>'Creates a middleware file'
+    ];
 
     /**
      * @var $commandRule

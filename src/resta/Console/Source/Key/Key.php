@@ -19,9 +19,11 @@ class Key extends ConsoleOutputter {
     public $type='key';
 
     /**
-     * @var $define
+     * @var array
      */
-    public $define='Key generate on console';
+    protected $runnableMethods = [
+        'generate'=>'Creates an application crypt key file'
+    ];
 
     /**
      * @var $commandRule

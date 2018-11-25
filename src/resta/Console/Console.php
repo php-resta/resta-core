@@ -47,6 +47,10 @@ class Console extends ApplicationProvider {
         //If the console class is not available on the kernel of resta, then the system will run the command class in the application.
         return $this->checkConsoleNamespace(function(){
 
+            if($this->isRunnableKernelCommandList()){
+                exception()->badMethodCall('this command is not runnable');
+            }
+
             // we get the instance data of the kernel command class of the system.
             $commander=(new $this->consoleClassNamespace($this->getConsoleArgumentsWithKey(),$this));
 
@@ -89,5 +93,18 @@ class Console extends ApplicationProvider {
 
         //callback custom console
         return call_user_func_array($callback,[$commander]);
+    }
+
+    /**
+     * @return bool
+     */
+    private function isRunnableKernelCommandList()
+    {
+        $commandList = app()->getCommandList();
+
+        //is runnable kernel command conditions
+        return !array_key_exists($this->consoleClassNamespace,$commandList) OR
+            (array_key_exists($this->consoleClassNamespace,$commandList) AND
+                !$commandList[$this->consoleClassNamespace]['isRunnable']);
     }
 }

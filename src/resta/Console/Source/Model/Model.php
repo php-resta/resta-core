@@ -17,9 +17,11 @@ class Model extends ConsoleOutputter {
     public $type='model';
 
     /**
-     * @var $define
+     * @var array
      */
-    public $define='Model creating';
+    protected $runnableMethods = [
+        'create'=>'Creates a model file'
+    ];
 
     /**
      * @var $commandRule

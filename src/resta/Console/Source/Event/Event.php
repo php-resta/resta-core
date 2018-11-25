@@ -18,14 +18,16 @@ class Event extends ConsoleOutputter {
     public $type='event';
 
     /**
-     * @var $define
+     * @var array
      */
-    public $define='Event';
+    protected $runnableMethods = [
+        'create'=>'Creates an event manager'
+    ];
 
     /**
      * @var $commandRule
      */
-    public $commandRule=[];
+    protected $commandRule=[];
 
     /**
      * @method create

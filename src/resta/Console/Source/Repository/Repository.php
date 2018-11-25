@@ -17,9 +17,11 @@ class Repository extends ConsoleOutputter {
     public $type='repository';
 
     /**
-     * @var $define
+     * @var array
      */
-    public $define='repository';
+    protected $runnableMethods = [
+        'create'=>'Creates repository structure'
+    ];
 
     /**
      * @var $commandRule

@@ -17,9 +17,11 @@ class Controller extends ConsoleOutputter {
     public $type='controller';
 
     /**
-     * @var $define
+     * @var array
      */
-    public $define='Controller create';
+    protected $runnableMethods = [
+        'create' => 'Creates a controller'
+    ];
 
     /**
      * @var array

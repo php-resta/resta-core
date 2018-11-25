@@ -17,14 +17,16 @@ class Boot extends ConsoleOutputter {
     public $type='boot';
 
     /**
-     * @var $define
+     * @var array
      */
-    public $define='Boot create';
+    protected $runnableMethods = [
+        'create'=>'Creates a general boot object'
+    ];
 
     /**
      * @var $commandRule
      */
-    public $commandRule=[];
+    protected $commandRule=[];
 
     /**
      * @method create

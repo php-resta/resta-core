@@ -2,6 +2,7 @@
 
 namespace Resta\Foundation;
 
+use Resta\ClosureDispatcher;
 use Resta\Utils;
 use Resta\StaticPathList;
 use Resta\StaticPathModel;
@@ -111,12 +112,18 @@ class CustomBooter
     }
 
     /**
-     * @param $booter
+     * @param $boot
      * @return mixed
      */
-    private function getBooterList($booter)
+    private function getBooterList($boot)
     {
+        //kernel boot name
+        $kernelBootName = $this->boot;
+
         //We specify the method call for the booter list.
-        return pos($booter)->bootFire(null,$this->boot);
+        return ClosureDispatcher::bind(pos($boot))
+            ->call(function() use ($kernelBootName) {
+                return $this->bootFire(null,$kernelBootName);
+            });
     }
 }

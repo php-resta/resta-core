@@ -17,9 +17,11 @@ class Source extends ConsoleOutputter {
     public $type='source';
 
     /**
-     * @var $define
+     * @var array
      */
-    public $define='Source create';
+    protected $runnableMethods = [
+        'create'=>'Creates source file'
+    ];
 
     /**
      * @var $commandRule

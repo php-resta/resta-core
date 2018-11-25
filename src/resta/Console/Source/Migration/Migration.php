@@ -17,9 +17,12 @@ class Migration extends ConsoleOutputter {
     public $type='migration';
 
     /**
-     * @var $define
+     * @var array
      */
-    public $define='creating migration on console';
+    protected $runnableMethods = [
+        'create'=>'Creates a migration file',
+        'push'  => 'Executes as sql the generated migration file'
+    ];
 
     /**
      * @var $commandRule

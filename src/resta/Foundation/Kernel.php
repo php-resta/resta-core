@@ -2,6 +2,7 @@
 
 namespace Resta\Foundation;
 
+use Resta\ClosureDispatcher;
 use Resta\Container\Container;
 use Resta\Contracts\KernelContracts;
 
@@ -37,12 +38,40 @@ class Kernel extends Container implements KernelContracts
 
     /**
      * @var array
+     *//**
+     * @var $define
      */
+    public $define = [
+        'create' => ''
+    ];
     protected $reflectionGroups=[
 
         'Resta\Booting\RouteProvider',
         'Resta\Booting\ResponseManager',
 
+    ];
+
+    /**
+     * @var array
+     */
+    protected $commandList = [
+
+        'Resta\Console\Source\AutoService\Autoservice'      => ['isRunnable' => true],
+        'Resta\Console\Source\Boot\Boot'                    => ['isRunnable' => true],
+        'Resta\Console\Source\Command\Command'              => ['isRunnable' => true],
+        'Resta\Console\Source\Controller\Controller'        => ['isRunnable' => true],
+        'Resta\Console\Source\Env\Env'                      => ['isRunnable' => true],
+        'Resta\Console\Source\Event\Event'                  => ['isRunnable' => true],
+        'Resta\Console\Source\Exception\Exception'          => ['isRunnable' => true],
+        'Resta\Console\Source\Key\Key'                      => ['isRunnable' => true],
+        'Resta\Console\Source\Middleware\Middleware'        => ['isRunnable' => true],
+        'Resta\Console\Source\Migration\Migration'          => ['isRunnable' => true],
+        'Resta\Console\Source\Model\Model'                  => ['isRunnable' => true],
+        'Resta\Console\Source\Project\Project'              => ['isRunnable' => true],
+        'Resta\Console\Source\Repository\Repository'        => ['isRunnable' => true],
+        'Resta\Console\Source\Request\Request'              => ['isRunnable' => true],
+        'Resta\Console\Source\Source\Source'                => ['isRunnable' => true],
+        'Resta\Console\Source\Token\Token'                  => ['isRunnable' => true],
     ];
 
     /**
@@ -58,7 +87,10 @@ class Kernel extends Container implements KernelContracts
 
             //kernel boots run and service container{
             //makeBuild for service Container
-            pos($boot)->bootFire($boot);
+            return ClosureDispatcher::bind(pos($boot))
+                ->call(function() use ($boot) {
+                    $this->bootFire($boot);
+                });
         });
     }
 
