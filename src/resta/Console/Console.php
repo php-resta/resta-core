@@ -100,11 +100,22 @@ class Console extends ApplicationProvider {
      */
     private function isRunnableKernelCommandList()
     {
-        $commandList = app()->getCommandList();
+        $commandList = $this->getCommandList();
 
         //is runnable kernel command conditions
         return !array_key_exists($this->consoleClassNamespace,$commandList) OR
             (array_key_exists($this->consoleClassNamespace,$commandList) AND
                 !$commandList[$this->consoleClassNamespace]['isRunnable']);
+    }
+
+    /**
+     * @return mixed
+     */
+    private function getCommandList()
+    {
+        return $commandList = resta()->appClosureInstance->call(function()
+        {
+            return $this->bootFire(null,'commandList');
+        });
     }
 }

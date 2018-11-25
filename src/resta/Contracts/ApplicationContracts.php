@@ -9,10 +9,4 @@ interface ApplicationContracts {
      */
    public function console();
 
-    /**
-     * @return mixed
-     */
-   public function getCommandList();
-
-
 }

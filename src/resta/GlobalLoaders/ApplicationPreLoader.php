@@ -4,6 +4,7 @@ namespace Resta\GlobalLoaders;
 
 use Resta\App;
 use Resta\ClassAliasGroup;
+use Resta\ClosureDispatcher;
 use Resta\ApplicationProvider;
 use Resta\Foundation\RegisterAppBound;
 
@@ -42,6 +43,10 @@ class ApplicationPreLoader extends ApplicationProvider
         // We are saving the application class to
         // the container object for the appClass value.
         $this->register('appClass',new \application());
+
+        //set closure bind instance for application
+        $this->register('appClosureInstance',ClosureDispatcher::bind(app()));
+
     }
 
 }

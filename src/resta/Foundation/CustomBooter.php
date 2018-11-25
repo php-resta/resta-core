@@ -121,7 +121,7 @@ class CustomBooter
         $kernelBootName = $this->boot;
 
         //We specify the method call for the booter list.
-        return ClosureDispatcher::bind(pos($boot))
+        return resta()->appClosureInstance
             ->call(function() use ($kernelBootName) {
                 return $this->bootFire(null,$kernelBootName);
             });

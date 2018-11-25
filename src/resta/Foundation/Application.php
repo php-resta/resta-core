@@ -82,14 +82,4 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
         //If you come via console, the kernel console value is appraised.
         return ($this->console()) ? null : $this->kernel->response;
     }
-
-    /**
-     * get command list from kernel
-     *
-     * @return array
-     */
-    public function getCommandList()
-    {
-        return $this->bootFire(null,'commandList');
-    }
 }
