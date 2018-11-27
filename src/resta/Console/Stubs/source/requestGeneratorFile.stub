@@ -2,13 +2,13 @@
 
 namespace App\__project__\__version__\Optional\Source\Request\__request__;
 
-trait __request__RequestFaker
+trait __request__RequestGenerator
 {
     /**
-     * faker manager for inputs
+     * auto generator for inputs
      * @var array
      */
-    protected $faker=[];
+    protected $generators=[];
 
     //
 }

@@ -178,44 +178,43 @@ class Request extends RequestClient implements HandleContracts
     /**
      * @return void|mixed
      */
-    private function fakerManager()
+    private function generatorManager()
     {
-        // the first way in the faker method is to detect
-        // the presence of the faker method and if so, to run this method.
-        if(method_exists($this,'faker')){
-            $this->fakerMethod($this->faker());
-        }
-        else{
-
-            // in the second case where the faker is not found,
-            // check the presence of the faker object
-            // and operate the faker over this object.
-            if($this->checkProperties('faker')){
-                $this->fakerMethod($this->faker);
-            }
+        // check the presence of the generator object
+        // and operate the generator over this object.
+        if($this->checkProperties('generators')){
+            $this->generatorMethod($this->generators);
         }
     }
 
     /**
-     * @param $faker
-     * @return void|mixed
+     * @param $generators
      */
-    private function fakerMethod($faker)
+    private function generatorMethod($generators)
     {
-        //faker array object
-        foreach ($faker as $fake){
+        // check the presence of the generator object
+        // and operate the generator over this object.
+        if($this->checkProperties('auto_generators')){
+            $generators = array_merge($generators,$this->auto_generators);
+        }
 
-            //faker method name
-            $fakerMethodName=$fake.'Faker';
+        //generator array object
+        foreach ($generators as $generator){
 
-            // if the faker method is present,
+            //generator method name
+            $generatorMethodName=$generator.'generator';
+
+            // if the generator method is present,
             // the fake value is assigned.
-            if(method_exists($this,$fakerMethodName)){
+            if(method_exists($this,$generatorMethodName)){
 
                 //fake registration
-                if(!isset($this->inputs[$fake])){
-                    $this->inputs[$fake]=$this->{$fakerMethodName}();
+                if(!isset($this->inputs[$generator])){
+                    $this->{$generator}=$this->{$generatorMethodName}();
+                    $this->inputs[$generator]=$this->{$generatorMethodName}();
                 }
+
+                $this->registerRequestInputs($generator);
             }
         }
     }
@@ -258,7 +257,7 @@ class Request extends RequestClient implements HandleContracts
 
         // we update the input values ​​after
         // we receive and check the saved objects.
-        $this->setClientObjects($method);
+        $this->setClientObjects();
 
         // we add our user-side properties for the request object,
         // and on this we will set all the request object properties
@@ -313,6 +312,11 @@ class Request extends RequestClient implements HandleContracts
      */
     private function requestProperties()
     {
+        // if a fake method is defined and it is not in
+        // the context of any key method when access is granted,
+        // it can be filled with fake method.
+        $this->generatorManager();
+
         // contrary to capsule method,
         // expected values must be in the key being sent.
         $this->expectedInputs();
@@ -332,46 +336,49 @@ class Request extends RequestClient implements HandleContracts
         // allows the user to execute
         // the methods specified by the user.
         $this->autoInjection();
-
-        // if a fake method is defined and it is not in
-        // the context of any key method when access is granted,
-        // it can be filled with fake method.
-        $this->fakerManager();
     }
 
     /**
-     * @param $method
-     * @return void|mixed
+     * @return mixed
      */
-    private function setClientObjects($method)
+    private function setClientObjects()
     {
+        $method = $this->method;
+
         // we update the input values ​​after
         // we receive and check the saved objects.
         foreach ($this->getClientObjects() as $key=>$value){
 
             if($method($key)!==null){
 
-                $this->inputs[$key]=$value;
-
                 if($value===null){
                     $this->{$key}=$method($key);
                     $this->inputs[$key]=$this->{$key};
                 }
 
-                // the method name to be used with
-                // the http method.
-                $requestMethod=$method.''.ucfirst($key);
-
                 // the request update to be performed using
                 // the method name to be used with the http method.
-                $this->setRequestInputs($requestMethod,$key);
-
-                // the request update to be performed using
-                // the method name to be used without the http method.
-                $this->setRequestInputs($key,$key);
-
+                $this->registerRequestInputs($key);
             }
         }
+    }
+
+    /**
+     * @param $key
+     */
+    private function registerRequestInputs($key)
+    {
+        // the method name to be used with
+        // the http method.
+        $requestMethod=$this->method.''.ucfirst($key);
+
+        // the request update to be performed using
+        // the method name to be used with the http method.
+        $this->setRequestInputs($requestMethod,$key);
+
+        // the request update to be performed using
+        // the method name to be used without the http method.
+        $this->setRequestInputs($key,$key);
     }
 
     /**

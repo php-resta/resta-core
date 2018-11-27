@@ -44,6 +44,7 @@ class Request extends ConsoleOutputter {
 
         if(!file_exists($this->sourceRequestDir().'/Request.php')){
             $this->touch['source/request']              = $this->sourceRequestDir().'/Request.php';
+            $this->touch['source/requestGenerator']              = $this->sourceRequestDir().'/RequestGenerator.php';
         }
 
         if(!file_exists($this->sourceRequestDir().'/RequestProvider.php')){
@@ -52,7 +53,7 @@ class Request extends ConsoleOutputter {
 
 
         $this->touch['source/requestFile']              = $this->directory['requestDir'].'/'.$request.'Request.php';
-        $this->touch['source/requestFakerFile']         = $this->directory['requestDir'].'/'.$request.'RequestFaker.php';
+        $this->touch['source/requestGeneratorFile']         = $this->directory['requestDir'].'/'.$request.'RequestGenerator.php';
 
         //set project touch
         $this->file->touch($this);
