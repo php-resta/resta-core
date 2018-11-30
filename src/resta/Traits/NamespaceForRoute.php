@@ -3,6 +3,7 @@
 namespace Resta\Traits;
 
 use Resta\Utils;
+use Resta\StaticPathList;
 use Resta\StaticPathModel;
 use Resta\GlobalLoaders\Router;
 use Resta\Routing\CheckEndpointForAutoService;
@@ -151,27 +152,8 @@ trait NamespaceForRoute
     public function getControllerNamespace()
     {
         //generator namespace for array
-        $namespace=Utils::generatorNamespace([
+        $namespace=app()->namespace()->controller($this->endpoint(),true);
 
-            //composer autoload namespace
-            StaticPathModel::$autoloadNamespace,
-
-            //project name
-            $this->project(),
-
-            //project version name
-            Utils::getAppVersion($this->project(),$this),
-
-            //controller static path name
-            StaticPathModel::$controller,
-
-            //endpoint name
-            $this->endpoint(),
-
-            //call file
-            $this->namespaceIdentifier()
-        ]);
-        
         //check namespace exists
         if(file_exists(Utils::getPathFromNamespace($namespace)) && Utils::isNamespaceExists($namespace)){
             return $namespace;
@@ -202,16 +184,5 @@ trait NamespaceForRoute
         //Here we do the namespace control for the auto service. There is no endpoint available,
         //but if there is an auto service recognized by the system, this auto service will be the endpoint.
         return $this->makeBind(CheckEndpointForAutoService::class);
-    }
-
-    /**
-     * @return string
-     */
-    private function namespaceIdentifier()
-    {
-        //default endpoint indicator.
-        $endpoint=$this->endpoint().''.StaticPathModel::$callClassPrefix;
-
-        return $endpoint;
     }
 }

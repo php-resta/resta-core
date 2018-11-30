@@ -1,6 +1,6 @@
 <?php
 
-namespace __controllerNamespace__;
+namespace __controllerNamespace__\__resourceInController__;
 
 use Resta\Contracts\RegisterContracts;
 

@@ -21,6 +21,8 @@ class ExceptionManager implements ExceptionContracts {
                     appInstance()->terminate('exceptionLine');
                     appInstance()->register('exceptionFile',$value['file']);
                     appInstance()->register('exceptionLine',$value['line']);
+
+                    break;
                 }
             }
         }

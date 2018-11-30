@@ -30,6 +30,21 @@ class StaticPathList
     public static $callClassPrefix='Controller';
 
     /**
+     * @var string
+     */
+    public static $controllerBundleName='Bundle';
+
+    /**
+     * @var string
+     */
+    public static $resourceInController='Resource';
+
+    /**
+     * @var string
+     */
+    public static $configurationInController='Config';
+
+    /**
      * @var null
      */
     public static $appPath=null;

@@ -2,6 +2,8 @@
 
 namespace Resta;
 
+use phpDocumentor\Reflection\Types\Self_;
+
 class StaticPathModel extends StaticPathList
 {
     /**
@@ -127,7 +129,7 @@ class StaticPathModel extends StaticPathList
      */
     public static function getServiceConf()
     {
-        return self::endpointPath().'/ServiceConf.php';
+        return self::endpointPath().'/'.self::$configurationInController.'/ServiceConf.php';
     }
 
     /**
@@ -135,7 +137,7 @@ class StaticPathModel extends StaticPathList
      */
     public static function getServiceDummy()
     {
-        return self::endpointPath().'/Dummy.yaml';
+        return self::endpointPath().'/'.self::$configurationInController.'/Dummy.yaml';
     }
 
     /**

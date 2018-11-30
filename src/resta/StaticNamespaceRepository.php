@@ -14,7 +14,7 @@ class StaticNamespaceRepository extends StaticPathRepository
 
     /**
      * @param null $endpoint
-     * @param array $bind
+     * @param $bind
      * @return mixed|string
      */
     public function controller($endpoint=null,$bind=array())
@@ -23,7 +23,9 @@ class StaticNamespaceRepository extends StaticPathRepository
 
         if($endpoint===null) return $call;
 
-        $endpointCall=$call.'\\'.ucfirst($endpoint).'\\'.ucfirst($endpoint).''.StaticPathModel::$callClassPrefix;
+        $endpointCall=$call.'\\'.ucfirst($endpoint).''.StaticPathList::$controllerBundleName.'\\'.ucfirst($endpoint).''.StaticPathModel::$callClassPrefix;
+
+        if($bind===true) return $endpointCall;
 
         return app()->makeBind($endpointCall,$bind);
     }
