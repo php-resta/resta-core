@@ -31,9 +31,11 @@ interface StaticPathContracts {
     public function config();
 
     /**
+     * @param null $controller
+     * @param bool $bool
      * @return mixed
      */
-    public function controller();
+    public function controller($controller=null,$bool=true);
 
     /**
      * @return mixed

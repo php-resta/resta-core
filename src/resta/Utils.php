@@ -416,7 +416,81 @@ class Utils
     }
 
 
+    /**
+     * @param $dir
+     * @param bool $recursive
+     * @param string $basedir
+     * @param bool $include_dirs
+     * @return array
+     */
+    public static function getAllFilesInDirectory($dir, $recursive = true, $basedir = '', $include_dirs = false)
+    {
+        if ($dir == '') {return array();} else {$results = array(); $subresults = array();}
+        if (!is_dir($dir)) {$dir = dirname($dir);} // so a files path can be sent
+        if ($basedir == '') {$basedir = realpath($dir).DIRECTORY_SEPARATOR;}
 
+        $files = scandir($dir);
+        foreach ($files as $key => $value){
+            if ( ($value != '.') && ($value != '..') ) {
+                $path = realpath($dir.DIRECTORY_SEPARATOR.$value);
+                if (is_dir($path)) {
+                    // optionally include directories in file list
+                    if ($include_dirs) {$subresults[] = str_replace($basedir, '', $path);}
+                    // optionally get file list for all subdirectories
+                    if ($recursive) {
+                        $subdirresults = self::getAllFilesInDirectory($path, $recursive, $basedir, $include_dirs);
+                        $results = array_merge($results, $subdirresults);
+                    }
+                } else {
+                    // strip basedir and add to subarray to separate file list
+                    $subresults[] = str_replace($basedir, '', $path);
+                }
+            }
+        }
+        // merge the subarray to give the list of files then subdirectory files
+        if (count($subresults) > 0) {$results = array_merge($subresults, $results);}
+        return $results;
+    }
 
+    /**
+     * @param $files
+     * @param null $reelPath
+     * @return array
+     */
+    public static function getPathWithPhpExtension($files,$reelPath=null)
+    {
+        $pathWithPhpList = [];
 
+        foreach ($files as $file){
+
+            if(preg_match('@(.*).php@is',$file,$pathWithPhp)){
+
+                if($reelPath===null){
+                    $pathWithPhpList[] = $pathWithPhp[0];
+                }
+                else{
+                    $pathWithPhpList[] = $reelPath.'/'.$pathWithPhp[0];
+                }
+
+            }
+        }
+
+        return $pathWithPhpList;
+    }
+
+    /**
+     * @return array
+     */
+    public static function getCommandList()
+    {
+        if(isset(resta()->appClosureInstance)){
+
+            return resta()->appClosureInstance->call(function()
+            {
+                return $this->bootFire(null,'commandList');
+            });
+        }
+
+        return [];
+    }
 }

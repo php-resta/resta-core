@@ -26,7 +26,7 @@ class Env extends ConsoleOutputter {
     /**
      * @var $commandRule
      */
-    protected $commandRule=[];
+    protected $commandRule='env';
 
     /**
      * @method create

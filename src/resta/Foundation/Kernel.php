@@ -56,7 +56,7 @@ class Kernel extends Container implements KernelContracts
      */
     protected $commandList = [
 
-        'Resta\Console\Source\AutoService\Autoservice'      => ['isRunnable' => true],
+        'Resta\Console\Source\Autoservice\Autoservice'      => ['isRunnable' => true],
         'Resta\Console\Source\Boot\Boot'                    => ['isRunnable' => true],
         'Resta\Console\Source\Command\Command'              => ['isRunnable' => true],
         'Resta\Console\Source\Controller\Controller'        => ['isRunnable' => true],
@@ -70,7 +70,6 @@ class Kernel extends Container implements KernelContracts
         'Resta\Console\Source\Project\Project'              => ['isRunnable' => true],
         'Resta\Console\Source\Repository\Repository'        => ['isRunnable' => true],
         'Resta\Console\Source\Request\Request'              => ['isRunnable' => true],
-        'Resta\Console\Source\Source\Source'                => ['isRunnable' => true],
         'Resta\Console\Source\Token\Token'                  => ['isRunnable' => true],
     ];
 

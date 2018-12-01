@@ -24,6 +24,11 @@ class Model extends ConsoleOutputter {
     ];
 
     /**
+     * @var bool
+     */
+    protected $projectStatus = true;
+
+    /**
      * @var $commandRule
      */
     public $commandRule=['model','?table'];

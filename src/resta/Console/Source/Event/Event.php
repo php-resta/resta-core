@@ -18,10 +18,15 @@ class Event extends ConsoleOutputter {
     public $type='event';
 
     /**
+     * @var bool
+     */
+    protected $projectStatus = true;
+
+    /**
      * @var array
      */
     protected $runnableMethods = [
-        'create'=>'Creates an event manager'
+        'create'=>'Creates an event system'
     ];
 
     /**

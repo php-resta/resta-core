@@ -38,7 +38,7 @@ class Console extends ApplicationProvider {
      * @method consoleProcess
      * @return mixed
      */
-    public function consoleProcess(){
+    protected function consoleProcess(){
 
         //We create a namespace for the console and we assign to a variable the path of this class.
         $this->consoleClassNamespace=$this->consoleClassNamespace();
@@ -67,8 +67,17 @@ class Console extends ApplicationProvider {
      */
     public function handle()
     {
-        //run console process
-        return $this->consoleProcess();
+        //get is running console
+        if(Utils::isRequestConsole()){
+
+            //run console process
+            if(count($this->getArguments())){
+                return $this->consoleProcess();
+            }
+
+            return app()->makeBind(ConsoleCommandList::class,
+                ['argument'=>[]])->handle();
+        }
     }
 
     /**
@@ -76,7 +85,7 @@ class Console extends ApplicationProvider {
      * @param callable $callback
      * @return mixed
      */
-    public function prepareCommander($commander,callable $callback){
+    protected function prepareCommander($commander,callable $callback){
 
         // closure binding custom command,move custom namespace as specific
         // call prepare commander firstly for checking command builder
@@ -100,22 +109,11 @@ class Console extends ApplicationProvider {
      */
     private function isRunnableKernelCommandList()
     {
-        $commandList = $this->getCommandList();
+        $commandList = Utils::getCommandList();
 
         //is runnable kernel command conditions
         return !array_key_exists($this->consoleClassNamespace,$commandList) OR
             (array_key_exists($this->consoleClassNamespace,$commandList) AND
                 !$commandList[$this->consoleClassNamespace]['isRunnable']);
-    }
-
-    /**
-     * @return mixed
-     */
-    private function getCommandList()
-    {
-        return $commandList = resta()->appClosureInstance->call(function()
-        {
-            return $this->bootFire(null,'commandList');
-        });
     }
 }

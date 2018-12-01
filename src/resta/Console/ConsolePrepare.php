@@ -4,8 +4,8 @@ namespace Resta\Console;
 
 use Resta\Contracts\ConsolePrepareContracts;
 
-class ConsolePrepare implements ConsolePrepareContracts {
-
+class ConsolePrepare implements ConsolePrepareContracts
+{
     /**
      * @var array $prepareBind
      */
@@ -15,8 +15,8 @@ class ConsolePrepare implements ConsolePrepareContracts {
      * @param $commander
      * @return array|mixed
      */
-    public function prepareCommander($commander){
-
+    public function prepareCommander($commander)
+    {
         $commander=$commander->call(function() use($commander){
 
             return [
@@ -65,6 +65,8 @@ class ConsolePrepare implements ConsolePrepareContracts {
     private function getDefaultCommandRules($rules)
     {
         $list = [];
+
+        if(!is_array($rules)) $rules = [];
 
         foreach ($rules as $key=>$rule){
 

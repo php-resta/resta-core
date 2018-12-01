@@ -24,6 +24,11 @@ class Repository extends ConsoleOutputter {
     ];
 
     /**
+     * @var bool
+     */
+    protected $projectStatus = true;
+
+    /**
      * @var $commandRule
      */
     public $commandRule=['repository','?source'];

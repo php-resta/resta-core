@@ -51,4 +51,9 @@ class Autoservice extends ConsoleOutputter {
 
         echo $this->classical(' > Auto Service called as "'.$autoDirectory[0].'" has been successfully created in the '.$this->autoService().'');
     }
+
+    public function test()
+    {
+        return 'hello';
+    }
 }

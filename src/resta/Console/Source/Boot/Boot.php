@@ -26,7 +26,7 @@ class Boot extends ConsoleOutputter {
     /**
      * @var $commandRule
      */
-    protected $commandRule=[];
+    protected $commandRule='boot';
 
     /**
      * @method create

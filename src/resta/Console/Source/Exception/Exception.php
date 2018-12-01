@@ -24,6 +24,11 @@ class Exception extends ConsoleOutputter {
     ];
 
     /**
+     * @var bool
+     */
+    protected $projectStatus = true;
+
+    /**
      * @var $commandRule
      */
     public $commandRule=['exception'];

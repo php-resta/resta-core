@@ -16,9 +16,11 @@ class __command__ extends ConsoleOutputter
     protected $type='__command__';
 
     /**
-     * @var $define
+     * @var array
      */
-    protected $define='__command__';
+     protected $runnableMethods = [
+        'handle' => '__command__  handle'
+     ];
 
     /**
      * @var $commandRule array

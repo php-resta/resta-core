@@ -2,7 +2,6 @@
 
 namespace Resta\Console\Source\Project;
 
-use const Grpc\STATUS_ABORTED;
 use Resta\Console\ConsoleListAccessor;
 use Resta\Console\ConsoleOutputter;
 use Resta\StaticPathModel;
@@ -23,6 +22,11 @@ class Project extends ConsoleOutputter {
     protected $runnableMethods = [
         'create'=>'Creates Application Skeleton'
     ];
+
+    /**
+     * @var bool
+     */
+    protected $projectStatus = true;
 
     /**
      * @var $commandRule

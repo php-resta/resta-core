@@ -267,11 +267,16 @@ class StaticPathRepository
     }
 
     /**
+     * @param null $controller
+     * @param bool $bool
      * @return mixed
      */
-    public function controller()
+    public function controller($controller=null,$bool=true)
     {
-        return Utils::getPathFromNamespace(app()->namespace()->controller(),false);
+        $namespaceController = ($controller===null) ? app()->namespace()->controller()
+            : app()->namespace()->controller($controller,true);
+
+        return Utils::getPathFromNamespace($namespaceController,false);
     }
 
     /**

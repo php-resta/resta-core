@@ -21,13 +21,22 @@ class Controller extends ConsoleOutputter {
      * @var array
      */
     protected $runnableMethods = [
-        'create' => 'Creates a controller'
+        'create'    => 'Creates a controller',
+        'rename'    => 'rename controller'
     ];
+
+    /**
+     * @var bool
+     */
+    protected $projectStatus = true;
 
     /**
      * @var array
      */
-    protected $commandRule=['controller','?namespace'];
+    protected $commandRule=[
+        'create'    => ['controller'],
+        'rename'    => ['controller','rename']
+    ];
 
     /**
      * @method create
@@ -80,6 +89,43 @@ class Controller extends ConsoleOutputter {
         // and as a result we print the result on the console screen.
         echo $this->classical(' > Controller called as "'.$controller.'" has been successfully created in the '.app()->namespace()->call().'');
 
+    }
+
+    /**
+     * @return mixed
+     *
+     */
+    public function rename()
+    {
+        $path = app()->path()->controller().'/'.$this->argument['controller'].''.StaticPathList::$controllerBundleName;
+
+        if(file_exists($path)){
+
+            $newPathName = str_replace($this->argument['controller'],$this->argument['rename'],$path);
+
+            rename($path,$newPathName);
+
+            $getAllFiles = Utils::getAllFilesInDirectory($newPathName);
+
+            $getPathWithPhpExtensions = Utils::getPathWithPhpExtension($getAllFiles,$newPathName);
+
+            foreach ($getPathWithPhpExtensions as $getPathWithPhpExtension){
+
+                $newName = preg_replace('@'.$this->argument['controller'].'@is'
+                    ,$this->argument['rename'],$getPathWithPhpExtension);
+
+                rename($getPathWithPhpExtension,$newName);
+
+                Utils::changeClass($newName,
+                    [
+                       $this->argument['controller']=>$this->argument['rename']
+                    ]);
+
+            }
+
+            echo $this->classical($this->argument['controller'].' Controller has been changed as '.$this->argument['rename'].' Controller');
+
+        }
     }
 
     /**
