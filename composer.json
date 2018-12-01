@@ -51,9 +51,6 @@
         "zendframework/zend-db": "^2.9",
         "doctrine/dbal": "^2.7",
         "symfony/stopwatch": "^4.1",
-        "fzaninotto/faker": "^1.7",
-        "ext-curl": "*",
-        "ext-dom": "*",
-        "ext-json": "*"
+        "fzaninotto/faker": "^1.7"
     }
 }
