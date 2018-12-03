@@ -2,9 +2,6 @@
 
 namespace Resta\Config;
 
-use phpDocumentor\Reflection\DocBlock\Tags\See;
-use phpDocumentor\Reflection\Types\Self_;
-
 class Config
 {
     /**
@@ -42,7 +39,6 @@ class Config
         if(self::$configProcessInstance!==null){
             return self::$configProcessInstance->get();
         }
-
     }
 
     /**
@@ -54,6 +50,7 @@ class Config
         if(self::$_instance===null){
             return (new self())->setConfig($config);
         }
+
         return new self();
     }
 
