@@ -59,7 +59,7 @@ class Config
      */
     public function setConfig($config)
     {
-        self::$_instance=1;
+        self::$_instance=true;
 
         self::$config = $config;
 
