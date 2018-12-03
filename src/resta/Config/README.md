@@ -5,7 +5,7 @@ It is a loader including a helper method.
 * ConfidLoader object is a kernel loader.
 * ConfigProcess is a config definitor.
 
-###Configuration process inside the application
+### Configuration process inside the application
 
 - To get all file namespaces and path that in the configuration directory
 ```sh
@@ -25,14 +25,14 @@ use Resta\Config\ConfigProcess;
 ```
 - .(dot) is a seperator then you can get key in key recursively.(example app.foo.bar etc..)
 
-###Helper method
+### Helper method
 
 ```sh
 config('app.response');
 ```
 - You can get all configuration keys in the application box
 
-###Config facade object
+### Config facade object
 
 ```sh
 use Resta\Config\Config;
