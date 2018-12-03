@@ -13,6 +13,11 @@ class ConfigProcess
     protected $config;
 
     /**
+     * @var array
+     */
+    protected $configList = [];
+
+    /**
      * ConfigProcess constructor.
      * @param null $config
      */
@@ -43,10 +48,10 @@ class ConfigProcess
 
         // we are starting a array of
         // point-based logical processes for config data processing.
-        $this->config=Str::stringToArray($this->config);
+        $this->configList=Str::stringToArray($this->config);
 
         //if the config object exists in the kernel, start the process.
-        if(isset($kernelConfig[$config=current($this->config)])){
+        if(isset($kernelConfig[$config=current($this->configList)])){
 
             //get config data
             $configData=$this->getConfigData($kernelConfig,$config);
@@ -65,13 +70,13 @@ class ConfigProcess
     private function configProcessResult($config)
     {
         //config data if dotted.
-        if(count($this->config)){
+        if(count($this->configList)){
 
-            array_shift($this->config);
+            array_shift($this->configList);
             $configRecursive=$config;
 
             //we apply the dotted-knit config dataset as nested.
-            foreach ($this->config as $key=>$value){
+            foreach ($this->configList as $key=>$value){
                 $configRecursive=$configRecursive[$value];
             }
         }
