@@ -195,7 +195,7 @@ if (!function_exists('config')) {
      */
     function config($config=null)
     {
-        return app()->singleton()->appClass->configLoaders($config);
+        return resta()->appClass->configLoaders($config);
     }
 }
 

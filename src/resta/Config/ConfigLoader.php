@@ -12,6 +12,8 @@ class ConfigLoader
      */
     public function handle(ConfigGlobalInstance $config)
     {
+        define('config',true);
+
         //We run a glob function for all of the config files,
         //where we pass namespace and paths to a kernel object and process them.
         $configFiles=Utils::glob(app()->path()->config());

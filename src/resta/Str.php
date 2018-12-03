@@ -672,7 +672,18 @@ class Str
     /**
      * @param $data
      */
-    public static function slashToBackSlash($data){
+    public static function slashToBackSlash($data)
+    {
         return str_replace("\\","/",$data);
+    }
+
+    /**
+     * @param $string
+     * @param string $explode
+     * @return array
+     */
+    public static function stringToArray($string,$explode=".")
+    {
+        return explode($explode,$string);
     }
 }
