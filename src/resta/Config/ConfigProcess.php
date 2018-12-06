@@ -4,13 +4,17 @@ namespace Resta\Config;
 
 use Resta\Str;
 use Resta\Utils;
+use Resta\Traits\PropertyAccessibility;
 
-class ConfigProcess
+class ConfigProcess implements \ArrayAccess
 {
+    //get property accessibility
+    use PropertyAccessibility;
+
     /**
      * @var $config
      */
-    protected $config;
+    protected $config = null;
 
     /**
      * @var array
@@ -23,7 +27,9 @@ class ConfigProcess
      */
     public function __construct($config=null)
     {
-        $this->config=$config;
+        if($this->config===null){
+            $this->config=$config;
+        }
     }
 
     /**

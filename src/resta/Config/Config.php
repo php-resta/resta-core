@@ -5,62 +5,59 @@ namespace Resta\Config;
 class Config
 {
     /**
-     * @var $config
+     * @var null $config
      */
     private static $config = null;
 
     /**
-     * @var null $_instance
-     */
-    private static $_instance = null;
-
-    /**
-     * @var null
+     * @var null $configProcessInstance
      */
     private static $configProcessInstance = null;
 
     /**
      * Config constructor.
-     * @param null $config
      */
     public function __construct()
     {
         if(self::$config!==null && self::$configProcessInstance===null){
-            self::$configProcessInstance=new ConfigProcess(self::$config);
+            self::$configProcessInstance=new ConfigProcess();
         }
-
     }
 
     /**
-     * @return string
+     * @return mixed|null
+     * @throws \DI\DependencyException
+     * @throws \DI\NotFoundException
      */
     public function get()
     {
         if(self::$configProcessInstance!==null){
+
+            $config = self::$config;
+
+            self::$configProcessInstance->offsetSet('config',$config);
+
             return self::$configProcessInstance->get();
         }
+
+        return null;
+    }
+
+    /**
+     * @param null $config
+     * @return Config
+     */
+    public static function make($config=null)
+    {
+        return (new self())->setConfig($config);
     }
 
     /**
      * @param $config
      * @return Config
      */
-    public static function make($config=null)
-    {
-        if(self::$_instance===null){
-            return (new self())->setConfig($config);
-        }
-
-        return new self();
-    }
-
-    /**
-     * @param $config
-     */
     public function setConfig($config)
     {
-        self::$_instance=true;
-
         self::$config = $config;
 
         return new self();
