@@ -74,7 +74,6 @@ class Project extends ConsoleOutputter {
         $this->touch['kernel/provider']               = $this->kernel().'/AppProvider.php';
         $this->touch['kernel/annotations']          = $this->kernel().'/AppAnnotations.php';
         $this->touch['middleware/authenticate']     = $this->middleware().'/Authenticate.php';
-        $this->touch['middleware/validation']       = $this->middleware().'/Validation.php';
         $this->touch['middleware/clientToken']      = $this->middleware().'/ClientApiToken.php';
         $this->touch['middleware/settimezone']      = $this->middleware().'/SetClientTimezone.php';
         $this->touch['middleware/trustedproxies']   = $this->middleware().'/TrustedProxies.php';

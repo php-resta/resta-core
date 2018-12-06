@@ -48,55 +48,25 @@ class Request extends RequestClient implements HandleContracts
     }
 
     /**
-     * @return void
+     * @return mixed
      */
-    protected function autoInjection()
+    private function autoValidate($validate)
     {
-        // we get the autoInject method from
-        // the sequence obtained by getObjects.
-        $getObjects     = $this->getObjects();
-        $autoInject     = $getObjects['autoInject'];
-
-        //if auto inject count is true
-        if(count($autoInject)){
-
-            // we provide the auto method with
-            // auto value added as prefix to the auto inject method name.
-            foreach($autoInject as $key=>$method){
-
-                //prefix auto value
-                $autoMethod='auto'.ucfirst($method);
-
-                // if the specified auto method has been created by the user,
-                // we are running.
-                if(method_exists($this,$autoMethod)){
-                    $this->inputs[$method]=$this->{$autoMethod}();
+        foreach ($this->{$validate} as $object=>$datas){
+            if(Utils::isNamespaceExists($object)){
+                $getObjectInstance = app()->makeBind($object);
+                foreach ($datas as $dataKey=>$data){
+                    if(is_numeric($dataKey) && method_exists($getObjectInstance,$data)){
+                        if(isset($this->origin[$data])){
+                            if(!is_array($this->origin[$data])){
+                               $this->origin[$data] = array($this->origin[$data]);
+                            }
+                            foreach ($this->origin[$data] as $originData){
+                                $getObjectInstance->{$data}($originData);
+                            }
+                        }
+                    }
                 }
-            }
-        }
-    }
-
-    /**
-     * @return void
-     */
-    private function capsule()
-    {
-        //we are in capsule control.
-        if($this->checkProperties('capsule')){
-
-            // with the capsule method we ensure
-            // that all values are the same as those existing in the capsule.
-            // if the value does not exist in capsule, we will throw an exception.
-            foreach ($this->inputs as $key=>$value){
-                if(!in_array($key,$this->capsule)){
-                    exception()->unexpectedValue($key .' input  as value sent is not invalid ');
-                }
-            }
-
-            // all values are in the capsule but the values sent are too big;
-            // in this case we will throw an exception again.
-            if(Utils::isArrayEqual(array_keys($this->inputs),$this->capsule)===false){
-                exception()->unexpectedValue('the values accepted by the server are not the same with values you sent');
             }
         }
     }
@@ -180,11 +150,20 @@ class Request extends RequestClient implements HandleContracts
      */
     private function generatorManager()
     {
+
+        // check the presence of the generator object
+        // and operate the generator over this object.
+        if($this->checkProperties('auto_generators')){
+            $this->generators = array_merge($this->generators,$this->auto_generators);
+        }
+
         // check the presence of the generator object
         // and operate the generator over this object.
         if($this->checkProperties('generators')){
             $this->generatorMethod($this->generators);
         }
+
+
     }
 
     /**
@@ -192,11 +171,7 @@ class Request extends RequestClient implements HandleContracts
      */
     private function generatorMethod($generators)
     {
-        // check the presence of the generator object
-        // and operate the generator over this object.
-        if($this->checkProperties('auto_generators')){
-            $generators = array_merge($generators,$this->auto_generators);
-        }
+
 
         //generator array object
         foreach ($generators as $generator){
@@ -266,31 +241,6 @@ class Request extends RequestClient implements HandleContracts
     }
 
     /**
-     * @param $keyMethod
-     * @param $key
-     * @param callable $callback
-     * @return bool|mixed
-     */
-    private function ifCallableRequestMethod($keyMethod,$key,callable $callback)
-    {
-        if(is_callable($keyMethod) & is_array($this->inputs[$key])){
-
-            foreach ($this->inputs[$key] as $ikey=>$input){
-
-                if(!isset($removeFirstKey)){
-                    $this->inputs[$key]=[];
-                }
-                $this->inputs[$key][$ikey]=$keyMethod($input);
-                $removeFirstKey=true;
-            }
-
-            return true;
-        }
-
-        return call_user_func($callback);
-    }
-
-    /**
      * @method initClient
      * @param $method
      * @return void
@@ -325,17 +275,9 @@ class Request extends RequestClient implements HandleContracts
         // how the request object will be requested,
         $this->checkHttpMethod();
 
-        // mandates the specified keys and
-        // prohibits the sending of values other than those values.
-        $this->capsule();
-
         // it passes all keys that are sent through
         // a validation method on the user side.
         $this->validation();
-
-        // allows the user to execute
-        // the methods specified by the user.
-        $this->autoInjection();
     }
 
     /**
@@ -343,18 +285,16 @@ class Request extends RequestClient implements HandleContracts
      */
     private function setClientObjects()
     {
-        $method = $this->method;
+        $clientObjects = $this->getClientObjects();
 
         // we update the input values ​​after
         // we receive and check the saved objects.
-        foreach ($this->getClientObjects() as $key=>$value){
+        foreach ($clientObjects as $key=>$value){
 
-            if($method($key)!==null){
+            if(isset($clientObjects['origin'][$key])){
 
-                if($value===null){
-                    $this->{$key}=$method($key);
-                    $this->inputs[$key]=$this->{$key};
-                }
+                $this->{$key} = $clientObjects['origin'][$key];
+                $this->inputs[$key] = $this->{$key};
 
                 // the request update to be performed using
                 // the method name to be used with the http method.
@@ -389,13 +329,22 @@ class Request extends RequestClient implements HandleContracts
     {
         if(method_exists($this,$method)){
 
-            $keyMethod=$this->{$method}();
+            if(is_array($this->inputs[$key])){
 
-            // if the request objects contain an array value,
-            // then we assign the values ​​of the closure object specified by the user in this case.
-            $this->ifCallableRequestMethod($keyMethod,$key,function() use($keyMethod,$key){
+                $inputKeys = $this->inputs[$key];
+
+                $this->inputs[$key] = [];
+                foreach ($inputKeys as $input){
+
+                    $this->{$key} = $input;
+                    $keyMethod=$this->{$method}();
+                    $this->inputs[$key][]=$keyMethod;
+                }
+            }
+            else{
+                $keyMethod=$this->{$method}();
                 $this->inputs[$key]=$keyMethod;
-            });
+            }
         }
     }
 
@@ -404,6 +353,9 @@ class Request extends RequestClient implements HandleContracts
      */
     private function validation()
     {
+        if(property_exists($this,'autoObjectValidate') && is_array($this->autoObjectValidate) && count($this->autoObjectValidate)){
+            $this->autoValidate('autoObjectValidate');
+        }
         // we need to find the rule method
         // because we can not validate it.
         if(method_exists($this,'rule')){
