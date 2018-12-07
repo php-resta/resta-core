@@ -78,13 +78,10 @@ class Controller extends ConsoleOutputter {
         $this->touch['service/contractIndex']  = $this->directory['contract'].'/index.html';
 
         $this->file->touch($this,[
-            'stub'=>'Service_Create'
+            'stub'=>'Controller_Create'
         ]);
 
         $this->docUpdate();
-
-        // after all the operations, we apply chmod to the controller directory.
-        Utils::chmod($this->controller());
         
         // and as a result we print the result on the console screen.
         echo $this->classical(' > Controller called as "'.$controller.'" has been successfully created in the '.app()->namespace()->call().'');

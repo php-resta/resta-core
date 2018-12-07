@@ -147,7 +147,7 @@ trait ConsoleListAccessor {
      */
     public function sourceRequestDir(){
 
-        return $this->optional().'/'.StaticPathModel::$sourcePath.'/Request';
+        return $this->optional().'/'.StaticPathModel::$sourceRequest;
     }
 
     /**

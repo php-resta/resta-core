@@ -119,7 +119,7 @@ class FileProcess
 
             $this->setDirectory($stubberDirectoryList);
         }
-
+        
         foreach ($this->data->touch as $execution=>$executionFile){
 
             $executionArray=explode("/",$execution);

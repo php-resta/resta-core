@@ -79,7 +79,7 @@ class App
      */
     public function configLoaders($config=null)
     {
-        return (new ConfigProcess($config))->get();
+        return Config\Config::make($config)->get();
     }
 
     /**

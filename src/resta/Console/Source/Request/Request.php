@@ -42,18 +42,19 @@ class Request extends ConsoleOutputter {
 
         $request=$this->argument['request'];
 
-        $this->directory['requestDir']=$this->optional().'/'.StaticPathModel::$sourcePath.'/'.StaticPathModel::$sourceRequest.'/'.$request;
+        $this->directory['requestCreate']   = $this->sourceRequestDir();
+        $this->directory['requestDir']      = $this->directory['requestCreate'].'/'.$request;
 
         //set project directory
         $this->file->makeDirectory($this);
 
-        if(!file_exists($this->sourceRequestDir().'/Request.php')){
-            $this->touch['source/request']              = $this->sourceRequestDir().'/Request.php';
-            $this->touch['source/requestGenerator']              = $this->sourceRequestDir().'/RequestGenerator.php';
+        if(!file_exists($this->directory['requestCreate'].'/Request.php')){
+            $this->touch['source/request']              =$this->directory['requestCreate'].'/Request.php';
+            $this->touch['source/requestGenerator']              = $this->directory['requestCreate'].'/RequestGenerator.php';
         }
 
-        if(!file_exists($this->sourceRequestDir().'/RequestProvider.php')){
-            $this->touch['source/requestProvider']      = $this->sourceRequestDir().'/RequestProvider.php';
+        if(!file_exists($this->directory['requestCreate'].'/RequestProvider.php')){
+            $this->touch['source/requestProvider']      = $this->directory['requestCreate'].'/RequestProvider.php';
         }
 
 
@@ -62,9 +63,6 @@ class Request extends ConsoleOutputter {
 
         //set project touch
         $this->file->touch($this);
-
-        Utils::chmod($this->optional());
-
         echo $this->classical(' > Request called as "'.$request.'" has been successfully created in the '.app()->namespace()->optionalSource().'');
     }
 }
