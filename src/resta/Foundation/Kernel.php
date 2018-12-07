@@ -36,14 +36,6 @@ class Kernel extends Container implements KernelContracts
         'Resta\Booting\Middleware'
     ];
 
-    /**
-     * @var array
-     *//**
-     * @var $define
-     */
-    public $define = [
-        'create' => ''
-    ];
     protected $reflectionGroups=[
 
         'Resta\Booting\RouteProvider',

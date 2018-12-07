@@ -87,7 +87,6 @@ class Project extends ConsoleOutputter {
         $this->touch['middleware/settimezone']      = $this->middleware().'/SetClientTimezone.php';
         $this->touch['middleware/trustedproxies']   = $this->middleware().'/TrustedProxies.php';
         $this->touch['node/index']                  = $this->node().'/index.html';
-        $this->touch['stub/index']                  = $this->stub().'/index.html';
         $this->touch['webservice/index']            = $this->webservice().'/index.html';
         $this->touch['language/index']              = $this->language().'/index.html';
         $this->touch['language/exception']          = $this->language().'/en/exception.yaml';
@@ -95,6 +94,7 @@ class Project extends ConsoleOutputter {
         $this->touch['log/index']                   = $this->log().'/index.html';
         $this->touch['resource/index']              = $this->resource().'/index.html';
         $this->touch['resource/index']              = $this->resource().'/'.StaticPathModel::$cache.'/index.html';
+        $this->touch['stub/index']                  = $this->stub().'/index.html';
         $this->touch['session/index']               = $this->session().'/index.html';
         $this->touch['service/index']               = $this->controller().'/index.html';
         $this->touch['config/hateoas']              = $this->config().'/Hateoas.php';
@@ -119,12 +119,6 @@ class Project extends ConsoleOutputter {
 
         //set project touch
         $this->file->touch($this);
-
-        Utils::chmod_r($this->projectPath(),0777,0777);
-
-        //Utils::chmod($this->projectPath());
-        //Utils::chmod($this->project);
-
 
         echo $this->classical(' > Application called as "'.$this->projectName().'" has been successfully created in the '.$this->projectPath().'');
     }
