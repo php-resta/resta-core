@@ -39,9 +39,9 @@ class Project extends ConsoleOutputter {
      */
     public function create()
     {
-
         $this->argument['kernelDir'] = Utils::getNamespace($this->kernel());
         $this->directory['projectDir'] = $this->projectPath();
+        $this->directory['optionalDir'] = $this->optional();
 
         $recursiveDefaultDirectory = explode("\\",$this->argument['project']);
         $recursiveDefaultDirectory[] = 'V1';
@@ -94,7 +94,7 @@ class Project extends ConsoleOutputter {
         $this->touch['log/index']                   = $this->log().'/index.html';
         $this->touch['resource/index']              = $this->resource().'/index.html';
         $this->touch['resource/index']              = $this->resource().'/'.StaticPathModel::$cache.'/index.html';
-        $this->touch['stub/index']                  = $this->stub().'/index.html';
+        //$this->touch['stub/index']                  = $this->stub().'/index.html';
         $this->touch['session/index']               = $this->session().'/index.html';
         $this->touch['service/index']               = $this->controller().'/index.html';
         $this->touch['config/hateoas']              = $this->config().'/Hateoas.php';
