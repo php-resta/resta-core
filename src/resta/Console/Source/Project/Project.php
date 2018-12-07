@@ -67,7 +67,6 @@ class Project extends ConsoleOutputter {
         $this->directory['languageDir']             = $this->language();
         $this->directory['languageEnDir']           = $this->language().'/en';
         $this->directory['sessionDir']              = $this->session();
-        //$this->directory['versionDir']              = $this->version();
         $this->directory['callDir']                 = $this->controller();
         $this->directory['configDir']               = $this->config();
         $this->directory['sourceDir']               = $this->sourceDir();
@@ -95,7 +94,7 @@ class Project extends ConsoleOutputter {
         $this->touch['log/index']                   = $this->log().'/index.html';
         $this->touch['resource/index']              = $this->resource().'/index.html';
         $this->touch['resource/index']              = $this->resource().'/'.StaticPathModel::$cache.'/index.html';
-        //$this->touch['stub/index']                  = $this->stub().'/index.html';
+        $this->touch['stub/index']                  = $this->stub().'/index.html';
         $this->touch['session/index']               = $this->session().'/index.html';
         $this->touch['service/index']               = $this->controller().'/index.html';
         $this->touch['config/hateoas']              = $this->config().'/Hateoas.php';
