@@ -76,22 +76,20 @@ class Project extends ConsoleOutputter {
         //set project directory
         $this->file->makeDirectory($this);
 
-        Utils::chmod_r(StaticPathModel::appPath(),0777,0777);
-
         //get project file all path
         //$this->touch['publish']                     = $this->project.'/publish.php';
         //$this->touch['main/version']                = $this->project.'/version.php';
         $this->touch['kernel/kernel']               = $this->kernel().'/Kernel.php';
-        $this->touch['kernel/provider']               = $this->kernel().'/AppProvider.php';
+        $this->touch['kernel/provider']             = $this->kernel().'/AppProvider.php';
         $this->touch['kernel/annotations']          = $this->kernel().'/AppAnnotations.php';
         $this->touch['middleware/authenticate']     = $this->middleware().'/Authenticate.php';
         $this->touch['middleware/clientToken']      = $this->middleware().'/ClientApiToken.php';
         $this->touch['middleware/settimezone']      = $this->middleware().'/SetClientTimezone.php';
         $this->touch['middleware/trustedproxies']   = $this->middleware().'/TrustedProxies.php';
         $this->touch['node/index']                  = $this->node().'/index.html';
-        $this->touch['stub/index']                  = $this->stub().'/index.html';
-        $this->touch['webservice/index']            = $this->webservice().'/index.html';
-        $this->touch['language/index']              = $this->language().'/index.html';
+        $this->touch['node/index']                  = $this->stub().'/index.html';
+        $this->touch['node/index']                  = $this->webservice().'/index.html';
+        $this->touch['node/index']                  = $this->language().'/index.html';
         $this->touch['language/exception']          = $this->language().'/en/exception.yaml';
         $this->touch['language/default']            = $this->language().'/en/default.yaml';
         $this->touch['log/index']                   = $this->log().'/index.html';
