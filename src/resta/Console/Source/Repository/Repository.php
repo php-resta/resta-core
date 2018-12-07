@@ -47,9 +47,11 @@ class Repository extends ConsoleOutputter {
 
         if($this->sourceCreate()) return true;
 
+        $this->directory['repositoryPath'] = $this->repository();
         $this->directory['repositoryDir']=$repositoryPath;
 
-        $this->directory['repositorySourceDir']=$this->repository().'/'.$repository.'/Source/Main';
+        $this->directory['repositorySourceDir']=$this->repository().'/'.$repository.'/Source';
+        $this->directory['repositorySourceMainDir']=$this->directory['repositorySourceDir'].'/Main';
 
         //set project directory
         $this->file->makeDirectory($this);
@@ -58,15 +60,13 @@ class Repository extends ConsoleOutputter {
         $this->touch['repository/contract']     =$this->directory['repositoryDir'].'/'.$repository.'Contract.php';
         $this->touch['repository/trait']        =$this->directory['repositoryDir'].'/'.$repository.'Trait.php';
 
-        $this->touch['repository/sourcemain']       =$this->directory['repositorySourceDir'].'/'.$repository.'Main.php';
+        $this->touch['repository/sourcemain']       =$this->directory['repositorySourceMainDir'].'/'.$repository.'Main.php';
 
         //set project touch
         $this->file->touch($this,[
             'stub'=>'Repository_Create'
         ]);
-
-        Utils::chmod($this->repository());
-
+        
         //set annotations
         $this->setAnnotations();
 
