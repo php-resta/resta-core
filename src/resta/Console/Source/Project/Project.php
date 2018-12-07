@@ -43,9 +43,16 @@ class Project extends ConsoleOutputter {
         $this->argument['kernelDir'] = Utils::getNamespace($this->kernel());
         $this->directory['projectDir'] = $this->projectPath();
 
-        //$recursiveDefaultDirectory = explode("\\",$this->argument['project']);
-        //$recursiveDefaultDirectoryList = [];
+        $recursiveDefaultDirectory = explode("\\",$this->argument['project']);
+        $recursiveDefaultDirectory[] = 'V1';
+        $recursiveDefaultDirectoryList = [];
 
+        foreach (array_slice($recursiveDefaultDirectory,1) as $defaultDirectory){
+
+            $recursiveDefaultDirectoryList[]=$defaultDirectory;
+            $this->directory[$defaultDirectory.'Path'] = $this->projectPath().''.implode("/",$recursiveDefaultDirectoryList);
+        }
+        
         //get project directory all path
         $this->directory['kernelDir']               = $this->kernel();
         $this->directory['middleWareDir']           = $this->middleware();
