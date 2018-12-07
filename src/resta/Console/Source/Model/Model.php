@@ -41,7 +41,7 @@ class Model extends ConsoleOutputter {
 
         $this->argument['file']=$this->argument['model'];
 
-        if($this->argument['table']===null){
+        if(!isset($this->argument['table'])){
             $this->argument['table']=$this->argument['file'].'s';
         }
 
