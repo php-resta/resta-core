@@ -87,7 +87,7 @@ class Project extends ConsoleOutputter {
         $this->touch['middleware/settimezone']      = $this->middleware().'/SetClientTimezone.php';
         $this->touch['middleware/trustedproxies']   = $this->middleware().'/TrustedProxies.php';
         $this->touch['node/index']                  = $this->node().'/index.html';
-        $this->touch['node/index']                  = $this->stub().'/index.html';
+        $this->touch['stub/index']                  = $this->stub().'/index.html';
         $this->touch['webservice/index']            = $this->webservice().'/index.html';
         $this->touch['language/index']              = $this->language().'/index.html';
         $this->touch['language/exception']          = $this->language().'/en/exception.yaml';
