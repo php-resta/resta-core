@@ -40,7 +40,11 @@ class Project extends ConsoleOutputter {
     public function create()
     {
 
-        $this->argument['kernelDir']=Utils::getNamespace($this->kernel());
+        $this->argument['kernelDir'] = Utils::getNamespace($this->kernel());
+        $this->directory['projectDir'] = $this->projectPath();
+
+        //$recursiveDefaultDirectory = explode("\\",$this->argument['project']);
+        //$recursiveDefaultDirectoryList = [];
 
         //get project directory all path
         $this->directory['kernelDir']               = $this->kernel();
