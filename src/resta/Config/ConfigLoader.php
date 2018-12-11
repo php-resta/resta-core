@@ -43,7 +43,7 @@ class ConfigLoader
 
         //We run a glob function for all of the config files,
         //where we pass namespace and paths to a kernel object and process them.
-        $configFiles=Utils::glob($path);
+        $configFiles = Utils::glob($path);
 
         //The config object is a kernel object
         //that can be used to call all class and array files in the config directory of the project.
