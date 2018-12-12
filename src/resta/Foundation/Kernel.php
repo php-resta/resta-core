@@ -31,11 +31,17 @@ class Kernel extends Container implements KernelContracts
         'Resta\Booting\Console',
     ];
 
+    /**
+     * @var array
+     */
     protected $middlewareGroups=[
 
         'Resta\Booting\Middleware'
     ];
 
+    /**
+     * @var array 
+     */
     protected $reflectionGroups=[
 
         'Resta\Booting\RouteProvider',
