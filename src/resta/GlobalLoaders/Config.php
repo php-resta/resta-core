@@ -17,10 +17,12 @@ class Config extends ApplicationProvider
         // the config directory of each application.
         foreach($files as $key=>$file){
 
-            $this->register('appConfig',Str::lower($key),[
-                'namespace' =>app()->namespace()->config().'\\'.$key,
-                'file'      =>$file
-            ]);
+            if(file_exists($file)){
+                $this->register('appConfig',Str::lower($key),[
+                    'namespace' =>app()->namespace()->config().'\\'.$key,
+                    'file'      =>$file
+                ]);
+            }
         }
     }
 }
