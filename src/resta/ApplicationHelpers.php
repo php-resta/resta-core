@@ -308,3 +308,14 @@ if (!function_exists('faker')) {
         return $faker;
     }
 }
+
+if (!function_exists('path')) {
+
+    /**
+     * @return \Resta\Contracts\StaticPathContracts
+     */
+    function path()
+    {
+        return app()->path();
+    }
+}

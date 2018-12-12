@@ -10,7 +10,7 @@ class ConfigLoader
     /**
      * @var $globalInstance ConfigGlobalInstance
      */
-    protected $globalInstance;
+    protected static $globalInstance;
 
     /**
      * @param ConfigGlobalInstance $config
@@ -20,7 +20,7 @@ class ConfigLoader
         define('config',true);
 
         //global instance general property
-        $this->globalInstance = $config;
+        self::$globalInstance = $config;
 
         //set config values
         $this->setConfig();
@@ -47,6 +47,6 @@ class ConfigLoader
 
         //The config object is a kernel object
         //that can be used to call all class and array files in the config directory of the project.
-        $this->globalInstance->setConfig($configFiles);
+        self::$globalInstance->setConfig($configFiles);
     }
 }

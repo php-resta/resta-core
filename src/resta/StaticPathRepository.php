@@ -271,10 +271,17 @@ class StaticPathRepository
      * @param bool $bool
      * @return mixed
      */
-    public function controller($controller=null,$bool=true)
+    public function controller($controller=null,$bool=false)
     {
         $namespaceController = ($controller===null) ? app()->namespace()->controller()
             : app()->namespace()->controller($controller,true);
+
+        if($bool){
+            $namespaceControllerExplode = explode("\\",$namespaceController);
+            array_pop($namespaceControllerExplode);
+
+            $namespaceController = implode("\\",$namespaceControllerExplode);
+        }
 
         return Utils::getPathFromNamespace($namespaceController,false);
     }

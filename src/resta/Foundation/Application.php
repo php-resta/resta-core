@@ -82,4 +82,15 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
         //If you come via console, the kernel console value is appraised.
         return ($this->console()) ? null : $this->kernel->response;
     }
+
+    /**
+     * @param callable $callback
+     * @return mixed|void
+     */
+    public function loadConfig(callable $callback)
+    {
+        if(isset(resta()->bindings['config'])){
+            $configBind = resta()->bindings['config']->setConfig(call_user_func($callback));
+        }
+    }
 }
