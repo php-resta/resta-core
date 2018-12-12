@@ -24,11 +24,11 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
      */
     public function __construct($console=false)
     {
-        //get console status for cli
+        // get console status for cli
         $this->console=$console;
 
-        //The bootstrapper method is the initial process
-        //that runs the individual methods that the application initiated.
+        // the bootstrapper method is the initial process
+        // that runs the individual methods that the application initiated.
         new Bootstrappers($this);
     }
 
@@ -41,20 +41,20 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
      */
     protected function bootFire($boot=null,$maker=null)
     {
-        //we can refer to this method
-        //because we can boot classes in the middleware or bootstrapper array.
+        // we can refer to this method
+        // because we can boot classes in the middleware or bootstrapper array.
         if($boot===null && $maker!==null){
 
-            //We create kernel bootstrapping objects
-            //that can be changed by you with the closure dispatcher method.
+            // we create kernel bootstrapping objects
+            // that can be changed by you with the closure dispatcher method.
             return ClosureDispatcher::bind(KernelBootManager::class)
                 ->call(function() use ($maker){
                     return $this->handle($maker);
             });
         }
 
-        //The boot method to be executed can be specified by the user.
-        //We use this method to know how to customize it.
+        // the boot method to be executed can be specified by the user.
+        // we use this method to know how to customize it.
         return forward_static_call_array([array_pop($boot),'loadBootstrappers'],[$boot]);
     }
 
@@ -65,8 +65,8 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
      */
     public function console()
     {
-        //Controlling the console object is
-        //intended to make sure that the kernel bootstrap classes do not work.
+        // controlling the console object is
+        // intended to make sure that the kernel bootstrap classes do not work.
         return $this->console;
     }
 
@@ -77,9 +77,9 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
      */
     public function handle()
     {
-        //This is the main calling place of your application.
-        //If you come via http, the kernel response value is appraised.
-        //If you come via console, the kernel console value is appraised.
+        // this is the main calling place of your application.
+        // if you come via http, the kernel response value is appraised.
+        // if you come via console, the kernel console value is appraised.
         return ($this->console()) ? null : $this->kernel->response;
     }
 
@@ -89,6 +89,8 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
      */
     public function loadConfig(callable $callback)
     {
+        // it adds the path information specified
+        // by callback to the configuration values.
         if(isset(resta()->bindings['config'])){
             $configBind = resta()->bindings['config']->setConfig(call_user_func($callback));
         }
