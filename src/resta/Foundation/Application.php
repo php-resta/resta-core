@@ -84,6 +84,8 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
     }
 
     /**
+     * configuration loader
+     *
      * @param callable $callback
      * @return mixed|void
      */
