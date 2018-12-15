@@ -2,6 +2,7 @@
 
 namespace Resta\Console\Source\Controller;
 
+use Resta\Config\Config;
 use Resta\StaticPathList;
 use Resta\Utils;
 use Resta\StaticPathModel;
@@ -59,6 +60,9 @@ class Controller extends ConsoleOutputter {
         $this->argument['serviceClass']         = $controller;
         $this->argument['callClassPrefix']      = StaticPathModel::$callClassPrefix;
 
+        $fullNamespaceForController = $this->argument['controllerNamespace'].'\\'.$this->argument['serviceClass'].''.$this->argument['callClassPrefix'];
+
+
         // with the directory operation,
         // we get to the service directory, which is called the controller.
         $this->file->makeDirectory($this);
@@ -82,6 +86,10 @@ class Controller extends ConsoleOutputter {
         ]);
 
         $this->docUpdate();
+
+        Config::make('controller')->set([
+            $this->argument['serviceClass']=> [$fullNamespaceForController=>['all'=>true]]
+        ]);
         
         // and as a result we print the result on the console screen.
         echo $this->classical(' > Controller called as "'.$controller.'" has been successfully created in the '.app()->namespace()->call().'');

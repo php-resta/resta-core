@@ -2,6 +2,7 @@
 
 namespace Resta;
 
+use phpDocumentor\Reflection\Types\Self_;
 use Resta\Services\YamlManager;
 use Resta\Container\ContainerResolve;
 
@@ -11,6 +12,11 @@ class Utils
      * @var array $bool
      */
     private static $bool=[];
+
+    /**
+     * @var array
+     */
+    private static $recursiveArray= [];
 
     /**
      * @return \DI\Container

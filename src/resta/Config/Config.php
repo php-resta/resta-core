@@ -2,7 +2,11 @@
 
 namespace Resta\Config;
 
+use phpDocumentor\Reflection\Types\Self_;
 use Resta\Contracts\AccessorContracts;
+use Resta\FileProcess;
+use Resta\Str;
+use Resta\Utils;
 
 class Config implements AccessorContracts
 {
@@ -72,18 +76,38 @@ class Config implements AccessorContracts
     }
 
     /**
+     * @param $data
      * @return mixed|void
      */
-    public function set()
+    public function set($data)
     {
+        $configPath     = path()->config();
+        $configArray    = Str::stringToArray(self::$config);
+        $setConfigPath  = $configPath.'/'.ucfirst(current($configArray)).'.php';
 
+        /**
+         * @var $fileProcess FileProcess
+         */
+        $fileProcess = app()->makeBind(FileProcess::class);
+        $getConfig   = config(current($configArray));
+
+        if(count($configArray)===1){
+
+            $getConfigContent = ($getConfig===null) ? [] : $getConfig;
+
+            $setData = '<?php return '.var_export(array_merge($getConfigContent,$data), true).';';
+            $fileProcess->dumpFile($setConfigPath,$setData);
+
+        }
+
+        return true;
     }
 
     /**
      * @param $config
      * @return Config
      */
-    public function setConfig($config)
+    private function setConfig($config)
     {
         self::$config = $config;
 

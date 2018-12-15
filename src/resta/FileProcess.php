@@ -37,6 +37,15 @@ class FileProcess
     }
 
     /**
+     * @param $file
+     * @param $data
+     */
+    public function dumpFile($file,$data)
+    {
+        $this->fs->dumpFile($file,$data);
+    }
+
+    /**
      * @param $data
      * @param bool $status
      * @return mixed
