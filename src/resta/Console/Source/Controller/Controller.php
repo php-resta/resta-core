@@ -100,6 +100,7 @@ class Controller extends ConsoleOutputter {
 
             $newPathName = str_replace($this->argument['controller'],$this->argument['rename'],$path);
 
+
             rename($path,$newPathName);
 
             $getAllFiles = Utils::getAllFilesInDirectory($newPathName);
@@ -108,8 +109,9 @@ class Controller extends ConsoleOutputter {
 
             foreach ($getPathWithPhpExtensions as $getPathWithPhpExtension){
 
-                $newName = preg_replace('@'.$this->argument['controller'].'@is'
-                    ,$this->argument['rename'],$getPathWithPhpExtension);
+                $withoutFullPath = str_replace($newPathName,"",$getPathWithPhpExtension);
+
+                $newName = $newPathName."".preg_replace("((.*)".$this->argument['controller'].")", "$1".$this->argument['rename'], $withoutFullPath);
 
                 rename($getPathWithPhpExtension,$newName);
 
