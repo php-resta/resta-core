@@ -2,7 +2,9 @@
 
 namespace Resta\Config;
 
-class Config
+use Resta\Contracts\AccessorContracts;
+
+class Config implements AccessorContracts
 {
     /**
      * @var null $config
@@ -15,10 +17,16 @@ class Config
     private static $configProcessInstance = null;
 
     /**
+     * @var null $instance
+     */
+    private static $instance = null;
+
+    /**
      * Config constructor.
      */
     public function __construct()
     {
+        // we create a singleton object for the config process class.
         if(self::$config!==null && self::$configProcessInstance===null){
             self::$configProcessInstance=new ConfigProcess();
         }
@@ -31,12 +39,16 @@ class Config
      */
     public function get()
     {
+        // The config process class should not be null.
         if(self::$configProcessInstance!==null){
 
+            //get config variables
             $config = self::$config;
 
+            // offset config variables to config process class
             self::$configProcessInstance->offsetSet('config',$config);
 
+            //get config variable from config process class
             return self::$configProcessInstance->get();
         }
 
@@ -49,7 +61,22 @@ class Config
      */
     public static function make($config=null)
     {
-        return (new self())->setConfig($config);
+        // check static singleton object
+        // then set as singleton with new self
+        if(self::$instance===null){
+            self::$instance=new self();
+        }
+
+        //static single object set config
+        return self::$instance->setConfig($config);
+    }
+
+    /**
+     * @return mixed|void
+     */
+    public function set()
+    {
+
     }
 
     /**
