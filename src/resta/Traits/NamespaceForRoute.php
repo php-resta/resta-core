@@ -156,6 +156,10 @@ trait NamespaceForRoute
 
         //check namespace exists
         if(file_exists(Utils::getPathFromNamespace($namespace)) && Utils::isNamespaceExists($namespace)){
+
+            // the controller classes are registered in the config controller.
+            // the controller class is not executed if it is not available here.
+            $this->checkConfigForController($namespace);
             return $namespace;
         }
 
@@ -174,6 +178,30 @@ trait NamespaceForRoute
         return $this->checkEndpointForAutoService()->getNamespaceForAutoService($instance,function(){
             throw new \UnexpectedValueException('Any endpoint is not available');
         });
+    }
+
+    /**
+     * @param $namespace
+     */
+    public function checkConfigForController($namespace)
+    {
+        $configController = config('controller');
+
+        if($configController===null
+            OR !isset($configController[$this->endpoint()])
+            or !isset($configController[$this->endpoint()][$namespace])){
+            exception()->badFunctionCall('The request has not been saved in your configuration settings.');
+        }
+
+        $configController = $configController[$this->endpoint()][$namespace];
+
+        if(isset($configController[environment()]) and $configController[environment()]===false){
+            exception()->domain('Sorry, this endpoint is not allowed to run for this environment.');
+        }
+
+        if(isset($configController['all']) AND $configController['all']===false){
+            exception()->domain('Sorry, this endpoint is never allowed to run.');
+        }
     }
 
     /**

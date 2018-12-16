@@ -18,6 +18,8 @@ class Router extends ApplicationProvider
      */
     public function route()
     {
+        $namespace = $this->getControllerNamespace();
+
         if(file_exists($serviceDummy=StaticPathModel::getServiceDummy())){
             $serviceDummy=Yaml::parse(file_get_contents($serviceDummy));
         }
@@ -25,7 +27,7 @@ class Router extends ApplicationProvider
         //utils make bind via dependency injection named as service container
         $this->register('serviceConf',              (new FileProcess())->callFile(StaticPathModel::getServiceConf()));
         $this->register('serviceDummy',      (isset($serviceDummy)) ? $serviceDummy : []);
-        $this->register('instanceController',       $this->makeBind($this->getControllerNamespace()));
+        $this->register('instanceController',       $this->makeBind($namespace));
         $this->register('serviceConf',              $this->singleton()->serviceConf);
     }
 
