@@ -499,4 +499,21 @@ class Utils
 
         return [];
     }
+
+    /**
+     * @return array
+     */
+    public static function getHttpMethods()
+    {
+        return [
+            'get',
+            'head',
+            'post',
+            'put',
+            'delete',
+            'connect',
+            'options',
+            'trace'
+        ];
+    }
 }

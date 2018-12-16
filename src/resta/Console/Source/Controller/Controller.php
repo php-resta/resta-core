@@ -2,12 +2,13 @@
 
 namespace Resta\Console\Source\Controller;
 
+use Resta\Utils;
 use Resta\Config\Config;
 use Resta\StaticPathList;
-use Resta\Utils;
 use Resta\StaticPathModel;
 use Resta\Console\ConsoleOutputter;
 use Resta\Console\ConsoleListAccessor;
+use Resta\Services\Controller\Controller as CallController;
 
 class Controller extends ConsoleOutputter {
 
@@ -23,7 +24,8 @@ class Controller extends ConsoleOutputter {
      */
     protected $runnableMethods = [
         'create'    => 'Creates a controller',
-        'rename'    => 'rename controller'
+        'rename'    => 'Renames controller',
+        'all'       => 'Lists all controller'
     ];
 
     /**
@@ -36,8 +38,50 @@ class Controller extends ConsoleOutputter {
      */
     protected $commandRule=[
         'create'    => ['controller'],
-        'rename'    => ['controller','rename']
+        'rename'    => ['controller','rename'],
+        'all'       => [],
     ];
+
+    public function all()
+    {
+        echo $this->info('All Route Controller Lists :');
+
+        $this->table->setHeaders(['route','http','method','parameters','define','middleware','event','doc','status']);
+
+        $controllers = (config('controller')===null) ? [] : config('controller');
+
+        foreach ($controllers as $controller=>$detail){
+
+            foreach ($detail as $namespace=>$permission){
+
+                $call = new CallController($namespace);
+
+                $methods = $call->getControllerMethods();
+
+                foreach ($methods as $http=>$method){
+
+                    $parameters = $call->getParameters($method['default']);
+
+                    $this->table->addRow([
+                        $controller,
+                        $http,
+                        $method['short'],
+                        '/'.implode("/",$parameters['route']),
+                        $parameters['define'],
+                        '',
+                        '',
+                        '',
+                        json_encode($permission)
+                    ]);
+                }
+
+
+            }
+
+        }
+
+        echo $this->table->getTable();
+    }
 
     /**
      * @method create
