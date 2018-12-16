@@ -2,11 +2,10 @@
 
 namespace Resta\Config;
 
-use phpDocumentor\Reflection\Types\Self_;
-use Resta\Contracts\AccessorContracts;
-use Resta\FileProcess;
 use Resta\Str;
 use Resta\Utils;
+use Resta\FileProcess;
+use Resta\Contracts\AccessorContracts;
 
 class Config implements AccessorContracts
 {
