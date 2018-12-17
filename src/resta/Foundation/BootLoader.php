@@ -1,6 +1,6 @@
 <?php
 
-namespace Resta\Booting;
+namespace Resta\Foundation;
 
 use Resta\Utils;
 use Resta\ApplicationProvider;
@@ -18,7 +18,7 @@ use Resta\Environment\EnvironmentConfiguration;
 use Resta\Encrypter\Encrypter as EncrypterProvider;
 use Resta\GlobalLoaders\GlobalAccessor as Accessor;
 
-class Bootstrapper extends ApplicationProvider implements BootContracts
+class BootLoader extends ApplicationProvider implements BootContracts
 {
     /**
      * @var $bootstrapper

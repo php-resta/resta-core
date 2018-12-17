@@ -2,7 +2,6 @@
 
 namespace Resta\Foundation;
 
-use Resta\Booting\Bootstrapper;
 use Illuminate\Support\Collection;
 use Resta\Contracts\HandleContracts;
 use Resta\Contracts\ApplicationContracts;
@@ -40,7 +39,7 @@ class FinalBooting implements HandleContracts
         // in this way, all boot classes will be installed quickly.
         if($defaultBoot) {
             $bootManager =
-                $this->app->makeBind(Bootstrapper::class, $this->app->applicationProviderBinding($this->app));
+                $this->app->makeBind(BootLoader::class, $this->app->applicationProviderBinding($this->app));
         }
 
         //boot loop make bind calling
