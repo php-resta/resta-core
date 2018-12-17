@@ -40,7 +40,8 @@ class FinalBooting implements HandleContracts
         // in this way, all boot classes will be installed quickly.
         if($defaultBoot) {
             $bootManager =
-                $this->app->makeBind(BootLoader::class, $this->app->applicationProviderBinding($this->app));
+                $this->app->makeBind(BootLoader::class,
+                    $this->app->applicationProviderBinding($this->app));
         }
 
         //boot loop make bind calling
