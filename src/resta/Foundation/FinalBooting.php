@@ -2,6 +2,7 @@
 
 namespace Resta\Foundation;
 
+use Resta\Booting\Bootstrapper;
 use Illuminate\Support\Collection;
 use Resta\Contracts\HandleContracts;
 use Resta\Contracts\ApplicationContracts;
@@ -31,16 +32,32 @@ class FinalBooting implements HandleContracts
 
     /**
      * @param $boots
-     * @return void|mixed
+     * @param bool $defaultBoot
      */
-    private function bootstrapper($boots)
+    private function bootstrapper($boots,$defaultBoot=true)
     {
+        // as the default boot manager, we will use the bootstrapper class.
+        // in this way, all boot classes will be installed quickly.
+        if($defaultBoot) {
+            $bootManager =
+                $this->app->makeBind(Bootstrapper::class, $this->app->applicationProviderBinding($this->app));
+        }
+
         //boot loop make bind calling
         foreach ($boots as $bootstrapper){
 
-            //set makeBuild for kernel boots
-            $this->app->makeBind($bootstrapper,$this->app->applicationProviderBinding($this->app))
-                ->boot();
+            // for the default boot, we overwrite the bootstrapper class's bootstrapper property
+            // and load it with the boot method.
+            if($defaultBoot){
+                $bootManager->bootstrapper = $bootstrapper;
+                $bootManager->boot();
+            }
+            // we will use the classical method for classes
+            // that will not boot from the kernel.
+            else{
+                $this->app->makeBind($bootstrapper,$this->app->applicationProviderBinding($this->app))
+                    ->boot();
+            }
         }
     }
 
@@ -75,7 +92,7 @@ class FinalBooting implements HandleContracts
 
         //custom boot according to manifest bootManager
         $this->customBootManifest(function($boot){
-            $this->bootstrapper($boot);
+            $this->bootstrapper($boot,false);
         });
     }
 }

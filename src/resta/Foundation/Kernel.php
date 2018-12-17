@@ -17,36 +17,30 @@ class Kernel extends Container implements KernelContracts
      * @var array
      */
     protected $originGroups=[
-
-        'Resta\Booting\GlobalAccessor',
-        'Resta\Booting\Exception',
-        'Resta\Booting\UrlParse',
-        'Resta\Booting\LogProvider',
-        'Resta\Booting\Environment',
-        'Resta\Booting\ConfigLoader',
-        'Resta\Booting\Encrypter',
-        'Resta\Booting\EventDispatcher',
-        'Resta\Booting\AppProvider',
-        'Resta\Booting\ServiceContainer',
-        'Resta\Booting\Console',
+        'accessor',
+        'exception',
+        'urlProvider',
+        'logger',
+        'environment',
+        'configLoader',
+        'encrypter',
+        'eventDispatcher',
+        'appProvider',
+        'serviceContainer',
+        'appConsole',
     ];
-
     /**
      * @var array
      */
     protected $middlewareGroups=[
-
-        'Resta\Booting\Middleware'
+        'middleware'
     ];
-
     /**
-     * @var array 
+     * @var array
      */
     protected $reflectionGroups=[
-
-        'Resta\Booting\RouteProvider',
-        'Resta\Booting\ResponseManager',
-
+        'router',
+        'responseManager',
     ];
 
     /**
