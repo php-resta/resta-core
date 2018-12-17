@@ -49,7 +49,9 @@ class FinalBooting implements HandleContracts
             // and load it with the boot method.
             if($defaultBoot){
                 $bootManager->bootstrapper = $bootstrapper;
-                $bootManager->boot();
+                (method_exists($bootManager,'boot'))
+                    ? $bootManager->boot()
+                    : $this->bootstrapper([$bootstrapper],false);
             }
             // we will use the classical method for classes
             // that will not boot from the kernel.
