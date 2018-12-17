@@ -2,6 +2,7 @@
 
 namespace Resta\Foundation;
 
+use Resta\Utils;
 use Illuminate\Support\Collection;
 use Resta\Contracts\HandleContracts;
 use Resta\Contracts\ApplicationContracts;
@@ -56,8 +57,10 @@ class FinalBooting implements HandleContracts
             // we will use the classical method for classes
             // that will not boot from the kernel.
             else{
-                $this->app->makeBind($bootstrapper,$this->app->applicationProviderBinding($this->app))
-                    ->boot();
+                if(Utils::isNamespaceExists($bootstrapper)){
+                    $this->app->makeBind($bootstrapper,$this->app->applicationProviderBinding($this->app))
+                        ->boot();
+                }
             }
         }
     }
