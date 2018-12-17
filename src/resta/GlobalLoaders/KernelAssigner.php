@@ -57,9 +57,18 @@ class KernelAssigner extends ApplicationProvider
             //get global object instance
             $globalObjectInstance=$this->getGlobalObjectInstance($object);
 
+            //get concrete instance
+            $concreteInstance = $this->makeBind($concrete);
+
+            // this method is executed if the concrete instance contains the handle method.
+            // if no handle method is included, the concrete instance is returned directly.
+            $registerObjectInstance = (method_exists($concreteInstance,'handle'))
+                ? $concreteInstance->handle($globalObjectInstance)
+                : $concreteInstance;
+
             //the value corresponding to the bind value for the global object is assigned and
             //the makeBind method is called for the dependency injection.
-            $this->register($object,$this->makeBind($concrete)->handle($globalObjectInstance));
+            $this->register($object,$registerObjectInstance);
         }
     }
 
