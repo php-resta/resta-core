@@ -36,6 +36,7 @@ class Bootstrappers
      */
     protected $bootstrappers=[
         'originGroups',
+        'consoleGroups',
         'middlewareGroups',
         'reflectionGroups'
     ];

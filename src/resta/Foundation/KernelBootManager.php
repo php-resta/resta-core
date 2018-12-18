@@ -20,7 +20,12 @@ class KernelBootManager extends Manifest
         // As a parameter, the maker variable comes as
         // the name of the list to be booted.
         if(isset($this->{$maker})){
-            $this->makerList=$this->{$maker};
+            if($maker=="originGroups"){
+                $this->makerList=array_merge($this->{$maker},$this->boot());
+            }
+            else{
+                $this->makerList=$this->{$maker};
+            }
         }
 
         //revision maker
@@ -42,8 +47,8 @@ class KernelBootManager extends Manifest
 
                 // the revision list is presented as a helper method to prevent
                 // the listener application being booted from taking the entire listener individually.
-                if(isset(static::$revision[$makerValue])){
-                    $this->makerList[$makerKey]=static::$revision[$makerValue];
+                if(count($this->revision) && isset($this->revision[$makerValue])){
+                    $this->makerList[$makerKey]=$this->revision[$makerValue];
                 }
             }
         }

@@ -27,8 +27,12 @@ class Kernel extends Container implements KernelContracts
         'eventDispatcher',
         'appProvider',
         'serviceContainer',
+    ];
+
+    protected $consoleGroups = [
         'appConsole',
     ];
+
     /**
      * @var array
      */
