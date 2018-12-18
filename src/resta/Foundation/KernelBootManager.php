@@ -42,8 +42,8 @@ class KernelBootManager extends Manifest
 
                 // the revision list is presented as a helper method to prevent
                 // the listener application being booted from taking the entire listener individually.
-                if(isset($this->revision) && isset($this->revision[$makerValue])){
-                    $this->makerList[$makerKey]=$this->revision[$makerValue];
+                if(isset(static::$revision[$makerValue])){
+                    $this->makerList[$makerKey]=static::$revision[$makerValue];
                 }
             }
         }
