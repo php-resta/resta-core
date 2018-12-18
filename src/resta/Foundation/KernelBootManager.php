@@ -20,8 +20,12 @@ class KernelBootManager extends Manifest
         // As a parameter, the maker variable comes as
         // the name of the list to be booted.
         if(isset($this->{$maker})){
-            if($maker=="originGroups"){
-                $this->makerList=array_merge($this->{$maker},$this->boot());
+
+            // we set this condition for users to boot the classes they want to end at the origin groups.
+            // in the manifesto, if the afterOriginGroups method returns an class of arrays
+            // then these classes will automatically join the originGroups installation.
+            if($maker=="originGroups" && method_exists($this,'afterOriginGroups')){
+                $this->makerList=array_merge($this->{$maker},$this->afterOriginGroups());
             }
             else{
                 $this->makerList=$this->{$maker};
