@@ -22,7 +22,7 @@ class Kernel extends Container implements KernelContracts
         'urlProvider',
         'logger',
         'environment',
-        'configManager',
+        'configProvider',
         'encrypter',
         'eventDispatcher',
         'appProvider',

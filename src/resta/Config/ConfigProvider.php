@@ -5,7 +5,7 @@ namespace Resta\Config;
 use Resta\Utils;
 use Resta\GlobalLoaders\Config as ConfigGlobalInstance;
 
-class ConfigManager
+class ConfigProvider
 {
     /**
      * @var $globalInstance ConfigGlobalInstance
