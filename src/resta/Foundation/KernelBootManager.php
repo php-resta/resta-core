@@ -21,14 +21,14 @@ class KernelBootManager extends Manifest
         // the name of the list to be booted.
         if(isset($this->{$maker})){
 
+            //default boot list
+            $this->makerList=$this->{$maker};
+
             // we set this condition for users to boot the classes they want to end at the origin groups.
-            // in the manifesto, if the afterOriginGroups method returns an class of arrays
-            // then these classes will automatically join the originGroups installation.
-            if($maker=="originGroups" && method_exists($this,'afterOriginGroups')){
-                $this->makerList=array_merge($this->{$maker},$this->afterOriginGroups());
-            }
-            else{
-                $this->makerList=$this->{$maker};
+            // in the manifesto, if the kernel groups method returns an class of arrays
+            // then these classes will automatically join the kernel groups installation.
+            if(method_exists($this,$makerExtend = $maker.'Extend')){
+                $this->makerList=array_merge($this->{$maker},$this->{$makerExtend}());
             }
         }
 

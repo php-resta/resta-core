@@ -14,7 +14,7 @@ class StaticPathRepository
     public function app($app=null)
     {
         $app=($app===null) ? $this->appDetector() : $app;
-        return StaticPathModel::appPath().'/'.Str::slashToBackSlash($app);
+        return StaticPathModel::appPath().''.DIRECTORY_SEPARATOR.''.Str::slashToBackSlash($app);
     }
 
     /**
@@ -22,7 +22,7 @@ class StaticPathRepository
      */
     public function appBuilder()
     {
-        return app()->path()->model().'/'.StaticPathList::$builder;
+        return app()->path()->model().''.DIRECTORY_SEPARATOR.''.StaticPathList::$builder;
     }
 
     /**
@@ -31,7 +31,7 @@ class StaticPathRepository
      */
     public function appCall($app=null)
     {
-        return $this->appVersion($app).'/'.StaticPathList::$controller;
+        return $this->appVersion($app).''.DIRECTORY_SEPARATOR.''.StaticPathList::$controller;
     }
 
     /**
@@ -40,7 +40,7 @@ class StaticPathRepository
      */
     public function appCommand($app=null)
     {
-        return $this->appVersion($app).'/'.StaticPathList::$optional.'/'.StaticPathList::$command.'';
+        return $this->appVersion($app).''.DIRECTORY_SEPARATOR.''.StaticPathList::$optional.''.DIRECTORY_SEPARATOR.''.StaticPathList::$command.'';
     }
 
     /**
@@ -49,7 +49,7 @@ class StaticPathRepository
      */
     public function appConfig($app=null)
     {
-        return $this->appVersion($app).'/'.StaticPathList::$config;
+        return $this->appVersion($app).''.DIRECTORY_SEPARATOR.''.StaticPathList::$config;
     }
 
     /**
@@ -66,9 +66,9 @@ class StaticPathRepository
     public function appKernel()
     {
         $projectPrefix      = StaticPathModel::projectPrefix();
-        $kernel     = $this->app().'/'.StaticPathList::$kernel;
+        $kernel     = $this->app().''.DIRECTORY_SEPARATOR.''.StaticPathList::$kernel;
 
-        return StaticPathModel::projectPath($projectPrefix.'/',$kernel);
+        return StaticPathModel::projectPath($projectPrefix.''.DIRECTORY_SEPARATOR.'',$kernel);
     }
 
     /**
@@ -76,7 +76,7 @@ class StaticPathRepository
      */
     public function appLanguage()
     {
-        return StaticPathModel::getAppStorage().'/'.StaticPathList::$language;
+        return StaticPathModel::getAppStorage().''.DIRECTORY_SEPARATOR.''.StaticPathList::$language;
     }
 
     /**
@@ -84,7 +84,7 @@ class StaticPathRepository
      */
     public function appLog()
     {
-        return StaticPathModel::getAppStorage().'/'.StaticPathList::$log;
+        return StaticPathModel::getAppStorage().''.DIRECTORY_SEPARATOR.''.StaticPathList::$log;
     }
 
     /**
@@ -93,7 +93,7 @@ class StaticPathRepository
      */
     public function appLogger($app=null)
     {
-        return $this->appVersion($app).'/ServiceLogController';
+        return $this->appVersion($app).''.DIRECTORY_SEPARATOR.'ServiceLogController';
     }
 
     /**
@@ -102,7 +102,7 @@ class StaticPathRepository
      */
     public function appMiddleware($app=null)
     {
-        return $this->appVersion($app).'/'.StaticPathList::$middleware;
+        return $this->appVersion($app).''.DIRECTORY_SEPARATOR.''.StaticPathList::$middleware;
     }
 
     /**
@@ -111,7 +111,7 @@ class StaticPathRepository
      */
     public function appMigration($app=null)
     {
-        return $this->appVersion($app).'/'.StaticPathList::$migration;
+        return $this->appVersion($app).''.DIRECTORY_SEPARATOR.''.StaticPathList::$migration;
     }
 
     /**
@@ -120,7 +120,7 @@ class StaticPathRepository
      */
     public function appModel($app=null)
     {
-        return $this->appVersion($app).'/'.StaticPathList::$model;
+        return $this->appVersion($app).''.DIRECTORY_SEPARATOR.''.StaticPathList::$model;
     }
 
     /**
@@ -129,7 +129,7 @@ class StaticPathRepository
      */
     public function appOptionalException($app=null)
     {
-        return $this->appVersion($app).'/'.StaticPathList::$optional.'/'.StaticPathList::$optionalException;
+        return $this->appVersion($app).''.DIRECTORY_SEPARATOR.''.StaticPathList::$optional.''.DIRECTORY_SEPARATOR.''.StaticPathList::$optionalException;
     }
 
     /**
@@ -138,7 +138,7 @@ class StaticPathRepository
      */
     public function appOptionalEvents($app=null)
     {
-        return $this->appVersion($app).'/'.StaticPathList::$optional.'/'.StaticPathList::$events;
+        return $this->appVersion($app).''.DIRECTORY_SEPARATOR.''.StaticPathList::$optional.''.DIRECTORY_SEPARATOR.''.StaticPathList::$events;
     }
 
     /**
@@ -147,7 +147,7 @@ class StaticPathRepository
      */
     public function appOptionalJob($app=null)
     {
-        return $this->appVersion($app).'/'.StaticPathList::$optional.'/'.StaticPathList::$job;
+        return $this->appVersion($app).''.DIRECTORY_SEPARATOR.''.StaticPathList::$optional.''.DIRECTORY_SEPARATOR.''.StaticPathList::$job;
     }
 
     /**
@@ -156,7 +156,7 @@ class StaticPathRepository
      */
     public function appOptionalListeners($app=null)
     {
-        return $this->appVersion($app).'/'.StaticPathList::$optional.'/'.StaticPathList::$listeners;
+        return $this->appVersion($app).''.DIRECTORY_SEPARATOR.''.StaticPathList::$optional.''.DIRECTORY_SEPARATOR.''.StaticPathList::$listeners;
     }
 
     /**
@@ -165,7 +165,7 @@ class StaticPathRepository
      */
     public function appOptionalSubscribers($app=null)
     {
-        return $this->appVersion($app).'/'.StaticPathList::$optional.'/'.StaticPathList::$listeners.'/'.StaticPathList::$subscribers;
+        return $this->appVersion($app).''.DIRECTORY_SEPARATOR.''.StaticPathList::$optional.''.DIRECTORY_SEPARATOR.''.StaticPathList::$listeners.''.DIRECTORY_SEPARATOR.''.StaticPathList::$subscribers;
     }
 
     /**
@@ -174,9 +174,9 @@ class StaticPathRepository
     public function appRepository()
     {
         $projectPrefix      = StaticPathModel::projectPrefix();
-        $repositoryPath     = $this->app().'/'.StaticPathList::$repository;
+        $repositoryPath     = $this->app().''.DIRECTORY_SEPARATOR.''.StaticPathList::$repository;
 
-        return StaticPathModel::projectPath($projectPrefix.'/',$repositoryPath);
+        return StaticPathModel::projectPath($projectPrefix.''.DIRECTORY_SEPARATOR.'',$repositoryPath);
     }
 
     /**
@@ -185,7 +185,7 @@ class StaticPathRepository
      */
     public function appOptionalSource($app=null)
     {
-        return $this->appVersion($app).'/'.StaticPathList::$optional.'/'.StaticPathList::$sourcePath;
+        return $this->appVersion($app).''.DIRECTORY_SEPARATOR.''.StaticPathList::$optional.''.DIRECTORY_SEPARATOR.''.StaticPathList::$sourcePath;
     }
 
     /**
@@ -194,7 +194,7 @@ class StaticPathRepository
      */
     public function appOptionalWebservice($app=null)
     {
-        return $this->appVersion($app).'/'.StaticPathList::$optional.'/'.StaticPathList::$webservice;
+        return $this->appVersion($app).''.DIRECTORY_SEPARATOR.''.StaticPathList::$optional.''.DIRECTORY_SEPARATOR.''.StaticPathList::$webservice;
     }
 
     /**
@@ -202,7 +202,7 @@ class StaticPathRepository
      */
     public function appResourche()
     {
-        return StaticPathModel::getAppStorage().'/'.StaticPathList::$resource;
+        return StaticPathModel::getAppStorage().''.DIRECTORY_SEPARATOR.''.StaticPathList::$resource;
     }
 
     /**
@@ -211,7 +211,7 @@ class StaticPathRepository
      */
     public function appServiceAnnotations($app=null)
     {
-        return $this->appVersion($app).'/'.StaticPathList::$serviceAnnotations;
+        return $this->appVersion($app).''.DIRECTORY_SEPARATOR.''.StaticPathList::$serviceAnnotations;
     }
 
     /**
@@ -220,7 +220,7 @@ class StaticPathRepository
      */
     public function appServiceContainer($app=null)
     {
-        return $this->appVersion($app).'/ServiceContainerController';
+        return $this->appVersion($app).''.DIRECTORY_SEPARATOR.'ServiceContainerController';
     }
 
     /**
@@ -229,7 +229,7 @@ class StaticPathRepository
      */
     public function appServiceEventDispatcher($app=null)
     {
-        return $this->appVersion($app).'/ServiceEventDispatcherController';
+        return $this->appVersion($app).''.DIRECTORY_SEPARATOR.'ServiceEventDispatcherController';
     }
 
     /**
@@ -238,7 +238,7 @@ class StaticPathRepository
      */
     public function appServiceMiddleware($app=null)
     {
-        return $this->appVersion($app).'/'.StaticPathList::$serviceMiddleware;
+        return $this->appVersion($app).''.DIRECTORY_SEPARATOR.''.StaticPathList::$serviceMiddleware;
     }
 
     /**
@@ -254,7 +254,7 @@ class StaticPathRepository
      */
     public function appStubs()
     {
-        return $this->appKernel().'/'.StaticPathList::$stub;
+        return $this->appKernel().''.DIRECTORY_SEPARATOR.''.StaticPathList::$stub;
     }
 
     /**
@@ -264,7 +264,7 @@ class StaticPathRepository
     public function appVersion($app=null)
     {
         if(defined('app')){
-            return $this->app($app).'/'.Utils::getAppVersion(app);
+            return $this->app($app).''.DIRECTORY_SEPARATOR.''.Utils::getAppVersion(app);
         }
         return null;
     }
