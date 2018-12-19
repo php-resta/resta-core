@@ -42,7 +42,11 @@ class FileProcess
      */
     public function dumpFile($file,$data)
     {
-        $this->fs->dumpFile($file,$data);
+        try {
+            $this->fs->dumpFile($file,$data);
+        } catch (IOExceptionInterface $exception) {
+            exception()->runtime('Unexpected dump file error');
+        }
     }
 
     /**
