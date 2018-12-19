@@ -8,7 +8,6 @@ use Resta\Support\Traits\Macroable;
 
 class Arr
 {
-    use Macroable;
     /**
      * Determine whether the given value is array accessible.
      *
