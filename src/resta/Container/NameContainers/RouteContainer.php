@@ -3,7 +3,7 @@
 namespace Resta\Container\NameContainers;
 
 use Resta\Support\Str;
-use Resta\Utils;
+use Resta\Support\Utils;
 use Resta\GlobalLoaders\Container;
 
 class RouteContainer

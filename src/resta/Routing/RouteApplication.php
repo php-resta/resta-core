@@ -2,7 +2,7 @@
 
 namespace Resta\Routing;
 
-use Resta\Utils;
+use Resta\Support\Utils;
 use Resta\ApplicationProvider;
 use Resta\GlobalLoaders\Router;
 use Resta\Traits\NamespaceForRoute;

@@ -2,7 +2,7 @@
 
 namespace Resta\Foundation;
 
-use Resta\Utils;
+use Resta\Support\Utils;
 use Resta\ApplicationProvider;
 use Resta\Logger\LoggerService;
 use Resta\Exception\ErrorHandler;

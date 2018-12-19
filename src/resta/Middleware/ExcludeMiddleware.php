@@ -2,7 +2,7 @@
 
 namespace Resta\Middleware;
 
-use Resta\Utils;
+use Resta\Support\Utils;
 use Resta\ApplicationProvider;
 
 class ExcludeMiddleware extends ApplicationProvider

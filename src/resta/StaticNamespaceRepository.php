@@ -2,6 +2,8 @@
 
 namespace Resta;
 
+use Resta\Support\Utils;
+
 class StaticNamespaceRepository extends StaticPathRepository
 {
     /**

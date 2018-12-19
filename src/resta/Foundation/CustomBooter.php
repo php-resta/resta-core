@@ -3,7 +3,7 @@
 namespace Resta\Foundation;
 
 use Resta\ClosureDispatcher;
-use Resta\Utils;
+use Resta\Support\Utils;
 use Resta\StaticPathList;
 use Resta\StaticPathModel;
 

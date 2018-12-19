@@ -2,7 +2,7 @@
 
 namespace __repositoryNamespace__;
 
-use Resta\Utils;
+use Resta\Support\Utils;
 
 trait __repository__Trait
 {

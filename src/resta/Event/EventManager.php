@@ -2,7 +2,7 @@
 
 namespace Resta\Event;
 
-use Resta\Utils;
+use Resta\Support\Utils;
 use Resta\GlobalLoaders\EventDispatcher as EventDispatcherGlobalInstance;
 
 class EventManager extends EventHandler

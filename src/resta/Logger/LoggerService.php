@@ -2,7 +2,7 @@
 
 namespace Resta\Logger;
 
-use Resta\Utils;
+use Resta\Support\Utils;
 use Resta\GlobalLoaders\Logger as LoggerGlobalInstance;
 
 class LoggerService

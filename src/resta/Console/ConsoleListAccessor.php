@@ -3,7 +3,7 @@
 namespace Resta\Console;
 
 use Resta\StaticPathModel;
-use Resta\Utils;
+use Resta\Support\Utils;
 
 trait ConsoleListAccessor {
 

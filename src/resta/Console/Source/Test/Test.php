@@ -4,7 +4,7 @@ namespace Resta\Console\Source\Test;
 
 use Resta\Console\ConsoleOutputter;
 use Resta\Console\ConsoleListAccessor;
-use Resta\Utils;
+use Resta\Support\Utils;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 

@@ -6,7 +6,7 @@ use Resta\ClosureDispatcher;
 use Resta\Console\ConsoleListAccessor;
 use Resta\Console\ConsoleOutputter;
 use Resta\StaticPathList;
-use Resta\Utils;
+use Resta\Support\Utils;
 
 class Event extends ConsoleOutputter {
 

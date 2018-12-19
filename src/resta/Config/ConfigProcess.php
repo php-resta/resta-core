@@ -3,7 +3,7 @@
 namespace Resta\Config;
 
 use Resta\Support\Str;
-use Resta\Utils;
+use Resta\Support\Utils;
 use Resta\Traits\PropertyAccessibility;
 
 class ConfigProcess implements \ArrayAccess

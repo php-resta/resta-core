@@ -2,7 +2,7 @@
 
 namespace Resta\Middleware;
 
-use Resta\Utils;
+use Resta\Support\Utils;
 use Resta\ApplicationProvider;
 use Resta\GlobalLoaders\Middleware as MiddlewareGlobalInstance;
 

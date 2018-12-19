@@ -2,7 +2,7 @@
 
 namespace Resta\Container;
 
-use Resta\Utils;
+use Resta\Support\Utils;
 use Resta\Console\ConsoleBindings;
 use Resta\Contracts\ContainerContracts;
 use Resta\GlobalLoaders\KernelAssigner;

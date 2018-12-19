@@ -2,7 +2,7 @@
 
 namespace Resta\Console\Source\Controller;
 
-use Resta\Utils;
+use Resta\Support\Utils;
 use Resta\Config\Config;
 use Resta\StaticPathList;
 use Resta\StaticPathModel;

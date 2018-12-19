@@ -2,7 +2,7 @@
 
 namespace Resta\Foundation;
 
-use Resta\Utils;
+use Resta\Support\Utils;
 use Illuminate\Support\Collection;
 use Resta\Contracts\HandleContracts;
 use Resta\Contracts\ApplicationContracts;

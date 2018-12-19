@@ -2,7 +2,7 @@
 
 namespace Resta\GlobalLoaders;
 
-use Resta\Utils;
+use Resta\Support\Utils;
 use Resta\ApplicationProvider;
 
 class KernelAssigner extends ApplicationProvider

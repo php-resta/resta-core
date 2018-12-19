@@ -4,7 +4,7 @@ namespace Resta\Console\Source\Command;
 
 use Resta\Console\ConsoleListAccessor;
 use Resta\Console\ConsoleOutputter;
-use Resta\Utils;
+use Resta\Support\Utils;
 
 class Command extends ConsoleOutputter {
 

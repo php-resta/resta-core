@@ -4,6 +4,7 @@ namespace Resta;
 
 use Lingua\Lingua;
 use Resta\Support\Str;
+use Resta\Support\Utils;
 use Store\Services\Cache;
 use Resta\Config\ConfigProcess;
 use Store\Services\Redis as Redis;

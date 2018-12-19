@@ -2,6 +2,7 @@
 
 namespace Resta;
 
+use Resta\Support\Utils;
 use Resta\Response\ResponseOutManager;
 use Resta\Contracts\ContainerContracts;
 use Resta\Contracts\ApplicationContracts;

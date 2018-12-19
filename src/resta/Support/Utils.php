@@ -1,6 +1,6 @@
 <?php
 
-namespace Resta;
+namespace Resta\Support;
 
 use Resta\Services\YamlManager;
 use Resta\Container\ContainerResolve;

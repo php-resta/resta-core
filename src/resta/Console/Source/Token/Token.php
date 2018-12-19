@@ -5,7 +5,7 @@ namespace Resta\Console\Source\Token;
 use Resta\Console\ConsoleListAccessor;
 use Resta\Console\ConsoleOutputter;
 use Resta\StaticPathModel;
-use Resta\Utils;
+use Resta\Support\Utils;
 
 class Token extends ConsoleOutputter {
 

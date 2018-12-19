@@ -5,7 +5,7 @@ namespace Resta\Console\Source\Autoservice;
 use Resta\Console\ConsoleListAccessor;
 use Resta\Console\ConsoleOutputter;
 use Resta\StaticPathModel;
-use Resta\Utils;
+use Resta\Support\Utils;
 
 class Autoservice extends ConsoleOutputter {
 

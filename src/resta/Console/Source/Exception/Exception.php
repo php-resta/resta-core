@@ -5,7 +5,7 @@ namespace Resta\Console\Source\Exception;
 use Resta\Console\ConsoleListAccessor;
 use Resta\Console\ConsoleOutputter;
 use Resta\StaticPathModel;
-use Resta\Utils;
+use Resta\Support\Utils;
 
 class Exception extends ConsoleOutputter {
 

@@ -2,7 +2,7 @@
 
 namespace Resta\Environment;
 
-use Resta\Utils;
+use Resta\Support\Utils;
 
 class CheckEnvironmentFile
 {

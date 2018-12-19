@@ -2,7 +2,7 @@
 
 namespace Resta\UrlParse;
 
-use Resta\Utils;
+use Resta\Support\Utils;
 use Resta\StaticPathList;
 
 class UrlParseApplication

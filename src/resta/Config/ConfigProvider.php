@@ -2,7 +2,7 @@
 
 namespace Resta\Config;
 
-use Resta\Utils;
+use Resta\Support\Utils;
 use Resta\GlobalLoaders\Config as ConfigGlobalInstance;
 
 class ConfigProvider

@@ -2,7 +2,7 @@
 
 namespace Resta\Encrypter;
 
-use Resta\Utils;
+use Resta\Support\Utils;
 use Defuse\Crypto\Key;
 use Defuse\Crypto\Crypto;
 use Resta\GlobalLoaders\Encrypter as EncrypterGlobalInstance;

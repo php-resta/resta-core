@@ -2,7 +2,7 @@
 
 namespace Resta\Console;
 
-use Resta\Utils;
+use Resta\Support\Utils;
 
 trait ConsoleArguments {
 

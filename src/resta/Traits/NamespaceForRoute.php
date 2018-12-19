@@ -2,7 +2,7 @@
 
 namespace Resta\Traits;
 
-use Resta\Utils;
+use Resta\Support\Utils;
 use Resta\StaticPathList;
 use Resta\StaticPathModel;
 use Resta\GlobalLoaders\Router;

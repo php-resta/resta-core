@@ -2,7 +2,7 @@
 
 namespace Resta\Services;
 
-use Resta\Utils;
+use Resta\Support\Utils;
 use Store\Services\RequestClient;
 use Resta\Contracts\HandleContracts;
 

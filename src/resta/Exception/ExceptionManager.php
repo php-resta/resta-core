@@ -3,7 +3,7 @@
 namespace Resta\Exception;
 
 use Resta\Contracts\ExceptionContracts;
-use Resta\Utils;
+use Resta\Support\Utils;
 
 class ExceptionManager implements ExceptionContracts {
 

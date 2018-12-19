@@ -2,7 +2,7 @@
 
 namespace Resta;
 
-use phpDocumentor\Reflection\Types\Self_;
+use Resta\Support\Utils;
 
 class StaticPathModel extends StaticPathList
 {

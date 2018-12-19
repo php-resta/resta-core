@@ -6,7 +6,7 @@ use Resta\Console\ConsoleListAccessor;
 use Resta\Console\ConsoleOutputter;
 
 use Resta\StaticPathModel;
-use Resta\Utils;
+use Resta\Support\Utils;
 use Symfony\Component\Security\Core\Tests\Encoder\EncAwareUser;
 
 class Key extends ConsoleOutputter {
