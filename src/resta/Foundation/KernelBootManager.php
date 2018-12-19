@@ -24,7 +24,7 @@ class KernelBootManager extends Manifest
             //default boot list
             $this->makerList=$this->{$maker};
 
-            // we set this condition for users to boot the classes they want to end at the origin groups.
+            // we set this condition for users to boot the classes they want in the kernel groups.
             // in the manifesto, if the kernel groups method returns an class of arrays
             // then these classes will automatically join the kernel groups installation.
             if(method_exists($this,$makerExtend = $maker.'Extend')){
