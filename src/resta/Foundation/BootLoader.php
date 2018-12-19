@@ -9,7 +9,7 @@ use Resta\Exception\ErrorHandler;
 use Resta\Contracts\BootContracts;
 use Resta\Response\ResponseApplication;
 use Resta\UrlParse\UrlParseApplication;
-use Resta\Config\ConfigLoader as Config;
+use Resta\Config\ConfigManager as Config;
 use Resta\Contracts\ApplicationContracts;
 use Resta\Middleware\ApplicationMiddleware;
 use Resta\Console\Console as ConsoleManager;
@@ -73,7 +73,7 @@ class BootLoader extends ApplicationProvider implements BootContracts
     /**
      * @return mixed|void
      */
-    private function configLoader()
+    private function configManager()
     {
         // this is your application's config installer.
         // you can easily access the config variables with the config installer.
