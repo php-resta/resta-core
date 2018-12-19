@@ -95,6 +95,8 @@ class Config implements AccessorContracts
         $getConfigContent = ($getConfig===null) ? [] : $getConfig;
 
         foreach ($data as $value){
+            
+            // we check the config value not to be rewritten.
             if(!in_array($value,$getConfigContent)){
                 $setData = '<?php return '.var_export(array_merge($getConfigContent,$data), true).';';
                 $fileProcess->dumpFile($setConfigPath,$setData);
