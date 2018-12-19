@@ -75,10 +75,10 @@ class Config implements AccessorContracts
     }
 
     /**
-     * @param $data
-     * @return mixed|void
+     * @param array $data
+     * @return bool|mixed
      */
-    public function set($data)
+    public function set($data=array())
     {
         $configPath     = path()->config();
         $configArray    = Str::stringToArray(self::$config);

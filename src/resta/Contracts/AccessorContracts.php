@@ -10,8 +10,8 @@ interface AccessorContracts
     public function get();
 
     /**
-     * @param $data
+     * @param array $data
      * @return mixed
      */
-    public function set($data);
+    public function set($data=array());
 }
