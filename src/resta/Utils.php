@@ -2,7 +2,6 @@
 
 namespace Resta;
 
-use phpDocumentor\Reflection\Types\Self_;
 use Resta\Services\YamlManager;
 use Resta\Container\ContainerResolve;
 

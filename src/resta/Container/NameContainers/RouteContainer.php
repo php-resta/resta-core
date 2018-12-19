@@ -2,7 +2,7 @@
 
 namespace Resta\Container\NameContainers;
 
-use Resta\Str;
+use Resta\Support\Str;
 use Resta\Utils;
 use Resta\GlobalLoaders\Container;
 

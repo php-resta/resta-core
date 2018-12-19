@@ -2,7 +2,7 @@
 
 namespace Resta\GlobalLoaders;
 
-use Resta\Str;
+use Resta\Support\Str;
 use Resta\ApplicationProvider;
 
 class Config extends ApplicationProvider

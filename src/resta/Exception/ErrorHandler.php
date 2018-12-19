@@ -2,7 +2,7 @@
 
 namespace Resta\Exception;
 
-use Resta\Str;
+use Resta\Support\Str;
 use Resta\Utils;
 use Resta\StaticPathModel;
 use Resta\ClosureDispatcher;

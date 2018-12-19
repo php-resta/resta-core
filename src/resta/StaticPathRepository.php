@@ -2,6 +2,8 @@
 
 namespace Resta;
 
+use Resta\Support\Str;
+
 class StaticPathRepository
 {
     /**

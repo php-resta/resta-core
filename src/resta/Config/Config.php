@@ -2,8 +2,8 @@
 
 namespace Resta\Config;
 
-use Resta\Str;
 use Resta\Utils;
+use Resta\Support\Str;
 use Resta\FileProcess;
 use Resta\Contracts\AccessorContracts;
 

@@ -2,7 +2,7 @@
 
 namespace Resta\Config;
 
-use Resta\Str;
+use Resta\Support\Str;
 use Resta\Utils;
 use Resta\Traits\PropertyAccessibility;
 
