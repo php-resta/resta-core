@@ -2,6 +2,7 @@
 
 namespace Resta\Config;
 
+use Resta\Support\Arr;
 use Resta\Support\Str;
 use Resta\FileProcess;
 use Resta\Support\Utils;
@@ -92,13 +93,13 @@ class Config implements AccessorContracts
 
         // if the config contents come to null,
         // we assign an empty array value to the variable.
-        $getConfigContent = ($getConfig===null) ? [] : $getConfig;
+        $getConfigWrap = Arr::wrap($getConfig);
 
         foreach ($data as $value){
             
             // we check the config value not to be rewritten.
-            if(!in_array($value,$getConfigContent)){
-                $setData = '<?php return '.var_export(array_merge($getConfigContent,$data), true).';';
+            if(!in_array($value,$getConfigWrap)){
+                $setData = '<?php return '.var_export(array_merge($getConfigWrap,$data), true).';';
                 $fileProcess->dumpFile($setConfigPath,$setData);
             }
         }
