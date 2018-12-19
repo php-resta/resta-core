@@ -2,9 +2,9 @@
 
 namespace Resta\Config;
 
-use Resta\Support\Utils;
 use Resta\Support\Str;
 use Resta\FileProcess;
+use Resta\Support\Utils;
 use Resta\Contracts\AccessorContracts;
 
 class Config implements AccessorContracts
