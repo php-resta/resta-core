@@ -530,4 +530,23 @@ class Arr
         }
         return is_array($value) ? $value : [$value];
     }
+
+    /**
+     * removes same values from the given two arrays
+     *
+     * @param  mixed  $value
+     * @return array
+     */
+    public static function removeSameValues($removeArray=array(),$referenceArray=array())
+    {
+        $list = [];
+
+        foreach ($removeArray as $remove){
+            if(!in_array($remove,$referenceArray)){
+                $list[]=$remove;
+            }
+        }
+        return array_merge($referenceArray,$list);
+    }
+
 }
