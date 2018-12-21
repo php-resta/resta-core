@@ -28,7 +28,7 @@ class ConfigProcess implements \ArrayAccess
     public function __construct($config=null)
     {
         if($this->config===null){
-            $this->config=$config;
+            $this->config = $config;
         }
     }
 
@@ -43,7 +43,7 @@ class ConfigProcess implements \ArrayAccess
 
         //we are getting the config data from the kernel object..
         if(isset(resta()->appConfig)){
-            $kernelConfig=resta()->appConfig;
+            $kernelConfig = resta()->appConfig;
         }
 
         // if the config variable is not sent,
@@ -54,13 +54,13 @@ class ConfigProcess implements \ArrayAccess
 
         // we are starting a array of
         // point-based logical processes for config data processing.
-        $this->configList=Str::stringToArray($this->config);
+        $this->configList = Str::stringToArray($this->config);
 
         //if the config object exists in the kernel, start the process.
-        if(isset($kernelConfig[$config=current($this->configList)])){
+        if(isset($kernelConfig[$config = current($this->configList)])){
 
             //get config data
-            $configData=$this->getConfigData($kernelConfig,$config);
+            $configData = $this->getConfigData($kernelConfig,$config);
 
             //we process and rotate on point basis.
             return $this->configProcessResult($configData);
@@ -79,11 +79,11 @@ class ConfigProcess implements \ArrayAccess
         if(count($this->configList)){
 
             array_shift($this->configList);
-            $configRecursive=$config;
+            $configRecursive = $config;
 
             //we apply the dotted-knit config dataset as nested.
             foreach ($this->configList as $key=>$value){
-                $configRecursive=$configRecursive[$value];
+                $configRecursive = $configRecursive[$value];
             }
         }
 
@@ -102,14 +102,14 @@ class ConfigProcess implements \ArrayAccess
     private function getConfigData($kernelConfig,$config)
     {
         //if the config data is a class instance, we get it as an object.
-        if(Utils::isNamespaceExists($configFile=$kernelConfig[$config]['namespace'])){
-            $configData=Utils::makeBind($configFile)->handle();
+        if(Utils::isNamespaceExists($configFile = $kernelConfig[$config]['namespace'])){
+            $configData = Utils::makeBind($configFile)->handle();
         }
 
         //if the config data is just an array.
         if(!isset($configData) && file_exists($configFile=$kernelConfig[$config]['file'])){
-            $pureConfig=require($configFile);
-            $configData=$pureConfig;
+            $pureConfig = require($configFile);
+            $configData = $pureConfig;
         }
 
         return $configData;
