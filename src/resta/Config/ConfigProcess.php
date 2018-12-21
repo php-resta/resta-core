@@ -49,7 +49,7 @@ class ConfigProcess implements \ArrayAccess
         // if the config variable is not sent,
         // we print the kernel config data directly.
         if(null===$this->config) {
-            return (count($kernelConfig)) ? $kernelConfig : null;
+            return (count($kernelConfig)) ? $kernelConfig : [];
         }
 
         // we are starting a array of
@@ -66,7 +66,7 @@ class ConfigProcess implements \ArrayAccess
             return $this->configProcessResult($configData);
         }
 
-        return null;
+        return [];
     }
 
     /**
