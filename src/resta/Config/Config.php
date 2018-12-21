@@ -81,13 +81,11 @@ class Config implements AccessorContracts
      */
     public function set($data=array())
     {
+        // receive the necessary config settings.
         $configPath     = path()->config();
         $configArray    = current(Str::stringToArray(self::$config));
         $setConfigPath  = $configPath.''.DIRECTORY_SEPARATOR.''.ucfirst($configArray).'.php';
-
-        // if the config contents come to null,
-        // we assign an empty array value to the variable.
-        $getConfigWrap = Arr::wrap(config($configArray));
+        $getConfigWrap  = Arr::wrap(config($configArray));
 
         foreach ($data as $value){
             
