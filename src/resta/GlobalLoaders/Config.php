@@ -3,6 +3,7 @@
 namespace Resta\GlobalLoaders;
 
 use Resta\Support\Str;
+use Resta\Support\Utils;
 use Resta\ApplicationProvider;
 
 class Config extends ApplicationProvider
@@ -19,7 +20,7 @@ class Config extends ApplicationProvider
 
             if(file_exists($file)){
                 $this->register('appConfig',Str::lower($key),[
-                    'namespace' =>app()->namespace()->config().'\\'.$key,
+                    'namespace' =>Utils::getNamespace($file),
                     'file'      =>$file
                 ]);
             }

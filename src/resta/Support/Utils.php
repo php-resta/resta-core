@@ -159,7 +159,7 @@ class Utils
      */
     public static function generatorNamespace($data=array())
     {
-        return implode("\\",$data);
+        return str_replace('.php','',implode("\\",$data));
     }
 
     /**
@@ -306,10 +306,10 @@ class Utils
      */
     public static function getNamespace($namespace)
     {
-        $rootDelete=str_replace(root.'/src/app/','',$namespace);
+        $rootDelete=str_replace(root.''.DIRECTORY_SEPARATOR.'src'.DIRECTORY_SEPARATOR.'app'.DIRECTORY_SEPARATOR.'','',$namespace);
 
         return 'App\\'.self::generatorNamespace(
-          explode('/',$rootDelete)
+          explode(''.DIRECTORY_SEPARATOR.'',$rootDelete)
         );
 
     }
