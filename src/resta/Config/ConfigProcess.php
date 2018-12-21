@@ -34,7 +34,7 @@ class ConfigProcess implements \ArrayAccess
     }
 
     /**
-     * @return mixed|null
+     * @return array|mixed|null
      * @throws \DI\DependencyException
      * @throws \DI\NotFoundException
      */
@@ -71,7 +71,7 @@ class ConfigProcess implements \ArrayAccess
 
     /**
      * @param $config
-     * @return mixed
+     * @return mixed|null
      */
     private function configProcessResult($config)
     {
@@ -95,7 +95,7 @@ class ConfigProcess implements \ArrayAccess
     /**
      * @param $kernelConfig
      * @param $config
-     * @return mixed
+     * @return array|mixed
      * @throws \DI\DependencyException
      * @throws \DI\NotFoundException
      */
