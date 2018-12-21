@@ -108,10 +108,10 @@ class ConfigProcess implements \ArrayAccess
 
         //if the config data is just an array.
         if(!isset($configData) && file_exists($configFile=$kernelConfig[$config]['file'])){
-            $pureConfig = require($configFile);
-            $configData = $pureConfig;
+            $configData = require($configFile);
         }
 
-        return $configData;
+        //return config data
+        return isset($configData) ? $configData : [];
     }
 }
