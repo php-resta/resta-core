@@ -252,7 +252,7 @@ class App
      */
     public function translator($data,$select=array())
     {
-        $lang=(new Lingua(app()->path()->appLanguage()));
+        $lang=(new Lingua(path()->appLanguage()));
 
         $defaultLocale=config('app.locale');
 

@@ -21,7 +21,7 @@ class ServiceLogController
     public function file($output,$file="access",$type="info")
     {
         //log register path
-        $filePath=app()->path()->appLog().'/'.$file.'.log';
+        $filePath=path()->appLog().'/'.$file.'.log';
 
         //monologue library and make the necessary adjustments.
         $log = new Logger('monolog');

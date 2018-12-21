@@ -146,7 +146,7 @@ class Controller extends ConsoleOutputter {
      */
     public function rename()
     {
-        $path = app()->path()->controller().'/'.$this->argument['controller'].''.StaticPathList::$controllerBundleName;
+        $path = path()->controller().'/'.$this->argument['controller'].''.StaticPathList::$controllerBundleName;
 
         if(file_exists($path)){
 

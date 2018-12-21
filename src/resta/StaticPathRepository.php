@@ -22,7 +22,7 @@ class StaticPathRepository
      */
     public function appBuilder()
     {
-        return app()->path()->model().''.DIRECTORY_SEPARATOR.''.StaticPathList::$builder;
+        return path()->model().''.DIRECTORY_SEPARATOR.''.StaticPathList::$builder;
     }
 
     /**

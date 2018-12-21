@@ -164,7 +164,7 @@ trait ConsoleListAccessor {
      */
     public function repository(){
 
-        return app()->path()->repository();
+        return path()->repository();
     }
 
     /**

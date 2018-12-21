@@ -39,7 +39,7 @@ class ConfigProvider
     public function setConfig($path=null)
     {
         //path variable for parameter
-        $path = ($path === null) ? app()->path()->config() : $path;
+        $path = ($path === null) ? path()->config() : $path;
 
         //We run a glob function for all of the config files,
         //where we pass namespace and paths to a kernel object and process them.

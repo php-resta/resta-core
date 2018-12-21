@@ -158,7 +158,7 @@ class Migration extends ConsoleOutputter {
     private function getConfig()
     {
         return  ['paths'=>[
-            app()->path()->migration(),
+            path()->migration(),
             StaticPathModel::storeMigrationPath()
         ],
             'database'=>config('database')];

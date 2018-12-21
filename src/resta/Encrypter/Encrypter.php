@@ -21,7 +21,7 @@ class Encrypter {
         define('encrypter',true);
 
         //get encrypter file
-        $encrypterFile=app()->path()->encrypterFile();
+        $encrypterFile=path()->encrypterFile();
 
         //throws an exception it there is no encrypter file
         if(!file_exists($encrypterFile)){

@@ -124,7 +124,7 @@ class FileProcess
         $stubStructure      = explode("_",$complex['stub']);
         $stubStructure[]    = $this->data->argument['stub'];
 
-        $stubberDirectoryList=app()->path()->stubs();
+        $stubberDirectoryList=path()->stubs();
 
         foreach ($stubStructure as $stubberDirectory){
 

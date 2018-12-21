@@ -33,7 +33,7 @@ class Test extends ConsoleOutputter {
      */
     public function run()
     {
-        $path = str_replace(root.'/','',app()->path()->controller()).'/'.$this->argument['controller'];
+        $path = str_replace(root.'/','',path()->controller()).'/'.$this->argument['controller'];
         $process = new Process(array('vendor/bin/phpunit','--bootstrap','index.php',$path));
         $process->run();
 

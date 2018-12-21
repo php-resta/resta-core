@@ -53,9 +53,9 @@ class Event extends ConsoleOutputter {
         });
 
 
-        $this->directory['eventsDir']=app()->path()->optionalEvents();
-        $this->directory['eventsListenDir']=app()->path()->optionalListeners();
-        $this->directory['eventsListenSubscriberDir']=app()->path()->optionalSubscribers();
+        $this->directory['eventsDir']=path()->optionalEvents();
+        $this->directory['eventsListenDir']=path()->optionalListeners();
+        $this->directory['eventsListenSubscriberDir']=path()->optionalSubscribers();
 
         //set project directory
         $this->file->makeDirectory($this);

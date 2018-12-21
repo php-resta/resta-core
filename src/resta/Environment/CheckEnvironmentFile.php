@@ -41,7 +41,7 @@ class CheckEnvironmentFile
     private function getEnvironmentPath()
     {
         //We call environment path with this method
-        return app()->path()->environmentFile();
+        return path()->environmentFile();
     }
 
     /**
