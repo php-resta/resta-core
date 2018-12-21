@@ -85,22 +85,16 @@ class Config implements AccessorContracts
         $configArray    = current(Str::stringToArray(self::$config));
         $setConfigPath  = $configPath.''.DIRECTORY_SEPARATOR.''.ucfirst($configArray).'.php';
 
-        /**
-         * @var $fileProcess FileProcess
-         */
-        $fileProcess = app()->makeBind(FileProcess::class);
-        $getConfig   = config($configArray);
-
         // if the config contents come to null,
         // we assign an empty array value to the variable.
-        $getConfigWrap = Arr::wrap($getConfig);
+        $getConfigWrap = Arr::wrap(config($configArray));
 
         foreach ($data as $value){
             
             // we check the config value not to be rewritten.
             if(!in_array($value,$getConfigWrap)){
                 $setData = '<?php return '.var_export(array_merge($getConfigWrap,$data), true).';';
-                $fileProcess->dumpFile($setConfigPath,$setData);
+                app()->makeBind(FileProcess::class)->dumpFile($setConfigPath,$setData);
             }
         }
     }
