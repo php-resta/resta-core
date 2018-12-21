@@ -2,6 +2,7 @@
 
 namespace Resta\Config;
 
+use Resta\Support\Arr;
 use Resta\Support\Str;
 use Resta\Support\Utils;
 use Resta\Traits\PropertyAccessibility;
@@ -59,10 +60,9 @@ class ConfigProcess implements \ArrayAccess
         //if the config object exists in the kernel, start the process.
         if(isset($kernelConfig[$config = current($this->configList)])){
 
-            //get config data
+            // get config data
+            // we process and rotate on point basis.
             $configData = $this->getConfigData($kernelConfig,$config);
-
-            //we process and rotate on point basis.
             return $this->configProcessResult($configData);
         }
 
@@ -79,17 +79,17 @@ class ConfigProcess implements \ArrayAccess
         if(count($this->configList)){
 
             array_shift($this->configList);
-            $configRecursive = $config;
+            $configdotted = $config;
 
             //we apply the dotted-knit config dataset as nested.
             foreach ($this->configList as $key=>$value){
-                $configRecursive = $configRecursive[$value];
+                $configdotted = Arr::isset($configdotted,$value);
             }
         }
 
         // if the config data is not dotted,normal data is printed
         // if not, the nested data is printed.
-        return (isset($configRecursive)) ? $configRecursive : $config;
+        return (isset($configdotted)) ? $configdotted : null;
     }
 
     /**

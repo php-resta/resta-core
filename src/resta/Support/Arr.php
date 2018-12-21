@@ -549,4 +549,18 @@ class Arr
         return array_merge($referenceArray,$list);
     }
 
+    /**
+     * check if there is key in the given array
+     *
+     * @param  mixed  $value
+     * @return mixed
+     */
+    public static function isset($array,$key)
+    {
+        if(isset($array[$key])){
+            return $array[$key];
+        }
+        return null;
+    }
+
 }
