@@ -13,7 +13,7 @@ class StaticPathModel extends StaticPathList
     public static function projectPrefix($group=null)
     {
         if($group!==null){
-            return self::$projectPrefix.'/'.$group;
+            return self::$projectPrefix.''.DIRECTORY_SEPARATOR.''.$group;
         }
 
         if(defined('group')){
@@ -47,7 +47,7 @@ class StaticPathModel extends StaticPathList
     public static function appPath()
     {
         //get app path for application
-        return self::$appPath=root.'/'.self::$appDefine.'/app';
+        return self::$appPath=root.''.DIRECTORY_SEPARATOR.''.self::$appDefine.'/app';
     }
 
     /**
@@ -67,7 +67,7 @@ class StaticPathModel extends StaticPathList
         if(!defined('app')) define('app',null);
 
         //get app path for application
-        return self::projectPath(self::projectPrefix(),self::appPath().'/'.self::slashToBackSlash(app).''.self::$storage);
+        return self::projectPath(self::projectPrefix(),self::appPath().''.DIRECTORY_SEPARATOR.''.self::slashToBackSlash(app).''.self::$storage);
     }
 
     /**
@@ -88,7 +88,7 @@ class StaticPathModel extends StaticPathList
 
             $appProject=explode("\\",app);
             $app=str_replace("\\","",app);
-            $environmentFile=self::appPath().'/'.strtolower($app).'.yaml';
+            $environmentFile=self::appPath().''.DIRECTORY_SEPARATOR.''.strtolower($app).'.yaml';
 
             if(file_exists($environmentFile)){
                 //get app path for application
@@ -96,7 +96,7 @@ class StaticPathModel extends StaticPathList
             }
 
             //get app path for application
-            return self::appPath().'/'.strtolower(current($appProject)).'.yaml';
+            return self::appPath().''.DIRECTORY_SEPARATOR.''.strtolower(current($appProject)).'.yaml';
         }
     }
 
@@ -111,7 +111,7 @@ class StaticPathModel extends StaticPathList
 
         if($path){
 
-            return self::appPath().'/'.self::slashToBackSlash($app).'/'.Utils::getAppVersion($app).'';
+            return self::appPath().''.DIRECTORY_SEPARATOR.''.self::slashToBackSlash($app).''.DIRECTORY_SEPARATOR.''.Utils::getAppVersion($app).'';
         }
         return self::$autoloadNamespace.'\\'.$app.'\\'.Utils::getAppVersion($app).'';
     }
@@ -121,7 +121,7 @@ class StaticPathModel extends StaticPathList
      */
     public static function endpointPath()
     {
-        return self::appPath().'/'.self::slashToBackSlash(app).'/'.Utils::getAppVersion(app).'/'.self::$controller.'/'.endpoint;
+        return self::appPath().''.DIRECTORY_SEPARATOR.''.self::slashToBackSlash(app).''.DIRECTORY_SEPARATOR.''.Utils::getAppVersion(app).''.DIRECTORY_SEPARATOR.''.self::$controller.''.DIRECTORY_SEPARATOR.''.endpoint;
     }
 
     /**
@@ -130,7 +130,7 @@ class StaticPathModel extends StaticPathList
     public static function getServiceConf()
     {
         if(defined('endpoint')){
-            return path()->controller(endpoint,true).'/'.StaticPathModel::$configurationInController.'/ServiceConf.php';
+            return path()->controller(endpoint,true).''.DIRECTORY_SEPARATOR.''.StaticPathModel::$configurationInController.'/ServiceConf.php';
         }
         return [];
     }
@@ -140,7 +140,7 @@ class StaticPathModel extends StaticPathList
      */
     public static function getServiceDummy()
     {
-        return self::endpointPath().'/'.self::$configurationInController.'/Dummy.yaml';
+        return self::endpointPath().''.DIRECTORY_SEPARATOR.''.self::$configurationInController.'/Dummy.yaml';
     }
 
     /**
@@ -151,7 +151,7 @@ class StaticPathModel extends StaticPathList
     {
         //get app config path for application
         if(false===$namespace){
-            return self::appPath().'/'.self::slashToBackSlash(app).'/'.Utils::getAppVersion(app).'/'.self::$config;
+            return self::appPath().''.DIRECTORY_SEPARATOR.''.self::slashToBackSlash(app).''.DIRECTORY_SEPARATOR.''.Utils::getAppVersion(app).''.DIRECTORY_SEPARATOR.''.self::$config;
         }
         return self::$autoloadNamespace.'\\'.app.'\\'.Utils::getAppVersion(app).'\\'.self::$config;
     }
@@ -235,7 +235,7 @@ class StaticPathModel extends StaticPathList
      */
     public static function appLog()
     {
-        return self::getAppStorage().'/'.self::$log;
+        return self::getAppStorage().''.DIRECTORY_SEPARATOR.''.self::$log;
     }
 
     /**
