@@ -2,9 +2,9 @@
 
 namespace Resta\Container;
 
+use Resta\Support\Arr;
 use Resta\Container\NameContainers\SpecialNameContainer;
 use Resta\Container\NameContainers\RouteContainer as Route;
-use Resta\Support\Arr;
 
 class GraceContainer
 {
