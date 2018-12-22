@@ -532,9 +532,8 @@ class Arr
     }
 
     /**
-     * removes same values from the given two arrays
-     *
-     * @param  mixed  $value
+     * @param array $removeArray
+     * @param array $referenceArray
      * @return array
      */
     public static function removeSameValues($removeArray=array(),$referenceArray=array())
@@ -550,10 +549,9 @@ class Arr
     }
 
     /**
-     * check if there is key in the given array
-     *
-     * @param  mixed  $value
-     * @return mixed
+     * @param $array
+     * @param $key
+     * @return null
      */
     public static function isset($array,$key)
     {
@@ -561,6 +559,21 @@ class Arr
             return $array[$key];
         }
         return null;
+    }
+
+    /**
+     * @param $array
+     * @param null $withKey
+     * @return bool
+     */
+    public static function isArrayWithCount($array,$withKey=null)
+    {
+        if($withKey===null){
+            return is_array($array) && count($array);
+        }
+
+        return isset($array[$withKey]) && self::isArrayWithCount($array[$withKey],null);
+
     }
 
 }

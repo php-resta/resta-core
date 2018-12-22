@@ -14,6 +14,41 @@ class RouteContainer
     protected $parameters=array();
 
     /**
+     * @var $reflection \ReflectionMethod
+     */
+    protected $reflection;
+
+    /**
+     * RouteContainer constructor.
+     * @param $reflection
+     */
+    public function __construct($reflection)
+    {
+        $this->reflection = $reflection;
+    }
+
+    /**
+     * @return array
+     */
+    private function getRouteFromDocComment()
+    {
+        $doc = $this->reflection->getDocComment();
+
+        $list = [];
+
+        if(preg_match('@route\((.*?)\)\r\n@is',$doc,$route)){
+           $routeParams = explode (" ",$route[1]);
+
+           foreach ($routeParams as $routeParam){
+               $routeParam = explode(":",$routeParam);
+               $list[$routeParam[0]] = $routeParam[1];
+           }
+        }
+
+        return $list;
+    }
+
+    /**
      * @param $parameters
      */
     private function checkRouteObligation($parameters)
@@ -50,13 +85,12 @@ class RouteContainer
      */
     public function resolveContainer($parameters,$param)
     {
-
         // we apply this method to obtain reliable
         // route data by checking the route requirement.
         $this->checkRouteObligation($parameters);
 
         //get service configuration params for route
-        $serviceConf = Utils::getServiceConf();
+        $serviceConf = resta()->serviceConf;
 
         // we get the container global object with
         // the help of global loaders and register the route container.
@@ -85,6 +119,7 @@ class RouteContainer
      */
     private function routePatternProcess($serviceConf,$params)
     {
+
         if(isset($serviceConf['routeParameters'])){
 
             $routeParameters = $serviceConf['routeParameters'];
@@ -96,13 +131,27 @@ class RouteContainer
 
             foreach ($params as $key=>$param){
 
-                if(isset($pattern[$key])){
+                $routeFromDocComment = $this->getRouteFromDocComment();
 
-                    if(!preg_match('@'.$pattern[$key].'$@is',$param)){
+                if(isset($routeFromDocComment[$key])){
+
+                    if(!preg_match('@^'.$routeFromDocComment[$key].'$@is',$param)){
                         exception()
-                            ->invalidArgument('route id value is not valid for configuration as pattern');
+                            ->invalidArgument('route '.$key.' value is not valid for configuration as pattern');
                     }
                 }
+                else{
+
+                    if(isset($pattern[$key])){
+
+                        if(!preg_match('@'.$pattern[$key].'$@is',$param)){
+                            exception()
+                                ->invalidArgument('route id value is not valid for configuration as pattern');
+                        }
+                    }
+                }
+
+
             }
         }
     }

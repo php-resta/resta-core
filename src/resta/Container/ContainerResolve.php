@@ -2,6 +2,8 @@
 
 namespace Resta\Container;
 
+use Resta\Support\ReflectionProcess;
+
 class ContainerResolve
 {
     /**
@@ -47,21 +49,13 @@ class ContainerResolve
     }
 
     /**
-     * @return mixed
-     */
-    private function getContainers()
-    {
-        return app()->singleton()->serviceContainer;
-    }
-
-    /**
      * @param $class
-     * @return \ReflectionMethod
+     * @return object
      * @throws \ReflectionException
      */
     private function getReflectionMethod($class)
     {
-        return new \ReflectionMethod($class[0],$class[1]);
+        return (new ReflectionProcess($class[0]))->reflectionMethodParams($class[1]);
     }
 
     /**
@@ -75,10 +69,10 @@ class ContainerResolve
         // With the reflection class we get the method.
         // and then we get the parameters in array.
         $reflection = $this->getReflectionMethod($class);
-        $parameters = $reflection->getParameters();
+        $parameters = $reflection->parameters;
 
         //service container objects.
-        $containers=$this->getContainers();
+        $containers = resta()->serviceContainer;
 
         // we group the parameters into type and
         // name and bind them with the necessary logic.
@@ -91,7 +85,9 @@ class ContainerResolve
             $paramMerge=array_merge($param,$checkParameterForContainer);
 
             // we do some useful logic bind for user benefit.
-            $param=app()->makeBind(GraceContainer::class)->graceContainerBuilder($parameter,$paramMerge);
+            $param=app()->makeBind(GraceContainer::class,[
+                'reflection' => $reflection->reflection
+            ])->graceContainerBuilder($parameter,$paramMerge);
 
         }
 

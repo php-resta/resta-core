@@ -35,7 +35,22 @@ class Controller
 
     /**
      * @param $method
-     * @return bool|string
+     * @return object
+     * @throws \ReflectionException
+     */
+    public function reflectionMethodParams($method)
+    {
+        $reflection = new \ReflectionMethod($this->namespace,$method);
+
+        return (object)[
+            'reflection'    => $reflection,
+            'document'      => $reflection->getDocComment(),
+        ];
+    }
+
+    /**
+     * @param $method
+     * @return array
      * @throws \ReflectionException
      */
     public function getParameters($method)
@@ -44,9 +59,9 @@ class Controller
         $list['define'] = '';
         $list['route'] = [''];
 
-        $reflection = new \ReflectionMethod($this->namespace,$method);
+        $reflection = $this->reflectionMethodParams($method);
 
-        $doc = $reflection->getDocComment();
+        $doc = $reflection->document;
 
         if(preg_match('@#define(.*?)\r\n@is',$doc,$define)){
 
@@ -55,7 +70,7 @@ class Controller
             }
         }
 
-        foreach ($reflection->getParameters() as $parameter)
+        foreach ($reflection->reflection->getParameters() as $parameter)
         {
             if($parameter->getName()=="route"){
                 $list['route']=$parameter->getDefaultValue();

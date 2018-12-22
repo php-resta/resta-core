@@ -4,6 +4,7 @@ namespace Resta\Container;
 
 use Resta\Container\NameContainers\SpecialNameContainer;
 use Resta\Container\NameContainers\RouteContainer as Route;
+use Resta\Support\Arr;
 
 class GraceContainer
 {
@@ -15,30 +16,46 @@ class GraceContainer
     ];
 
     /**
+     * @var $reflection
+     */
+    protected $reflection;
+
+    /**
+     * GraceContainer constructor.
+     * @param $reflection
+     */
+    public function __construct($reflection)
+    {
+        $this->reflection = $reflection;
+    }
+
+    /**
      * @param $parameter \ReflectionParameter
      * @param $param
-     * @return mixed
+     * @return array
      */
     protected function getNameContainers($parameter,$param)
     {
         // If the parameter contains a route variable.
         // We do a custom bind for the route
-        if(isset($this->nameContainers[$parameter->getName()])){
+        if($this->checkNameContainer($parameter)){
 
             // we do the name control for the container here,
             // and if we have the name container we are checking, we make a handle make bind.
             $nameContainers=$this->nameContainers[$parameter->getName()];
-            return app()->makeBind($nameContainers)->resolveContainer($parameter->getDefaultValue(),$param);
+            return app()->makeBind($nameContainers,[
+                'reflection' => $this->reflection
+            ])->resolveContainer($parameter->getDefaultValue(),$param);
         }
 
         // In particular, name container values can be specified and
         // they are injected directly into the methods contextually.
-        if(isset(app()->singleton()->serviceContainer[$parameter->getName()])){
+        if(isset(resta()->serviceContainer[$parameter->getName()])){
             return app()->makeBind(SpecialNameContainer::class)->resolveContainer($parameter,$param);
 
         }
 
-        return null;
+        return [];
     }
 
     /**
@@ -58,5 +75,15 @@ class GraceContainer
         // In particular, name container values can be specified and
         // they are injected directly into the methods contextually.
         return $this->getNameContainers($parameter,$param);
+    }
+
+    /**
+     * @param $parameter \ReflectionParameter
+     * @return bool
+     */
+    public function checkNameContainer($parameter)
+    {
+        return isset($this->nameContainers[$parameter->getName()])
+            && Arr::isArrayWithCount($parameter->getDefaultValue());
     }
 }

@@ -14,7 +14,8 @@ class Router extends ApplicationProvider
     use NamespaceForRoute;
 
     /**
-     * @return void
+     * @throws \DI\DependencyException
+     * @throws \DI\NotFoundException
      */
     public function route()
     {

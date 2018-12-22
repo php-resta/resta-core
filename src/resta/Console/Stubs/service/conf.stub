@@ -25,7 +25,13 @@ return [
      * client route parameters
      */
      'routeParameters'=>[
-        'index'=>[]
+        'get'=>[
+            'index'=>[
+                'pattern'=>[
+                    'id'=>'[0-9]+'
+                ]
+            ]
+        ]
      ]
 
 ];

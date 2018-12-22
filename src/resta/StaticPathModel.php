@@ -125,11 +125,14 @@ class StaticPathModel extends StaticPathList
     }
 
     /**
-     * @return string
+     * @return array|string
      */
     public static function getServiceConf()
     {
-        return self::endpointPath().'/'.self::$configurationInController.'/ServiceConf.php';
+        if(defined('endpoint')){
+            return path()->controller(endpoint,true).'/'.StaticPathModel::$configurationInController.'/ServiceConf.php';
+        }
+        return [];
     }
 
     /**
