@@ -2,10 +2,9 @@
 
 namespace Resta\Foundation;
 
-use Resta\ClosureDispatcher;
 use Resta\Support\Utils;
 use Resta\StaticPathList;
-use Resta\StaticPathModel;
+use Resta\ClosureDispatcher;
 
 class CustomBooter
 {
@@ -108,7 +107,7 @@ class CustomBooter
     private function getBootDirectory()
     {
         //Let's get our boot objects through the glob method.
-        return Utils::glob(StaticPathModel::bootDir());
+        return Utils::glob(path()->bootDir());
     }
 
     /**

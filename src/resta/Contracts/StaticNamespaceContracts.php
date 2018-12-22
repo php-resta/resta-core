@@ -2,7 +2,12 @@
 
 namespace Resta\Contracts;
 
-interface StaticNamespaceContracts {
+interface StaticNamespaceContracts
+{
+    /**
+     * @return mixed
+     */
+    public function bootDir();
 
     /**
      * @return mixed

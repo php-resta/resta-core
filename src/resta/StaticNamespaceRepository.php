@@ -9,6 +9,14 @@ class StaticNamespaceRepository extends StaticPathRepository
     /**
      * @return string
      */
+    public function bootDir()
+    {
+        return StaticPathList::$boot;
+    }
+
+    /**
+     * @return string
+     */
     public function builder()
     {
         return Utils::getNamespace(parent::builder());

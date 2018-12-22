@@ -269,6 +269,12 @@ class StaticPathRepository
         return null;
     }
 
+    public function bootDir()
+    {
+        //get boot directory for application
+        return root.''.DIRECTORY_SEPARATOR.''.StaticPathList::$appDefine.''.DIRECTORY_SEPARATOR.'boot';
+    }
+
     /**
      * @param null $controller
      * @param bool $bool

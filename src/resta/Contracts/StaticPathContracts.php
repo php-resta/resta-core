@@ -31,6 +31,11 @@ interface StaticPathContracts {
     public function config();
 
     /**
+     * @return mixed
+     */
+    public function bootDir();
+
+    /**
      * @param null $controller
      * @param bool $bool
      * @return mixed
