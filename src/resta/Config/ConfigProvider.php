@@ -27,7 +27,7 @@ class ConfigProvider
 
         // Finally, we will set
         // the application's timezone and encoding based on the configuration
-        if(count(config('app'))){
+        if(config('app')!==null){
             date_default_timezone_set(config('app.timezone'));
             mb_internal_encoding('UTF-8');
         }
