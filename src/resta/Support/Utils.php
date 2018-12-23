@@ -185,7 +185,7 @@ class Utils
      */
     public static function isNamespaceExists($namespace)
     {
-        return (class_exists($namespace)) ? true : false;
+        return (is_string($namespace) && class_exists($namespace)) ? true : false;
     }
 
     /**

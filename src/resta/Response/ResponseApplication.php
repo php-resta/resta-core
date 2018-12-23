@@ -2,6 +2,7 @@
 
 namespace Resta\Response;
 
+use Resta\Support\Utils;
 use Resta\ClosureDispatcher;
 
 class ResponseApplication extends ResponseOutput
@@ -61,7 +62,7 @@ class ResponseApplication extends ResponseOutput
         $outputter=$this->outPutter();
 
         //if out putter is not null
-        if($outputter!==null){
+        if(Utils::isNamespaceExists($outputter)){
 
             //We resolve the response via the service container
             //and run the handle method.
