@@ -190,12 +190,19 @@ if (!function_exists('applicationKey')) {
 if (!function_exists('config')) {
 
     /**
-     * @param $config null
-     * @return \Resta\Config\ConfigProcess
+     * @param null $config
+     * @param null $default
+     * @return null
      */
-    function config($config=null)
+    function config($config=null,$default=null)
     {
-        return resta()->appClass->configLoaders($config);
+        $configResult = resta()->appClass->configLoaders($config);
+
+        if($configResult === null && $default!==null){
+            return $default;
+        }
+
+        return $configResult;
     }
 }
 
@@ -204,7 +211,9 @@ if (!function_exists('resolve')) {
     /**
      * @param $class
      * @param array $bind
-     * @return mixed
+     * @return mixed|null
+     * @throws \DI\DependencyException
+     * @throws \DI\NotFoundException
      */
     function resolve($class,$bind=array())
     {
