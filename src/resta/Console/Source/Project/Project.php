@@ -114,7 +114,6 @@ class Project extends ConsoleOutputter {
         $this->touch['version/base']                = $this->version().'/ServiceBaseController.php';
         $this->touch['version/base']                = $this->version().'/ServiceBaseController.php';
         $this->touch['version/log']                 = $this->version().'/ServiceLogController.php';
-        $this->touch['version/tool']                = $this->version().'/ServiceToolsController.php';
         $this->touch['source/apitokentrait']        = $this->sourceSupportDir().'/Traits/ClientApiTokenTrait.php';
 
         //set project touch
