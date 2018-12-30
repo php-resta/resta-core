@@ -1,7 +1,7 @@
 <?php
 namespace Resta\Authenticate\Driver\Eloquent;
 
-use Store\Packages\Database\Eloquent\Connection as Eloquent;
+use Illuminate\Database\Eloquent\Model as Eloquent;
 
 class User extends Eloquent
 {

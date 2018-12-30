@@ -42,6 +42,7 @@ class UserBuilderHelper {
 
     /**
      * @param $token
+     * @return mixed
      */
     protected function checkQuery($token){
 
@@ -73,6 +74,7 @@ class UserBuilderHelper {
 
     /**
      * @param $token
+     * @return mixed
      */
     protected function logoutQuery($token){
 

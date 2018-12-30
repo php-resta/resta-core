@@ -10,10 +10,37 @@ class __file__Builder extends ServiceBaseController
 {
     /**
      * @return mixed
-    */
-    public function get__file__s()
+     */
+    public function retrieve()
     {
         //model all data
         return __file__::all()->toArray();
     }
+
+    /**
+     * @return mixed
+     */
+     public function create()
+     {
+        //create __file__
+        return __file__::create([]);
+     }
+
+     /**
+      * @return mixed
+      */
+     public function update()
+     {
+        //update __file__
+        return __file__::where()->update([]);
+     }
+
+     /**
+      * @return mixed
+      */
+     public function delete()
+     {
+        //delete __file__
+        return __file__::where()->delete();
+     }
 }

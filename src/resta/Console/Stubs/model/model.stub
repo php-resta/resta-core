@@ -9,4 +9,24 @@ class __file__ extends Eloquent
      * @var $table string
      */
     protected $table='__table__';
+
+    /**
+     * @var array $fillable
+     */
+    protected $fillable = [];
+
+     /**
+      * @var array $hidden
+      */
+     protected $hidden = [];
+
+      /**
+       * The event map for the model.
+       *
+       * @var array
+       */
+      protected $dispatchesEvents = [
+              'saved'   => 'namespace',
+              'deleted' => 'namespace',
+      ];
 }
