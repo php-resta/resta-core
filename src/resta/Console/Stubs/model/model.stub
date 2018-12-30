@@ -1,7 +1,7 @@
 <?php
 namespace App\__project__\__version__\__model__;
 
-use Store\Packages\Database\Eloquent\Connection as Eloquent;
+use Illuminate\Database\Eloquent\Model as Eloquent;
 
 class __file__ extends Eloquent
 {

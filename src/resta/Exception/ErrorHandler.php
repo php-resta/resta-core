@@ -50,12 +50,22 @@ class ErrorHandler extends ApplicationProvider {
 
         $exception=$this->exception;
 
-        $this->data['status']=$exception::exceptionTypeCodes($this->data['errType']);
+        if(isset(resta()->exceptiontrace))
+        {
+            $this->data['status'] = (int)resta()->exceptiontrace['callNamespace']->getCode();
+        }
+        else {
+
+            $this->data['status']=(int)$exception::exceptionTypeCodes($this->data['errType']);
+        }
+
+
 
         $this->terminate('responseSuccess');
         $this->terminate('responseStatus');
         $this->register('responseSuccess',(bool)false);
         $this->register('responseStatus',$this->data['status']);
+
 
         $optionalException=str_replace("\\","\\\\",$this->app->namespace()->optionalException());
 
@@ -70,8 +80,7 @@ class ErrorHandler extends ApplicationProvider {
                     $this->data['errLine']=(int)$traceResolve[2];
                 }
             }
-            $instanceErrtype=new $this->data['errType'];
-            $this->data['status']=$exception::exceptionTypeCodes(current(class_parents($instanceErrtype)));
+
 
             $this->data['errType']=class_basename($this->data['errType']);
         }
@@ -104,12 +113,11 @@ class ErrorHandler extends ApplicationProvider {
     }
 
     /**
-     * @param $errNo null
-     * @param $errStr null
-     * @param $this->data['errFile'] null
-     * @param $this->data['errLine'] null
-     * @param $this->data['errContext'] null
-     * @return mixed
+     * @param null $errNo
+     * @param null $errStr
+     * @param null $errFile
+     * @param null $errLine
+     * @param null $errContext
      */
     public function setErrorHandler($errNo=null, $errStr=null, $errFile=null, $errLine=null, $errContext=null)
     {
