@@ -33,9 +33,13 @@ class StaticNamespaceRepository extends StaticPathRepository
 
         if($endpoint===null) return $call;
 
-        $endpointCall=$call.'\\'.ucfirst($endpoint).''.StaticPathList::$controllerBundleName.'\\'.ucfirst($endpoint).''.StaticPathModel::$callClassPrefix;
+        $bundleName = $call.'\\'.ucfirst($endpoint).''.StaticPathList::$controllerBundleName.'';
+
+        $endpointCall=$bundleName.'\\'.ucfirst($endpoint).''.StaticPathModel::$callClassPrefix;
 
         if($bind===true) return $endpointCall;
+
+        if($bind=="bundle") return $bundleName;
 
         return app()->makeBind($endpointCall,$bind);
     }

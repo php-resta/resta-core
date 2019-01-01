@@ -573,7 +573,22 @@ class Arr
         }
 
         return isset($array[$withKey]) && self::isArrayWithCount($array[$withKey],null);
+    }
 
+    /**
+     * @param $array1
+     * @param $array2
+     * @return int
+     */
+    public static function arrayDiffKey($array1,$array2)
+    {
+        $forArray1 = array_diff_key($array1,$array2);
+        $forArray2 = array_diff_key($array2,$array1);
+
+        if(count($forArray1)=="0" && count($forArray2)=="0"){
+            return true;
+        }
+        return false;
     }
 
 }

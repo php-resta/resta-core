@@ -2,8 +2,8 @@
 
 namespace Resta\Traits;
 
+use Resta\Routing\Route;
 use Resta\Support\Utils;
-use Resta\StaticPathList;
 use Resta\StaticPathModel;
 use Resta\GlobalLoaders\Router;
 use Resta\Routing\CheckEndpointForAutoService;
@@ -154,12 +154,20 @@ trait NamespaceForRoute
         //generator namespace for array
         $namespace=app()->namespace()->controller($this->endpoint(),true);
 
+        $fromRoutes = Route::getRouteResolve();
+
+        if(count($fromRoutes)){
+            $namespace = app()->namespace()
+                    ->controller($this->endpoint(),'bundle').'\\'.$fromRoutes['class'];
+        }
+
+
         //check namespace exists
         if(file_exists(Utils::getPathFromNamespace($namespace)) && Utils::isNamespaceExists($namespace)){
 
             // the controller classes are registered in the config controller.
             // the controller class is not executed if it is not available here.
-            $this->checkConfigForController($namespace);
+            //$this->checkConfigForController($namespace);
             return $namespace;
         }
 

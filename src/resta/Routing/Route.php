@@ -2,6 +2,8 @@
 
 namespace Resta\Routing;
 
+use Resta\Support\Arr;
+
 class Route
 {
     /**
@@ -47,12 +49,14 @@ class Route
     }
 
     /**
-     * @return mixed
+     * @return void|mixed
      */
     public function handle()
     {
        foreach (self::$paths as $path){
-           require_once $path;
+           if(file_exists($path)){
+               resta()->fileSystem->callFile($path);
+           }
        }
     }
 
@@ -84,6 +88,7 @@ class Route
 
     /**
      * @param $params
+     * @param $function
      */
     public static function setRoute($params,$function)
     {
@@ -91,6 +96,83 @@ class Route
 
         [$class,$method] = explode("@",$route);
 
-        static::$routes[$class][$function][$method]['pattern'] = $pattern;
+        $patternList = array_slice(explode("/",$pattern),1);
+
+        static::$routes['pattern'][] = $patternList;
+        static::$routes['data'][] = ['method'=>$method,'class'=>$class,'http'=>$function];
+    }
+
+    /**
+     * @return array
+     */
+    public static function getRouteResolve()
+    {
+        $routes         = self::getRoutes();
+        $patternResolve = self::getPatternResolve();
+
+        if(isset($routes['data'][$patternResolve])){
+
+            if($routes['data'][$patternResolve]['http'] == strtolower(httpMethod)){
+
+                $resolve = $routes['data'][$patternResolve];
+
+                return [
+                    'class'     => $resolve['class'],
+                    'method'    => $resolve['method'],
+                ];
+            }
+        }
+        return [];
+    }
+
+    /**
+     * @return array|int|string
+     */
+    private static function getPatternResolve()
+    {
+        $routes     = self::getRoutes();
+
+        if(!isset($routes['pattern'])){
+            return [];
+        }
+
+        $patterns   = $routes['pattern'];
+        $urlRoute   = route();
+
+        if(isset($urlRoute[0]) && $urlRoute[0]==""){
+            $urlRoute = [];
+        }
+
+        foreach ($patterns as $key=>$pattern){
+
+            if(isset($pattern[0]) && $pattern[0]==""){
+                $pattern = [];
+            }
+
+            $diff = Arr::arrayDiffKey($pattern,$urlRoute);
+
+            if($diff){
+
+                $matches=true;
+
+                foreach ($pattern as $patternKey=>$patternValue){
+                    if(!preg_match('@\{(.*?)\}@is',$patternValue)){
+                        if($patternValue!==$urlRoute[$patternKey]){
+                            $matches=false;
+                        }
+                    }
+                }
+
+                if($matches){
+                    return $key;
+                }
+            }
+
+            if(count($pattern)-1 == count(route())){
+                if(preg_match('@\{[a-z]+\?\}@is',end($pattern))){
+                    return $key;
+                }
+            }
+        }
     }
 }

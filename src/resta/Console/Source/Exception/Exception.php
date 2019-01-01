@@ -4,6 +4,7 @@ namespace Resta\Console\Source\Exception;
 
 use Resta\Console\ConsoleListAccessor;
 use Resta\Console\ConsoleOutputter;
+use Resta\Routing\Route;
 use Resta\StaticPathModel;
 use Resta\Support\Utils;
 
@@ -37,8 +38,8 @@ class Exception extends ConsoleOutputter {
      * @method create
      * @return mixed
      */
-    public function create(){
-
+    public function create()
+    {
         $exception=$this->argument['exception'];
 
         $this->directory['exceptionDir']=$this->optional().'/'.StaticPathModel::$optionalException;

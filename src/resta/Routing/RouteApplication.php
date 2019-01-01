@@ -13,8 +13,9 @@ class RouteApplication extends ApplicationProvider
     use NamespaceForRoute;
 
     /**
-     * @method callController
      * @return mixed
+     * @throws \DI\DependencyException
+     * @throws \DI\NotFoundException
      */
     private function callController()
     {
@@ -24,42 +25,7 @@ class RouteApplication extends ApplicationProvider
         $this->singletonEagerForRoute();
 
         //call service together with controller method
-        return $this->controllerMethodProcess();
-    }
-
-    /**
-     * @method checkDummy
-     * @return mixed
-     */
-    private function checkDummy()
-    {
-        //In this case, the dummy object is checked as bool in the service conf object
-        //and the equation is compared with the returned value.
-        //If the boolean value is true at the end of the comparison, the dummy data screen is printed
-        return (false===$this->diffDummyAndController()) ?
-            array_merge($this->serviceDummy(),['__serviceDummy'=>true]) : $this->getCallBindController();
-    }
-
-    /**
-     * @method controllerMethodProcess
-     * @return mixed
-     */
-    private function controllerMethodProcess()
-    {
-        //In this case, the dummy object is checked as bool in the service conf object
-        //and the equation is compared with the returned value.
-        //If the boolean value is true at the end of the comparison, the dummy data screen is printed
-        return (resta()->serviceConf['dummy']) ? $this->checkDummy() : $this->getCallBindController();
-    }
-
-    /**
-     * @method diffDummyAndController
-     * @return bool
-     */
-    private function diffDummyAndController()
-    {
-        //We check the equality of the dummy data with the controller method data.
-        return Utils::array_diff_key_recursive($this->serviceDummy(),$this->getCallBindController());
+        return $this->getCallBindController();
     }
 
     /**
@@ -70,13 +36,17 @@ class RouteApplication extends ApplicationProvider
     {
         //we finally process the method of the class invoked by the user as a process and prepare it for the response
         return app()->makeBind(RouteWatch::class)->watch(function(){
-            return Utils::callBind([$this->instanceController(),resta()->method],$this->providerBinding());
+            if(method_exists($this->instanceController(),resta()->method)){
+                return Utils::callBind([$this->instanceController(),resta()->method],$this->providerBinding());
+            }
+            exception()->badMethodCall('The name of the method to be executed does not exist in the object.');
         });
     }
 
     /**
-     * @method handle
      * @return mixed
+     * @throws \DI\DependencyException
+     * @throws \DI\NotFoundException
      */
     public function handle()
     {
@@ -96,18 +66,8 @@ class RouteApplication extends ApplicationProvider
     }
 
     /**
-     * @method serviceDummy
-     * @return mixed
-     */
-    public function serviceDummy()
-    {
-        //The kernel object
-        //we temporarily assigned on the instance of the class obtained by route
-        return resta()->serviceDummy[strtolower(method)];
-    }
-
-    /**
-     * @return void
+     * @throws \DI\DependencyException
+     * @throws \DI\NotFoundException
      */
     private function singletonEagerForRoute()
     {

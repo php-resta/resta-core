@@ -3,6 +3,7 @@
 namespace Resta\GlobalLoaders;
 
 use Resta\ApplicationProvider;
+use Resta\FileProcess;
 use Store\Services\RequestService;
 use Resta\Response\ResponseApplication;
 use Symfony\Component\HttpFoundation\Request;
@@ -51,5 +52,7 @@ class GlobalAccessor extends ApplicationProvider
         $this->register('httpMethod',ucfirst(strtolower($this->app->kernel()->request->getRealMethod())));
 
         define('httpMethod',strtoupper($this->singleton()->httpMethod));
+
+        $this->register('fileSystem',new FileProcess());
     }
 }
