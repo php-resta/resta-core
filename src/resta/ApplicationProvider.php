@@ -53,7 +53,7 @@ class ApplicationProvider
     public function register($key,$object,$concrete=null)
     {
         //register app bound
-        return $this->app()->bound->register($key,$object,$concrete);
+        return $this->app->register($key,$object,$concrete);
     }
 
     /**

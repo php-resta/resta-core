@@ -115,6 +115,7 @@ class Controller extends ConsoleOutputter {
         // we process the processes related to file creation operations.
         // and then create files related to the touch method of the file object as it is in the directory process.
         $this->touch['service/endpoint']        = $this->directory['endpoint'].'/'.$this->argument['serviceClass'].''. $this->argument['callClassPrefix'].'.php';
+        $this->touch['service/route']           = $this->directory['endpoint'].'/Routes.php';
         $this->touch['service/acl']             = $this->directory['resource'].'/'.$this->argument['serviceClass'].'AclManagement.php';
         $this->touch['service/app']             = $this->directory['endpoint'].'/App.php';
         $this->touch['service/developer']       = $this->directory['configuration'].'/Developer.php';

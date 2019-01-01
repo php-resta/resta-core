@@ -1,31 +1,20 @@
 <?php
 
-namespace __kernelDir__;
+return [
 
-use Store\Contracts\HandleTraitContract;
-
-class Kernel implements HandleTraitContract
-{
     /**
-     * @method handle
-     * @return array
+     * repositories
+     * all repository names
      */
-    public function handle()
-    {
-        return [
+    'repositories' => [],
 
-        /**
-         * services
-         * all service names
-         */
-        'Services' => [],
+    /**
+     * service providers
+     * all providers names
+     */
+    'providers' => [
+        'routeServiceProvider'      => \App\Mobi\Kernel\Providers\RouteServiceProvider::class,
+        'eloquentServiceProvider'   => \App\Mobi\Kernel\Providers\EloquentServiceProvider::class,
+    ],
 
-        /**
-         * services
-         * all service names
-         */
-        'Repositories' => [],
-
-        ];
-    }
-}
+];

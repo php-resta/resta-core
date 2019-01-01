@@ -2,6 +2,7 @@
 
 namespace Resta\Foundation;
 
+use Resta\Support\Utils;
 use Resta\ClosureDispatcher;
 use Resta\Traits\ApplicationPath;
 use Resta\Contracts\ApplicationContracts;
@@ -94,7 +95,18 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
         // it adds the values in path data specified
         // by callback to the configuration values.
         if(isset(resta()->bindings['config'])){
-            resta()->bindings['config']->setConfig(call_user_func($callback));
+            return resta()->bindings['config']->setConfig(call_user_func($callback));
         }
+    }
+
+    /**
+     * @param $key
+     * @param $object
+     * @param null $concrete
+     * @return mixed
+     */
+    public function register($key,$object,$concrete=null){
+
+        return resta()->bound->register($key,$object,$concrete);
     }
 }

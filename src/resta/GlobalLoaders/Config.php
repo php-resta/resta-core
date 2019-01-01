@@ -4,6 +4,7 @@ namespace Resta\GlobalLoaders;
 
 use Resta\Support\Str;
 use Resta\Support\Utils;
+use Resta\StaticPathList;
 use Resta\ApplicationProvider;
 
 class Config extends ApplicationProvider
@@ -14,6 +15,9 @@ class Config extends ApplicationProvider
      */
     public function setConfig($files=array())
     {
+        // we are adding kernel variables
+        $files['Kernel'] = path()->kernel().''.DIRECTORY_SEPARATOR.''.StaticPathList::$kernel.'.php';
+
         // we are saving all paths in
         // the config directory of each application.
         foreach($files as $key=>$file){

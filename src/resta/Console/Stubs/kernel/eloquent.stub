@@ -1,0 +1,51 @@
+<?php
+
+namespace __kernelProviderDir__;
+
+use Resta\ApplicationProvider;
+use Resta\Contracts\BootContracts;
+use Illuminate\Pagination\Paginator;
+use Store\Packages\Database\Eloquent\Connection as Eloquent;
+
+class EloquentServiceProvider extends ApplicationProvider implements BootContracts
+{
+    /**
+     * Eloquent service provider
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        $this->eloquentBoot();
+        $this->eloquentPagination();
+    }
+
+    /**
+     * Eloquent boot
+     *
+     * @return void
+     */
+    private function eloquentBoot()
+    {
+        new Eloquent();
+    }
+
+    /**
+     * Eloquent pagination boot
+     *
+     * @return void
+     */
+    private function eloquentPagination()
+    {
+        Paginator::currentPageResolver(function(){
+
+            $page = get('page',1);
+
+            if (filter_var($page, FILTER_VALIDATE_INT) !== false && (int) $page >= 1) {
+                return (int) $page;
+            }
+
+            return 1;
+        });
+    }
+}

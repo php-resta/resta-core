@@ -20,4 +20,12 @@ interface ApplicationContracts {
      */
    public function loadConfig(callable $callback);
 
+    /**
+     * @param $key
+     * @param $object
+     * @param null $concrete
+     * @return mixed
+     */
+   public function register($key,$object,$concrete=null);
+
 }

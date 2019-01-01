@@ -40,6 +40,7 @@ class Project extends ConsoleOutputter {
     public function create()
     {
         $this->argument['kernelDir'] = Utils::getNamespace($this->kernel());
+        $this->argument['kernelProviderDir'] = Utils::getNamespace($this->provider());
         $this->directory['projectDir'] = $this->projectPath();
 
         $recursiveDefaultDirectory = explode("\\",$this->argument['project']);
@@ -60,6 +61,7 @@ class Project extends ConsoleOutputter {
         $this->directory['nodeDir']                 = $this->node();
         $this->directory['webservice']              = $this->webservice();
         $this->directory['stubDir']                 = $this->stub();
+        $this->directory['providerDir']             = $this->provider();
         $this->directory['storageDir']              = $this->storage();
         $this->directory['logDir']                  = $this->log();
         $this->directory['resourceDir']             = $this->resource();
@@ -80,7 +82,8 @@ class Project extends ConsoleOutputter {
         //$this->touch['publish']                     = $this->project.'/publish.php';
         //$this->touch['main/version']                = $this->project.'/version.php';
         $this->touch['kernel/kernel']               = $this->kernel().'/Kernel.php';
-        $this->touch['kernel/provider']             = $this->kernel().'/AppProvider.php';
+        $this->touch['kernel/eloquent']             = $this->provider().'/EloquentServiceProvider.php';
+        $this->touch['kernel/route']                = $this->provider().'/RouteServiceProvider.php';
         $this->touch['kernel/annotations']          = $this->kernel().'/AppAnnotations.php';
         $this->touch['middleware/authenticate']     = $this->middleware().'/Authenticate.php';
         $this->touch['middleware/clientToken']      = $this->middleware().'/ClientApiToken.php';

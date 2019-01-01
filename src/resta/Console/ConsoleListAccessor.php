@@ -272,6 +272,14 @@ trait ConsoleListAccessor {
         return $this->kernel().'/'.StaticPathModel::$stub;
     }
 
+    /**
+     * @return mixed
+     */
+    public function provider(){
+
+        return $this->kernel().'/'.StaticPathModel::$provider;
+    }
+
 
     /**
      * @return mixed

@@ -1,0 +1,33 @@
+<?php
+
+namespace __kernelProviderDir__;
+
+use Resta\Routing\Route;
+use Resta\ApplicationProvider;
+use Resta\Contracts\BootContracts;
+
+class RouteServiceProvider extends ApplicationProvider implements BootContracts
+{
+    /**
+     * @return mixed|void
+     */
+    public function boot()
+    {
+        $this->registerRoutePath();
+
+        $this->app->bind('route',function(){
+            return Route::class;
+        });
+    }
+
+    /**
+     * @return void
+     */
+    private function registerRoutePath()
+    {
+        if(defined('endpoint')){
+            $routes = path()->controller(endpoint,true).''.DIRECTORY_SEPARATOR.'Routes.php';
+            Route::setPath($routes);
+        }
+    }
+}

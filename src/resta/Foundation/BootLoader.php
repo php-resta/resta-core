@@ -7,6 +7,7 @@ use Resta\ApplicationProvider;
 use Resta\Logger\LoggerService;
 use Resta\Exception\ErrorHandler;
 use Resta\Contracts\BootContracts;
+use Resta\Provider\ServiceProvider;
 use Resta\Response\ResponseApplication;
 use Resta\UrlParse\UrlParseApplication;
 use Resta\Config\ConfigProvider as Config;
@@ -91,6 +92,16 @@ class BootLoader extends ApplicationProvider implements BootContracts
         // the rest project is determined after the route variables from the URL are assigned to the kernel url object.
         $this->app->bind('container',function(){
             return app()->namespace()->serviceContainer();
+        },true);
+    }
+
+    /**
+     * @return mixed|void
+     */
+    private function serviceProvider()
+    {
+        $this->app->bind('serviceProvider',function(){
+            return ServiceProvider::class;
         },true);
     }
 
