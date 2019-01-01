@@ -2,4 +2,4 @@
 
 use Resta\Routing\Route;
 
-Route::get("/","__serviceClass__Controller@getIndexAction");
+Route::get("/","__serviceClass__Controller@index");

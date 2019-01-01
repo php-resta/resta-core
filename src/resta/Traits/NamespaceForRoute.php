@@ -151,16 +151,11 @@ trait NamespaceForRoute
      */
     public function getControllerNamespace()
     {
-        //generator namespace for array
-        $namespace=app()->namespace()->controller($this->endpoint(),true);
-
-        $fromRoutes = Route::getRouteResolve();
-
-        if(count($fromRoutes)){
-            $namespace = app()->namespace()
-                    ->controller($this->endpoint(),'bundle').'\\'.$fromRoutes['class'];
-        }
-
+        // we will take values ​​from the routes file as namespace.
+        // with the resolve method, route values ​​will come as an array.
+        $fromRoutes         = Route::getRouteResolve();
+        $fromRoutesClass    = (isset($fromRoutes['class'])) ? $fromRoutes['class'] : null;
+        $namespace          = app()->namespace()->controller($this->endpoint(),'bundle').'\\'.$fromRoutesClass;
 
         //check namespace exists
         if(file_exists(Utils::getPathFromNamespace($namespace)) && Utils::isNamespaceExists($namespace)){

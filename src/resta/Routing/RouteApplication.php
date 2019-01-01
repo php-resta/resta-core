@@ -29,16 +29,20 @@ class RouteApplication extends ApplicationProvider
     }
 
     /**
-     * @method getCallBindController
      * @return mixed
      */
     private function getCallBindController()
     {
         //we finally process the method of the class invoked by the user as a process and prepare it for the response
         return app()->makeBind(RouteWatch::class)->watch(function(){
+
+            // if the method in the instance object exists,
+            // this method is executed to produce the output.
             if(method_exists($this->instanceController(),resta()->method)){
                 return Utils::callBind([$this->instanceController(),resta()->method],$this->providerBinding());
             }
+
+            //throw exception as unsuccessful
             exception()->badMethodCall('The name of the method to be executed does not exist in the object.');
         });
     }

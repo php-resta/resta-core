@@ -7,7 +7,7 @@ class __serviceClass____callClassPrefix__ extends App
     /**
      * @return mixed|array
      */
-    public function getIndex__methodPrefix__()
+    public function index()
     {
         return [
             'endpoint'=>'__serviceClass__'

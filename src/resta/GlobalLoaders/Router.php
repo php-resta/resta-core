@@ -34,10 +34,7 @@ class Router extends ApplicationProvider
     public function substractMethodNameFromRouteParameters($method)
     {
         $fromRoutes = Route::getRouteResolve();
-
-        if(count($fromRoutes)){
-            $method = $fromRoutes['method'];
-        }
+        $method     = (isset($fromRoutes['method'])) ? $fromRoutes['method'] : $method;
 
         $this->register('method',$method);
         $this->register('routeParameters', $this->routeParametersAssign($this->resolveMethod($method)));
