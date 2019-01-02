@@ -86,18 +86,6 @@ class BootLoader extends ApplicationProvider implements BootContracts
     /**
      * @return mixed|void
      */
-    private function serviceContainer()
-    {
-        // with url parsing,the application route for
-        // the rest project is determined after the route variables from the URL are assigned to the kernel url object.
-        $this->app->bind('container',function(){
-            return app()->namespace()->serviceContainer();
-        },true);
-    }
-
-    /**
-     * @return mixed|void
-     */
     private function serviceProvider()
     {
         $this->app->bind('serviceProvider',function(){
