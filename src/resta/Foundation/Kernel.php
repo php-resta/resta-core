@@ -25,7 +25,6 @@ class Kernel extends Container implements KernelContracts
         'configProvider',
         'encrypter',
         'eventDispatcher',
-        'serviceContainer',
         'serviceProvider',
     ];
 

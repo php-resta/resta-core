@@ -66,13 +66,17 @@ class ContainerResolve
      */
     private function reflectionMethodParameters($class,$param)
     {
+        $containers = [];
+
+        //get service container objects.
+        if(isset(resta()->serviceContainer)){
+            $containers = resta()->serviceContainer;
+        }
+
         // With the reflection class we get the method.
         // and then we get the parameters in array.
         $reflection = $this->getReflectionMethod($class);
         $parameters = $reflection->parameters;
-
-        //service container objects.
-        $containers = resta()->serviceContainer;
 
         // we group the parameters into type and
         // name and bind them with the necessary logic.
@@ -90,7 +94,6 @@ class ContainerResolve
             ])->graceContainerBuilder($parameter,$paramMerge);
 
         }
-
         return $param;
     }
 }

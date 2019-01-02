@@ -111,7 +111,6 @@ class Project extends ConsoleOutputter {
         $this->touch['config/authenticate']         = $this->config().'/Authenticate.php';
         $this->touch['config/slack']                = $this->config().'/Slack.php';
         $this->touch['version/annotations']         = $this->version().'/ServiceAnnotationsController.php';
-        $this->touch['version/servicecontainer']    = $this->version().'/ServiceContainerController.php';
         $this->touch['version/servicedispatcher']   = $this->version().'/ServiceEventDispatcherController.php';
         $this->touch['version/servicemiddleware']   = $this->version().'/ServiceMiddlewareController.php';
         $this->touch['version/base']                = $this->version().'/ServiceBaseController.php';
