@@ -100,6 +100,8 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
     }
 
     /**
+     * kernel container object register
+     *
      * @param $key
      * @param $object
      * @param null $concrete
@@ -107,6 +109,10 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
      */
     public function register($key,$object,$concrete=null){
 
-        return resta()->bound->register($key,$object,$concrete);
+        // this method records the kernel container object globally.
+        // registered objects can be easily accessed with the resta () assistant.
+        if(isset(resta()->bound)){
+            return resta()->bound->register($key,$object,$concrete);
+        }
     }
 }
