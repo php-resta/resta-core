@@ -44,6 +44,7 @@ class Project extends ConsoleOutputter {
         $this->directory['projectDir'] = $this->projectPath();
 
         $recursiveDefaultDirectory = explode("\\",$this->argument['project']);
+        $this->argument['applicationName'] = pos($recursiveDefaultDirectory);
         $recursiveDefaultDirectory[] = 'V1';
         $recursiveDefaultDirectoryList = [];
 
@@ -117,6 +118,10 @@ class Project extends ConsoleOutputter {
         $this->touch['version/base']                = $this->version().'/ServiceBaseController.php';
         $this->touch['version/log']                 = $this->version().'/ServiceLogController.php';
         $this->touch['source/apitokentrait']        = $this->sourceSupportDir().'/Traits/ClientApiTokenTrait.php';
+        $this->touch['app/readme']                  = $this->projectPath().'/README.md';
+        $this->touch['app/gitignore']               = $this->projectPath().'/.gitignore';
+        $this->touch['app/composer']                = $this->projectPath().'/composer.json';
+        $this->touch['test/index']                  = $this->storage().'/index.html';
 
         //set project touch
         $this->file->touch($this);

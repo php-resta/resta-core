@@ -1,0 +1,4 @@
+./idea
+Storage/*
+!important Storage/index.html
+!important Storage/Language/*

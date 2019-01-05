@@ -1,0 +1,10 @@
+{
+    "name": "root/__applicationName__",
+    "authors": [
+        {
+            "name": "__applicationName__",
+            "email": "__applicationName__@__applicationName__.com"
+        }
+    ],
+    "require": {}
+}

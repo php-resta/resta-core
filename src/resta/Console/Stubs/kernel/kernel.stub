@@ -13,8 +13,8 @@ return [
      * all providers names
      */
     'providers' => [
-        'routeServiceProvider'      => \App\Mobi\Kernel\Providers\RouteServiceProvider::class,
-        'eloquentServiceProvider'   => \App\Mobi\Kernel\Providers\EloquentServiceProvider::class,
+        'routeServiceProvider'      => __kernelProviderDir__\RouteServiceProvider::class,
+        'eloquentServiceProvider'   => __kernelProviderDir__\EloquentServiceProvider::class,
     ],
 
 ];
