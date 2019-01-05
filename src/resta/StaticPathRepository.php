@@ -269,10 +269,31 @@ class StaticPathRepository
         return null;
     }
 
+    /**
+     * @return string
+     */
     public function bootDir()
     {
         //get boot directory for application
-        return root.''.DIRECTORY_SEPARATOR.''.StaticPathList::$appDefine.''.DIRECTORY_SEPARATOR.'boot';
+        return root.''.DIRECTORY_SEPARATOR.''.StaticPathList::$appDefine.''.DIRECTORY_SEPARATOR.''.strtolower(StaticPathList::$boot);
+    }
+
+    /**
+     * @return string
+     */
+    public function storeConfigDir()
+    {
+        //get store config directory for application
+        return $this->storeDir().'/Config';
+    }
+
+    /**
+     * @return string
+     */
+    public function storeDir()
+    {
+        //get store directory for application
+        return root.''.DIRECTORY_SEPARATOR.''.StaticPathList::$appDefine.''.DIRECTORY_SEPARATOR.''.strtolower(StaticPathList::$store);
     }
 
     /**

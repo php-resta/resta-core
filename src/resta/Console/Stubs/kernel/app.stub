@@ -1,0 +1,34 @@
+<?php
+
+namespace __kernelProviderDir__;
+
+use Resta\ApplicationProvider;
+use Resta\Contracts\BootContracts;
+
+class AppServiceProvider extends ApplicationProvider implements BootContracts
+{
+    /**
+     * @return mixed|void
+     */
+    public function boot()
+    {
+        $this->controllerConfigLoader();
+    }
+
+    /**
+     * @return void
+     */
+    private function controllerConfigLoader()
+    {
+        // while developing in the controller,
+        // in addition to the config variables
+        // it is added your config files in the controller directory
+        $this->app->loadConfig(function()
+        {
+            if(defined('endpoint')){
+                return path()->controller(endpoint,true).'/Config';
+            }
+            return null;
+        });
+    }
+}

@@ -92,6 +92,16 @@ interface StaticNamespaceContracts
     /**
      * @return mixed
      */
+    public function storeConfigDir();
+
+    /**
+     * @return mixed
+     */
+    public function storeDir();
+
+    /**
+     * @return mixed
+     */
     public function optionalSource();
 
     /**

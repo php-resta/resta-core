@@ -13,6 +13,7 @@ return [
      * all providers names
      */
     'providers' => [
+        'appServiceProvider'        => __kernelProviderDir__\AppServiceProvider::class,
         'routeServiceProvider'      => __kernelProviderDir__\RouteServiceProvider::class,
         'eloquentServiceProvider'   => __kernelProviderDir__\EloquentServiceProvider::class,
     ],

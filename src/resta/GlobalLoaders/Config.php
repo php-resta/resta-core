@@ -16,7 +16,8 @@ class Config extends ApplicationProvider
     public function setConfig($files=array())
     {
         // we are adding kernel variables
-        $files['Kernel'] = path()->kernel().''.DIRECTORY_SEPARATOR.''.StaticPathList::$kernel.'.php';
+        $files['Kernel']        = path()->kernel().''.DIRECTORY_SEPARATOR.''.StaticPathList::$kernel.'.php';
+        $files['Constructor']   = path()->storeConfigDir().''.DIRECTORY_SEPARATOR.'AppConstructor.php';
 
         // we are saving all paths in
         // the config directory of each application.

@@ -208,6 +208,22 @@ class StaticNamespaceRepository extends StaticPathRepository
     }
 
     /**
+     * @return string
+     */
+    public function storeConfigDir()
+    {
+        return $this->storeDir().'\Config';
+    }
+
+    /**
+     * @return string
+     */
+    public function storeDir()
+    {
+        return StaticPathList::$store;
+    }
+
+    /**
      * @return mixed
      */
     public function stubs()

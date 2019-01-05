@@ -95,7 +95,12 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
         // it adds the values in path data specified
         // by callback to the configuration values.
         if(isset(resta()->bindings['config'])){
-            return resta()->bindings['config']->setConfig(call_user_func($callback));
+
+            //get path as config loader
+            $configPath = call_user_func($callback);
+
+            //set your path for config loader
+            return resta()->bindings['config']->setConfig($configPath);
         }
     }
 

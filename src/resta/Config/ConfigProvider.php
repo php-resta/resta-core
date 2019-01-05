@@ -38,15 +38,18 @@ class ConfigProvider
      */
     public function setConfig($path=null)
     {
-        //path variable for parameter
-        $path = ($path === null) ? path()->config() : $path;
+        if(!is_array($path)){
 
-        //We run a glob function for all of the config files,
-        //where we pass namespace and paths to a kernel object and process them.
-        $configFiles = Utils::glob($path);
+            //path variable for parameter
+            $path = ($path === null) ? path()->config() : $path;
+
+            //We run a glob function for all of the config files,
+            //where we pass namespace and paths to a kernel object and process them.
+            $configFiles = Utils::glob($path);
+        }
 
         //The config object is a kernel object
         //that can be used to call all class and array files in the config directory of the project.
-        self::$globalInstance->setConfig($configFiles);
+        self::$globalInstance->setConfig($configFiles ?? $path);
     }
 }

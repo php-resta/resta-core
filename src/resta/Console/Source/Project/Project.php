@@ -84,6 +84,7 @@ class Project extends ConsoleOutputter {
         //$this->touch['main/version']                = $this->project.'/version.php';
         $this->touch['kernel/kernel']               = $this->kernel().'/Kernel.php';
         $this->touch['kernel/eloquent']             = $this->provider().'/EloquentServiceProvider.php';
+        $this->touch['kernel/app']                  = $this->provider().'/AppServiceProvider.php';
         $this->touch['kernel/route']                = $this->provider().'/RouteServiceProvider.php';
         $this->touch['kernel/annotations']          = $this->kernel().'/AppAnnotations.php';
         $this->touch['middleware/authenticate']     = $this->middleware().'/Authenticate.php';
