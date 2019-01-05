@@ -1,6 +1,8 @@
 <?php
+
 namespace App\__project__\__version__\__model__;
 
+use Resta\Support\Str;
 use Illuminate\Database\Eloquent\Model as Eloquent;
 
 class __file__ extends Eloquent
@@ -8,25 +10,40 @@ class __file__ extends Eloquent
     /**
      * @var $table string
      */
-    protected $table='__table__';
+    protected $table='users';
 
     /**
      * @var array $fillable
      */
     protected $fillable = [];
 
-     /**
-      * @var array $hidden
-      */
-     protected $hidden = [];
+    /**
+     * @var array
+     */
+    protected $hidden = [];
 
-      /**
-       * The event map for the model.
-       *
-       * @var array
-       */
-      protected $dispatchesEvents = [
-              'saved'   => 'namespace',
-              'deleted' => 'namespace',
-      ];
+    /**
+     * The event map for the model.
+     *
+     * @var array
+     */
+    protected $dispatchesEvents = [
+        'saved'   => 'namespace',
+        'deleted' => 'namespace',
+    ];
+
+    /**
+     * Scope a query to only include popular users.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopePagination($query)
+    {
+        return $query
+               ->paginate(config('app.pagination'))
+               ->withPath(Str::removeCharacterFromUri('page'))
+               ->toArray();
+    }
 }
+

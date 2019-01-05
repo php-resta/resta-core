@@ -14,7 +14,7 @@ class __file__Builder extends ServiceBaseController
     public function retrieve()
     {
         //model all data
-        return __file__::all()->toArray();
+        return __file__::pagination();
     }
 
     /**

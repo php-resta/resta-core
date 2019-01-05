@@ -276,10 +276,9 @@ class Str
 
 
     /**
-     * Generate a more truly "random" alpha-numeric string.
-     *
-     * @param  int  $length
+     * @param int $length
      * @return string
+     * @throws \Exception
      */
     public static function random($length = 16)
     {
@@ -671,6 +670,7 @@ class Str
 
     /**
      * @param $data
+     * @return mixed
      */
     public static function slashToBackSlash($data)
     {
@@ -685,5 +685,23 @@ class Str
     public static function stringToArray($string,$explode=".")
     {
         return explode($explode,$string);
+    }
+
+    /**
+     * @param null $removeCharacter
+     * @return null|string|string[]
+     */
+    public static function removeCharacterFromUri($removeCharacter=null)
+    {
+        if($removeCharacter!==null){
+            $query = request()->query->all();
+
+            if(count($query)=='1' && isset($query[$removeCharacter])){
+                return preg_replace('@'.$removeCharacter.'=(.*)|\?@is','',fullUrl());
+            }
+
+            return preg_replace('@'.$removeCharacter.'=(.*?)|&@is','',fullUrl());
+        }
+
     }
 }

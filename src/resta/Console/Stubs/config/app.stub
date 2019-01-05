@@ -126,7 +126,15 @@ return [
     */
     'watch' => environment('watch',false),
 
-
-
+    /*
+    |--------------------------------------------------------------------------
+    | Application Stop Watch
+    |--------------------------------------------------------------------------
+    |
+    | You can write and edit pagination data
+    | here as an help for your database output or collection data
+    |
+    */
+    'pagination' => 10,
 
 ];
