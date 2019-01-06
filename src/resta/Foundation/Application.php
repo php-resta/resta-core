@@ -112,8 +112,8 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
      * @param null $concrete
      * @return mixed
      */
-    public function register($key,$object,$concrete=null){
-
+    public function register($key,$object,$concrete=null)
+    {
         // this method records the kernel container object globally.
         // registered objects can be easily accessed with the resta () assistant.
         if(isset(resta()->bound)){
