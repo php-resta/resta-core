@@ -366,13 +366,19 @@ class Utils
     }
 
     /**
-     * @param int $key
-     * @return mixed
+     * @param int $debug
+     * @param null $key
+     * @return null
      */
-    public static function trace($key=0)
+    public static function trace($debug=0,$key=null)
     {
         $trace=debug_backtrace();
-        return $trace[$key];
+
+        if($key===null){
+            return $trace[$debug] ?? null;
+        }
+        return $trace[$debug][$key] ?? null;
+
     }
 
     /**

@@ -154,8 +154,13 @@ trait NamespaceForRoute
         // we will take values ​​from the routes file as namespace.
         // with the resolve method, route values ​​will come as an array.
         $fromRoutes         = Route::getRouteResolve();
-        $fromRoutesClass    = (isset($fromRoutes['class'])) ? $fromRoutes['class'] : null;
-        $namespace          = app()->namespace()->controller($this->endpoint(),'bundle').'\\'.$fromRoutesClass;
+        $namespace          = null;
+
+        if(count($fromRoutes)){
+            $fromRoutesClass    = (isset($fromRoutes['class'])) ? $fromRoutes['class'] : null;
+            $namespace          = Utils::getNamespace($fromRoutes['controller']).'\\'.$fromRoutesClass;
+        }
+
 
         //check namespace exists
         if(file_exists(Utils::getPathFromNamespace($namespace)) && Utils::isNamespaceExists($namespace)){

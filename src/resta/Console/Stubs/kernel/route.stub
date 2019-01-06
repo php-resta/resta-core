@@ -26,8 +26,17 @@ class RouteServiceProvider extends ApplicationProvider implements BootContracts
     private function registerRoutePath()
     {
         if(defined('endpoint')){
-            $routes = path()->controller(endpoint,true).''.DIRECTORY_SEPARATOR.'Routes.php';
-            Route::setPath($routes);
+
+            Route::setPath(function(){
+
+                $controllerPath = path()->controller(endpoint,true);
+                $routesMapper   = $controllerPath.''.DIRECTORY_SEPARATOR.'Routes.php';
+
+                return [
+                   'controllerPath' => $controllerPath,
+                   'routeMapper'    => $routesMapper,
+                ];
+            });
         }
     }
 }
