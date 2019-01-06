@@ -16,7 +16,10 @@ class EloquentServiceProvider extends ApplicationProvider implements BootContrac
      */
     public function boot()
     {
+        //eloquent loader
         $this->eloquentBoot();
+
+        //eloquent pagination resolver
         $this->eloquentPagination();
     }
 
@@ -27,6 +30,10 @@ class EloquentServiceProvider extends ApplicationProvider implements BootContrac
      */
     private function eloquentBoot()
     {
+        // the Eloquent ORM included with Laravel provides a beautiful,
+        // simple ActiveRecord implementation for working with your database.
+        // each database table has a corresponding "Model" which is used to interact with that table.
+        // models allow you to query for data in your tables, as well as insert new records into the table.
         new Eloquent();
     }
 
@@ -37,6 +44,9 @@ class EloquentServiceProvider extends ApplicationProvider implements BootContrac
      */
     private function eloquentPagination()
     {
+        // this installation must be done
+        // in order to make pagination for the eloquent data.
+        // source: https://github.com/illuminate/pagination/blob/master/PaginationServiceProvider.php
         Paginator::currentPageResolver(function(){
 
             $page = get('page',1);

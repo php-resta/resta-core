@@ -13,8 +13,10 @@ class RouteServiceProvider extends ApplicationProvider implements BootContracts
      */
     public function boot()
     {
+        //register route path
         $this->registerRoutePath();
 
+        // we are bind the route class.
         $this->app->bind('route',function(){
             return Route::class;
         });
@@ -25,10 +27,15 @@ class RouteServiceProvider extends ApplicationProvider implements BootContracts
      */
     private function registerRoutePath()
     {
+        // as controller path,
+        // we check whether the endpoint constant is loaded.
         if(defined('endpoint')){
 
+            // we will record the path data for the route.
+            // We set the routeMapper variables and save the route path.
             Route::setPath(function(){
 
+                // we are sending the controller and routes.php path.
                 $controllerPath = path()->controller(endpoint,true);
                 $routesMapper   = $controllerPath.''.DIRECTORY_SEPARATOR.'Routes.php';
 
