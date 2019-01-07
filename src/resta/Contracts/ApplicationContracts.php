@@ -28,4 +28,11 @@ interface ApplicationContracts {
      */
    public function register($key,$object,$concrete=null);
 
+    /**
+     * @param $abstract
+     * @param $instance
+     * @return mixed
+     */
+   public function instance ($abstract,$instance);
+
 }

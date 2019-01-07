@@ -8,7 +8,7 @@ use Resta\Contracts\ContainerContracts;
 use Resta\GlobalLoaders\KernelAssigner;
 use Resta\GlobalLoaders\GlobalAssignerForBind;
 
-class Container implements ContainerContracts
+class Container implements ContainerContracts,\ArrayAccess
 {
     /**
      * @var $singleton
@@ -24,6 +24,11 @@ class Container implements ContainerContracts
      * @var array  $instance
      */
     private static $instance=[];
+
+    /**
+     * @var array $instances
+     */
+    private $instances = [];
 
     /**
      * @var array $bindParams
@@ -61,6 +66,21 @@ class Container implements ContainerContracts
         //Since the objects that come to the build method are objects from the container method,
         //we need to automatically create a kernel object named serviceContainer in this method.
         $this->kernelAssigner()->container();
+    }
+
+    /**
+     * Register an existing instance as shared in the container.
+     *
+     * @param  string  $abstract
+     * @param  mixed   $instance
+     * @return mixed
+     */
+    public function instance($abstract, $instance)
+    {
+        // we'll check to determine if this type has been bound before, and if it has
+        // we will fire the rebound callbacks registered with the container and it
+        // can be updated with consuming classes that have gotten resolved here.
+        $this->instances[$abstract] = $instance;
     }
 
     /**
@@ -333,5 +353,61 @@ class Container implements ContainerContracts
         //that we can bind to the special class di in the dependency condition.
         //This method is automatically added to the classes resolved by the entire make bind method.
         return array_merge($bind,['app'=>$make]);
+    }
+
+    /**
+     * @param $offset
+     * @param $value
+     */
+    public function offsetSet($offset, $value) {
+
+    }
+
+    /**
+     * @param $offset
+     * @return bool
+     */
+    public function offsetExists($offset) {
+        return isset($this->container[$offset]);
+    }
+
+    /**
+     * @param $offset
+     */
+    public function offsetUnset($offset) {
+        unset($this->container[$offset]);
+    }
+
+    /**
+     * @param $offset
+     * @return null
+     */
+    public function offsetGet($offset) {
+
+        return $this->makeBind($this->instances['containerInstanceResolve'],[
+            'instances' => $this->instances
+        ])->{$offset}();
+    }
+
+    /**
+     * Dynamically access container services.
+     *
+     * @param  string  $key
+     * @return mixed
+     */
+    public function __get($key)
+    {
+        return $this[$key];
+    }
+    /**
+     * Dynamically set container services.
+     *
+     * @param  string  $key
+     * @param  mixed   $value
+     * @return void
+     */
+    public function __set($key, $value)
+    {
+        $this[$key] = $value;
     }
 }

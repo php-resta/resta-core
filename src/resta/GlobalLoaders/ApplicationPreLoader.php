@@ -7,6 +7,7 @@ use Resta\ClassAliasGroup;
 use Resta\ClosureDispatcher;
 use Resta\ApplicationProvider;
 use Resta\Foundation\RegisterAppBound;
+use Resta\Container\ContainerInstanceResolver;
 
 class ApplicationPreLoader extends ApplicationProvider
 {
@@ -15,6 +16,9 @@ class ApplicationPreLoader extends ApplicationProvider
      */
     public function handle()
     {
+        //set base instances
+        $this->setBaseInstances();
+
         //we define the general application instance object.
         define('appInstance',(base64_encode(serialize($this))));
 
@@ -36,17 +40,31 @@ class ApplicationPreLoader extends ApplicationProvider
         $registerAppBound=$this->app->makeBind(RegisterAppBound::class);
         $registerAppBound->register('bound',$registerAppBound);
 
+        //register as instance registerAppBound object
+        $this->app->instance('register',$registerAppBound);
+
         //We add manifest configuration variables to the manifest property in the kernel.
         $bootManager=require(root.'/bootstrapper/Manifest/BootManager.php');
-        $this->register('manifest','bootManager',$bootManager);
+        $this->app->register('manifest','bootManager',$bootManager);
 
         // We are saving the application class to
         // the container object for the appClass value.
-        $this->register('appClass',new \application());
+        $this->app->register('appClass',new \application());
 
         //set closure bind instance for application
-        $this->register('appClosureInstance',ClosureDispatcher::bind(app()));
+        $this->app->register('appClosureInstance',ClosureDispatcher::bind(app()));
 
+    }
+
+    /**
+     * @return void|mixed
+     */
+    private function setBaseInstances()
+    {
+        //register as instance application object
+        // and container instance resolve
+        $this->app->instance('app',$this->app);
+        $this->app->instance('containerInstanceResolve',ContainerInstanceResolver::class);
     }
 
 }
