@@ -10,12 +10,6 @@ class ContainerInstanceResolver
     protected $instances;
 
     /**
-     * @var $offSet
-     */
-    protected $offSet;
-
-
-    /**
      * ContainerInstanceResolver constructor.
      * @param $instances
      */
@@ -36,7 +30,9 @@ class ContainerInstanceResolver
         // we will register a global data accessor using
         // the register method of the registerAppBound object.
         return function($key,$object,$concrete){
-            return $this->instances['register']->register($key,$object,$concrete);
+            if(isset($this->instances['register'])){
+                return $this->instances['register']->register($key,$object,$concrete);
+            }
         };
     }
 
