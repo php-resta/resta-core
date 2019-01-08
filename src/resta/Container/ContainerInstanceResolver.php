@@ -30,6 +30,8 @@ class ContainerInstanceResolver
         // we will register a global data accessor using
         // the register method of the registerAppBound object.
         return function($key,$object,$concrete){
+
+            //in the instances we control the register data.
             if(isset($this->instances['register'])){
 
                 // with tap helper method,
