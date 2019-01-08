@@ -187,6 +187,20 @@ if (!function_exists('applicationKey')) {
     }
 }
 
+if (!function_exists('tap')) {
+
+    /**
+     * @param $value
+     * @param $callback
+     * @return mixed
+     */
+    function tap($value, $callback)
+    {
+        $callback($value);
+        return $value;
+    }
+}
+
 if (!function_exists('config')) {
 
     /**

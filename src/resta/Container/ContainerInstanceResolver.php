@@ -16,7 +16,7 @@ class ContainerInstanceResolver
     public function __construct($instances)
     {
         //get container instances
-        $this->instances    = $instances;
+        $this->instances = $instances;
     }
 
     /**
@@ -31,7 +31,12 @@ class ContainerInstanceResolver
         // the register method of the registerAppBound object.
         return function($key,$object,$concrete){
             if(isset($this->instances['register'])){
-                return $this->instances['register']->register($key,$object,$concrete);
+
+                // with tap helper method,
+                // we save the data to the global accessor.
+                tap($this->instances['register'],function($instance) use($key,$object,$concrete){
+                    return $instance->register($key,$object,$concrete);
+                });
             }
         };
     }
