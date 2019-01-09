@@ -3,9 +3,10 @@
 namespace Resta\Config;
 
 use Resta\Support\Utils;
+use Resta\ApplicationProvider;
 use Resta\GlobalLoaders\Config as ConfigGlobalInstance;
 
-class ConfigProvider
+class ConfigProvider extends ApplicationProvider
 {
     /**
      * @var $globalInstance ConfigGlobalInstance
@@ -18,6 +19,9 @@ class ConfigProvider
     public function handle(ConfigGlobalInstance $config)
     {
         define('config',true);
+
+        //set config container instance
+        $this->app->instance('config',$this);
 
         //global instance general property
         self::$globalInstance = $config;
