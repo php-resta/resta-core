@@ -1,4 +1,4 @@
 ./idea
-Storage/*
-!important Storage/index.html
-!important Storage/Language/*
+Storage/Log/*
+Storage/Resource/*
+Storage/Session/*

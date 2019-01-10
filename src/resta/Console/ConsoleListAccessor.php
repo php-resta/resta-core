@@ -7,7 +7,11 @@ use Resta\Support\Utils;
 
 trait ConsoleListAccessor {
 
-    public function projectPath(){
+    public function projectPath()
+    {
+        if($this->project===null){
+            throw new \InvalidArgumentException('Project name is invalid');
+        }
         return StaticPathModel::projectPath($this->projectPrefix,$this->project);
     }
 
@@ -19,11 +23,8 @@ trait ConsoleListAccessor {
     /**
      * @return mixed
      */
-    public function kernel(){
-
-        if($this->project===null){
-            throw new \InvalidArgumentException('Project name is invalid');
-        }
+    public function kernel()
+    {
         return $this->projectPath().''.StaticPathModel::$kernel;
     }
 
@@ -190,7 +191,7 @@ trait ConsoleListAccessor {
      */
     public function webservice(){
 
-        return $this->optional().'/'.StaticPathModel::$webservice;
+        return $this->projectPath().'/'.StaticPathModel::$webservice;
     }
 
 
