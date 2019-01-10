@@ -23,17 +23,6 @@ class ConfigProcess implements \ArrayAccess
     protected $configList = [];
 
     /**
-     * ConfigProcess constructor.
-     * @param null $config
-     */
-    public function __construct($config=null)
-    {
-        if($this->config===null){
-            $this->config = $config;
-        }
-    }
-
-    /**
      * @return array|mixed|null
      * @throws \DI\DependencyException
      * @throws \DI\NotFoundException
@@ -109,6 +98,13 @@ class ConfigProcess implements \ArrayAccess
         //if the config data is just an array.
         if(!isset($configData) && file_exists($configFile=$kernelConfig[$config]['file'])){
             $configData = require($configFile);
+        }
+
+        // if there is data key in the kernelConfig array
+        // this is not the file data,
+        // a loading that contains a hand-written array.
+        if(isset($kernelConfig[$config]['data'])) {
+            return $kernelConfig[$config]['data'];
         }
 
         //return config data

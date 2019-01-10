@@ -32,7 +32,7 @@ class Config implements AccessorContracts
     {
         // we create a singleton object for the config process class.
         if(self::$config!==null && self::$configProcessInstance===null){
-            self::$configProcessInstance = new ConfigProcess();
+            self::$configProcessInstance = app()->makeBind(ConfigProcess::class);
         }
     }
 

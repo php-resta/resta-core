@@ -44,11 +44,10 @@ class ConfigProvider extends ApplicationProvider
     {
         if(!is_array($path)){
 
-            //path variable for parameter
+            // path variable for parameter
+            // we run a glob function for all of the config files,
+            // where we pass namespace and paths to a kernel object and process them.
             $path = ($path === null) ? path()->config() : $path;
-
-            //We run a glob function for all of the config files,
-            //where we pass namespace and paths to a kernel object and process them.
             $configFiles = Utils::glob($path);
         }
 

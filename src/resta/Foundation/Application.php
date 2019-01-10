@@ -97,7 +97,10 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
         if(is_object($this['config'])){
 
             //set your path for config loader
-            return $this['config']->setConfig(call_user_func($callback));
+            return tap($this['config'],function($config) use($callback) {
+                return $config->setConfig(call_user_func($callback));
+            });
+
         }
     }
 
