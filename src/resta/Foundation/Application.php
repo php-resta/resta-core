@@ -113,8 +113,6 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
     {
         // this method records the kernel container object globally.
         // registered objects can be easily accessed with the resta () assistant.
-        if(isset(resta()->bound)){
-            return resta()->bound->register($key,$object,$concrete);
-        }
+        return $this['register']($key,$object,$concrete);
     }
 }

@@ -59,8 +59,6 @@ class ErrorHandler extends ApplicationProvider {
             $this->data['status']=(int)$exception::exceptionTypeCodes($this->data['errType']);
         }
 
-
-
         $this->terminate('responseSuccess');
         $this->terminate('responseStatus');
         $this->register('responseSuccess',(bool)false);
@@ -156,7 +154,6 @@ class ErrorHandler extends ApplicationProvider {
         if(property_exists(resta(),'exceptiontrace')){
 
             $customExceptionTrace=resta()->exceptiontrace;
-
             $this->data['errFile']=$customExceptionTrace['file'];
             $this->data['errLine']=$customExceptionTrace['line'];
         }
