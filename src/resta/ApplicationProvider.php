@@ -78,7 +78,7 @@ class ApplicationProvider
 
         //We only get the objects in the list name to match the header objects
         //that come with the request path to the objects sent by the client
-        foreach ($this->request()->headers->all() as $key=>$value) {
+        foreach (request()->headers->all() as $key=>$value) {
             $list[$key]=$value;
         }
 
