@@ -68,42 +68,6 @@ class ApplicationProvider
     }
 
     /**
-     * SymfonyRequest constructor.
-     * @return \Symfony\Component\HttpFoundation\Request|\Store\Services\RequestService
-     */
-    public function request()
-    {
-        //symfony request
-        return $this->app()->request;
-    }
-
-    /**
-     * @param null $param
-     * @param null $default
-     * @return null
-     */
-    public function get($param=null,$default=null)
-    {
-        //symfony request query object
-        $get=$this->app()->get;
-
-        return ($param===null) ? $get : (isset($get[$param]) ? $get[$param] : $default);
-    }
-
-    /**
-     * @param null $param
-     * @param null $default
-     * @return null
-     */
-    public function post($param=null,$default=null)
-    {
-        //symfony request query object
-        $post=$this->app()->post;
-
-        return ($param===null) ? $post : (isset($post[$param]) ? $post[$param] : $default);
-    }
-
-    /**
      * @param null $param
      * @param null $default
      * @return null
@@ -206,54 +170,11 @@ class ApplicationProvider
     }
 
     /**
-     * @param null $config
-     * @return mixed
-     */
-    public function config($config=null)
-    {
-        return $this->singleton()->appClass->configLoaders($config);
-    }
-
-    /**
      * @return ResponseOutManager
      */
     public function response()
     {
         $object=debug_backtrace()[2]['object'];
         return new ResponseOutManager($object);
-    }
-
-    /**
-     * @param null $data
-     * @param null $key
-     * @return mixed
-     */
-    public function pick($data=null,$key=null)
-    {
-        if($data===null) return $this->singleton()->pick;
-
-        if($key===null){
-            $this->singleton()->pick[]=$data;
-        }
-        else{
-            $this->singleton()->pick[$key]=$data;
-        }
-    }
-
-    /**
-     * @param null $data
-     * @param null $key
-     * @return mixed
-     */
-    public function stack($data=null,$key=null)
-    {
-        if($data===null) return $this->singleton()->stack;
-
-        if($key===null){
-            $this->singleton()->stack[]=$data;
-        }
-        else{
-            $this->singleton()->stack[$key]=$data;
-        }
     }
 }

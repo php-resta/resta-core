@@ -106,7 +106,7 @@ if (!function_exists('request')) {
      */
     function request()
     {
-        return appInstance()->request();
+        return resta()->request;
     }
 }
 
@@ -140,7 +140,10 @@ if (!function_exists('post')) {
      */
     function post($param=null,$default=null)
     {
-        return appInstance()->post($param,$default);
+        //symfony request query object
+        $post=resta()->post;
+
+        return ($param===null) ? $post : (isset($post[$param]) ? $post[$param] : $default);
     }
 }
 
@@ -155,7 +158,10 @@ if (!function_exists('get')) {
      */
     function get($param=null,$default=null)
     {
-        return appInstance()->get($param,$default);
+        //symfony request query object
+        $get=resta()->get;
+
+        return ($param===null) ? $get : (isset($get[$param]) ? $get[$param] : $default);
     }
 }
 
