@@ -227,11 +227,13 @@ class ErrorHandler extends ApplicationProvider {
      */
     public function inStactTrace($error)
     {
-        if(!preg_match('@'.resta()->url['project'].'@',$error['file']) && !isset(resta()->exceptionFile)){
-            if(preg_match('@ in\s(.*?)\n@is',$error['message'],$result)){
-                $errorMessage = explode(":",$result[1]);
-                $this->app->register('exceptionFile',$errorMessage[0]);
-                $this->app->register('exceptionLine',$errorMessage[1]);
+        if(isset(resta()->url)){
+            if(!preg_match('@'.resta()->url['project'].'@',$error['file']) && !isset(resta()->exceptionFile)){
+                if(preg_match('@ in\s(.*?)\n@is',$error['message'],$result)){
+                    $errorMessage = explode(":",$result[1]);
+                    $this->app->register('exceptionFile',$errorMessage[0]);
+                    $this->app->register('exceptionLine',$errorMessage[1]);
+                }
             }
         }
     }
