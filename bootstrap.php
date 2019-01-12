@@ -11,7 +11,3 @@ define("root",str_replace("\\","/",realpath(__DIR__.'/')));
  * return autoload file
  */
 require_once root.''.DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR.'autoload.php';
-
-$app=new Resta\Foundation\Application(false);
-
-echo 'asa';
