@@ -28,7 +28,7 @@ class KernelBootManager
 
         // if there is manifest propery in the resta
         // in this case,manifest property is manifest class
-        if(isset(resta()->manifest)){
+        if(isset(core()->manifest)){
             $this->manifest = $this->manifest->makeBind(Manifest::class);
         }
 

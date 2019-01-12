@@ -90,7 +90,7 @@ class RouteContainer
         $this->checkRouteObligation($parameters);
 
         //get service configuration params for route
-        $serviceConf = resta()->serviceConf;
+        $serviceConf = core()->serviceConf;
 
         // we get the container global object with
         // the help of global loaders and register the route container.

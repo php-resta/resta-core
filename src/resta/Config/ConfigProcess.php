@@ -32,8 +32,8 @@ class ConfigProcess implements \ArrayAccess
         $kernelConfig = [];
 
         //we are getting the config data from the kernel object..
-        if(isset(resta()->appConfig)){
-            $kernelConfig = resta()->appConfig;
+        if(isset(core()->appConfig)){
+            $kernelConfig = core()->appConfig;
         }
 
         // if the config variable is not sent,

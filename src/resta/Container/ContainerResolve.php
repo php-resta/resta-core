@@ -69,8 +69,8 @@ class ContainerResolve
         $containers = [];
 
         //get service container objects.
-        if(isset(resta()->serviceContainer)){
-            $containers = resta()->serviceContainer;
+        if(isset(core()->serviceContainer)){
+            $containers = core()->serviceContainer;
         }
 
         // With the reflection class we get the method.

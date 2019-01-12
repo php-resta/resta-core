@@ -126,11 +126,11 @@ class Bootstrappers
     private function peelings()
     {
         //if there are peelings
-        if(isset(resta()->peelings)){
+        if(isset(core()->peelings)){
 
             // We send the peelings property to
             // the bootstrapperPeelOnion class.
-            $peelings=resta()->peelings;
+            $peelings=core()->peelings;
             pos($peelings)->onionRun($peelings);
         }
     }

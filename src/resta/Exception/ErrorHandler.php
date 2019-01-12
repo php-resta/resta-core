@@ -50,9 +50,9 @@ class ErrorHandler extends ApplicationProvider {
 
         $exception=$this->exception;
 
-        if(isset(resta()->exceptiontrace))
+        if(isset(core()->exceptiontrace))
         {
-            $this->data['status'] = (int)resta()->exceptiontrace['callNamespace']->getCode();
+            $this->data['status'] = (int)core()->exceptiontrace['callNamespace']->getCode();
         }
         else {
 
@@ -151,9 +151,9 @@ class ErrorHandler extends ApplicationProvider {
         //get lang message for exception
         $this->getLangMessageForException();
 
-        if(property_exists(resta(),'exceptiontrace')){
+        if(property_exists(core(),'exceptiontrace')){
 
-            $customExceptionTrace=resta()->exceptiontrace;
+            $customExceptionTrace=core()->exceptiontrace;
             $this->data['errFile']=$customExceptionTrace['file'];
             $this->data['errLine']=$customExceptionTrace['line'];
         }
@@ -173,9 +173,9 @@ class ErrorHandler extends ApplicationProvider {
         http_response_code($this->data['status']);
 
         //set json app exception
-        resta()->router=$appException;
+        core()->router=$appException;
 
-        $restaOutHandle=resta()->out->handle();
+        $restaOutHandle=core()->out->handle();
 
 
         if($restaOutHandle===null){
@@ -206,9 +206,9 @@ class ErrorHandler extends ApplicationProvider {
                 define('methodName',null);
             }
 
-            if(isset(resta()->exceptionFile)){
-                $last_error['file'] = resta()->exceptionFile;
-                $last_error['line'] = resta()->exceptionLine;
+            if(isset(core()->exceptionFile)){
+                $last_error['file'] = core()->exceptionFile;
+                $last_error['line'] = core()->exceptionLine;
             }
             header('Content-type:application/json;charset=utf-8');
 
@@ -227,8 +227,8 @@ class ErrorHandler extends ApplicationProvider {
      */
     public function inStactTrace($error)
     {
-        if(isset(resta()->url)){
-            if(!preg_match('@'.resta()->url['project'].'@',$error['file']) && !isset(resta()->exceptionFile)){
+        if(isset(core()->url)){
+            if(!preg_match('@'.core()->url['project'].'@',$error['file']) && !isset(core()->exceptionFile)){
                 if(preg_match('@ in\s(.*?)\n@is',$error['message'],$result)){
                     $errorMessage = explode(":",$result[1]);
                     $this->app->register('exceptionFile',$errorMessage[0]);

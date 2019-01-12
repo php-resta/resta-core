@@ -183,7 +183,7 @@ class ConsoleOutputter extends ConsolePrepare {
         if(config('app')!==null && config('app.consoleLogger')){
 
             logger('console')->{$level}([
-                'argument'  => implode(" ",resta()->consoleArguments),
+                'argument'  => implode(" ",core()->consoleArguments),
                 'result'    => $string,
             ]);
         }

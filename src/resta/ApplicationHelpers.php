@@ -106,14 +106,15 @@ if (!function_exists('request')) {
      */
     function request()
     {
-        return resta()->request;
+        return core()->request;
     }
 }
 
-if (!function_exists('resta')) {
+
+if (!function_exists('core')) {
 
 
-    function resta()
+    function core()
     {
         return appInstance()->singleton();
     }
@@ -141,7 +142,7 @@ if (!function_exists('post')) {
     function post($param=null,$default=null)
     {
         //symfony request query object
-        $post=resta()->post;
+        $post=core()->post;
 
         return ($param===null) ? $post : (isset($post[$param]) ? $post[$param] : $default);
     }
@@ -159,7 +160,7 @@ if (!function_exists('get')) {
     function get($param=null,$default=null)
     {
         //symfony request query object
-        $get=resta()->get;
+        $get=core()->get;
 
         return ($param===null) ? $get : (isset($get[$param]) ? $get[$param] : $default);
     }
@@ -216,7 +217,7 @@ if (!function_exists('config')) {
      */
     function config($config=null,$default=null)
     {
-        $configResult = resta()->appClass->configLoaders($config);
+        $configResult = core()->appClass->configLoaders($config);
 
         if($configResult === null && $default!==null){
             return $default;

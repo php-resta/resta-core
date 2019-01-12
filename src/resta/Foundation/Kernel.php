@@ -83,7 +83,7 @@ class Kernel extends Container implements KernelContracts
 
             //kernel boots run and service container{
             //makeBuild for service Container
-            return resta()->appClosureInstance
+            return core()->appClosureInstance
                 ->call(function() use ($boot) {
                     $this->bootFire($boot);
                 });

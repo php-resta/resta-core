@@ -29,7 +29,7 @@ class LoggerHandler implements LoggerInterface
     public function __construct($file=null)
     {
         $this->file=$file;
-        $this->logger=resta()->loggerService;
+        $this->logger=core()->loggerService;
     }
 
     /**

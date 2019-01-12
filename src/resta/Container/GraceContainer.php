@@ -50,7 +50,7 @@ class GraceContainer
 
         // In particular, name container values can be specified and
         // they are injected directly into the methods contextually.
-        if(isset(resta()->serviceContainer[$parameter->getName()])){
+        if(isset(core()->serviceContainer[$parameter->getName()])){
             return app()->makeBind(SpecialNameContainer::class)->resolveContainer($parameter,$param);
 
         }

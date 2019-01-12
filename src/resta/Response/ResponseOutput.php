@@ -18,9 +18,9 @@ class ResponseOutput
      */
     private function dataIncludedForPrinter($printer)
     {
-        if(isset(resta()->controllerWatch)){
+        if(isset(core()->controllerWatch)){
 
-            $watch=resta()->controllerWatch;
+            $watch=core()->controllerWatch;
             return array_merge($printer,['watch'=>['memory'=>$watch['memory']]]);
         }
 
@@ -109,12 +109,12 @@ class ResponseOutput
 
         // If the log feature is available on the kernel,
         // we run the logger process.
-        if(isset(resta()->log)){
+        if(isset(core()->log)){
 
             // we can run logging after checking
             // the configuration for the logger process in the LoggerService class
             // so that,If logging is not allowed in the main configuration file, we will not log.
-            return resta()->loggerService->checkLoggerConfiguration($this->printer,function($printer){
+            return core()->loggerService->checkLoggerConfiguration($this->printer,function($printer){
                 return $printer;
             });
         }

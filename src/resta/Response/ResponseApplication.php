@@ -36,7 +36,7 @@ class ResponseApplication extends ResponseOutput
     private function getControllerInstance()
     {
         //we get the instanceController object from the router.
-        return resta()->instanceController;
+        return core()->instanceController;
     }
 
     /**
@@ -46,7 +46,7 @@ class ResponseApplication extends ResponseOutput
     {
         //we get the response type by checking the instanceController object from the router.
         //Each type of response is in the base class in project directory.
-        return ($this->getControllerInstance()===null) ? resta()->responseType :
+        return ($this->getControllerInstance()===null) ? core()->responseType :
             $this->appResponseType();
     }
 

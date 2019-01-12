@@ -20,7 +20,7 @@ class LoggerService
     public function checkLoggerConfiguration($printer,callable $callback)
     {
         // logger service handler
-        if(config('app.logger') && isset(resta()->log)){
+        if(config('app.logger') && isset(core()->log)){
             return $this->logHandler($printer,'access',$this->getLoggerType());
         }
 
@@ -53,7 +53,7 @@ class LoggerService
         if(Utils::isNamespaceExists($loggerNamespace)===false){
 
             //get checking console for logger
-            if(Utils::isRequestConsole()===false && resta()->isAvailableStore){
+            if(Utils::isRequestConsole()===false && core()->isAvailableStore){
 
                 //throw exception via domain method
                 exception()->domain('Such a group was not created within the project.');
@@ -86,10 +86,10 @@ class LoggerService
      */
     public function logHandler($printer,$file="access",$type='info')
     {
-        if(isset(resta()->log)){
+        if(isset(core()->log)){
 
             //we get the log object that was previously assigned.
-            $log=resta()->log;
+            $log=core()->log;
 
             $base=current($log);
 

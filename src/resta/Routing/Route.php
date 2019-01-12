@@ -65,7 +65,7 @@ class Route
     {
        foreach (self::$paths as $mapper=>$controller){
            if(file_exists($mapper)){
-               resta()->fileSystem->callFile($mapper);
+               core()->fileSystem->callFile($mapper);
            }
        }
     }

@@ -45,7 +45,7 @@ class UrlParseApplication
         $this->urlList['parameters']=array_slice($query,3);
 
         //url global instance
-        resta()->urlGlobalInstance->definitor($this->urlList);
+        core()->urlGlobalInstance->definitor($this->urlList);
 
     }
 

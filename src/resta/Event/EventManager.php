@@ -127,8 +127,8 @@ class EventManager extends EventHandler
      */
     protected function getListeners()
     {
-        if(isset(resta()->events)) {
-            return resta()->events;
+        if(isset(core()->events)) {
+            return core()->events;
         }
         return $this->listen;
     }
@@ -145,7 +145,7 @@ class EventManager extends EventHandler
         // the registered bindings object.
         // we apply this value to the registered object
         // because it is used in outgoing simple calls.
-        $dispatcher=resta()->bindings['eventDispatcher'];
+        $dispatcher=core()->bindings['eventDispatcher'];
 
         //get subscribe event list with event subscribe handler
         $dispatcherList=$this->eventSubscribeHandler($dispatcher);

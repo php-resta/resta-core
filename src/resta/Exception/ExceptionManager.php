@@ -15,7 +15,7 @@ class ExceptionManager implements ExceptionContracts {
             appInstance()->register('exceptionLine',debug_backtrace()[1]['line']);
 
             if(isset($value['file'])){
-                if(preg_match('@'.resta()->url['project'].'@',$value['file'])){
+                if(preg_match('@'.core()->url['project'].'@',$value['file'])){
 
                     appInstance()->terminate('exceptionFile');
                     appInstance()->terminate('exceptionLine');

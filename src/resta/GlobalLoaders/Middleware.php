@@ -23,9 +23,9 @@ class Middleware extends ApplicationProvider
      */
     public function pointer($middleValue)
     {
-        if(isset(resta()->pointer['middlewareList'])){
+        if(isset(core()->pointer['middlewareList'])){
 
-            $middlewareList = resta()->pointer['middlewareList'];
+            $middlewareList = core()->pointer['middlewareList'];
 
             if(is_array($middlewareList)){
                 $middlewareList = array_merge($middlewareList,[$middleValue]);

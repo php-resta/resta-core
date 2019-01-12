@@ -64,8 +64,8 @@ class MiddlewareKernelProviderProcess implements LayerInterface
      */
     private function afterPeel()
     {
-        if(resta()->bindings['middleware']!==null){
-            return resta()->bindings['middleware']->after=true;
+        if(core()->bindings['middleware']!==null){
+            return core()->bindings['middleware']->after=true;
         }
     }
 

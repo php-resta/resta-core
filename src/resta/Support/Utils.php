@@ -420,8 +420,8 @@ class Utils
      */
     public static function getServiceConf()
     {
-        if(property_exists(resta(),'serviceConf') && defined('methodName')){
-            return resta()->serviceConf;
+        if(property_exists(core(),'serviceConf') && defined('methodName')){
+            return core()->serviceConf;
         }
         return [];
     }
@@ -494,9 +494,9 @@ class Utils
      */
     public static function getCommandList()
     {
-        if(isset(resta()->appClosureInstance)){
+        if(isset(core()->appClosureInstance)){
 
-            return resta()->appClosureInstance->call(function()
+            return core()->appClosureInstance->call(function()
             {
                 return $this->bootFire(null,'commandList');
             });
