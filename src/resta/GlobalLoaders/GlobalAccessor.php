@@ -2,8 +2,9 @@
 
 namespace Resta\GlobalLoaders;
 
-use Resta\ApplicationProvider;
 use Resta\FileProcess;
+use Resta\Support\Utils;
+use Resta\ApplicationProvider;
 use Store\Services\RequestService;
 use Resta\Response\ResponseApplication;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,22 +27,26 @@ class GlobalAccessor extends ApplicationProvider
 
         //The HttpFoundation component defines an object-oriented layer for the HTTP specification.
         //The HttpFoundation component replaces these default PHP global variables and functions by an object-oriented layer
-        Request::setFactory(function(array $query = array(),
-                                     array $request = array(),
-                                     array $attributes = array(),
-                                     array $cookies = array(),
-                                     array $files = array(),
-                                     array $server = array(),
-                                     $content = null)
-        {
-            return new RequestService($query,
-                $request,
-                $attributes,
-                $cookies,
-                $files,
-                $server,
-                $content);
-        });
+        if(Utils::isNamespaceExists(RequestService::class)){
+
+            Request::setFactory(function(array $query = array(),
+                                         array $request = array(),
+                                         array $attributes = array(),
+                                         array $cookies = array(),
+                                         array $files = array(),
+                                         array $server = array(),
+                                         $content = null)
+            {
+                return new RequestService($query,
+                    $request,
+                    $attributes,
+                    $cookies,
+                    $files,
+                    $server,
+                    $content);
+            });
+        }
+
 
         //After registering the symfony request method, we also save the get and post methods for user convenience.
         $this->register('request',      Request::createFromGlobals());

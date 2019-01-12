@@ -53,7 +53,7 @@ class LoggerService
         if(Utils::isNamespaceExists($loggerNamespace)===false){
 
             //get checking console for logger
-            if(Utils::isRequestConsole()===false){
+            if(Utils::isRequestConsole()===false && resta()->isAvailableStore){
 
                 //throw exception via domain method
                 exception()->domain('Such a group was not created within the project.');

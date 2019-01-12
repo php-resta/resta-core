@@ -100,9 +100,12 @@ class BootLoader extends ApplicationProvider implements BootContracts
     {
         // the rest system will assign a random key to your application for you.
         // this application will single the advantages of using the rest system for your application in particular.
-        $this->app->bind('encrypter',function(){
-            return EncrypterProvider::class;
-        });
+        if(resta()->isAvailableStore){
+            $this->app->bind('encrypter',function(){
+                return EncrypterProvider::class;
+            });
+        }
+
     }
 
     /**
@@ -140,9 +143,11 @@ class BootLoader extends ApplicationProvider implements BootContracts
         // this function can be used for defining your own way of handling errors during runtime,
         // for example in applications in which you need to do cleanup of data/files when a critical error happens,
         // or when you need to trigger an error under certain conditions (using trigger_error()).
-        $this->app->bind('exception',function(){
-            return ErrorHandler::class;
-        });
+        if(resta()->isAvailableStore){
+            $this->app->bind('exception',function(){
+                return ErrorHandler::class;
+            });
+        }
     }
 
     /**
@@ -166,9 +171,11 @@ class BootLoader extends ApplicationProvider implements BootContracts
         // when your application is requested, the middleware classes are running before all bootstrapper executables.
         // thus, if you make http request your application, you can verify with an intermediate middleware layer
         // and throw an exception.
-        $this->app->bind('middleware',function(){
-            return ApplicationMiddleware::class;
-        });
+        if(resta()->isAvailableStore){
+            $this->app->bind('middleware',function(){
+                return ApplicationMiddleware::class;
+            });
+        }
     }
 
     /**
@@ -191,9 +198,11 @@ class BootLoader extends ApplicationProvider implements BootContracts
         // route operations are the last part of the system run. In this section,
         // a route operation is passed through the url process and output is sent to the screen according to
         // the method file to be called by the application
-        $this->app->bind('router',function(){
-            return Router::class;
-        });
+        if(resta()->isAvailableStore){
+            $this->app->bind('router',function(){
+                return Router::class;
+            });
+        }
     }
 
     /**
@@ -203,8 +212,11 @@ class BootLoader extends ApplicationProvider implements BootContracts
     {
         // with url parsing,the application route for
         // the rest project is determined after the route variables from the URL are assigned to the kernel url object.
-        $this->app->bind('url',function(){
-            return UrlParseApplication::class;
-        });
+        if(resta()->isAvailableStore){
+            $this->app->bind('url',function(){
+                return UrlParseApplication::class;
+            });
+        }
+
     }
 }

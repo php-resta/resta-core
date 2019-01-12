@@ -12,6 +12,24 @@ use Resta\Container\ContainerInstanceResolver;
 class ApplicationPreLoader extends ApplicationProvider
 {
     /**
+     * check store directory
+     *
+     * @return void|mixed
+     */
+    private function isAvailableStore()
+    {
+        // if the store directory is available,
+        // then the application process continues.
+        // if not available, only the core is executed.
+        if(file_exists(app()->path()->storeDir())){
+            $this->app->register('isAvailableStore',true);
+        }
+        else{
+            $this->app->register('isAvailableStore',false);
+        }
+    }
+
+    /**
      * @return void
      */
     public function handle()
@@ -24,6 +42,9 @@ class ApplicationPreLoader extends ApplicationProvider
 
         //main loader for application
         $this->mainLoader();
+
+        //control of required store classes.
+        $this->isAvailableStore();
     }
 
     /**
