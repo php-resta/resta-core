@@ -5,6 +5,7 @@ namespace Resta\Foundation;
 use Resta\ClosureDispatcher;
 use Resta\Container\Container;
 use Resta\Contracts\KernelContracts;
+use Resta\Middleware\MiddlewareKernelProvider;
 
 class Kernel extends Container implements KernelContracts
 {
@@ -99,7 +100,7 @@ class Kernel extends Container implements KernelContracts
             // we will implement a special onion method here and
             // pass our bootstraper classes through this method.
             // Our goal here is to implement the middleware layer correctly.
-            $this->makeBind(BootstrapperPeelOnion::class)->onionBoot([$group,$booting],function() use($group){
+            $this->makeBind(MiddlewareKernelProvider::class)->onionBoot([$group,$booting],function() use($group){
                 $this->bootstrappers($this,$group);
             });
 
