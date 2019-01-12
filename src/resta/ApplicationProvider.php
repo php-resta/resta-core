@@ -64,7 +64,7 @@ class ApplicationProvider
     public function terminate($key,$object=null)
     {
         //terminate app bound
-        return $this->app()->bound->terminate($key,$object);
+        return $this->app()->container->terminate($key,$object);
     }
 
     /**

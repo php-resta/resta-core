@@ -43,8 +43,8 @@ class ContainerInstanceResolver
 
             // this method records the kernel container object globally.
             // registered objects can be easily accessed with the resta () assistant.
-            if(isset(core()->bound)){
-                return core()->bound->register($key,$object,$concrete);
+            if(isset(core()->container)){
+                return core()->container->register($key,$object,$concrete);
             }
         };
     }

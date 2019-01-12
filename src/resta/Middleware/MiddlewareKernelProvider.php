@@ -42,7 +42,7 @@ class MiddlewareKernelProvider
         // If the peelings variable does not have a kernel,
         // we first assign an instance of this class to the initial value of the array.
         if(!isset(core()->peelings)){
-            core()->bound->register('peelings','0',$this);
+            core()->container->register('peelings','0',$this);
         }
 
         // we will then use the keys of
@@ -54,14 +54,14 @@ class MiddlewareKernelProvider
         $bootstrapperPeelOnionProcess = new MiddlewareKernelProviderProcess($this->onionTypes[$group],$this->onionList);
 
         // and we assign this running onion process property to the peelings variable on the kernel.
-        core()->bound->register('peelings',end($keys)+1,$bootstrapperPeelOnionProcess);
+        core()->container->register('peelings',end($keys)+1,$bootstrapperPeelOnionProcess);
 
         //If the peelingsAfter object is not in the kernel.
         if(!isset(core()->peelingsAfter)){
 
             //we assign the last saved after object to the peelingsAfter variable independently in the kernel.
             $bootstrapperPeelAfterOnionProcess  = new MiddlewareKernelProviderProcess('after',$this->onionList);
-            core()->bound->register('peelingsAfter',$bootstrapperPeelAfterOnionProcess);
+            core()->container->register('peelingsAfter',$bootstrapperPeelAfterOnionProcess);
         }
 
         return true;

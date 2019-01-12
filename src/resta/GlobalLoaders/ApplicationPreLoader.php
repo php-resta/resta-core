@@ -58,11 +58,11 @@ class ApplicationPreLoader extends ApplicationProvider
 
         //For the application, we create the object that the register method,
         // which is the container center, is connected to by the kernel object register method.
-        $registerAppBound=$this->app->makeBind(RegisterAppBound::class);
-        $registerAppBound->register('bound',$registerAppBound);
+        $registerAppContainer = $this->app->makeBind(RegisterAppBound::class);
+        $registerAppContainer->register('container',$registerAppContainer);
 
         //register as instance registerAppBound object
-        $this->app->instance('register',$registerAppBound);
+        $this->app->instance('register',$registerAppContainer);
 
         //get manifest bootManager.php
         $bootManager = root.'/bootstrapper/Manifest/BootManager.php';
