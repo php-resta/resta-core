@@ -6,6 +6,7 @@ use Resta\ClosureDispatcher;
 use Resta\Container\Container;
 use Resta\Contracts\KernelContracts;
 use Resta\Middleware\MiddlewareKernelProvider;
+use Resta\Foundation\Bootstrapper\BootFireCallback;
 
 class Kernel extends Container implements KernelContracts
 {
