@@ -76,7 +76,6 @@ class FinalBooting implements HandleContracts
         if(isset($this->boot['custom'])){
 
             //get manifest for boot manager
-            //$manifest=app()->singleton()->manifest['bootManager'];
             return call_user_func_array($callback,[$this->boot['custom']]);
         }
     }

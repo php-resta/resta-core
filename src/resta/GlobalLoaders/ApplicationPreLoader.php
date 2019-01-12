@@ -43,9 +43,14 @@ class ApplicationPreLoader extends ApplicationProvider
         //register as instance registerAppBound object
         $this->app->instance('register',$registerAppBound);
 
+        //get manifest bootManager.php
+        $bootManager = root.'/bootstrapper/Manifest/BootManager.php';
+
         //We add manifest configuration variables to the manifest property in the kernel.
-        $bootManager=require(root.'/bootstrapper/Manifest/BootManager.php');
-        $this->app->register('manifest','bootManager',$bootManager);
+        if(file_exists($bootManager)){
+            $bootManager=require(root.'/bootstrapper/Manifest/BootManager.php');
+            $this->app->register('manifest','bootManager',$bootManager);
+        }
 
         // We are saving the application class to
         // the container object for the appClass value.

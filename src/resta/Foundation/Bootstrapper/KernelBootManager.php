@@ -3,10 +3,10 @@
 namespace Resta\Foundation\Bootstrapper;
 
 use Resta\Support\Arr;
-use Resta\Support\Utils;
 use Bootstrapper\Manifest;
+use Resta\ClosureDispatcher;
 
-class KernelBootManager extends Manifest
+class KernelBootManager
 {
     /**
      * @var array $makerList
@@ -14,57 +14,110 @@ class KernelBootManager extends Manifest
     protected $makerList=[];
 
     /**
+     * @var $manifest
+     */
+    protected $manifest;
+
+    /**
+     * KernelBootManager constructor.
+     */
+    public function __construct()
+    {
+        //default manifest is application
+        $this->manifest = app();
+
+        // if there is manifest propery in the resta
+        // in this case,manifest property is manifest class
+        if(isset(resta()->manifest)){
+            $this->manifest = $this->manifest->makeBind(Manifest::class);
+        }
+
+        //closure dispatcher for manifest property
+        $this->manifest = ClosureDispatcher::bind($this->manifest);
+    }
+
+    /**
+     * get makerList from property
+     *
+     * @return array
+     */
+    public function getMakerList()
+    {
+        //get makerList property
+        return $this->makerList;
+    }
+
+    /**
      * @param $maker
      * @return mixed
      */
     protected function handle($maker)
     {
-        // As a parameter, the maker variable comes as
-        // the name of the list to be booted.
-        if(isset($this->{$maker})){
+        $app = clone $this;
 
-            //get default maker list
-            $this->makerList=$this->{$maker};
+        return $this->manifest->call(function() use ($maker,$app){
 
-            // we set this condition for users to boot the classes they want in the kernel groups.
-            // in the manifesto, if the kernel groups method returns an class of arrays
-            // then these classes will automatically join the kernel groups installation.
-            if(property_exists($this,$makerExtend = $maker.'Extend') && is_array($this->{$makerExtend})){
+            // As a parameter, the maker variable comes as
+            // the name of the list to be booted.
+            if(isset($this->{$maker})){
 
-                // if the makerExtend value in the manifest is a method,
-                // in this case, the method is executed instead of the object
-                $checkMethodOrObjectForMakerExtend =
-                    (method_exists($this,$makerExtend) && is_array($this->{$makerExtend}()))
-                        ? $this->{$makerExtend}()
-                        : $this->{$makerExtend};
+                //get default maker list
+                $app->setMakerList($this->{$maker});
 
-                // get maker list as merged with checkMethodOrObjectForMakerExtend variable
-                $this->makerList=Arr::removeSameValues($checkMethodOrObjectForMakerExtend,$this->{$maker});
+                // we set this condition for users to boot the classes they want in the kernel groups.
+                // in the manifesto, if the kernel groups method returns an class of arrays
+                // then these classes will automatically join the kernel groups installation.
+                if(property_exists($this,$makerExtend = $maker.'Extend') && is_array($this->{$makerExtend})){
+
+                    // if the makerExtend value in the manifest is a method,
+                    // in this case, the method is executed instead of the object
+                    $checkMethodOrObjectForMakerExtend =
+                        (method_exists($this,$makerExtend) && is_array($this->{$makerExtend}()))
+                            ? $this->{$makerExtend}()
+                            : $this->{$makerExtend};
+
+                    // get maker list as merged with checkMethodOrObjectForMakerExtend variable
+                    $app->setMakerList(Arr::removeSameValues($checkMethodOrObjectForMakerExtend,$this->{$maker}));
+                }
             }
-        }
 
-        // revision maker
-        // group name to boot
-        $this->revisionMaker();
-        return $this->makerList;
+            // revision maker
+            // group name to boot
+            $app->revisionMaker($this->revision);
+            return $app->getMakerList();
+        });
+
     }
 
     /**
-     * @return void
+     * check revision by manifest
+     *
+     * @param $revision
      */
-    private function revisionMaker()
+    public function revisionMaker($revision)
     {
-        if(count($this->makerList)){
+        if(is_array($revision) && count($this->makerList)){
 
             //We return to the boot list and perform a revision check.
             foreach ($this->makerList as $makerKey=>$makerValue){
 
                 // the revision list is presented as a helper method to prevent
                 // the listener application being booted from taking the entire listener individually.
-                if(count($this->revision) && isset($this->revision[$makerValue])){
-                    $this->makerList[$makerKey]=$this->revision[$makerValue];
+                if(count($revision) && isset($revision[$makerValue])){
+                    $this->makerList[$makerKey]=$revision[$makerValue];
                 }
             }
         }
+    }
+
+    /**
+     * set a value for makerList property
+     *
+     * @param $maker
+     */
+    public function setMakerList($maker)
+    {
+        //set makerList property
+        $this->makerList = $maker;
     }
 }
