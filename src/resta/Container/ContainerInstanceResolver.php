@@ -20,36 +20,6 @@ class ContainerInstanceResolver
     }
 
     /**
-     * application data register
-     *
-     * @return \Closure
-     */
-    public function register()
-    {
-        // in the instance array,
-        // we will register a global data accessor using
-        // the register method of the registerAppBound object.
-        return function($key,$object,$concrete){
-
-            //in the instances we control the register data.
-            if(isset($this->instances['register'])){
-
-                // with tap helper method,
-                // we save the data to the global accessor.
-                tap($this->instances['register'],function($instance) use($key,$object,$concrete){
-                    return $instance->register($key,$object,$concrete);
-                });
-            }
-
-            // this method records the kernel container object globally.
-            // registered objects can be easily accessed with the resta () assistant.
-            if(isset(core()->container)){
-                return core()->container->register($key,$object,$concrete);
-            }
-        };
-    }
-
-    /**
      * @param $name
      * @param $arguments
      * @return null
