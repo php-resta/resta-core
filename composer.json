@@ -17,7 +17,7 @@
             "Resta\\": "src/resta/",
             "Resta\\Core\\Tests\\": "tests"
         },
-        "files": ["src/resta/ApplicationHelpers.php"]
+        "files": ["src/resta/Foundation/ApplicationHelpers.php"]
     },
     "require": {
         "php-di/php-di": "^5.4",
