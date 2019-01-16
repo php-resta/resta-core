@@ -88,21 +88,22 @@ use '.$this->argument['factoryDir'].'\\'.$factoryArgument.'\Interfaces\\'.$facto
                     ]);
             }
 
-            $resourceArgument = $this->argument['resource'];
+            if(isset($this->argument['resource'])){
+                $resourceArgument = $this->argument['resource'];
 
-            if($resourceArgument!==null){
-                $factoryArgumentResourceDir = $this->directory['factoryArgumentDir'].''.DIRECTORY_SEPARATOR.'Resources';
-                $this->directory['factoryArgumentResourceArgumentDir']  =$factoryArgumentResourceDir.''.DIRECTORY_SEPARATOR.''.$resourceArgument;
-                $this->file->makeDirectory($this);
+                if($resourceArgument!==null){
+                    $factoryArgumentResourceDir = $this->directory['factoryArgumentDir'].''.DIRECTORY_SEPARATOR.'Resources';
+                    $this->directory['factoryArgumentResourceArgumentDir']  =$factoryArgumentResourceDir.''.DIRECTORY_SEPARATOR.''.$resourceArgument;
+                    $this->file->makeDirectory($this);
 
-                if(!file_exists($this->directory['factoryArgumentResourceArgumentDir'].''.DIRECTORY_SEPARATOR.''.$resourceArgument.'.php')){
+                    if(!file_exists($this->directory['factoryArgumentResourceArgumentDir'].''.DIRECTORY_SEPARATOR.''.$resourceArgument.'.php')){
 
-                    $this->touch['factory/factoryargumentresource']             = $this->directory['factoryArgumentResourceArgumentDir'].''.DIRECTORY_SEPARATOR.''.$resourceArgument.'.php';
-                    $this->touch['factory/factoryargumentresourceinterface']    = $this->directory['factoryArgumentDirInterfaces'].'/'.$resourceArgument.'Interface.php';
-                    $this->file->touch($this);
+                        $this->touch['factory/factoryargumentresource']             = $this->directory['factoryArgumentResourceArgumentDir'].''.DIRECTORY_SEPARATOR.''.$resourceArgument.'.php';
+                        $this->touch['factory/factoryargumentresourceinterface']    = $this->directory['factoryArgumentDirInterfaces'].'/'.$resourceArgument.'Interface.php';
+                        $this->file->touch($this);
 
-                    Utils::changeClass($factoryargumentmanager,
-                        ['class '.$factoryArgument.'Manager extends FactoryManager implements '.$factoryArgument.'Interface
+                        Utils::changeClass($factoryargumentmanager,
+                            ['class '.$factoryArgument.'Manager extends FactoryManager implements '.$factoryArgument.'Interface
 {'=>'class '.$factoryArgument.'Manager extends FactoryManager implements '.$factoryArgument.'Interface
 {
     /**
@@ -114,17 +115,17 @@ use '.$this->argument['factoryDir'].'\\'.$factoryArgument.'\Interfaces\\'.$facto
     }
     ',
 
-                            'namespace '.$this->argument['factoryDir'].'\\'.$factoryArgument.';' => 'namespace '.$this->argument['factoryDir'].'\\'.$factoryArgument.';
+                                'namespace '.$this->argument['factoryDir'].'\\'.$factoryArgument.';' => 'namespace '.$this->argument['factoryDir'].'\\'.$factoryArgument.';
                                    
 use '.$this->argument['factoryDir'].'\\'.$factoryArgument.'\Interfaces\\'.$resourceArgument.'Interface;
 use '.$this->argument['factoryDir'].'\\'.$factoryArgument.'\Resources\\'.$resourceArgument.'\\'.$resourceArgument.';',
 
-                        ]);
+                            ]);
 
 
-                    Utils::changeClass($factoryargumentmanagerInterface,
-                        [
-                            'interface '.$factoryArgument.'Interface
+                        Utils::changeClass($factoryargumentmanagerInterface,
+                            [
+                                'interface '.$factoryArgument.'Interface
 {' => 'interface '.$factoryArgument.'Interface
 {
     /**
@@ -132,10 +133,12 @@ use '.$this->argument['factoryDir'].'\\'.$factoryArgument.'\Resources\\'.$resour
      */
     public function '.strtolower($resourceArgument).'();
     '
-                        ]);
-                }
+                            ]);
+                    }
 
+                }
             }
+
 
         }
 
