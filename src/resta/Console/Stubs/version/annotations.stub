@@ -6,6 +6,7 @@ use __kernelDir__\AppAnnotations;
 
 /**
  * Trait ServiceAnnotationsController
+  * @property \__factoryDir__\Factory factory
  */
 trait ServiceAnnotationsController
 {

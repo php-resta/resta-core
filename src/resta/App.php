@@ -26,6 +26,10 @@ class App
      */
     public static function annotationsLoaders($service,$arg)
     {
+        //factory runner
+        if($service=="factory"){
+            return self::factory();
+        }
         //if $name starts with $needles for repository
         if(Str::endsWith($service,'Repository')){
             return self::repository($service);
@@ -42,6 +46,12 @@ class App
         }
 
         return self::$service($arg);
+    }
+
+    private static function factory()
+    {
+        $factory = app()->namespace()->factory().'\Factory';
+        return app()->makeBind($factory);
     }
 
     /**
