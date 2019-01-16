@@ -143,6 +143,6 @@ use '.$this->argument['factoryDir'].'\\'.$factoryArgument.'\Resources\\'.$resour
         }
 
 
-        echo $this->classical('factory');
+        echo $this->classical('factory has been successfully created');
     }
 }
