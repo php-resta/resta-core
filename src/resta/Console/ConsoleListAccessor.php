@@ -238,6 +238,14 @@ trait ConsoleListAccessor {
         return $this->version().'/'.StaticPathModel::$middleware;
     }
 
+    /**
+     * @return mixed
+     */
+    public function factory(){
+
+        return $this->version().'/'.StaticPathModel::$factory;
+    }
+
 
     /**
      * @return mixed

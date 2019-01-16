@@ -39,9 +39,10 @@ class Project extends ConsoleOutputter {
      */
     public function create()
     {
-        $this->argument['kernelDir'] = Utils::getNamespace($this->kernel());
-        $this->argument['kernelProviderDir'] = Utils::getNamespace($this->provider());
-        $this->directory['projectDir'] = $this->projectPath();
+        $this->argument['kernelDir']            = Utils::getNamespace($this->kernel());
+        $this->argument['kernelProviderDir']    = Utils::getNamespace($this->provider());
+        $this->argument['factoryDir']           = app()->namespace()->factory();
+        $this->directory['projectDir']          = $this->projectPath();
 
         $recursiveDefaultDirectory = explode("\\",$this->argument['project']);
         $this->argument['applicationName'] = pos($recursiveDefaultDirectory);
@@ -59,6 +60,7 @@ class Project extends ConsoleOutputter {
         //get project directory all path
         $this->directory['kernelDir']               = $this->kernel();
         $this->directory['middleWareDir']           = $this->middleware();
+        $this->directory['factoryDir']              = app()->path()->factory();
         $this->directory['nodeDir']                 = $this->node();
         $this->directory['webservice']              = $this->webservice();
         $this->directory['stubDir']                 = $this->stub();
@@ -91,6 +93,8 @@ class Project extends ConsoleOutputter {
         $this->touch['middleware/clientToken']      = $this->middleware().'/ClientApiToken.php';
         $this->touch['middleware/settimezone']      = $this->middleware().'/SetClientTimezone.php';
         $this->touch['middleware/trustedproxies']   = $this->middleware().'/TrustedProxies.php';
+        $this->touch['factory/factory']             = $this->factory().'/Factory.php';
+        $this->touch['factory/factorymanager']      = $this->factory().'/FactoryManager.php';
         $this->touch['node/index']                  = $this->node().'/index.html';
         $this->touch['webservice/index']            = $this->webservice().'/index.html';
         $this->touch['language/index']              = $this->language().'/index.html';

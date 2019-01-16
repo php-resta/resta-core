@@ -1,0 +1,11 @@
+<?php
+
+namespace __factoryDir__\__factory__\Resources\__resource__;
+
+use __factoryDir__\FactoryManager;
+use __factoryDir__\__factory__\Interfaces\__resource__Interface;
+
+class __resource__ extends FactoryManager implements __resource__Interface
+{
+
+}

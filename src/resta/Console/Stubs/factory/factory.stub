@@ -1,0 +1,12 @@
+<?php
+
+namespace __factoryDir__;
+
+/**
+ * Class Factory
+ * @package __factoryDir__
+ */
+class Factory extends FactoryManager
+{
+
+}

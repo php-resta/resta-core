@@ -98,6 +98,14 @@ class StaticNamespaceRepository extends StaticPathRepository
     /**
      * @return mixed
      */
+    public function factory()
+    {
+        return Utils::getNamespace(parent::factory());
+    }
+
+    /**
+     * @return mixed
+     */
     public function migration()
     {
         return Utils::getNamespace(parent::migration());

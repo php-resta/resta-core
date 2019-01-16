@@ -13,6 +13,11 @@ interface StaticPathContracts {
     /**
      * @return mixed
      */
+    public function factory();
+
+    /**
+     * @return mixed
+     */
     public function appLanguage();
 
     /**

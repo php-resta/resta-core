@@ -61,6 +61,15 @@ class StaticPathRepository
     }
 
     /**
+     * @param null $app
+     * @return mixed
+     */
+    public function appFactory($app=null)
+    {
+        return $this->appVersion($app).''.DIRECTORY_SEPARATOR.''.StaticPathList::$factory;
+    }
+
+    /**
      * @return mixed|string
      */
     public function appKernel()

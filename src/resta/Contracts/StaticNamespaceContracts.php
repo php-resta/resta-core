@@ -36,6 +36,11 @@ interface StaticNamespaceContracts
     /**
      * @return mixed
      */
+    public function factory();
+
+    /**
+     * @return mixed
+     */
     public function kernel();
 
     /**

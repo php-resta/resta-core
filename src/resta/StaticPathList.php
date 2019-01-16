@@ -186,6 +186,11 @@ class StaticPathList
     public static $middleware='Middleware';
 
     /**
+     * @var $factory
+     */
+    public static $factory='Factory';
+
+    /**
      * @var $node
      */
     public static $node='Node';
