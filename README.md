@@ -29,7 +29,7 @@ The skeleton repository integrates this magical box perfectly into itself and fo
 require_once '../vendor/autoload.php';
 use Resta\Foundation\Application
 
- $app = Application(true);
+$app = Application(true);
 
 ```
 
