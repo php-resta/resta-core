@@ -59,6 +59,11 @@ config('test.value2.nested1');
 
 ```
 
+## How to learn resta?
+
+The resta has a perfectly written documentation.If you have a frame habit depending on your quick learning ability.
+Do not worry. You will be able to learn  very easily the resta and use it with peace of mind.
+
 ## Security Vulnerabilities
 If you discover a security vulnerability within Resta, 
 please send an e-mail to Ali Gürbüz via [galiant781@gmail.com](mailto:galiant781@gmail.com). All security vulnerabilities will be promptly addressed.
