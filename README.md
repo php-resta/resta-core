@@ -64,6 +64,16 @@ config('test.value2.nested1');
 The resta has a perfectly written [Documentation](README.md).If you have a php framework habit depending on your quick learning ability.
 Do not worry. You will be able to learn  very easily the resta and use it with peace of mind.
 
+## Resta includes the following components.
+
+- [Symfony Http Foundation](https://github.com/symfony/http-foundation)
+- [Symfony File System](https://github.com/symfony/filesystem)
+- [Symfony Cache](https://github.com/symfony/cache)
+- [Nesbot Carbon](https://github.com/briannesbitt/Carbon)
+- [Illuminate Database](https://github.com/illuminate/database)
+
+and the resta provides support from many powerful components.
+
 ## Security Vulnerabilities
 If you discover a security vulnerability within Resta, 
 please send an e-mail to Ali Gürbüz via [galiant781@gmail.com](mailto:galiant781@gmail.com). All security vulnerabilities will be promptly addressed.
