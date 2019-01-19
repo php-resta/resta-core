@@ -70,7 +70,7 @@ Do not worry. You will be able to learn  very easily the resta and use it with p
 - [Symfony File System](https://github.com/symfony/filesystem)
 - [Symfony Cache](https://github.com/symfony/cache)
 - [Nesbot Carbon](https://github.com/briannesbitt/Carbon)
-- [Illuminate Database](https://github.com/illuminate/database)
+- [Laravel Eloquent](https://github.com/illuminate/database)
 
 and the resta provides support from many powerful components.
 
