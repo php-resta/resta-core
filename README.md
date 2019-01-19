@@ -61,7 +61,7 @@ config('test.value2.nested1');
 
 ## How to learn resta?
 
-The resta has a perfectly written documentation.If you have a php framework habit depending on your quick learning ability.
+The resta has a perfectly written [Documentation](README.md).If you have a php framework habit depending on your quick learning ability.
 Do not worry. You will be able to learn  very easily the resta and use it with peace of mind.
 
 ## Security Vulnerabilities
