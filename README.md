@@ -8,3 +8,6 @@
 > **Note:** The repository contains core of the resta.
 The resta core is a fully open source and will be continuously developed.
 So that we will work with the help of your pull requests to make the core more stable.
+
+## Code of Conduct
+Please read CODE_OF_CONDUCT.md.The resta core we will work together as much as we can to bring it to a better structure.
