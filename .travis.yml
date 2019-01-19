@@ -1,0 +1,9 @@
+language: php
+install:
+  - composer install
+  - composer dump-autoload -o
+php:
+  - '7.3'
+  - '7.2'
+  - nightly
+script: vendor/bin/phpunit
