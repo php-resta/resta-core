@@ -4,4 +4,7 @@
 [![Latest Unstable Version](https://poser.pugx.org/restapix/resta/v/unstable)](//packagist.org/packages/restapix/resta)
 
 # Resta - A Great Php Api Designer
-resta php api restfull framework
+
+> **Note:** The repository contains core of the resta.
+The resta core is a fully open source and will be continuously developed.
+So that we will work with the help of your pull requests to make the core more stable.
