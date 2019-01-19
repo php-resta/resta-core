@@ -37,6 +37,8 @@ As you can see above, the application object will return itself in a super-fast 
 One issue you should be aware of is that the resta kernel is directly dependent on the composer.json file.
 <ins> Therefore, you must install its dependencies via composer before using the application object. </ins>
 
+> Now let's make a small example to show what can be done with this magic box.
+
 
 ## Security Vulnerabilities
 If you discover a security vulnerability within Resta, 
