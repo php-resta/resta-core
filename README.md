@@ -38,7 +38,7 @@ One issue you should be aware of is that the resta kernel is directly dependent 
 <ins> Therefore, you must install its dependencies via composer before using the application object. </ins>
 
 > Now let's make a small example to show what can be done with this magic box.
-With this example, lets install an array as a configuration.Let's do reading this values.
+In this example,lets install an array as a configuration,then let's read these values.
 
 ## Security Vulnerabilities
 If you discover a security vulnerability within Resta, 
