@@ -21,7 +21,16 @@ If you want,you can create your api structure with keep track of the core applic
 
 Resta core consists of a stable box. This box is defined as [Application Box](src/resta/Foundation/Application.php).
 This class works with the same determination all over the place.
-<ins> For example, you can write as follows. </ins>
+> <ins> For example, you can write as follows. </ins>
+
+```php
+
+require_once '../vendor/autoload.php';
+use Resta\Foundation\Application
+
+new Application(true);
+
+```
 
 ## Security Vulnerabilities
 If you discover a security vulnerability within Resta, 
