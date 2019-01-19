@@ -53,7 +53,7 @@ $app->loadConfig(function()
     return ['test' => ['value1' => 'foo','value2'=>['nested1' => 'nestedValue1']]];
 });
 
-//lets read these values via config helper method
+//let's read these values via config helper method
 config('test.value1);
 config('test.value2.nested1');
 
