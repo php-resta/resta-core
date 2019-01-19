@@ -33,6 +33,8 @@ $app = Application(true);
 
 ```
 
+As you can see above, the application object will return itself in a super-fast way without error.
+
 ## Security Vulnerabilities
 If you discover a security vulnerability within Resta, 
 please send an e-mail to Ali Gürbüz via [galiant781@gmail.com](mailto:galiant781@gmail.com). All security vulnerabilities will be promptly addressed.
