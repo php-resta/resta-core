@@ -21,6 +21,7 @@ If you want,you can create your api structure with keep track of the core applic
 
 Resta core consists of a stable box. This box is defined as [Application Box](src/resta/Foundation/Application.php).
 This class works with the same determination all over the place.The application box is in the role of igniter for running a set of kernel classes.
+The skeleton repository integrates this magical box perfectly into itself and forms the resta structure.
 > <ins> For example, you can write as follows. </ins>
 
 ```php
