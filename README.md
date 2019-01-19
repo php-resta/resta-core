@@ -14,6 +14,9 @@ Please review [Code of Conduct](CODE_OF_CONDUCT.md).
 The resta core we will work together as much as we can to bring it to a better structure.
 the resta is very nice and very comfortable to write a better api code. We are pleased to present this to the community.
 
+## How to work the resta core
+---
+
 ## Security Vulnerabilities
 If you discover a security vulnerability within Resta, 
 please send an e-mail to Ali Gürbüz via [galiant781@gmail.com](mailto:galiant781@gmail.com). All security vulnerabilities will be promptly addressed.
