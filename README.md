@@ -14,8 +14,9 @@ Please review [Code of Conduct](CODE_OF_CONDUCT.md).
 The resta core we will work together as much as we can to bring it to a better structure.
 the resta is very nice and very comfortable to write a better api code. We are pleased to present this to the community.
 
-## How to work the resta core
----
+## How to work the resta core?
+> **Note:** The resta core works in complete harmony by means of the skeleton repository.
+If you want,you can create your api structure with keep track of the core application box.
 
 ## Security Vulnerabilities
 If you discover a security vulnerability within Resta, 
