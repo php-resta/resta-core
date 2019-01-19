@@ -12,4 +12,4 @@ So that we will work with the help of your pull requests to make the core more s
 ## Code of Conduct
 Please review [Code of Conduct](CODE_OF_CONDUCT.md).
 The resta core we will work together as much as we can to bring it to a better structure.
-It is so nice and so much comfortable writing a better api code with resta. We are pleased to offer to the community that.
+the resta is very nice and very comfortable to write a better api code. We are pleased to present this to the community.
