@@ -40,6 +40,25 @@ One issue you should be aware of is that the resta kernel is directly dependent 
 > Now let's make a small example to show what can be done with this magic box.
 In this example,lets install an array as a configuration,then let's read these values.
 
+```php
+
+require_once '../vendor/autoload.php';
+use Resta\Foundation\Application
+
+$app = Application(true);
+
+//set array values via loadConfig method
+$app->loadConfig(function()
+{
+    return ['test' => ['value1' => 'foo','value2'=>['nested1' => 'nestedValue1']]];
+});
+
+//lets read these values via config helper method
+config('test.value1);
+config('test.value2.nested1');
+
+```
+
 ## Security Vulnerabilities
 If you discover a security vulnerability within Resta, 
 please send an e-mail to Ali Gürbüz via [galiant781@gmail.com](mailto:galiant781@gmail.com). All security vulnerabilities will be promptly addressed.
