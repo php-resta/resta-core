@@ -35,7 +35,7 @@ $app = Application(true);
 
 As you can see above, the application object will return itself in a super-fast way without error.
 One issue you should be aware of is that the resta kernel is directly dependent on the composer.json file.
-<ins> Therefore, you must install dependencies with composer install before using the application object. </ins>
+<ins> Therefore, you must install its dependencies with composer install before using the application object. </ins>
 
 
 ## Security Vulnerabilities
