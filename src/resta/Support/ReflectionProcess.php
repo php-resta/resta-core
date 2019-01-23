@@ -41,6 +41,7 @@ class ReflectionProcess
             'reflection'    => $reflection,
             'document'      => $reflection->getDocComment(),
             'parameters'    => $reflection->getParameters(),
+            'isProtected'   => $reflection->isProtected(),
         ];
     }
 }

@@ -14,14 +14,6 @@ trait Request
     ];
 
     /**
-     * @return array
-     */
-    public function all()
-    {
-        return $this->inputs;
-    }
-
-    /**
      * @return void
      */
     protected function rule()
