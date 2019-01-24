@@ -267,6 +267,34 @@ class Request extends RequestClient implements HandleContracts
     }
 
     /**
+     * @param $method
+     * @param $key
+     *
+     * @throws \ReflectionException
+     */
+    private function checkAnnotations($method,$key)
+    {
+        $reflection = $this->reflection->reflectionMethodParams($method);
+        $annotation = $reflection->document;
+
+        if(preg_match('@remove\((.*?)\)\r\n@is',$annotation,$remove)){
+            if(isset($this->inputs[$key])){
+                if(preg_match('@'.$remove[1].'@is',$this->inputs[$key])){
+                    unset($this->inputs[$key]);
+                }
+            }
+        }
+
+        if(preg_match('@regex\((.*?)\)\r\n@is',$annotation,$regex)){
+            if(isset($this->inputs[$key])){
+                if(!preg_match('@'.$regex[1].'@is',$this->inputs[$key])){
+                    exception()->unexpectedValue($key.' input value is not valid as format ('.$regex[1].')');
+                }
+            }
+        }
+    }
+
+    /**
      * @return void|mixed
      */
     private function requestProperties()
@@ -338,7 +366,10 @@ class Request extends RequestClient implements HandleContracts
     {
         if(method_exists($this,$method) && $this->reflection->reflectionMethodParams($method)->isProtected){
 
-            if(is_array($this->inputs[$key])){
+            //check annotations for method
+            $this->checkAnnotations($method,$key);
+
+            if(isset($this->inputs[$key]) && is_array($this->inputs[$key])){
 
                 $inputKeys = $this->inputs[$key];
 
@@ -351,8 +382,11 @@ class Request extends RequestClient implements HandleContracts
                 }
             }
             else{
-                $keyMethod=$this->{$method}();
-                $this->inputs[$key]=$keyMethod;
+                if(isset($this->inputs[$key])){
+                    $keyMethod=$this->{$method}();
+                    $this->inputs[$key]=$keyMethod;
+                }
+
             }
         }
     }
