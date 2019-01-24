@@ -245,6 +245,24 @@ class ErrorHandler extends ApplicationProvider {
 
         $clone = clone $this;
 
+        if(property_exists(core(),'exceptionTranslate')){
+
+            $langMessage=trans('exception.'.core()->exceptionTranslate);
+
+            if(property_exists(core(),'exceptionTranslateParams')){
+
+                if(count(core()->exceptionTranslateParams[core()->exceptionTranslate])){
+                    foreach (core()->exceptionTranslateParams[core()->exceptionTranslate] as $key=>$value){
+                        $langMessage=preg_replace('@\('.$key.'\)@is',$value,$langMessage);
+                    }
+                }
+            }
+
+            if($langMessage!==null){
+                $this->data['errStrReal']=$langMessage;
+            }
+        }
+
         if(class_exists($this->data['errorClassNamespace'])
             && Str::startsWith($this->data['errorClassNamespace'],'App')){
 

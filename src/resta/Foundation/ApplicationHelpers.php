@@ -272,12 +272,14 @@ if (!function_exists('route')) {
 if (!function_exists('exception')) {
 
     /**
+     * @param null $name
+     * @param array $params
      * @return \Resta\Contracts\ExceptionContracts
      */
-    function exception()
+    function exception($name=null,$params=array())
     {
         $exceptionManager=\Resta\Exception\ExceptionManager::class;
-        return new $exceptionManager;
+        return new $exceptionManager($name,$params);
     }
 }
 

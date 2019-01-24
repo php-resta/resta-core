@@ -14,6 +14,21 @@ trait Request
     ];
 
     /**
+     * @var $page
+     */
+    protected $page;
+
+    /**
+     * @regex(^\d+$)
+     * @exception(name:page params:page=page)
+     * @return mixed
+     */
+    protected function page()
+    {
+        return $this->page;
+    }
+
+    /**
      * @return void
      */
     protected function rule()

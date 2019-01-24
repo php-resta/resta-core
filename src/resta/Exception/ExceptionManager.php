@@ -7,8 +7,20 @@ use Resta\Contracts\ExceptionContracts;
 
 class ExceptionManager implements ExceptionContracts {
 
-    public function __construct()
+    /**
+     * ExceptionManager constructor.
+     * @param null $name
+     * @param array $params
+     */
+    public function __construct($name=null,$params=array())
     {
+        if($name!==null){
+            if(count($params)){
+                app()->register('exceptionTranslateParams',$name,$params);
+            }
+            app()->register('exceptionTranslate',$name);
+        }
+
         foreach (debug_backtrace() as $key=>$value){
 
             appInstance()->register('exceptionFile',debug_backtrace()[1]['file']);
