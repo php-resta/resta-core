@@ -24,6 +24,7 @@ class ConfigProcess implements \ArrayAccess
 
     /**
      * @return array|mixed|null
+     *
      * @throws \DI\DependencyException
      * @throws \DI\NotFoundException
      */
@@ -85,6 +86,7 @@ class ConfigProcess implements \ArrayAccess
      * @param $kernelConfig
      * @param $config
      * @return array|mixed
+     *
      * @throws \DI\DependencyException
      * @throws \DI\NotFoundException
      */
