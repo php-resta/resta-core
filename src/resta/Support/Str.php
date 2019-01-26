@@ -700,7 +700,7 @@ class Str
                 return preg_replace('@'.$removeCharacter.'=(.*)|\?@is','',fullUrl());
             }
 
-            return preg_replace('@'.$removeCharacter.'=(.*?)|&@is','',fullUrl());
+            return preg_replace('@'.$removeCharacter.'=\d+\&|\&'.$removeCharacter.'=\d+@is','',fullUrl());
         }
 
     }

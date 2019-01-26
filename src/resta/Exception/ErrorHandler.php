@@ -210,7 +210,9 @@ class ErrorHandler extends ApplicationProvider {
                 $last_error['file'] = core()->exceptionFile;
                 $last_error['line'] = core()->exceptionLine;
             }
-            header('Content-type:application/json;charset=utf-8');
+            //header('Content-type:application/json;charset=utf-8');
+
+            //dd($last_error);
 
             $this->setErrorHandler(
                 E_ERROR,

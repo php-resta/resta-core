@@ -5,6 +5,8 @@ namespace __controllerNamespace__;
 class __serviceClass____callClassPrefix__ extends App
 {
     /**
+     * #define: get __serviceClass__
+     *
      * @return mixed|array
      */
     public function index()
