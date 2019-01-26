@@ -27,7 +27,7 @@ class ConfigTest extends AbstractTest
         }
 
         //set config path
-        static::$app->setPaths('config',root.''.DIRECTORY_SEPARATOR.'Config');
+        static::$app->setPaths('config',$configDirectory);
 
         static::$app->loadConfig(function()
         {
