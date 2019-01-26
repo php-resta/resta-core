@@ -1,28 +1,43 @@
 <?php
 
-namespace App\__project__\__version__\Config;
+return [
 
-class Database
-{
-    /**
-     * database settings.
-     * access database object for every service.
-     * @return array
-     */
-    public function handle() : array
-    {
-        //default connection
-        $connection='mysql';
+    /*
+    |--------------------------------------------------------------------------
+    | Default Database Connection Name
+    |--------------------------------------------------------------------------
+    |
+    | Here you may specify which of the database connections below you wish
+    | to use as your default connection for all database work. Of course
+    | you may use many connections at once using the Database library.
+    |
+    */
+    'default' => 'mysql',
 
-        //local settings
-        $db['mysql']['driver']      = environment('db_connection','mysql');
-        $db['mysql']['port']        = environment('db_port','localhost');
-        $db['mysql']['host']        = environment('db_host','localhost');
-        $db['mysql']['database']    = environment('db_database','database');
-        $db['mysql']['user']        = environment('db_username','user');
-        $db['mysql']['password']    = environment('db_password','password');
+    /*
+    |--------------------------------------------------------------------------
+    | Database Connections
+    |--------------------------------------------------------------------------
+    |
+    | Here are each of the database connections setup for your application.
+    | Of course, examples of configuring each database platform that is
+    | supported by Resta is shown below to make development simple.
+    |
+    |
+    | All database work in Resta is done through the PHP PDO facilities
+    | so make sure you have the driver for your particular database of
+    | choice installed on your machine before you begin development.
+    |
+    */
+    'connections' => [
+        'mysql' => [
+            'driver'    => environment('db_connection','mysql'),
+            'port'      => environment('db_port','localhost'),
+            'host'      => environment('db_host','localhost'),
+            'database'  => environment('db_database','database'),
+            'user'      => environment('db_username','user'),
+            'password'  => environment('db_password','password'),
+        ]
+    ]
 
-        //return db
-        return $db[$connection];
-    }
-}
+];

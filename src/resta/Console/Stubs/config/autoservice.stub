@@ -1,23 +1,8 @@
 <?php
 
-namespace App\__project__\__version__\Config;
-
-use Store\Contracts\HandleTraitContract;
-
-class AutoServices implements HandleTraitContract
-{
-    /**
-     * auto service settings.
-     * the place allowed for access every auto service.
-     * @return array
-     */
-    public function handle() : array
-    {
-        return [
+return [
             'hook'          => true,
             'login'         => true,
             'logout'        => true,
             'translate'     => true,
         ];
-    }
-}

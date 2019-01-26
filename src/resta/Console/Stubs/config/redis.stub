@@ -1,28 +1,32 @@
 <?php
 
-namespace App\__project__\__version__\Config;
+return [
 
-class Redis
-{
-    /**
-     * redis settings.
-     * access redis object for every service.
-     * @return array
-     */
-    public function handle() : array
-    {
-        //redis array
-        $redis=[];
+    /*
+    |--------------------------------------------------------------------------
+    | Redis Databases
+    |--------------------------------------------------------------------------
+    |
+    | Redis is an open source, fast, and advanced key-value store that also
+    | provides a richer body of commands than a typical key-value system
+    | such as APC or Memcached. Laravel makes it easy to dig right in.
+    |
+    */
+    'redis' => [
+        'default' => [
+            'host'          => environment('redis_host', '127.0.0.1'),
+            'password'      => environment('redis_password', null),
+            'port'          => environment('redis_port', '6379'),
+            'scheme'        => environment('redis_scheme', 'tcp'),
+            'database'      => environment('redis_database', 0),
+        ],
+        'log' => [
+            'host'          => environment('redis_host', '127.0.0.1'),
+            'password'      => environment('redis_password', null),
+            'port'          => environment('redis_port', '6379'),
+            'scheme'        => environment('redis_scheme', 'tcp'),
+            'database'      => environment('redis_database', 0),
+        ],
+    ]
 
-        //redis settings
-        $redis['connection']['host']    =environment('redis_host', '127.0.0.1');
-        $redis['connection']['port']    =environment('redis_port', '6379');
-        $redis['connection']['scheme']  =environment('redis_scheme', 'tcp');
-
-        //select database names
-        //$redis['databases']['redisDb::log']=env('redisDb::log',1);
-
-        return $redis;
-
-    }
-}
+];

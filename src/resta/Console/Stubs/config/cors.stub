@@ -1,16 +1,3 @@
 <?php
 
-namespace App\__project__\__version__\Config;
-
-class Cors
-{
-    /**
-     * cors class settings.
-     * access via http parameters allowed for every service.
-     * @return array
-     */
-    public function handle() : array
-    {
-        return [];
-    }
-}
+return [];
