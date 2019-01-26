@@ -16,7 +16,6 @@ trait AuthenticateBasic
         }
 
         return null;
-
     }
 
     /**
