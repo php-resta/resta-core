@@ -3,24 +3,16 @@
 namespace Resta\Core\Tests\Config;
 
 use Resta\Config\Config;
-use PHPUnit\Framework\TestCase;
-use Resta\Foundation\Application;
+use Resta\Core\Tests\AbstractTest;
 
-class ConfigTest extends TestCase
+class ConfigTest extends AbstractTest
 {
-    /**
-     * @var $app Application
-     */
-    protected static $app;
-
     /**
      * @return void|mixed
      */
     protected function setUp()
     {
-        if(static::$app===null){
-            static::$app = new Application(false);
-        }
+        parent::setUp();
 
         static::$app->loadConfig(function()
         {
@@ -49,6 +41,8 @@ class ConfigTest extends TestCase
      */
     public function testBase()
     {
+        $this->assertInstanceOf(Config::class,Config::make());
+
         $this->assertSame('foo',Config::make('core.test1')->get());
         $this->assertSame('nested1value',Config::make('core.test2.nested1')->get());
     }
