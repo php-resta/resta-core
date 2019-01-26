@@ -23,13 +23,16 @@ class ConfigTest extends AbstractTest
 
         if(!file_exists($configDirectory)){
             @mkdir($configDirectory);
-            @touch($configDirectory.''.DIRECTORY_SEPARATOR.'App.php');
+            @touch($configDirectory.''.DIRECTORY_SEPARATOR.'Core.php');
         }
+
+        //set config path
+        static::$app->setPaths('config',root.''.DIRECTORY_SEPARATOR.'Config');
 
         static::$app->loadConfig(function()
         {
-           return root.''.DIRECTORY_SEPARATOR.'Config';
-        },true);
+           return core()->paths['config'];
+        });
 
         $this->values = [
             'test1'=>'foo',
@@ -40,7 +43,7 @@ class ConfigTest extends AbstractTest
 
         static::$app->loadConfig(function()
         {
-            return ['core' => $this->values];
+            return ['init' => $this->values];
         });
     }
 
@@ -49,8 +52,8 @@ class ConfigTest extends AbstractTest
      */
     public function testConfigHelper()
     {
-        $this->assertSame('foo',config('core.test1'));
-        $this->assertSame('nested1value',config('core.test2.nested1'));
+        $this->assertSame('foo',config('init.test1'));
+        $this->assertSame('nested1value',config('init.test2.nested1'));
     }
 
     /**
@@ -60,7 +63,7 @@ class ConfigTest extends AbstractTest
     {
         $this->assertSame(null,config('core-not'));
         $this->assertSame(null,config('core.not-exist'));
-        $this->assertSame($this->values,config('core'));
+        $this->assertSame($this->values,config('init'));
     }
 
     /**
@@ -69,15 +72,15 @@ class ConfigTest extends AbstractTest
      */
     public function testSetValues()
     {
-        $this->assertTrue(true,Config::make('app')->set([
+        $this->assertTrue(true,Config::make('core')->set([
             'x'=>'y',
             'x2'=>'y2'
         ]));
 
-        $this->assertSame('y',Config::make('app.x')->get());
-        $this->assertSame('y2',config('app.x2'));
+        $this->assertSame('y',Config::make('core.x')->get());
+        $this->assertSame('y2',config('core.x2'));
 
-        $this->assertNull(null,Config::make('app')->set([
+        $this->assertNull(null,Config::make('core')->set([
             'x'=>'y',
             'x2'=>'y2'
         ]));
@@ -91,8 +94,8 @@ class ConfigTest extends AbstractTest
     {
         $this->assertInstanceOf(Config::class,Config::make());
 
-        $this->assertSame('foo',Config::make('core.test1')->get());
-        $this->assertSame('nested1value',Config::make('core.test2.nested1')->get());
+        $this->assertSame('foo',Config::make('init.test1')->get());
+        $this->assertSame('nested1value',Config::make('init.test2.nested1')->get());
     }
 
 }

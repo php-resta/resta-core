@@ -69,7 +69,7 @@ class Config implements AccessorContracts
     public function set($data=array())
     {
         // receive the necessary config settings.
-        $configPath     = (core()->reelConfigPath) ?? path()->config();
+        $configPath     = path()->config();
         $configArray    = current(Str::stringToArray(self::$config));
         $setConfigPath  = $configPath.''.DIRECTORY_SEPARATOR.''.ucfirst($configArray).'.php';
         $getConfigWrap  = Arr::wrap(config($configArray));

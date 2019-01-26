@@ -35,4 +35,11 @@ interface ApplicationContracts {
      */
    public function instance ($abstract,$instance);
 
+    /**
+     * @param null $name
+     * @param null $path
+     * @return mixed
+     */
+   public function setPaths($name=null,$path=null);
+
 }

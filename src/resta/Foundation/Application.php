@@ -99,15 +99,25 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
         // by callback to the configuration values.
         if(is_object($this['config'])){
 
-            if($assignPath){
-                $this->register('reelConfigPath',call_user_func($callback));
-            }
-
             //set your path for config loader
             return tap($this['config'],function($config) use($callback) {
                 return $config->setConfig(call_user_func($callback));
             });
 
+        }
+    }
+
+    /**
+     * @param null $name
+     * @param null $path
+     * @return mixed|void
+     */
+    public function setPaths($name=null,$path=null)
+    {
+        // save the globally identified paths to
+        // the global container object of the resta.
+        if($name!==null && $path!==null){
+            $this->register('paths',$name,$path);
         }
     }
 }

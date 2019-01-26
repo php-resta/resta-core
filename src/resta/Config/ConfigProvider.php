@@ -49,6 +49,7 @@ class ConfigProvider extends ApplicationProvider
             // where we pass namespace and paths to a kernel object and process them.
             $path = ($path === null) ? path()->config() : $path;
             $configFiles = Utils::glob($path);
+
         }
 
         //The config object is a kernel object

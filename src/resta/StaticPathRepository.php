@@ -57,6 +57,9 @@ class StaticPathRepository
      */
     public function appConfig($app=null)
     {
+        if(isset(core()->paths['config'])){
+            return core()->paths['config'];
+        }
         return $this->appVersion($app).''.DIRECTORY_SEPARATOR.''.StaticPathList::$config;
     }
 
