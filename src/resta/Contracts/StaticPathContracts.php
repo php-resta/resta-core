@@ -2,13 +2,19 @@
 
 namespace Resta\Contracts;
 
-interface StaticPathContracts {
+interface StaticPathContracts
+{
 
     /**
      * @param null $app
      * @return mixed
      */
     public function app($app=null);
+
+    /**
+     * @return mixed
+     */
+    public function autoloadNamespace();
 
     /**
      * @return mixed

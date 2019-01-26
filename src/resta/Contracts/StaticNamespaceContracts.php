@@ -7,6 +7,11 @@ interface StaticNamespaceContracts
     /**
      * @return mixed
      */
+    public function autoloadNamespace();
+
+    /**
+     * @return mixed
+     */
     public function bootDir();
 
     /**
@@ -122,17 +127,7 @@ interface StaticNamespaceContracts
     /**
      * @return mixed
      */
-    public function serviceContainer();
-
-    /**
-     * @return mixed
-     */
     public function serviceEventDispatcher();
-
-    /**
-     * @return mixed
-     */
-    public function serviceMiddleware();
 
     /**
      * @return mixed

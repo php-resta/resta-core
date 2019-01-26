@@ -26,18 +26,8 @@ class Config implements AccessorContracts
     private static $instance = null;
 
     /**
-     * Config constructor.
-     */
-    public function __construct()
-    {
-        // we create a singleton object for the config process class.
-        if(self::$config!==null && self::$configProcessInstance===null){
-            self::$configProcessInstance = app()->makeBind(ConfigProcess::class);
-        }
-    }
-
-    /**
      * @return mixed|null
+     *
      * @throws \DI\DependencyException
      * @throws \DI\NotFoundException
      */
@@ -65,14 +55,11 @@ class Config implements AccessorContracts
      */
     public static function make($config=null)
     {
-        // check static singleton object
-        // then set as singleton with new self
-        if(self::$instance===null){
-            self::$instance=new self();
-        }
+        self::$config = $config;
+        self::$configProcessInstance = app()->makeBind(ConfigProcess::class);
 
         //static single object set config
-        return self::$instance->setConfig($config);
+        return new self();
     }
 
     /**
@@ -95,16 +82,5 @@ class Config implements AccessorContracts
                 app()->makeBind(FileProcess::class)->dumpFile($setConfigPath,$setData);
             }
         }
-    }
-
-    /**
-     * @param $config
-     * @return Config
-     */
-    private function setConfig($config)
-    {
-        self::$config = $config;
-
-        return new self();
     }
 }

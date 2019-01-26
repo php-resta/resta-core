@@ -18,6 +18,14 @@ class StaticPathRepository
     }
 
     /**
+     * @return mixed
+     */
+    public function autoloadNamespace()
+    {
+        return root.''.DIRECTORY_SEPARATOR.''.StaticPathList::$appDefine.''.DIRECTORY_SEPARATOR.''.strtolower(StaticPathList::$autoloadNamespace);
+    }
+
+    /**
      * @return string
      */
     public function appBuilder()

@@ -9,6 +9,14 @@ class StaticNamespaceRepository extends StaticPathRepository
     /**
      * @return string
      */
+    public function autoloadNamespace()
+    {
+        return StaticPathList::$autoloadNamespace;
+    }
+
+    /**
+     * @return string
+     */
     public function bootDir()
     {
         return StaticPathList::$boot;
@@ -191,13 +199,6 @@ class StaticNamespaceRepository extends StaticPathRepository
         return Utils::getNamespace(parent::serviceAnnotations());
     }
 
-    /**
-     * @return mixed
-     */
-    public function serviceContainer()
-    {
-        return Utils::getNamespace(parent::serviceContainer());
-    }
 
     /**
      * @return mixed
