@@ -2,8 +2,8 @@
 
 namespace Resta\Authenticate;
 
-trait AuthenticateResponse {
-
+trait AuthenticateResponse
+{
     /**
      * @var array $params
      */
@@ -12,15 +12,16 @@ trait AuthenticateResponse {
     /**
      * @return bool
      */
-    private function checkStatus(){
+    private function checkStatus()
+    {
         return isset($this->params['status']) && $this->params['status'];
     }
 
     /**
      * @return void|mixed
      */
-    protected function getCheckResult(){
-
+    protected function getCheckResult()
+    {
         // if the status value is true,
         // we send output generated from the token value.
         if($this->checkStatus()){
@@ -34,8 +35,8 @@ trait AuthenticateResponse {
     /**
      * @return void|mixed
      */
-    protected function getLogoutResult(){
-
+    protected function getLogoutResult()
+    {
         // if the status value is true,
         // we send output generated from the token value.
         if($this->checkStatus()){
@@ -49,8 +50,8 @@ trait AuthenticateResponse {
     /**
      * @return array
      */
-    protected function getResult(){
-
+    protected function getResult()
+    {
         $result= [];
 
         // if the status value is true,

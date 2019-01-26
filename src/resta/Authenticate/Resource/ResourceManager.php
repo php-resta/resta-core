@@ -2,8 +2,8 @@
 
 namespace Resta\Authenticate\Resource;
 
-class ResourceManager {
-
+class ResourceManager
+{
     /**
      * @var $auth
      */
@@ -18,8 +18,8 @@ class ResourceManager {
      * ResourceManager constructor.
      * @param $auth
      */
-    public function __construct($auth) {
-
+    public function __construct($auth)
+    {
         //authenticate instance
         $this->auth=$auth;
 

@@ -5,8 +5,8 @@ namespace Resta\Authenticate\Driver\Eloquent;
 use Resta\Authenticate\Driver\BuilderContract;
 use Resta\Authenticate\Driver\BuilderParamGenerator;
 
-class UserBuilder extends UserBuilderHelper implements BuilderContract {
-
+class UserBuilder extends UserBuilderHelper implements BuilderContract
+{
     //get param generator
     use BuilderParamGenerator;
 
@@ -19,8 +19,8 @@ class UserBuilder extends UserBuilderHelper implements BuilderContract {
      * UserBuilder constructor.
      * @param $auth \Resta\Authenticate\AuthenticateProvider
      */
-    public function __construct($auth) {
-
+    public function __construct($auth)
+    {
         //authenticate instance
         $this->auth=$auth;
 
@@ -30,8 +30,8 @@ class UserBuilder extends UserBuilderHelper implements BuilderContract {
     /**
      * @param $token
      */
-    public function check($token){
-
+    public function check($token)
+    {
         // using the driver object we write the query builder statement.
         // we do the values of the query with the token that are sent.
         $query=$this->checkQuery($token);
@@ -39,15 +39,14 @@ class UserBuilder extends UserBuilderHelper implements BuilderContract {
         // with query we bind the returned values to the params property of the auth object.
         // and so the auth object will make a final return with these values.
         $this->paramValues('check',$query);
-
     }
 
     /**
      * @param $credentials \Resta\Authenticate\Resource\AuthLoginCredentialsManager
      * @return mixed|void
      */
-    public function login($credentials){
-
+    public function login($credentials)
+    {
         // using the driver object we write the query builder statement.
         // we do the values of the query with the credentials that are sent.
         $query=$this->setQuery($credentials);
@@ -68,8 +67,8 @@ class UserBuilder extends UserBuilderHelper implements BuilderContract {
     /**
      * @param $token
      */
-    public function logout($token){
-
+    public function logout($token)
+    {
         // using the driver object we write the query builder statement.
         // we do the values of the query with the token that are sent.
         $query=$this->logoutQuery($token);
@@ -80,6 +79,5 @@ class UserBuilder extends UserBuilderHelper implements BuilderContract {
 
         //token updating as null
         $this->updateToken(md5(time()));
-
     }
 }

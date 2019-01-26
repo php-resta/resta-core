@@ -2,8 +2,8 @@
 
 namespace Resta\Authenticate\Driver\Eloquent;
 
-class UserBuilderHelper {
-
+class UserBuilderHelper
+{
     /**
      * @var array
      */
@@ -26,8 +26,8 @@ class UserBuilderHelper {
      * @param $driver
      * @return mixed
      */
-    protected function callbackQueryWithoutCredentials($driver){
-
+    protected function callbackQueryWithoutCredentials($driver)
+    {
         if($this->isCallableAddToWhere()){
 
             return $driver::where(function($query) {
@@ -44,8 +44,8 @@ class UserBuilderHelper {
      * @param $token
      * @return mixed
      */
-    protected function checkQuery($token){
-
+    protected function checkQuery($token)
+    {
         //we get the model specified for the builder.
         $driver=$this->query['driver'];
 
@@ -65,8 +65,8 @@ class UserBuilderHelper {
     /**
      * @return bool
      */
-    protected function isCallableAddToWhere(){
-
+    protected function isCallableAddToWhere()
+    {
         // addToWhere checks whether
         // the config value is a callable value.
         return is_callable($this->query['addToWhere']);
@@ -76,8 +76,8 @@ class UserBuilderHelper {
      * @param $token
      * @return mixed
      */
-    protected function logoutQuery($token){
-
+    protected function logoutQuery($token)
+    {
         //we get the model specified for the builder.
         $driver=$this->query['driver'];
 
@@ -95,14 +95,13 @@ class UserBuilderHelper {
         });
 
         return $query;
-
     }
 
     /**
      * @param $query
      */
-    protected function queryAddToWhere($query){
-
+    protected function queryAddToWhere($query)
+    {
         // if the addToWhereClosure value is a closure,
         // then in this case we actually run
         // the closure object and add it to the query value.
@@ -115,8 +114,8 @@ class UserBuilderHelper {
      * @param $credentials
      * @return mixed
      */
-    protected function setQuery($credentials){
-
+    protected function setQuery($credentials)
+    {
         //we get the model specified for the builder.
         $driver=$this->query['driver'];
 
@@ -147,8 +146,8 @@ class UserBuilderHelper {
     /**
      * @return void|mixed
      */
-    protected function updateToken($token=null){
-
+    protected function updateToken($token=null)
+    {
         //if query status value is true
         if($this->auth->params['status']){
 

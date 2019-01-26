@@ -2,8 +2,8 @@
 
 namespace Resta\Authenticate;
 
-trait AuthenticateToken {
-
+trait AuthenticateToken
+{
     /**
      * @var null
      */
@@ -12,8 +12,8 @@ trait AuthenticateToken {
     /**
      * @return string
      */
-    public function getTokenData(){
-
+    public function getTokenData()
+    {
         // the absolute params property must be present
         // in the object and the params value must be the builder key.
         if(property_exists($this,'params') and isset($this->params['builder'])){
@@ -37,8 +37,8 @@ trait AuthenticateToken {
      * @param callable $callback
      * @return mixed
      */
-    private function tokenForConfig($authData,callable $callback){
-
+    private function tokenForConfig($authData,callable $callback)
+    {
         // we get the authenticate token value
         // from the config values.
         $configToken=$this->getConfigToken();

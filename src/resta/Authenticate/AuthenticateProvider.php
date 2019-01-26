@@ -6,8 +6,8 @@ use Resta\Authenticate\Resource\AuthCheckManager;
 use Resta\Authenticate\Resource\AuthLoginManager;
 use Resta\Authenticate\Resource\AuthLogoutManager;
 
-class AuthenticateProvider extends ConfigProvider implements AuthenticateContract {
-
+class AuthenticateProvider extends ConfigProvider implements AuthenticateContract
+{
     //get auth response,auth exception,auth token and auth basic
     use AuthenticateResponse,AuthenticateException,AuthenticateToken,AuthenticateBasic;
 
@@ -19,8 +19,8 @@ class AuthenticateProvider extends ConfigProvider implements AuthenticateContrac
     /**
      * @return bool
      */
-    public function check(){
-
+    public function check()
+    {
         // header to determine whether
         // the token value is present and return a callback.
         return $this->checkTokenViaHeaders(function($token){
@@ -33,15 +33,14 @@ class AuthenticateProvider extends ConfigProvider implements AuthenticateContrac
             // the boolean value from the checkResult method.
             return $this->getCheckResult();
         });
-
     }
 
     /**
      * @param $store
      * @return $this
      */
-    public function guard($guard) {
-
+    public function guard($guard)
+    {
         $this->guard=$guard;
 
         $this->setAuthenticateNeeds();
@@ -52,8 +51,8 @@ class AuthenticateProvider extends ConfigProvider implements AuthenticateContrac
     /**
      * @return bool
      */
-    public function id(){
-
+    public function id()
+    {
         // we obtain the id value obtained via
         // authenticate availability with the help of callback object.
         return $this->checkParamsViaAvailability('authId',function($id){
@@ -66,8 +65,8 @@ class AuthenticateProvider extends ConfigProvider implements AuthenticateContrac
      * @param bool $objectReturn
      * @return $this|mixed
      */
-    public function login($credentials=null,$objectReturn=false){
-
+    public function login($credentials=null,$objectReturn=false)
+    {
         // we will determine whether
         // the http path is correct for this method.
         $this->checkProcessHttpMethod('login');
@@ -88,8 +87,8 @@ class AuthenticateProvider extends ConfigProvider implements AuthenticateContrac
     /**
      * @return mixed|void
      */
-    public function logout(){
-
+    public function logout()
+    {
         // we will determine whether
         // the http path is correct for this method.
         $this->checkProcessHttpMethod('logout');
@@ -111,8 +110,8 @@ class AuthenticateProvider extends ConfigProvider implements AuthenticateContrac
     /**
      * @return bool
      */
-    public function token(){
-
+    public function token()
+    {
         // we obtain the token value obtained via
         // authenticate availability with the help of callback object.
         return $this->checkParamsViaAvailability('authToken',function($token){
@@ -123,8 +122,8 @@ class AuthenticateProvider extends ConfigProvider implements AuthenticateContrac
     /**
      * @return bool
      */
-    public function user(){
-
+    public function user()
+    {
         // we obtain the user value obtained via
         // authenticate availability with the help of callback object.
         return $this->checkParamsViaAvailability('auth',function($user){
@@ -135,8 +134,8 @@ class AuthenticateProvider extends ConfigProvider implements AuthenticateContrac
     /**
      * @return bool
      */
-    public function userData(){
-
+    public function userData()
+    {
         // we obtain the data value obtained via
         // authenticate availability with the help of callback object.
         return $this->checkParamsViaAvailability('data',function($data){

@@ -2,8 +2,8 @@
 
 namespace Resta\Authenticate;
 
-interface AuthenticateContract {
-
+interface AuthenticateContract
+{
     /**
      * @return mixed
      */

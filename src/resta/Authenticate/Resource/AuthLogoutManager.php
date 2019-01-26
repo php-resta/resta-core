@@ -2,8 +2,8 @@
 
 namespace Resta\Authenticate\Resource;
 
-class AuthLogoutManager extends ResourceManager {
-
+class AuthLogoutManager extends ResourceManager
+{
     /**
      * @var $token
      */
@@ -28,8 +28,8 @@ class AuthLogoutManager extends ResourceManager {
     /**
      * @return void|mixed
      */
-    public function logoutProcess(){
-
+    public function logoutProcess()
+    {
         // Finally, we attempt to login the user by running
         // the login method of the builder object.
         $this->driverBuilderInstance->logout($this->token);

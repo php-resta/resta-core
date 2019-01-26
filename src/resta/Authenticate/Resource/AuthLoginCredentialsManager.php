@@ -4,8 +4,8 @@ namespace Resta\Authenticate\Resource;
 
 use Resta\Authenticate\AuthenticateRequest;
 
-class AuthLoginCredentialsManager {
-
+class AuthLoginCredentialsManager
+{
     /**
      * @var $credentials
      */
@@ -26,8 +26,8 @@ class AuthLoginCredentialsManager {
      * @param $credentials
      * @param bool $using
      */
-    public function __construct($credentials,$using=false){
-
+    public function __construct($credentials,$using=false)
+    {
         //get credentials as default
         $this->credentials=$credentials;
 
@@ -48,8 +48,8 @@ class AuthLoginCredentialsManager {
     /**
      * @return mixed
      */
-    public function get(){
-
+    public function get()
+    {
         //get credentials
         return $this->credentials;
     }
@@ -57,8 +57,8 @@ class AuthLoginCredentialsManager {
     /**
      * @return null
      */
-    public function getCredentialHash(){
-
+    public function getCredentialHash()
+    {
         //get credential hash
         return $this->credentialHash;
     }
@@ -66,8 +66,8 @@ class AuthLoginCredentialsManager {
     /**
      * @return void|mixed
      */
-    private function handle(){
-
+    private function handle()
+    {
         // with the request object we get
         // the credentials values through the all method.
         $this->credentials=($this->request===null) ? $this->get() : $this->request->credentials($this->credentials);
@@ -76,12 +76,11 @@ class AuthLoginCredentialsManager {
     /**
      * @return void|mixed
      */
-    private function setCredentialHash(){
-
+    private function setCredentialHash()
+    {
         //set credential hash
         if(count($this->credentials)){
             $this->credentialHash=md5(sha1(implode("|",$this->credentials)));
         }
-
     }
 }

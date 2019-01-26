@@ -2,8 +2,8 @@
 
 namespace Resta\Authenticate\Resource;
 
-class AuthCheckManager extends ResourceManager {
-
+class AuthCheckManager extends ResourceManager
+{
     /**
      * @var $token
      */
@@ -28,8 +28,8 @@ class AuthCheckManager extends ResourceManager {
     /**
      * @return void|mixed
      */
-    public function checkProcess(){
-
+    public function checkProcess()
+    {
         // Finally, we attempt to login the user by running
         // the login method of the builder object.
         $this->driverBuilderInstance->check($this->token);

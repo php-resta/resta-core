@@ -2,8 +2,8 @@
 
 namespace Resta\Authenticate\Driver;
 
-interface BuilderContract {
-
+interface BuilderContract
+{
     /**
      * @param $token
      * @return mixed

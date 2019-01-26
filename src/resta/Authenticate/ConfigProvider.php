@@ -4,8 +4,8 @@ namespace Resta\Authenticate;
 
 use Store\Services\HttpSession as Session;
 
-class ConfigProvider {
-
+class ConfigProvider
+{
     /**
      * @var string
      */
@@ -34,8 +34,8 @@ class ConfigProvider {
     /**
      * ConfigProvider constructor.
      */
-    public function __construct() {
-
+    public function __construct()
+    {
         $this->config();
 
         if($this->guard=="default"){
@@ -46,8 +46,8 @@ class ConfigProvider {
     /**
      * @return void|mixed
      */
-    public function config(){
-
+    public function config()
+    {
         $this->config=config('authenticate');
 
         return $this->config;
@@ -56,20 +56,19 @@ class ConfigProvider {
     /**
      * @return string
      */
-    public function getAddToWhere(){
-
+    public function getAddToWhere()
+    {
         if(isset($this->config['guard'][$this->guard]['addToWhere'])){
             return $this->config['guard'][$this->guard]['addToWhere'];
         }
         return null;
-
     }
 
     /**
      * @return string
      */
-    public function getConfigToken(){
-
+    public function getConfigToken()
+    {
         if(isset($this->config['guard'][$this->guard]['token'])){
             return $this->config['guard'][$this->guard]['token'];
         }
@@ -79,16 +78,16 @@ class ConfigProvider {
     /**
      * @return string
      */
-    public function getCredentials(){
-
+    public function getCredentials()
+    {
         return $this->config['guard'][$this->guard]['credentials'];
     }
 
     /**
      * @return string
      */
-    public function getDriverBuilderNamespace(){
-
+    public function getDriverBuilderNamespace()
+    {
         $model=$this->getModel();
 
         if($model=="Default"){
@@ -100,8 +99,8 @@ class ConfigProvider {
     /**
      * @return string
      */
-    public function getDriver(){
-
+    public function getDriver()
+    {
         $this->driver=ucfirst($this->config['guard'][$this->guard]['driver']);
 
         return $this->driver;
@@ -110,8 +109,8 @@ class ConfigProvider {
     /**
      * @return string
      */
-    public function getDriverNamespace(){
-
+    public function getDriverNamespace()
+    {
         $model=$this->getModel();
 
         if($model=="Default"){
@@ -123,16 +122,16 @@ class ConfigProvider {
     /**
      * @return string
      */
-    public function getHttp(){
-
+    public function getHttp()
+    {
         return $this->config['guard'][$this->guard]['http'];
     }
 
     /**
      * @return string
      */
-    public function getModel(){
-
+    public function getModel()
+    {
         $this->model=ucfirst($this->config['guard'][$this->guard]['model']);
 
         return $this->model;
@@ -141,16 +140,16 @@ class ConfigProvider {
     /**
      * @return string
      */
-    public function getTokenKey(){
-
+    public function getTokenKey()
+    {
         return $this->config['guard'][$this->guard]['key'];
     }
 
     /**
      * @return void|mixed
      */
-    protected function setAuthenticateNeeds(){
-
+    protected function setAuthenticateNeeds()
+    {
         $this->getDriver();
 
         $this->getModel();
@@ -160,8 +159,8 @@ class ConfigProvider {
      * @param $store
      * @return $this
      */
-    public function store($store) {
-
+    public function store($store)
+    {
         $this->store=$store;
 
         return $this;
