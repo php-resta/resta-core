@@ -39,13 +39,15 @@ class FileProcess
     /**
      * @param $file
      * @param $data
+     * @return bool
      */
     public function dumpFile($file,$data)
     {
         try {
             $this->fs->dumpFile($file,$data);
+            return true;
         } catch (IOExceptionInterface $exception) {
-            exception()->runtime('Unexpected dump file error');
+            return false;
         }
     }
 
@@ -86,6 +88,14 @@ class FileProcess
         } catch (IOExceptionInterface $e) {
             return "An error occurred while creating your directory at ".$e->getPath();
         }
+    }
+
+    /**
+     * @param $file
+     */
+    public function setFile($file)
+    {
+        @touch($file);
     }
 
     /**

@@ -86,17 +86,22 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
         return ($this->console()) ? null : $this->kernel->response;
     }
 
-    /**ContainerContracts
-     * configuration loader
+    /**
+     *ContainerContracts configuration loader
      *
+     * @param $assignPath false
      * @param callable $callback
      * @return mixed
      */
-    public function loadConfig(callable $callback)
+    public function loadConfig(callable $callback,$assignPath=false)
     {
         // it adds the values in path data specified
         // by callback to the configuration values.
         if(is_object($this['config'])){
+
+            if($assignPath){
+                $this->register('reelConfigPath',call_user_func($callback));
+            }
 
             //set your path for config loader
             return tap($this['config'],function($config) use($callback) {
