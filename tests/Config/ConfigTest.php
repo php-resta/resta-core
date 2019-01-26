@@ -39,7 +39,7 @@ class ConfigTest extends AbstractTest
      * @throws \DI\DependencyException
      * @throws \DI\NotFoundException
      */
-    public function testBase()
+    public function testConfigFacade()
     {
         $this->assertInstanceOf(Config::class,Config::make());
 
