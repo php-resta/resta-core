@@ -3,7 +3,7 @@
 namespace App\__project__\__version__;
 
 use Monolog\Logger;
-use Monolog\Handler\StreamHandler;
+use Monolog\Handler\RotatingFileHandler;
 
 class ServiceLogController
 {
@@ -26,7 +26,13 @@ class ServiceLogController
 
         //monologue library and make the necessary adjustments.
         $log = new Logger('monolog');
-        $log->pushHandler(new StreamHandler($filePath, Logger::INFO));
+
+        $handler = new RotatingFileHandler($filePath, 0, Logger::INFO, true, 0664);
+
+        # '/' in date format is treated like '/' in directory path
+        # so Y/m/d-filename will create path: eg. 2019/01/01-filename.log
+        $handler->setFilenameFormat('{date}-{filename}', 'Y/m/d');
+        $log->pushHandler($handler);
 
         //We write to the specified file.
         $log->{$type}(json_encode($output));
