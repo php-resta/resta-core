@@ -51,9 +51,7 @@ class Exception extends ConsoleOutputter {
 
         //set project touch
         $this->file->touch($this);
-
-        Utils::chmod($this->optional());
-
+        
         echo $this->classical(' > Exception called as "'.$this->argument['exception'].'" has been successfully created in the '.app()->namespace()->optionalException().'');
     }
 }

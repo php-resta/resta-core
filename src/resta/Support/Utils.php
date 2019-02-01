@@ -242,7 +242,7 @@ class Utils
     /**
      * @param $path
      */
-    public static function chmod($path)
+    public static function makeWritable($path)
     {
         $dir = new \DirectoryIterator($path);
 
@@ -251,7 +251,7 @@ class Utils
             chmod($item->getPathname(), 0777);
 
             if ($item->isDir() && !$item->isDot()) {
-                self::chmod($item->getPathname());
+                self::makeWritable($item->getPathname());
             }
         }
     }

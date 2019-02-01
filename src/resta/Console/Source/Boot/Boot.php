@@ -41,9 +41,7 @@ class Boot extends ConsoleOutputter {
         $this->touch['main/boot']        = StaticPathModel::bootDir().'/'.$this->argument['boot'].'.php';
 
         $this->file->touch($this);
-
-        Utils::chmod(root);
-
+        
         echo $this->classical('---------------------------------------------------------------------------');
         echo $this->bluePrint('Booting Class Named ['.$this->argument['project'].'] Has Been Successfully Created');
         echo $this->classical('---------------------------------------------------------------------------');

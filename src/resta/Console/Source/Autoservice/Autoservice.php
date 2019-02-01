@@ -47,8 +47,6 @@ class Autoservice extends ConsoleOutputter {
 
         $this->file->touch($this);
 
-        Utils::chmod(root);
-
         echo $this->classical(' > Auto Service called as "'.$autoDirectory[0].'" has been successfully created in the '.$this->autoService().'');
     }
 

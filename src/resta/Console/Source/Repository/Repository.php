@@ -91,8 +91,6 @@ class Repository extends ConsoleOutputter {
             //set project touch
             $this->file->touch($this);
 
-            Utils::chmod($this->repository());
-
             echo $this->info('Repository Named "'.$this->argument['source'].'" Has Been Successfully Created');
 
             return true;

@@ -68,8 +68,6 @@ class Model extends ConsoleOutputter {
 
         $this->setAnnotations();
 
-        Utils::chmod($this->model());
-
         echo $this->classical(' > Model called as "'.$this->argument['file'].'" has been successfully created in the '.app()->namespace()->model().'');
     }
 

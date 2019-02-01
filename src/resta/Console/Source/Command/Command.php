@@ -42,8 +42,6 @@ class Command extends ConsoleOutputter {
 
         $this->file->touch($this);
 
-        Utils::chmod(root);
-
         echo $this->classical(' > Commander called as "'.$this->argument['command'].'" has been successfully created in the '.app()->namespace()->command().'');
 
     }

@@ -42,8 +42,6 @@ class Env extends ConsoleOutputter {
         //set key file touch
         $this->file->touch($this);
 
-        Utils::chmod(StaticPathModel::appPath());
-
         echo $this->classical(' > Environment file called as "'.$envFile.'" has been successfully created in the '.StaticPathModel::appPath().'');
     }
 }

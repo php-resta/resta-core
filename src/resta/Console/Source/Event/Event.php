@@ -114,10 +114,6 @@ class Event extends ConsoleOutputter {
                 $this->file->touch($this);
             }
         }
-
-
-        Utils::chmod($this->optional());
-
         echo $this->classical(' > Your events has been successfully created in the '.app()->namespace()->optionalEvents().'');
     }
 }
