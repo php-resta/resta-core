@@ -22,6 +22,11 @@ class StaticPathList
     /**
      * @var string
      */
+    public static $projectPrefixGroup='Api\\Main';
+
+    /**
+     * @var string
+     */
     public static $methodPrefix='Action';
 
     /**

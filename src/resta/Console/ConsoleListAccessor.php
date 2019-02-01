@@ -2,8 +2,10 @@
 
 namespace Resta\Console;
 
-use Resta\StaticPathModel;
+use Resta\Support\Str;
 use Resta\Support\Utils;
+use Resta\StaticPathList;
+use Resta\StaticPathModel;
 
 trait ConsoleListAccessor {
 
@@ -12,7 +14,7 @@ trait ConsoleListAccessor {
         if($this->project===null){
             throw new \InvalidArgumentException('Project name is invalid');
         }
-        return StaticPathModel::projectPath($this->projectPrefix,$this->project);
+        return StaticPathModel::projectPath(Str::slashToBackSlash(StaticPathList::$projectPrefixGroup),$this->project);
     }
 
     public function projectName(){

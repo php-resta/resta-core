@@ -5,6 +5,7 @@ namespace Resta\Console;
 use Resta\FileProcess;
 use Resta\StaticPathList;
 use Resta\StaticPathModel;
+use Resta\Support\Str;
 use Resta\Traits\ConsoleColor;
 
 class ConsoleOutputter extends ConsolePrepare {
@@ -106,12 +107,8 @@ class ConsoleOutputter extends ConsolePrepare {
             $this->argument['sourceNamespace']      = app()->namespace()->optionalSource();
 
             if(!isset($this->argument['group'])){
-
-                $this->projectPrefix=StaticPathModel::projectPrefix('Main');
-
-                $projectPrefixNamespace=str_replace("/","\\",$this->projectPrefix);
-
-                $this->argument['project']=$this->argument['project'].'\\'.$projectPrefixNamespace;
+                
+                $this->argument['project']=$this->argument['project'].'\\'.StaticPathList::$projectPrefixGroup;
             }
             else{
 

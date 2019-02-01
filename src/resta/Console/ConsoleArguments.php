@@ -3,6 +3,7 @@
 namespace Resta\Console;
 
 use Resta\Support\Utils;
+use Resta\StaticPathList;
 
 trait ConsoleArguments {
 
@@ -88,18 +89,6 @@ trait ConsoleArguments {
     }
 
     /**
-     * @param callable $callback
-     */
-    public function checkMainConsoleRunner(callable $callback){
-
-        /**if(Utils::isNamespaceExists($this->consoleClassNamespace())===false){
-            return call_user_func($callback);
-        }
-        $this->defineAppnameForCustomConsole();*/
-
-    }
-
-    /**
      * @method defineAppnameForCustomConsole
      * @return void
      */
@@ -110,19 +99,12 @@ trait ConsoleArguments {
 
         $getConsoleArgumentsWithKey=$this->getConsoleArgumentsWithKey();
 
-        if(isset($getConsoleArgumentsWithKey['group'])){
-            $app=$arguments[2].'\\Api\\'.$getConsoleArgumentsWithKey['group'];
+        if(isset($arguments[2])){
+            $app=$arguments[2].'\\'.StaticPathList::$projectPrefixGroup;
         }
-        else{
 
-            if(isset($arguments[2])){
-                $app=$arguments[2].'\Api\Main';
-            }
-
-            if(!defined('group')){
-                define('group','Api\Main');
-            }
-
+        if(!defined('group')){
+            define('group',StaticPathList::$projectPrefixGroup);
         }
 
         if(!defined('app') and isset($arguments[2])) define('app',$app);
