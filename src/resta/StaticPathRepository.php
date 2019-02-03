@@ -192,10 +192,9 @@ class StaticPathRepository
      */
     public function appRepository()
     {
-        $projectPrefix      = StaticPathModel::projectPrefix();
-        $repositoryPath     = $this->app().''.DIRECTORY_SEPARATOR.''.StaticPathList::$repository;
+        $repository     = $this->app().''.DIRECTORY_SEPARATOR.''.StaticPathList::$repository;
 
-        return StaticPathModel::projectPath($projectPrefix.''.DIRECTORY_SEPARATOR.'',$repositoryPath);
+        return $repository;
     }
 
     /**
