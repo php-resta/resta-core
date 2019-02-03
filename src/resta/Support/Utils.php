@@ -134,22 +134,10 @@ class Utils
 
 
     /**
-     * @param null $app
-     * @param null $appInstance
      * @return string
      */
-    public static function getAppVersion($app=null,$appInstance=null)
+    public static function getAppVersion()
     {
-        if(defined('app')){
-
-            $versionClass='App\\'.$app.'\version';
-
-            if(file_exists(self::getPathFromNamespace($versionClass)) && self::isNamespaceExists($versionClass)){
-                $instance=new $versionClass;
-                return $instance->handle($appInstance);
-            }
-        }
-
         return 'V1';
     }
 

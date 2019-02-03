@@ -85,10 +85,9 @@ class StaticPathRepository
      */
     public function appKernel()
     {
-        $projectPrefix      = StaticPathModel::projectPrefix();
         $kernel     = $this->app().''.DIRECTORY_SEPARATOR.''.StaticPathList::$kernel;
 
-        return StaticPathModel::projectPath($projectPrefix.''.DIRECTORY_SEPARATOR.'',$kernel);
+        return $kernel;
     }
 
     /**
@@ -96,7 +95,7 @@ class StaticPathRepository
      */
     public function appLanguage()
     {
-        return StaticPathModel::getAppStorage().''.DIRECTORY_SEPARATOR.''.StaticPathList::$language;
+        return self::appStorage().''.DIRECTORY_SEPARATOR.''.StaticPathList::$language;
     }
 
     /**
@@ -104,7 +103,7 @@ class StaticPathRepository
      */
     public function appLog()
     {
-        return StaticPathModel::getAppStorage().''.DIRECTORY_SEPARATOR.''.StaticPathList::$log;
+        return self::appStorage().''.DIRECTORY_SEPARATOR.''.StaticPathList::$log;
     }
 
     /**
@@ -222,7 +221,7 @@ class StaticPathRepository
      */
     public function appResourche()
     {
-        return StaticPathModel::getAppStorage().''.DIRECTORY_SEPARATOR.''.StaticPathList::$resource;
+        return self::appStorage().''.DIRECTORY_SEPARATOR.''.StaticPathList::$resource;
     }
 
     /**
@@ -266,7 +265,9 @@ class StaticPathRepository
      */
     public function appStorage()
     {
-        return StaticPathModel::getAppStorage();
+        $storage = $this->app().''.DIRECTORY_SEPARATOR.''.StaticPathList::$storage;
+
+        return $storage;
     }
 
     /**
@@ -284,7 +285,12 @@ class StaticPathRepository
     public function appVersion($app=null)
     {
         if(defined('app')){
-            return $this->app($app).''.DIRECTORY_SEPARATOR.''.Utils::getAppVersion(app);
+
+            $prefixGroup = Str::slashToBackSlash(StaticPathList::$projectPrefixGroup);
+            $app = $this->app($app).''.DIRECTORY_SEPARATOR.''.$prefixGroup.''.DIRECTORY_SEPARATOR.''.Utils::getAppVersion();
+
+            return $app;
+
         }
         return null;
     }

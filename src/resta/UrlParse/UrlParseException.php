@@ -20,12 +20,6 @@ class UrlParseException
             throw new \DomainException('No Project');
         }
 
-        //If there is no namespace on the url
-        //we throw an exception
-        if($data['namespace']===null){
-            throw new \DomainException('No Namespace');
-        }
-
         //If there is no endpoint on the url
         //we throw an exception
         if($data['endpoint']===null){

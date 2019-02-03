@@ -15,7 +15,7 @@ class UrlParseApplication
     /**
      * @var array $urlNames
      */
-    protected $urlNames=['project','namespace','endpoint','method'];
+    protected $urlNames=['project','version','endpoint','method'];
 
     /**
      * @return void
@@ -57,6 +57,7 @@ class UrlParseApplication
         //convert array for query
         //we are removing the first empty element from the array due to the slash sign.
         $arrayForQuery=explode("/",request()->getPathInfo());
+
         array_shift($arrayForQuery);
 
         //we set the first letter of the array elements
@@ -73,18 +74,8 @@ class UrlParseApplication
      */
     private function getUrlListValues($key,$value)
     {
-        if($this->urlNames[$key]=="namespace"){
-
-            // If the key value of the url is specified as a namespace,
-            // then in this case we are converting this group value to namespace format.
-            $projectPrefixNamespace=Utils::slashToBackSlash(StaticPathList::$projectPrefix);
-            $this->urlList[$this->urlNames[$key]]=(strlen($value)>0) ? $projectPrefixNamespace.'\\'.$value : null;
-        }
-        else{
-
-            //If the value from the url is an external value, the default format is applied.
-            $this->urlList[$this->urlNames[$key]]=(strlen($value)>0) ? $value : null;
-        }
+        //If the value from the url is an external value, the default format is applied.
+        $this->urlList[$this->urlNames[$key]]=(strlen($value)>0) ? $value : null;
     }
 
 

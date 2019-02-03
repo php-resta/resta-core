@@ -3,6 +3,7 @@
 namespace Resta\GlobalLoaders;
 
 use Resta\ApplicationProvider;
+use Resta\StaticPathList;
 
 class Url extends ApplicationProvider
 {
@@ -13,8 +14,8 @@ class Url extends ApplicationProvider
     public function definitor($urlList)
     {
         //We define global URL objects globally for the application.
-        define('group',             $urlList['namespace'].'');
-        define('app',               $urlList['project'].'\\'.group);
+        define('version',           $urlList['version'].'');
+        define('app',               $urlList['project']);
         define('endpoint',          $urlList['endpoint']);
         define('method',            $urlList['method']);
 

@@ -100,7 +100,7 @@ trait ConsoleArguments {
         $getConsoleArgumentsWithKey=$this->getConsoleArgumentsWithKey();
 
         if(isset($arguments[2])){
-            $app=$arguments[2].'\\'.StaticPathList::$projectPrefixGroup;
+            $app=$arguments[2];
         }
 
         if(!defined('group')){
