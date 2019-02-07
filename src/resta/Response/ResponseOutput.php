@@ -93,6 +93,7 @@ class ResponseOutput
      */
     private function printer($output)
     {
+        
         //if the system throws an exception,
         //we subtract the hateoas extension from the output value.
         $this->printer=$this->noInExceptionHateoas($output,function() use ($output){
