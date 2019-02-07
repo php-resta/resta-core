@@ -28,8 +28,8 @@ class LoggerHandler implements LoggerInterface
      */
     public function __construct($file=null)
     {
-        $this->file=$file;
-        $this->logger=core()->loggerService;
+        $this->file = $file;
+        $this->logger = core()->loggerService;
     }
 
     /**
@@ -38,7 +38,7 @@ class LoggerHandler implements LoggerInterface
      */
     public function adapter($adapter)
     {
-        $this->adapter=$adapter;
+        $this->adapter = $adapter;
         return $this;
     }
 
@@ -164,9 +164,9 @@ class LoggerHandler implements LoggerInterface
 
         if($this->adapter!==null){
 
-            $adapter=$this->adapter;
+            $adapter = $this->adapter;
 
-            $adapter=ClosureDispatcher::bind($this->logger)->call(function() use($adapter){
+            $adapter = ClosureDispatcher::bind($this->logger)->call(function() use($adapter){
                 return $this->adapter=$adapter;
             });
         }

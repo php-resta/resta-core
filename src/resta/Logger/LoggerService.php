@@ -89,14 +89,14 @@ class LoggerService
         if(isset(core()->log)){
 
             //we get the log object that was previously assigned.
-            $log=core()->log;
+            $log = core()->log;
 
-            $base=current($log);
+            $base = current($log);
 
             if($this->adapter!==null){
 
-                $log=[];
-                $log[$this->adapter]=$base;
+                $log = [];
+                $log[$this->adapter] = $base;
             }
 
             // this object is obtained directly as an array and specifies
