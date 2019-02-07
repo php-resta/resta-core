@@ -66,13 +66,6 @@ class LoggerService
         //the service log file in the project's version directory.
         $appBase = app()->makeBind($loggerNamespace);
 
-        //in order to customize the adapter property contained in this file,
-        //we can process it in a method so that we can specify a log adapter property
-        //that is bounded by the state.
-        if(method_exists($appBase,'adapter')){
-            $appBase->adapter = $appBase->adapter();
-        }
-
         // we send the resulting adapter property as
         // a reference to the bind automatic instance class.
         $logger->setLogger($appBase,$appBase->adapter,$this);
