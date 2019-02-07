@@ -157,11 +157,15 @@ class Migration extends ConsoleOutputter {
      */
     private function getConfig()
     {
+        $defaultConnection = config('database.default');
+
+        $configdb = config('database.connections.'.$defaultConnection);
+
         return  ['paths'=>[
             path()->migration(),
             StaticPathModel::storeMigrationPath()
         ],
-            'database'=>config('database')];
+            'database'=>$configdb];
     }
 
     /**
