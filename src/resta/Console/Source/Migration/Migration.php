@@ -2,10 +2,11 @@
 
 namespace Resta\Console\Source\Migration;
 
+use Resta\StaticPathModel;
 use Migratio\SchemaFacade;
 use Resta\Console\ConsoleOutputter;
 use Resta\Console\ConsoleListAccessor;
-use Resta\StaticPathModel;
+use Store\Services\DatabaseConnection;
 
 class Migration extends ConsoleOutputter {
 
@@ -157,15 +158,11 @@ class Migration extends ConsoleOutputter {
      */
     private function getConfig()
     {
-        $defaultConnection = config('database.default');
-
-        $configdb = config('database.connections.'.$defaultConnection);
-
         return  ['paths'=>[
             path()->migration(),
             StaticPathModel::storeMigrationPath()
         ],
-            'database'=>$configdb];
+            'database'=>DatabaseConnection::getConfig()];
     }
 
     /**
