@@ -175,7 +175,13 @@ class ErrorHandler extends ApplicationProvider {
         //set json app exception
         core()->router=$appException;
 
-        $restaOutHandle=core()->out->handle();
+        $restaOutHandle = null;
+
+        if(!defined('responseApp')){
+
+            $restaOutHandle=core()->out->handle();
+        }
+
 
 
         if($restaOutHandle===null){
@@ -210,9 +216,6 @@ class ErrorHandler extends ApplicationProvider {
                 $last_error['file'] = core()->exceptionFile;
                 $last_error['line'] = core()->exceptionLine;
             }
-            //header('Content-type:application/json;charset=utf-8');
-
-            //dd($last_error);
 
             $this->setErrorHandler(
                 E_ERROR,

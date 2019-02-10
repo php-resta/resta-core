@@ -20,7 +20,7 @@ class LoggerService
     public function checkLoggerConfiguration($printer,callable $callback)
     {
         // logger service handler
-        if(config('app.logger') && isset(core()->log)){
+        if(config('app.logger')){
             return $this->logHandler($printer,'access',$this->getLoggerType());
         }
 
