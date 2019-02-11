@@ -137,22 +137,6 @@ class BootLoader extends ApplicationProvider implements BootContracts
     /**
      * @return mixed|void
      */
-    private function exception()
-    {
-        // sets a user-defined error handler function
-        // this function can be used for defining your own way of handling errors during runtime,
-        // for example in applications in which you need to do cleanup of data/files when a critical error happens,
-        // or when you need to trigger an error under certain conditions (using trigger_error()).
-        if(core()->isAvailableStore){
-            $this->app->bind('exception',function(){
-                return ErrorHandler::class;
-            });
-        }
-    }
-
-    /**
-     * @return mixed|void
-     */
     private function logger()
     {
         // to help you learn more about what's happening within your application,

@@ -6,6 +6,7 @@ use Resta\App;
 use Resta\ClassAliasGroup;
 use Resta\ClosureDispatcher;
 use Resta\ApplicationProvider;
+use Resta\Exception\ErrorHandler;
 use Resta\Container\ContainerInstanceResolver;
 
 class ApplicationPreLoader extends ApplicationProvider
@@ -44,6 +45,16 @@ class ApplicationPreLoader extends ApplicationProvider
 
         //control of required store classes.
         $this->isAvailableStore();
+
+        // sets a user-defined error handler function
+        // this function can be used for defining your own way of handling errors during runtime,
+        // for example in applications in which you need to do cleanup of data/files when a critical error happens,
+        // or when you need to trigger an error under certain conditions (using trigger_error()).
+        if(core()->isAvailableStore){
+            $this->app->bind('exception',function(){
+                return ErrorHandler::class;
+            });
+        }
     }
 
     /**

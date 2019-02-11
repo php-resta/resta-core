@@ -20,7 +20,6 @@ class Kernel extends Container implements KernelContracts
      */
     protected $originGroups=[
         'accessor',
-        'exception',
         'urlProvider',
         'environment',
         'logger',
