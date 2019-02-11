@@ -82,8 +82,7 @@ class ApplicationPreLoader extends ApplicationProvider
         // We add manifest configuration variables
         // to the manifest property in the kernel.
         if(file_exists($bootManager)){
-            $bootManagerList = require($bootManager);
-            $this->app->register('manifest','bootManager',$bootManagerList);
+            $this->app->register('manifest','bootManager',require($bootManager));
         }
 
         // We are saving the application class to
