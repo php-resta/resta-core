@@ -7,6 +7,7 @@ use Resta\ClassAliasGroup;
 use Resta\ClosureDispatcher;
 use Resta\ApplicationProvider;
 use Resta\Exception\ErrorHandler;
+use Resta\GlobalLoaders\GlobalAccessor;
 use Resta\Container\ContainerInstanceResolver;
 
 class ApplicationPreLoader extends ApplicationProvider
@@ -46,6 +47,10 @@ class ApplicationPreLoader extends ApplicationProvider
         //control of required store classes.
         $this->isAvailableStore();
 
+        $this->app->bind('accessor',function(){
+            return GlobalAccessor::class;
+        });
+
         // sets a user-defined error handler function
         // this function can be used for defining your own way of handling errors during runtime,
         // for example in applications in which you need to do cleanup of data/files when a critical error happens,
@@ -77,8 +82,8 @@ class ApplicationPreLoader extends ApplicationProvider
         // We add manifest configuration variables
         // to the manifest property in the kernel.
         if(file_exists($bootManager)){
-            require($bootManager);
-            $this->app->register('manifest','bootManager',$bootManager);
+            $bootManagerList = require($bootManager);
+            $this->app->register('manifest','bootManager',$bootManagerList);
         }
 
         // We are saving the application class to

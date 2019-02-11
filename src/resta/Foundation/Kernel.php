@@ -19,7 +19,6 @@ class Kernel extends Container implements KernelContracts
      * @var array
      */
     protected $originGroups=[
-        'accessor',
         'urlProvider',
         'environment',
         'logger',

@@ -29,16 +29,6 @@ class BootLoader extends ApplicationProvider implements BootContracts
     /**
      * @return mixed|void
      */
-    private function accessor()
-    {
-        $this->app->bind('accessor',function(){
-            return Accessor::class;
-        });
-    }
-
-    /**
-     * @return mixed|void
-     */
     private function appConsole()
     {
         //if the console is true
