@@ -1,12 +1,11 @@
 <?php
 
-namespace Resta\GlobalLoaders;
+namespace Resta\Foundation;
 
 use Resta\App;
 use Resta\ClassAliasGroup;
 use Resta\ClosureDispatcher;
 use Resta\ApplicationProvider;
-use Resta\Foundation\RegisterAppBound;
 use Resta\Container\ContainerInstanceResolver;
 
 class ApplicationPreLoader extends ApplicationProvider
@@ -61,11 +60,13 @@ class ApplicationPreLoader extends ApplicationProvider
         $this->app->register('container',$this->app);
 
         //get manifest bootManager.php
-        $bootManager = root.'/bootstrapper/Manifest/BootManager.php';
+        $seperator = DIRECTORY_SEPARATOR;
+        $bootManager = root.''.$seperator.'bootstrapper'.$seperator.'Manifest'.$seperator.'BootManager.php';
 
-        //We add manifest configuration variables to the manifest property in the kernel.
+        // We add manifest configuration variables
+        // to the manifest property in the kernel.
         if(file_exists($bootManager)){
-            $bootManager=require(root.'/bootstrapper/Manifest/BootManager.php');
+            require($bootManager);
             $this->app->register('manifest','bootManager',$bootManager);
         }
 

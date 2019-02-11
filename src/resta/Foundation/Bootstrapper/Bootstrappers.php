@@ -2,7 +2,7 @@
 
 namespace Resta\Foundation\Bootstrapper;
 
-use Resta\GlobalLoaders\ApplicationPreLoader;
+use Resta\Foundation\ApplicationPreLoader;
 
 class Bootstrappers
 {
