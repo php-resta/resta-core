@@ -2,7 +2,7 @@
 
 namespace Boot;
 
-use Resta\ApplicationProvider;
+use Resta\Foundation\ApplicationProvider;
 use Store\Traits\Annotations;
 use Resta\Contracts\BootContracts;
 

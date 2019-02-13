@@ -5,9 +5,9 @@ namespace Resta\Foundation;
 use Resta\App;
 use Resta\ClassAliasGroup;
 use Resta\ClosureDispatcher;
-use Resta\ApplicationProvider;
 use Resta\Exception\ErrorHandler;
 use Resta\GlobalLoaders\GlobalAccessor;
+use Resta\Foundation\ApplicationProvider;
 use Resta\Container\ContainerInstanceResolver;
 
 class ApplicationPreLoader extends ApplicationProvider

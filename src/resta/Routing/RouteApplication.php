@@ -3,9 +3,9 @@
 namespace Resta\Routing;
 
 use Resta\Support\Utils;
-use Resta\ApplicationProvider;
 use Resta\GlobalLoaders\Router;
 use Resta\Traits\NamespaceForRoute;
+use Resta\Foundation\ApplicationProvider;
 
 class RouteApplication extends ApplicationProvider
 {

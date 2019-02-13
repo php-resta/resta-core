@@ -2,7 +2,7 @@
 
 namespace __kernelProviderDir__;
 
-use Resta\ApplicationProvider;
+use Resta\Foundation\ApplicationProvider;
 use Resta\Contracts\BootContracts;
 use Illuminate\Pagination\Paginator;
 use Store\Packages\Database\Eloquent\Connection as Eloquent;

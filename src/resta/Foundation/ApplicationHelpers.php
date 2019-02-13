@@ -80,7 +80,7 @@ if (!function_exists('event')) {
 if (!function_exists('appInstance')) {
 
     /**
-     * @return \Resta\ApplicationProvider
+     * @return \Resta\Foundation\ApplicationProvider
      */
     function appInstance()
     {

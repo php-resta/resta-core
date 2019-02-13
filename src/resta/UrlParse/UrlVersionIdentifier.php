@@ -2,7 +2,7 @@
 
 namespace Resta\UrlParse;
 
-use Resta\ApplicationProvider;
+use Resta\Foundation\ApplicationProvider;
 
 class UrlVersionIdentifier extends ApplicationProvider
 {

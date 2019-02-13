@@ -4,7 +4,7 @@ namespace Resta\Console;
 
 use Resta\Support\Utils;
 use Resta\ClosureDispatcher;
-use Resta\ApplicationProvider;
+use Resta\Foundation\ApplicationProvider;
 
 class Console extends ApplicationProvider {
 

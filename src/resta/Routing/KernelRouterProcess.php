@@ -2,7 +2,7 @@
 
 namespace Resta\Routing;
 
-use Resta\ApplicationProvider;
+use Resta\Foundation\ApplicationProvider;
 
 class KernelRouterProcess extends ApplicationProvider
 {

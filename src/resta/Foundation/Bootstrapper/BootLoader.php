@@ -3,15 +3,15 @@
 namespace Resta\Foundation\Bootstrapper;
 
 use Resta\Support\Utils;
-use Resta\ApplicationProvider;
 use Resta\Logger\LoggerService;
 use Resta\Exception\ErrorHandler;
 use Resta\Contracts\BootContracts;
 use Resta\Provider\ServiceProvider;
 use Resta\Response\ResponseApplication;
 use Resta\UrlParse\UrlParseApplication;
-use Resta\Config\ConfigProvider as Config;
+use Resta\Foundation\ApplicationProvider;
 use Resta\Contracts\ApplicationContracts;
+use Resta\Config\ConfigProvider as Config;
 use Resta\Middleware\ApplicationMiddleware;
 use Resta\Console\Console as ConsoleManager;
 use Resta\Routing\RouteApplication as Router;

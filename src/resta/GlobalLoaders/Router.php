@@ -5,8 +5,8 @@ namespace Resta\GlobalLoaders;
 use Resta\FileProcess;
 use Resta\Routing\Route;
 use Resta\StaticPathModel;
-use Resta\ApplicationProvider;
 use Resta\Traits\NamespaceForRoute;
+use Resta\Foundation\ApplicationProvider;
 
 class Router extends ApplicationProvider
 {

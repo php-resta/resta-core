@@ -2,7 +2,7 @@
 
 namespace Resta\GlobalLoaders;
 
-use Resta\ApplicationProvider;
+use Resta\Foundation\ApplicationProvider;
 
 class Environment extends ApplicationProvider
 {

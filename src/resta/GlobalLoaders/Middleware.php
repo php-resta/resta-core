@@ -2,8 +2,8 @@
 
 namespace Resta\GlobalLoaders;
 
-use Resta\ApplicationProvider;
 use Resta\Middleware\ExcludeMiddleware;
+use Resta\Foundation\ApplicationProvider;
 
 class Middleware extends ApplicationProvider
 {

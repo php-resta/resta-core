@@ -2,7 +2,7 @@
 
 namespace Resta\Provider;
 
-use Resta\ApplicationProvider;
+use Resta\Foundation\ApplicationProvider;
 
 class ServiceProvider extends  ApplicationProvider
 {

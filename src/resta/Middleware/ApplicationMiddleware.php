@@ -3,7 +3,7 @@
 namespace Resta\Middleware;
 
 use Resta\Support\Utils;
-use Resta\ApplicationProvider;
+use Resta\Foundation\ApplicationProvider;
 use Resta\GlobalLoaders\Middleware as MiddlewareGlobalInstance;
 
 class ApplicationMiddleware extends ApplicationProvider

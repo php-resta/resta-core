@@ -4,9 +4,9 @@ namespace Resta\GlobalLoaders;
 
 use Resta\FileProcess;
 use Resta\Support\Utils;
-use Resta\ApplicationProvider;
 use Store\Services\RequestService;
 use Resta\Response\ResponseApplication;
+use Resta\Foundation\ApplicationProvider;
 use Symfony\Component\HttpFoundation\Request;
 
 class GlobalAccessor extends ApplicationProvider

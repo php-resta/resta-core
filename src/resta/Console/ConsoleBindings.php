@@ -2,8 +2,8 @@
 
 namespace Resta\Console;
 
-use Resta\ApplicationProvider;
 use Resta\Config\ConfigLoader as Config;
+use Resta\Foundation\ApplicationProvider;
 use Resta\Environment\EnvironmentConfiguration;
 use Resta\Encrypter\Encrypter as EncrypterProvider;
 

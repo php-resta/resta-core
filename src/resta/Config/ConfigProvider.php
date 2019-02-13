@@ -3,7 +3,7 @@
 namespace Resta\Config;
 
 use Resta\Support\Utils;
-use Resta\ApplicationProvider;
+use Resta\Foundation\ApplicationProvider;
 use Resta\GlobalLoaders\Config as ConfigGlobalInstance;
 
 class ConfigProvider extends ApplicationProvider

@@ -5,7 +5,7 @@ namespace Resta\GlobalLoaders;
 use Resta\Support\Str;
 use Resta\Support\Utils;
 use Resta\StaticPathList;
-use Resta\ApplicationProvider;
+use Resta\Foundation\ApplicationProvider;
 
 class Config extends ApplicationProvider
 {

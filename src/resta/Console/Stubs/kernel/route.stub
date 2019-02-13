@@ -3,7 +3,7 @@
 namespace __kernelProviderDir__;
 
 use Resta\Routing\Route;
-use Resta\ApplicationProvider;
+use Resta\Foundation\ApplicationProvider;
 use Resta\Contracts\BootContracts;
 
 class RouteServiceProvider extends ApplicationProvider implements BootContracts

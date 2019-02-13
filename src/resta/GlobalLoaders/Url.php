@@ -2,8 +2,8 @@
 
 namespace Resta\GlobalLoaders;
 
-use Resta\ApplicationProvider;
 use Resta\StaticPathList;
+use Resta\Foundation\ApplicationProvider;
 
 class Url extends ApplicationProvider
 {

@@ -6,7 +6,7 @@ use Resta\Support\Str;
 use Resta\Support\Utils;
 use Resta\StaticPathModel;
 use Resta\ClosureDispatcher;
-use Resta\ApplicationProvider;
+use Resta\Foundation\ApplicationProvider;
 
 class ErrorHandler extends ApplicationProvider {
 

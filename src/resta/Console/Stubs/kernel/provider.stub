@@ -2,7 +2,7 @@
 
 namespace __kernelDir__;
 
-use Resta\ApplicationProvider;
+use Resta\Foundation\ApplicationProvider;
 use Store\Contracts\HandleTraitContract;
 
 class AppProvider extends ApplicationProvider implements HandleTraitContract
