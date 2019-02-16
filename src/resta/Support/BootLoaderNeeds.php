@@ -13,11 +13,7 @@ class BootLoaderNeeds
     {
         static::loadUrl();
         static::loadEnvironment();
-
-        if(file_exists(path()->logger())){
-            static::loadLogger();
-        }
-
+        static::loadLogger();
         static::loadConfig();
     }
 
@@ -56,7 +52,7 @@ class BootLoaderNeeds
      */
     public static function loadLogger()
     {
-        if(isset(core()->bindings['logger'])===false){
+        if(isset(core()->bindings['logger'])===false && Utils::isNamespaceExists(app()->namespace()->logger())){
             core()->bootLoader->call(function(){
                 return $this->logger();
             });
