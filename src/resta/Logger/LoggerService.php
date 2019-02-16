@@ -99,7 +99,16 @@ class LoggerService
             // and log the application in the customized mode for the application.
             // The service log class uses the monolog class.
             if(method_exists($base,$adapter=key($log))){
-                call_user_func_array([$base,$adapter],[$printer,$file,$type]);
+
+                // this is very important.
+                // in the production log messages,
+                // we have to get the production log message kernel variable
+                // in order not to show an external error to the user
+                $logOutput = (isset(core()->productionLogMessage)) ?
+                    core()->productionLogMessage :
+                    $printer;
+
+                call_user_func_array([$base,$adapter],[$logOutput,$file,$type]);
             }
 
             //printer back

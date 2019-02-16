@@ -79,4 +79,18 @@ class ResponseApplication extends ResponseOutput
         //the output array according to the base object.
         return config('app.responseOutPutter.'.$this->getResponseKind());
     }
+
+    /**
+     * @param array $data
+     * @return array
+     */
+    public function outputFormatter($data=array())
+    {
+        $dataCapsule = config('response.data');
+
+        return array_merge(
+            config('response.meta'),
+            [$dataCapsule=>$data]
+        );
+    }
 }

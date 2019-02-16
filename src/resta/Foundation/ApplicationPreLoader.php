@@ -8,6 +8,7 @@ use Resta\ClosureDispatcher;
 use Resta\Exception\ErrorHandler;
 use Resta\GlobalLoaders\GlobalAccessor;
 use Resta\Foundation\ApplicationProvider;
+use Resta\Foundation\Bootstrapper\BootLoader;
 use Resta\Container\ContainerInstanceResolver;
 
 class ApplicationPreLoader extends ApplicationProvider
@@ -46,6 +47,7 @@ class ApplicationPreLoader extends ApplicationProvider
 
         //control of required store classes.
         $this->isAvailableStore();
+
 
         $this->app->bind('accessor',function(){
             return GlobalAccessor::class;
@@ -91,6 +93,9 @@ class ApplicationPreLoader extends ApplicationProvider
 
         //set closure bind instance for application
         $this->app->register('appClosureInstance',ClosureDispatcher::bind(app()));
+
+        //set closure bind instance for bootLoader class
+        $this->app->register('bootLoader',ClosureDispatcher::bind($this->app->makeBind(BootLoader::class)));
 
     }
 

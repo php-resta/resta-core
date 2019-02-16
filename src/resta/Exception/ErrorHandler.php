@@ -32,11 +32,11 @@ class ErrorHandler extends ApplicationProvider {
 
         $environment=environment();
 
-        if(isset($this->app->kernel()->applicationKey)){
+        if(isset(core()->applicationKey)){
 
             // application key, but if it has a null value
             // then we move the environment value to the production environment.
-            $applicationKey = $this->app->kernel()->applicationKey;
+            $applicationKey = core()->applicationKey;
             $environment    = ($applicationKey===null) ? 'production' : environment();
         }
 
@@ -119,10 +119,17 @@ class ErrorHandler extends ApplicationProvider {
      */
     public function setErrorHandler($errNo=null, $errStr=null, $errFile=null, $errLine=null, $errContext=null)
     {
+        //we have to do config installation for url exception.
+        if(isset(core()->bindings['config'])===false){
+            core()->bootLoader->call(function(){
+                return $this->configProvider();
+            });
+        }
+
         // in general we will use the exception class
         // in the store/config directory to make it possible
         // to change the user-based exceptions.
-        $exception=$this->exception;
+        $this->data['exception'] = $this->exception;
 
         //constant object as default
         $this->data['errType']              = 'Undefined';
@@ -130,6 +137,7 @@ class ErrorHandler extends ApplicationProvider {
         $this->data['errorClassNamespace']  = null;
         $this->data['errFile']              = $errFile;
         $this->data['errLine']              = $errLine;
+        $this->data['errNo']                = $errNo;
 
         // catch exception via preg match
         // and then clear the Uncaught statement from inside.
@@ -140,12 +148,12 @@ class ErrorHandler extends ApplicationProvider {
         if(is_array($meta=config('response.meta'))){
 
             //set as the success object is false
-            $appExceptionSuccess=[];
+            $this->data['appExceptionSuccess']=[];
         }
         else{
 
             //set as the success object is false
-            $appExceptionSuccess=['success'=>(bool)false,'status'=>$this->data['status']];
+            $this->data['appExceptionSuccess']=['success'=>(bool)false,'status'=>$this->data['status']];
         }
 
         //get lang message for exception
@@ -158,19 +166,42 @@ class ErrorHandler extends ApplicationProvider {
             $this->data['errLine']=$customExceptionTrace['line'];
         }
 
-        $environment=$this->getEnvironmentStatus();
-        $appException=$appExceptionSuccess+$exception::$environment(
-                $errNo,
-                $this->data['errStrReal'],
-                $this->data['errFile'],
-                $this->data['errLine'],
-                $this->data['errType'],
-                $this->data['lang']
-            );
+        $environment = $this->getEnvironmentStatus();
+
+        $vendorDirectory = str_replace(root.''.DIRECTORY_SEPARATOR.'','',$this->data['errFile']);
+
+        if(Str::startsWith($vendorDirectory,'vendor')
+            && Str::startsWith($vendorDirectory,'vendor/restapix')===false)
+        {
+            $externalMessage = ($environment==="production") ?
+                'An unexpected external error has occurred' :
+                $this->data['errStrReal'];
+
+            $appException=$this->getAppException($environment,$externalMessage);
 
 
-        //Get or Set the HTTP response code
-        http_response_code($this->data['status']);
+            //Get or Set the HTTP response code
+            http_response_code(500);
+            $this->app->terminate('responseStatus');
+            $this->app->register('responseStatus',500);
+
+
+        }
+        else{
+
+            $appException=$this->getAppException($environment,$this->data['errStrReal']);
+
+            //Get or Set the HTTP response code
+            http_response_code($this->data['status']);
+        }
+
+
+        if($environment==="production"){
+
+            $productionLogMessage = $this->getAppException('local',$this->data['errStrReal']);
+            $this->app->register('productionLogMessage',core()->out->outputFormatter($productionLogMessage));
+        }
+
 
         //set json app exception
         core()->router=$appException;
@@ -182,10 +213,11 @@ class ErrorHandler extends ApplicationProvider {
             $restaOutHandle=core()->out->handle();
         }
 
-
-
         if($restaOutHandle===null){
-            echo json_encode($appException);
+
+            $responseConfigData = config('response.data');
+
+            echo json_encode(core()->out->outputFormatter($appException));
             exit();
         }
         else{
@@ -193,6 +225,22 @@ class ErrorHandler extends ApplicationProvider {
             exit();
         }
 
+    }
+
+    /**
+     * @param $environment
+     * @return mixed
+     */
+    private function getAppException($environment,$message)
+    {
+        return $this->data['appExceptionSuccess']+$this->data['exception']::$environment(
+            $this->data['errNo'],
+            $message,
+            $this->data['errFile'],
+            $this->data['errLine'],
+            $this->data['errType'],
+            $this->data['lang']
+        );
     }
 
     /**
