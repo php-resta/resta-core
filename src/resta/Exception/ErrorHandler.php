@@ -6,6 +6,7 @@ use Resta\Support\Str;
 use Resta\Support\Utils;
 use Resta\StaticPathModel;
 use Resta\ClosureDispatcher;
+use Resta\Support\BootLoaderNeeds;
 use Resta\Foundation\ApplicationProvider;
 
 class ErrorHandler extends ApplicationProvider {
@@ -119,12 +120,9 @@ class ErrorHandler extends ApplicationProvider {
      */
     public function setErrorHandler($errNo=null, $errStr=null, $errFile=null, $errLine=null, $errContext=null)
     {
-        //we have to do config installation for url exception.
-        if(isset(core()->bindings['config'])===false){
-            core()->bootLoader->call(function(){
-                return $this->configProvider();
-            });
-        }
+        // in case of a deficiency,
+        // we need to boot our general needs to be needed for the exception.
+        BootLoaderNeeds::loadNeeds();
 
         // in general we will use the exception class
         // in the store/config directory to make it possible

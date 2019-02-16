@@ -28,7 +28,7 @@ class ApplicationProvider
         /**
          * @var $app \Resta\Contracts\ApplicationContracts|ContainerContracts
          */
-        $this->app=$app;
+        $this->app = $app;
 
         //url object assign
         $this->url();
@@ -92,6 +92,8 @@ class ApplicationProvider
      */
     public function url()
     {
+        $this->url = [];
+
         if(isset($this->app()->url)){
 
             //we assign the url object to the global kernel url object

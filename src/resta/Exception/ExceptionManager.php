@@ -3,6 +3,7 @@
 namespace Resta\Exception;
 
 use Resta\Support\Utils;
+use Resta\Support\BootLoaderNeeds;
 use Resta\Contracts\ExceptionContracts;
 
 class ExceptionManager implements ExceptionContracts {
@@ -23,16 +24,18 @@ class ExceptionManager implements ExceptionContracts {
 
         foreach (debug_backtrace() as $key=>$value){
 
-            appInstance()->register('exceptionFile',debug_backtrace()[1]['file']);
-            appInstance()->register('exceptionLine',debug_backtrace()[1]['line']);
+            app()->register('exceptionFile',debug_backtrace()[1]['file']);
+            app()->register('exceptionLine',debug_backtrace()[1]['line']);
 
-            if(isset($value['file'])){
+            BootLoaderNeeds::loadNeeds();
+
+            if(isset($value['file']) && isset(core()->url)){
                 if(preg_match('@'.core()->url['project'].'@',$value['file'])){
 
-                    appInstance()->terminate('exceptionFile');
-                    appInstance()->terminate('exceptionLine');
-                    appInstance()->register('exceptionFile',$value['file']);
-                    appInstance()->register('exceptionLine',$value['line']);
+                    app()->terminate('exceptionFile');
+                    app()->terminate('exceptionLine');
+                    app()->register('exceptionFile',$value['file']);
+                    app()->register('exceptionLine',$value['line']);
 
                     break;
                 }
