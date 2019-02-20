@@ -6,6 +6,7 @@ use Resta\Support\Utils;
 use Resta\ClosureDispatcher;
 use Resta\Traits\ApplicationPath;
 use Resta\Contracts\ApplicationContracts;
+use Resta\Contracts\ConfigProviderContracts;
 use Resta\Contracts\ApplicationHelpersContracts;
 use Resta\Foundation\Bootstrapper\Bootstrappers;
 use Resta\Foundation\Bootstrapper\KernelBootManager;
@@ -124,7 +125,7 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
         if(is_object($this['config'])){
 
             //set your path for config loader
-            return tap($this['config'],function($config) use($callback) {
+            return tap($this['config'],function(ConfigProviderContracts $config) use($callback) {
                 return $config->setConfig(call_user_func($callback));
             });
         }

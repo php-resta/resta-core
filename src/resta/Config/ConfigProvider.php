@@ -4,9 +4,10 @@ namespace Resta\Config;
 
 use Resta\Support\Utils;
 use Resta\Foundation\ApplicationProvider;
+use Resta\Contracts\ConfigProviderContracts;
 use Resta\GlobalLoaders\Config as ConfigGlobalInstance;
 
-class ConfigProvider extends ApplicationProvider
+class ConfigProvider extends ApplicationProvider implements ConfigProviderContracts
 {
     /**
      * @var $globalInstance ConfigGlobalInstance
