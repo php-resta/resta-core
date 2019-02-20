@@ -28,7 +28,7 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
     public function __construct($console=false)
     {
         // get console status for cli
-        $this->console=$console;
+        $this->console = $console;
 
         // the bootstrapper method is the initial process
         // that runs the individual methods that the application initiated.
@@ -76,7 +76,7 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
     /**
      * handle application
      *
-     * @return null
+     * @return void|mixed
      */
     public function handle()
     {
@@ -87,7 +87,7 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
     }
 
     /**
-     *ContainerContracts configuration loader
+     * customer configuration loader for core
      *
      * @param $assignPath false
      * @param callable $callback
@@ -108,6 +108,8 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
     }
 
     /**
+     * application structure directory paths changing
+     *
      * @param null $name
      * @param null $path
      * @return mixed|void
