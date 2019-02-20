@@ -21,14 +21,6 @@ interface ApplicationContracts {
    public function loadConfig(callable $callback);
 
     /**
-     * @param $key
-     * @param $object
-     * @param null $concrete
-     * @return mixed
-     */
-   public function register($key,$object,$concrete=null);
-
-    /**
      * @param $abstract
      * @param $instance
      * @return mixed
@@ -39,6 +31,19 @@ interface ApplicationContracts {
      * @return mixed
      */
    public function isLocale();
+
+    /**
+     * @return array
+     */
+   public function kernelGroups();
+
+    /**
+     * @param $key
+     * @param $object
+     * @param null $concrete
+     * @return mixed
+     */
+    public function register($key,$object,$concrete=null);
 
     /**
      * @param null $name

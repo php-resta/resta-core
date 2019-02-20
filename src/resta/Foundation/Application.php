@@ -2,9 +2,10 @@
 
 namespace Resta\Foundation;
 
-use Resta\Support\Utils;
+use Resta\Support\Str;
 use Resta\ClosureDispatcher;
 use Resta\Traits\ApplicationPath;
+use Illuminate\Support\Collection;
 use Resta\Contracts\ApplicationContracts;
 use Resta\Contracts\ConfigProviderContracts;
 use Resta\Contracts\ApplicationHelpersContracts;
@@ -110,6 +111,31 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
     {
         //check environment for local
         return environment() === 'local';
+    }
+
+    /**
+     * get all kernel bootstrapper groups
+     *
+     * @return array
+     */
+    public function kernelGroups()
+    {
+        $properties = [];
+
+        // with the help of reflection instance,
+        // we get the kernel properties extended to the application object.
+        foreach ($this['reflection']($this)->getProperties() as $appProperty){
+            $properties[]=$appProperty->getName();
+        }
+
+        // we get the names of
+        // the kernel properties ended with groups through the Collection class.
+        [$groups] = Collection::make($properties)->partition(function($properties){
+           return Str::endsWith($properties,'Groups');
+        });
+
+        //as a result, kernel groups are being returned.
+        return array_values($groups->all());
     }
 
     /**

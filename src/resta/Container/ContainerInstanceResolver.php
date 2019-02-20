@@ -20,6 +20,14 @@ class ContainerInstanceResolver
     }
 
     /**
+     * @return mixed
+     */
+    public function reflection()
+    {
+        return app()->makeBind($this->instances[__FUNCTION__]);
+    }
+
+    /**
      * @param $name
      * @param $arguments
      * @return null

@@ -10,6 +10,8 @@ use Resta\GlobalLoaders\GlobalAccessor;
 use Resta\Foundation\ApplicationProvider;
 use Resta\Foundation\Bootstrapper\BootLoader;
 use Resta\Container\ContainerInstanceResolver;
+use Resta\Support\ReflectionProcess;
+use Illuminate\Support\Collection;
 
 class ApplicationPreLoader extends ApplicationProvider
 {
@@ -108,6 +110,7 @@ class ApplicationPreLoader extends ApplicationProvider
         // and container instance resolve
         $this->app->instance('app',$this->app);
         $this->app->instance('containerInstanceResolve',ContainerInstanceResolver::class);
+        $this->app->instance('reflection',ReflectionProcess::class);
     }
 
 }

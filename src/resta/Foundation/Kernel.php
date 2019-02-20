@@ -19,31 +19,31 @@ class Kernel extends Container implements KernelContracts
      * @var array
      */
     protected $originGroups=[
-        'urlProvider',
-        'environment',
-        'logger',
-        'configProvider',
-        'encrypter',
-        'eventDispatcher',
-        'serviceProvider',
+        'url'               => 'urlProvider',
+        'environment'       => 'environment',
+        'logger'            => 'logger',
+        'config'            => 'configProvider',
+        'encrypter'         => 'encrypter',
+        'eventDispatcher'   => 'eventDispatcher',
+        'serviceProvider'   => 'serviceProvider',
     ];
 
     protected $consoleGroups = [
-        'appConsole',
+        'console'=>'appConsole',
     ];
 
     /**
      * @var array
      */
     protected $middlewareGroups=[
-        'middleware'
+        'middleware'=>'middleware'
     ];
     /**
      * @var array
      */
     protected $reflectionGroups=[
-        'router',
-        'responseManager',
+        'router'    => 'router',
+        'response'  => 'responseManager',
     ];
 
     /**
@@ -82,8 +82,7 @@ class Kernel extends Container implements KernelContracts
 
             //kernel boots run and service container{
             //makeBuild for service Container
-            return core()->appClosureInstance
-                ->call(function() use ($boot) {
+            return core()->appClosureInstance->call(function() use ($boot) {
                     $this->bootFire($boot);
                 });
         });
