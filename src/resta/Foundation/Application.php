@@ -135,4 +135,15 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
             $this->register('paths',$name,$path);
         }
     }
+
+    /**
+     * Get the version number of the application.
+     *
+     * @return string
+     */
+    public function version()
+    {
+        //get resta application version number
+        return static::version;
+    }
 }

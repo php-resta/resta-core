@@ -42,4 +42,9 @@ interface ApplicationContracts {
      */
    public function setPaths($name=null,$path=null);
 
+    /**
+     * @return mixed
+     */
+   public function version();
+
 }
