@@ -122,7 +122,7 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
     {
         // it adds the values in path data specified
         // by callback to the configuration values.
-        if(is_object($this['config'])){
+        if($this['config'] instanceof ConfigProviderContracts){
 
             //set your path for config loader
             return tap($this['config'],function(ConfigProviderContracts $config) use($callback) {
