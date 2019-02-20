@@ -123,7 +123,7 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
         $properties = [];
 
         // with the help of reflection instance,
-        // we get the kernel properties extended to the application object.
+        // we get the kernel properties extended with the application object.
         foreach ($this['reflection']($this)->getProperties() as $property){
             $properties[]=$property->getName();
         }
