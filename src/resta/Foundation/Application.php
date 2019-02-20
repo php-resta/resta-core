@@ -20,14 +20,14 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
      *
      * @var string
      */
-    const version = '1.0.0';
+    const VERSION = '1.0.0';
 
     /**
      * The Laravel framework version.
      *
      * @var string
      */
-    const loadBootstrappers = 'loadBootstrappers';
+    protected const LOADBOOTSTRAPPERS = 'loadBootstrappers';
 
     /**
      * @var bool $console
@@ -72,7 +72,7 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
 
         // the boot method to be executed can be specified by the user.
         // we use this method to know how to customize it.
-        return forward_static_call_array([array_pop($boot),self::loadBootstrappers],[$boot]);
+        return forward_static_call_array([array_pop($boot),self::LOADBOOTSTRAPPERS],[$boot]);
     }
 
     /**
@@ -144,6 +144,6 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
     public function version()
     {
         //get resta application version number
-        return static::version;
+        return static::VERSION;
     }
 }
