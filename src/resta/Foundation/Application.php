@@ -129,6 +129,9 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
                 return $config->setConfig(call_user_func($callback));
             });
         }
+
+        //set exception for config instance for application
+        exception()->unexpectedValue('config instance is not loaded for application container');
     }
 
     /**
