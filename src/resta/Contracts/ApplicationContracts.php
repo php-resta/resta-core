@@ -36,6 +36,11 @@ interface ApplicationContracts {
    public function instance ($abstract,$instance);
 
     /**
+     * @return mixed
+     */
+   public function isLocale();
+
+    /**
      * @param null $name
      * @param null $path
      * @return mixed

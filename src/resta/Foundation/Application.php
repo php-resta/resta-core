@@ -101,6 +101,17 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
     }
 
     /**
+     * Determine if application locale is the given locale.
+     *
+     * @return bool
+     */
+    public function isLocale()
+    {
+        //check environment for local
+        return environment() === 'local';
+    }
+
+    /**
      * customer configuration loader for core
      *
      * @param callable $callback
