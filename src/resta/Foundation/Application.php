@@ -127,7 +127,6 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
             return tap($this['config'],function($config) use($callback) {
                 return $config->setConfig(call_user_func($callback));
             });
-
         }
     }
 
