@@ -89,11 +89,10 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
     /**
      * customer configuration loader for core
      *
-     * @param $assignPath false
      * @param callable $callback
      * @return mixed
      */
-    public function loadConfig(callable $callback,$assignPath=false)
+    public function loadConfig(callable $callback)
     {
         // it adds the values in path data specified
         // by callback to the configuration values.
