@@ -130,7 +130,7 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
             });
         }
 
-        //set exception for config instance for application
+        //set config instance exception for application
         exception()->unexpectedValue('config instance is not loaded for application container');
     }
 
