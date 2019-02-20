@@ -16,6 +16,20 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
     use ApplicationPath;
 
     /**
+     * The Resta api designer version.
+     *
+     * @var string
+     */
+    const version = '1.0.0';
+
+    /**
+     * The Laravel framework version.
+     *
+     * @var string
+     */
+    const loadBootstrappers = 'loadBootstrappers';
+
+    /**
      * @var bool $console
      */
     protected $console;
@@ -58,7 +72,7 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
 
         // the boot method to be executed can be specified by the user.
         // we use this method to know how to customize it.
-        return forward_static_call_array([array_pop($boot),'loadBootstrappers'],[$boot]);
+        return forward_static_call_array([array_pop($boot),self::loadBootstrappers],[$boot]);
     }
 
     /**
