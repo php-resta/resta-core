@@ -6,12 +6,11 @@ use Resta\App;
 use Resta\ClassAliasGroup;
 use Resta\ClosureDispatcher;
 use Resta\Exception\ErrorHandler;
+use Resta\Support\ReflectionProcess;
 use Resta\GlobalLoaders\GlobalAccessor;
 use Resta\Foundation\ApplicationProvider;
 use Resta\Foundation\Bootstrapper\BootLoader;
 use Resta\Container\ContainerInstanceResolver;
-use Resta\Support\ReflectionProcess;
-use Illuminate\Support\Collection;
 
 class ApplicationPreLoader extends ApplicationProvider
 {
