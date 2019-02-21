@@ -2,6 +2,7 @@
 
 namespace Resta\Foundation\Bootstrapper;
 
+use Resta\Contracts\ApplicationContracts;
 use Resta\Foundation\ApplicationPreLoader;
 
 class Bootstrappers
@@ -12,9 +13,9 @@ class Bootstrappers
     protected $stack=[];
 
     /**
-     * @var $concrete null
+     * @var $app ApplicationContracts
      */
-    protected $concrete;
+    protected $app;
 
     /**
      * @var $bootstrapper null
@@ -32,22 +33,12 @@ class Bootstrappers
     protected $pusherStacks=array();
 
     /**
-     * @var bootstrappers array
-     */
-    protected $bootstrappers=[
-        'originGroups',
-        'consoleGroups',
-        'middlewareGroups',
-        'reflectionGroups'
-    ];
-
-    /**
      * Bootstrappers constructor.
      * @param null $concrete
      * @param array $pusher
      * @param null $bootstrapper
      */
-    public function __construct($concrete=null,$pusher=array(),$bootstrapper=null)
+    public function __construct($app=null,$pusher=array(),$bootstrapper=null)
     {
         //if the user sets the bootstrapper variable to true,
         //we do not do anything.
@@ -60,12 +51,12 @@ class Bootstrappers
         //Once the concrete object has been assigned, we run the bootstrappers sequence
         //and include it in the application.
         //The pusher and bootstrapper variables can be sent by the user.
-        $this->concrete     = $concrete;
+        $this->app          = $app;
         $this->pusher       = $pusher;
         $this->bootstrapper = $bootstrapper;
 
         //we boot the initial instance for the application.
-        if($this->ifExistPusher()) (new ApplicationPreLoader($this->concrete))->handle();
+        if($this->ifExistPusher()) (new ApplicationPreLoader($this->app))->handle();
 
         //call bootstrapper process
         $this->callBootstrapperProcess();
@@ -92,7 +83,7 @@ class Bootstrappers
         //if the value to be sent as the second parameter for this method is true,
         //the values ​​in the first parameter of the method will be combined with the bootstrappers list.
         if($bootstrapper && $this->ifExistPusher()){
-            $bootstrapStack=array_merge($this->pusher,$this->bootstrappers);
+            $bootstrapStack=array_merge($this->pusher,$this->app->kernelGroupKeys());
         }
 
         //Bootstrap list join check is done and list is returned.
@@ -114,7 +105,7 @@ class Bootstrappers
             // if the callback data is different from the application kernel,
             // we will pass it to the pusher control for a special use.
             $this->ifExistPusher(function($call) use($bootstrapper){
-                call_user_func_array([$this->concrete,$call],[$bootstrapper,$this,$this->stack['onionIdentifier']]);
+                call_user_func_array([$this->app,$call],[$bootstrapper,$this,$this->stack['onionIdentifier']]);
             });
         }
     }
@@ -172,7 +163,7 @@ class Bootstrappers
         // we push the collected pusher data to
         // the pusherStacks data with the concrete object.
         foreach ($this->pusher as $pusher){
-            $pusherStack[]=$this->concrete->{$pusher}();
+            $pusherStack[]=$this->app->{$pusher}();
         }
 
         //pusherHandle key of the pusherStack array
