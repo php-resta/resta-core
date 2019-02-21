@@ -9,6 +9,7 @@ class HigherOrderTapProxy
      * @var mixed
      */
     public $target;
+    
     /**
      * Create a new tap proxy instance.
      *
