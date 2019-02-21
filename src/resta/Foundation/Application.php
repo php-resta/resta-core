@@ -85,7 +85,7 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
     public function commandList()
     {
         //get command list from kernel
-        return $this->bootFire(null,'commandList');
+        return $this->commandList;
     }
 
     /**
