@@ -1,6 +1,6 @@
 <?php
 
-namespace Illuminate\Support\Traits;
+namespace Resta\Support\Traits;
 
 use Closure;
 use ReflectionClass;
