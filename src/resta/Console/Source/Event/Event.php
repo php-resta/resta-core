@@ -2,11 +2,10 @@
 
 namespace Resta\Console\Source\Event;
 
+use Resta\StaticPathList;
+use Resta\Console\ConsoleOutputter;
 use Resta\Support\ClosureDispatcher;
 use Resta\Console\ConsoleListAccessor;
-use Resta\Console\ConsoleOutputter;
-use Resta\StaticPathList;
-use Resta\Support\Utils;
 
 class Event extends ConsoleOutputter {
 

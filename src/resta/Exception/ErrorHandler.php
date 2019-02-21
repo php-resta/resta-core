@@ -5,8 +5,8 @@ namespace Resta\Exception;
 use Resta\Support\Str;
 use Resta\Support\Utils;
 use Resta\StaticPathModel;
-use Resta\Support\ClosureDispatcher;
 use Resta\Support\BootLoaderNeeds;
+use Resta\Support\ClosureDispatcher;
 use Resta\Foundation\ApplicationProvider;
 
 class ErrorHandler extends ApplicationProvider {

@@ -3,10 +3,10 @@
 namespace Resta\Foundation;
 
 use Resta\App;
-use Resta\Support\ClosureDispatcher;
 use Resta\Exception\ErrorHandler;
 use Resta\Support\ClassAliasGroup;
 use Resta\Support\ReflectionProcess;
+use Resta\Support\ClosureDispatcher;
 use Resta\GlobalLoaders\GlobalAccessor;
 use Resta\Foundation\ApplicationProvider;
 use Resta\Foundation\Bootstrapper\BootLoader;

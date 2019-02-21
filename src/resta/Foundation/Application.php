@@ -3,9 +3,9 @@
 namespace Resta\Foundation;
 
 use Resta\Support\Str;
-use Resta\Support\ClosureDispatcher;
 use Resta\Traits\ApplicationPath;
 use Illuminate\Support\Collection;
+use Resta\Support\ClosureDispatcher;
 use Resta\Contracts\ApplicationContracts;
 use Resta\Contracts\ConfigProviderContracts;
 use Resta\Contracts\ApplicationHelpersContracts;
