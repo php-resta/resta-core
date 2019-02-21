@@ -1,10 +1,11 @@
 <?php
 
-namespace Resta;
+namespace Resta\Support;
 
 use Lingua\Lingua;
 use Resta\Support\Str;
 use Resta\Support\Utils;
+use Resta\Config\Config;
 use Store\Services\Cache;
 use Resta\Config\ConfigProcess;
 use Store\Services\Redis as Redis;
@@ -91,7 +92,7 @@ class App
      */
     public function configLoaders($config=null)
     {
-        return Config\Config::make($config)->get();
+        return Config::make($config)->get();
     }
 
     /**

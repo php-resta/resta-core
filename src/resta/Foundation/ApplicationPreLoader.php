@@ -2,7 +2,7 @@
 
 namespace Resta\Foundation;
 
-use Resta\App;
+use Resta\Support\App;
 use Resta\Exception\ErrorHandler;
 use Resta\Support\ClassAliasGroup;
 use Resta\Support\ReflectionProcess;
