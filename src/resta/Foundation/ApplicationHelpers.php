@@ -203,6 +203,10 @@ if (!function_exists('tap')) {
      */
     function tap($value, $callback)
     {
+        if (!is_callable($callback)) {
+            return new \Resta\Support\HigherOrderTapProxy($value);
+        }
+
         $callback($value);
         return $value;
     }
