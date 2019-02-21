@@ -4,7 +4,6 @@ namespace Resta\Foundation;
 
 use Resta\Container\Container;
 use Resta\Contracts\KernelContracts;
-use Resta\Support\ClosureDispatcher;
 use Resta\Middleware\MiddlewareKernelProvider;
 use Resta\Foundation\Bootstrapper\BootFireCallback;
 
