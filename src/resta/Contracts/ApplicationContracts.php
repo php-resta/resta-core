@@ -8,7 +8,7 @@ interface ApplicationContracts {
      * @return array
      */
     public function commandList();
-    
+
     /**
      * @return mixed
      */
@@ -40,7 +40,7 @@ interface ApplicationContracts {
     /**
      * @return array
      */
-   public function kernelGroups();
+   public function kernelGroupKeys();
 
     /**
      * @param $key
