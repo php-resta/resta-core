@@ -3,7 +3,7 @@
 namespace Resta\Logger;
 
 use Psr\Log\LoggerInterface;
-use Resta\ClosureDispatcher;
+use Resta\Support\ClosureDispatcher;
 
 class LoggerHandler implements LoggerInterface
 {

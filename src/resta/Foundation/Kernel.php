@@ -2,7 +2,7 @@
 
 namespace Resta\Foundation;
 
-use Resta\ClosureDispatcher;
+use Resta\Support\ClosureDispatcher;
 use Resta\Container\Container;
 use Resta\Contracts\KernelContracts;
 use Resta\Middleware\MiddlewareKernelProvider;

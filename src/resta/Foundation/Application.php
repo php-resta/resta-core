@@ -3,7 +3,7 @@
 namespace Resta\Foundation;
 
 use Resta\Support\Str;
-use Resta\ClosureDispatcher;
+use Resta\Support\ClosureDispatcher;
 use Resta\Traits\ApplicationPath;
 use Illuminate\Support\Collection;
 use Resta\Contracts\ApplicationContracts;

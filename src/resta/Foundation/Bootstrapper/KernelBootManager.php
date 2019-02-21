@@ -4,7 +4,7 @@ namespace Resta\Foundation\Bootstrapper;
 
 use Resta\Support\Arr;
 use Bootstrapper\Manifest;
-use Resta\ClosureDispatcher;
+use Resta\Support\ClosureDispatcher;
 
 class KernelBootManager
 {

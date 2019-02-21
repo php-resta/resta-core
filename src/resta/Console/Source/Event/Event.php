@@ -2,7 +2,7 @@
 
 namespace Resta\Console\Source\Event;
 
-use Resta\ClosureDispatcher;
+use Resta\Support\ClosureDispatcher;
 use Resta\Console\ConsoleListAccessor;
 use Resta\Console\ConsoleOutputter;
 use Resta\StaticPathList;

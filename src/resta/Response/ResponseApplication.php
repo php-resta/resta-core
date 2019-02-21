@@ -3,7 +3,7 @@
 namespace Resta\Response;
 
 use Resta\Support\Utils;
-use Resta\ClosureDispatcher;
+use Resta\Support\ClosureDispatcher;
 
 class ResponseApplication extends ResponseOutput
 {

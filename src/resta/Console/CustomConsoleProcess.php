@@ -4,7 +4,7 @@ namespace Resta\Console;
 
 use Resta\Support\Utils;
 use Resta\StaticPathModel;
-use Resta\ClosureDispatcher;
+use Resta\Support\ClosureDispatcher;
 use Resta\Console\ConsoleOutputter;
 
 class CustomConsoleProcess extends ConsoleOutputter

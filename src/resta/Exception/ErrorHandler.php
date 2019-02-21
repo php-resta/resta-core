@@ -5,7 +5,7 @@ namespace Resta\Exception;
 use Resta\Support\Str;
 use Resta\Support\Utils;
 use Resta\StaticPathModel;
-use Resta\ClosureDispatcher;
+use Resta\Support\ClosureDispatcher;
 use Resta\Support\BootLoaderNeeds;
 use Resta\Foundation\ApplicationProvider;
 

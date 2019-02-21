@@ -3,9 +3,9 @@
 namespace Resta\Foundation;
 
 use Resta\App;
-use Resta\ClassAliasGroup;
-use Resta\ClosureDispatcher;
+use Resta\Support\ClosureDispatcher;
 use Resta\Exception\ErrorHandler;
+use Resta\Support\ClassAliasGroup;
 use Resta\Support\ReflectionProcess;
 use Resta\GlobalLoaders\GlobalAccessor;
 use Resta\Foundation\ApplicationProvider;

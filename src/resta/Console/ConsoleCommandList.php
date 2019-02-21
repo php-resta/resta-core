@@ -3,7 +3,7 @@
 namespace Resta\Console;
 
 use Resta\Support\Utils;
-use Resta\ClosureDispatcher;
+use Resta\Support\ClosureDispatcher;
 use Resta\Console\Source\Autoservice\Autoservice;
 
 class ConsoleCommandList extends ConsoleOutputter

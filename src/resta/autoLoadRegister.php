@@ -56,7 +56,7 @@ class autoloadRegister
         $systemApp=[];
 
         if(defined('app')){
-            $systemApp=(new ClassAliasGroup())->handle($class);
+            $systemApp=(new \Resta\Support\ClassAliasGroup())->handle($class);
         }
 
         if(!file_exists($class)){

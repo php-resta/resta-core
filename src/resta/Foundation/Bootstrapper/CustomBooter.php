@@ -4,7 +4,7 @@ namespace Resta\Foundation\Bootstrapper;
 
 use Resta\Support\Utils;
 use Resta\StaticPathList;
-use Resta\ClosureDispatcher;
+use Resta\Support\ClosureDispatcher;
 
 class CustomBooter
 {
