@@ -5,6 +5,11 @@ namespace Resta\Contracts;
 interface ApplicationContracts {
 
     /**
+     * @return array
+     */
+    public function commandList();
+    
+    /**
      * @return mixed
      */
    public function console();

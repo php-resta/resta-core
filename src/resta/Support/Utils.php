@@ -480,22 +480,6 @@ class Utils
     /**
      * @return array
      */
-    public static function getCommandList()
-    {
-        if(isset(core()->appClosureInstance)){
-
-            return core()->appClosureInstance->call(function()
-            {
-                return $this->bootFire(null,'commandList');
-            });
-        }
-
-        return [];
-    }
-
-    /**
-     * @return array
-     */
     public static function getHttpMethods()
     {
         return [

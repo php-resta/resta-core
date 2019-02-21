@@ -78,6 +78,16 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
     }
 
     /**
+     * get kernel command list
+     *
+     * @return array
+     */
+    public function commandList()
+    {
+        return $this->bootFire(null,'commandList');
+    }
+
+    /**
      * console kernel object
      *
      * @return bool|mixed|null

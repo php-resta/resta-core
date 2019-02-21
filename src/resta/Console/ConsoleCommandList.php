@@ -13,7 +13,7 @@ class ConsoleCommandList extends ConsoleOutputter
      */
     public function handle()
     {
-        $getCommandList = Utils::getCommandList();
+        $getCommandList = app()->commandList();
 
         $this->table->setHeaders(['command','project','params','description']);
 

@@ -109,7 +109,7 @@ class Console extends ApplicationProvider {
      */
     private function isRunnableKernelCommandList()
     {
-        $commandList = Utils::getCommandList();
+        $commandList = $this->app->commandList();
 
         //is runnable kernel command conditions
         return !array_key_exists($this->consoleClassNamespace,$commandList) OR
