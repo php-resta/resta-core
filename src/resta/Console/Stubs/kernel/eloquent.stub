@@ -2,9 +2,9 @@
 
 namespace __kernelProviderDir__;
 
-use Resta\Foundation\ApplicationProvider;
 use Resta\Contracts\BootContracts;
 use Illuminate\Pagination\Paginator;
+use Resta\Foundation\ApplicationProvider;
 use Store\Packages\Database\Eloquent\Connection as Eloquent;
 
 class EloquentServiceProvider extends ApplicationProvider implements BootContracts

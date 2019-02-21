@@ -2,8 +2,8 @@
 
 namespace __kernelProviderDir__;
 
-use Resta\Foundation\ApplicationProvider;
 use Resta\Contracts\BootContracts;
+use Resta\Foundation\ApplicationProvider;
 
 class AppServiceProvider extends ApplicationProvider implements BootContracts
 {
