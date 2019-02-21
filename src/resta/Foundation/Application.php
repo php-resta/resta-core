@@ -84,7 +84,7 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
      */
     public function commandList()
     {
-        //get command list from kernel 
+        //get command list from kernel
         return $this->bootFire(null,'commandList');
     }
 
@@ -129,7 +129,7 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
      *
      * @return array
      */
-    public function kernelGroups()
+    public function kernelGroupKeys()
     {
         $properties = [];
 
