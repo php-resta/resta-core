@@ -1,4 +1,5 @@
 <?php
+
 namespace Resta\Support;
 
 class HigherOrderTapProxy
@@ -9,7 +10,7 @@ class HigherOrderTapProxy
      * @var mixed
      */
     public $target;
-    
+
     /**
      * Create a new tap proxy instance.
      *
