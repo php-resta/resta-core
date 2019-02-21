@@ -125,7 +125,7 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
     }
 
     /**
-     * get all kernel bootstrapper groups
+     * get all kernel bootstrapper groups keys
      *
      * @return array
      */
