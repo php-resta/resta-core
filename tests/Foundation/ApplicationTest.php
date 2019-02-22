@@ -31,4 +31,12 @@ class ApplicationTest extends AbstractTest
             'reflectionGroups',
         ],static::$app->kernelGroupKeys());
     }
+
+    /**
+     * @return void|mixed
+     */
+    public function testCorePath()
+    {
+        $this->assertNotNull(true,static::$app->corePath());
+    }
 }
