@@ -1,8 +1,8 @@
 <?php
 
-namespace Resta;
+namespace Resta\Foundation;
 
-class autoloadRegister
+class ApplicationAutoLoadRegister
 {
     /**
      * @var $class
@@ -32,8 +32,8 @@ class autoloadRegister
     private function getRegisterCallBackVar($class)
     {
         $this->class=$class;
-        $this->classPath=root.'/'.$this->class.'.php';
-        $this->classPath=str_replace("\\","/",$this->classPath);
+        $this->classPath = root.'/'.$this->class.'.php';
+        $this->classPath = str_replace("\\","/",$this->classPath);
     }
 
     /**
