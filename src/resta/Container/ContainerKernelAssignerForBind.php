@@ -1,10 +1,10 @@
 <?php
 
-namespace Resta\GlobalLoaders;
+namespace Resta\Container;
 
 use Resta\Foundation\ApplicationProvider;
 
-class GlobalAssignerForBind extends ApplicationProvider
+class ContainerKernelAssignerForBind extends ApplicationProvider
 {
     /**
      * @param $bindClass
@@ -14,7 +14,7 @@ class GlobalAssignerForBind extends ApplicationProvider
     public function getAssigner($bindClass,$callback)
     {
         //set namespace for bind class
-        $bindClassNamespace=__NAMESPACE__.'\\'.ucfirst($bindClass);
+        $bindClassNamespace='Resta\GlobalLoaders\\'.ucfirst($bindClass);
 
         //we automatically load a global loaders for the bind method
         //and assign it to the object name in the kernel object with bind,

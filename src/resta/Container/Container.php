@@ -6,7 +6,7 @@ use Resta\Support\Utils;
 use Resta\Console\ConsoleBindings;
 use Resta\Contracts\ContainerContracts;
 use Resta\Container\ContainerKernelAssigner;
-use Resta\GlobalLoaders\GlobalAssignerForBind;
+use Resta\Container\ContainerKernelAssignerForBind as GlobalAssignerForBind;
 
 class Container implements ContainerContracts,\ArrayAccess
 {
