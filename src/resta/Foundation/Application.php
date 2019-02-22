@@ -107,6 +107,8 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
      */
     public function corePath()
     {
+        // get the directory
+        // where kernel files are running to the kernel object.
         return core()->corePath;
     }
 
