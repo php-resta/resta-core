@@ -4,7 +4,7 @@ namespace Resta\Core\Tests\Foundation;
 
 use Resta\Core\Tests\AbstractTest;
 
-class Application extends AbstractTest
+class ApplicationTest extends AbstractTest
 {
     /**
      * @var array
