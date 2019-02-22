@@ -29,7 +29,7 @@ The skeleton repository integrates this magical box perfectly into itself and fo
 require_once '../vendor/autoload.php';
 use Resta\Foundation\Application
 
-$app = Application(true);
+$app = new Application(true);
 
 ```
 
@@ -45,7 +45,7 @@ In this example,lets install an array as a configuration,then let's read these v
 require_once '../vendor/autoload.php';
 use Resta\Foundation\Application
 
-$app = Application(true);
+$app = new Application(true);
 
 //set array values via loadConfig method
 $app->loadConfig(function()
