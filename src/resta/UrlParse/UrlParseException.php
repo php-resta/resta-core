@@ -2,7 +2,7 @@
 
 namespace Resta\UrlParse;
 
-use Resta\StaticPathModel;
+use Resta\Foundation\StaticPathModel;
 
 class UrlParseException
 {

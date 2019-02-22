@@ -3,7 +3,7 @@
 namespace Resta\Console;
 
 use Resta\Support\Utils;
-use Resta\StaticPathList;
+use Resta\Foundation\StaticPathList;
 
 trait ConsoleArguments {
 

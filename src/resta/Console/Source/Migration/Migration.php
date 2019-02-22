@@ -2,7 +2,7 @@
 
 namespace Resta\Console\Source\Migration;
 
-use Resta\StaticPathModel;
+use Resta\Foundation\StaticPathModel;
 use Migratio\SchemaFacade;
 use Resta\Console\ConsoleOutputter;
 use Resta\Console\ConsoleListAccessor;

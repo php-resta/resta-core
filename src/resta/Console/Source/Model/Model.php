@@ -4,7 +4,7 @@ namespace Resta\Console\Source\Model;
 
 use Resta\Console\ConsoleListAccessor;
 use Resta\Console\ConsoleOutputter;
-use Resta\StaticPathModel;
+use Resta\Foundation\StaticPathModel;
 use Resta\Support\Utils;
 
 class Model extends ConsoleOutputter {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Resta;
+namespace Resta\Foundation;
 
 use Resta\Support\Str;
 use Resta\Support\Utils;

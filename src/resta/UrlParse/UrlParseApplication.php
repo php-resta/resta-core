@@ -3,7 +3,7 @@
 namespace Resta\UrlParse;
 
 use Resta\Support\Utils;
-use Resta\StaticPathList;
+use Resta\Foundation\StaticPathList;
 
 class UrlParseApplication
 {

@@ -4,8 +4,8 @@ namespace Resta\Console;
 
 use Resta\Support\Str;
 use Resta\Support\Utils;
-use Resta\StaticPathList;
-use Resta\StaticPathModel;
+use Resta\Foundation\StaticPathList;
+use Resta\Foundation\StaticPathModel;
 
 trait ConsoleListAccessor {
 

@@ -4,7 +4,7 @@ namespace Resta\Traits;
 
 use Resta\Routing\Route;
 use Resta\Support\Utils;
-use Resta\StaticPathModel;
+use Resta\Foundation\StaticPathModel;
 use Resta\GlobalLoaders\Router;
 use Resta\Routing\CheckEndpointForAutoService;
 

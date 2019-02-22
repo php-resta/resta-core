@@ -5,7 +5,7 @@ namespace Resta\Console\Source\Key;
 use Resta\Console\ConsoleListAccessor;
 use Resta\Console\ConsoleOutputter;
 
-use Resta\StaticPathModel;
+use Resta\Foundation\StaticPathModel;
 use Resta\Support\Utils;
 use Symfony\Component\Security\Core\Tests\Encoder\EncAwareUser;
 

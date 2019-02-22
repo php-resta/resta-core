@@ -3,7 +3,7 @@
 namespace Resta\Console;
 
 use Resta\Support\Utils;
-use Resta\StaticPathModel;
+use Resta\Foundation\StaticPathModel;
 use Resta\Console\ConsoleOutputter;
 use Resta\Support\ClosureDispatcher;
 

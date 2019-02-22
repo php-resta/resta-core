@@ -2,8 +2,8 @@
 
 namespace Resta\Console;
 
-use Resta\StaticPathList;
-use Resta\StaticPathModel;
+use Resta\Foundation\StaticPathList;
+use Resta\Foundation\StaticPathModel;
 use Resta\Traits\ConsoleColor;
 use Resta\Support\FileProcess;
 

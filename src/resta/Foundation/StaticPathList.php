@@ -1,6 +1,6 @@
 <?php
 
-namespace Resta;
+namespace Resta\Foundation;
 
 class StaticPathList
 {
