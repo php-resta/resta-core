@@ -1,6 +1,6 @@
 <?php
 
-namespace Resta\UrlParse;
+namespace Resta\Url;
 
 class UrlParseParamResolved extends UrlParseException
 {

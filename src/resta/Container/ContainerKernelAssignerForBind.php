@@ -13,16 +13,16 @@ class ContainerKernelAssignerForBind extends ApplicationProvider
      */
     public function getAssigner($bindClass,$callback)
     {
-        //set namespace for bind class
-        $bindClassNamespace = 'Resta\GlobalLoaders\\'.ucfirst($bindClass);
+        //global instance name and kernel object assign
+        $bindClassInstanceName = $bindClass.'KernelAssigner';
 
+        //set namespace for bind class
+        $bindClassNamespace = 'Resta\\'.ucfirst($bindClass).'\\'.ucfirst($bindClassInstanceName);
+        
         //we automatically load a global loaders for the bind method
         //and assign it to the object name in the kernel object with bind,
         //which you can easily use in the booted classes for kernel object assignments.
         if(class_exists($bindClassNamespace)){
-
-            //global instance name and kernel object assign
-            $bindClassInstanceName = $bindClass.'GlobalInstance';
             $this->register($bindClassInstanceName,$this->makeBind($bindClassNamespace));
         }
 

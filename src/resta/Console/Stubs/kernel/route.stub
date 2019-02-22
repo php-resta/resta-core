@@ -2,7 +2,7 @@
 
 namespace __kernelProviderDir__;
 
-use Resta\Routing\Route;
+use Resta\Router\Route;
 use Resta\Contracts\BootContracts;
 use Resta\Foundation\ApplicationProvider;
 

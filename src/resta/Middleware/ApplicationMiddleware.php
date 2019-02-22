@@ -4,7 +4,6 @@ namespace Resta\Middleware;
 
 use Resta\Support\Utils;
 use Resta\Foundation\ApplicationProvider;
-use Resta\GlobalLoaders\Middleware as MiddlewareGlobalInstance;
 
 class ApplicationMiddleware extends ApplicationProvider
 {
@@ -19,9 +18,9 @@ class ApplicationMiddleware extends ApplicationProvider
     public $after=false;
 
     /**
-     * @param MiddlewareGlobalInstance $middleware
+     * @param MiddlewareKernelAssigner $middleware
      */
-    public function handle(MiddlewareGlobalInstance $middleware)
+    public function handle(MiddlewareKernelAssigner $middleware)
     {
         //set define for middleware
         define('middleware',true);

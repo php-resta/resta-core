@@ -4,7 +4,7 @@ namespace Resta\Console\Source\Exception;
 
 use Resta\Console\ConsoleListAccessor;
 use Resta\Console\ConsoleOutputter;
-use Resta\Routing\Route;
+use Resta\Router\Route;
 use Resta\Foundation\StaticPathModel;
 use Resta\Support\Utils;
 

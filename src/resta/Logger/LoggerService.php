@@ -3,7 +3,6 @@
 namespace Resta\Logger;
 
 use Resta\Support\Utils;
-use Resta\GlobalLoaders\Logger as LoggerGlobalInstance;
 
 class LoggerService
 {
@@ -37,9 +36,9 @@ class LoggerService
     }
 
     /**
-     * @param LoggerGlobalInstance $logger
+     * @param LoggerKernelAssigner $logger
      */
-    public function handle(LoggerGlobalInstance $logger)
+    public function handle(LoggerKernelAssigner $logger)
     {
         //set define for logger
         define('logger',true);

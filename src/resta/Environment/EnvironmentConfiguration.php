@@ -2,8 +2,6 @@
 
 namespace Resta\Environment;
 
-use Resta\GlobalLoaders\Environment as EnvironmentGlobalInstance;
-
 class EnvironmentConfiguration
 {
     /**
@@ -37,9 +35,9 @@ class EnvironmentConfiguration
     }
 
     /**
-     * @param EnvironmentGlobalInstance $environment
+     * @param EnvironmentKernelAssigner $environment
      */
-    public function handle(EnvironmentGlobalInstance $environment)
+    public function handle(EnvironmentKernelAssigner $environment)
     {
         //set define for config
         define ('environment',true);

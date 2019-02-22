@@ -11,11 +11,11 @@ class Encrypter {
 
     /**
      * @return mixed
-     * @param EncrypterGlobalInstance $encrypter
+     * @param EncrypterKernelAssigner $encrypter
      * @throws \Defuse\Crypto\Exception\EnvironmentIsBrokenException
      * @throws \Defuse\Crypto\Exception\WrongKeyOrModifiedCiphertextException
      */
-    public function handle(EncrypterGlobalInstance $encrypter){
+    public function handle(EncrypterKernelAssigner $encrypter){
 
         //set define for encrypter
         define('encrypter',true);

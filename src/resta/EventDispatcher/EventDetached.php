@@ -1,6 +1,6 @@
 <?php
 
-namespace Resta\Event;
+namespace Resta\EventDispatcher;
 
 class EventDetached
 {

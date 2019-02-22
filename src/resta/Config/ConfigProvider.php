@@ -5,7 +5,6 @@ namespace Resta\Config;
 use Resta\Support\Utils;
 use Resta\Foundation\ApplicationProvider;
 use Resta\Contracts\ConfigProviderContracts;
-use Resta\GlobalLoaders\Config as ConfigGlobalInstance;
 
 class ConfigProvider extends ApplicationProvider implements ConfigProviderContracts
 {
@@ -15,9 +14,9 @@ class ConfigProvider extends ApplicationProvider implements ConfigProviderContra
     protected static $globalInstance;
 
     /**
-     * @param ConfigGlobalInstance $config
+     * @param ConfigKernelAssigner $config
      */
-    public function handle(ConfigGlobalInstance $config)
+    public function handle(ConfigKernelAssigner $config)
     {
         define('config',true);
 

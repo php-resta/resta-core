@@ -1,6 +1,6 @@
 <?php
 
-namespace Resta\UrlParse;
+namespace Resta\Url;
 
 use Resta\Support\Utils;
 use Resta\Foundation\StaticPathList;
@@ -45,7 +45,7 @@ class UrlParseApplication
         $this->urlList['parameters']=array_slice($query,3);
 
         //url global instance
-        core()->urlGlobalInstance->definitor($this->urlList);
+        core()->urlKernelAssigner->definitor($this->urlList);
 
     }
 

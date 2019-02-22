@@ -1,6 +1,6 @@
 <?php
 
-namespace Resta\Routing;
+namespace Resta\Router;
 
 use Resta\Support\Arr;
 use Resta\Support\Utils;

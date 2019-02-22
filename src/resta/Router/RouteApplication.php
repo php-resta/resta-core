@@ -1,9 +1,8 @@
 <?php
 
-namespace Resta\Routing;
+namespace Resta\Router;
 
 use Resta\Support\Utils;
-use Resta\GlobalLoaders\Router;
 use Resta\Traits\NamespaceForRoute;
 use Resta\Foundation\ApplicationProvider;
 
@@ -79,7 +78,7 @@ class RouteApplication extends ApplicationProvider
          * get global router instance
          * @var $routerGlobalInstance Router
          */
-        $routerGlobalInstance=core()->routerGlobalInstance;
+        $routerGlobalInstance=core()->routerKernelAssigner;
 
         //the singleton eager class is a class built to temporarily prevent
         //the use of user-side kernel objects used by the rest system.

@@ -1,9 +1,8 @@
 <?php
 
-namespace Resta\Event;
+namespace Resta\EventDispatcher;
 
 use Resta\Support\Utils;
-use Resta\GlobalLoaders\EventDispatcher as EventDispatcherGlobalInstance;
 
 class EventManager extends EventHandler
 {
@@ -134,9 +133,9 @@ class EventManager extends EventHandler
     }
 
     /**
-     * @param EventDispatcherGlobalInstance $eventDispatcher
+     * @param EventDispatcherKernelAssigner $eventDispatcher
      */
-    public function handle(EventDispatcherGlobalInstance $eventDispatcher)
+    public function handle(EventDispatcherKernelAssigner $eventDispatcher)
     {
         //set constant event-dispatcher
         define('event-dispatcher',true);

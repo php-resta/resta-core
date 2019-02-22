@@ -3,7 +3,7 @@
 namespace Resta\Response;
 
 use Resta\Config\ConfigProcess;
-use Resta\Routing\KernelRouterProcess;
+use Resta\Router\KernelRouterProcess;
 
 class ResponseOutput
 {

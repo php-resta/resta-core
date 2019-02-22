@@ -8,10 +8,10 @@ use Resta\Support\ClassAliasGroup;
 use Resta\Support\ReflectionProcess;
 use Resta\Contracts\HandleContracts;
 use Resta\Support\ClosureDispatcher;
-use Resta\GlobalLoaders\GlobalAccessor;
 use Resta\Foundation\ApplicationProvider;
 use Resta\Foundation\Bootstrapper\BootLoader;
 use Resta\Container\ContainerInstanceResolver;
+use Resta\Foundation\ApplicationGlobalAccessor as GlobalAccessor;
 
 class ApplicationPreLoader extends ApplicationProvider implements HandleContracts
 {

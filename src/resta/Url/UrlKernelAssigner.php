@@ -1,11 +1,11 @@
 <?php
 
-namespace Resta\GlobalLoaders;
+namespace Resta\Url;
 
 use Resta\Foundation\StaticPathList;
 use Resta\Foundation\ApplicationProvider;
 
-class Url extends ApplicationProvider
+class UrlKernelAssigner extends ApplicationProvider
 {
     /**
      * @param $urlList

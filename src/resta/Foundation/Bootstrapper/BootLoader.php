@@ -6,18 +6,17 @@ use Resta\Support\Utils;
 use Resta\Logger\LoggerService;
 use Resta\Exception\ErrorHandler;
 use Resta\Contracts\BootContracts;
+use Resta\Url\UrlParseApplication;
 use Resta\Provider\ServiceProvider;
 use Resta\Response\ResponseApplication;
-use Resta\UrlParse\UrlParseApplication;
 use Resta\Foundation\ApplicationProvider;
 use Resta\Contracts\ApplicationContracts;
 use Resta\Config\ConfigProvider as Config;
 use Resta\Middleware\ApplicationMiddleware;
 use Resta\Console\Console as ConsoleManager;
-use Resta\Routing\RouteApplication as Router;
+use Resta\Router\RouteApplication as Router;
 use Resta\Environment\EnvironmentConfiguration;
 use Resta\Encrypter\Encrypter as EncrypterProvider;
-use Resta\GlobalLoaders\GlobalAccessor as Accessor;
 
 class BootLoader extends ApplicationProvider implements BootContracts
 {

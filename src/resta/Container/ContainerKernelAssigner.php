@@ -123,7 +123,7 @@ class ContainerKernelAssigner extends ApplicationProvider
      */
     private function getGlobalObjectInstance($object)
     {
-        $globalObject           = $object.'GlobalInstance';
+        $globalObject           = $object.'KernelAssigner';
         $issetGlobalObject      = (isset($this->singleton()->{$globalObject}));
 
         return ($issetGlobalObject) ? $this->singleton()->{$globalObject} : null;

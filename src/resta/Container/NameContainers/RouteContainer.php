@@ -4,7 +4,7 @@ namespace Resta\Container\NameContainers;
 
 use Resta\Support\Str;
 use Resta\Support\Utils;
-use Resta\GlobalLoaders\Container;
+use Resta\Router\RouterKernelAssigner;
 
 class RouteContainer
 {
@@ -94,8 +94,8 @@ class RouteContainer
 
         // we get the container global object with
         // the help of global loaders and register the route container.
-        $containerGlobalLoaders=app()->makeBind(Container::class);
-        $containerGlobalLoaders->routeContainer($this->parameters);
+        $containerGlobalLoaders=app()->makeBind(RouterKernelAssigner::class);
+        $containerGlobalLoaders->routeServiceConfiguration($this->parameters);
 
         //route helper method
         $param['route']=route();

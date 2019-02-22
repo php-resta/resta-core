@@ -1,15 +1,14 @@
 <?php
 
-namespace Resta\GlobalLoaders;
+namespace Resta\Foundation;
 
 use Resta\Support\Utils;
 use Resta\Support\FileProcess;
 use Store\Services\RequestService;
 use Resta\Response\ResponseApplication;
-use Resta\Foundation\ApplicationProvider;
 use Symfony\Component\HttpFoundation\Request;
 
-class GlobalAccessor extends ApplicationProvider
+class ApplicationGlobalAccessor extends ApplicationProvider
 {
     /**
      * @return void
