@@ -2,8 +2,8 @@
 
 namespace Resta\Console\Source\Event;
 
-use Resta\Foundation\StaticPathList;
 use Resta\Console\ConsoleOutputter;
+use Resta\Foundation\StaticPathList;
 use Resta\Support\ClosureDispatcher;
 use Resta\Console\ConsoleListAccessor;
 

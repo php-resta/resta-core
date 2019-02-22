@@ -4,9 +4,9 @@ namespace Resta\Console\Source\Controller;
 
 use Resta\Support\Utils;
 use Resta\Config\Config;
+use Resta\Console\ConsoleOutputter;
 use Resta\Foundation\StaticPathList;
 use Resta\Foundation\StaticPathModel;
-use Resta\Console\ConsoleOutputter;
 use Resta\Console\ConsoleListAccessor;
 use Resta\Services\Controller\Controller as CallController;
 

@@ -2,10 +2,10 @@
 
 namespace Resta\Console;
 
-use Resta\Foundation\StaticPathList;
-use Resta\Foundation\StaticPathModel;
 use Resta\Traits\ConsoleColor;
 use Resta\Support\FileProcess;
+use Resta\Foundation\StaticPathList;
+use Resta\Foundation\StaticPathModel;
 
 class ConsoleOutputter extends ConsolePrepare {
 
