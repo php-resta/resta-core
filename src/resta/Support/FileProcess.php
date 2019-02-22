@@ -33,7 +33,7 @@ class FileProcess
     public function __construct()
     {
         $this->fs=new Filesystem();
-        $this->stubPath=__DIR__.'/Console/Stubs';
+        $this->stubPath=__DIR__.'/../Console/Stubs';
     }
 
     /**
