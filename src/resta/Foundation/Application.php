@@ -109,7 +109,11 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
     {
         // get the directory
         // where kernel files are running to the kernel object.
-        return core()->corePath;
+        if(isset(core()->corePath)){
+            return core()->corePath;
+        }
+        return null;
+
     }
 
     /**
