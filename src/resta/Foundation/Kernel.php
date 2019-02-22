@@ -10,6 +10,8 @@ use Resta\Foundation\Bootstrapper\BootFireCallback;
 class Kernel extends Container implements KernelContracts
 {
     /**
+     * origin groups for kernel boot
+     *
      * @var $boot
      */
     protected $boot=false;
@@ -27,15 +29,20 @@ class Kernel extends Container implements KernelContracts
         'serviceProvider'   => 'serviceProvider',
     ];
 
+    /**
+     * 
+     *
+     * @var array
+     */
     protected $consoleGroups = [
-        'console'=>'appConsole',
+        'console' => 'appConsole',
     ];
 
     /**
      * @var array
      */
     protected $middlewareGroups=[
-        'middleware'=>'middleware'
+        'middleware' => 'middleware'
     ];
     /**
      * @var array
