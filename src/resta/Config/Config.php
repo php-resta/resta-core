@@ -4,8 +4,8 @@ namespace Resta\Config;
 
 use Resta\Support\Arr;
 use Resta\Support\Str;
-use Resta\FileProcess;
 use Resta\Support\Utils;
+use Resta\Support\FileProcess;
 use Resta\Contracts\AccessorContracts;
 
 class Config implements AccessorContracts

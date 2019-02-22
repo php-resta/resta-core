@@ -1,6 +1,6 @@
 <?php
 
-namespace Resta;
+namespace Resta\Support;
 
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;

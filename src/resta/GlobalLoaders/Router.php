@@ -2,9 +2,9 @@
 
 namespace Resta\GlobalLoaders;
 
-use Resta\FileProcess;
 use Resta\Routing\Route;
 use Resta\StaticPathModel;
+use Resta\Support\FileProcess;
 use Resta\Traits\NamespaceForRoute;
 use Resta\Foundation\ApplicationProvider;
 
