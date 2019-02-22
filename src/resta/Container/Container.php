@@ -5,7 +5,7 @@ namespace Resta\Container;
 use Resta\Support\Utils;
 use Resta\Console\ConsoleBindings;
 use Resta\Contracts\ContainerContracts;
-use Resta\GlobalLoaders\KernelAssigner;
+use Resta\Container\ContainerKernelAssigner;
 use Resta\GlobalLoaders\GlobalAssignerForBind;
 
 class Container implements ContainerContracts,\ArrayAccess
@@ -64,7 +64,7 @@ class Container implements ContainerContracts,\ArrayAccess
     public function kernelAssigner()
     {
         //We will use the kernelAssigner class to resolve the singleton object state.
-        return $this->makeBind(KernelAssigner::class);
+        return $this->makeBind(ContainerKernelAssigner::class);
     }
 
     /**

@@ -1,11 +1,11 @@
 <?php
 
-namespace Resta\GlobalLoaders;
+namespace Resta\Container;
 
 use Resta\Support\Utils;
 use Resta\Foundation\ApplicationProvider;
 
-class KernelAssigner extends ApplicationProvider
+class ContainerKernelAssigner extends ApplicationProvider
 {
     /**
      * @param $object
