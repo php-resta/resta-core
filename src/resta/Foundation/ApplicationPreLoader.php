@@ -6,13 +6,14 @@ use Resta\Support\App;
 use Resta\Exception\ErrorHandler;
 use Resta\Support\ClassAliasGroup;
 use Resta\Support\ReflectionProcess;
+use Resta\Contracts\HandleContracts;
 use Resta\Support\ClosureDispatcher;
 use Resta\GlobalLoaders\GlobalAccessor;
 use Resta\Foundation\ApplicationProvider;
 use Resta\Foundation\Bootstrapper\BootLoader;
 use Resta\Container\ContainerInstanceResolver;
 
-class ApplicationPreLoader extends ApplicationProvider
+class ApplicationPreLoader extends ApplicationProvider implements HandleContracts
 {
     /**
      * check store directory
@@ -33,7 +34,7 @@ class ApplicationPreLoader extends ApplicationProvider
     }
 
     /**
-     * @return void
+     * @return void|mixed
      */
     public function handle()
     {
@@ -49,7 +50,7 @@ class ApplicationPreLoader extends ApplicationProvider
         //control of required store classes.
         $this->isAvailableStore();
 
-
+        //global accessor handling
         $this->app->bind('accessor',function(){
             return GlobalAccessor::class;
         });

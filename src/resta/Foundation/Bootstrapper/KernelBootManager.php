@@ -104,7 +104,7 @@ class KernelBootManager
                 // the revision list is presented as a helper method to prevent
                 // the listener application being booted from taking the entire listener individually.
                 if(count($revision) && isset($revision[$makerValue])){
-                    $this->makerList[$makerKey]=$revision[$makerValue];
+                    $this->makerList[$makerKey] = $revision[$makerValue];
                 }
             }
         }
