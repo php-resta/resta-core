@@ -17,6 +17,11 @@ interface ApplicationContracts {
     /**
      * @return mixed
      */
+   public function corePath();
+
+    /**
+     * @return mixed
+     */
    public function handle();
 
     /**

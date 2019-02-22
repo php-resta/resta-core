@@ -101,6 +101,16 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
     }
 
     /**
+     * get core path
+     *
+     * @return mixed
+     */
+    public function corePath()
+    {
+        return core()->corePath;
+    }
+
+    /**
      * handle application
      *
      * @return void|mixed

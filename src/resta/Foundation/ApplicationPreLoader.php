@@ -75,6 +75,9 @@ class ApplicationPreLoader extends ApplicationProvider implements HandleContract
         //and easily resolve an encrypted instance of all the kernel variables in our helper class.
         ClassAliasGroup::setAlias(App::class,'application');
 
+        //we're saving the directory where kernel files are running to the kernel object.
+        $this->app->register('corePath',str_replace('Foundation','',__DIR__.''));
+
         //For the application, we create the object that the register method,
         // which is the container center, is connected to by the kernel object register method.
         $this->app->register('container',$this->app);
