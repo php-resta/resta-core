@@ -107,9 +107,9 @@ use '.$this->argument['factoryDir'].'\\'.$factoryArgument.'\Interfaces\\'.$facto
 {'=>'class '.$factoryArgument.'Manager extends FactoryManager implements '.$factoryArgument.'Interface
 {
     /**
-     * @return '.$resourceArgument.'Interface
+     * @return '.$resourceArgument.'
      */
-    public function '.strtolower($resourceArgument).'() : '.$resourceArgument.'Interface
+    public function '.strtolower($resourceArgument).'() : '.$resourceArgument.'
     {
         return new '.$resourceArgument.'($this->factory);
     }
@@ -117,7 +117,6 @@ use '.$this->argument['factoryDir'].'\\'.$factoryArgument.'\Interfaces\\'.$facto
 
                                 'namespace '.$this->argument['factoryDir'].'\\'.$factoryArgument.';' => 'namespace '.$this->argument['factoryDir'].'\\'.$factoryArgument.';
                                    
-use '.$this->argument['factoryDir'].'\\'.$factoryArgument.'\Interfaces\\'.$resourceArgument.'Interface;
 use '.$this->argument['factoryDir'].'\\'.$factoryArgument.'\Resources\\'.$resourceArgument.'\\'.$resourceArgument.';',
 
                             ]);
@@ -126,10 +125,12 @@ use '.$this->argument['factoryDir'].'\\'.$factoryArgument.'\Resources\\'.$resour
                         Utils::changeClass($factoryargumentmanagerInterface,
                             [
                                 'interface '.$factoryArgument.'Interface
-{' => 'interface '.$factoryArgument.'Interface
+{' => 'use '.$this->argument['factoryDir'].'\\'.$factoryArgument.'\Resources\\'.$resourceArgument.'\\'.$resourceArgument.';
+
+interface '.$factoryArgument.'Interface
 {
     /**
-     * @return '.$resourceArgument.'Interface
+     * @return '.$resourceArgument.'
      */
     public function '.strtolower($resourceArgument).'();
     '

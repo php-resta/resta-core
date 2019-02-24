@@ -7,5 +7,11 @@ use __factoryDir__\__factory__\Interfaces\__resource__Interface;
 
 class __resource__ extends FactoryManager implements __resource__Interface
 {
-
+    /**
+     * @return mixed|string
+     */
+    public function get()
+    {
+        return '__resource__';
+    }
 }

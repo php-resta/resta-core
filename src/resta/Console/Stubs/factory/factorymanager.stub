@@ -2,7 +2,7 @@
 
 namespace __factoryDir__;
 
-class FactoryManager
+abstract class FactoryManager
 {
     /**
      * @var $instance array

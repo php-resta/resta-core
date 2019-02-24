@@ -4,5 +4,8 @@ namespace __factoryDir__\__factory__\Interfaces;
 
 interface __resource__Interface
 {
-
+    /**
+     * @return mixed
+     */
+    public function get();
 }
