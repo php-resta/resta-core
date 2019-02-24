@@ -2,7 +2,7 @@
 
 namespace Resta\Authenticate;
 
-use Resta\Services\Request as RequestClient;
+use Resta\Request\Request as RequestClient;
 
 class AuthenticateRequest extends RequestClient
 {
