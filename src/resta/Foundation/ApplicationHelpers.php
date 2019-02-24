@@ -212,6 +212,21 @@ if (!function_exists('tap')) {
     }
 }
 
+if (!function_exists('bundleName')) {
+
+    /**
+     *
+     */
+    function bundleName()
+    {
+       if(defined('endpoint')){
+
+           return endpoint.''.\Resta\Foundation\StaticPathList::$controllerBundleName;
+       }
+       return null;
+    }
+}
+
 if (!function_exists('config')) {
 
     /**

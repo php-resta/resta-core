@@ -64,9 +64,7 @@ class Route
     public function handle()
     {
        foreach (self::$paths as $mapper=>$controller){
-           if(file_exists($mapper)){
-               core()->fileSystem->callFile($mapper);
-           }
+           core()->fileSystem->callFile($mapper);
        }
     }
 
@@ -93,8 +91,14 @@ class Route
     {
         $routeDefinitor = call_user_func($callback);
 
-        if(!isset(static::$paths[$routeDefinitor['routeMapper']])){
-            static::$paths[$routeDefinitor['routeMapper']]=$routeDefinitor['controllerPath'];
+        $routeName = isset($routeDefinitor['routeName'])
+            ? $routeDefinitor['routeName']
+            : endpoint.'Route.php';
+
+        $routeMapper = $routeDefinitor['routeMapper'].''.DIRECTORY_SEPARATOR.''.$routeName;
+
+        if(file_exists($routeMapper) && !isset(static::$paths[$routeMapper])){
+            static::$paths[$routeMapper]=$routeDefinitor['controllerPath'];
         }
     }
 
@@ -160,6 +164,7 @@ class Route
         $patterns   = $routes['pattern'];
         $urlRoute   = array_filter(route(),'strlen');
 
+
         foreach ($patterns as $key=>$pattern){
 
             $pattern = array_filter($pattern,'strlen');
@@ -195,6 +200,8 @@ class Route
                 }
             }
         }
+
+        return 0;
     }
 
     /**

@@ -89,7 +89,6 @@ class Controller extends ConsoleOutputter {
      */
     public function create()
     {
-
         $controller                     = $this->argument['controller'];
         $resourceInController           = $this->argument['resourceInController'] = StaticPathList::$resourceInController;
         $configurationInController      = $this->argument['configurationInController'] = StaticPathList::$configurationInController;
@@ -107,6 +106,10 @@ class Controller extends ConsoleOutputter {
         $this->argument['callClassPrefix']      = StaticPathModel::$callClassPrefix;
         $fullNamespaceForController             = $this->argument['controllerNamespace'].'\\'.$this->argument['serviceClass'].''.$this->argument['callClassPrefix'];
 
+        if(!file_exists(config('kernel.paths.route'))){
+
+            $this->directory['routes']       = config('kernel.paths.route');
+        }
 
         // with the directory operation,
         // we get to the service directory, which is called the controller.
@@ -116,7 +119,7 @@ class Controller extends ConsoleOutputter {
         // we process the processes related to file creation operations.
         // and then create files related to the touch method of the file object as it is in the directory process.
         $this->touch['service/endpoint']        = $this->directory['endpoint'].''.DIRECTORY_SEPARATOR.''.$this->argument['serviceClass'].''. $this->argument['callClassPrefix'].'.php';
-        $this->touch['service/route']           = $this->directory['endpoint'].''.DIRECTORY_SEPARATOR.'Routes.php';
+        $this->touch['service/route']           = config('kernel.paths.route').''.DIRECTORY_SEPARATOR.''.$controller.'Route.php';
         $this->touch['service/acl']             = $this->directory['resource'].''.DIRECTORY_SEPARATOR.''.$this->argument['serviceClass'].'AclManagement.php';
         $this->touch['service/app']             = $this->directory['endpoint'].''.DIRECTORY_SEPARATOR.'App.php';
         $this->touch['service/developer']       = $this->directory['configuration'].''.DIRECTORY_SEPARATOR.'Developer.php';

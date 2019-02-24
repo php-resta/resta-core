@@ -18,4 +18,11 @@ return [
         'eloquentServiceProvider'   => __kernelProviderDir__\EloquentServiceProvider::class,
     ],
 
+    /**
+     * get paths for application
+     */
+     'paths' => [
+        'route' => path()->version().''.DIRECTORY_SEPARATOR.'Routes'
+     ]
+
 ];
