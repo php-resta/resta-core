@@ -93,11 +93,9 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
         //We use this method to know how to customize it.
         BootFireCallback::setBootFire([$app,$strappers],function($boot){
 
-            //kernel boots run and service container{
+            //kernel boots run and service container
             //makeBuild for service Container
-            return core()->appClosureInstance->call(function() use ($boot) {
-                $this->bootFire($boot);
-            });
+            $this->bootFire($boot);
         });
     }
 
