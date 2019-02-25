@@ -177,8 +177,7 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
             return ($applicationKey===null) ? 'production' : environment();
         }
 
-        //throw exception runtine if the applicationKey is not valid
-        exception()->runtime('Application key value is not valid for application runtime');
+        return environment();
     }
 
     /**
