@@ -31,17 +31,9 @@ class ErrorHandler extends ApplicationProvider {
      */
     private function getEnvironmentStatus(){
 
-        $environment=environment();
-
-        if(isset(core()->applicationKey)){
-
-            // application key, but if it has a null value
-            // then we move the environment value to the production environment.
-            $applicationKey = core()->applicationKey;
-            $environment    = ($applicationKey===null) ? 'production' : environment();
-        }
-
-        return $environment;
+        // application key, but if it has a null value
+        // then we move the environment value to the production environment.
+        return $this->app->detectEnvironmentForApplicationKey();
     }
 
     /**

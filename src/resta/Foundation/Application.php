@@ -160,7 +160,25 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
             return core()->corePath;
         }
         return null;
+    }
 
+    /**
+     * detect environment according to application key
+     *
+     * @return mixed|string
+     */
+    public function detectEnvironmentForApplicationKey()
+    {
+        if(isset(core()->applicationKey)){
+
+            // application key, but if it has a null value
+            // then we move the environment value to the production environment.
+            $applicationKey = core()->applicationKey;
+            return ($applicationKey===null) ? 'production' : environment();
+        }
+
+        //throw exception runtine if the applicationKey is not valid
+        exception()->runtime('Application key value is not valid for application runtime');
     }
 
     /**

@@ -22,6 +22,11 @@ interface ApplicationContracts {
     /**
      * @return mixed
      */
+   public function detectEnvironmentForApplicationKey();
+
+    /**
+     * @return mixed
+     */
    public function handle();
 
     /**
