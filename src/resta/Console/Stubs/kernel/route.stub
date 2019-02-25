@@ -27,20 +27,15 @@ class RouteServiceProvider extends ApplicationProvider implements BootContracts
      */
     private function registerRoutePath()
     {
-        // as controller path,
-        // we check whether the endpoint constant is loaded.
-        if(defined('endpoint')){
+        // we will record the path data for the route.
+        // We set the routeMapper variables and the route path.
+        Route::setPath(function(){
 
-            // we will record the path data for the route.
-            // We set the routeMapper variables and save the route path.
-            Route::setPath(function(){
-
-                // we are sending the controller and routes.php path.
-                return [
-                    'controllerPath'    => path()->controller(endpoint,true),
-                    'routeMapper'       => config('kernel.paths.route'),
-                ];
-            });
-        }
+            // we are sending the controller and routes.php path.
+            return [
+                //'controllerPath'  => 'controllerPath',
+                //'routePath'       => 'routeMapper',
+            ];
+        });
     }
 }

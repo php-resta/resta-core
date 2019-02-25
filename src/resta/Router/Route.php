@@ -34,6 +34,37 @@ class Route
     }
 
     /**
+     * get controller router
+     *
+     * @return mixed|void
+     */
+    public static function getControllerRouter()
+    {
+        define ('getControllerRouter' ,true);
+
+        self::setPath(function(){
+
+            // as controller path,
+            // we check whether the endpoint constant is loaded.
+            if(defined('endpoint')){
+
+                // we will record the path data for the route.
+                // We set the routeMapper variables and the route path.
+                Route::setPath(function(){
+
+                    // we are sending the controller and routes.php path.
+                    return [
+                        'controllerPath'    => path()->controller(endpoint,true),
+                        'routePath'         => config('kernel.paths.route'),
+                    ];
+                });
+            }
+        });
+    }
+
+    /**
+     * get static getPath
+     *
      * @return array
      */
     public static function getPath()
@@ -42,6 +73,8 @@ class Route
     }
 
     /**
+     * get static getRoutes
+     *
      * @return array
      */
     public static function getRoutes()
@@ -50,6 +83,8 @@ class Route
     }
 
     /**
+     * get static getTracePath
+     *
      * @return mixed|null
      */
     public static function getTracePath()
@@ -59,16 +94,24 @@ class Route
     }
 
     /**
+     * route handle for application
+     *
      * @return void|mixed
      */
     public function handle()
     {
+        // we will record the path data for the route.
+        // We set the routeMapper variables and the route path.
+        self::getControllerRouter();
+
        foreach (self::$paths as $mapper=>$controller){
            core()->fileSystem->callFile($mapper);
        }
     }
 
     /**
+     * http post method
+     *
      * @param mixed ...$params
      */
     public static function post(...$params)
@@ -77,6 +120,8 @@ class Route
     }
 
     /**
+     * http put method
+     *
      * @param mixed ...$params
      */
     public static function put(...$params)
@@ -85,24 +130,34 @@ class Route
     }
 
     /**
+     * get route setPath method
+     *
      * @param $path
      */
     public static function setPath(callable $callback)
     {
         $routeDefinitor = call_user_func($callback);
 
-        $routeName = isset($routeDefinitor['routeName'])
-            ? $routeDefinitor['routeName']
-            : endpoint.'Route.php';
+        if(isset($routeDefinitor['controllerPath']) && isset($routeDefinitor['routePath'])){
 
-        $routeMapper = $routeDefinitor['routeMapper'].''.DIRECTORY_SEPARATOR.''.$routeName;
+            //set a predefined value for route.php.
+            $routePrefix = (defined('endpoint')) ? endpoint : '';
 
-        if(file_exists($routeMapper) && !isset(static::$paths[$routeMapper])){
-            static::$paths[$routeMapper]=$routeDefinitor['controllerPath'];
+            $routeName = isset($routeDefinitor['routeName'])
+                ? $routeDefinitor['routeName']
+                : $routePrefix.'Route.php';
+
+            $routeMapper = $routeDefinitor['routePath'].''.DIRECTORY_SEPARATOR.''.$routeName;
+
+            if(file_exists($routeMapper) && !isset(static::$paths[$routeMapper])){
+                static::$paths[$routeMapper] = $routeDefinitor['controllerPath'];
+            }
         }
     }
 
     /**
+     * get route setRoute method
+     *
      * @param $params
      * @param $function
      * @param null $controller
@@ -127,6 +182,8 @@ class Route
     }
 
     /**
+     * get route getRouteResolve
+     *
      * @return array
      */
     public static function getRouteResolve()
@@ -151,6 +208,8 @@ class Route
     }
 
     /**
+     * get route getPatternResolve
+     *
      * @return array|int|string
      */
     private static function getPatternResolve()
@@ -205,6 +264,8 @@ class Route
     }
 
     /**
+     * get route checkArrayEqual
+     *
      * @param $patterns
      * @param $urlRoute
      * @return int|string
