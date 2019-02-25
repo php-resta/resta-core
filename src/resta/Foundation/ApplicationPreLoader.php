@@ -134,10 +134,10 @@ class ApplicationPreLoader extends ApplicationProvider implements HandleContract
     private function setGlobalAccessor()
     {
         //get response success and status
-        $this->app->register('instanceController',       null);
-        $this->app->register('responseSuccess',          true);
-        $this->app->register('responseStatus',           200);
-        $this->app->register('responseType',             'json');
+        $this->app->register('instanceController',null);
+        $this->app->register('responseSuccess',true);
+        $this->app->register('responseStatus',200);
+        $this->app->register('responseType','json');
 
         //we first load the response class as a singleton object to allow you to send output anywhere
         $this->app->register('out',             $this->makeBind(ResponseApplication::class));
@@ -166,9 +166,9 @@ class ApplicationPreLoader extends ApplicationProvider implements HandleContract
 
 
         //After registering the symfony request method, we also save the get and post methods for user convenience.
-        $this->app->register('request',      Request::createFromGlobals());
-        $this->app->register('get',          $this->app->kernel()->request->query->all());
-        $this->app->register('post',         $this->app->kernel()->request->request->all());
+        $this->app->register('request',Request::createFromGlobals());
+        $this->app->register('get',$this->app->kernel()->request->query->all());
+        $this->app->register('post',$this->app->kernel()->request->request->all());
 
         //We determine with the kernel object which HTTP method the requested from the client
         $this->app->register('httpMethod',ucfirst(strtolower($this->app->kernel()->request->getRealMethod())));
