@@ -3,9 +3,9 @@
 namespace Resta\Console\Source\Event;
 
 use Resta\Console\ConsoleOutputter;
-use Resta\Foundation\StaticPathList;
 use Resta\Support\ClosureDispatcher;
 use Resta\Console\ConsoleListAccessor;
+use Resta\Foundation\PathManager\StaticPathList;
 
 class Event extends ConsoleOutputter {
 

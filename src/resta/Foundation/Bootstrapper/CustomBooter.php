@@ -3,8 +3,8 @@
 namespace Resta\Foundation\Bootstrapper;
 
 use Resta\Support\Utils;
-use Resta\Foundation\StaticPathList;
 use Resta\Support\ClosureDispatcher;
+use Resta\Foundation\PathManager\StaticPathList;
 
 class CustomBooter
 {

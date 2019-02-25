@@ -4,9 +4,9 @@ namespace Resta\Traits;
 
 use Resta\Router\Route;
 use Resta\Support\Utils;
-use Resta\Foundation\StaticPathModel;
 use Resta\GlobalLoaders\Router;
 use Resta\Router\CheckEndpointForAutoService;
+use Resta\Foundation\PathManager\StaticPathModel;
 
 trait NamespaceForRoute
 {

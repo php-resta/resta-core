@@ -4,8 +4,8 @@ namespace Resta\Console;
 
 use Resta\Traits\ConsoleColor;
 use Resta\Support\FileProcess;
-use Resta\Foundation\StaticPathList;
-use Resta\Foundation\StaticPathModel;
+use Resta\Foundation\PathManager\StaticPathList;
+use Resta\Foundation\PathManager\StaticPathModel;
 
 class ConsoleOutputter extends ConsolePrepare {
 

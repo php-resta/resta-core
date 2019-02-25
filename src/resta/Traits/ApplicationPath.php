@@ -2,8 +2,8 @@
 
 namespace Resta\Traits;
 
-use Resta\Foundation\StaticPathRepository;
-use Resta\Foundation\StaticNamespaceRepository;
+use Resta\Foundation\PathManager\StaticPathRepository;
+use Resta\Foundation\PathManager\StaticNamespaceRepository;
 
 trait ApplicationPath
 {

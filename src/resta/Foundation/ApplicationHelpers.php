@@ -221,7 +221,7 @@ if (!function_exists('bundleName')) {
     {
        if(defined('endpoint')){
 
-           return endpoint.''.\Resta\Foundation\StaticPathList::$controllerBundleName;
+           return endpoint.''.\Resta\Foundation\PathManager\StaticPathList::$controllerBundleName;
        }
        return null;
     }

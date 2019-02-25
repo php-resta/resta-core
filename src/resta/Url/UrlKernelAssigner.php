@@ -2,8 +2,8 @@
 
 namespace Resta\Url;
 
-use Resta\Foundation\StaticPathList;
 use Resta\Foundation\ApplicationProvider;
+use Resta\Foundation\PathManager\StaticPathList;
 
 class UrlKernelAssigner extends ApplicationProvider
 {

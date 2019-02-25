@@ -2,8 +2,8 @@
 
 namespace Resta\Services\Controller;
 
-use Resta\Foundation\StaticPathModel;
 use Resta\Support\Utils;
+use Resta\Foundation\PathManager\StaticPathModel;
 
 class Controller
 {

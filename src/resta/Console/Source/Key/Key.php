@@ -2,11 +2,10 @@
 
 namespace Resta\Console\Source\Key;
 
-use Resta\Console\ConsoleListAccessor;
-use Resta\Console\ConsoleOutputter;
-
-use Resta\Foundation\StaticPathModel;
 use Resta\Support\Utils;
+use Resta\Console\ConsoleOutputter;
+use Resta\Console\ConsoleListAccessor;
+use Resta\Foundation\PathManager\StaticPathModel;
 use Symfony\Component\Security\Core\Tests\Encoder\EncAwareUser;
 
 class Key extends ConsoleOutputter {

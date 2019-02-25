@@ -2,11 +2,11 @@
 
 namespace Resta\Console\Source\Migration;
 
-use Resta\Foundation\StaticPathModel;
 use Migratio\SchemaFacade;
 use Resta\Console\ConsoleOutputter;
 use Resta\Console\ConsoleListAccessor;
 use Store\Services\DatabaseConnection;
+use Resta\Foundation\PathManager\StaticPathModel;
 
 class Migration extends ConsoleOutputter {
 

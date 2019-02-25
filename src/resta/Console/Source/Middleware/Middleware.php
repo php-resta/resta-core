@@ -2,10 +2,10 @@
 
 namespace Resta\Console\Source\Middleware;
 
-use Resta\Console\ConsoleListAccessor;
-use Resta\Console\ConsoleOutputter;
-use Resta\Foundation\StaticPathModel;
 use Resta\Support\Utils;
+use Resta\Console\ConsoleOutputter;
+use Resta\Console\ConsoleListAccessor;
+use Resta\Foundation\PathManager\StaticPathModel;
 
 class Middleware extends ConsoleOutputter {
 

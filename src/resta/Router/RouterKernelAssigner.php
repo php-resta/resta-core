@@ -5,8 +5,8 @@ namespace Resta\Router;
 use Resta\Router\Route;
 use Resta\Support\FileProcess;
 use Resta\Traits\NamespaceForRoute;
-use Resta\Foundation\StaticPathModel;
 use Resta\Foundation\ApplicationProvider;
+use Resta\Foundation\PathManager\StaticPathModel;
 
 class RouterKernelAssigner extends ApplicationProvider
 {

@@ -4,10 +4,10 @@ namespace Resta\Exception;
 
 use Resta\Support\Str;
 use Resta\Support\Utils;
-use Resta\Foundation\StaticPathModel;
 use Resta\Support\BootLoaderNeeds;
 use Resta\Support\ClosureDispatcher;
 use Resta\Foundation\ApplicationProvider;
+use Resta\Foundation\PathManager\StaticPathModel;
 
 class ErrorHandler extends ApplicationProvider {
 

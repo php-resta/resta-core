@@ -4,8 +4,8 @@ namespace Resta\Config;
 
 use Resta\Support\Str;
 use Resta\Support\Utils;
-use Resta\Foundation\StaticPathList;
 use Resta\Foundation\ApplicationProvider;
+use Resta\Foundation\PathManager\StaticPathList;
 
 class ConfigKernelAssigner extends ApplicationProvider
 {

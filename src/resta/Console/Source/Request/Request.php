@@ -2,11 +2,11 @@
 
 namespace Resta\Console\Source\Request;
 
-use const Grpc\STATUS_ABORTED;
-use Resta\Console\ConsoleListAccessor;
-use Resta\Console\ConsoleOutputter;
-use Resta\Foundation\StaticPathModel;
 use Resta\Support\Utils;
+use const Grpc\STATUS_ABORTED;
+use Resta\Console\ConsoleOutputter;
+use Resta\Console\ConsoleListAccessor;
+use Resta\Foundation\PathManager\StaticPathModel;
 
 class Request extends ConsoleOutputter {
 
