@@ -3,12 +3,17 @@
 namespace Resta\Foundation;
 
 use Resta\Support\App;
+use Resta\Support\Utils;
+use Resta\Support\FileProcess;
 use Resta\Exception\ErrorHandler;
+use Store\Services\RequestService;
 use Resta\Support\ClassAliasGroup;
 use Resta\Support\ReflectionProcess;
 use Resta\Contracts\HandleContracts;
 use Resta\Support\ClosureDispatcher;
+use Resta\Response\ResponseApplication;
 use Resta\Foundation\ApplicationProvider;
+use Symfony\Component\HttpFoundation\Request;
 use Resta\Foundation\Bootstrapper\BootLoader;
 use Resta\Container\ContainerInstanceResolver;
 use Resta\Foundation\ApplicationGlobalAccessor as GlobalAccessor;
@@ -34,6 +39,8 @@ class ApplicationPreLoader extends ApplicationProvider implements HandleContract
     }
 
     /**
+     * application preloader handle
+     *
      * @return void|mixed
      */
     public function handle()
@@ -51,9 +58,7 @@ class ApplicationPreLoader extends ApplicationProvider implements HandleContract
         $this->isAvailableStore();
 
         //global accessor handling
-        $this->app->bind('accessor',function(){
-            return GlobalAccessor::class;
-        });
+       $this->setGlobalAccessor();
 
         // sets a user-defined error handler function
         // this function can be used for defining your own way of handling errors during runtime,
@@ -67,6 +72,8 @@ class ApplicationPreLoader extends ApplicationProvider implements HandleContract
     }
 
     /**
+     * set main loader
+     *
      * @return void
      */
     private function mainLoader()
@@ -105,6 +112,8 @@ class ApplicationPreLoader extends ApplicationProvider implements HandleContract
     }
 
     /**
+     * set base instances
+     *
      * @return void|mixed
      */
     private function setBaseInstances()
@@ -114,6 +123,59 @@ class ApplicationPreLoader extends ApplicationProvider implements HandleContract
         $this->app->instance('app',$this->app);
         $this->app->instance('containerInstanceResolve',ContainerInstanceResolver::class);
         $this->app->instance('reflection',ReflectionProcess::class);
+    }
+
+    /**
+     * set global accessor
+     *
+     * @throws \DI\DependencyException
+     * @throws \DI\NotFoundException
+     */
+    private function setGlobalAccessor()
+    {
+        //get response success and status
+        $this->app->register('instanceController',       null);
+        $this->app->register('responseSuccess',          true);
+        $this->app->register('responseStatus',           200);
+        $this->app->register('responseType',             'json');
+
+        //we first load the response class as a singleton object to allow you to send output anywhere
+        $this->app->register('out',             $this->makeBind(ResponseApplication::class));
+
+        //The HttpFoundation component defines an object-oriented layer for the HTTP specification.
+        //The HttpFoundation component replaces these default PHP global variables and functions by an object-oriented layer
+        if(Utils::isNamespaceExists(RequestService::class)){
+
+            Request::setFactory(function(array $query = array(),
+                                         array $request = array(),
+                                         array $attributes = array(),
+                                         array $cookies = array(),
+                                         array $files = array(),
+                                         array $server = array(),
+                                         $content = null)
+            {
+                return new RequestService($query,
+                    $request,
+                    $attributes,
+                    $cookies,
+                    $files,
+                    $server,
+                    $content);
+            });
+        }
+
+
+        //After registering the symfony request method, we also save the get and post methods for user convenience.
+        $this->app->register('request',      Request::createFromGlobals());
+        $this->app->register('get',          $this->app->kernel()->request->query->all());
+        $this->app->register('post',         $this->app->kernel()->request->request->all());
+
+        //We determine with the kernel object which HTTP method the requested from the client
+        $this->app->register('httpMethod',ucfirst(strtolower($this->app->kernel()->request->getRealMethod())));
+
+        define('httpMethod',strtoupper($this->app->singleton()->httpMethod));
+
+        $this->app->register('fileSystem',new FileProcess());
     }
 
 }
