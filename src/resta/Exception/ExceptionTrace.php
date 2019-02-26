@@ -20,7 +20,7 @@ class ExceptionTrace {
 
         // for real file path with
         // debug backtrace method are doing follow.
-        $this->debubBackTrace();
+        $this->debugBackTrace();
     }
 
     /**
@@ -44,7 +44,7 @@ class ExceptionTrace {
      *
      * @return mixed|void
      */
-    public function debubBackTrace()
+    public function debugBackTrace()
     {
         foreach (debug_backtrace() as $key=>$value){
 
