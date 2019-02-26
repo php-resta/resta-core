@@ -22,7 +22,7 @@ class ServiceProvider extends  ApplicationProvider
             //first we are running register methods of provider classes.
             foreach($providers as $key=>$provider){
                 $this->applyProvider($provider);
-                $this->app->register('providers',$key,$provider);
+                $this->app->register('loadedProviders',$key,$provider);
             }
 
             //then we are running boot methods of provider classes.
