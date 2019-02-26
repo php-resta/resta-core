@@ -10,17 +10,13 @@ use Store\Packages\Database\Eloquent\Connection as Eloquent;
 class EloquentServiceProvider extends ApplicationProvider implements BootContracts
 {
     /**
-     * Eloquent service provider
+     * boot service provider
      *
      * @return void
      */
     public function boot()
     {
-        //eloquent loader
-        $this->eloquentBoot();
-
-        //eloquent pagination resolver
-        $this->eloquentPagination();
+        //
     }
 
     /**
@@ -57,5 +53,19 @@ class EloquentServiceProvider extends ApplicationProvider implements BootContrac
 
             return 1;
         });
+    }
+
+    /**
+     * register service provider
+     *
+     * @return void
+     */
+    public function register()
+    {
+        //eloquent loader
+        $this->eloquentBoot();
+
+        //eloquent pagination resolver
+        $this->eloquentPagination();
     }
 }

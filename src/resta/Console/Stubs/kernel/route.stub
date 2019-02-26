@@ -9,9 +9,21 @@ use Resta\Foundation\ApplicationProvider;
 class RouteServiceProvider extends ApplicationProvider implements BootContracts
 {
     /**
+     * boot service provider
+     *
      * @return mixed|void
      */
     public function boot()
+    {
+        //
+    }
+
+    /**
+     * register service provider
+     *
+     * @return mixed|void
+     */
+    public function register()
     {
         //register route path
         $this->registerRoutePath();
@@ -23,6 +35,8 @@ class RouteServiceProvider extends ApplicationProvider implements BootContracts
     }
 
     /**
+     * register route path
+     *
      * @return void
      */
     private function registerRoutePath()

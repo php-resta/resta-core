@@ -8,17 +8,21 @@ use Resta\Foundation\ApplicationProvider;
 class AppServiceProvider extends ApplicationProvider implements BootContracts
 {
     /**
+     * boot service provider
+     *
      * @return mixed|void
      */
     public function boot()
     {
-        $this->controllerConfigLoader();
+        //
     }
 
     /**
+     * register service provider
+     *
      * @return void
      */
-    private function controllerConfigLoader()
+    public function register()
     {
         // while developing in the controller,
         // in addition to the config variables
