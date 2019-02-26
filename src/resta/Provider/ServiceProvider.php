@@ -15,18 +15,25 @@ class ServiceProvider extends  ApplicationProvider
     public function handle()
     {
         //get kernel service providers for application
-        $providers = config('kernel.providers');
+        $providers = $this->app->serviceProviders();
 
-        if(is_array($providers)){
+        //first we are running register methods of provider classes.
+        foreach($providers as $key=>$provider){
 
-            //first we are running register methods of provider classes.
-            foreach($providers as $key=>$provider){
+            //providers can only be installed once.
+            if(!isset(core()->loadedProviders[$key])){
+
+                //apply providers and register for kernel
                 $this->applyProvider($provider);
                 $this->app->register('loadedProviders',$key,$provider);
             }
+        }
 
-            //then we are running boot methods of provider classes.
-            foreach($providers as $key=>$provider){
+        //then we are running boot methods of provider classes.
+        foreach($providers as $key=>$provider){
+
+            //if the providers register is already booted.
+            if(isset(core()->loadedProviders[$key])){
                 $this->applyProvider($provider,'boot');
             }
         }

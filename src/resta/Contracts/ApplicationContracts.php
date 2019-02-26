@@ -5,6 +5,12 @@ namespace Resta\Contracts;
 interface ApplicationContracts {
 
     /**
+     * @param $maker
+     * @return mixed
+     */
+    public function bootManifest($maker);
+
+    /**
      * @return array
      */
     public function commandList();
@@ -59,6 +65,11 @@ interface ApplicationContracts {
      * @return mixed
      */
     public function register($key,$object,$concrete=null);
+
+    /**
+     * @return array
+     */
+    public function serviceProviders();
 
     /**
      * @param null $name

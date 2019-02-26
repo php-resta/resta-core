@@ -81,6 +81,17 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
     }
 
     /**
+     * get kernel maker from manifest
+     *
+     * @param $maker
+     * @return mixed
+     */
+    public function bootManifest($maker)
+    {
+        return $this->bootFire(null,$maker);
+    }
+
+    /**
      * application bootstrappers
      *
      * @method bootstrappers
@@ -249,6 +260,22 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
 
         //set config instance exception for application
         exception()->unexpectedValue('config instance is not loaded for application container');
+    }
+
+    /**
+     * get service providers
+     *
+     * @return array
+     */
+    public function serviceProviders()
+    {
+        //get project providers from config kernel
+        $providers = (is_array(config('kernel.providers')))
+            ? config('kernel.providers')
+            : [];
+
+        //core kernel providers and project providers have been merged
+        return array_merge($this->bootManifest('providers'),$providers);
     }
 
     /**

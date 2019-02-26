@@ -14,6 +14,8 @@ class Kernel extends Container
     protected $boot=false;
 
     /**
+     * get origin groups
+     *
      * @var array
      */
     protected $originGroups=[
@@ -27,7 +29,7 @@ class Kernel extends Container
     ];
 
     /**
-     * 
+     * get console groups
      *
      * @var array
      */
@@ -36,12 +38,19 @@ class Kernel extends Container
     ];
 
     /**
+     * get middleware groups
+     *
      * @var array
      */
     protected $middlewareGroups=[
         'middleware' => 'middleware'
     ];
     /**
+     *
+     */
+    /**
+     * get reflection groups
+     *
      * @var array
      */
     protected $reflectionGroups=[
@@ -50,6 +59,8 @@ class Kernel extends Container
     ];
 
     /**
+     * get command list
+     *
      * @var array
      */
     protected $commandList = [
@@ -71,4 +82,11 @@ class Kernel extends Container
         'Resta\Console\Source\Token\Token'                  => ['isRunnable' => true],
         'Resta\Console\Source\Factory\Factory'              => ['isRunnable' => true],
     ];
+
+    /**
+     * get service providers
+     *
+     * @var array $providers
+     */
+    protected $providers = [];
 }
