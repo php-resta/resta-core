@@ -167,13 +167,13 @@ class ApplicationPreLoader extends ApplicationProvider implements HandleContract
 
         //After registering the symfony request method, we also save the get and post methods for user convenience.
         $this->app->register('request',Request::createFromGlobals());
-        $this->app->register('get',$this->app->kernel()->request->query->all());
-        $this->app->register('post',$this->app->kernel()->request->request->all());
+        $this->app->register('get',core()->request->query->all());
+        $this->app->register('post',core()->request->request->all());
 
         //We determine with the kernel object which HTTP method the requested from the client
-        $this->app->register('httpMethod',ucfirst(strtolower($this->app->kernel()->request->getRealMethod())));
+        $this->app->register('httpMethod',ucfirst(strtolower(core()->request->getRealMethod())));
 
-        define('httpMethod',strtoupper($this->app->singleton()->httpMethod));
+        define('httpMethod',strtoupper(core()->httpMethod));
 
         $this->app->register('fileSystem',new FileProcess());
     }

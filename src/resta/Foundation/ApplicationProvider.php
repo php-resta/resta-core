@@ -45,29 +45,6 @@ class ApplicationProvider
     }
 
     /**
-     * @param $key
-     * @param $object
-     * @param null $concrete
-     * @return mixed
-     */
-    public function register($key,$object,$concrete=null)
-    {
-        //register app bound
-        return $this->app->register($key,$object,$concrete);
-    }
-
-    /**
-     * @param $key
-     * @param null $object
-     * @return mixed
-     */
-    public function terminate($key,$object=null)
-    {
-        //terminate app bound
-        return $this->app()->container->terminate($key,$object);
-    }
-
-    /**
      * @param null $param
      * @param null $default
      * @return null
@@ -98,7 +75,7 @@ class ApplicationProvider
 
             //we assign the url object to the global kernel url object
             //so that it can be read anywhere in our route file.
-            $this->url=$this->app()->url;
+            $this->url = core()->url;
         }
     }
 
@@ -153,22 +130,6 @@ class ApplicationProvider
     public function routeParameters()
     {
         return $this->app()->routeParameters;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function singleton()
-    {
-        return $this->app->singleton();
-    }
-
-    /**
-     * @return object
-     */
-    public function container()
-    {
-        return (object)$this->app()->serviceContainer;
     }
 
     /**

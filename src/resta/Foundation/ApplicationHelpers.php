@@ -116,7 +116,7 @@ if (!function_exists('core')) {
 
     function core()
     {
-        return appInstance()->singleton();
+        return appInstance()->app->singleton();
     }
 }
 

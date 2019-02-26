@@ -19,7 +19,7 @@ class KernelRouterProcess extends ApplicationProvider
      */
     private function pickRouter()
     {
-        $singleton=$this->singleton();
+        $singleton=core();
         $singleton->routerSpecifications['router']=(isset($singleton->pick)) ? $singleton->pick[0] : $singleton->router;
     }
 
@@ -47,7 +47,7 @@ class KernelRouterProcess extends ApplicationProvider
         array_walk($this->routerSpecification,[$this,'routerSpecification']);
 
         //Then we return the routerSpecifications object that is assigned for the kernel to the router method.
-        return call_user_func_array($callback,[$this->singleton()->routerSpecifications['router']]);
+        return call_user_func_array($callback,[core()->routerSpecifications['router']]);
     }
 
     /**
@@ -66,7 +66,7 @@ class KernelRouterProcess extends ApplicationProvider
     private function stackRouter()
     {
         //singleton object
-        $singleton=$this->singleton();
+        $singleton=core();
 
         //if there is no singleton pick
         //If this is the case, we collect these values and assign them to the router variable.

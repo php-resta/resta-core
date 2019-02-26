@@ -52,10 +52,10 @@ class ErrorHandler extends ApplicationProvider {
             $this->data['status']=(int)$exception::exceptionTypeCodes($this->data['errType']);
         }
 
-        $this->terminate('responseSuccess');
-        $this->terminate('responseStatus');
-        $this->register('responseSuccess',(bool)false);
-        $this->register('responseStatus',$this->data['status']);
+        $this->app->terminate('responseSuccess');
+        $this->app->terminate('responseStatus');
+        $this->app->register('responseSuccess',(bool)false);
+        $this->app->register('responseStatus',$this->data['status']);
 
 
         $optionalException=str_replace("\\","\\\\",$this->app->namespace()->optionalException());

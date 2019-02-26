@@ -26,8 +26,8 @@ class ConsoleBindings extends ApplicationProvider {
         //We assign the values assigned to the console object to the bindings array.
         //The console object represents the classes to be bound for the kernel object console.
         //if the array returns false on an if condition, the array will be automatically detected as empty.
-        if(isset($this->singleton()->consoleShared) and is_array($this->singleton()->consoleShared)){
-            return $this->singleton()->consoleShared;
+        if(isset(core()->consoleShared) and is_array(core()->consoleShared)){
+            return core()->consoleShared;
         }
         return [];
     }

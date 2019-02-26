@@ -23,13 +23,13 @@ class ContainerKernelAssignerForBind extends ApplicationProvider
         //and assign it to the object name in the kernel object with bind,
         //which you can easily use in the booted classes for kernel object assignments.
         if(class_exists($bindClassNamespace)){
-            $this->register($bindClassInstanceName,$this->makeBind($bindClassNamespace));
+            $this->app->register($bindClassInstanceName,$this->makeBind($bindClassNamespace));
         }
 
         //we register the bound object to the kernel bindings property.
         if(is_callable($callback)){
             if(class_exists($call = call_user_func($callback))){
-                $this->register('bindings',$bindClass,$this->makeBind($call));
+                $this->app->register('bindings',$bindClass,$this->makeBind($call));
             }
         }
     }

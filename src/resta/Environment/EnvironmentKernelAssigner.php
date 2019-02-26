@@ -16,7 +16,7 @@ class EnvironmentKernelAssigner extends ApplicationProvider
         $environment=(count($configuration)) ? $configuration['env'] : 'production';
 
         //we are doing global registration for env and var value.
-        $this->register('env',$environment);
-        $this->register('var',$configuration);
+        $this->app->register('env',$environment);
+        $this->app->register('var',$configuration);
     }
 }

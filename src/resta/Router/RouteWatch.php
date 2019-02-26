@@ -22,7 +22,7 @@ class RouteWatch extends ApplicationProvider
             $controllerOutput=call_user_func($callback);
 
             //save to kernel for a variable named controller Watch
-            $this->register('controllerWatch', 'memory',memory_get_usage() - $memoryUsage);
+            $this->app->register('controllerWatch', 'memory',memory_get_usage() - $memoryUsage);
         }
 
         // if watch config is true; in this case

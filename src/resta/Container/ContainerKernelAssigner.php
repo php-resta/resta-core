@@ -17,7 +17,7 @@ class ContainerKernelAssigner extends ApplicationProvider
         //The console share is evaluated as a true variable to be assigned as the 3rd parameter in the classes to be bound.
         //The work to be done here is to bind the classes to be included in the console share privately.
         if($this->app->console()){
-            $this->register('consoleShared',$object,$this->getConcrete($callback));
+            $this->app->register('consoleShared',$object,$this->getConcrete($callback));
         }
     }
 
@@ -27,8 +27,8 @@ class ContainerKernelAssigner extends ApplicationProvider
     public function container()
     {
         //We are initializing the array property for the service container object.
-        if(!isset($this->singleton()->serviceContainer)){
-            $this->register('serviceContainer',[]);
+        if(!isset(core()->serviceContainer)){
+            $this->app->register('serviceContainer',[]);
         }
     }
 
@@ -52,7 +52,7 @@ class ContainerKernelAssigner extends ApplicationProvider
     {
         //We check that the concrete object
         //is an object that can be retrieved.
-        if(!isset($this->singleton()->{$object}) && class_exists($concrete)){
+        if(!isset(core()->{$object}) && class_exists($concrete)){
 
             //get global object instance
             $globalObjectInstance=$this->getGlobalObjectInstance($object);
@@ -68,7 +68,7 @@ class ContainerKernelAssigner extends ApplicationProvider
 
             //the value corresponding to the bind value for the global object is assigned and
             //the makeBind method is called for the dependency injection.
-            $this->register($object,$registerObjectInstance);
+            $this->app->register($object,$registerObjectInstance);
         }
     }
 
@@ -108,11 +108,11 @@ class ContainerKernelAssigner extends ApplicationProvider
     {
         //We check that the concrete object
         //is an object that can be retrieved.
-        if(isset($this->singleton()->serviceContainer) && !isset($this->singleton()->serviceContainer[$object])){
+        if(isset(core()->serviceContainer) && !isset(core()->serviceContainer[$object])){
 
             //the value corresponding to the bind value for the global object is assigned and
             //the makeBind method is called for the dependency method.
-            $this->register('serviceContainer',$object,$concrete);
+            $this->app->register('serviceContainer',$object,$concrete);
         }
     }
 
@@ -124,8 +124,8 @@ class ContainerKernelAssigner extends ApplicationProvider
     private function getGlobalObjectInstance($object)
     {
         $globalObject           = $object.'KernelAssigner';
-        $issetGlobalObject      = (isset($this->singleton()->{$globalObject}));
+        $issetGlobalObject      = (isset(core()->{$globalObject}));
 
-        return ($issetGlobalObject) ? $this->singleton()->{$globalObject} : null;
+        return ($issetGlobalObject) ? core()->{$globalObject} : null;
     }
 }

@@ -22,9 +22,8 @@ class RouterKernelAssigner extends ApplicationProvider
         $namespace = $this->getControllerNamespace();
 
         //utils make bind via dependency injection named as service container
-        $this->register('serviceConf',              (new FileProcess())->callFile(StaticPathModel::getServiceConf()));
-        $this->register('instanceController',       $this->makeBind($namespace));
-        $this->register('serviceConf',              $this->singleton()->serviceConf);
+        $this->app->register('serviceConf',              (new FileProcess())->callFile(StaticPathModel::getServiceConf()));
+        $this->app->register('instanceController',       $this->makeBind($namespace));
     }
 
     /**
@@ -36,8 +35,8 @@ class RouterKernelAssigner extends ApplicationProvider
         $fromRoutes = Route::getRouteResolve();
         $method     = (isset($fromRoutes['method'])) ? $fromRoutes['method'] : $method;
 
-        $this->register('method',$method);
-        $this->register('routeParameters', $this->routeParametersAssign($this->resolveMethod($method)));
+        $this->app->register('method',$method);
+        $this->app->register('routeParameters', $this->routeParametersAssign($this->resolveMethod($method)));
 
     }
 
@@ -62,7 +61,7 @@ class RouterKernelAssigner extends ApplicationProvider
 
         // based on the serviceConf variable,
         // we are doing parameter bindings in the method context in the routeParameters array key.
-        $this->register('serviceConf','routeParameters',[$method=>$parameters]);
+        $this->app->register('serviceConf','routeParameters',[$method=>$parameters]);
 
     }
 

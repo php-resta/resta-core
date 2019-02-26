@@ -20,6 +20,6 @@ class UrlKernelAssigner extends ApplicationProvider
         define('method',            $urlList['method']);
 
         //route parameters kernel object register
-        $this->register('routeParameters',$urlList['parameters']);
+        $this->app->register('routeParameters',$urlList['parameters']);
     }
 }

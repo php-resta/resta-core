@@ -13,6 +13,6 @@ class EventDispatcherKernelAssigner extends ApplicationProvider
     public function setEventDispatcher($dispatcher)
     {
         //we save to kernel object value of the event-dispatcher
-        $this->register('events',$dispatcher);
+        $this->app->register('events',$dispatcher);
     }
 }

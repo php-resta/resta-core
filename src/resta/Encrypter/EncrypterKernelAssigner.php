@@ -14,6 +14,6 @@ class EncrypterKernelAssigner extends ApplicationProvider
 
         //we are assigning a singleton object
         //so that we can use our application key in the project.
-       $this->register('applicationKey',current($key));
+       $this->app->register('applicationKey',current($key));
     }
 }
