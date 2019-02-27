@@ -67,7 +67,7 @@ class KernelBootManager
                 // we set this condition for users to boot the classes they want in the kernel groups.
                 // in the manifesto, if the kernel groups method returns an class of arrays
                 // then these classes will automatically join the kernel groups installation.
-                if(property_exists($this,$makerExtend = $maker.'Extend') && is_array($this->{$makerExtend})){
+                if(property_exists($this,$makerExtend = 'attach'.ucfirst($maker)) && is_array($this->{$makerExtend})){
 
                     // if the makerExtend value in the manifest is a method,
                     // in this case, the method is executed instead of the object
@@ -77,7 +77,7 @@ class KernelBootManager
                             : $this->{$makerExtend};
 
                     // get maker list as merged with checkMethodOrObjectForMakerExtend variable
-                    $app->setMakerList(Arr::removeSameValues($checkMethodOrObjectForMakerExtend,$this->{$maker}));
+                    $app->setMakerList(array_merge($this->{$maker},$checkMethodOrObjectForMakerExtend));
                 }
             }
 
@@ -103,8 +103,8 @@ class KernelBootManager
 
                 // the revision list is presented as a helper method to prevent
                 // the listener application being booted from taking the entire listener individually.
-                if(count($revision) && isset($revision[$makerValue])){
-                    $this->makerList[$makerKey] = $revision[$makerValue];
+                if(count($revision) && isset($revision[$makerKey])){
+                    $this->makerList[$makerKey] = $revision[$makerKey];
                 }
             }
         }
