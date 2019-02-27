@@ -83,7 +83,10 @@ class KernelManifestManager
 
             // revision maker
             // group name to boot
-            $app->revisionMaker($this->revision);
+            if(isset($this->revision)){
+                $app->revisionMaker($this->revision);
+            }
+
             return $app->getMakerList();
         });
 
