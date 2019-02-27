@@ -5,12 +5,6 @@ namespace Resta\Contracts;
 interface ApplicationContracts {
 
     /**
-     * @param $maker
-     * @return mixed
-     */
-    public function bootManifest($maker);
-
-    /**
      * @return array
      */
     public function commandList();
@@ -57,6 +51,12 @@ interface ApplicationContracts {
      * @return array
      */
    public function kernelGroupKeys();
+
+    /**
+     * @param $maker
+     * @return mixed
+     */
+    public function manifest($maker);
 
     /**
      * @param $key

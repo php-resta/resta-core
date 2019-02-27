@@ -122,7 +122,7 @@ class CustomBooter
         //We specify the method call for the booter list.
         return core()->appClosureInstance
             ->call(function() use ($kernelBootName) {
-                return $this->bootFire(null,$kernelBootName);
+                return $this->manifest($kernelBootName);
             });
     }
 }

@@ -13,7 +13,7 @@ use Resta\Middleware\MiddlewareKernelProvider;
 use Resta\Contracts\ApplicationHelpersContracts;
 use Resta\Foundation\Bootstrapper\Bootstrappers;
 use Resta\Foundation\Bootstrapper\BootFireCallback;
-use Resta\Foundation\Bootstrapper\KernelBootManager;
+use Resta\Foundation\Bootstrapper\KernelManifestManager;
 
 class Application extends Kernel implements ApplicationContracts,ApplicationHelpersContracts,KernelContracts
 {
@@ -69,7 +69,7 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
 
             // we create kernel bootstrapping objects
             // that can be changed by you with the closure dispatcher method.
-            return ClosureDispatcher::bind(KernelBootManager::class)
+            return ClosureDispatcher::bind(KernelManifestManager::class)
                 ->call(function() use ($maker){
                     return $this->handle($maker);
             });
@@ -78,17 +78,6 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
         // the boot method to be executed can be specified by the user.
         // we use this method to know how to customize it.
         return forward_static_call_array([array_pop($boot),self::LOADBOOTSTRAPPERS],[$boot]);
-    }
-
-    /**
-     * get kernel maker from manifest
-     *
-     * @param $maker
-     * @return mixed
-     */
-    public function bootManifest($maker)
-    {
-        return $this->bootFire(null,$maker);
     }
 
     /**
@@ -263,6 +252,17 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
     }
 
     /**
+     * get kernel maker from manifest
+     *
+     * @param $maker
+     * @return mixed
+     */
+    public function manifest($maker)
+    {
+        return $this->bootFire(null,$maker);
+    }
+
+    /**
      * get service providers
      *
      * @return array
@@ -275,7 +275,7 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
             : [];
 
         //core kernel providers and project providers have been merged
-        return array_merge($this->bootManifest('providers'),$providers);
+        return array_merge($this->manifest('providers'),$providers);
     }
 
     /**
