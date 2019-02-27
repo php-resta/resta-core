@@ -20,10 +20,9 @@ class ServiceProvider extends  ApplicationProvider
         //first we are running register methods of provider classes.
         foreach($providers as $key=>$provider){
 
-            //providers can only be installed once.
+            // providers can only be installed once.
+            // apply providers and register for kernel
             if(!isset(core()->loadedProviders[$key])){
-
-                //apply providers and register for kernel
                 $this->applyProvider($provider);
                 $this->app->register('loadedProviders',$key,$provider);
             }
