@@ -259,8 +259,6 @@ class Route
                 }
             }
         }
-
-        return 0;
     }
 
     /**
