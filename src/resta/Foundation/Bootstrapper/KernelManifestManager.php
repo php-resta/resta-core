@@ -67,14 +67,14 @@ class KernelManifestManager
                 // we set this condition for users to boot the classes they want in the kernel groups.
                 // in the manifesto, if the kernel groups method returns an class of arrays
                 // then these classes will automatically join the kernel groups installation.
-                if(property_exists($this,$makerExtend = 'attach'.ucfirst($maker)) && is_array($this->{$makerExtend})){
+                if(isset($this->app[$maker]) && is_array($this->app[$maker])){
 
                     // if the makerExtend value in the manifest is a method,
                     // in this case, the method is executed instead of the object
                     $checkMethodOrObjectForMakerExtend =
-                        (method_exists($this,$makerExtend) && is_array($this->{$makerExtend}()))
-                            ? $this->{$makerExtend}()
-                            : $this->{$makerExtend};
+                        (method_exists($this,$maker) && is_array($this->{$maker}()))
+                            ? $this->{$maker}()
+                            : $this->app[$maker];
 
                     // get maker list as merged with checkMethodOrObjectForMakerExtend variable
                     $app->setMakerList(array_merge($this->{$maker},$checkMethodOrObjectForMakerExtend));
