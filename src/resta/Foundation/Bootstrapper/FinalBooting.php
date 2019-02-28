@@ -26,8 +26,8 @@ class FinalBooting implements HandleContracts
      */
     public function __construct(ApplicationContracts $app,$boot)
     {
-        $this->app=$app;
-        $this->boot=$boot;
+        $this->app = $app;
+        $this->boot = $boot;
     }
 
     /**
@@ -39,9 +39,7 @@ class FinalBooting implements HandleContracts
         // as the default boot manager, we will use the bootstrapper class.
         // in this way, all boot classes will be installed quickly.
         if($defaultBoot) {
-            $bootManager =
-                $this->app->makeBind(BootLoader::class,
-                    $this->app->applicationProviderBinding($this->app));
+            $bootManager = $this->app['bootLoader'];
         }
 
         //boot loop make bind calling

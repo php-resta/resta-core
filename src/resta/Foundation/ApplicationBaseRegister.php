@@ -45,11 +45,15 @@ class ApplicationBaseRegister extends ApplicationProvider implements HandleContr
      */
     public function handle()
     {
-        //set base instances
-        $this->setBaseInstances();
+        //we can use this method to move an instance of the application class with the kernel object
+        //and easily resolve an encrypted instance of all the kernel variables in our helper class.
+        ClassAliasGroup::setAlias(App::class,'application');
 
         //we define the general application instance object.
         define('appInstance',(base64_encode(serialize($this))));
+
+        //set base instances
+        $this->setBaseInstances();
 
         //main loader for application
         $this->mainLoader();
@@ -78,10 +82,6 @@ class ApplicationBaseRegister extends ApplicationProvider implements HandleContr
      */
     private function mainLoader()
     {
-        //we can use this method to move an instance of the application class with the kernel object
-        //and easily resolve an encrypted instance of all the kernel variables in our helper class.
-        ClassAliasGroup::setAlias(App::class,'application');
-
         //we're saving the directory where kernel files are running to the kernel object.
         $this->app->register('corePath',str_replace('Foundation','',__DIR__.''));
 
@@ -107,7 +107,7 @@ class ApplicationBaseRegister extends ApplicationProvider implements HandleContr
         $this->app->register('appClosureInstance',ClosureDispatcher::bind(app()));
 
         //set closure bind instance for bootLoader class
-        $this->app->register('bootLoader',ClosureDispatcher::bind($this->app->makeBind(BootLoader::class)));
+        $this->app->register('bootLoader',ClosureDispatcher::bind($this->app['bootLoader']));
 
     }
 
@@ -121,6 +121,7 @@ class ApplicationBaseRegister extends ApplicationProvider implements HandleContr
         //register as instance application object
         // and container instance resolve
         $this->app->instance('app',$this->app);
+        $this->app->instance('bootLoader',$this->app->makeBind(BootLoader::class));
         $this->app->instance('containerInstanceResolve',ContainerInstanceResolver::class);
         $this->app->instance('reflection',ReflectionProcess::class);
     }
