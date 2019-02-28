@@ -32,7 +32,7 @@ class LoggerService
      */
     private function getLoggerType()
     {
-        return (appInstance()->getSuccess()) ? 'info' : 'error';
+        return (core()->responseSuccess) ? 'info' : 'error';
     }
 
     /**
