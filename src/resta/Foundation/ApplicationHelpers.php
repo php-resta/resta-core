@@ -127,10 +127,21 @@ if (!function_exists('response')) {
      */
     function response()
     {
-        return appInstance()->response();
+        $object=debug_backtrace()[1]['object'];
+        return new \Resta\Response\ResponseOutManager($object);
     }
 }
 
+if (!function_exists('httpMethod')) {
+
+    /**
+     * @return string
+     */
+    function httpMethod()
+    {
+        return strtolower(core()->httpMethod);
+    }
+}
 
 if (!function_exists('post')) {
 

@@ -27,7 +27,7 @@ trait AuthenticateBasic
 
         // we will determine whether
         // the http path is correct for this method.
-        if(isset($getHttp[$type]) and $getHttp[$type]!==appInstance()->httpMethod()){
+        if(isset($getHttp[$type]) and $getHttp[$type]!==httpMethod()){
             $this->getExceptionForHttp($getHttp[$type]);
         }
     }

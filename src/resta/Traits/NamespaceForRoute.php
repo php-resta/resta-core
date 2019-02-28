@@ -47,7 +47,7 @@ trait NamespaceForRoute
      */
     public function method()
     {
-        return strtolower($this->httpMethod()).''.ucfirst(core()->url['method']);
+        return strtolower(httpMethod()).''.ucfirst(core()->url['method']);
     }
 
     /**
@@ -56,7 +56,7 @@ trait NamespaceForRoute
      */
     public function resolveMethod($method)
     {
-        $method=str_replace($this->httpMethod(),'',$method);
+        $method=str_replace(httpMethod(),'',$method);
         $method=str_replace(StaticPathModel::$methodPrefix,'',$method);
         return $method;
     }
@@ -93,7 +93,7 @@ trait NamespaceForRoute
         //by default we assign a default method value of indexAction
         //this value must be a method value automatically named indexAction
         //if it does not come from the url discovery value
-        return $this->httpMethod().'Index'.StaticPathModel::$methodPrefix;
+        return httpMethod().'Index'.StaticPathModel::$methodPrefix;
     }
 
     /**
@@ -125,7 +125,7 @@ trait NamespaceForRoute
     {
         //If the path variables give values ​​in the methods do we have a method name,
         //we subtract this value from the route variables.
-        return array_values(array_diff($this->routeParameters(),[$method]));
+        return array_values(array_diff(core()->routeParameters,[$method]));
     }
 
     /**
@@ -137,7 +137,7 @@ trait NamespaceForRoute
     {
         // we are extracting httpMethod and prefix from
         // the method variable so that we can extract the salt method name.
-        $deleteHttp         = str_replace($this->httpMethod(),'',$method);
+        $deleteHttp         = str_replace(httpMethod(),'',$method);
         $methodName         = str_replace(StaticPathModel::$methodPrefix,'',$deleteHttp);
 
         //set as global method name

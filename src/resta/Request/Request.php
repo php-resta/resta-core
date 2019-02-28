@@ -45,7 +45,7 @@ class Request extends RequestClient implements HandleContracts
     public function __construct()
     {
         //We assign httpMethod constant to property to method name.
-        $this->method=appInstance()->httpMethod();
+        $this->method = httpMethod();
 
         // if we leave the request process to the application side,
         // then in this case we refer to the requestClient object in
