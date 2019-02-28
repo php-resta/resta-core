@@ -42,7 +42,7 @@ class CustomConsoleProcess extends ConsoleOutputter
                 // call bindings for resolving
                 // call with dependency injection resolving
                 $commandBindings=[$commandClassResolved,strtolower($app->getConsoleClassMethod())];
-                return Utils::callBind($commandBindings,appInstance()->providerBinding());
+                return Utils::callBind($commandBindings,app()->applicationProviderBinding($this->app));
 
             });
         });

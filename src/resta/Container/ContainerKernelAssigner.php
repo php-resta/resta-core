@@ -58,7 +58,7 @@ class ContainerKernelAssigner extends ApplicationProvider
             $globalObjectInstance=$this->getGlobalObjectInstance($object);
 
             //get concrete instance
-            $concreteInstance = $this->makeBind($concrete);
+            $concreteInstance = $this->app->makeBind($concrete);
 
             // this method is executed if the concrete instance contains the handle method.
             // if no handle method is included, the concrete instance is returned directly.

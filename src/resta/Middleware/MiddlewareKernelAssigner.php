@@ -12,8 +12,8 @@ class MiddlewareKernelAssigner extends ApplicationProvider
     public function setMiddleware()
     {
         //We are logging the kernel for the middleware class and the exclude class.
-        core()->middlewareClass     = $this->makeBind(app()->namespace()->serviceMiddleware());
-        core()->excludeClass        = $this->makeBind(ExcludeMiddleware::class);
+        core()->middlewareClass     = $this->app->makeBind(app()->namespace()->serviceMiddleware());
+        core()->excludeClass        = $this->app->makeBind(ExcludeMiddleware::class);
     }
 
     /**

@@ -23,7 +23,7 @@ class RouterKernelAssigner extends ApplicationProvider
 
         //utils make bind via dependency injection named as service container
         $this->app->register('serviceConf',              (new FileProcess())->callFile(StaticPathModel::getServiceConf()));
-        $this->app->register('instanceController',       $this->makeBind($namespace));
+        $this->app->register('instanceController',       $this->app->makeBind($namespace));
     }
 
     /**

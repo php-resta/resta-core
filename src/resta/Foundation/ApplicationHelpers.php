@@ -175,7 +175,16 @@ if (!function_exists('headers')) {
      */
     function headers($param=null,$default=null)
     {
-        return appInstance()->headers($param,$default);
+        $list=[];
+
+        //We only get the objects in the list name to match the header objects
+        //that come with the request path to the objects sent by the client
+        foreach (request()->headers->all() as $key=>$value) {
+            $list[$key]=$value;
+        }
+
+        //return header list
+        return ($param===null) ? $list : (isset($list[$param]) ? $list[$param][0] : $default);
     }
 }
 
@@ -257,7 +266,7 @@ if (!function_exists('resolve')) {
      */
     function resolve($class,$bind=array())
     {
-        return appInstance()->makeBind($class,$bind);
+        return app()->makeBind($class,$bind);
     }
 }
 

@@ -45,25 +45,6 @@ class ApplicationProvider
     }
 
     /**
-     * @param null $param
-     * @param null $default
-     * @return null
-     */
-    public function headers($param=null,$default=null)
-    {
-        $list=[];
-
-        //We only get the objects in the list name to match the header objects
-        //that come with the request path to the objects sent by the client
-        foreach (request()->headers->all() as $key=>$value) {
-            $list[$key]=$value;
-        }
-
-        //return header list
-        return ($param===null) ? $list : (isset($list[$param]) ? $list[$param][0] : $default);
-    }
-
-    /**
      * @method url
      * @return mixed
      */
@@ -78,28 +59,7 @@ class ApplicationProvider
             $this->url = core()->url;
         }
     }
-
-    /**
-     * @param $class
-     * @param array $bind
-     * @return mixed|null
-     * @throws \DI\DependencyException
-     * @throws \DI\NotFoundException
-     */
-    public function makeBind($class,$bind=array())
-    {
-        return Utils::makeBind($class,$this->providerBinding($bind));
-    }
-
-    /**
-     * @param array $bind
-     * @return mixed
-     */
-    public function providerBinding($bind=array())
-    {
-        return $this->app->applicationProviderBinding($this->app,$bind);
-    }
-
+    
     /**
      * @return mixed
      */

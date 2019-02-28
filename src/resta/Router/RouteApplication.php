@@ -38,7 +38,7 @@ class RouteApplication extends ApplicationProvider
             // if the method in the instance object exists,
             // this method is executed to produce the output.
             if(method_exists($this->instanceController(),core()->method)){
-                return Utils::callBind([$this->instanceController(),core()->method],$this->providerBinding());
+                return Utils::callBind([$this->instanceController(),core()->method],$this->app->applicationProviderBinding($this->app));
             }
 
             //throw exception as unsuccessful

@@ -76,7 +76,7 @@ class ApplicationMiddleware extends ApplicationProvider
                     //The condition of a specific statement to be handled
                     if($this->checkNamespaceAndSpecificCondition()){
                         $middlewareInstance->pointer($middleVal);
-                        $this->makeBind($this->middleware['namespace'])->handle();
+                        $this->app->makeBind($this->middleware['namespace'])->handle();
                     }
                 }
             });

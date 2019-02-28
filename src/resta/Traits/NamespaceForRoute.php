@@ -219,6 +219,6 @@ trait NamespaceForRoute
     {
         //Here we do the namespace control for the auto service. There is no endpoint available,
         //but if there is an auto service recognized by the system, this auto service will be the endpoint.
-        return $this->makeBind(CheckEndpointForAutoService::class);
+        return app()->makeBind(CheckEndpointForAutoService::class);
     }
 }
