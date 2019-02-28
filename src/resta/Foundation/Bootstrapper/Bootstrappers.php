@@ -3,7 +3,7 @@
 namespace Resta\Foundation\Bootstrapper;
 
 use Resta\Contracts\ApplicationContracts;
-use Resta\Foundation\ApplicationPreLoader;
+use Resta\Foundation\ApplicationBaseRegister as BaseRegister;
 
 class Bootstrappers
 {
@@ -56,7 +56,7 @@ class Bootstrappers
         $this->bootstrapper = $bootstrapper;
 
         //we boot the initial instance for the application.
-        if($this->ifExistPusher()) (new ApplicationPreLoader($this->app))->handle();
+        if($this->ifExistPusher()) (new BaseRegister($this->app))->handle();
 
         //call bootstrapper process
         $this->callBootstrapperProcess();

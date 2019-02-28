@@ -18,7 +18,7 @@ use Resta\Foundation\Bootstrapper\BootLoader;
 use Resta\Container\ContainerInstanceResolver;
 use Resta\Foundation\ApplicationGlobalAccessor as GlobalAccessor;
 
-class ApplicationPreLoader extends ApplicationProvider implements HandleContracts
+class ApplicationBaseRegister extends ApplicationProvider implements HandleContracts
 {
     /**
      * check store directory
