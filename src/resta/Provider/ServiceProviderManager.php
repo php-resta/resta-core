@@ -15,19 +15,4 @@ class ServiceProviderManager extends  ApplicationProvider
     {
         return get_called_class();
     }
-
-    /**
-     * get dependencies property for provider
-     *
-     * @return mixed
-     */
-    public function dependencies()
-    {
-        //check if the property is exist
-        if(property_exists($this,'dependencies')){
-            return (array)$this->dependencies;
-        }
-
-        return [];
-    }
 }
