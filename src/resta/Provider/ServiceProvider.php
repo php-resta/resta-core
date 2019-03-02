@@ -31,13 +31,6 @@ class ServiceProvider extends  ApplicationProvider
             // we are running the provider.
             $providerInstance = $this->app->makeBind($provider);
 
-            // this is very important.
-            // providers install dependencies before it.
-            // we need to check the value of kernel dependencies in order to avoid infinite loops.
-            if(!isset(core()->dependencies)){
-                $this->resolveDependenciesForProviders($providerInstance);
-            }
-
             //we need to do method check for provider.
             if(method_exists($providerInstance,$method)){
                 $providerInstance->{$method}();
@@ -58,10 +51,14 @@ class ServiceProvider extends  ApplicationProvider
     {
         //set service providers for providers property
         if($this->providers===null){
-            $this->providers = $this->app->serviceProviders();
+            $providers = $this->app->serviceProviders();
+
+            if(count($providers)){
+                $this->providers = $providers;
+            }
         }
 
-        return $this->providers;
+        return $this->providers ?: [];
     }
 
     /**
@@ -78,34 +75,11 @@ class ServiceProvider extends  ApplicationProvider
     }
 
     /**
-     * resolve dependencies for providers
-     *
-     * @param $providerInstance
-     */
-    private function resolveDependenciesForProviders($providerInstance)
-    {
-        //get dependencies for providers
-        $dependencies = $providerInstance->dependencies();
-
-        foreach ($dependencies as $dependency){
-
-            if(isset($this->providers[$dependency])){
-
-                // we have to save the dependencies kernel value for dependencies.
-                // then the dependencies are executed and the kernel value is terminated at the end.
-                $this->app->register('dependencies',true);
-                $this->resolveProviders([$dependency=>$this->providers[$dependency]]);
-                $this->app->terminate('dependencies');
-            }
-        }
-    }
-
-    /**
      * resolve providers
      *
-     * @param $providers
+     * @param array $providers
      */
-    public function resolveProviders($providers)
+    public function resolveProviders($providers=array())
     {
         //first we are running register methods of provider classes.
         foreach($providers as $key=>$provider){
