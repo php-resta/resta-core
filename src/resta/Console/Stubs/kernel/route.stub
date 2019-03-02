@@ -9,13 +9,6 @@ use Resta\Provider\ServiceProviderManager;
 class RouteServiceProvider extends ServiceProviderManager implements BootContracts
 {
     /**
-     * load dependencies for provider
-     *
-     * @var array $dependencies
-     */
-    protected $dependencies = [];
-
-    /**
      * boot service provider
      *
      * @return mixed|void
