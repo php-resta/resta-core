@@ -50,4 +50,19 @@ class ProviderTest extends AbstractTest
     {
         $this->assertSame(config('kernel.providers'),core()->loadedProviders);
     }
+
+    /**
+     * @return void|mixed
+     */
+    public function testServiceProvidersCheck()
+    {
+        $this->assertTrue(true,isset(core()->testprovider1register));
+        $this->assertTrue(true,isset(core()->testprovider1boot));
+
+        $this->assertTrue(true,isset(core()->testprovider2register));
+        $this->assertTrue(true,isset(core()->testprovider2boot));
+
+        $this->assertTrue(true,isset(core()->testprovider2register));
+        $this->assertTrue(true,isset(core()->testprovider2boot));
+    }
 }

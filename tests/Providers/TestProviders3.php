@@ -14,9 +14,7 @@ class TestProviders3 extends ServiceProviderManager implements BootContracts
      */
     public function boot()
     {
-        if(!isset(core()->testprovider3)){
-            exception()->runtime('register method is not applied');
-        }
+        $this->app->register('testprovider3boot',true);
     }
 
     /**
@@ -26,6 +24,6 @@ class TestProviders3 extends ServiceProviderManager implements BootContracts
      */
     public function register()
     {
-        $this->app->register('testprovider3',true);
+        $this->app->register('testprovider3register',true);
     }
 }
