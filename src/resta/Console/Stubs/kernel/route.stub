@@ -4,10 +4,17 @@ namespace __kernelProviderDir__;
 
 use Resta\Router\Route;
 use Resta\Contracts\BootContracts;
-use Resta\Foundation\ApplicationProvider;
+use Resta\Provider\ServiceProviderManager;
 
-class RouteServiceProvider extends ApplicationProvider implements BootContracts
+class RouteServiceProvider extends ServiceProviderManager implements BootContracts
 {
+    /**
+     * load dependencies for provider
+     *
+     * @var array $dependencies
+     */
+    protected $dependencies = [];
+
     /**
      * boot service provider
      *
