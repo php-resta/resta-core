@@ -46,7 +46,13 @@ class App
             return self::Builder(ucfirst($service));
         }
 
-        return self::$service($arg);
+
+        if(method_exists(new self,$service)){
+            return self::$service($arg);
+        }
+
+        exception()->badMethodCall($service.' invalid method or property');
+
     }
 
     private static function factory()

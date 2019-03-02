@@ -54,7 +54,7 @@ class ExceptionTrace {
             Dependencies::loadBootstrapperNeedsForException();
 
             if(isset($value['file']) && isset(core()->url)){
-                if(preg_match('@'.core()->url['project'].'@',$value['file'])){
+                if(preg_match('@'.core()->url['project'].'|boot|providers@',$value['file'])){
 
                     app()->terminate('exceptionFile');
                     app()->terminate('exceptionLine');
