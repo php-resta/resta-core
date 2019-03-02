@@ -19,21 +19,6 @@ class ProviderTest extends AbstractTest
     {
         parent::setUp();
 
-        $configDirectory = root.''.DIRECTORY_SEPARATOR.'Config';
-
-        if(!file_exists($configDirectory)){
-            @mkdir($configDirectory);
-        }
-
-
-        //set config path
-        static::$app->setPaths('config',$configDirectory);
-
-        static::$app->loadConfig(function()
-        {
-            return core()->paths['config'];
-        });
-
         static::$app->loadConfig(function()
         {
             return ['kernel'=>[
