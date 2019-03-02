@@ -35,7 +35,7 @@ class ServiceProvider extends  ApplicationProvider
             // providers install dependencies before it.
             // we need to check the value of kernel dependencies in order to avoid infinite loops.
             if(!isset(core()->dependencies)){
-                static::resolveDependenciesForProviders($providerInstance);
+                $this->resolveDependenciesForProviders($providerInstance);
             }
 
             //we need to do method check for provider.
@@ -45,7 +45,6 @@ class ServiceProvider extends  ApplicationProvider
                 if($method=="register"){
                     $this->app->register('loadedProviders',$key,$provider);
                 }
-
             }
         }
     }
@@ -72,6 +71,8 @@ class ServiceProvider extends  ApplicationProvider
      */
     public function handle()
     {
+        define ('serviceprovider',true);
+
         //check providers and resolve
         $this->resolveProviders($this->getServiceProviders());
     }
@@ -81,7 +82,7 @@ class ServiceProvider extends  ApplicationProvider
      *
      * @param $providerInstance
      */
-    public function resolveDependenciesForProviders($providerInstance)
+    private function resolveDependenciesForProviders($providerInstance)
     {
         //get dependencies for providers
         $dependencies = $providerInstance->dependencies();
