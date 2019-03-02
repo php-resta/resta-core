@@ -8,20 +8,15 @@ use Resta\Provider\ServiceProviderManager;
 class TestProviders3 extends ServiceProviderManager implements BootContracts
 {
     /**
-     * load dependencies for provider
-     *
-     * @var array $dependencies
-     */
-    protected $dependencies = [];
-
-    /**
      * boot service provider
      *
      * @return void
      */
     public function boot()
     {
-        //
+        if(!isset(core()->testprovider3)){
+            exception()->runtime('register method is not applied');
+        }
     }
 
     /**
@@ -31,6 +26,6 @@ class TestProviders3 extends ServiceProviderManager implements BootContracts
      */
     public function register()
     {
-        //
+        $this->app->register('testprovider3',true);
     }
 }
