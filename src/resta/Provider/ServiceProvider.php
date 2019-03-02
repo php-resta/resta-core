@@ -21,7 +21,7 @@ class ServiceProvider extends  ApplicationProvider
      * @param $provider
      * @param string $method
      */
-    public function applyProvider($key,$provider,$method='register')
+    private function applyProvider($key,$provider,$method='register')
     {
         // If the provider classes are a real object
         // we will run them.
