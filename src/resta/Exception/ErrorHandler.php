@@ -114,7 +114,7 @@ class ErrorHandler extends ApplicationProvider {
     {
         // in case of a deficiency,
         // we need to boot our general needs to be needed for the exception.
-        Dependencies::loadNeedsAsBootstrapper();
+        Dependencies::loadBootstrapperNeedsForException();
 
         // in general we will use the exception class
         // in the store/config directory to make it possible

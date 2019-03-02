@@ -30,7 +30,7 @@ class Dependencies
      *
      * @return void|mixed
      */
-    public static function loadNeedsAsBootstrapper()
+    public static function loadBootstrapperNeedsForException()
     {
         static::bootLoader(['url','environment','logger','config']);
     }
