@@ -30,12 +30,6 @@ interface ApplicationContracts {
    public function handle();
 
     /**
-     * @param callable $callback
-     * @return mixed
-     */
-   public function loadConfig(callable $callback);
-
-    /**
      * @param $abstract
      * @param $instance
      * @return mixed
@@ -51,6 +45,17 @@ interface ApplicationContracts {
      * @return array
      */
    public function kernelGroupKeys();
+
+    /**
+     * @return array
+     */
+   public function kernelGroupList();
+
+    /**
+     * @param callable $callback
+     * @return mixed
+     */
+    public function loadConfig(callable $callback);
 
     /**
      * @param $maker

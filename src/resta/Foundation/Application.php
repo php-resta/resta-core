@@ -230,6 +230,23 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
     }
 
     /**
+     * kernel groups name lists
+     *
+     * @return array|void
+     */
+    public function kernelGroupList()
+    {
+        $list = [];
+
+        //get kernel group names with manifest method
+        foreach ($this->kernelGroupKeys() as $groupKey){
+            $list = array_merge($list,$this->manifest($groupKey));
+        }
+
+        return $list;
+    }
+
+    /**
      * customer configuration loader for core
      *
      * @param callable $callback

@@ -49,25 +49,17 @@ class LoggerService
         // if the logger file does not exist
         // or request console is true
         // we throw a domain exception.
-        if(Utils::isNamespaceExists($loggerNamespace)===false){
+        if(Utils::isNamespaceExists($loggerNamespace)){
 
-            //get checking console for logger
-            if(Utils::isRequestConsole()===false && core()->isAvailableStore){
+            //We are getting the path to
+            //the service log file in the project's version directory.
+            $appBase = app()->makeBind($loggerNamespace);
 
-                //throw exception via domain method
-                exception()->domain('Such a group was not created within the project.');
-            }
-
-            return false;
+            // we send the resulting adapter property as
+            // a reference to the bind automatic instance class.
+            $logger->setLogger($appBase,$appBase->adapter,$this);
         }
 
-        //We are getting the path to
-        //the service log file in the project's version directory.
-        $appBase = app()->makeBind($loggerNamespace);
-
-        // we send the resulting adapter property as
-        // a reference to the bind automatic instance class.
-        $logger->setLogger($appBase,$appBase->adapter,$this);
     }
 
     /**

@@ -49,11 +49,11 @@ class ApplicationBaseRegister extends ApplicationProvider implements HandleContr
         //and easily resolve an encrypted instance of all the kernel variables in our helper class.
         ClassAliasGroup::setAlias(App::class,'application');
 
-        //we define the general application instance object.
-        define('appInstance',(base64_encode(serialize($this))));
-
         //set base instances
         $this->setBaseInstances();
+
+        //we define the general application instance object.
+        define('appInstance',(base64_encode(serialize($this))));
 
         //main loader for application
         $this->mainLoader();

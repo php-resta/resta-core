@@ -3,7 +3,7 @@
 namespace Resta\Exception;
 
 use Resta\Support\Utils;
-use Resta\Support\BootLoaderNeeds;
+use Resta\Support\Dependencies;
 
 class ExceptionTrace {
 
@@ -51,7 +51,7 @@ class ExceptionTrace {
             app()->register('exceptionFile',debug_backtrace()[1]['file']);
             app()->register('exceptionLine',debug_backtrace()[1]['line']);
 
-            BootLoaderNeeds::loadNeeds();
+            Dependencies::loadNeedsAsBootstrapper();
 
             if(isset($value['file']) && isset(core()->url)){
                 if(preg_match('@'.core()->url['project'].'@',$value['file'])){

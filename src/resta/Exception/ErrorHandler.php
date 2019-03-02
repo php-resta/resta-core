@@ -4,7 +4,7 @@ namespace Resta\Exception;
 
 use Resta\Support\Str;
 use Resta\Support\Utils;
-use Resta\Support\BootLoaderNeeds;
+use Resta\Support\Dependencies;
 use Resta\Support\ClosureDispatcher;
 use Resta\Foundation\ApplicationProvider;
 use Resta\Foundation\PathManager\StaticPathModel;
@@ -114,7 +114,7 @@ class ErrorHandler extends ApplicationProvider {
     {
         // in case of a deficiency,
         // we need to boot our general needs to be needed for the exception.
-        BootLoaderNeeds::loadNeeds();
+        Dependencies::loadNeedsAsBootstrapper();
 
         // in general we will use the exception class
         // in the store/config directory to make it possible
