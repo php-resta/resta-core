@@ -196,6 +196,11 @@ class StaticPathList
     public static $node='Node';
 
     /**
+     * @var $node
+     */
+    public static $provider='Providers';
+
+    /**
      * @var $once
      */
     public static $once='Once';
@@ -209,11 +214,6 @@ class StaticPathList
      * @var $stub
      */
     public static $stub='Stub';
-
-    /**
-     * @var $provider
-     */
-    public static $provider='Providers';
 
     /**
      * @var $store

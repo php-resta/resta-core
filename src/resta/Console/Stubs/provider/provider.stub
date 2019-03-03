@@ -1,0 +1,28 @@
+<?php
+
+namespace Providers;
+
+use Resta\Provider\ServiceProviderManager;
+
+class __provider__ extends ServiceProviderManager
+{
+    /**
+     * boot service provider
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        //
+    }
+
+    /**
+     * register service provider
+     *
+     * @return void
+     */
+    public function register()
+    {
+       //
+    }
+}

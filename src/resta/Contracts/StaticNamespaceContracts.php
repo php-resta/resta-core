@@ -51,6 +51,11 @@ interface StaticNamespaceContracts
     /**
      * @return mixed
      */
+    public function provider();
+
+    /**
+     * @return mixed
+     */
     public function logger();
 
     /**

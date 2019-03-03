@@ -42,6 +42,16 @@ class StaticPathModel extends StaticPathList
     }
 
     /**
+     * @method providerDir
+     * @return mixed
+     */
+    public static function providerDir()
+    {
+        //get boot directory for application
+        return root.'/src/providers';
+    }
+
+    /**
      * @return string
      */
     public static function appPath()

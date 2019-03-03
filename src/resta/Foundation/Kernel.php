@@ -67,6 +67,7 @@ class Kernel extends Container
 
         'Resta\Console\Source\Autoservice\Autoservice'      => ['isRunnable' => true],
         'Resta\Console\Source\Boot\Boot'                    => ['isRunnable' => true],
+        'Resta\Console\Source\Provider\Provider'            => ['isRunnable' => true],
         'Resta\Console\Source\Command\Command'              => ['isRunnable' => true],
         'Resta\Console\Source\Controller\Controller'        => ['isRunnable' => true],
         'Resta\Console\Source\Env\Env'                      => ['isRunnable' => true],

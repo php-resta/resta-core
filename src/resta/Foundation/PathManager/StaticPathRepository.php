@@ -91,6 +91,16 @@ class StaticPathRepository
     }
 
     /**
+     * @return mixed|string
+     */
+    public function appProvider()
+    {
+        $kernel     = $this->app().''.DIRECTORY_SEPARATOR.''.StaticPathList::$kernel.''.DIRECTORY_SEPARATOR.''.StaticPathList::$provider;
+
+        return $kernel;
+    }
+
+    /**
      * @return string
      */
     public function appLanguage()
