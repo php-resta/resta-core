@@ -1,0 +1,8 @@
+<?php
+
+namespace __controllerNamespace__\Policy;
+
+class __serviceClass____callClassPrefix__Policy
+{
+    //
+}

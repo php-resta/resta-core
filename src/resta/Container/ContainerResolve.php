@@ -3,6 +3,7 @@
 namespace Resta\Container;
 
 use Resta\Support\ReflectionProcess;
+use Resta\Support\Utils;
 
 class ContainerResolve
 {
@@ -45,7 +46,19 @@ class ContainerResolve
             //return result for parameter of the container
             return [$parameterName=>$parameterResolve];
         }
-        return [];
+
+        if(Utils::isNamespaceExists($parameter->getType()->getName())){
+
+            // Unpack the container object and
+            // bind it to the param variable.
+            $parameterName=$parameter->getName();
+            $parameterResolve=app()->makeBind($parameter->getType()->getName());
+
+            //return result for parameter of the container
+            return [$parameterName=>$parameterResolve];
+        }
+
+
     }
 
     /**
@@ -81,6 +94,7 @@ class ContainerResolve
         // we group the parameters into type and
         // name and bind them with the necessary logic.
         foreach ($parameters as $parameter){
+
 
             // if the parameter is an object and
             // this object is a service container object

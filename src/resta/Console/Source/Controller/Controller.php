@@ -93,10 +93,12 @@ class Controller extends ConsoleOutputter {
         $resourceInController           = $this->argument['resourceInController'] = StaticPathList::$resourceInController;
         $configurationInController      = $this->argument['configurationInController'] = StaticPathList::$configurationInController;
 
+
         //Processes related to argument variables via console.
         $this->argument['methodPrefix']         = StaticPathModel::$methodPrefix;
         $this->directory['endpoint']            = app()->path()->controller().''.DIRECTORY_SEPARATOR.''.$controller.''.StaticPathList::$controllerBundleName;
         $this->directory['resource']            = $this->directory['endpoint'].'/'.$resourceInController;
+        $this->directory['policy']              = $this->directory['endpoint'].'/Policy';
         $this->directory['test']                = $this->directory['endpoint'].'/Test';
         $this->directory['configuration']       = $this->directory['endpoint'].'/'.$configurationInController;
 
@@ -115,32 +117,49 @@ class Controller extends ConsoleOutputter {
         // we get to the service directory, which is called the controller.
         $this->file->makeDirectory($this);
 
+        if(isset($this->argument['resource']) && file_exists($this->directory['endpoint'])){
 
-        // we process the processes related to file creation operations.
-        // and then create files related to the touch method of the file object as it is in the directory process.
-        $this->touch['service/endpoint']        = $this->directory['endpoint'].''.DIRECTORY_SEPARATOR.''.$this->argument['serviceClass'].''. $this->argument['callClassPrefix'].'.php';
-        $this->touch['service/route']           = config('kernel.paths.route').''.DIRECTORY_SEPARATOR.''.$controller.'Route.php';
-        $this->touch['service/acl']             = $this->directory['resource'].''.DIRECTORY_SEPARATOR.''.$this->argument['serviceClass'].'AclManagement.php';
-        $this->touch['service/app']             = $this->directory['endpoint'].''.DIRECTORY_SEPARATOR.'App.php';
-        $this->touch['service/developer']       = $this->directory['configuration'].''.DIRECTORY_SEPARATOR.'Developer.php';
-        $this->touch['service/conf']            = $this->directory['configuration'].''.DIRECTORY_SEPARATOR.'ServiceConf.php';
-        $this->touch['service/dummy']           = $this->directory['configuration'].''.DIRECTORY_SEPARATOR.'Dummy.yaml';
-        $this->touch['service/doc']             = $this->directory['configuration'].''.DIRECTORY_SEPARATOR.'Doc.yaml';
-        $this->touch['service/readme']          = $this->directory['endpoint'].''.DIRECTORY_SEPARATOR.'README.md';
-        $this->touch['service/testIndex']       = $this->directory['test'].''.DIRECTORY_SEPARATOR.'index.html';
+            $this->touch['service/resource']   = $this->directory['resource'].''.DIRECTORY_SEPARATOR.''.$this->argument['resource'].'.php';
 
-        $this->file->touch($this,[
-            'stub'=>'Controller_Create'
-        ]);
+            $this->file->touch($this);
 
-        $this->docUpdate();
+            // and as a result we print the result on the console screen.
+            echo $this->classical(' > Resource Controller called as "'.$this->argument['resource'].'" has been successfully created in the '.$this->directory['resource'].'');
 
-        Config::make('controller')->set([
-            $this->argument['serviceClass']=> [$fullNamespaceForController=>['all'=>true]]
-        ]);
-        
-        // and as a result we print the result on the console screen.
-        echo $this->classical(' > Controller called as "'.$controller.'" has been successfully created in the '.app()->namespace()->call().'');
+        }
+        else{
+
+            // we process the processes related to file creation operations.
+            // and then create files related to the touch method of the file object as it is in the directory process.
+            $this->touch['service/endpoint']        = $this->directory['endpoint'].''.DIRECTORY_SEPARATOR.''.$this->argument['serviceClass'].''. $this->argument['callClassPrefix'].'.php';
+            $this->touch['service/route']           = config('kernel.paths.route').''.DIRECTORY_SEPARATOR.''.$controller.'Route.php';
+            $this->touch['service/resourceIndex']   = $this->directory['resource'].''.DIRECTORY_SEPARATOR.'index.html';
+            $this->touch['service/app']             = $this->directory['endpoint'].''.DIRECTORY_SEPARATOR.'App.php';
+            $this->touch['service/developer']       = $this->directory['configuration'].''.DIRECTORY_SEPARATOR.'Developer.php';
+            $this->touch['service/conf']            = $this->directory['configuration'].''.DIRECTORY_SEPARATOR.'ServiceConf.php';
+            $this->touch['service/dummy']           = $this->directory['configuration'].''.DIRECTORY_SEPARATOR.'Dummy.yaml';
+            $this->touch['service/doc']             = $this->directory['configuration'].''.DIRECTORY_SEPARATOR.'Doc.yaml';
+            $this->touch['service/readme']          = $this->directory['endpoint'].''.DIRECTORY_SEPARATOR.'README.md';
+            $this->touch['service/testIndex']       = $this->directory['test'].''.DIRECTORY_SEPARATOR.'index.html';
+            $this->touch['service/policy']          = $this->directory['policy'].''.DIRECTORY_SEPARATOR.''.$this->argument['serviceClass'].''. $this->argument['callClassPrefix'].'Policy.php';
+
+            $this->file->touch($this,[
+                'stub'=>'Controller_Create'
+            ]);
+
+            $this->docUpdate();
+
+            Config::make('controller')->set([
+                $this->argument['serviceClass']=> [$fullNamespaceForController=>['all'=>true]]
+            ]);
+
+            // and as a result we print the result on the console screen.
+            echo $this->classical(' > Controller called as "'.$controller.'" has been successfully created in the '.app()->namespace()->call().'');
+
+
+        }
+
+
 
     }
 
