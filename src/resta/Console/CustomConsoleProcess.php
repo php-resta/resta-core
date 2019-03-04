@@ -25,7 +25,7 @@ class CustomConsoleProcess extends ConsoleOutputter
         if (!class_exists($commandNamespace)) return null;
 
         //get class resolved
-        $commandClassResolved = app()->makeBind($commandNamespace,
+        $commandClassResolved = app()->resolve($commandNamespace,
             [
                 'argument' => $this->argument,
                 'app' => $this->app->app

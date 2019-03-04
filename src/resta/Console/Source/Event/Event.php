@@ -44,7 +44,7 @@ class Event extends ConsoleOutputter {
 
         $eventDispatcher=app()->namespace()->version().'\ServiceEventDispatcherController';
 
-        $eventDispatchers=app()->makeBind(ClosureDispatcher::class,['bind'=>new $eventDispatcher])->call(function(){
+        $eventDispatchers=app()->resolve(ClosureDispatcher::class,['bind'=>new $eventDispatcher])->call(function(){
             return [
               'listen'      => $this->listen,
               'subscriber'  => $this->subscribe

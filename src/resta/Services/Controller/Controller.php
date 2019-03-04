@@ -87,7 +87,7 @@ class Controller
      */
     private function request()
     {
-        $this->request = app()->makeBind($this->namespace);
+        $this->request = app()->resolve($this->namespace);
 
         return $this;
     }

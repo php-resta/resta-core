@@ -94,7 +94,7 @@ class ConfigProcess implements \ArrayAccess
     {
         //if the config data is a class instance, we get it as an object.
         if(Utils::isNamespaceExists($configFile = $kernelConfig[$config]['namespace'])){
-            $configData = Utils::makeBind($configFile)->handle();
+            $configData = app()->resolve($configFile)->handle();
         }
 
         //if the config data is just an array.

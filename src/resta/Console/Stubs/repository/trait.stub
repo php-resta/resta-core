@@ -12,7 +12,7 @@ trait __repository__Trait
      */
     public function adapter()
     {
-        return app()->makeBind($this->getRepositorySourceAdapter());
+        return app()->resolve($this->getRepositorySourceAdapter());
     }
 
     /**

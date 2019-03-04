@@ -58,7 +58,7 @@ class ContainerKernelAssigner extends ApplicationProvider
             $globalObjectInstance=$this->getGlobalObjectInstance($object);
 
             //get concrete instance
-            $concreteInstance = $this->app->makeBind($concrete);
+            $concreteInstance = $this->app->resolve($concrete);
 
             // this method is executed if the concrete instance contains the handle method.
             // if no handle method is included, the concrete instance is returned directly.
@@ -67,7 +67,7 @@ class ContainerKernelAssigner extends ApplicationProvider
                 : $concreteInstance;
 
             //the value corresponding to the bind value for the global object is assigned and
-            //the makeBind method is called for the dependency injection.
+            //the resolve method is called for the dependency injection.
             $this->app->register($object,$registerObjectInstance);
         }
     }
@@ -111,7 +111,7 @@ class ContainerKernelAssigner extends ApplicationProvider
         if(isset(core()->serviceContainer) && !isset(core()->serviceContainer[$object])){
 
             //the value corresponding to the bind value for the global object is assigned and
-            //the makeBind method is called for the dependency method.
+            //the resolve method is called for the dependency method.
             $this->app->register('serviceContainer',$object,$concrete);
         }
     }

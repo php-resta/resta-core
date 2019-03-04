@@ -66,7 +66,7 @@ class ResponseApplication extends ResponseOutput
 
             //We resolve the response via the service container
             //and run the handle method.
-            return app()->makeBind($outputter)->handle($this->getOutPutter());
+            return app()->resolve($outputter)->handle($this->getOutPutter());
         }
     }
 

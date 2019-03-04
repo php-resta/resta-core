@@ -43,7 +43,7 @@ class GraceContainer
             // we do the name control for the container here,
             // and if we have the name container we are checking, we make a handle make bind.
             $nameContainers=$this->nameContainers[$parameter->getName()];
-            return app()->makeBind($nameContainers,[
+            return app()->resolve($nameContainers,[
                 'reflection' => $this->reflection
             ])->resolveContainer($parameter->getDefaultValue(),$param);
         }
@@ -51,7 +51,7 @@ class GraceContainer
         // In particular, name container values can be specified and
         // they are injected directly into the methods contextually.
         if(isset(core()->serviceContainer[$parameter->getName()])){
-            return app()->makeBind(SpecialNameContainer::class)->resolveContainer($parameter,$param);
+            return app()->resolve(SpecialNameContainer::class)->resolveContainer($parameter,$param);
 
         }
 
@@ -69,7 +69,7 @@ class GraceContainer
         // but not a container object.
         // we do some useful logic bind for user benefit.
         if($parameter->getType()!==null){
-            return app()->makeBind(RepositoryContainer::class)->handle($parameter,$param);
+            return app()->resolve(RepositoryContainer::class)->handle($parameter,$param);
         }
 
         // In particular, name container values can be specified and

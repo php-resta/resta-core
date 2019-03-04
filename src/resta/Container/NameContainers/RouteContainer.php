@@ -94,7 +94,7 @@ class RouteContainer
 
         // we get the container global object with
         // the help of global loaders and register the route container.
-        $containerGlobalLoaders=app()->makeBind(RouterKernelAssigner::class);
+        $containerGlobalLoaders=app()->resolve(RouterKernelAssigner::class);
         $containerGlobalLoaders->routeServiceConfiguration($this->parameters);
 
         //route helper method

@@ -44,7 +44,7 @@ class EnvironmentConfiguration
 
         //where we do the checks for the environment file type,
         //and if no configuration file is found, the system throws an exception.
-        $configuration=app()->makeBind(CheckEnvironmentFile::class)->checkConfiguration();
+        $configuration=app()->resolve(CheckEnvironmentFile::class)->checkConfiguration();
 
         //We are globalizing environment variables.
         $environment->set($configuration);

@@ -49,7 +49,7 @@ class Utils
      * @throws \DI\DependencyException
      * @throws \DI\NotFoundException
      */
-    public static function makeBind($class=null, $param=array())
+    public static function make($class=null, $param=array())
     {
         if($class!==null){
 

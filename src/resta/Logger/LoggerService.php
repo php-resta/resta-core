@@ -53,7 +53,7 @@ class LoggerService
 
             //We are getting the path to
             //the service log file in the project's version directory.
-            $appBase = app()->makeBind($loggerNamespace);
+            $appBase = app()->resolve($loggerNamespace);
 
             // we send the resulting adapter property as
             // a reference to the bind automatic instance class.

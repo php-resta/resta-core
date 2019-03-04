@@ -46,7 +46,7 @@ interface ContainerContracts {
      * @param array $bind
      * @return mixed
      */
-    public function makeBind($class,$bind=array());
+    public function resolve($class,$bind=array());
 
 
 }

@@ -49,7 +49,7 @@ class StaticNamespaceRepository extends StaticPathRepository
 
         if($bind=="bundle") return $bundleName;
 
-        return app()->makeBind($endpointCall,$bind);
+        return app()->resolve($endpointCall,$bind);
     }
 
     /**

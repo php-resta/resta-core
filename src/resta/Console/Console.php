@@ -75,7 +75,7 @@ class Console extends ApplicationProvider {
                 return $this->consoleProcess();
             }
 
-            return app()->makeBind(ConsoleCommandList::class,
+            return app()->resolve(ConsoleCommandList::class,
                 ['argument'=>[]])->handle();
         }
     }
@@ -89,7 +89,7 @@ class Console extends ApplicationProvider {
 
         // closure binding custom command,move custom namespace as specific
         // call prepare commander firstly for checking command builder
-        $closureCommand     = app()->makeBind(ClosureDispatcher::class,['bind'=>$commander]);
+        $closureCommand     = app()->resolve(ClosureDispatcher::class,['bind'=>$commander]);
 
         //assign commander method name
         $closureCommand->prepareBind['methodName']=$this->getConsoleClassMethod();

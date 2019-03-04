@@ -41,7 +41,7 @@ class Token extends ConsoleOutputter {
 
         //
         $clientApiToken=StaticPathModel::appMiddlewarePath($this->projectName()).'\\ClientApiToken';
-        $resolveClientApiToken=Utils::makeBind($clientApiToken,$this->app->app->applicationProviderBinding($this->app->app));
+        $resolveClientApiToken=Utils::resolve($clientApiToken,$this->app->app->applicationProviderBinding($this->app->app));
 
         //
         $key=lcfirst($this->argument['key']);

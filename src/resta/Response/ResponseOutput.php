@@ -33,7 +33,7 @@ class ResponseOutput
      */
     private function getRouter()
     {
-        return app()->makeBind(KernelRouterProcess::class)->router();
+        return app()->resolve(KernelRouterProcess::class)->router();
     }
 
     /**

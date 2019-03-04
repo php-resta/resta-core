@@ -29,7 +29,7 @@ class ServiceProvider extends  ApplicationProvider
 
             // after determining whether the register or boot methods
             // we are running the provider.
-            $providerInstance = $this->app->makeBind($provider);
+            $providerInstance = $this->app->resolve($provider);
 
             //we need to do method check for provider.
             if(method_exists($providerInstance,$method)){

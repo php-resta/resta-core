@@ -41,7 +41,7 @@ class ContainerResolve
             // Unpack the container object and
             // bind it to the param variable.
             $parameterName=$parameter->getName();
-            $parameterResolve=app()->makeBind($containers[$parameter->getType()->getName()]);
+            $parameterResolve=app()->resolve($containers[$parameter->getType()->getName()]);
 
             //return result for parameter of the container
             return [$parameterName=>$parameterResolve];
@@ -52,7 +52,7 @@ class ContainerResolve
             // Unpack the container object and
             // bind it to the param variable.
             $parameterName=$parameter->getName();
-            $parameterResolve=app()->makeBind($parameter->getType()->getName());
+            $parameterResolve=app()->resolve($parameter->getType()->getName());
 
             //return result for parameter of the container
             return [$parameterName=>$parameterResolve];
@@ -103,7 +103,7 @@ class ContainerResolve
             $paramMerge=array_merge($param,$checkParameterForContainer);
 
             // we do some useful logic bind for user benefit.
-            $param=app()->makeBind(GraceContainer::class,[
+            $param=app()->resolve(GraceContainer::class,[
                 'reflection' => $reflection->reflection
             ])->graceContainerBuilder($parameter,$paramMerge);
 

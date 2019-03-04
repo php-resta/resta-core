@@ -19,7 +19,7 @@ class ClassAliasGroup
    {
        $aliasGroup=app()->namespace()->config().'\AliasGroup';
        if(class_exists($aliasGroup)){
-           return app()->makeBind($aliasGroup)->handle();
+           return app()->resolve($aliasGroup)->handle();
        }
        return [];
    }

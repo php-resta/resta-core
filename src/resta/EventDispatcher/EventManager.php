@@ -82,7 +82,7 @@ class EventManager extends EventHandler
 
                 // After resolving the subscriber object with the help of the service container,
                 // we call the subscriber method.
-                $subscriberInstance=app()->makeBind($subscriberNamespace,['param'=>null]);
+                $subscriberInstance=app()->resolve($subscriberNamespace,['param'=>null]);
                 $subscriberInstance->subscriber($this);
             }
         }

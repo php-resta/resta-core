@@ -64,7 +64,7 @@ class Container implements ContainerContracts,\ArrayAccess
     public function kernelAssigner()
     {
         //We will use the kernelAssigner class to resolve the singleton object state.
-        return $this->makeBind(ContainerKernelAssigner::class);
+        return $this->resolve(ContainerKernelAssigner::class);
     }
 
     /**
@@ -119,7 +119,7 @@ class Container implements ContainerContracts,\ArrayAccess
 
         //If the bind method does not have parameters object and callback, the value is directly assigned to the kernel object.
         //Otherwise, when the bind object and callback are sent, the closure class inherits
-        //the applicationProvider object and the makeBind method is called
+        //the applicationProvider object and the resolve method is called
         return ($object===null) ? $this->kernel() : $this->{$makeBuild}($object,$callback);
 
     }
@@ -135,7 +135,7 @@ class Container implements ContainerContracts,\ArrayAccess
     {
         //If the bind method does not have parameters object and callback, the value is directly assigned to the kernel object.
         //Otherwise, when the bind object and callback are sent, the closure class inherits
-        //the applicationProvider object and the makeBind method is called
+        //the applicationProvider object and the resolve method is called
         return $this->bind($object,$callback,'container');
     }
 
@@ -154,7 +154,7 @@ class Container implements ContainerContracts,\ArrayAccess
 
         //If the bind method does not have parameters object and callback, the value is directly assigned to the kernel object.
         //Otherwise, when the bind object and callback are sent, the closure class inherits
-        //the applicationProvider object and the makeBind method is called
+        //the applicationProvider object and the resolve method is called
         return $this->bind($eventName,$object,'container');
 
     }
@@ -197,7 +197,7 @@ class Container implements ContainerContracts,\ArrayAccess
         $this->globalAssignerForBind($object,$callback);
 
         //the value corresponding to the bind value for the global object is assigned and
-        //the makeBind method is called for the dependency injection.
+        //the resolve method is called for the dependency injection.
         $this->kernelAssigner()->setKernelObject($object,$callback);
 
         //return kernel object
@@ -215,7 +215,7 @@ class Container implements ContainerContracts,\ArrayAccess
     {
         //we use the console bindings class to specify the classes to be preloaded in the console application.
         //Thus, classes that can not be bound with http are called without closure in global loaders directory.
-        $this->makeBind(ConsoleBindings::class)->console($object,$container);
+        $this->resolve(ConsoleBindings::class)->console($object,$container);
 
         //The console application must always return the kernel method.
         return $this->kernel();
@@ -245,7 +245,7 @@ class Container implements ContainerContracts,\ArrayAccess
         //we automatically load a global loaders for the bind method
         //and assign it to the object name in the kernel object with bind,
         //which you can easily use in the booted classes for kernel object assignments.
-        $this->makeBind(GlobalAssignerForBind::class)->getAssigner($object,$callback);
+        $this->resolve(GlobalAssignerForBind::class)->getAssigner($object,$callback);
 
     }
 
@@ -269,7 +269,7 @@ class Container implements ContainerContracts,\ArrayAccess
         $this->serviceContainerObject();
 
         //the value corresponding to the bind value for the global object is assigned and
-        //the makeBind method is called for the dependency method.
+        //the resolve method is called for the dependency method.
         $this->kernelAssigner()->setKernelObject($object,$callback,'serviceContainer');
 
         //return kernel object
@@ -307,10 +307,11 @@ class Container implements ContainerContracts,\ArrayAccess
      * @param $class
      * @param array $bind
      * @return mixed
+     *
      * @throws \DI\DependencyException
      * @throws \DI\NotFoundException
      */
-    public function makeBind($class,$bind=array())
+    public function resolve($class,$bind=array())
     {
         //the context bind objects are checked again and the bind sequence submitted by
         //the user is checked and forced to re-instantiate the object.
@@ -325,10 +326,10 @@ class Container implements ContainerContracts,\ArrayAccess
 
             //By singleton checking, we solve the dependency injection of the given class.
             //Thus, each class can be called together with its dependency.
-            self::$instance[$class]=Utils::makeBind($class,$this->applicationProviderBinding($this,self::$bindParams[$class]));
-            $this->singleton()->makeBind[class_basename($class)]=self::$instance[$class];
+            self::$instance[$class]=Utils::make($class,$this->applicationProviderBinding($this,self::$bindParams[$class]));
+            $this->singleton()->resolve[class_basename($class)]=self::$instance[$class];
 
-            //return makeBind class
+            //return resolve class
             return self::$instance[$class];
         }
 
@@ -489,7 +490,7 @@ class Container implements ContainerContracts,\ArrayAccess
      */
     public function offsetGet($offset) {
 
-        return $this->makeBind($this->instances['containerInstanceResolve'],[
+        return $this->resolve($this->instances['containerInstanceResolve'],[
             'instances' => $this->instances
         ])->{$offset}();
     }

@@ -121,7 +121,7 @@ class ApplicationBaseRegister extends ApplicationProvider implements HandleContr
         //register as instance application object
         // and container instance resolve
         $this->app->instance('app',$this->app);
-        $this->app->instance('bootLoader',$this->app->makeBind(BootLoader::class));
+        $this->app->instance('bootLoader',$this->app->resolve(BootLoader::class));
         $this->app->instance('containerInstanceResolve',ContainerInstanceResolver::class);
         $this->app->instance('reflection',ReflectionProcess::class);
     }
@@ -141,7 +141,7 @@ class ApplicationBaseRegister extends ApplicationProvider implements HandleContr
         $this->app->register('responseType','json');
 
         //we first load the response class as a singleton object to allow you to send output anywhere
-        $this->app->register('out',$this->app->makeBind(ResponseApplication::class));
+        $this->app->register('out',$this->app->resolve(ResponseApplication::class));
 
         //The HttpFoundation component defines an object-oriented layer for the HTTP specification.
         //The HttpFoundation component replaces these default PHP global variables and functions by an object-oriented layer

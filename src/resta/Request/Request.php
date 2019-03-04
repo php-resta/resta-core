@@ -60,7 +60,7 @@ class Request extends RequestClient implements HandleContracts
     {
         foreach ($this->{$validate} as $object=>$datas){
             if(Utils::isNamespaceExists($object)){
-                $getObjectInstance = app()->makeBind($object);
+                $getObjectInstance = app()->resolve($object);
                 foreach ($datas as $dataKey=>$data){
                     if(is_numeric($dataKey) && method_exists($getObjectInstance,$data)){
                         if(isset($this->origin[$data])){

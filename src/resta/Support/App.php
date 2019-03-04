@@ -58,7 +58,7 @@ class App
     private static function factory()
     {
         $factory = app()->namespace()->factory().'\Factory';
-        return app()->makeBind($factory);
+        return app()->resolve($factory);
     }
 
     /**
@@ -71,7 +71,7 @@ class App
         $builder=app()->namespace()->builder().'\\'.$service;
 
         //we are getting builder instance.
-        return app()->makeBind($builder);
+        return app()->resolve($builder);
     }
 
     /**
@@ -116,7 +116,7 @@ class App
         $container=$instance->container()->{$class};
 
         if(!is_array($instance->container()->{$class}) AND Utils::isNamespaceExists($container)){
-            return $instance->makeBind($container,$bind);
+            return $instance->resolve($container,$bind);
         }
         return $instance->container()->{$class};
     }
@@ -138,7 +138,7 @@ class App
     private static function date($arg)
     {
         if(property_exists($class=pos($arg),'app')){
-            return $class->makeBind(Date::class);
+            return $class->resolve(Date::class);
         }
         return null;
     }
@@ -192,7 +192,7 @@ class App
         if($namespace) return $repositoryNamespace;
 
         //and eventually we conclude the adapter class of the repository package as an instance.
-        return app()->makeBind($repositoryNamespace)->adapter();
+        return app()->resolve($repositoryNamespace)->adapter();
     }
 
     /**
@@ -211,7 +211,7 @@ class App
 
         //run service for endpoint
         $serviceSource=StaticPathModel::appSourceEndpoint().'\\'.$getCalledClass.'\\'.$service.'\Main';
-        return app()->makeBind($serviceSource);
+        return app()->resolve($serviceSource);
     }
 
     /**

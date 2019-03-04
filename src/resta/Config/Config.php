@@ -56,7 +56,7 @@ class Config implements AccessorContracts
     public static function make($config=null)
     {
         self::$config = $config;
-        self::$configProcessInstance = app()->makeBind(ConfigProcess::class);
+        self::$configProcessInstance = app()->resolve(ConfigProcess::class);
 
         //static single object set config
         return new self();
@@ -79,7 +79,7 @@ class Config implements AccessorContracts
             // we check the config value not to be rewritten.
             if(!in_array($value,$getConfigWrap)){
                 $setData = '<?php return '.var_export(array_merge($getConfigWrap,$data), true).';';
-                return app()->makeBind(FileProcess::class)->dumpFile($setConfigPath,$setData);
+                return app()->resolve(FileProcess::class)->dumpFile($setConfigPath,$setData);
             }
         }
     }

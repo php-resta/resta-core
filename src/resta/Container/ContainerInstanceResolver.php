@@ -24,7 +24,7 @@ class ContainerInstanceResolver
      */
     public function reflection()
     {
-        return app()->makeBind($this->instances[__FUNCTION__]);
+        return app()->resolve($this->instances[__FUNCTION__]);
     }
 
     /**

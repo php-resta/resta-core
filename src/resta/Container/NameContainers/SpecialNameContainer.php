@@ -19,7 +19,7 @@ class SpecialNameContainer
         if(class_exists($specialNameContainer)){
 
             //we resolve the custom name container through the service container.
-            $resolveSpecialNameContainer=app()->makeBind($specialNameContainer);
+            $resolveSpecialNameContainer=app()->resolve($specialNameContainer);
 
             // we need to find out whether we have
             // the specific name getNameContainer method solved

@@ -30,7 +30,7 @@ class ProviderTest extends AbstractTest
             ]];
         });
 
-        $providerInstance = static::$app->makeBind(ServiceProvider::class);
+        $providerInstance = static::$app->resolve(ServiceProvider::class);
         $providerInstance->getServiceProviders();
         $providerInstance->resolveProviders(static::$app->serviceProviders());
     }

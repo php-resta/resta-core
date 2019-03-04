@@ -112,7 +112,7 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
             // we will implement a special onion method here and
             // pass our bootstraper classes through this method.
             // Our goal here is to implement the middleware layer correctly.
-            $this->makeBind(MiddlewareKernelProvider::class)->onionBoot([$group,$booting],function() use($group){
+            $this->resolve(MiddlewareKernelProvider::class)->onionBoot([$group,$booting],function() use($group){
                 $this->bootstrappers($this,$group);
             });
 

@@ -6,7 +6,7 @@ if (!function_exists('auth')) {
      */
     function auth()
     {
-        return app()->makeBind(\Resta\Authenticate\AuthenticateProvider::class);
+        return app()->resolve(\Resta\Authenticate\AuthenticateProvider::class);
     }
 }
 
@@ -277,7 +277,7 @@ if (!function_exists('resolve')) {
      */
     function resolve($class,$bind=array())
     {
-        return app()->makeBind($class,$bind);
+        return app()->resolve($class,$bind);
     }
 }
 
@@ -330,7 +330,7 @@ if (!function_exists('logger')) {
      */
     function logger($file=null)
     {
-        return app()->makeBind(\Resta\Logger\LoggerHandler::class,['file'=>$file]);
+        return app()->resolve(\Resta\Logger\LoggerHandler::class,['file'=>$file]);
     }
 }
 

@@ -27,7 +27,7 @@ class RepositoryContainer
             $repositoryName=str_replace('Contract','',$parameter->getName());
             $getRepositoryAdapter=\application::repository($repositoryName,true);
 
-            $param[$parameter->getName()]=app()->makeBind($getRepositoryAdapter)->adapter();
+            $param[$parameter->getName()]=app()->resolve($getRepositoryAdapter)->adapter();
         }
 
         return $param;

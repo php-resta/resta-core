@@ -21,7 +21,7 @@ class ConsoleCommandList extends ConsoleOutputter
 
         foreach ($getCommandList as $command=>$runnable){
 
-            $commandInstance = app()->makeBind($command,['argument'=>[]]);
+            $commandInstance = app()->resolve($command,['argument'=>[]]);
 
             $className = class_basename($commandInstance);
 

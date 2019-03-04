@@ -29,7 +29,7 @@ class KernelManifestManager
         // if there is manifest propery in the resta
         // in this case,manifest property is manifest class
         if(isset(core()->manifest)){
-            $this->manifest = $this->manifest->makeBind(Manifest::class);
+            $this->manifest = $this->manifest->resolve(Manifest::class);
         }
 
         //closure dispatcher for manifest property

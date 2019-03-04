@@ -28,7 +28,7 @@ class BootFireCallback extends ApplicationProvider
         // We get instance for customBooter class
         // we get our object-protected boot lists
         // directly in the application class with the help of public access method.
-        $customBooter   = $app->makeBind(CustomBooter::class,['boot'=>self::getBooter($booter)]);
+        $customBooter   = $app->resolve(CustomBooter::class,['boot'=>self::getBooter($booter)]);
         $boot           = ($customBooter)->customBootstrappers($booter);
 
         // and as a result we now use
