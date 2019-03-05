@@ -86,7 +86,7 @@ class ServiceProvider extends  ApplicationProvider
 
             // providers can only be installed once.
             // apply providers and register for kernel
-            if(!isset(core()->loadedProviders[$key])){
+            if(!isset($this->app['core']->loadedProviders[$key])){
                 $this->applyProvider($key,$provider);
             }
         }
@@ -95,7 +95,7 @@ class ServiceProvider extends  ApplicationProvider
         foreach($providers as $key=>$provider){
 
             //if the providers register is already booted.
-            if(isset(core()->loadedProviders[$key])){
+            if(isset($this->app['core']->loadedProviders[$key])){
                 $this->applyProvider($key,$provider,'boot');
             }
         }
