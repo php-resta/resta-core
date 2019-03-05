@@ -70,6 +70,8 @@ class ServiceProvider extends  ApplicationProvider
     {
         define ('serviceprovider',true);
 
+        // for loaded providers,
+        // we register an empty array for the container object.
         $this->app->register('loadedProviders',[]);
 
         //check providers and resolve
