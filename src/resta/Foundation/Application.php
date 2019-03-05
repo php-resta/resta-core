@@ -155,8 +155,8 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
     {
         // get the directory
         // where kernel files are running to the kernel object.
-        if(isset($this->singleton()->corePath)){
-            return $this->singleton()->corePath;
+        if(isset($this['corePath'])){
+            return $this['corePath'];
         }
         return null;
     }
@@ -168,11 +168,11 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
      */
     public function detectEnvironmentForApplicationKey()
     {
-        if(isset($this['container']['applicationKey'])){
+        if(isset($this['applicationKey'])){
 
             // application key, but if it has a null value
             // then we move the environment value to the production environment.
-            $applicationKey = $this['container']['applicationKey'];
+            $applicationKey = $this['applicationKey'];
             return ($applicationKey===null) ? 'production' : environment();
         }
 
