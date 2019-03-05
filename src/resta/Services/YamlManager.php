@@ -3,6 +3,7 @@
 namespace Resta\Services;
 
 use Symfony\Component\Yaml\Yaml;
+use Symfony\Component\Yaml\Exception\ParseException;
 
 class YamlManager
 {
@@ -53,7 +54,11 @@ class YamlManager
     private function getYamlParse()
     {
         //get yaml as parsed
-        return Yaml::parse(file_get_contents($this->path));
+        try {
+            return Yaml::parse(file_get_contents($this->path));
+        } catch (ParseException $exception) {
+            return [];
+        }
     }
 
 }

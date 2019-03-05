@@ -155,7 +155,7 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
     {
         // get the directory
         // where kernel files are running to the kernel object.
-        return $this['corePath'] ?: null;
+        return core()->corePath ?: null;
     }
 
     /**
