@@ -22,7 +22,7 @@ class MiddlewareKernelAssigner extends ApplicationProvider
      */
     public function pointer($middleValue)
     {
-        if(isset($this->app['container']->pointer['middlewareList'])){
+        if(property_exists($this->app['container'],'pointer') && isset($this->app['container']->pointer['middlewareList'])){
 
             $middlewareList = $this->app['container']->pointer['middlewareList'];
 
