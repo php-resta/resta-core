@@ -6,8 +6,8 @@ use Resta\Support\Utils;
 use Resta\Support\Dependencies;
 use Resta\Foundation\ApplicationProvider;
 
-class ExceptionTrace extends ApplicationProvider {
-
+class ExceptionTrace extends ApplicationProvider
+{
     /**
      * ExceptionTrace constructor.
      * @param $app

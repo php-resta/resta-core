@@ -55,6 +55,9 @@ class ApplicationBaseRegister extends ApplicationProvider implements HandleContr
         //we define the general application instance object.
         define('appInstance',(base64_encode(serialize($this))));
 
+        //set core instance value
+        $this->app->instance('container',core());
+
         //main loader for application
         $this->mainLoader();
 
@@ -120,7 +123,6 @@ class ApplicationBaseRegister extends ApplicationProvider implements HandleContr
     {
         //register as instance application object
         // and container instance resolve
-        $this->app->instance('app',$this->app);
         $this->app->instance('bootLoader',$this->app->resolve(BootLoader::class));
         $this->app->instance('containerInstanceResolve',ContainerInstanceResolver::class);
         $this->app->instance('reflection',ReflectionProcess::class);

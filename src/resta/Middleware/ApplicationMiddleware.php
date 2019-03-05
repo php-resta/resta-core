@@ -37,7 +37,7 @@ class ApplicationMiddleware extends ApplicationProvider
         //When your application is requested, the middleware classes are running before all bootstrapper executables.
         //Thus, if you make http request your application, you can verify with an intermediate middleware layer
         //and throw an exception.
-        $resolveServiceMiddleware = core()->middlewareClass->{$middlewareMethod}();
+        $resolveServiceMiddleware = $this->app['container']->middlewareClass->{$middlewareMethod}();
         $this->serviceMiddleware($middleware,$resolveServiceMiddleware);
 
     }
@@ -56,8 +56,8 @@ class ApplicationMiddleware extends ApplicationProvider
             $middlewareName = ucfirst($middleVal);
 
             //middleware and exclude class instances
-            $excludeClass = core()->excludeClass;
-            $middlewareClass = core()->middlewareClass;
+            $excludeClass = $this->app['container']->excludeClass;
+            $middlewareClass = $this->app['container']->middlewareClass;
 
             //middleware definitions.
             $this->middleware['namespace']          = app()->namespace()->middleware().'\\'.$middlewareName;
@@ -117,7 +117,7 @@ class ApplicationMiddleware extends ApplicationProvider
         return [
           1=>[endpoint],
           2=>[endpoint,method],
-          3=>[endpoint,method,core()->httpMethod]
+          3=>[endpoint,method,$this->app['container']->httpMethod]
         ];
     }
 
