@@ -6,7 +6,6 @@ use Resta\Support\Str;
 use Resta\Traits\ApplicationPath;
 use Illuminate\Support\Collection;
 use Resta\Support\ClosureDispatcher;
-use Resta\Contracts\KernelContracts;
 use Resta\Contracts\ApplicationContracts;
 use Resta\Contracts\ConfigProviderContracts;
 use Resta\Middleware\MiddlewareKernelProvider;
@@ -15,7 +14,7 @@ use Resta\Foundation\Bootstrapper\Bootstrappers;
 use Resta\Foundation\Bootstrapper\BootFireCallback;
 use Resta\Foundation\Bootstrapper\KernelManifestManager;
 
-class Application extends Kernel implements ApplicationContracts,ApplicationHelpersContracts,KernelContracts
+class Application extends Kernel implements ApplicationContracts,ApplicationHelpersContracts
 {
     //get app paths
     use ApplicationPath;
@@ -156,8 +155,8 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
     {
         // get the directory
         // where kernel files are running to the kernel object.
-        if(isset(core()->corePath)){
-            return core()->corePath;
+        if(isset($this->singleton()->corePath)){
+            return $this->singleton()->corePath;
         }
         return null;
     }
@@ -169,11 +168,11 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
      */
     public function detectEnvironmentForApplicationKey()
     {
-        if(isset(core()->applicationKey)){
+        if(property_exists($this['container'],'applicationKey')){
 
             // application key, but if it has a null value
             // then we move the environment value to the production environment.
-            $applicationKey = core()->applicationKey;
+            $applicationKey = $this['container']->applicationKey;
             return ($applicationKey===null) ? 'production' : environment();
         }
 

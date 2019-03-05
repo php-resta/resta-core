@@ -71,7 +71,7 @@ class ApplicationBaseRegister extends ApplicationProvider implements HandleContr
         // this function can be used for defining your own way of handling errors during runtime,
         // for example in applications in which you need to do cleanup of data/files when a critical error happens,
         // or when you need to trigger an error under certain conditions (using trigger_error()).
-        if(core()->isAvailableStore){
+        if($this->app['container']->isAvailableStore){
             $this->app->bind('exception',function(){
                 return ErrorHandler::class;
             });
