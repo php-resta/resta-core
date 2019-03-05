@@ -57,6 +57,8 @@ class ContainerInstanceResolver
     }
 
     /**
+     * instance magic caller
+     *
      * @param $name
      * @param $arguments
      * @return null
