@@ -318,7 +318,7 @@ if (!function_exists('exception')) {
     function exception($name=null,$params=array())
     {
         $exceptionManager=\Resta\Exception\ExceptionManager::class;
-        return new $exceptionManager($name,$params);
+        return app()->resolve($exceptionManager,['name'=>$name,'params'=>$params]);
     }
 }
 

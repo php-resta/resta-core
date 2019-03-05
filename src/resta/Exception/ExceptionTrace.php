@@ -4,16 +4,20 @@ namespace Resta\Exception;
 
 use Resta\Support\Utils;
 use Resta\Support\Dependencies;
+use Resta\Foundation\ApplicationProvider;
 
-class ExceptionTrace {
+class ExceptionTrace extends ApplicationProvider {
 
     /**
-     * ExceptionManager constructor.
+     * ExceptionTrace constructor.
+     * @param $app
      * @param null $name
      * @param array $params
      */
-    public function __construct($name=null,$params=array())
+    public function __construct($app,$name=null,$params=array())
     {
+        parent::__construct($app);
+
         // we help the user to pull a special message from
         // the translate section to be specified by the user for the exception.
         $this->exceptionTranslate($name,$params);
@@ -33,9 +37,9 @@ class ExceptionTrace {
     {
         if($name!==null){
             if(count($params)){
-                app()->register('exceptionTranslateParams',$name,$params);
+                $this->app->register('exceptionTranslateParams',$name,$params);
             }
-            app()->register('exceptionTranslate',$name);
+            $this->app->register('exceptionTranslate',$name);
         }
     }
 
@@ -48,18 +52,21 @@ class ExceptionTrace {
     {
         foreach (debug_backtrace() as $key=>$value){
 
-            app()->register('exceptionFile',debug_backtrace()[1]['file']);
-            app()->register('exceptionLine',debug_backtrace()[1]['line']);
+            if(isset(debug_backtrace()[$key],debug_backtrace()[$key]['file']))
+            {
+                $this->app->register('exceptionFile',debug_backtrace()[$key]['file']);
+                $this->app->register('exceptionLine',debug_backtrace()[$key]['line']);
+            }
 
             Dependencies::loadBootstrapperNeedsForException();
 
             if(isset($value['file']) && isset(core()->url)){
                 if(preg_match('@'.core()->url['project'].'|boot|providers@',$value['file'])){
 
-                    app()->terminate('exceptionFile');
-                    app()->terminate('exceptionLine');
-                    app()->register('exceptionFile',$value['file']);
-                    app()->register('exceptionLine',$value['line']);
+                    $this->app->terminate('exceptionFile');
+                    $this->app->terminate('exceptionLine');
+                    $this->app->register('exceptionFile',$value['file']);
+                    $this->app->register('exceptionLine',$value['line']);
 
                     break;
                 }
@@ -75,7 +82,7 @@ class ExceptionTrace {
         //We use the magic method for the exception and
         //call the exception class in the application to get the instance.
         $nameException = ucfirst($name).'Exception';
-        $nameNamespace = app()->namespace()->optionalException().'\\'.$nameException;
+        $nameNamespace = $this->app->namespace()->optionalException().'\\'.$nameException;
         $callNamespace = new $nameNamespace;
 
 
@@ -89,7 +96,7 @@ class ExceptionTrace {
 
 
         // we register the custom exception trace value with the global kernel object.
-        app()->register('exceptiontrace',$customExceptionTrace);
+        $this->app->register('exceptiontrace',$customExceptionTrace);
 
         //If the developer wants to execute an event when calling a special exception,
         //we process the event method.
