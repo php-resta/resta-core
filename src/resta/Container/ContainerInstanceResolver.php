@@ -26,6 +26,7 @@ class ContainerInstanceResolver
      */
     public function reflection()
     {
+        //we solve the reflection method with the resolve method.
         return app()->resolve($this->instances[__FUNCTION__]);
     }
 
@@ -39,10 +40,14 @@ class ContainerInstanceResolver
         //check container value for kernel
         if(isset($this->instances['container'])){
 
+            // if methoda is a null parameter,
+            // then we send direct container values.
             if($name===null){
                 return (array)$this->instances['container'];
             }
 
+            // if there is an existing value in the container as the method parameter,
+            // we send this value directly in the container.
             if(isset($this->container()[$name])){
                 return $this->container()[$name];
             }
