@@ -9,10 +9,10 @@ class __resource__ extends ServiceBaseController
     /**
      * resource class for __serviceClass__
      *
-     * @return mixed|void
+     * @return mixed
      */
     public function get()
     {
-        //
+        return '__resource__';
     }
 }
