@@ -168,11 +168,11 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
      */
     public function detectEnvironmentForApplicationKey()
     {
-        if(property_exists($this['container'],'applicationKey')){
+        if(isset($this['container']['applicationKey'])){
 
             // application key, but if it has a null value
             // then we move the environment value to the production environment.
-            $applicationKey = $this['container']->applicationKey;
+            $applicationKey = $this['container']['applicationKey'];
             return ($applicationKey===null) ? 'production' : environment();
         }
 

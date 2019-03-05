@@ -20,11 +20,26 @@ class ContainerInstanceResolver
     }
 
     /**
+     * reflection resolve for instance
+     *
      * @return mixed
      */
     public function reflection()
     {
         return app()->resolve($this->instances[__FUNCTION__]);
+    }
+
+    /**
+     * container resolve for instance
+     *
+     * @return array
+     */
+    public function container()
+    {
+        if(isset($this->instances['container'])){
+            return (array)$this->instances['container'];
+        }
+        return [];
     }
 
     /**
