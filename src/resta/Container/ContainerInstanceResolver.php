@@ -34,10 +34,19 @@ class ContainerInstanceResolver
      *
      * @return array
      */
-    public function container()
+    public function container($name=null)
     {
+        //check container value for kernel
         if(isset($this->instances['container'])){
-            return (array)$this->instances['container'];
+
+            if($name===null){
+                return (array)$this->instances['container'];
+            }
+
+            if(isset($this->container()[$name])){
+                return $this->container()[$name];
+            }
+
         }
         return [];
     }
@@ -50,6 +59,6 @@ class ContainerInstanceResolver
     public function __call($name, $arguments)
     {
         //we call container instance as data
-        return $this->instances[$name] ?? null;
+        return $this->instances[$name] ?? $this->container($name);
     }
 }

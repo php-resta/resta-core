@@ -22,9 +22,9 @@ class MiddlewareKernelAssigner extends ApplicationProvider
      */
     public function pointer($middleValue)
     {
-        if(isset($this->app['container']['pointer']['middlewareList'])){
+        if(isset($this->app['pointer']['middlewareList'])){
 
-            $middlewareList = $this->app['container']['pointer']['middlewareList'];
+            $middlewareList = $this->app['pointer']['middlewareList'];
 
             if(is_array($middlewareList)){
                 $middlewareList = array_merge($middlewareList,[$middleValue]);

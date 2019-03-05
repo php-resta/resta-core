@@ -37,8 +37,8 @@ class RouteApplication extends ApplicationProvider
 
             // if the method in the instance object exists,
             // this method is executed to produce the output.
-            if(method_exists($this->instanceController(),$this->app['container']['method'])){
-                return Utils::callBind([$this->instanceController(),$this->app['container']['method']],$this->app->applicationProviderBinding($this->app));
+            if(method_exists($this->instanceController(),$this->app['method'])){
+                return Utils::callBind([$this->instanceController(),$this->app['method']],$this->app->applicationProviderBinding($this->app));
             }
 
             //throw exception as unsuccessful
@@ -65,7 +65,7 @@ class RouteApplication extends ApplicationProvider
     {
         //The kernel object
         //we temporarily assigned on the instance of the class obtained by route
-        return $this->app['container']['instanceController'];
+        return $this->app['instanceController'];
     }
 
     /**
@@ -78,7 +78,7 @@ class RouteApplication extends ApplicationProvider
          * get global router instance
          * @var $routerGlobalInstance Router
          */
-        $routerGlobalInstance=$this->app['container']['routerKernelAssigner'];
+        $routerGlobalInstance=$this->app['routerKernelAssigner'];
 
         //the singleton eager class is a class built to temporarily prevent
         //the use of user-side kernel objects used by the rest system.
