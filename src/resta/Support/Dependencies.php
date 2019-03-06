@@ -47,6 +47,6 @@ class Dependencies
      */
     public static function loadBootstrapperNeedsForException()
     {
-        static::bootLoader(self::$bootLoaders);
+        static::bootLoader(self::getBootLoaders());
     }
 }
