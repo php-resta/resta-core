@@ -56,23 +56,8 @@ class Bootstrappers
     }
 
     /**
-     * get bootstrappers list
+     * call bootstrappers for application
      *
-     * @return array
-     */
-    private function getBootstrappers()
-    {
-        //if the value to be sent as the second parameter for this method is true,
-        //the values ​​in the first parameter of the method will be combined with the bootstrappers list.
-        if($this->ifExistPusher()){
-            $bootstrapStack=array_merge($this->pusher,$this->app->kernelGroupKeys());
-        }
-
-        //Bootstrap list join check is done and list is returned.
-        return (isset($bootstrapStack)) ? $bootstrapStack : $this->pusher;
-    }
-
-    /**
      * @param array $customBootstrapers
      */
     public function callBootstrapperProcess($customBootstrapers=[])
@@ -93,22 +78,53 @@ class Bootstrappers
     }
 
     /**
-     * @method peelings
-     * @return mixed|void
+     * get bootstrappers list
+     *
+     * @return array
      */
-    private function peelings()
+    private function getBootstrappers()
     {
-        //if there are peelings
-        if(isset($this->app['peelings'])){
-
-            // We send the peelings property to
-            // the bootstrapperPeelOnion class.
-            $peelings = $this->app['peelings'];
-            pos($peelings)->onionRun($peelings);
+        //if the value to be sent as the second parameter for this method is true,
+        //the values ​​in the first parameter of the method will be combined with the bootstrappers list.
+        if($this->ifExistPusher()){
+            $bootstrapStack=array_merge($this->pusher,$this->app->kernelGroupKeys());
         }
+
+        //Bootstrap list join check is done and list is returned.
+        return (isset($bootstrapStack)) ? $bootstrapStack : $this->pusher;
     }
 
     /**
+     * get bootstrapper stack
+     *
+     * @param $customBootstrapers
+     */
+    private function getBootstrappersStack($customBootstrapers)
+    {
+        // here we check that a special bootstrappers list will work and we identify the onion identifier.
+        // we are peeling onion class by classifying onion class.
+        $customBootstrapersCount            = count($customBootstrapers);
+        $getBootstrappers                   = $this->getBootstrappers();
+        $this->stack['getBootstrappers']    = ($customBootstrapersCount) ? $customBootstrapers : $getBootstrappers;
+        $this->stack['onionIdentifier']     = ($customBootstrapersCount) ? false : true;
+    }
+
+    /**
+     * @return array|mixed
+     */
+    public function getPusher()
+    {
+        // a public method
+        // for the pushers collected.
+        if(count($this->pusherStacks)){
+            return $this->pusherStacks['pusherHandle'];
+        }
+        return [];
+    }
+
+    /**
+     * bootstrapper for pipeline
+     *
      * @param null $callback
      * @return bool
      */
@@ -134,6 +150,23 @@ class Bootstrappers
         return call_user_func_array($callback,['callBootstrapperProcess']);
     }
 
+
+    /**
+     * @method peelings
+     * @return mixed|void
+     */
+    private function peelings()
+    {
+        //if there are peelings
+        if(isset($this->app['peelings'])){
+
+            // We send the peelings property to
+            // the bootstrapperPeelOnion class.
+            $peelings = $this->app['peelings'];
+            pos($peelings)->onionRun($peelings);
+        }
+    }
+
     /**
      * @return void
      */
@@ -150,31 +183,5 @@ class Bootstrappers
 
         //pusherHandle key of the pusherStack array
         $this->pusherStacks['pusherHandle'] = $pusherStack;
-    }
-
-    /**
-     * @param $customBootstrapers
-     */
-    private function getBootstrappersStack($customBootstrapers)
-    {
-        // here we check that a special bootstrappers list will work and we identify the onion identifier.
-        // we are peeling onion class by classifying onion class.
-        $customBootstrapersCount            = count($customBootstrapers);
-        $getBootstrappers                   = $this->getBootstrappers();
-        $this->stack['getBootstrappers']    = ($customBootstrapersCount) ? $customBootstrapers : $getBootstrappers;
-        $this->stack['onionIdentifier']     = ($customBootstrapersCount) ? false : true;
-    }
-
-    /**
-     * @return array|mixed
-     */
-    public function getPusher()
-    {
-        // a public method
-        // for the pushers collected.
-        if(count($this->pusherStacks)){
-            return $this->pusherStacks['pusherHandle'];
-        }
-        return [];
     }
 }
