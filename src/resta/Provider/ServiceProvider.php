@@ -43,6 +43,21 @@ class ServiceProvider extends  ApplicationProvider
     }
 
     /**
+     * assign loadedProviders core value
+     *
+     * @return mixed|void
+     */
+    private function assignerLoadedProvidersInitialCoreValue()
+    {
+        if(!isset($this->app['loadedProviders'])){
+
+            // for loaded providers,
+            // we register an empty array for the container object.
+            $this->app->register('loadedProviders',[]);
+        }
+    }
+
+    /**
      * get all service providers
      *
      * @return array
@@ -102,21 +117,6 @@ class ServiceProvider extends  ApplicationProvider
             if(isset($this->app['loadedProviders'][$key])){
                 $this->applyProvider($key,$provider,'boot');
             }
-        }
-    }
-
-    /**
-     * assign loadedProviders core value
-     *
-     * @return mixed|void
-     */
-    private function assignerLoadedProvidersInitialCoreValue()
-    {
-        if(!isset($this->app['loadedProviders'])){
-
-            // for loaded providers,
-            // we register an empty array for the container object.
-            $this->app->register('loadedProviders',[]);
         }
     }
 }
