@@ -232,12 +232,14 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
      */
     public function kernelGroupList()
     {
+        $list = [];
+
         //get kernel group names with manifest method
         foreach ($this->kernelGroupKeys() as $groupKey){
-            return $this->manifest($groupKey);
+            $list = array_merge($list,$this->manifest($groupKey));
         }
 
-        return [];
+        return $list;
     }
 
     /**
