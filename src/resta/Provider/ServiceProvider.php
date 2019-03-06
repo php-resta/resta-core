@@ -70,10 +70,6 @@ class ServiceProvider extends  ApplicationProvider
     {
         define ('serviceprovider',true);
 
-        // for loaded providers,
-        // we register an empty array for the container object.
-        $this->app->register('loadedProviders',[]);
-
         //check providers and resolve
         $this->resolveProviders($this->getServiceProviders());
     }
@@ -85,6 +81,10 @@ class ServiceProvider extends  ApplicationProvider
      */
     public function resolveProviders($providers=array())
     {
+        // for loaded providers,
+        // we register an empty array for the container object.
+        $this->assignerLoadedProvidersInitialCoreValue();
+
         //first we are running register methods of provider classes.
         foreach($providers as $key=>$provider){
 
@@ -102,6 +102,21 @@ class ServiceProvider extends  ApplicationProvider
             if(isset($this->app['loadedProviders'][$key])){
                 $this->applyProvider($key,$provider,'boot');
             }
+        }
+    }
+
+    /**
+     * assign loadedProviders core value
+     *
+     * @return mixed|void
+     */
+    private function assignerLoadedProvidersInitialCoreValue()
+    {
+        if(!isset($this->app['loadedProviders'])){
+
+            // for loaded providers,
+            // we register an empty array for the container object.
+            $this->app->register('loadedProviders',[]);
         }
     }
 }
