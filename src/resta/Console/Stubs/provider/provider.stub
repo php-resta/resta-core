@@ -1,6 +1,6 @@
 <?php
 
-namespace Providers;
+namespace __ProviderNamespace__;
 
 use Resta\Provider\ServiceProviderManager;
 

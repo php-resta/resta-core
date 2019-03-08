@@ -2,6 +2,7 @@
 
 namespace Resta\Console\Source\Provider;
 
+use http\Exception\InvalidArgumentException;
 use Resta\Support\Utils;
 use Resta\Console\ConsoleListAccessor;
 use Resta\Console\ConsoleOutputter;
@@ -14,19 +15,24 @@ class Provider extends ConsoleOutputter {
     /**
      * @var $type
      */
-    public $type='boot';
+    public $type='provider';
 
     /**
      * @var array
      */
     protected $runnableMethods = [
-        'create'=>'Creates a general provider class'
+        'create'    => 'Creates a provider',
     ];
 
     /**
-     * @var $commandRule
+     * @var bool
      */
-    protected $commandRule='provider';
+    protected $projectStatus = true;
+
+    /**
+     * @var array
+     */
+    protected $commandRule=[];
 
     /**
      * @method create
@@ -37,11 +43,18 @@ class Provider extends ConsoleOutputter {
         $bootName=explode("\\",$this->argument['project']);
 
         if(file_exists(app()->path()->app())){
+
+            if(!isset($this->argument['provider'])) exception()->invalidArgument('Provider key is not valid');
+
+            $this->argument['ProviderNamespace'] = app()->namespace()->provider();
             $this->touch['provider/provider'] = app()->path()->provider().'/'.$this->argument['provider'].'.php';
         }
         else{
 
-            $this->argument['provider']=current($bootName);
+            $providerName = explode(":",current($bootName));
+
+            $this->argument['provider']=ucfirst(end($providerName));
+            $this->argument['ProviderNamespace'] = 'Providers';
             $this->touch['provider/provider'] = StaticPathModel::providerDir().'/'.$this->argument['provider'].'.php';
         }
 
