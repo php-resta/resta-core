@@ -5,6 +5,11 @@ namespace Resta\Support;
 class Dependencies
 {
     /**
+     * @var array $bootLoaders
+     */
+    protected static $bootLoaders = ['url','environment','logger','config'];
+
+    /**
      * load bootstrapper dependencies
      *
      * @param array $loaders
@@ -17,12 +22,22 @@ class Dependencies
         foreach ($loaders as $loader){
             if(isset($kernelGroupList[$loader]) && isset(core()->bindings[$loader])===false){
 
-                //with the bootloader kernel,we get the bootloader method.
+                //with the boot loader kernel,we get the boot loader method.
                 core()->bootLoader->call(function() use($loader,$kernelGroupList) {
                     return $this->{$kernelGroupList[$loader]}();
                 });
             }
         }
+    }
+
+    /**
+     * get dependency boot loaders
+     *
+     * @return array
+     */
+    public static function getBootLoaders()
+    {
+        return self::$bootLoaders;
     }
 
     /**
@@ -32,6 +47,6 @@ class Dependencies
      */
     public static function loadBootstrapperNeedsForException()
     {
-        static::bootLoader(['url','environment','logger','config']);
+        static::bootLoader(self::getBootLoaders());
     }
 }
