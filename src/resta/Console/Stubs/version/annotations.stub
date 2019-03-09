@@ -2,7 +2,7 @@
 
 namespace App\__project__\__version__;
 
-use __kernelDir__\AppAnnotations;
+use Store\Traits\Annotations;
 
 /**
  * Trait ServiceAnnotationsController
@@ -10,5 +10,5 @@ use __kernelDir__\AppAnnotations;
  */
 trait ServiceAnnotationsController
 {
-    use AppAnnotations;
+    use Annotations;
 }

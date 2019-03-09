@@ -6,10 +6,6 @@ use Store\Traits\Annotations;
 
 /**
  * Trait ServiceAnnotationsController
- * @method \Store\Services\HttpSession session
- * @method \Predis\Client redis
- * @method \Store\Services\AppCollection collection
- * @method \Store\Services\Cache cache
  */
 trait AppAnnotations
 {
