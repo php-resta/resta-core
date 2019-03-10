@@ -90,11 +90,4 @@ class Kernel extends Container
      * @var array $providers
      */
     protected $providers = [];
-
-    /**
-     * application annotations
-     *
-     * @var array $annotations
-     */
-    protected $annotations = [];
 }
