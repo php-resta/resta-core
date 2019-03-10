@@ -58,6 +58,7 @@ class ContainerResolve
             return [$parameterName=>$parameterResolve];
         }
 
+        return [];
 
     }
 
@@ -99,7 +100,7 @@ class ContainerResolve
             // if the parameter is an object and
             // this object is a service container object
             // then the parameter will bind.
-            $checkParameterForContainer=$this->checkParameterForContainer($containers,$parameter);
+            $checkParameterForContainer = $this->checkParameterForContainer($containers,$parameter);
             $paramMerge=array_merge($param,$checkParameterForContainer);
 
             // we do some useful logic bind for user benefit.
