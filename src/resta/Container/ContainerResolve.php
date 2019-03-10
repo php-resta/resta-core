@@ -87,8 +87,8 @@ class ContainerResolve extends ApplicationProvider
         $containers = [];
 
         //get service container objects.
-        if(isset($this->app['serviceContainer'])){
-            $containers = $this->app['serviceContainer'];
+        if(isset(core()->serviceContainer)){
+            $containers = core()->serviceContainer;
         }
 
         // With the reflection class we get the method.
