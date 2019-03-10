@@ -2,8 +2,8 @@
 
 namespace Resta\Container;
 
-use Resta\Support\ReflectionProcess;
 use Resta\Support\Utils;
+use Resta\Support\ReflectionProcess;
 
 class ContainerResolve
 {
@@ -12,17 +12,18 @@ class ContainerResolve
      * @param $param
      * @param callable $callback
      * @return mixed
+     *
      * @throws \ReflectionException
      */
     public function call($class,$param,callable $callback)
     {
         // We use the reflection class to solve
         // the parameters of the class's methods.
-        $param=$this->reflectionMethodParameters($class,$param);
+        $param = $this->reflectionMethodParameters($class,$param);
 
         // as a result
         // we return the resolved class to the callback class
-        $params=(object)['class'=>$class,'param'=>$param];
+        $params = (object)['class'=>$class,'param'=>$param];
         return call_user_func_array($callback,[$params]);
     }
 
@@ -40,8 +41,8 @@ class ContainerResolve
 
             // Unpack the container object and
             // bind it to the param variable.
-            $parameterName=$parameter->getName();
-            $parameterResolve=app()->resolve($containers[$parameter->getType()->getName()]);
+            $parameterName = $parameter->getName();
+            $parameterResolve = app()->resolve($containers[$parameter->getType()->getName()]);
 
             //return result for parameter of the container
             return [$parameterName=>$parameterResolve];
@@ -51,8 +52,8 @@ class ContainerResolve
 
             // Unpack the container object and
             // bind it to the param variable.
-            $parameterName=$parameter->getName();
-            $parameterResolve=app()->resolve($parameter->getType()->getName());
+            $parameterName = $parameter->getName();
+            $parameterResolve = app()->resolve($parameter->getType()->getName());
 
             //return result for parameter of the container
             return [$parameterName=>$parameterResolve];
@@ -101,7 +102,7 @@ class ContainerResolve
             // this object is a service container object
             // then the parameter will bind.
             $checkParameterForContainer = $this->checkParameterForContainer($containers,$parameter);
-            $paramMerge=array_merge($param,$checkParameterForContainer);
+            $paramMerge = array_merge($param,$checkParameterForContainer);
 
             // we do some useful logic bind for user benefit.
             $param=app()->resolve(GraceContainer::class,[
