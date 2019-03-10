@@ -4,8 +4,9 @@ namespace Resta\Container;
 
 use Resta\Support\Utils;
 use Resta\Support\ReflectionProcess;
+use Resta\Foundation\ApplicationProvider;
 
-class ContainerResolve
+class ContainerResolve extends ApplicationProvider
 {
     /**
      * @param $class
@@ -65,18 +66,20 @@ class ContainerResolve
 
     /**
      * @param $class
-     * @return object
-     * @throws \ReflectionException
+     * @return mixed
      */
     private function getReflectionMethod($class)
     {
-        return (new ReflectionProcess($class[0]))->reflectionMethodParams($class[1]);
+        [$class,$method] = [$class[0],$class[1]];
+
+        return $this->app['reflection']($class)->reflectionMethodParams($method);
     }
 
     /**
      * @param $class
      * @param $param
      * @return mixed
+     *
      * @throws \ReflectionException
      */
     private function reflectionMethodParameters($class,$param)

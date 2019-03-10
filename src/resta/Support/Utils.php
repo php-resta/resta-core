@@ -84,7 +84,7 @@ class Utils
      */
     public static function callBind($class=null, $param=array())
     {
-        return (new ContainerResolve())->call($class,$param,function($call){
+        return (app()->resolve(ContainerResolve::class))->call($class,$param,function($call){
             return self::callBuild()->call($call->class,$call->param);
         });
     }
