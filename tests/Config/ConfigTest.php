@@ -62,6 +62,7 @@ class ConfigTest extends AbstractTest
     public function testGetValues()
     {
         $this->assertSame(null,config('core-not'));
+        $this->assertSame('foo',config('core-not','foo'));
         $this->assertSame(null,config('core.not-exist'));
         $this->assertSame($this->values,config('init'));
     }
