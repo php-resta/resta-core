@@ -2,9 +2,9 @@
 
 namespace Resta\Console\Source\Token;
 
-use Resta\Support\Utils;
 use Resta\Console\ConsoleOutputter;
 use Resta\Console\ConsoleListAccessor;
+use Resta\Container\DIContainerManager;
 use Resta\Foundation\PathManager\StaticPathModel;
 
 class Token extends ConsoleOutputter {
@@ -41,7 +41,7 @@ class Token extends ConsoleOutputter {
 
         //
         $clientApiToken=StaticPathModel::appMiddlewarePath($this->projectName()).'\\ClientApiToken';
-        $resolveClientApiToken=Utils::resolve($clientApiToken,$this->app->app->applicationProviderBinding($this->app->app));
+        $resolveClientApiToken=DIContainerManager::resolve($clientApiToken,$this->app->app->applicationProviderBinding($this->app->app));
 
         //
         $key=lcfirst($this->argument['key']);

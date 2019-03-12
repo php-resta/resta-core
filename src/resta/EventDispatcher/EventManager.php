@@ -3,6 +3,7 @@
 namespace Resta\EventDispatcher;
 
 use Resta\Support\Utils;
+use Resta\Container\DIContainerManager;
 
 class EventManager extends EventHandler
 {
@@ -56,7 +57,7 @@ class EventManager extends EventHandler
 
         // we call it with the bind property of
         // the handle method in the last stage for listen object.
-        Utils::callBind([$listenNamespace,'handle'],[
+        DIContainerManager::callBind([$listenNamespace,'handle'],[
             ucfirst($this->dispatches['eventName'])=>$this->dispatches['event']
         ]);
     }

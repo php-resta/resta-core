@@ -2,8 +2,8 @@
 
 namespace Resta\Router;
 
-use Resta\Support\Utils;
 use Resta\Traits\NamespaceForRoute;
+use Resta\Container\DIContainerManager;
 use Resta\Foundation\ApplicationProvider;
 
 class RouteApplication extends ApplicationProvider
@@ -38,7 +38,7 @@ class RouteApplication extends ApplicationProvider
             // if the method in the instance object exists,
             // this method is executed to produce the output.
             if(method_exists($this->instanceController(),$this->app['method'])){
-                return Utils::callBind([$this->instanceController(),$this->app['method']],$this->app->applicationProviderBinding($this->app));
+                return DIContainerManager::callBind([$this->instanceController(),$this->app['method']],$this->app->applicationProviderBinding($this->app));
             }
 
             //throw exception as unsuccessful

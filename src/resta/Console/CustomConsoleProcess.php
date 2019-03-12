@@ -5,6 +5,7 @@ namespace Resta\Console;
 use Resta\Support\Utils;
 use Resta\Console\ConsoleOutputter;
 use Resta\Support\ClosureDispatcher;
+use Resta\Container\DIContainerManager;
 use Resta\Foundation\PathManager\StaticPathModel;
 
 class CustomConsoleProcess extends ConsoleOutputter
@@ -42,7 +43,7 @@ class CustomConsoleProcess extends ConsoleOutputter
                 // call bindings for resolving
                 // call with dependency injection resolving
                 $commandBindings=[$commandClassResolved,strtolower($app->getConsoleClassMethod())];
-                return Utils::callBind($commandBindings,app()->applicationProviderBinding($this->app));
+                return DIContainerManager::callBind($commandBindings,app()->applicationProviderBinding($this->app));
 
             });
         });

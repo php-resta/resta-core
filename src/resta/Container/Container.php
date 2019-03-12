@@ -326,7 +326,7 @@ class Container implements ContainerContracts,\ArrayAccess
 
             //By singleton checking, we solve the dependency injection of the given class.
             //Thus, each class can be called together with its dependency.
-            self::$instance[$class]=Utils::make($class,$this->applicationProviderBinding($this,self::$bindParams[$class]));
+            self::$instance[$class]=DIContainerManager::make($class,$this->applicationProviderBinding($this,self::$bindParams[$class]));
             $this->singleton()->resolve[class_basename($class)]=self::$instance[$class];
 
             //return resolve class
