@@ -1,0 +1,26 @@
+<?php
+
+namespace App\__project__\__version__\__model__\Contract;
+
+interface __file__Contract
+{
+    /**
+     * @return mixed
+     */
+    public function get();
+
+    /**
+     * @return mixed
+     */
+    public function create();
+
+    /**
+     * @return mixed
+     */
+    public function update();
+
+    /**
+     * @return mixed
+     */
+    public function delete();
+}
