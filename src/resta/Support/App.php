@@ -8,6 +8,7 @@ use Resta\Support\Utils;
 use Resta\Config\Config;
 use Store\Services\Cache;
 use Resta\Config\ConfigProcess;
+use Store\Services\DateCollection;
 use Store\Services\Redis as Redis;
 use Store\Services\HttpSession as Session;
 use Store\Services\DateCollection as Date;
@@ -132,15 +133,14 @@ class App
     }
 
     /**
-     * @param $arg
-     * @return null
+     * @param array $arg
+     * @return mixed
      */
-    private static function date($arg)
+    private static function date($arg=array())
     {
-        if(property_exists($class=pos($arg),'app')){
-            return $class->resolve(Date::class);
-        }
-        return null;
+        $locale = (count($arg)=="0") ? config('app.locale','en') : current($arg);
+
+       return app()->resolve(Date::class)->setLocale($locale);
     }
 
     /**
