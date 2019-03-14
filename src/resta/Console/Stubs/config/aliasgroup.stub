@@ -1,5 +1,0 @@
-<?php
-
-return [
-    'tool' => 'App\Mobi\Api\Main\V1\ServiceToolsController'
-];
