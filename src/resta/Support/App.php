@@ -8,6 +8,7 @@ use Resta\Support\Utils;
 use Resta\Config\Config;
 use Store\Services\Cache;
 use Resta\Config\ConfigProcess;
+use Store\Services\Crypt;
 use Store\Services\DateCollection;
 use Store\Services\Redis as Redis;
 use Store\Services\HttpSession as Session;
@@ -141,6 +142,14 @@ class App
         $locale = (count($arg)=="0") ? config('app.locale','en') : current($arg);
 
        return app()->resolve(Date::class)->setLocale($locale);
+    }
+
+    /**
+     * @return mixed
+     */
+    private static function crypt()
+    {
+        return app()->resolve(Crypt::class);
     }
 
     /**
