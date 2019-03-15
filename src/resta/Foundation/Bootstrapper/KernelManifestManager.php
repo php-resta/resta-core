@@ -2,6 +2,7 @@
 
 namespace Resta\Foundation\Bootstrapper;
 
+use Resta\Support\Utils;
 use Src\Manifest;
 use Resta\Support\Arr;
 use Resta\Support\ClosureDispatcher;
@@ -69,15 +70,28 @@ class KernelManifestManager
                 // then these classes will automatically join the kernel groups installation.
                 if(isset($this->app) && isset($this->app[$maker]) && is_array($this->app[$maker])){
 
+                    $appMaker = $this->app[$maker];
+
                     // if the makerExtend value in the manifest is a method,
                     // in this case, the method is executed instead of the object
-                    $checkMethodOrObjectForMakerExtend =
-                        (method_exists($this,$maker) && is_array($this->{$maker}()))
-                            ? $this->{$maker}()
-                            : $this->app[$maker];
+                    if(method_exists($this,$maker)){
+                        $this->{$maker}(app());
+                    }
 
-                    // get maker list as merged with checkMethodOrObjectForMakerExtend variable
-                    $app->setMakerList(array_merge($this->{$maker},$checkMethodOrObjectForMakerExtend));
+                    //we combine the kernel with the application list on the application side.
+                    $kernelMakers = array_merge($this->{$maker},$this->app[$maker]);
+
+                    // classes in the entire maker list can be uploaded on a per-user basis.
+                    // if the maker is present on a method basis, then the maker list values ​​must be true or false.
+                    // if one of the maker classes is false will not load this maker class.
+                    foreach ($kernelMakers as $kernelMakerAbstract=>$kernelMaker) {
+                        if($kernelMaker){
+                            $kernelMakers[$kernelMakerAbstract] = $appMaker[$kernelMakerAbstract];
+                        }
+                    }
+
+                    // save all kernel maker list.
+                    $app->setMakerList($kernelMakers);
                 }
             }
 
