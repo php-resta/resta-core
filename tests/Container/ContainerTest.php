@@ -2,8 +2,8 @@
 
 namespace Resta\Core\Tests\Container;
 
-use Resta\Core\Tests\AbstractTest;
 use Resta\Foundation\Application;
+use Resta\Core\Tests\AbstractTest;
 use Resta\Core\Tests\Container\Dummy\ResolveDummy;
 
 class ApplicationTest extends AbstractTest
