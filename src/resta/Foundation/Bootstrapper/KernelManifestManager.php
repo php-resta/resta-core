@@ -5,6 +5,7 @@ namespace Resta\Foundation\Bootstrapper;
 use Src\Manifest;
 use Resta\Support\Arr;
 use Resta\Support\ClosureDispatcher;
+use Resta\Contracts\ApplicationContracts;
 
 class KernelManifestManager
 {
@@ -19,12 +20,13 @@ class KernelManifestManager
     protected $manifest;
 
     /**
-     * KernelBootManager constructor.
+     * KernelManifestManager constructor.
+     * @param ApplicationContracts $app
      */
-    public function __construct()
+    public function __construct(ApplicationContracts $app)
     {
         //default manifest is application
-        $this->manifest = app();
+        $this->manifest = $app;
 
         // if there is manifest propery in the resta
         // in this case,manifest property is manifest class

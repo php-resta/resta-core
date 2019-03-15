@@ -68,7 +68,7 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
 
             // we create kernel bootstrapping objects
             // that can be changed by you with the closure dispatcher method.
-            return ClosureDispatcher::bind(KernelManifestManager::class)
+            return ClosureDispatcher::bind($this->resolve(KernelManifestManager::class))
                 ->call(function() use ($maker){
                     return $this->handle($maker);
             });
