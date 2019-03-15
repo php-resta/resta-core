@@ -2,7 +2,7 @@
 
 namespace Resta\Support;
 
-use Resta\Services\YamlManager;
+use Resta\Support\YamlManager;
 use Resta\Container\ContainerResolve;
 
 class Utils

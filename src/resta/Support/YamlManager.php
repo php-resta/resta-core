@@ -1,6 +1,6 @@
 <?php
 
-namespace Resta\Services;
+namespace Resta\Support;
 
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Yaml\Exception\ParseException;
