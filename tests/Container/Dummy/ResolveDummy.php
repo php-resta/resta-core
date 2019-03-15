@@ -12,6 +12,11 @@ class ResolveDummy extends ApplicationProvider
     protected $dummy;
 
     /**
+     * @var $counter
+     */
+    protected static $counter =0;
+
+    /**
      * ResolveDummy constructor.
      * @param $app
      * @param $dummy
@@ -21,6 +26,8 @@ class ResolveDummy extends ApplicationProvider
         parent::__construct($app);
 
         $this->dummy = $dummy;
+
+        static::$counter = ++static::$counter;
     }
 
     /**
@@ -29,5 +36,13 @@ class ResolveDummy extends ApplicationProvider
     public function getDummy()
     {
         return $this->dummy;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCounter()
+    {
+        return static::$counter;
     }
 }
