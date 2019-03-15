@@ -2,7 +2,6 @@
 
 namespace Resta\Foundation\Bootstrapper;
 
-use Resta\Support\Utils;
 use Src\Manifest;
 use Resta\Support\Arr;
 use Resta\Support\ClosureDispatcher;
