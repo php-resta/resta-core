@@ -20,6 +20,7 @@ class Dependencies
         $kernelGroupList = app()->kernelGroupList();
 
         foreach ($loaders as $loader){
+
             if(isset($kernelGroupList[$loader]) && isset(core()->bindings[$loader])===false){
 
                 //with the boot loader kernel,we get the boot loader method.

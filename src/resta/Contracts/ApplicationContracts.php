@@ -5,6 +5,12 @@ namespace Resta\Contracts;
 interface ApplicationContracts {
 
     /**
+     * @param $object
+     * @return mixed
+     */
+    public function checkBindings($object);
+
+    /**
      * @return array
      */
     public function commandList();

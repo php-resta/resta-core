@@ -2,6 +2,7 @@
 
 namespace Resta\Foundation;
 
+use Resta\Support\Dependencies;
 use Resta\Support\Str;
 use Resta\Traits\ApplicationPath;
 use Illuminate\Support\Collection;
@@ -121,6 +122,17 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
         //system booting for app
         //pre-loaders are the most necessary classes for the system.
         $this->bootstrappers($this,$group);
+    }
+
+    /**
+     * check if the object in binding is available
+     *
+     * @param $object
+     */
+    public function checkBindings($object)
+    {
+        //check bindings object
+        return (isset($this['bindings'],$this['bindings'][$object])) ? true : false;
     }
 
     /**

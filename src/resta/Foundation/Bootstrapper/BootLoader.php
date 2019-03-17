@@ -57,7 +57,9 @@ class BootLoader extends ApplicationProvider implements BootContracts
      */
     public function boot()
     {
-        $this->{$this->bootstrapper}();
+        if($this->app->checkBindings($this->bootstrapper)===false){
+            $this->{$this->bootstrapper}();
+        }
     }
 
     /**

@@ -58,6 +58,11 @@ if (!function_exists('environment')) {
             );
         }
 
+        if(app()->checkBindings('environment')===false){
+            \Resta\Support\Dependencies::bootLoader(['environment']);
+            return environment();
+        }
+
         return 'production';
 
     }
