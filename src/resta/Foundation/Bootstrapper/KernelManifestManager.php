@@ -3,7 +3,6 @@
 namespace Resta\Foundation\Bootstrapper;
 
 use Src\Manifest;
-use Resta\Support\Arr;
 use Resta\Support\ClosureDispatcher;
 use Resta\Contracts\ApplicationContracts;
 
