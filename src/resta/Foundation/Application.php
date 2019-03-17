@@ -2,7 +2,6 @@
 
 namespace Resta\Foundation;
 
-use Resta\Support\Dependencies;
 use Resta\Support\Str;
 use Resta\Traits\ApplicationPath;
 use Illuminate\Support\Collection;
