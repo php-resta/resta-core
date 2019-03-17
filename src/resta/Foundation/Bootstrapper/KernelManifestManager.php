@@ -3,7 +3,6 @@
 namespace Resta\Foundation\Bootstrapper;
 
 use Src\Manifest;
-use Resta\Support\Arr;
 use Resta\Support\ClosureDispatcher;
 use Resta\Contracts\ApplicationContracts;
 
@@ -30,7 +29,7 @@ class KernelManifestManager
 
         // if there is manifest propery in the resta
         // in this case,manifest property is manifest class
-        if(isset($app['isAvailableStore'])){
+        if($app['isAvailableStore']){
             $this->manifest = $this->manifest->resolve(Manifest::class);
         }
 
