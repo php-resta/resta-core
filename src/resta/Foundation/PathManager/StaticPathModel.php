@@ -3,6 +3,7 @@
 namespace Resta\Foundation\PathManager;
 
 use Resta\Support\Utils;
+use Resta\Url\UrlVersionIdentifier;
 
 class StaticPathModel extends StaticPathList
 {
@@ -121,9 +122,9 @@ class StaticPathModel extends StaticPathList
 
         if($path){
 
-            return self::appPath().''.DIRECTORY_SEPARATOR.''.self::slashToBackSlash($app).''.DIRECTORY_SEPARATOR.''.Utils::getAppVersion($app).'';
+            return self::appPath().''.DIRECTORY_SEPARATOR.''.self::slashToBackSlash($app).''.DIRECTORY_SEPARATOR.''.UrlVersionIdentifier::version().'';
         }
-        return self::$autoloadNamespace.'\\'.$app.'\\'.Utils::getAppVersion($app).'';
+        return self::$autoloadNamespace.'\\'.$app.'\\'.UrlVersionIdentifier::version().'';
     }
 
     /**
@@ -131,7 +132,7 @@ class StaticPathModel extends StaticPathList
      */
     public static function endpointPath()
     {
-        return self::appPath().''.DIRECTORY_SEPARATOR.''.self::slashToBackSlash(app).''.DIRECTORY_SEPARATOR.''.Utils::getAppVersion(app).''.DIRECTORY_SEPARATOR.''.self::$controller.''.DIRECTORY_SEPARATOR.''.endpoint;
+        return self::appPath().''.DIRECTORY_SEPARATOR.''.self::slashToBackSlash(app).''.DIRECTORY_SEPARATOR.''.UrlVersionIdentifier::version().''.DIRECTORY_SEPARATOR.''.self::$controller.''.DIRECTORY_SEPARATOR.''.endpoint;
     }
 
     /**
@@ -161,9 +162,9 @@ class StaticPathModel extends StaticPathList
     {
         //get app config path for application
         if(false===$namespace){
-            return self::appPath().''.DIRECTORY_SEPARATOR.''.self::slashToBackSlash(app).''.DIRECTORY_SEPARATOR.''.Utils::getAppVersion(app).''.DIRECTORY_SEPARATOR.''.self::$config;
+            return self::appPath().''.DIRECTORY_SEPARATOR.''.self::slashToBackSlash(app).''.DIRECTORY_SEPARATOR.''.UrlVersionIdentifier::version().''.DIRECTORY_SEPARATOR.''.self::$config;
         }
-        return self::$autoloadNamespace.'\\'.app.'\\'.Utils::getAppVersion(app).'\\'.self::$config;
+        return self::$autoloadNamespace.'\\'.app.'\\'.UrlVersionIdentifier::version().'\\'.self::$config;
     }
 
     /**
@@ -219,7 +220,7 @@ class StaticPathModel extends StaticPathList
                 define('app',$app);
             }
         }
-        return self::$autoloadNamespace.'\\'.app.'\\'.Utils::getAppVersion(app).'\\'.self::$middleware;
+        return self::$autoloadNamespace.'\\'.app.'\\'.UrlVersionIdentifier::version().'\\'.self::$middleware;
     }
 
     /**

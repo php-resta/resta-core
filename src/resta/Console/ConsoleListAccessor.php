@@ -4,6 +4,7 @@ namespace Resta\Console;
 
 use Resta\Support\Str;
 use Resta\Support\Utils;
+use Resta\Url\UrlVersionIdentifier;
 use Resta\Foundation\PathManager\StaticPathList;
 use Resta\Foundation\PathManager\StaticPathModel;
 
@@ -43,7 +44,7 @@ trait ConsoleListAccessor {
      */
     public function version(){
 
-        return $this->project.'/'.Utils::getAppVersion($this->argument['project']);
+        return $this->project.'/'.UrlVersionIdentifier::version();
     }
 
 

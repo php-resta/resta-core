@@ -3,6 +3,7 @@
 namespace Resta\Console;
 
 use Resta\Support\Utils;
+use Resta\Url\UrlVersionIdentifier;
 use Resta\Foundation\PathManager\StaticPathList;
 
 trait ConsoleArguments {
@@ -75,7 +76,7 @@ trait ConsoleArguments {
         }
 
         //get app version
-        $listKey['version']=Utils::getAppVersion($listKey['project']);
+        $listKey['version']=UrlVersionIdentifier::version();
 
         return $listKey;
 

@@ -72,16 +72,7 @@ class Utils
             return strtolower($argument);
         },$argument);
     }
-
-
-    /**
-     * @return string
-     */
-    public static function getAppVersion()
-    {
-        return 'V1';
-    }
-
+    
     /**
      * @param array $data
      * @return string

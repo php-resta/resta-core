@@ -19,6 +19,16 @@ class UrlParseException
         if($data['project']===null OR !file_exists($appPath)){
             throw new \DomainException('No Project');
         }
+        
+
+        if(!in_array($data['version'],UrlVersionIdentifier::supportedVersions())){
+            throw new \DomainException('Version Number is not supported');
+        }
+
+        if(UrlVersionIdentifier::checkPathUrlVersion($data['version'])===false){
+            throw new \DomainException('The version you specified does not exist.');
+        }
+
 
         //If there is no endpoint on the url
         //we throw an exception

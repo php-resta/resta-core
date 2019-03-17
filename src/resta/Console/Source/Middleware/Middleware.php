@@ -39,7 +39,7 @@ class Middleware extends ConsoleOutputter {
      */
     public function create(){
 
-        $this->touch['middleware/middleware']= $this->project.'/'.Utils::getAppVersion($this->project).'/Middleware/'.$this->argument['middleware'].'.php';
+        $this->touch['middleware/middleware']= path()->middleware().'/'.$this->argument['middleware'].'.php';
 
 
         $this->file->touch($this);

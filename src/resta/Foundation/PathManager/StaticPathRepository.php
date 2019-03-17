@@ -4,6 +4,7 @@ namespace Resta\Foundation\PathManager;
 
 use Resta\Support\Str;
 use Resta\Support\Utils;
+use Resta\Url\UrlVersionIdentifier;
 
 class StaticPathRepository
 {
@@ -296,7 +297,8 @@ class StaticPathRepository
         if(defined('app')){
 
             $prefixGroup = Str::slashToBackSlash(StaticPathList::$projectPrefixGroup);
-            $app = $this->app($app).''.DIRECTORY_SEPARATOR.''.$prefixGroup.''.DIRECTORY_SEPARATOR.''.Utils::getAppVersion();
+
+            $app = $this->app($app).''.DIRECTORY_SEPARATOR.''.$prefixGroup.''.DIRECTORY_SEPARATOR.''.UrlVersionIdentifier::version(true);
 
             return $app;
 
