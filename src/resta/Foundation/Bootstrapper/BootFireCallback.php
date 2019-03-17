@@ -23,7 +23,7 @@ class BootFireCallback extends ApplicationProvider
     {
         //We allocate our application class from
         //the booter path.
-        $app=pos($booter);
+        $app = pos($booter);
 
         // We get instance for customBooter class
         // we get our object-protected boot lists

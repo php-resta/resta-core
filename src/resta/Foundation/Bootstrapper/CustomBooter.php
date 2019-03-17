@@ -36,7 +36,7 @@ class CustomBooter
 
         //Let's assign
         //this variable to the name of our boot list.
-        $this->boot=$boot;
+        $this->boot = $boot;
     }
 
     /**
@@ -89,16 +89,10 @@ class CustomBooter
     private function booterManifest($booter)
     {
         //custom boot class
-        $booterManifest=$this->bootNamespace;
+        $booterManifest = $this->bootNamespace;
 
         // We get the manifest values from the kernel.
-        $manifest=pos($booter)->singleton()->manifest;
-
-        // We check if the manifest directory exists in the BootManager class.
-        // if it is present as a manifest, the booter is added to the list.
-        if(isset($manifest['bootManager'][$booterManifest])){
-            $this->booterList['custom'][]=$booterManifest;
-        }
+        $this->booterList['custom'][] = $booterManifest;
     }
 
     /**

@@ -30,7 +30,7 @@ class KernelManifestManager
 
         // if there is manifest propery in the resta
         // in this case,manifest property is manifest class
-        if(isset(core()->manifest)){
+        if(isset($app['isAvailableStore'])){
             $this->manifest = $this->manifest->resolve(Manifest::class);
         }
 

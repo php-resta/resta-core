@@ -89,16 +89,6 @@ class ApplicationBaseRegister extends ApplicationProvider implements HandleContr
         // which is the container center, is connected to by the kernel object register method.
         $this->app->register('container',$this->app);
 
-        //get manifest bootManager.php
-        $seperator = DIRECTORY_SEPARATOR;
-        $bootManager = root.''.$seperator.'bootstrapper'.$seperator.'Manifest'.$seperator.'BootManager.php';
-
-        // We add manifest configuration variables
-        // to the manifest property in the kernel.
-        if(file_exists($bootManager)){
-            $this->app->register('manifest','bootManager',require($bootManager));
-        }
-
         // We are saving the application class to
         // the container object for the appClass value.
         $this->app->register('appClass',new \application());
