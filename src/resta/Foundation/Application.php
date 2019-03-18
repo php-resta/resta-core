@@ -207,12 +207,11 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
             );
         }
 
-        if($this->checkBindings('environment')===false){
-            $this->loadIfNotExistBoot(['environment']);
-            return $this->environment();
-        }
-
-        return 'production';
+        // if the environment is not booted,
+        // it creates a direct missing ring
+        // and we have to reinstall the environment to remove it.
+        $this->loadIfNotExistBoot(['environment']);
+        return $this->environment();
     }
 
     /**
@@ -236,7 +235,7 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
     public function isLocale()
     {
         //check environment for local
-        return environment() === 'local';
+        return $this->environment() === 'local';
     }
 
     /**
