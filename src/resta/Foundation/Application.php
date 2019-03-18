@@ -9,6 +9,7 @@ use Resta\Support\ClosureDispatcher;
 use Resta\Contracts\ApplicationContracts;
 use Resta\Contracts\ConfigProviderContracts;
 use Resta\Middleware\MiddlewareKernelProvider;
+use Resta\Environment\EnvironmentConfiguration;
 use Resta\Contracts\ApplicationHelpersContracts;
 use Resta\Foundation\Bootstrapper\Bootstrappers;
 use Resta\Foundation\Bootstrapper\BootFireCallback;
@@ -130,7 +131,8 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
      */
     public function checkBindings($object)
     {
-        //check bindings object
+        // the booted objects are saved to the kernel.
+        // this method checks whether these objects are registered.
         return (isset($this['bindings'],$this['bindings'][$object])) ? true : false;
     }
 
@@ -185,6 +187,32 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
         }
 
         return environment();
+    }
+
+    /**
+     * get environment variables
+     *
+     * @param array $environment
+     * @return mixed|string
+     */
+    public function environment($environment=array())
+    {
+        if(isset($this['var'])){
+
+            $arguments = (isset(func_get_args()[0]))
+                ? func_get_args()[0] : func_get_args();
+
+            return EnvironmentConfiguration::environment(
+                $arguments,$this['var']
+            );
+        }
+
+        if($this->checkBindings('environment')===false){
+            $this->loadIfNotExistBoot(['environment']);
+            return $this->environment();
+        }
+
+        return 'production';
     }
 
     /**
@@ -273,6 +301,28 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
 
         //set config instance exception for application
         exception()->unexpectedValue('config instance is not loaded for application container');
+    }
+
+    /**
+     * load if not exist boot
+     *
+     * @param array $loaders
+     */
+    public function loadIfNotExistBoot($loaders=array())
+    {
+        //get kernel group list from application
+        $kernelGroupList = $this->kernelGroupList();
+
+        foreach ($loaders as $loader){
+
+            if(isset($kernelGroupList[$loader]) && isset($this['bindings'][$loader])===false){
+
+                //with the boot loader kernel,we get the boot loader method.
+                core()->bootLoader->call(function() use($loader,$kernelGroupList) {
+                    return $this->{$kernelGroupList[$loader]}();
+                });
+            }
+        }
     }
 
     /**

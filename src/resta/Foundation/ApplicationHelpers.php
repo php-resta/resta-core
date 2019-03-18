@@ -52,19 +52,7 @@ if (!function_exists('dd')) {
 if (!function_exists('environment')) {
     function environment()
     {
-        if(property_exists(app()->singleton(),'var')){
-            return \Resta\Environment\EnvironmentConfiguration::environment(
-                func_get_args(),app()->singleton()->var
-            );
-        }
-
-        if(app()->checkBindings('environment')===false){
-            \Resta\Support\Dependencies::bootLoader(['environment']);
-            return environment();
-        }
-
-        return 'production';
-
+        return app()->environment(func_get_args());
     }
 }
 

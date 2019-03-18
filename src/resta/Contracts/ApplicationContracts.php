@@ -31,6 +31,12 @@ interface ApplicationContracts {
    public function detectEnvironmentForApplicationKey();
 
     /**
+     * @param array $environment
+     * @return mixed
+     */
+   public function environment($environment=array());
+
+    /**
      * @return mixed
      */
    public function handle();
@@ -62,6 +68,12 @@ interface ApplicationContracts {
      * @return mixed
      */
     public function loadConfig(callable $callback);
+
+    /**
+     * @param array $loaders
+     * @return mixed
+     */
+    public function loadIfNotExistBoot($loaders=array());
 
     /**
      * @param $maker
