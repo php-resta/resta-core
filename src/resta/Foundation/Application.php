@@ -183,10 +183,10 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
             // application key, but if it has a null value
             // then we move the environment value to the production environment.
             $applicationKey = $this['applicationKey'];
-            return ($applicationKey===null) ? 'production' : environment();
+            return ($applicationKey===null) ? 'production' : $this->environment();
         }
 
-        return environment();
+        return $this->environment();
     }
 
     /**
@@ -197,13 +197,13 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
      */
     public function environment($environment=array())
     {
-        if(isset($this['var'])){
+        if($this->checkBindings('environment')){
 
             $arguments = (isset(func_get_args()[0]))
                 ? func_get_args()[0] : func_get_args();
 
             return EnvironmentConfiguration::environment(
-                $arguments,$this['var']
+                $arguments,$this['environmentVariables']
             );
         }
 
@@ -320,7 +320,8 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
 
                 //with the boot loader kernel,we get the boot loader method.
                 $this['closureBootLoader']->call(function() use($loader,$kernelGroupList) {
-                    return $this->{$kernelGroupList[$loader]}();
+                    $this->bootstrapper = $kernelGroupList[$loader];
+                    return $this->boot();
                 });
             }
         }

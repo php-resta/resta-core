@@ -16,19 +16,7 @@ class Dependencies
      */
     public static function bootLoader($loaders=array())
     {
-        //get kernel group list from application
-        $kernelGroupList = app()->kernelGroupList();
-
-        foreach ($loaders as $loader){
-
-            if(isset($kernelGroupList[$loader]) && isset(core()->bindings[$loader])===false){
-
-                //with the boot loader kernel,we get the boot loader method.
-                app()['closureBootLoader']->call(function() use($loader,$kernelGroupList) {
-                    return $this->{$kernelGroupList[$loader]}();
-                });
-            }
-        }
+        app()->loadIfNotExistBoot($loaders);
     }
 
     /**
