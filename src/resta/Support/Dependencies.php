@@ -24,7 +24,7 @@ class Dependencies
             if(isset($kernelGroupList[$loader]) && isset(core()->bindings[$loader])===false){
 
                 //with the boot loader kernel,we get the boot loader method.
-                core()->bootLoader->call(function() use($loader,$kernelGroupList) {
+                app()['closureBootLoader']->call(function() use($loader,$kernelGroupList) {
                     return $this->{$kernelGroupList[$loader]}();
                 });
             }

@@ -97,7 +97,7 @@ class ApplicationBaseRegister extends ApplicationProvider implements HandleContr
         $this->app->register('appClosureInstance',ClosureDispatcher::bind(app()));
 
         //set closure bind instance for bootLoader class
-        $this->app->register('bootLoader',ClosureDispatcher::bind($this->app['bootLoader']));
+        $this->app->register('closureBootLoader',ClosureDispatcher::bind($this->app['bootLoader']));
 
     }
 

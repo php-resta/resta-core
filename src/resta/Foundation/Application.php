@@ -315,10 +315,12 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
 
         foreach ($loaders as $loader){
 
-            if(isset($kernelGroupList[$loader]) && isset($this['bindings'][$loader])===false){
+            // if a service needs another boot service,
+            // the service is directly installed here and the service needs are resolved.
+            if(isset($kernelGroupList[$loader]) && $this->checkBindings($loader)===false){
 
                 //with the boot loader kernel,we get the boot loader method.
-                core()->bootLoader->call(function() use($loader,$kernelGroupList) {
+                $this['closureBootLoader']->call(function() use($loader,$kernelGroupList) {
                     return $this->{$kernelGroupList[$loader]}();
                 });
             }
