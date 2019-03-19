@@ -4,37 +4,38 @@ namespace Resta\Foundation\Bootstrapper;
 
 use Resta\Support\Utils;
 use Illuminate\Support\Collection;
-use Resta\Contracts\HandleContracts;
 use Resta\Contracts\ApplicationContracts;
+use Resta\Foundation\ApplicationProvider;
 
-class FinalBooting implements HandleContracts
+class FinalBooting extends ApplicationProvider
 {
     /**
-     * @var $app
+     * @var $boot array
      */
-    private $app;
-
-    /**
-     * @var $boot
-     */
-    private $boot;
+    private $boot = array();
 
     /**
      * FinalBooting constructor.
-     * @param ApplicationContracts $app
-     * @param $boot
+     *
+     * @param $app
+     * @param array $boot
      */
-    public function __construct(ApplicationContracts $app,$boot)
+    public function __construct($app,$boot=array())
     {
-        $this->app = $app;
+        parent::__construct($app);
+
         $this->boot = $boot;
+
+        $this->handle();
     }
 
     /**
-     * @param $boots
+     * application bootstrapper process
+     *
+     * @param array $boots
      * @param bool $defaultBoot
      */
-    private function bootstrapper($boots,$defaultBoot=true)
+    private function bootstrapper($boots=array(),$defaultBoot=true)
     {
         //boot loop make bind calling
         foreach ($boots as $bootstrapperKey=>$bootstrapper){
@@ -56,6 +57,8 @@ class FinalBooting implements HandleContracts
     }
 
     /**
+     * custom boot manifest process
+     *
      * @param callable $callback
      * @return void|mixed
      */
@@ -68,22 +71,24 @@ class FinalBooting implements HandleContracts
     }
 
     /**
+     * application bootstrapper handle
+     *
      * @param $app
      * @param $boot
      * @return mixed|void
      */
-    public function handle()
+    private function handle()
     {
         //we remove the custom data from the boot list and boot normally.
         $defaultBoot = Collection::make($this->boot)->except('custom')->all();
 
         //custom boot according to manifest bootManager
         $this->customBootManifest(function($boot){
-            $this->bootstrapper($boot,false);
+            $this->bootstrapper((array)$boot,false);
         });
 
         // and as a result we now use
         //the instance properties of our boot lists to include our implementation.
-        $this->bootstrapper($defaultBoot);
+        $this->bootstrapper((array)$defaultBoot);
     }
 }

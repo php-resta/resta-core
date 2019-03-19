@@ -33,7 +33,7 @@ class BootFireCallback extends ApplicationProvider
 
         // and as a result we now use
         //the instance properties of our boot lists to include our implementation.
-        (new FinalBooting($app,$boot))->handle();
+        $app->resolve(FinalBooting::class,['boot'=>$boot]);
     }
 
     /**
