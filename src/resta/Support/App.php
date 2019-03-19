@@ -93,17 +93,6 @@ class App
     }
 
     /**
-     * @param null $config
-     * @return mixed|null
-     * @throws \DI\DependencyException
-     * @throws \DI\NotFoundException
-     */
-    public function configLoaders($config=null)
-    {
-        return Config::make($config)->get();
-    }
-
-    /**
      * @param $instance
      * @param $class
      * @param array $bind

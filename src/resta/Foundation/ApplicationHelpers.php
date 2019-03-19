@@ -249,7 +249,7 @@ if (!function_exists('config')) {
      */
     function config($config=null,$default=null)
     {
-        $configResult = core()->appClass->configLoaders($config);
+        $configResult = app()->config($config);
 
         if($configResult === null && $default!==null){
             return $default;

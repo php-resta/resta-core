@@ -16,6 +16,12 @@ interface ApplicationContracts {
     public function commandList();
 
     /**
+     * @param null $config
+     * @return mixed
+     */
+    public function config($config=null);
+
+    /**
      * @return mixed
      */
    public function console();

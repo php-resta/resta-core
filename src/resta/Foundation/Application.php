@@ -3,6 +3,7 @@
 namespace Resta\Foundation;
 
 use Resta\Support\Str;
+use Resta\Config\Config;
 use Resta\Traits\ApplicationPath;
 use Illuminate\Support\Collection;
 use Resta\Support\ClosureDispatcher;
@@ -145,6 +146,28 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
     {
         //get command list from kernel
         return $this->commandList;
+    }
+
+    /**
+     * get configuration values
+     *
+     * @param null $config
+     * @return mixed|void
+     *
+     * @throws \DI\DependencyException
+     * @throws \DI\NotFoundException
+     */
+    public function config($config=null)
+    {
+        if($this->checkBindings(__FUNCTION__)){
+            return Config::make($config)->get();
+        }
+
+        // if the environment is not booted,
+        // it creates a direct missing ring
+        // and we have to reinstall the environment to remove it.
+        $this->loadIfNotExistBoot([__FUNCTION__]);
+        return $this->config($config);
     }
 
     /**
