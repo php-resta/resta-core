@@ -7,7 +7,7 @@ class Dependencies
     /**
      * @var array $bootLoaders
      */
-    protected static $bootLoaders = ['url','environment','logger','config'];
+    protected static $bootLoaders = ['url','logger'];
 
     /**
      * load bootstrapper dependencies
