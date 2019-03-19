@@ -134,7 +134,7 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
     {
         // the booted objects are saved to the kernel.
         // this method checks whether these objects are registered.
-        return (isset($this['bindings'],$this['bindings'][$object])) ? true : false;
+        return (isset($this['bindings'],$this['bindings'][$object]));
     }
 
     /**
@@ -220,7 +220,7 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
      */
     public function environment($environment=array())
     {
-        if($this->checkBindings('environment')){
+        if($this->checkBindings(__FUNCTION__)){
 
             $arguments = (isset(func_get_args()[0]))
                 ? func_get_args()[0] : func_get_args();
@@ -233,7 +233,7 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
         // if the environment is not booted,
         // it creates a direct missing ring
         // and we have to reinstall the environment to remove it.
-        $this->loadIfNotExistBoot(['environment']);
+        $this->loadIfNotExistBoot([__FUNCTION__]);
         return $this->environment();
     }
 
