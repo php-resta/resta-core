@@ -47,7 +47,8 @@ class FinalBooting implements HandleContracts
             // we will use the classical method for classes
             // that will not boot from the kernel.
             else{
-                if(Utils::isNamespaceExists($bootstrapper)){
+                if(Utils::isNamespaceExists($bootstrapper)
+                    && false===isset($this->app['resolve'][$bootstrapper])){
                     $this->app->resolve($bootstrapper)->boot();
                 }
             }
