@@ -261,17 +261,6 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
     }
 
     /**
-     * check if the request is console
-     *
-     * @return bool
-     */
-    public function runningInConsole()
-    {
-        //Determine if the application is running in the console.
-        return php_sapi_name() === 'cli' || php_sapi_name() === 'phpdbg';
-    }
-
-    /**
      * get all kernel bootstrapper groups keys
      *
      * @return array
@@ -370,6 +359,17 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
     {
         //kernel manifest bootstrapper
         return $this->bootFire(null,$maker);
+    }
+
+    /**
+     * check if the request is console
+     *
+     * @return bool
+     */
+    public function runningInConsole()
+    {
+        //Determine if the application is running in the console.
+        return php_sapi_name() === 'cli' || php_sapi_name() === 'phpdbg';
     }
 
     /**

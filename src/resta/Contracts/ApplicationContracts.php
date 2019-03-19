@@ -60,11 +60,6 @@ interface ApplicationContracts {
    public function isLocale();
 
     /**
-     * @return mixed
-     */
-   public function runningInConsole();
-
-    /**
      * @return array
      */
    public function kernelGroupKeys();
@@ -99,6 +94,11 @@ interface ApplicationContracts {
      * @return mixed
      */
     public function register($key,$object,$concrete=null);
+
+    /**
+     * @return mixed
+     */
+    public function runningInConsole();
 
     /**
      * @return array
