@@ -75,7 +75,7 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
                     return $this->handle($maker);
             });
         }
-
+        
         // the boot method to be executed can be specified by the user.
         // we use this method to know how to customize it.
         return forward_static_call_array([array_pop($boot),self::LOADBOOTSTRAPPERS],[$boot]);

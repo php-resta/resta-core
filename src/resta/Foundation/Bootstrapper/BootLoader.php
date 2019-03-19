@@ -23,7 +23,7 @@ class BootLoader extends ApplicationProvider implements BootContracts
     /**
      * @var $bootstrapper
      */
-    public $bootstrapper;
+    private $bootstrapper;
 
     /**
      * @return mixed|void
@@ -45,7 +45,9 @@ class BootLoader extends ApplicationProvider implements BootContracts
      */
     public function boot()
     {
-        $this->{$this->bootstrapper}();
+        if(method_exists($this,$this->bootstrapper)){
+            $this->{$this->bootstrapper}();
+        }
     }
 
     /**
@@ -58,18 +60,6 @@ class BootLoader extends ApplicationProvider implements BootContracts
         if($this->app->checkBindings('config')===false){
             $this->app->bind('config',function(){
                 return Config::class;
-            },true);
-        }
-    }
-
-    /**
-     * @return mixed|void
-     */
-    private function serviceProvider()
-    {
-        if($this->app->checkBindings('serviceProvider')===false){
-            $this->app->bind('serviceProvider',function(){
-                return ServiceProvider::class;
             },true);
         }
     }
@@ -177,6 +167,28 @@ class BootLoader extends ApplicationProvider implements BootContracts
                 return Router::class;
             });
         }
+    }
+
+    /**
+     * @return mixed|void
+     */
+    private function serviceProvider()
+    {
+        if($this->app->checkBindings('serviceProvider')===false){
+            $this->app->bind('serviceProvider',function(){
+                return ServiceProvider::class;
+            },true);
+        }
+    }
+
+    /**
+     * set bootstrapper property
+     *
+     * @param null $bootstrapper
+     */
+    public function setBootstrapper($bootstrapper=null)
+    {
+        $this->bootstrapper = $bootstrapper;
     }
 
     /**

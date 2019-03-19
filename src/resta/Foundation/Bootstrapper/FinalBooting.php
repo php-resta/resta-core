@@ -36,22 +36,14 @@ class FinalBooting implements HandleContracts
      */
     private function bootstrapper($boots,$defaultBoot=true)
     {
-        // as the default boot manager, we will use the bootstrapper class.
-        // in this way, all boot classes will be installed quickly.
-        if($defaultBoot) {
-            $bootManager = $this->app['bootLoader'];
-        }
-
         //boot loop make bind calling
         foreach ($boots as $bootstrapper){
 
             // for the default boot, we overwrite the bootstrapper class's bootstrapper property
             // and load it with the boot method.
             if($defaultBoot){
-                $bootManager->bootstrapper = $bootstrapper;
-                (method_exists($bootManager,'boot'))
-                    ? $bootManager->boot()
-                    : $this->bootstrapper([$bootstrapper],false);
+                $this->app['bootLoader']->setBootstrapper($bootstrapper);
+                $this->app['bootLoader']->boot();
             }
             // we will use the classical method for classes
             // that will not boot from the kernel.
@@ -72,8 +64,6 @@ class FinalBooting implements HandleContracts
     {
         //we make custom boot
         if(isset($this->boot['custom'])){
-
-            //get manifest for boot manager
             return call_user_func_array($callback,[$this->boot['custom']]);
         }
     }
