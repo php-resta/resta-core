@@ -205,8 +205,7 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
 
             // application key, but if it has a null value
             // then we move the environment value to the production environment.
-            $applicationKey = $this['applicationKey'];
-            return ($applicationKey===null) ? 'production' : $this->environment();
+            return ($this['applicationKey']===null) ? 'production' : $this->environment();
         }
 
         return $this->environment();
