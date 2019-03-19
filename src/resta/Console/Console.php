@@ -68,7 +68,7 @@ class Console extends ApplicationProvider {
     public function handle()
     {
         //get is running console
-        if(Utils::isRequestConsole()){
+        if($this->app->runningInConsole()){
 
             //run console process
             if(count($this->getArguments())){
