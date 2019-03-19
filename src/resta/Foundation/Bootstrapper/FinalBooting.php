@@ -37,20 +37,18 @@ class FinalBooting implements HandleContracts
     private function bootstrapper($boots,$defaultBoot=true)
     {
         //boot loop make bind calling
-        foreach ($boots as $bootstrapper){
+        foreach ($boots as $bootstrapperKey=>$bootstrapper){
 
             // for the default boot, we overwrite the bootstrapper class's bootstrapper property
             // and load it with the boot method.
             if($defaultBoot){
-                $this->app['bootLoader']->setBootstrapper($bootstrapper);
-                $this->app['bootLoader']->boot();
+                $this->app->loadIfNotExistBoot([$bootstrapperKey]);
             }
             // we will use the classical method for classes
             // that will not boot from the kernel.
             else{
                 if(Utils::isNamespaceExists($bootstrapper)){
-                    $this->app->resolve($bootstrapper,$this->app->applicationProviderBinding($this->app))
-                        ->boot();
+                    $this->app->resolve($bootstrapper)->boot();
                 }
             }
         }
