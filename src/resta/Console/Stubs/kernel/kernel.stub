@@ -3,19 +3,6 @@
 return [
 
     /**
-     * Application Version Number
-     *
-     * @var $version
-     */
-    'version' => 'V1',
-
-    /**
-     * repositories
-     * all repository names
-     */
-    'repositories' => [],
-
-    /**
      * service providers
      * all providers names
      */

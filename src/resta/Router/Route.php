@@ -18,6 +18,11 @@ class Route
     protected static $paths = [];
 
     /**
+     * @var array $mappers
+     */
+    protected static $mappers = [];
+
+    /**
      * @param mixed ...$params
      */
     public static function delete(...$params)
@@ -60,6 +65,16 @@ class Route
                 });
             }
         });
+    }
+
+    /**
+     * get mappers
+     *
+     * @return array
+     */
+    public static function getMappers()
+    {
+        return static::$mappers;
     }
 
     /**
@@ -139,6 +154,10 @@ class Route
         $routeDefinitor = call_user_func($callback);
 
         if(isset($routeDefinitor['controllerPath']) && isset($routeDefinitor['routePath'])){
+
+            //the route paths to be saved to the mappers static property.
+            static::$mappers['routePaths'][] = $routeDefinitor['routePath'];
+            static::$mappers['controllerNamespaces'][] = Utils::getNamespace($routeDefinitor['controllerPath']);
 
             //set a predefined value for route.php.
             $routePrefix = (defined('endpoint')) ? endpoint : '';
