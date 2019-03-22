@@ -23,6 +23,11 @@ class Route
     protected static $mappers = [];
 
     /**
+     * @var $namespace
+     */
+    protected static $namespace;
+
+    /**
      * @param mixed ...$params
      */
     public static function delete(...$params)
@@ -49,21 +54,16 @@ class Route
 
         self::setPath(function(){
 
-            // as controller path,
-            // we check whether the endpoint constant is loaded.
-            if(defined('endpoint')){
+            // we will record the path data for the route.
+            // We set the routeMapper variables and the route path.
+            Route::setPath(function(){
 
-                // we will record the path data for the route.
-                // We set the routeMapper variables and the route path.
-                Route::setPath(function(){
-
-                    // we are sending the controller and routes.php path.
-                    return [
-                        'controllerPath'    => path()->controller(endpoint,true),
-                        'routePath'         => config('kernel.paths.route'),
-                    ];
-                });
-            }
+                // we are sending the controller and routes.php path.
+                return [
+                    'controllerPath'    => path()->controller(),
+                    'routePath'         => config('kernel.paths.route'),
+                ];
+            });
         });
     }
 
@@ -122,6 +122,19 @@ class Route
        foreach (self::$paths as $mapper=>$controller){
            core()->fileSystem->callFile($mapper);
        }
+    }
+
+    /**
+     * set namespace for route
+     *
+     * @param $namespace
+     * @return Route
+     */
+    public static function namespace($namespace)
+    {
+        static::$namespace = $namespace;
+
+        return new static();
     }
 
     /**
@@ -197,6 +210,7 @@ class Route
             'class'         => $class,
             'http'          => $function,
             'controller'    => $controller,
+            'namespace'     => static::$namespace,
         ];
     }
 
@@ -220,6 +234,7 @@ class Route
                     'class'         => $resolve['class'],
                     'method'        => $resolve['method'],
                     'controller'    => $resolve['controller'],
+                    'namespace'     => $resolve['namespace']
                 ];
             }
         }

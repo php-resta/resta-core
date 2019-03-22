@@ -93,6 +93,7 @@ class Controller extends ConsoleOutputter {
         $resourceInController           = $this->argument['resourceInController'] = StaticPathList::$resourceInController;
         $configurationInController      = $this->argument['configurationInController'] = StaticPathList::$configurationInController;
 
+        $this->argument['bundleName'] = $controller.''.StaticPathList::$controllerBundleName;
 
         //Processes related to argument variables via console.
         $this->argument['methodPrefix']         = StaticPathModel::$methodPrefix;
@@ -106,6 +107,7 @@ class Controller extends ConsoleOutputter {
         $this->argument['controllerNamespace']  = app()->namespace()->controller().'\\'.$controller.''.StaticPathList::$controllerBundleName;
         $this->argument['serviceClass']         = $controller;
         $this->argument['callClassPrefix']      = StaticPathModel::$callClassPrefix;
+        
         $fullNamespaceForController             = $this->argument['controllerNamespace'].'\\'.$this->argument['serviceClass'].''.$this->argument['callClassPrefix'];
 
         if(!file_exists(config('kernel.paths.route'))){

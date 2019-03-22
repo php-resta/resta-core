@@ -158,9 +158,14 @@ trait NamespaceForRoute
 
         if(count($fromRoutes)){
             $fromRoutesClass    = (isset($fromRoutes['class'])) ? $fromRoutes['class'] : null;
-            $namespace          = Utils::getNamespace($fromRoutes['controller']).'\\'.$fromRoutesClass;
-        }
 
+            if($fromRoutes['namespace']===null){
+                $namespace = Utils::getNamespace($fromRoutes['controller']).'\\'.$fromRoutesClass;
+            }
+            else{
+                $namespace = Utils::getNamespace($fromRoutes['controller']).'\\'.$fromRoutes['namespace'].'\\'.$fromRoutesClass;
+            }
+        }
 
         //check namespace exists
         if(file_exists(Utils::getPathFromNamespace($namespace)) && Utils::isNamespaceExists($namespace)){

@@ -11,4 +11,4 @@ use Resta\Router\Route;
 | routes are loaded by the RouteServiceProvider.
 |
 */
-Route::get("/","__serviceClass__Controller@index");
+Route::namespace('__bundleName__')->get("/","__serviceClass__Controller@index");
