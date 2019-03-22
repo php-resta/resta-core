@@ -10,6 +10,11 @@ class Route
     /**
      * @var array
      */
+    protected static $endpoints = [];
+
+    /**
+     * @var array
+     */
     protected static $routes = [];
 
     /**
@@ -41,30 +46,6 @@ class Route
     public static function get(...$params)
     {
         self::setRoute($params,__FUNCTION__,self::getTracePath());
-    }
-
-    /**
-     * get controller router
-     *
-     * @return mixed|void
-     */
-    public static function getControllerRouter()
-    {
-        define ('getControllerRouter' ,true);
-
-        self::setPath(function(){
-
-            // we will record the path data for the route.
-            // We set the routeMapper variables and the route path.
-            Route::setPath(function(){
-
-                // we are sending the controller and routes.php path.
-                return [
-                    'controllerPath'    => path()->controller(),
-                    'routePath'         => config('kernel.paths.route'),
-                ];
-            });
-        });
     }
 
     /**
@@ -115,10 +96,6 @@ class Route
      */
     public function handle()
     {
-        // we will record the path data for the route.
-        // We set the routeMapper variables and the route path.
-        self::getControllerRouter();
-
        foreach (self::$paths as $mapper=>$controller){
            core()->fileSystem->callFile($mapper);
        }
@@ -173,11 +150,9 @@ class Route
             static::$mappers['controllerNamespaces'][] = Utils::getNamespace($routeDefinitor['controllerPath']);
 
             //set a predefined value for route.php.
-            $routePrefix = (defined('endpoint')) ? endpoint : '';
+            $routePrefix = (defined('endpoint')) ? endpoint : md5(time());
 
-            $routeName = isset($routeDefinitor['routeName'])
-                ? $routeDefinitor['routeName']
-                : $routePrefix.'Route.php';
+            $routeName = $routePrefix.'Route.php';
 
             $routeMapper = $routeDefinitor['routePath'].''.DIRECTORY_SEPARATOR.''.$routeName;
 
@@ -256,12 +231,12 @@ class Route
 
         $patterns   = $routes['pattern'];
         $urlRoute   = array_filter(route(),'strlen');
-
-
+        
         foreach ($patterns as $key=>$pattern){
 
             $pattern = array_filter($pattern,'strlen');
             $diff    = Arr::arrayDiffKey($pattern,$urlRoute);
+
 
             if($diff){
 

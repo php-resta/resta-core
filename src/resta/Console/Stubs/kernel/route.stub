@@ -15,7 +15,10 @@ class RouteServiceProvider extends ServiceProviderManager implements BootContrac
      */
     public function boot()
     {
-        //
+        // we are bind the route class.
+        $this->app->bind('route',function(){
+            return Route::class;
+        });
     }
 
     /**
@@ -25,31 +28,16 @@ class RouteServiceProvider extends ServiceProviderManager implements BootContrac
      */
     public function register()
     {
-        //register route path
-        $this->registerRoutePath();
-
-        // we are bind the route class.
-        $this->app->bind('route',function(){
-            return Route::class;
-        });
-    }
-
-    /**
-     * register route path
-     *
-     * @return void
-     */
-    private function registerRoutePath()
-    {
         // we will record the path data for the route.
         // We set the routeMapper variables and the route path.
         Route::setPath(function(){
 
             // we are sending the controller and routes.php path.
             return [
-                //'controllerPath'  => 'controllerPath',
-                //'routePath'       => 'routeMapper',
+                'controllerPath'    => path()->controller(),
+                'routePath'         => config('kernel.paths.route'),
             ];
         });
     }
+
 }
