@@ -34,8 +34,8 @@ class RouteServiceProvider extends ServiceProviderManager implements BootContrac
 
             // we are sending the controller and routes.php path.
             return [
-                'controllerPath'    => path()->controller(),
-                'routePath'         => config('kernel.paths.route'),
+                //'controllerPath'    => 'controllerPath',
+                //'routePath'         => 'routePath',
             ];
         });
     }

@@ -96,6 +96,17 @@ class Route
      */
     public function handle()
     {
+        // we will record the path data for the route.
+        // We set the routeMapper variables and the route path.
+        self::setPath(function(){
+
+            // we are sending the controller and routes.php path.
+            return [
+                'controllerPath'    => path()->controller(),
+                'routePath'         => path()->route(),
+            ];
+        });
+
        foreach (self::$paths as $mapper=>$controller){
            core()->fileSystem->callFile($mapper);
        }

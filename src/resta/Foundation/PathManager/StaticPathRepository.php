@@ -209,6 +209,14 @@ class StaticPathRepository
     }
 
     /**
+     * @return mixed
+     */
+    public function appRoute()
+    {
+        return $this->appVersion().''.DIRECTORY_SEPARATOR.''.StaticPathList::$route;
+    }
+
+    /**
      * @param null $app
      * @return mixed
      */
