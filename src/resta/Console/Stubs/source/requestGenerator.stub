@@ -1,6 +1,6 @@
 <?php
 
-namespace App\__project__\__version__\Optional\Request;
+namespace __requestNamespace__;
 
 trait RequestGenerator
 {

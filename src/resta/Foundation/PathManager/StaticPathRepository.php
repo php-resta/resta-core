@@ -201,6 +201,14 @@ class StaticPathRepository
     /**
      * @return mixed
      */
+    public function appRequest()
+    {
+        return $this->appVersion().''.DIRECTORY_SEPARATOR.''.StaticPathList::$request;
+    }
+
+    /**
+     * @return mixed
+     */
     public function appRepository()
     {
         $repository     = $this->app().''.DIRECTORY_SEPARATOR.''.StaticPathList::$repository;

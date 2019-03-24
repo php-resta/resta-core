@@ -121,6 +121,11 @@ interface StaticPathContracts
     /**
      * @return mixed
      */
+    public function request();
+
+    /**
+     * @return mixed
+     */
     public function route();
 
     /**

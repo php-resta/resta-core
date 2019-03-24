@@ -98,6 +98,11 @@ interface StaticNamespaceContracts
      */
     public function optionalSubscribers();
 
+    /**
+     * @return mixed
+     */
+    public function request();
+
 
     /**
      * @return mixed

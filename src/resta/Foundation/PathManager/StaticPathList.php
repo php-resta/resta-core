@@ -191,6 +191,11 @@ class StaticPathList
     public static $route='Routes';
 
     /**
+     * @var string
+     */
+    public static $request='Request';
+
+    /**
      * @var $factory
      */
     public static $factory='Factory';

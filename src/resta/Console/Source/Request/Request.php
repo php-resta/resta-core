@@ -42,24 +42,26 @@ class Request extends ConsoleOutputter {
 
         $request=$this->argument['request'];
 
-        $this->directory['requestCreate']   = $this->sourceRequestDir();
+
+        $this->directory['requestCreate']   = path()->request();
+        $this->argument['requestNamespace'] = Utils::getNamespace($this->directory['requestCreate']);
         $this->directory['requestDir']      = $this->directory['requestCreate'].'/'.$request;
 
         //set project directory
         $this->file->makeDirectory($this);
 
         if(!file_exists($this->directory['requestCreate'].'/Request.php')){
-            $this->touch['source/request']              =$this->directory['requestCreate'].'/Request.php';
-            $this->touch['source/requestGenerator']              = $this->directory['requestCreate'].'/RequestGenerator.php';
+            $this->touch['source/request'] = $this->directory['requestCreate'].'/Request.php';
+            $this->touch['source/requestGenerator'] = $this->directory['requestCreate'].'/RequestGenerator.php';
         }
 
         if(!file_exists($this->directory['requestCreate'].'/RequestProvider.php')){
-            $this->touch['source/requestProvider']      = $this->directory['requestCreate'].'/RequestProvider.php';
+            $this->touch['source/requestProvider'] = $this->directory['requestCreate'].'/RequestProvider.php';
         }
 
 
-        $this->touch['source/requestFile']              = $this->directory['requestDir'].'/'.$request.'Request.php';
-        $this->touch['source/requestGeneratorFile']         = $this->directory['requestDir'].'/'.$request.'RequestGenerator.php';
+        $this->touch['source/requestFile'] = $this->directory['requestDir'].'/'.$request.'Request.php';
+        $this->touch['source/requestGeneratorFile'] = $this->directory['requestDir'].'/'.$request.'RequestGenerator.php';
 
         //set project touch
         $this->file->touch($this);

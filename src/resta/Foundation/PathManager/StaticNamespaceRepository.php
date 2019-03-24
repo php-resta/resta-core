@@ -194,6 +194,14 @@ class StaticNamespaceRepository extends StaticPathRepository
     /**
      * @return mixed
      */
+    public function request()
+    {
+        return Utils::getNamespace(parent::request());
+    }
+
+    /**
+     * @return mixed
+     */
     public function repository()
     {
         return Utils::getNamespace(parent::repository());
