@@ -40,18 +40,20 @@ class Exception extends ConsoleOutputter {
      */
     public function create()
     {
-        $exception=$this->argument['exception'];
+        $exception = $this->argument['exception'];
+        $this->argument['exceptionNamespace'] = app()->namespace()->exception();
 
-        $this->directory['exceptionDir']=$this->optional().'/'.StaticPathModel::$optionalException;
+        $this->directory['exceptionDir'] = path()->exception();
+
 
         //set project directory
         $this->file->makeDirectory($this);
 
-        $this->touch['exception/exception']        =$this->directory['exceptionDir'].'/'.$exception.'Exception.php';
+        $this->touch['exception/exception'] =$this->directory['exceptionDir'].'/'.$exception.'Exception.php';
 
         //set project touch
         $this->file->touch($this);
         
-        echo $this->classical(' > Exception called as "'.$this->argument['exception'].'" has been successfully created in the '.app()->namespace()->optionalException().'');
+        echo $this->classical(' > Exception called as "'.$this->argument['exception'].'" has been successfully created in the '.app()->namespace()->exception().'');
     }
 }

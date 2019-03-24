@@ -127,9 +127,9 @@ class StaticNamespaceRepository extends StaticPathRepository
     /**
      * @return mixed
      */
-    public function optionalException()
+    public function exception()
     {
-        return Utils::getNamespace(parent::optionalException());
+        return Utils::getNamespace(parent::exception());
     }
 
     /**

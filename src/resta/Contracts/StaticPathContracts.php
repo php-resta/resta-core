@@ -71,6 +71,11 @@ interface StaticPathContracts
     /**
      * @return mixed
      */
+    public function exception();
+
+    /**
+     * @return mixed
+     */
     public function kernel();
 
     /**

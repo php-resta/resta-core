@@ -58,7 +58,7 @@ class ErrorHandler extends ApplicationProvider {
         $this->app->register('responseStatus',$this->data['status']);
 
 
-        $optionalException=str_replace("\\","\\\\",$this->app->namespace()->optionalException());
+        $optionalException=str_replace("\\","\\\\",$this->app->namespace()->exception());
 
         if(preg_match('@'.$optionalException.'@is',$this->data['errType'])){
 

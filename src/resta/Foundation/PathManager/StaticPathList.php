@@ -140,9 +140,9 @@ class StaticPathList
     public static $subscribers='Subscribers';
 
     /**
-     * @var $optionalException
+     * @var $exception
      */
-    public static $optionalException='Exception';
+    public static $exception='Exception';
 
     /**
      * @var $job

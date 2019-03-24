@@ -157,9 +157,9 @@ class StaticPathRepository
      * @param null $app
      * @return mixed
      */
-    public function appOptionalException($app=null)
+    public function appException($app=null)
     {
-        return $this->appVersion($app).''.DIRECTORY_SEPARATOR.''.StaticPathList::$optional.''.DIRECTORY_SEPARATOR.''.StaticPathList::$optionalException;
+        return $this->appVersion().''.DIRECTORY_SEPARATOR.''.StaticPathList::$exception;
     }
 
     /**

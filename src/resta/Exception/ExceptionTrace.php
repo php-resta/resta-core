@@ -82,7 +82,7 @@ class ExceptionTrace extends ApplicationProvider
         //We use the magic method for the exception and
         //call the exception class in the application to get the instance.
         $nameException = ucfirst($name).'Exception';
-        $nameNamespace = $this->app->namespace()->optionalException().'\\'.$nameException;
+        $nameNamespace = app()->namespace()->exception().'\\'.$nameException;
         $callNamespace = new $nameNamespace;
 
 
