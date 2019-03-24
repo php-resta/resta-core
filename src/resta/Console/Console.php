@@ -41,7 +41,7 @@ class Console extends ApplicationProvider {
     protected function consoleProcess(){
 
         //We create a namespace for the console and we assign to a variable the path of this class.
-        $this->consoleClassNamespace=$this->consoleClassNamespace();
+        $this->consoleClassNamespace = $this->consoleClassNamespace();
 
         //If the console executor is a custom console application; in this case we look at the kernel directory inside the application.
         //If the console class is not available on the kernel of resta, then the system will run the command class in the application.

@@ -47,9 +47,9 @@ class StaticPathRepository
      * @param null $app
      * @return string
      */
-    public function appCommand($app=null)
+    public function appCommand()
     {
-        return $this->appVersion($app).''.DIRECTORY_SEPARATOR.''.StaticPathList::$optional.''.DIRECTORY_SEPARATOR.''.StaticPathList::$command.'';
+        return $this->appVersion().''.DIRECTORY_SEPARATOR.''.StaticPathList::$command.'';
     }
 
     /**

@@ -104,6 +104,7 @@ class ConsoleOutputter extends ConsolePrepare {
             $this->argument['repositoryNamespace']  = app()->namespace()->repository();
             $this->argument['modelNamespace']       = app()->namespace()->model();
             $this->argument['sourceNamespace']      = app()->namespace()->optionalSource();
+            $this->argument['versionNamespace']     = app()->namespace()->version();
 
             if(!isset($this->argument['group'])){
                 

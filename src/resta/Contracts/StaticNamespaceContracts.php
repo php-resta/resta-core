@@ -27,11 +27,9 @@ interface StaticNamespaceContracts
     public function controller($endpoint=null,$bind=array());
 
     /**
-     * @param null $command
-     * @param array $argument
      * @return mixed
      */
-    public function command($command=null,$argument=array());
+    public function command();
 
     /**
      * @return mixed

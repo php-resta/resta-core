@@ -39,6 +39,11 @@ interface StaticPathContracts
     /**
      * @return mixed
      */
+    public function command();
+
+    /**
+     * @return mixed
+     */
     public function config();
 
     /**

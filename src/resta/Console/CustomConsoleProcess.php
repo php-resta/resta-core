@@ -20,7 +20,7 @@ class CustomConsoleProcess extends ConsoleOutputter
 
         // command namespace
         // call custom command namespace
-        $commandNamespace = Utils::getNamespace($this->command()) . '\\' . $this->app->getConsoleClass();
+        $commandNamespace = Utils::getNamespace(path()->command()) . '\\' . $this->app->getConsoleClass();
 
         //return null if there is no command namespace
         if (!class_exists($commandNamespace)) return null;

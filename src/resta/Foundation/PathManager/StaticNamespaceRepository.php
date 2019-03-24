@@ -53,22 +53,11 @@ class StaticNamespaceRepository extends StaticPathRepository
     }
 
     /**
-     * @param null $command
-     * @param array $argument
-     * @return mixed|string
+     * @return string
      */
-    public function command($command=null,$argument=array())
+    public function command()
     {
-        $commandNamespace=Utils::getNamespace($this->appCommand());
-
-        if($command===null) return $commandNamespace;
-
-        $commandCall=$commandNamespace.'\\'.ucfirst($command);
-
-        $defaultArgument=['project'=>app,'commandCall'=>true];
-        $argumentList=array_merge($defaultArgument,$argument);
-
-        return new $commandCall($argumentList,app());
+        return Utils::getNamespace(parent::command());
     }
 
     /**
