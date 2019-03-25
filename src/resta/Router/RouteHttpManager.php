@@ -52,4 +52,15 @@ class RouteHttpManager
     {
         static::setRoute($params,__FUNCTION__,static::getTracePath());
     }
+
+    /**
+     * this trait gives an error when calling from outside.
+     *
+     * @param $name
+     * @param $arguments
+     */
+    public static function __callStatic($name, $arguments)
+    {
+        exception()->badFunctionCall($name.' method is not valid for routing process');
+    }
 }
