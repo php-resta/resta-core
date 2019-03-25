@@ -65,28 +65,28 @@ class Route extends RouteHttpManager
      */
     private static function getPatternResolve()
     {
-        $routes     = self::getRoutes();
+        $routes = self::getRoutes();
 
         if(!isset($routes['pattern'])){
             return [];
         }
 
-        $patterns   = $routes['pattern'];
-        $urlRoute   = array_filter(route(),'strlen');
+        $patterns = $routes['pattern'];
+        $urlRoute = array_filter(route(),'strlen');
 
         foreach ($patterns as $key=>$pattern){
 
             $pattern = array_filter($pattern,'strlen');
-            $diff    = Arr::arrayDiffKey($pattern,$urlRoute);
+            $diff = Arr::arrayDiffKey($pattern,$urlRoute);
 
             if($diff){
 
-                $matches=true;
+                $matches = true;
 
                 foreach ($pattern as $patternKey=>$patternValue){
                     if(!preg_match('@\{(.*?)\}@is',$patternValue)){
                         if($patternValue!==$urlRoute[$patternKey]){
-                            $matches=false;
+                            $matches = false;
                         }
                     }
                 }
