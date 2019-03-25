@@ -11,17 +11,17 @@ class Route extends RouteHttpManager
     use RouteAccessiblePropertyTrait;
 
     /**
-     * @var array
+     * @var array $endpoints
      */
     protected static $endpoints = [];
 
     /**
-     * @var array
+     * @var array $routes
      */
     protected static $routes = [];
 
     /**
-     * @var array
+     * @var array $paths
      */
     protected static $paths = [];
 
@@ -31,7 +31,7 @@ class Route extends RouteHttpManager
     protected static $mappers = [];
 
     /**
-     * @var $namespace
+     * @var null $namespace
      */
     protected static $namespace;
 
