@@ -58,7 +58,7 @@ class Repository extends ConsoleOutputter {
 
         $this->touch['repository/adapter']      =$this->directory['repositoryDir'].'/'.$repository.'Adapter.php';
         $this->touch['repository/contract']     =$this->directory['repositoryDir'].'/'.$repository.'Contract.php';
-        $this->touch['repository/trait']        =$this->directory['repositoryDir'].'/'.$repository.'Trait.php';
+        //$this->touch['repository/trait']        =$this->directory['repositoryDir'].'/'.$repository.'Trait.php';
 
         $this->touch['repository/sourcemain']       =$this->directory['repositorySourceMainDir'].'/'.$repository.'Main.php';
 
