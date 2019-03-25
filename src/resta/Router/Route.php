@@ -5,8 +5,11 @@ namespace Resta\Router;
 use Resta\Support\Arr;
 use Resta\Support\Utils;
 
-class Route
+class Route extends RouteHttpManager
 {
+    // get route acccessible property
+    use RouteAccessiblePropertyTrait;
+
     /**
      * @var array
      */
@@ -33,171 +36,74 @@ class Route
     protected static $namespace;
 
     /**
-     * @param mixed ...$params
-     */
-    public static function delete(...$params)
-    {
-        self::setRoute($params,__FUNCTION__,self::getTracePath());
-    }
-
-    /**
-     * @param mixed ...$params
-     */
-    public static function get(...$params)
-    {
-        self::setRoute($params,__FUNCTION__,self::getTracePath());
-    }
-
-    /**
-     * get mappers
+     * get route checkArrayEqual
      *
-     * @return array
+     * @param $patterns
+     * @param $urlRoute
+     * @return int|string
      */
-    public static function getMappers()
+    private static function checkArrayEqual($patterns,$urlRoute)
     {
-        return static::$mappers;
-    }
+        foreach ($patterns as $key=>$pattern){
 
-    /**
-     * get static getPath
-     *
-     * @return array
-     */
-    public static function getPath()
-    {
-        return static::$paths;
-    }
-
-    /**
-     * get static getRoutes
-     *
-     * @return array
-     */
-    public static function getRoutes()
-    {
-        return static::$routes;
-    }
-
-    /**
-     * get static getTracePath
-     *
-     * @return mixed|null
-     */
-    public static function getTracePath()
-    {
-        $trace = Utils::trace(2,'file');
-        return self::getPath()[$trace] ?? null;
-    }
-
-    /**
-     * route handle for application
-     *
-     * @return void|mixed
-     */
-    public function handle()
-    {
-        // we will record the path data for the route.
-        // We set the routeMapper variables and the route path.
-        self::setPath(function(){
-
-            // we are sending the controller and routes.php path.
-            return [
-                'controllerPath'    => path()->controller(),
-                'routePath'         => path()->route(),
-            ];
-        });
-
-       foreach (self::$paths as $mapper=>$controller){
-           core()->fileSystem->callFile($mapper);
-       }
-    }
-
-    /**
-     * set namespace for route
-     *
-     * @param $namespace
-     * @return Route
-     */
-    public static function namespace($namespace)
-    {
-        static::$namespace = $namespace;
-
-        return new static();
-    }
-
-    /**
-     * http post method
-     *
-     * @param mixed ...$params
-     */
-    public static function post(...$params)
-    {
-        self::setRoute($params,__FUNCTION__,self::getTracePath());
-    }
-
-    /**
-     * http put method
-     *
-     * @param mixed ...$params
-     */
-    public static function put(...$params)
-    {
-        self::setRoute($params,__FUNCTION__,self::getTracePath());
-    }
-
-    /**
-     * get route setPath method
-     *
-     * @param $path
-     */
-    public static function setPath(callable $callback)
-    {
-        $routeDefinitor = call_user_func($callback);
-
-        if(isset($routeDefinitor['controllerPath']) && isset($routeDefinitor['routePath'])){
-
-            //the route paths to be saved to the mappers static property.
-            static::$mappers['routePaths'][] = $routeDefinitor['routePath'];
-            static::$mappers['controllerNamespaces'][] = Utils::getNamespace($routeDefinitor['controllerPath']);
-
-            //set a predefined value for route.php.
-            $routePrefix = (defined('endpoint')) ? endpoint : md5(time());
-
-            $routeName = $routePrefix.'Route.php';
-
-            $routeMapper = $routeDefinitor['routePath'].''.DIRECTORY_SEPARATOR.''.$routeName;
-
-            if(file_exists($routeMapper) && !isset(static::$paths[$routeMapper])){
-                static::$paths[$routeMapper] = $routeDefinitor['controllerPath'];
+            if(Utils::isArrayEqual($pattern,$urlRoute)){
+                return $key;
             }
         }
+
+        return null;
     }
 
     /**
-     * get route setRoute method
+     * get route getPatternResolve
      *
-     * @param $params
-     * @param $function
-     * @param null $controller
+     * @return array|int|string
      */
-    public static function setRoute($params,$function,$controller=null)
+    private static function getPatternResolve()
     {
-        [$pattern,$route] = $params;
+        $routes     = self::getRoutes();
 
-        [$class,$method] = explode("@",$route);
+        if(!isset($routes['pattern'])){
+            return [];
+        }
 
-        $patternList = array_values(
-            array_filter(explode("/",$pattern),'strlen')
-        );
+        $patterns   = $routes['pattern'];
+        $urlRoute   = array_filter(route(),'strlen');
 
-        static::$routes['pattern'][] = $patternList;
-        static::$routes['data'][] = [
-            'method'        => $method,
-            'class'         => $class,
-            'http'          => $function,
-            'controller'    => $controller,
-            'namespace'     => static::$namespace,
-        ];
+        foreach ($patterns as $key=>$pattern){
+
+            $pattern = array_filter($pattern,'strlen');
+            $diff    = Arr::arrayDiffKey($pattern,$urlRoute);
+
+            if($diff){
+
+                $matches=true;
+
+                foreach ($pattern as $patternKey=>$patternValue){
+                    if(!preg_match('@\{(.*?)\}@is',$patternValue)){
+                        if($patternValue!==$urlRoute[$patternKey]){
+                            $matches=false;
+                        }
+                    }
+                }
+
+                if($matches){
+
+                    $isArrayEqual = self::checkArrayEqual($patterns,$urlRoute);
+
+                    if($isArrayEqual===null){
+                        return $key;
+                    }
+                    return $isArrayEqual;
+                }
+            }
+
+            if(count($pattern)-1 == count(route())){
+                if(preg_match('@\{[a-z]+\?\}@is',end($pattern))){
+                    return $key;
+                }
+            }
+        }
     }
 
     /**
@@ -228,75 +134,78 @@ class Route
     }
 
     /**
-     * get route getPatternResolve
+     * route handle for application
      *
-     * @return array|int|string
+     * @return void|mixed
      */
-    private static function getPatternResolve()
+    public function handle()
     {
-        $routes     = self::getRoutes();
+        // we will record the path data for the route.
+        // We set the routeMapper variables and the route path.
+        self::setPath(function(){
 
-        if(!isset($routes['pattern'])){
-            return [];
-        }
+            // we are sending
+            // the controller and routes.php path.
+            return [
+                'controllerPath'    => path()->controller(),
+                'routePath'         => path()->route(),
+            ];
+        });
 
-        $patterns   = $routes['pattern'];
-        $urlRoute   = array_filter(route(),'strlen');
-        
-        foreach ($patterns as $key=>$pattern){
+       foreach (self::$paths as $mapper=>$controller){
+           core()->fileSystem->callFile($mapper);
+       }
+    }
 
-            $pattern = array_filter($pattern,'strlen');
-            $diff    = Arr::arrayDiffKey($pattern,$urlRoute);
+    /**
+     * get route setPath method
+     *
+     * @param $path
+     */
+    public static function setPath(callable $callback)
+    {
+        $routeDefinitor = call_user_func($callback);
 
+        if(isset($routeDefinitor['controllerPath']) && isset($routeDefinitor['routePath'])){
 
-            if($diff){
+            //the route paths to be saved to the mappers static property.
+            static::$mappers['routePaths'][] = $routeDefinitor['routePath'];
+            static::$mappers['controllerNamespaces'][] = Utils::getNamespace($routeDefinitor['controllerPath']);
 
-                $matches=true;
+            //set a predefined value for route.php.
+            $routePrefix    = (defined('endpoint')) ? endpoint : md5(time());
+            $routeName      = $routePrefix.'Route.php';
+            $routeMapper    = $routeDefinitor['routePath'].''.DIRECTORY_SEPARATOR.''.$routeName;
 
-                foreach ($pattern as $patternKey=>$patternValue){
-                    if(!preg_match('@\{(.*?)\}@is',$patternValue)){
-                        if($patternValue!==$urlRoute[$patternKey]){
-                            $matches=false;
-                        }
-                    }
-                }
-
-                if($matches){
-
-                    $isArrayEqual = self::checkArrayEqual($patterns,$urlRoute);
-
-                    if($isArrayEqual===null){
-                        return $key;
-                    }
-                    return $isArrayEqual;
-
-                }
-            }
-
-            if(count($pattern)-1 == count(route())){
-                if(preg_match('@\{[a-z]+\?\}@is',end($pattern))){
-                    return $key;
-                }
+            if(file_exists($routeMapper) && !isset(static::$paths[$routeMapper])){
+                static::$paths[$routeMapper] = $routeDefinitor['controllerPath'];
             }
         }
     }
 
     /**
-     * get route checkArrayEqual
+     * get route setRoute method
      *
-     * @param $patterns
-     * @param $urlRoute
-     * @return int|string
+     * @param $params
+     * @param $function
+     * @param null $controller
      */
-    private static function checkArrayEqual($patterns,$urlRoute)
+    public static function setRoute($params,$function,$controller=null)
     {
-        foreach ($patterns as $key=>$pattern){
+        [$pattern,$route]   = $params;
+        [$class,$method]    = explode("@",$route);
 
-            if(Utils::isArrayEqual($pattern,$urlRoute)){
-                return $key;
-            }
-        }
+        $patternList = array_values(
+            array_filter(explode("/",$pattern),'strlen')
+        );
 
-        return null;
+        static::$routes['pattern'][] = $patternList;
+        static::$routes['data'][] = [
+            'method'        => $method,
+            'class'         => $class,
+            'http'          => $function,
+            'controller'    => $controller,
+            'namespace'     => static::$namespace,
+        ];
     }
 }

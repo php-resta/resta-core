@@ -4,22 +4,11 @@ namespace Resta\Contracts;
 
 interface StaticPathContracts
 {
-
     /**
      * @param null $app
      * @return mixed
      */
     public function app($app=null);
-
-    /**
-     * @return mixed
-     */
-    public function autoloadNamespace();
-
-    /**
-     * @return mixed
-     */
-    public function factory();
 
     /**
      * @return mixed
@@ -34,7 +23,22 @@ interface StaticPathContracts
     /**
      * @return mixed
      */
+    public function appResourche();
+
+    /**
+     * @return mixed
+     */
     public function appStorage();
+
+    /**
+     * @return mixed
+     */
+    public function autoloadNamespace();
+
+    /**
+     * @return mixed
+     */
+    public function bootDir();
 
     /**
      * @return mixed
@@ -47,16 +51,16 @@ interface StaticPathContracts
     public function config();
 
     /**
-     * @return mixed
-     */
-    public function bootDir();
-
-    /**
      * @param null $controller
      * @param bool $bool
      * @return mixed
      */
     public function controller($controller=null,$bool=true);
+
+    /**
+     * @return mixed
+     */
+    public function factory();
 
     /**
      * @return mixed
@@ -81,11 +85,6 @@ interface StaticPathContracts
     /**
      * @return mixed
      */
-    public function provider();
-
-    /**
-     * @return mixed
-     */
     public function logger();
 
     /**
@@ -106,27 +105,12 @@ interface StaticPathContracts
     /**
      * @return mixed
      */
+    public function provider();
+
+    /**
+     * @return mixed
+     */
     public function optionalWebservice();
-
-    /**
-     * @return mixed
-     */
-    public function optionalJob();
-
-    /**
-     * @return mixed
-     */
-    public function optionalException();
-
-    /**
-     * @return mixed
-     */
-    public function optionalSource();
-
-    /**
-     * @return mixed
-     */
-    public function appResourche();
 
     /**
      * @return mixed
@@ -137,11 +121,6 @@ interface StaticPathContracts
      * @return mixed
      */
     public function route();
-
-    /**
-     * @return mixed
-     */
-    public function serviceContainer();
 
     /**
      * @return mixed
