@@ -2,6 +2,7 @@
 
 namespace Resta\Router;
 
+use http\Exception;
 use Resta\Support\Utils;
 
 trait RouteAccessiblePropertyTrait
@@ -11,7 +12,7 @@ trait RouteAccessiblePropertyTrait
      *
      * @return array
      */
-    protected static function getMappers()
+    protected static function getMappers() : array
     {
         // this feature will give you a map
         // to see all your route methods.
@@ -23,7 +24,7 @@ trait RouteAccessiblePropertyTrait
      *
      * @return array
      */
-    protected static function getPath()
+    protected static function getPath() : array
     {
         // this feature helps you to assign
         // which routes to run on your routes.
@@ -35,7 +36,7 @@ trait RouteAccessiblePropertyTrait
      *
      * @return array
      */
-    protected static function getRoutes()
+    protected static function getRoutes() : array
     {
         // it collects and
         // executes route data in an array.
