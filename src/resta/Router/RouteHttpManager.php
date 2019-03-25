@@ -2,21 +2,32 @@
 
 namespace Resta\Router;
 
-class RouteHttpManager
+use http\Exception;
+
+abstract class RouteHttpManager
 {
     /**
+     * http delete method
+     *
      * @param mixed ...$params
+     * @return void
      */
-    public static function delete(...$params)
+    public static function delete(...$params) : void
     {
+        // the DELETE method deletes the specified resource.
         static::setRoute($params,__FUNCTION__,static::getTracePath());
     }
 
     /**
+     * http get method
+     *
      * @param mixed ...$params
+     * @return void
      */
-    public static function get(...$params)
+    public static function get(...$params) : void
     {
+        // the GET method requests a representation of the specified resource.
+        // Requests using GET should only retrieve data.
         static::setRoute($params,__FUNCTION__,static::getTracePath());
     }
 
@@ -26,10 +37,14 @@ class RouteHttpManager
      * @param $namespace
      * @return Route
      */
-    public static function namespace($namespace)
+    public static function namespace($namespace) : Route
     {
+        // this feature is ideal for detecting
+        // a directory with a reachable endpoint.
         static::$namespace = $namespace;
 
+        // the method returns
+        // the class itself.
         return new static();
     }
 
@@ -37,9 +52,12 @@ class RouteHttpManager
      * http post method
      *
      * @param mixed ...$params
+     * @return void
      */
-    public static function post(...$params)
+    public static function post(...$params) : void
     {
+        // the POST method is used to submit an entity to the specified resource,
+        // often causing a change in state or side effects on the server.
         static::setRoute($params,__FUNCTION__,static::getTracePath());
     }
 
@@ -47,9 +65,12 @@ class RouteHttpManager
      * http put method
      *
      * @param mixed ...$params
+     * @return void
      */
-    public static function put(...$params)
+    public static function put(...$params) : void
     {
+        // the PUT method replaces all current representations of
+        // the target resource with the request payload.
         static::setRoute($params,__FUNCTION__,static::getTracePath());
     }
 
@@ -59,7 +80,7 @@ class RouteHttpManager
      * @param $name
      * @param $arguments
      */
-    public static function __callStatic($name, $arguments)
+    public static function __callStatic($name, $arguments) : Exception
     {
         exception()->badFunctionCall($name.' method is not valid for routing process');
     }
