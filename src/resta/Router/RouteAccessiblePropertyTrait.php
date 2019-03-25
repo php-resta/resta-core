@@ -7,43 +7,54 @@ use Resta\Support\Utils;
 trait RouteAccessiblePropertyTrait
 {
     /**
-     * get mappers
+     * get route mappers
      *
      * @return array
      */
     public static function getMappers()
     {
+        // this feature will give you a map
+        // to see all your route methods.
         return static::$mappers;
     }
 
     /**
-     * get static getPath
+     * get static path
      *
      * @return array
      */
     public static function getPath()
     {
+        // this feature helps you to assign
+        // which routes to run on your routes.
         return static::$paths;
     }
 
     /**
-     * get static getRoutes
+     * get static routes
      *
      * @return array
      */
     public static function getRoutes()
     {
+        // it collects and
+        // executes route data in an array.
         return static::$routes;
     }
 
     /**
-     * get static getTracePath
+     * get static trace path
      *
      * @return mixed|null
      */
     public static function getTracePath()
     {
+        // detects where the route path is coming from
+        // and returns this data in the static path.
         $trace = Utils::trace(2,'file');
+
+        // the trace is returned if the variable is available
+        // in the path data, otherwise it returns null.
         return static::getPath()[$trace] ?? null;
     }
 }
