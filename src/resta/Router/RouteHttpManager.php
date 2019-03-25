@@ -82,6 +82,8 @@ abstract class RouteHttpManager
      */
     public static function __callStatic($name, $arguments) : Exception
     {
+        // this abstract class is automatically returned
+        // to the exception in the use of any class other than the route class.
         exception()->badFunctionCall($name.' method is not valid for routing process');
     }
 }
