@@ -44,6 +44,8 @@ class Route extends RouteHttpManager
      */
     private static function checkArrayEqual($patterns,$urlRoute)
     {
+        // calculates the equality difference between
+        // the route pattern and the urlRoute value.
         foreach ($patterns as $key=>$pattern){
 
             if(Utils::isArrayEqual($pattern,$urlRoute)){
@@ -51,6 +53,8 @@ class Route extends RouteHttpManager
             }
         }
 
+        // if the difference is not equal,
+        // null is returned.
         return null;
     }
 
@@ -113,13 +117,19 @@ class Route extends RouteHttpManager
      */
     public static function getRouteResolve()
     {
+        // get routes data and the resolving pattern
+        // Both are interrelated.
         $routes         = self::getRoutes();
         $patternResolve = self::getPatternResolve();
 
+        //if routes data is available in pattern resolve.
         if(isset($routes['data'][$patternResolve])){
 
+            // if the incoming http value is
+            // the same as the real request method, the data is processed.
             if($routes['data'][$patternResolve]['http'] == strtolower(httpMethod)){
 
+                // we are set the solved pattern to a variable.
                 $resolve = $routes['data'][$patternResolve];
 
                 return [
@@ -134,7 +144,7 @@ class Route extends RouteHttpManager
     }
 
     /**
-     * route handle for application
+     * route handle for route application
      *
      * @return void|mixed
      */
@@ -152,6 +162,8 @@ class Route extends RouteHttpManager
             ];
         });
 
+        // in the paths data,
+        // we run the route mapper values ​​and the route files one by one.
        foreach (self::$paths as $mapper=>$controller){
            core()->fileSystem->callFile($mapper);
        }
