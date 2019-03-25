@@ -168,7 +168,7 @@ class StaticPathRepository
      */
     public function appOptionalEvents($app=null)
     {
-        return $this->appVersion($app).''.DIRECTORY_SEPARATOR.''.StaticPathList::$optional.''.DIRECTORY_SEPARATOR.''.StaticPathList::$events;
+        return $this->appVersion().''.DIRECTORY_SEPARATOR.''.StaticPathList::$events;
     }
 
     /**
@@ -186,7 +186,7 @@ class StaticPathRepository
      */
     public function appOptionalListeners($app=null)
     {
-        return $this->appVersion($app).''.DIRECTORY_SEPARATOR.''.StaticPathList::$optional.''.DIRECTORY_SEPARATOR.''.StaticPathList::$listeners;
+        return $this->appVersion().''.DIRECTORY_SEPARATOR.''.StaticPathList::$listeners;
     }
 
     /**
@@ -195,7 +195,7 @@ class StaticPathRepository
      */
     public function appOptionalSubscribers($app=null)
     {
-        return $this->appVersion($app).''.DIRECTORY_SEPARATOR.''.StaticPathList::$optional.''.DIRECTORY_SEPARATOR.''.StaticPathList::$listeners.''.DIRECTORY_SEPARATOR.''.StaticPathList::$subscribers;
+        return $this->appVersion().''.DIRECTORY_SEPARATOR.''.StaticPathList::$listeners.''.DIRECTORY_SEPARATOR.''.StaticPathList::$subscribers;
     }
 
     /**

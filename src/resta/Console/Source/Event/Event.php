@@ -42,6 +42,11 @@ class Event extends ConsoleOutputter {
         $this->argument['source']=StaticPathList::$events;
         $this->argument['sourcelisten']=StaticPathList::$listeners;
 
+        $this->argument['eventNamespace']=app()->namespace()->optionalEvents().'';
+        $this->argument['listenNamespace']=app()->namespace()->optionalListeners().'';
+        $this->argument['subscriberNamespace']=app()->namespace()->optionalSubscribers().'';
+
+
         $eventDispatcher=app()->namespace()->version().'\ServiceEventDispatcherController';
 
         $eventDispatchers=app()->resolve(ClosureDispatcher::class,['bind'=>new $eventDispatcher])->call(function(){
@@ -66,8 +71,7 @@ class Event extends ConsoleOutputter {
 
             $this->argument['eventMain']=ucfirst($event);
 
-            $this->argument['eventNamespace']=app()->namespace()->optionalEvents().'\\'.$this->argument['eventMain'];
-
+            $this->argument['eventKeyNamespace']=app()->namespace()->optionalEvents().'\\'.$this->argument['eventMain'];
 
             $mainFile=$this->directory['eventsDir'].'/'.ucfirst($event).'.php';
 
