@@ -11,7 +11,7 @@ trait RouteAccessiblePropertyTrait
      *
      * @return array
      */
-    public static function getMappers()
+    protected static function getMappers()
     {
         // this feature will give you a map
         // to see all your route methods.
@@ -23,7 +23,7 @@ trait RouteAccessiblePropertyTrait
      *
      * @return array
      */
-    public static function getPath()
+    protected static function getPath()
     {
         // this feature helps you to assign
         // which routes to run on your routes.
@@ -35,7 +35,7 @@ trait RouteAccessiblePropertyTrait
      *
      * @return array
      */
-    public static function getRoutes()
+    protected static function getRoutes()
     {
         // it collects and
         // executes route data in an array.
@@ -47,7 +47,7 @@ trait RouteAccessiblePropertyTrait
      *
      * @return mixed|null
      */
-    public static function getTracePath()
+    protected static function getTracePath()
     {
         // detects where the route path is coming from
         // and returns this data in the static path.
