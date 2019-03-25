@@ -55,7 +55,7 @@ class Project extends ConsoleOutputter {
             $this->directory[$defaultDirectory.'Path'] = $this->projectPath().''.implode("/",$recursiveDefaultDirectoryList);
         }
 
-        $this->directory['optionalDir'] = $this->optional();
+        //$this->directory['optionalDir'] = $this->optional();
         
         //get project directory all path
         $this->directory['kernelDir']               = $this->kernel();
@@ -74,9 +74,9 @@ class Project extends ConsoleOutputter {
         $this->directory['sessionDir']              = $this->session();
         $this->directory['callDir']                 = $this->controller();
         $this->directory['configDir']               = $this->config();
-        $this->directory['sourceDir']               = $this->sourceDir();
-        $this->directory['sourceSupportDir']        = $this->sourceSupportDir();
-        $this->directory['sourceSupportTraitDir']   = $this->sourceSupportDir().'/Traits';
+        //$this->directory['sourceDir']               = $this->sourceDir();
+        //$this->directory['sourceSupportDir']        = $this->sourceSupportDir();
+        //$this->directory['sourceSupportTraitDir']   = $this->sourceSupportDir().'/Traits';
 
         //set project directory
         $this->file->makeDirectory($this);
@@ -121,7 +121,7 @@ class Project extends ConsoleOutputter {
         $this->touch['version/base']                = $this->version().'/ServiceBaseController.php';
         $this->touch['version/base']                = $this->version().'/ServiceBaseController.php';
         $this->touch['version/log']                 = $this->version().'/ServiceLogController.php';
-        $this->touch['source/apitokentrait']        = $this->sourceSupportDir().'/Traits/ClientApiTokenTrait.php';
+        //$this->touch['source/apitokentrait']        = $this->sourceSupportDir().'/Traits/ClientApiTokenTrait.php';
         $this->touch['app/readme']                  = $this->projectPath().'/README.md';
         $this->touch['app/gitignore']               = $this->projectPath().'/.gitignore';
         $this->touch['app/composer']                = $this->projectPath().'/composer.json';
