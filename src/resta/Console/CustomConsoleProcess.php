@@ -29,7 +29,7 @@ class CustomConsoleProcess extends ConsoleOutputter
         $commandClassResolved = app()->resolve($commandNamespace,
             [
                 'argument' => $this->argument,
-                'app' => $this->app->app
+                'app' => $this->app->app()
             ]);
 
         $app = $this->app;
