@@ -1,5 +1,42 @@
 <?php
 
+if (!function_exists('app')) {
+
+    /**
+     * @return \Resta\Contracts\ApplicationContracts|\Resta\Contracts\ApplicationHelpersContracts|\Resta\Contracts\ContainerContracts
+     */
+    function app()
+    {
+        return appInstance()->app;
+    }
+}
+
+if (!function_exists('appInstance')) {
+
+    /**
+     * @return \Resta\Foundation\ApplicationProvider
+     */
+    function appInstance()
+    {
+        return \application::getAppInstance();
+    }
+}
+
+if (!function_exists('applicationKey')) {
+
+    /**
+     * @return string
+     */
+    function applicationKey()
+    {
+        if(property_exists($kernel=app()->kernel(),'applicationKey')){
+            return $kernel->applicationKey;
+        }
+        return null;
+
+    }
+}
+
 if (!function_exists('auth')) {
     /**
      * @return \Resta\Authenticate\AuthenticateContract
@@ -7,6 +44,53 @@ if (!function_exists('auth')) {
     function auth()
     {
         return app()->resolve(\Resta\Authenticate\AuthenticateProvider::class);
+    }
+}
+
+if (!function_exists('bundleName')) {
+
+    /**
+     * @return null|string
+     */
+    function bundleName()
+    {
+        if(defined('endpoint')){
+
+            return endpoint.''.\Resta\Foundation\PathManager\StaticPathList::$controllerBundleName;
+        }
+        return null;
+    }
+}
+
+if (!function_exists('config')) {
+
+    /**
+     * @param null $config
+     * @param null $default
+     * @return mixed|null
+     */
+    function config($config=null,$default=null)
+    {
+        $configResult = app()->config($config);
+
+        if($configResult === null && $default!==null){
+            return $default;
+        }
+
+        return $configResult;
+    }
+}
+
+if (!function_exists('container')) {
+
+    /**
+     * @param $class
+     * @param $bind array
+     * @return mixed
+     */
+    function container($class,$bind=array())
+    {
+        return app()->singleton()->appClass->container(appInstance(),$class,$bind);
     }
 }
 
@@ -22,11 +106,14 @@ if (!function_exists('controller')) {
     }
 }
 
-if (!function_exists('fullUrl')) {
+if (!function_exists('core')) {
 
-    function fullUrl()
+    /**
+     * @return mixed
+     */
+    function core()
     {
-        return request()->getUri();
+        return app()->singleton();
     }
 }
 
@@ -37,6 +124,14 @@ if (!function_exists('fingerPrint')) {
         return md5(sha1(implode("|",[
             request()->getClientIp(),$_SERVER['HTTP_USER_AGENT'],applicationKey()
         ])));
+    }
+}
+
+if (!function_exists('fullUrl')) {
+
+    function fullUrl()
+    {
+        return request()->getUri();
     }
 }
 
@@ -70,89 +165,39 @@ if (!function_exists('event')) {
     }
 }
 
-if (!function_exists('appInstance')) {
+if (!function_exists('exception')) {
 
     /**
-     * @return \Resta\Foundation\ApplicationProvider
+     * @param null $name
+     * @param array $params
+     * @return \Resta\Contracts\ExceptionContracts
      */
-    function appInstance()
+    function exception($name=null,$params=array())
     {
-        return \application::getAppInstance();
+        $exceptionManager=\Resta\Exception\ExceptionManager::class;
+        return app()->resolve($exceptionManager,['name'=>$name,'params'=>$params]);
     }
 }
 
-if (!function_exists('app')) {
+if (!function_exists('faker')) {
+
 
     /**
-     * @return \Resta\Contracts\ApplicationContracts|\Resta\Contracts\ApplicationHelpersContracts|\Resta\Contracts\ContainerContracts
+     * @param null $locale
+     * @return \Faker\Generator
      */
-    function app()
+    function faker($locale=null)
     {
-        return appInstance()->app;
+        if($locale===null){
+            $faker=\Faker\Factory::create();
+        }
+        else{
+            $faker=\Faker\Factory::create($locale);
+        }
+
+        return $faker;
     }
 }
-
-if (!function_exists('request')) {
-
-    /**
-     * @return \Store\Services\RequestService|\Symfony\Component\HttpFoundation\Request
-     */
-    function request()
-    {
-        return core()->request;
-    }
-}
-
-
-if (!function_exists('core')) {
-
-
-    function core()
-    {
-        return app()->singleton();
-    }
-}
-
-if (!function_exists('response')) {
-
-    /**
-     * @return \Resta\Response\ResponseOutManager
-     */
-    function response()
-    {
-        $object=debug_backtrace()[1]['object'];
-        return new \Resta\Response\ResponseOutManager($object);
-    }
-}
-
-if (!function_exists('httpMethod')) {
-
-    /**
-     * @return string
-     */
-    function httpMethod()
-    {
-        return strtolower(core()->httpMethod);
-    }
-}
-
-if (!function_exists('post')) {
-
-    /**
-     * @param null $param
-     * @param null $default
-     * @return mixed
-     */
-    function post($param=null,$default=null)
-    {
-        //symfony request query object
-        $post=core()->post;
-
-        return ($param===null) ? $post : (isset($post[$param]) ? $post[$param] : $default);
-    }
-}
-
-
 
 if (!function_exists('get')) {
 
@@ -192,18 +237,105 @@ if (!function_exists('headers')) {
     }
 }
 
-if (!function_exists('applicationKey')) {
+if (!function_exists('httpMethod')) {
 
     /**
      * @return string
      */
-    function applicationKey()
+    function httpMethod()
     {
-        if(property_exists($kernel=app()->kernel(),'applicationKey')){
-            return $kernel->applicationKey;
-        }
-        return null;
+        return strtolower(core()->httpMethod);
+    }
+}
 
+if (!function_exists('logger')) {
+
+    /**
+     * @param $file null
+     * @return \Resta\Logger\LoggerHandler
+     */
+    function logger($file=null)
+    {
+        return app()->resolve(\Resta\Logger\LoggerHandler::class,['file'=>$file]);
+    }
+}
+
+if (!function_exists('request')) {
+
+    /**
+     * @return \Store\Services\RequestService|\Symfony\Component\HttpFoundation\Request
+     */
+    function request()
+    {
+        return core()->request;
+    }
+}
+
+if (!function_exists('response')) {
+
+    /**
+     * @return \Resta\Response\ResponseOutManager
+     */
+    function response()
+    {
+        $object=debug_backtrace()[1]['object'];
+        return new \Resta\Response\ResponseOutManager($object);
+    }
+}
+
+if (!function_exists('path')) {
+
+    /**
+     * @return \Resta\Contracts\StaticPathContracts
+     */
+    function path()
+    {
+        return app()->path();
+    }
+}
+
+if (!function_exists('post')) {
+
+    /**
+     * @param null $param
+     * @param null $default
+     * @return mixed
+     */
+    function post($param=null,$default=null)
+    {
+        //symfony request query object
+        $post=core()->post;
+
+        return ($param===null) ? $post : (isset($post[$param]) ? $post[$param] : $default);
+    }
+}
+
+if (!function_exists('resolve')) {
+
+    /**
+     * @param $class
+     * @param array $bind
+     * @return mixed|null
+     * @throws \DI\DependencyException
+     * @throws \DI\NotFoundException
+     */
+    function resolve($class,$bind=array())
+    {
+        return app()->resolve($class,$bind);
+    }
+}
+
+if (!function_exists('route')) {
+
+    /**
+     * @param $key
+     * @return mixed
+     */
+    function route($key=null)
+    {
+        return array_map(function($route){
+            return strtolower($route);
+        },app()->singleton()->appClass->route($key));
     }
 }
 
@@ -225,109 +357,6 @@ if (!function_exists('tap')) {
     }
 }
 
-if (!function_exists('bundleName')) {
-
-    /**
-     *
-     */
-    function bundleName()
-    {
-       if(defined('endpoint')){
-
-           return endpoint.''.\Resta\Foundation\PathManager\StaticPathList::$controllerBundleName;
-       }
-       return null;
-    }
-}
-
-if (!function_exists('config')) {
-
-    /**
-     * @param null $config
-     * @param null $default
-     * @return null
-     */
-    function config($config=null,$default=null)
-    {
-        $configResult = app()->config($config);
-
-        if($configResult === null && $default!==null){
-            return $default;
-        }
-
-        return $configResult;
-    }
-}
-
-if (!function_exists('resolve')) {
-
-    /**
-     * @param $class
-     * @param array $bind
-     * @return mixed|null
-     * @throws \DI\DependencyException
-     * @throws \DI\NotFoundException
-     */
-    function resolve($class,$bind=array())
-    {
-        return app()->resolve($class,$bind);
-    }
-}
-
-if (!function_exists('container')) {
-
-    /**
-     * @param $class
-     * @param $bind array
-     * @return mixed
-     */
-    function container($class,$bind=array())
-    {
-        return app()->singleton()->appClass->container(appInstance(),$class,$bind);
-    }
-}
-
-if (!function_exists('route')) {
-
-    /**
-     * @param $key
-     * @return mixed
-     */
-    function route($key=null)
-    {
-        return array_map(function($route){
-            return strtolower($route);
-        },app()->singleton()->appClass->route($key));
-    }
-}
-
-if (!function_exists('exception')) {
-
-    /**
-     * @param null $name
-     * @param array $params
-     * @return \Resta\Contracts\ExceptionContracts
-     */
-    function exception($name=null,$params=array())
-    {
-        $exceptionManager=\Resta\Exception\ExceptionManager::class;
-        return app()->resolve($exceptionManager,['name'=>$name,'params'=>$params]);
-    }
-}
-
-if (!function_exists('logger')) {
-
-    /**
-     * @param $file null
-     * @return \Resta\Logger\LoggerHandler
-     */
-    function logger($file=null)
-    {
-        return app()->resolve(\Resta\Logger\LoggerHandler::class,['file'=>$file]);
-    }
-}
-
-
 if (!function_exists('trans')) {
 
 
@@ -339,49 +368,5 @@ if (!function_exists('trans')) {
     function trans($lang,$select=array())
     {
         return app()->singleton()->appClass->translator($lang,$select);
-    }
-}
-
-if (!function_exists('call')) {
-
-
-    /**
-     * @param $call
-     * @return mixed
-     */
-    function call($call)
-    {
-        return app()->namespace()->call($call);
-    }
-}
-
-if (!function_exists('faker')) {
-
-
-    /**
-     * @param null $locale
-     * @return \Faker\Generator
-     */
-    function faker($locale=null)
-    {
-        if($locale===null){
-            $faker=\Faker\Factory::create();
-        }
-        else{
-            $faker=\Faker\Factory::create($locale);
-        }
-
-        return $faker;
-    }
-}
-
-if (!function_exists('path')) {
-
-    /**
-     * @return \Resta\Contracts\StaticPathContracts
-     */
-    function path()
-    {
-        return app()->path();
     }
 }
