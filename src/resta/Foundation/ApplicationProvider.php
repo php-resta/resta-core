@@ -9,20 +9,17 @@ use Resta\Contracts\ApplicationContracts;
 class ApplicationProvider
 {
     /**
-     * @var $app \Resta\Contracts\ApplicationContracts|ContainerContracts
+     * @var $app ApplicationContracts|ContainerContracts
      */
     public $app;
 
     /**
      * Application Constructor
      *
-     * @param $app \Resta\Contracts\ApplicationContracts|ContainerContracts
+     * @param $app ApplicationContracts|ContainerContracts
      */
     public function __construct(ApplicationContracts $app)
     {
-        /**
-         * @var $app \Resta\Contracts\ApplicationContracts|ContainerContracts
-         */
         $this->app = $app;
     }
 }
