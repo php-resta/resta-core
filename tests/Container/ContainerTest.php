@@ -22,7 +22,7 @@ class ApplicationTest extends AbstractTest
         $this->assertSame(2,(new ResolveDummy(app()))->getCounter());
 
         $this->assertInstanceOf(ResolveDummy::class,static::$app->resolve(ResolveDummy::class));
-        $this->assertInstanceOf(Application::class,static::$app->resolve(ResolveDummy::class)->app);
+        $this->assertInstanceOf(Application::class,static::$app->resolve(ResolveDummy::class)->app());
         $this->assertSame(null,static::$app->resolve(ResolveDummy::class)->getDummy());
         $this->assertSame(3,static::$app->resolve(ResolveDummy::class)->getCounter());
         $this->assertSame(3,static::$app->resolve(ResolveDummy::class)->getCounter());
@@ -31,7 +31,7 @@ class ApplicationTest extends AbstractTest
 
         $this->assertInstanceOf(ResolveDummy::class,app()->resolve(ResolveDummy::class));
         $this->assertSame(5,app()->resolve(ResolveDummy::class)->getCounter());
-        $this->assertInstanceOf(Application::class,app()->resolve(ResolveDummy::class)->app);
+        $this->assertInstanceOf(Application::class,app()->resolve(ResolveDummy::class)->app());
         $this->assertSame(null,app()->resolve(ResolveDummy::class)->getDummy());
         $this->assertSame(5,app()->resolve(ResolveDummy::class)->getCounter());
         $this->assertSame(1,app()->resolve(ResolveDummy::class,['dummy'=>1])->getDummy());
