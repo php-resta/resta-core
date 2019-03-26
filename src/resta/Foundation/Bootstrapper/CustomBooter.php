@@ -21,12 +21,12 @@ class CustomBooter
     /**
      * @var array
      */
-    protected $booterList=[];
+    protected $booterList = [];
 
     /**
      * @var string
      */
-    protected $customBooter='originGroups';
+    protected $customBooter = 'originGroups';
 
     /**
      * CustomBooter constructor.
@@ -46,7 +46,7 @@ class CustomBooter
     private function addCustomBooter($booter)
     {
         //normally we will assign a variable to our booterList list.
-        $booterList=$this->getBooterList($booter);
+        $booterList = $this->getBooterList($booter);
 
         //Now, let's get our custom boot list.
         //Let's assign the final state to our booterList list along with our custom boot list.
