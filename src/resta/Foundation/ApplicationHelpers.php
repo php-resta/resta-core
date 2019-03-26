@@ -346,7 +346,6 @@ if (!function_exists('tap')) {
 
 if (!function_exists('trans')) {
 
-
     /**
      * @param $lang
      * @param array $select
