@@ -94,6 +94,17 @@ if (!function_exists('container')) {
     }
 }
 
+if (!function_exists('core')) {
+
+    /**
+     * @return mixed
+     */
+    function core()
+    {
+        return app()->singleton();
+    }
+}
+
 if (!function_exists('controller')) {
 
     /**
@@ -103,17 +114,6 @@ if (!function_exists('controller')) {
     function controller($controller=null)
     {
         return ($controller===null) ? app()->namespace()->controller() : app()->namespace()->controller($controller);
-    }
-}
-
-if (!function_exists('core')) {
-
-    /**
-     * @return mixed
-     */
-    function core()
-    {
-        return app()->singleton();
     }
 }
 
