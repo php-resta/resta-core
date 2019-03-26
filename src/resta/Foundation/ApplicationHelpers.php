@@ -270,33 +270,6 @@ if (!function_exists('response')) {
     }
 }
 
-if (!function_exists('path')) {
-
-    /**
-     * @return \Resta\Contracts\StaticPathContracts
-     */
-    function path()
-    {
-        return app()->path();
-    }
-}
-
-if (!function_exists('post')) {
-
-    /**
-     * @param null $param
-     * @param null $default
-     * @return mixed
-     */
-    function post($param=null,$default=null)
-    {
-        //symfony request query object
-        $post=core()->post;
-
-        return ($param===null) ? $post : (isset($post[$param]) ? $post[$param] : $default);
-    }
-}
-
 if (!function_exists('resolve')) {
 
     /**
@@ -323,6 +296,33 @@ if (!function_exists('route')) {
         return array_map(function($route){
             return strtolower($route);
         },app()->singleton()->appClass->route($key));
+    }
+}
+
+if (!function_exists('path')) {
+
+    /**
+     * @return \Resta\Contracts\StaticPathContracts
+     */
+    function path()
+    {
+        return app()->path();
+    }
+}
+
+if (!function_exists('post')) {
+
+    /**
+     * @param null $param
+     * @param null $default
+     * @return mixed
+     */
+    function post($param=null,$default=null)
+    {
+        //symfony request query object
+        $post=core()->post;
+
+        return ($param===null) ? $post : (isset($post[$param]) ? $post[$param] : $default);
     }
 }
 
