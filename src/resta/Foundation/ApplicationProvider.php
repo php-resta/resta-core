@@ -10,7 +10,7 @@ abstract class ApplicationProvider
     /**
      * @var $app ApplicationContracts|ContainerContracts
      */
-    public $app;
+    protected $app;
 
     /**
      * Application Constructor
@@ -20,5 +20,13 @@ abstract class ApplicationProvider
     public function __construct(ApplicationContracts $app)
     {
         $this->app = $app;
+    }
+
+    /**
+     * @return ApplicationContracts|ContainerContracts
+     */
+    public function app()
+    {
+        return $this->app;
     }
 }

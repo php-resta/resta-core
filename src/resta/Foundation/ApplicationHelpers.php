@@ -26,7 +26,7 @@ if (!function_exists('app')) {
      */
     function app()
     {
-        return appInstance()->app;
+        return appInstance()->app();
     }
 }
 
