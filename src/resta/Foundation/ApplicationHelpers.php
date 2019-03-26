@@ -1,9 +1,28 @@
 <?php
 
+use Faker\Factory;
+use Faker\Generator;
+use Resta\Logger\LoggerHandler;
+use Store\Services\RequestService;
+use Resta\Exception\ExceptionManager;
+use Resta\Support\HigherOrderTapProxy;
+use Resta\Response\ResponseOutManager;
+use Resta\Contracts\ContainerContracts;
+use Resta\EventDispatcher\EventManager;
+use Resta\Contracts\ExceptionContracts;
+use Resta\Contracts\StaticPathContracts;
+use Resta\Contracts\ApplicationContracts;
+use Resta\Foundation\ApplicationProvider;
+use Resta\Authenticate\AuthenticateContract;
+use Resta\Authenticate\AuthenticateProvider;
+use Symfony\Component\HttpFoundation\Request;
+use Resta\Contracts\ApplicationHelpersContracts;
+use Resta\Foundation\PathManager\StaticPathList;
+
 if (!function_exists('app')) {
 
     /**
-     * @return \Resta\Contracts\ApplicationContracts|\Resta\Contracts\ApplicationHelpersContracts|\Resta\Contracts\ContainerContracts
+     * @return ApplicationContracts|ApplicationHelpersContracts|ContainerContracts
      */
     function app()
     {
@@ -14,7 +33,7 @@ if (!function_exists('app')) {
 if (!function_exists('appInstance')) {
 
     /**
-     * @return \Resta\Foundation\ApplicationProvider
+     * @return ApplicationProvider
      */
     function appInstance()
     {
@@ -39,11 +58,11 @@ if (!function_exists('applicationKey')) {
 
 if (!function_exists('auth')) {
     /**
-     * @return \Resta\Authenticate\AuthenticateContract
+     * @return AuthenticateContract
      */
     function auth()
     {
-        return app()->resolve(\Resta\Authenticate\AuthenticateProvider::class);
+        return app()->resolve(AuthenticateProvider::class);
     }
 }
 
@@ -56,7 +75,7 @@ if (!function_exists('bundleName')) {
     {
         if(defined('endpoint')){
 
-            return endpoint.''.\Resta\Foundation\PathManager\StaticPathList::$controllerBundleName;
+            return endpoint.''.StaticPathList::$controllerBundleName;
         }
         return null;
     }
@@ -124,7 +143,7 @@ if (!function_exists('environment')) {
 if (!function_exists('event')) {
 
     /**
-     * @return \Resta\Event\EventManager
+     * @return EventManager
      */
     function event($event=null)
     {
@@ -140,11 +159,11 @@ if (!function_exists('exception')) {
     /**
      * @param null $name
      * @param array $params
-     * @return \Resta\Contracts\ExceptionContracts
+     * @return ExceptionContracts
      */
     function exception($name=null,$params=array())
     {
-        $exceptionManager=\Resta\Exception\ExceptionManager::class;
+        $exceptionManager=ExceptionManager::class;
         return app()->resolve($exceptionManager,['name'=>$name,'params'=>$params]);
     }
 }
@@ -153,15 +172,15 @@ if (!function_exists('faker')) {
 
     /**
      * @param null $locale
-     * @return \Faker\Generator
+     * @return Generator
      */
     function faker($locale=null)
     {
         if($locale===null){
-            $faker=\Faker\Factory::create();
+            $faker=Factory::create();
         }
         else{
-            $faker=\Faker\Factory::create($locale);
+            $faker=Factory::create($locale);
         }
 
         return $faker;
@@ -239,18 +258,18 @@ if (!function_exists('logger')) {
 
     /**
      * @param $file null
-     * @return \Resta\Logger\LoggerHandler
+     * @return LoggerHandler
      */
     function logger($file=null)
     {
-        return app()->resolve(\Resta\Logger\LoggerHandler::class,['file'=>$file]);
+        return app()->resolve(LoggerHandler::class,['file'=>$file]);
     }
 }
 
 if (!function_exists('request')) {
 
     /**
-     * @return \Store\Services\RequestService|\Symfony\Component\HttpFoundation\Request
+     * @return RequestService|Request
      */
     function request()
     {
@@ -261,12 +280,12 @@ if (!function_exists('request')) {
 if (!function_exists('response')) {
 
     /**
-     * @return \Resta\Response\ResponseOutManager
+     * @return ResponseOutManager
      */
     function response()
     {
         $object=debug_backtrace()[1]['object'];
-        return new \Resta\Response\ResponseOutManager($object);
+        return new ResponseOutManager($object);
     }
 }
 
@@ -276,6 +295,7 @@ if (!function_exists('resolve')) {
      * @param $class
      * @param array $bind
      * @return mixed|null
+     *
      * @throws \DI\DependencyException
      * @throws \DI\NotFoundException
      */
@@ -302,7 +322,7 @@ if (!function_exists('route')) {
 if (!function_exists('path')) {
 
     /**
-     * @return \Resta\Contracts\StaticPathContracts
+     * @return StaticPathContracts
      */
     function path()
     {
@@ -336,7 +356,7 @@ if (!function_exists('tap')) {
     function tap($value, $callback)
     {
         if (!is_callable($callback)) {
-            return new \Resta\Support\HigherOrderTapProxy($value);
+            return new HigherOrderTapProxy($value);
         }
 
         $callback($value);
