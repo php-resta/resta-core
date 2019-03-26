@@ -7,13 +7,6 @@ use Resta\Container\Container;
 abstract class Kernel extends Container
 {
     /**
-     * origin groups for kernel boot
-     *
-     * @var $boot
-     */
-    protected $boot=false;
-
-    /**
      * get origin groups
      *
      * @var array
