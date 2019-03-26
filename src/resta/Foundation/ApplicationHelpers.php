@@ -105,24 +105,6 @@ if (!function_exists('core')) {
     }
 }
 
-if (!function_exists('fingerPrint')) {
-
-    function fingerPrint()
-    {
-        return md5(sha1(implode("|",[
-            request()->getClientIp(),$_SERVER['HTTP_USER_AGENT'],applicationKey()
-        ])));
-    }
-}
-
-if (!function_exists('fullUrl')) {
-
-    function fullUrl()
-    {
-        return request()->getUri();
-    }
-}
-
 if (!function_exists('dd')) {
     function dd()
     {
@@ -184,6 +166,24 @@ if (!function_exists('faker')) {
         }
 
         return $faker;
+    }
+}
+
+if (!function_exists('fingerPrint')) {
+
+    function fingerPrint()
+    {
+        return md5(sha1(implode("|",[
+            request()->getClientIp(),$_SERVER['HTTP_USER_AGENT'],applicationKey()
+        ])));
+    }
+}
+
+if (!function_exists('fullUrl')) {
+
+    function fullUrl()
+    {
+        return request()->getUri();
     }
 }
 
