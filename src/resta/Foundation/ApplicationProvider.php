@@ -6,7 +6,7 @@ use Resta\Response\ResponseOutManager;
 use Resta\Contracts\ContainerContracts;
 use Resta\Contracts\ApplicationContracts;
 
-class ApplicationProvider
+abstract class ApplicationProvider
 {
     /**
      * @var $app ApplicationContracts|ContainerContracts
