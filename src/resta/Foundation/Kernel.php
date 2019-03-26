@@ -4,7 +4,7 @@ namespace Resta\Foundation;
 
 use Resta\Container\Container;
 
-class Kernel extends Container
+abstract class Kernel extends Container
 {
     /**
      * origin groups for kernel boot
