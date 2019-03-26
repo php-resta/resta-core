@@ -26,10 +26,10 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
      *
      * @var string
      */
-    const VERSION = '1.0.0';
+    protected const VERSION = '1.0.0';
 
     /**
-     * The Laravel framework version.
+     * load bootstrappers for kernel.
      *
      * @var string
      */
