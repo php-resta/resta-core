@@ -73,10 +73,10 @@ class ApplicationAutoLoadRegister
      */
     private function checkAliasClassFormatter($class,$callback)
     {
-        $systemApp=[];
+        $systemApp = [];
 
         if(defined('app')){
-            $systemApp=(new ClassAliasGroup())->handle($class);
+            $systemApp = (new ClassAliasGroup())->handle($class);
         }
 
         if(!file_exists($class)){
@@ -106,8 +106,8 @@ class ApplicationAutoLoadRegister
      */
     private function setAliasClassGroup($class,$systemApp)
     {
-        $alias=str_replace(root.''.DIRECTORY_SEPARATOR.'','',$class);
-        $alias=str_replace(self::FileExtension,'',$alias);
+        $alias = str_replace(root.''.DIRECTORY_SEPARATOR.'','',$class);
+        $alias = str_replace(self::FileExtension,'',$alias);
 
         //set class_alias groups
         if(array_key_exists($alias,$systemApp)){
