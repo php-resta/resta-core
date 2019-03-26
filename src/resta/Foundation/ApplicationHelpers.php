@@ -151,7 +151,6 @@ if (!function_exists('exception')) {
 
 if (!function_exists('faker')) {
 
-
     /**
      * @param null $locale
      * @return \Faker\Generator
