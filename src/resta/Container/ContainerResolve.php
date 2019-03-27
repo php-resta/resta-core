@@ -49,7 +49,7 @@ class ContainerResolve extends ApplicationProvider
             return [$parameterName=>$parameterResolve];
         }
 
-        if(Utils::isNamespaceExists($parameter->getType()->getName())){
+        if($parameter->getType()!== NULL && Utils::isNamespaceExists($parameter->getType()->getName())){
 
             // Unpack the container object and
             // bind it to the param variable.
