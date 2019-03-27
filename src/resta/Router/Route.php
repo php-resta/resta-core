@@ -184,13 +184,26 @@ class Route extends RouteHttpManager
             static::$mappers['routePaths'][] = $routeDefinitor['routePath'];
             static::$mappers['controllerNamespaces'][] = Utils::getNamespace($routeDefinitor['controllerPath']);
 
-            //set a predefined value for route.php.
-            $routePrefix    = (defined('endpoint')) ? endpoint : md5(time());
-            $routeName      = $routePrefix.'Route.php';
-            $routeMapper    = $routeDefinitor['routePath'].''.DIRECTORY_SEPARATOR.''.$routeName;
+            // if there is endpoint,
+            // then only that endpoint is transferred into the path
+            if(defined('endpoint')){
 
-            if(file_exists($routeMapper) && !isset(static::$paths[$routeMapper])){
-                static::$paths[$routeMapper] = $routeDefinitor['controllerPath'];
+                $routeName      = endpoint.'Route.php';
+                $routeMapper    = $routeDefinitor['routePath'].''.DIRECTORY_SEPARATOR.''.$routeName;
+
+                if(file_exists($routeMapper) && !isset(static::$paths[$routeMapper])){
+                    static::$paths[$routeMapper] = $routeDefinitor['controllerPath'];
+                }
+            }
+            else{
+
+                // if there is no endpoint,
+                // all files in the path of the route are transferred to path.
+                $allFilesInThatRoutePath = Utils::glob($routeDefinitor['routePath']);
+
+                foreach ($allFilesInThatRoutePath as $item){
+                    static::$paths[$item] = $routeDefinitor['controllerPath'];
+                }
             }
         }
     }

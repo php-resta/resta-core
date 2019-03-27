@@ -18,7 +18,7 @@ class RouteServiceProvider extends ServiceProviderManager implements BootContrac
         // we are bind the route class.
         $this->app->bind('route',function(){
             return Route::class;
-        });
+        },true);
     }
 
     /**
