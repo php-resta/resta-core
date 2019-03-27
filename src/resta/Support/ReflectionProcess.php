@@ -68,10 +68,7 @@ class ReflectionProcess
      */
     public function getReflectionMethod($method)
     {
-        if(!isset(static::$singletons['reflectionMethod_'.$this->namespace.'_'.$method])){
-            static::$singletons['reflectionMethod_'.$this->namespace.'_'.$method] = new \ReflectionMethod($this->namespace,$method);
-        }
-        return static::$singletons['reflectionMethod_'.$this->namespace.'_'.$method];
+        return new \ReflectionMethod($this->namespace,$method);
     }
 
     /**

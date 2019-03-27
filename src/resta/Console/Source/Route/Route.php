@@ -55,8 +55,12 @@ class Route extends ConsoleOutputter {
 
             $methodDocument = app()['reflection']($controllerNamespace)->reflectionMethodParams($data['method'])->document;
 
+            $methodDefinition = '';
+
             if(preg_match('@#define:(.*?)\r\n@is',$methodDocument,$definition)){
-               $definition = rtrim($definition[1]);
+                if(isset($definition[1])){
+                    $methodDefinition = rtrim($definition[1]);
+                }
             }
 
             $this->table->addRow([
@@ -64,7 +68,7 @@ class Route extends ConsoleOutputter {
                 $data['http'],
                 $controllerNamespace,
                 $data['method'],
-                $definition,
+                $methodDefinition,
                 '',
                 '',
                 '',
