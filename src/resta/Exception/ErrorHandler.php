@@ -205,7 +205,8 @@ class ErrorHandler extends ApplicationProvider {
 
         if($restaOutHandle===null){
 
-            $responseConfigData = config('response.data');
+            //header set and symfony response call
+            header('Content-type:application/json;charset=utf-8');
 
             echo json_encode(core()->out->outputFormatter($appException));
             exit();
