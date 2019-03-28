@@ -5,7 +5,7 @@ namespace __kernelDir__;
 use Store\Traits\Annotations;
 
 /**
- * Trait ServiceAnnotationsController
+ * Trait ServiceAnnotationsManager
  */
 trait AppAnnotations
 {

@@ -196,9 +196,9 @@ class StaticPathModel extends StaticPathList
     public static function appAnnotation($app=null,$path=false)
     {
         if($path){
-            return self::appVersionRoot($app,true).'/ServiceAnnotationsController.php';
+            return self::appVersionRoot($app,true).'/ServiceAnnotationsManager.php';
         }
-        return self::appVersionRoot($app).'\\ServiceAnnotationsController';
+        return self::appVersionRoot($app).'\\ServiceAnnotationsManager';
     }
 
     /**
@@ -206,7 +206,7 @@ class StaticPathModel extends StaticPathList
      */
     public static function appMiddleware()
     {
-        return self::appVersionRoot().'\\ServiceMiddlewareController';
+        return self::appVersionRoot().'\\ServiceMiddlewareManager';
     }
 
     /**
@@ -254,7 +254,7 @@ class StaticPathModel extends StaticPathList
      */
     public static function appServiceLog()
     {
-        return self::appVersionRoot().'\ServiceLogController';
+        return self::appVersionRoot().'\ServiceLogManager';
     }
 
     /**

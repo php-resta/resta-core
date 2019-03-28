@@ -4,7 +4,7 @@ namespace App\__project__\__version__;
 
 use Resta\EventDispatcher\EventManager;
 
-class ServiceEventDispatcherController extends EventManager
+class ServiceEventDispatcherManager extends EventManager
 {
     /**
      * The event listener mappings for the application.

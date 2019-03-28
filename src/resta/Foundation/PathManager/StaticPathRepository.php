@@ -123,7 +123,7 @@ class StaticPathRepository
      */
     public function appLogger($app=null)
     {
-        return $this->appVersion($app).''.DIRECTORY_SEPARATOR.'ServiceLogController';
+        return $this->appVersion($app).''.DIRECTORY_SEPARATOR.'ServiceLogManager';
     }
 
     /**
@@ -274,7 +274,7 @@ class StaticPathRepository
      */
     public function appServiceEventDispatcher($app=null)
     {
-        return $this->appVersion($app).''.DIRECTORY_SEPARATOR.'ServiceEventDispatcherController';
+        return $this->appVersion($app).''.DIRECTORY_SEPARATOR.'ServiceEventDispatcherManager';
     }
 
     /**

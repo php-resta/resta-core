@@ -76,7 +76,7 @@ class Model extends ConsoleOutputter {
     private function setAnnotations(){
 
         return Utils::changeClass(path()->serviceAnnotations().'.php',
-            ['Trait ServiceAnnotationsController'=>'Trait ServiceAnnotationsController'.PHP_EOL.' * @method \\'.app()->namespace()->builder().'\\'.$this->argument['file'].'Builder '.strtolower($this->argument['file']).'Builder'
+            ['Trait ServiceAnnotationsManager'=>'Trait ServiceAnnotationsManager'.PHP_EOL.' * @method \\'.app()->namespace()->builder().'\\'.$this->argument['file'].'Builder '.strtolower($this->argument['file']).'Builder'
             ]);
     }
 }

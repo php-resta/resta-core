@@ -4,7 +4,7 @@ namespace App\__project__\__version__;
 
 use Resta\Contracts\HandleContracts;
 
-class ServiceMiddlewareController implements HandleContracts
+class ServiceMiddlewareManager implements HandleContracts
 {
     /**
      * @return array

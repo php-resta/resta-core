@@ -2,12 +2,12 @@
 
 namespace __controllerNamespace__;
 
-use __versionNamespace__\ServiceAnnotationsController;
+use __versionNamespace__\ServiceAnnotationsManager;
 
 abstract class App
 {
     //get service annotations
-    use ServiceAnnotationsController;
+    use ServiceAnnotationsManager;
 
     /**
      * service restrictions method.

@@ -2,12 +2,12 @@
 
 namespace __exceptionNamespace__;
 
-use __versionNamespace__\ServiceAnnotationsController;
+use __versionNamespace__\ServiceAnnotationsManager;
 
 class __exception__Exception extends \Exception
 {
     //get app annotations controller
-    use ServiceAnnotationsController;
+    use ServiceAnnotationsManager;
 
     /**
      * @var string $message

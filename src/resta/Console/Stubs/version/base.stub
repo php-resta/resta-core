@@ -7,6 +7,6 @@ use Resta\Foundation\ApplicationProvider;
 class ServiceBaseController extends ApplicationProvider
 {
     //get service annotation
-    use ServiceAnnotationsController;
+    use ServiceAnnotationsManager;
 
 }

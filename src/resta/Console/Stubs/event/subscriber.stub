@@ -2,12 +2,12 @@
 
 namespace __subscriberNamespace__;
 
-use __versionNamespace__\ServiceAnnotationsController;
+use __versionNamespace__\ServiceAnnotationsManager;
 
 class __eventSubscriber__
 {
     //get service annotations
-    use ServiceAnnotationsController;
+    use ServiceAnnotationsManager;
 
     /**
      * @var $param

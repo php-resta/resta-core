@@ -3,11 +3,11 @@
 namespace __repositoryNamespace__;
 
 use Store\Traits\RepositoryTrait;
-use __versionNamespace__\ServiceAnnotationsController;
+use __versionNamespace__\ServiceAnnotationsManager;
 
 class __repository__Adapter
 {
-    use RepositoryTrait,ServiceAnnotationsController;
+    use RepositoryTrait,ServiceAnnotationsManager;
 
     /**
      * @var string

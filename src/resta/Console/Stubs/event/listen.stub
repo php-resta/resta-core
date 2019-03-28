@@ -3,12 +3,12 @@
 namespace __listenNamespace__;
 
 use __eventKeyNamespace__;
-use __versionNamespace__\ServiceAnnotationsController;
+use __versionNamespace__\ServiceAnnotationsManager;
 
 class __eventListen__
 {
     //get service annotations
-    use ServiceAnnotationsController;
+    use ServiceAnnotationsManager;
 
     /**
      * @param __eventMain__ $__eventMain__

@@ -5,10 +5,10 @@ namespace App\__project__\__version__;
 use Store\Traits\Annotations;
 
 /**
- * Trait ServiceAnnotationsController
+ * Trait ServiceAnnotationsManager
   * @property \__factoryDir__\Factory factory
  */
-trait ServiceAnnotationsController
+trait ServiceAnnotationsManager
 {
     use Annotations;
 }
