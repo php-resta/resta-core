@@ -46,11 +46,19 @@ class Factory extends ConsoleOutputter {
         $this->argument['factoryDir']   = app()->namespace()->factory();
         $factoryArgument                = $this->argument['factory'];
 
+        $this->directory['factoryDir'] = app()->path()->factory();
+
         $this->directory['factoryArgumentDir']              = app()->path()->factory().''.DIRECTORY_SEPARATOR.''.$factoryArgument;
         $this->directory['factoryArgumentDirInterfaces']    = $this->directory['factoryArgumentDir'].''.DIRECTORY_SEPARATOR.'Interfaces';
         $this->directory['factoryArgumentDirResources']     = $this->directory['factoryArgumentDir'].''.DIRECTORY_SEPARATOR.'Resources';
 
         $this->file->makeDirectory($this);
+
+        if(!file_exists($this->factory().'/Factory.php')){
+
+            $this->touch['factory/factory']             = $this->factory().'/Factory.php';
+            $this->touch['factory/factorymanager']      = $this->factory().'/FactoryManager.php';
+        }
 
         if(file_exists( $this->directory['factoryArgumentDir'])){
 
