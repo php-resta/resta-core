@@ -88,21 +88,6 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Application Response OutPutter
-    |--------------------------------------------------------------------------
-    |
-    | you can specify and manage the response output according to your project group.
-    | This value in the config is defined by the kernel and
-    | is a config switch which should never be disabled.
-    |
-    */
-    'responseOutPutter' => [
-            'json'  => 'Resta\Response\Outputter\JsonOutputter',
-            'xml'   => 'Resta\Response\Outputter\XmlOutputter'
-    ],
-
-    /*
-    |--------------------------------------------------------------------------
     | Application Timezone
     |--------------------------------------------------------------------------
     |

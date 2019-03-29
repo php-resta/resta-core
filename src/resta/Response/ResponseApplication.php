@@ -13,7 +13,7 @@ class ResponseApplication extends ResponseOutput
     private function appResponseType()
     {
         //get controller instance
-        $controllerInstance=$this->getControllerInstance();
+        $controllerInstance = $this->getControllerInstance();
 
         //If our endpoint is provided without auto service,
         //we get the response object from the existing kernel object without resampling our service base class.
@@ -59,25 +59,27 @@ class ResponseApplication extends ResponseOutput
         define ('responseApp',true);
 
         //get out putter for response
-        $outputter=$this->outPutter();
+        $formatter = $this->formatter();
 
         //if out putter is not null
-        if(Utils::isNamespaceExists($outputter)){
+        if(Utils::isNamespaceExists($formatter)){
 
             //We resolve the response via the service container
             //and run the handle method.
-            return app()->resolve($outputter)->handle($this->getOutPutter());
+            return app()->resolve($formatter)->{$this->getResponseKind()}($this->getOutPutter());
         }
+
+        exception()->runtime('There is no response class in your services');
     }
 
     /**
      * @return \Resta\Config\ConfigProcess
      */
-    private function outPutter()
+    private function formatter()
     {
         //we get and handle the adapter classes in
         //the output array according to the base object.
-        return config('app.responseOutPutter.'.$this->getResponseKind());
+        return config('response.outputter.formatter');
     }
 
     /**
