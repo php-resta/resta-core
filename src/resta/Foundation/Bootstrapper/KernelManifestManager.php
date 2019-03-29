@@ -68,9 +68,9 @@ class KernelManifestManager
                 // we set this condition for users to boot the classes they want in the kernel groups.
                 // in the manifesto, if the kernel groups method returns an class of arrays
                 // then these classes will automatically join the kernel groups installation.
-                if(isset($this->app) && isset($this->app[$maker]) && is_array($this->app[$maker])){
+                if(isset($this->run) && isset($this->run[$maker]) && is_array($this->run[$maker])){
 
-                    $appMaker = $this->app[$maker];
+                    $appMaker = $this->run[$maker];
 
                     // if the makerExtend value in the manifest is a method,
                     // in this case, the method is executed instead of the object
@@ -79,7 +79,7 @@ class KernelManifestManager
                     }
 
                     //we combine the kernel with the application list on the application side.
-                    $kernelMakers = array_merge($this->{$maker},$this->app[$maker]);
+                    $kernelMakers = array_merge($this->{$maker},$this->run[$maker]);
 
                     // classes in the entire maker list can be uploaded on a per-user basis.
                     // if the maker is present on a method basis, then the maker list values ​​must be true or false.
