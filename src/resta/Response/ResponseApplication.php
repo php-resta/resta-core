@@ -68,8 +68,6 @@ class ResponseApplication extends ResponseOutput
             //and run the handle method.
             return app()->resolve($formatter)->{$this->getResponseKind()}($this->getOutPutter());
         }
-
-        exception()->runtime('There is no response class in your services');
     }
 
     /**
