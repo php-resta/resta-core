@@ -36,7 +36,7 @@ class BootLoader extends ApplicationProvider implements BootContracts
 
             //If the second parameter is sent true to the application builder,
             //all operations are performed by the console and the custom booting are executed
-            $this->app->bind('appConsole',ConsoleManager::class,true);
+            $this->app->make('appConsole',ConsoleManager::class,true);
         }
     }
 
@@ -58,7 +58,7 @@ class BootLoader extends ApplicationProvider implements BootContracts
         // this is your application's config installer.
         // you can easily access the config variables with the config installer.
         if($this->app->checkBindings('config')===false){
-            $this->app->bind('config',function(){
+            $this->app->make('config',function(){
                 return Config::class;
             },true);
         }
@@ -72,7 +72,7 @@ class BootLoader extends ApplicationProvider implements BootContracts
         // the rest system will assign a random key to your application for you.
         // this application will single the advantages of using the rest system for your application in particular.
         if(core()->isAvailableStore && $this->app->checkBindings('encrypter')===false){
-            $this->app->bind('encrypter',function(){
+            $this->app->make('encrypter',function(){
                 return EncrypterProvider::class;
             });
         }
@@ -87,7 +87,7 @@ class BootLoader extends ApplicationProvider implements BootContracts
         // the environment where the application is running.for example,
         // you may wish to use a different cache driver locally than you do on your production server.
         if($this->app->checkBindings('environment')===false){
-            $this->app->bind('environment',function(){
+            $this->app->make('environment',function(){
                 return EnvironmentConfiguration::class;
             },true);
         }
@@ -102,7 +102,7 @@ class BootLoader extends ApplicationProvider implements BootContracts
         // that allow your application components to communicate
         // with each other by dispatching events and listening to them.
         if($this->app->checkBindings('eventDispatcher')===false){
-            $this->app->bind('eventDispatcher',function(){
+            $this->app->make('eventDispatcher',function(){
                 return app()->namespace()->serviceEventDispatcher();
             },true);
         }
@@ -118,7 +118,7 @@ class BootLoader extends ApplicationProvider implements BootContracts
         // rest system provides robust logging services that allow you to log messages to files,
         // the system error log, and even to Slack to notify your entire team.
         if($this->app->checkBindings('logger')===false){
-            $this->app->bind('logger',function(){
+            $this->app->make('logger',function(){
                 return LoggerService::class;
             },true);
         }
@@ -134,7 +134,7 @@ class BootLoader extends ApplicationProvider implements BootContracts
         // thus, if you make http request your application, you can verify with an intermediate middleware layer
         // and throw an exception.
         if(core()->isAvailableStore && $this->app->checkBindings('middleware')===false){
-            $this->app->bind('middleware',function(){
+            $this->app->make('middleware',function(){
                 return ApplicationMiddleware::class;
             });
         }
@@ -148,7 +148,7 @@ class BootLoader extends ApplicationProvider implements BootContracts
         // we determine kind of output with the response manager
         // json as default or [xml,wsdl]
         if($this->app->checkBindings('response')===false){
-            $this->app->bind('response',function(){
+            $this->app->make('response',function(){
                 return ResponseApplication::class;
             });
         }
@@ -163,7 +163,7 @@ class BootLoader extends ApplicationProvider implements BootContracts
         // a route operation is passed through the url process and output is sent to the screen according to
         // the method file to be called by the application
         if(core()->isAvailableStore && $this->app->checkBindings('router')===false){
-            $this->app->bind('router',function(){
+            $this->app->make('router',function(){
                 return Router::class;
             });
         }
@@ -175,7 +175,7 @@ class BootLoader extends ApplicationProvider implements BootContracts
     private function serviceProvider()
     {
         if($this->app->checkBindings('serviceProvider')===false){
-            $this->app->bind('serviceProvider',function(){
+            $this->app->make('serviceProvider',function(){
                 return ServiceProvider::class;
             },true);
         }
@@ -199,7 +199,7 @@ class BootLoader extends ApplicationProvider implements BootContracts
         // with url parsing,the application route for
         // the rest project is determined after the route variables from the URL are assigned to the kernel url object.
         if(core()->isAvailableStore && $this->app->checkBindings('url')===false){
-            $this->app->bind('url',function(){
+            $this->app->make('url',function(){
                 return UrlParseApplication::class;
             });
         }

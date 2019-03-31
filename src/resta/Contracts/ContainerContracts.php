@@ -11,7 +11,7 @@ interface ContainerContracts {
      * @param $container false
      * @return mixed
      */
-    public function bind($object=null,$callback=null,$container=false);
+    public function make($object=null,$callback=null,$container=false);
 
 
     /**
@@ -20,7 +20,7 @@ interface ContainerContracts {
      * @param $callback null
      * @return mixed
      */
-    public function container($object=null,$callback=null);
+    public function bind($object=null,$callback=null);
 
     /**
      * @method singleton

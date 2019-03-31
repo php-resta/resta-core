@@ -50,7 +50,7 @@ class ConsoleBindings extends ApplicationProvider {
         //if the container value is true,
         //we will have to assign a value to the build method,
         //which is the container method directly.
-        $appresolve=($container) ? 'build' : 'bind';
+        $appresolve = ($container) ? 'containerBuild' : 'make';
 
         //we send the value to the bind method without callback after checking the bind object to be loaded for the console.
         //This is the value found in the bindings variable.

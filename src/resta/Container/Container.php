@@ -98,10 +98,11 @@ class Container implements ContainerContracts,\ArrayAccess
      * @param null $callback
      * @param bool $container
      * @return mixed
+     *
      * @throws \DI\DependencyException
      * @throws \DI\NotFoundException
      */
-    public function bind($object=null,$callback=null,$container=false)
+    public function make($object=null,$callback=null,$container=false)
     {
         //we check whether the boolean value of the singleton variable used
         //for booting does not reset every time the object variable to be assigned to the kernel variable is true
@@ -115,7 +116,7 @@ class Container implements ContainerContracts,\ArrayAccess
 
         //If the third parameter passed to the bind method carries a container value,
         //then you will not be able to fire the build method instead of the make method.
-        $makeBuild=($container==="container") ? 'build' : 'make';
+        $makeBuild=($container==="container") ? 'containerBuild' : 'build';
 
         //If the bind method does not have parameters object and callback, the value is directly assigned to the kernel object.
         //Otherwise, when the bind object and callback are sent, the closure class inherits
@@ -128,15 +129,16 @@ class Container implements ContainerContracts,\ArrayAccess
      * @param null $object
      * @param null $callback
      * @return mixed
+     *
      * @throws \DI\DependencyException
      * @throws \DI\NotFoundException
      */
-    public function container($object=null,$callback=null)
+    public function bind($object=null,$callback=null)
     {
         //If the bind method does not have parameters object and callback, the value is directly assigned to the kernel object.
         //Otherwise, when the bind object and callback are sent, the closure class inherits
         //the applicationProvider object and the resolve method is called
-        return $this->bind($object,$callback,'container');
+        return $this->make($object,$callback,'container');
     }
 
     /**
@@ -155,7 +157,7 @@ class Container implements ContainerContracts,\ArrayAccess
         //If the bind method does not have parameters object and callback, the value is directly assigned to the kernel object.
         //Otherwise, when the bind object and callback are sent, the closure class inherits
         //the applicationProvider object and the resolve method is called
-        return $this->bind($eventName,$object,'container');
+        return $this->make($eventName,$object,'container');
 
     }
 
@@ -184,7 +186,7 @@ class Container implements ContainerContracts,\ArrayAccess
      * @throws \DI\DependencyException
      * @throws \DI\NotFoundException
      */
-    private function make($object,$callback,$sync=false)
+    private function build($object,$callback,$sync=false)
     {
         //If the console object returns true,
         //we do not cancel binding operations
@@ -254,10 +256,11 @@ class Container implements ContainerContracts,\ArrayAccess
      * @param $callback
      * @param bool $sync
      * @return mixed
+     *
      * @throws \DI\DependencyException
      * @throws \DI\NotFoundException
      */
-    public function build($object,$callback,$sync=false)
+    public function containerBuild($object,$callback,$sync=false)
     {
         //If the console object returns true,
         //we do not cancel binding operations
@@ -300,7 +303,7 @@ class Container implements ContainerContracts,\ArrayAccess
         if($this->console() AND $isCallableForCallback) return $this->consoleKernelObject($object,$container);
 
         //If the application is not a console operation, we re-bind to existing methods synchronously.
-        return ($container) ? $this->build($object,$callback,true) : $this->make($object,$callback,true);
+        return ($container) ? $this->build($object,$callback,true) : $this->build($object,$callback,true);
     }
 
     /**
