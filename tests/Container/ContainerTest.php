@@ -6,7 +6,7 @@ use Resta\Foundation\Application;
 use Resta\Core\Tests\AbstractTest;
 use Resta\Core\Tests\Container\Dummy\ResolveDummy;
 
-class ApplicationTest extends AbstractTest
+class ContainerTest extends AbstractTest
 {
     /**
      * @return void|mixed

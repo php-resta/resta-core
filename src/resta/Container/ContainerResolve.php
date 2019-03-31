@@ -100,7 +100,6 @@ class ContainerResolve extends ApplicationProvider
         // name and bind them with the necessary logic.
         foreach ($parameters as $parameter){
 
-
             // if the parameter is an object and
             // this object is a service container object
             // then the parameter will bind.
@@ -108,7 +107,7 @@ class ContainerResolve extends ApplicationProvider
             $paramMerge = array_merge($param,$checkParameterForContainer);
 
             // we do some useful logic bind for user benefit.
-            $param=app()->resolve(GraceContainer::class,[
+            $param = app()->resolve(GraceContainer::class,[
                 'reflection' => $reflection->reflection
             ])->graceContainerBuilder($parameter,$paramMerge);
 
