@@ -46,86 +46,6 @@ class Container implements ContainerContracts,\ArrayAccess
     protected $values=[];
 
     /**
-     * @return mixed
-     */
-    public function kernel()
-    {
-        //The kernel object system is the container backbone.
-        //Binding binding and container loads are done with
-        //the help of this object and distributed to the system.
-        return $this->kernel;
-    }
-
-    /**
-     * @return mixed
-     * @throws \DI\DependencyException
-     * @throws \DI\NotFoundException
-     */
-    public function kernelAssigner()
-    {
-        //We will use the kernelAssigner class to resolve the singleton object state.
-        return $this->resolve(ContainerKernelAssigner::class);
-    }
-
-    /**
-     * @throws \DI\DependencyException
-     * @throws \DI\NotFoundException
-     */
-    private function serviceContainerObject()
-    {
-        //Since the objects that come to the build method are objects from the container method,
-        //we need to automatically create a kernel object named serviceContainer in this method.
-        $this->kernelAssigner()->container();
-    }
-
-    /**
-     * Register an existing instance as shared in the container.
-     *
-     * @param  string  $abstract
-     * @param  mixed   $instance
-     * @return mixed
-     */
-    public function instance($abstract, $instance)
-    {
-        // we'll check to determine if this type has been bound before, and if it has
-        // we will fire the rebound callbacks registered with the container and it
-        // can be updated with consuming classes that have gotten resolved here.
-        $this->instances[$abstract] = $instance;
-    }
-
-    /**
-     * @param null $object
-     * @param null $callback
-     * @param bool $container
-     * @return mixed
-     *
-     * @throws \DI\DependencyException
-     * @throws \DI\NotFoundException
-     */
-    public function make($object=null,$callback=null,$container=false)
-    {
-        //we check whether the boolean value of the singleton variable used
-        //for booting does not reset every time the object variable to be assigned to the kernel variable is true
-        $this->singleton();
-
-        //The console share is evaluated as a true variable to be assigned as the 3rd parameter in the classes to be bound.
-        //The work to be done here is to bind the classes to be included in the console share privately.
-        if($container){
-            $this->consoleShared($object,$callback);
-        }
-
-        //If the third parameter passed to the bind method carries a container value,
-        //then you will not be able to fire the build method instead of the make method.
-        $makeBuild=($container==="container") ? 'containerBuild' : 'build';
-
-        //If the bind method does not have parameters object and callback, the value is directly assigned to the kernel object.
-        //Otherwise, when the bind object and callback are sent, the closure class inherits
-        //the applicationProvider object and the resolve method is called
-        return ($object===null) ? $this->kernel() : $this->{$makeBuild}($object,$callback);
-
-    }
-
-    /**
      * @param null $object
      * @param null $callback
      * @return mixed
@@ -142,47 +62,11 @@ class Container implements ContainerContracts,\ArrayAccess
     }
 
     /**
-     * @param $eventName
-     * @param $object
-     * @return mixed
-     * @throws \DI\DependencyException
-     * @throws \DI\NotFoundException
-     */
-    public function addEvent($eventName,$object)
-    {
-        //Since the objects that come to the build method are objects from the container method,
-        //we need to automatically create a kernel object named serviceContainer in this method.
-        $this->kernelAssigner()->event();
-
-        //If the bind method does not have parameters object and callback, the value is directly assigned to the kernel object.
-        //Otherwise, when the bind object and callback are sent, the closure class inherits
-        //the applicationProvider object and the resolve method is called
-        return $this->make($eventName,$object,'container');
-
-    }
-
-    /**
-     * @method singleton
-     */
-    public function singleton()
-    {
-        if($this->singleton===false){
-
-            //after first initializing, the singleton variable is set to true,
-            //and subsequent incoming classes can inherit the loaded object.
-            $this->singleton=true;
-            $this->kernel=\application::kernelBindObject();
-        }
-
-        //kernel object taken over
-        return $this->kernel();
-    }
-
-    /**
      * @param $object
      * @param $callback
      * @param bool $sync
      * @return mixed
+     *
      * @throws \DI\DependencyException
      * @throws \DI\NotFoundException
      */
@@ -208,8 +92,137 @@ class Container implements ContainerContracts,\ArrayAccess
 
     /**
      * @param $object
+     * @param $callback
+     * @param bool $sync
+     * @return mixed
+     *
+     * @throws \DI\DependencyException
+     * @throws \DI\NotFoundException
+     */
+    public function containerBuild($object,$callback,$sync=false)
+    {
+        //If the console object returns true,
+        //we do not cancel binding operations
+        //We are getting what applies to console with consoleKernelObject.
+        if($sync===false) return $this->consoleKernelObjectChecker($object,$callback,true);
+
+        //Since the objects that come to the build method are objects from the container method,
+        //we need to automatically create a kernel object named serviceContainer in this method.
+        $this->serviceContainerObject();
+
+        //the value corresponding to the bind value for the global object is assigned and
+        //the resolve method is called for the dependency method.
+        $this->kernelAssigner()->setKernelObject($object,$callback,'serviceContainer');
+
+        //return kernel object
+        return $this->kernel();
+    }
+
+
+    /**
+     * Register an existing instance as shared in the container.
+     *
+     * @param  string  $abstract
+     * @param  mixed   $instance
+     * @return mixed
+     */
+    public function instance($abstract, $instance)
+    {
+        // we'll check to determine if this type has been bound before, and if it has
+        // we will fire the rebound callbacks registered with the container and it
+        // can be updated with consuming classes that have gotten resolved here.
+        $this->instances[$abstract] = $instance;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function kernel()
+    {
+        //The kernel object system is the container backbone.
+        //Binding binding and container loads are done with
+        //the help of this object and distributed to the system.
+        return $this->kernel;
+    }
+
+    /**
+     * @return mixed
+     *
+     * @throws \DI\DependencyException
+     * @throws \DI\NotFoundException
+     */
+    public function kernelAssigner()
+    {
+        //We will use the kernelAssigner class to resolve the singleton object state.
+        return $this->resolve(ContainerKernelAssigner::class);
+    }
+
+    /**
+     * @param null $object
+     * @param null $callback
      * @param bool $container
      * @return mixed
+     *
+     * @throws \DI\DependencyException
+     * @throws \DI\NotFoundException
+     */
+    public function make($object=null,$callback=null,$container=false)
+    {
+        //we check whether the boolean value of the singleton variable used
+        //for booting does not reset every time the object variable to be assigned to the kernel variable is true
+        $this->singleton();
+
+        //The console share is evaluated as a true variable to be assigned as the 3rd parameter in the classes to be bound.
+        //The work to be done here is to bind the classes to be included in the console share privately.
+        if($container){
+            $this->consoleShared($object,$callback);
+        }
+
+
+        //If the third parameter passed to the bind method carries a container value,
+        //then you will not be able to fire the build method instead of the make method.
+        $makeBuild = ($container==="container") ? 'containerBuild' : 'build';
+
+        //If the bind method does not have parameters object and callback, the value is directly assigned to the kernel object.
+        //Otherwise, when the bind object and callback are sent, the closure class inherits
+        //the applicationProvider object and the resolve method is called
+        return ($object===null) ? $this->kernel() : $this->{$makeBuild}($object,$callback);
+
+    }
+
+    /**
+     * @throws \DI\DependencyException
+     * @throws \DI\NotFoundException
+     */
+    private function serviceContainerObject()
+    {
+        //Since the objects that come to the build method are objects from the container method,
+        //we need to automatically create a kernel object named serviceContainer in this method.
+        $this->kernelAssigner()->container();
+    }
+
+    /**
+     * @method singleton
+     */
+    public function singleton()
+    {
+        if($this->singleton===false){
+
+            //after first initializing, the singleton variable is set to true,
+            //and subsequent incoming classes can inherit the loaded object.
+            $this->singleton=true;
+            $this->kernel=\application::kernelBindObject();
+        }
+
+        //kernel object taken over
+        return $this->kernel();
+    }
+
+    /**
+     * @param $object
+     * @param bool $container
+     * @return mixed
+     *
      * @throws \DI\DependencyException
      * @throws \DI\NotFoundException
      */
@@ -251,33 +264,6 @@ class Container implements ContainerContracts,\ArrayAccess
 
     }
 
-    /**
-     * @param $object
-     * @param $callback
-     * @param bool $sync
-     * @return mixed
-     *
-     * @throws \DI\DependencyException
-     * @throws \DI\NotFoundException
-     */
-    public function containerBuild($object,$callback,$sync=false)
-    {
-        //If the console object returns true,
-        //we do not cancel binding operations
-        //We are getting what applies to console with consoleKernelObject.
-        if($sync===false) return $this->consoleKernelObjectChecker($object,$callback,true);
-
-        //Since the objects that come to the build method are objects from the container method,
-        //we need to automatically create a kernel object named serviceContainer in this method.
-        $this->serviceContainerObject();
-
-        //the value corresponding to the bind value for the global object is assigned and
-        //the resolve method is called for the dependency method.
-        $this->kernelAssigner()->setKernelObject($object,$callback,'serviceContainer');
-
-        //return kernel object
-        return $this->kernel();
-    }
 
     /**
      * @param $object
@@ -290,7 +276,7 @@ class Container implements ContainerContracts,\ArrayAccess
     private function consoleKernelObjectChecker($object,$callback,$container=false)
     {
         //we check whether the callback value is a callable function.
-        $isCallableForCallback=is_callable($callback);
+        $isCallableForCallback = is_callable($callback);
 
         //we automatically load a global loaders for the bind method
         //and assign it to the object name in the kernel object with bind,
@@ -303,7 +289,7 @@ class Container implements ContainerContracts,\ArrayAccess
         if($this->console() AND $isCallableForCallback) return $this->consoleKernelObject($object,$container);
 
         //If the application is not a console operation, we re-bind to existing methods synchronously.
-        return ($container) ? $this->build($object,$callback,true) : $this->build($object,$callback,true);
+        return ($container) ? $this->containerBuild($object,$callback,true) : $this->build($object,$callback,true);
     }
 
     /**

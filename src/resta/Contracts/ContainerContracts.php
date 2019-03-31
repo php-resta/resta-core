@@ -35,13 +35,6 @@ interface ContainerContracts {
     public function kernel();
 
     /**
-     * @param $eventName
-     * @param $object
-     * @return mixed
-     */
-    public function addEvent($eventName,$object);
-
-    /**
      * @param $class
      * @param array $bind
      * @return mixed
