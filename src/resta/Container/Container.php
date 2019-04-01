@@ -126,6 +126,7 @@ class Container implements ContainerContracts,\ArrayAccess
      * @param $callback
      * @param bool $container
      * @return mixed
+     *
      * @throws \DI\DependencyException
      * @throws \DI\NotFoundException
      */
