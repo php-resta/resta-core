@@ -45,6 +45,19 @@ class ContainerKernelAssigner extends ApplicationProvider
 
     /**
      * @param $object
+     * @return null
+     * @return void
+     */
+    private function getGlobalObjectInstance($object)
+    {
+        $globalObject = $object.'KernelAssigner';
+        $issetGlobalObject = (isset(core()->{$globalObject}));
+
+        return ($issetGlobalObject) ? core()->{$globalObject} : null;
+    }
+
+    /**
+     * @param $object
      * @param $concrete
      * @return void
      */
@@ -114,18 +127,5 @@ class ContainerKernelAssigner extends ApplicationProvider
             //the resolve method is called for the dependency method.
             $this->app->register('serviceContainer',$object,$concrete);
         }
-    }
-
-    /**
-     * @param $object
-     * @return null
-     * @return void
-     */
-    private function getGlobalObjectInstance($object)
-    {
-        $globalObject           = $object.'KernelAssigner';
-        $issetGlobalObject      = (isset(core()->{$globalObject}));
-
-        return ($issetGlobalObject) ? core()->{$globalObject} : null;
     }
 }

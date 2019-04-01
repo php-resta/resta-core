@@ -30,7 +30,7 @@ class ContainerResolve extends ApplicationProvider
 
     /**
      * @param $containers
-     * @param $parameter \ReflectionParameter
+     * @param $parameter
      * @return array
      */
     private function checkParameterForContainer($containers,$parameter)

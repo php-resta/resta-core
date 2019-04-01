@@ -31,6 +31,16 @@ class GraceContainer
 
     /**
      * @param $parameter \ReflectionParameter
+     * @return bool
+     */
+    public function checkNameContainer($parameter)
+    {
+        return isset($this->nameContainers[$parameter->getName()])
+            && Arr::isArrayWithCount($parameter->getDefaultValue());
+    }
+
+    /**
+     * @param $parameter \ReflectionParameter
      * @param $param
      * @return array
      */
@@ -75,15 +85,5 @@ class GraceContainer
         // In particular, name container values can be specified and
         // they are injected directly into the methods contextually.
         return $this->getNameContainers($parameter,$param);
-    }
-
-    /**
-     * @param $parameter \ReflectionParameter
-     * @return bool
-     */
-    public function checkNameContainer($parameter)
-    {
-        return isset($this->nameContainers[$parameter->getName()])
-            && Arr::isArrayWithCount($parameter->getDefaultValue());
     }
 }

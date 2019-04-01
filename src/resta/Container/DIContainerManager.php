@@ -15,8 +15,7 @@ class DIContainerManager extends ApplicationProvider
         //di-container
         return \DI\ContainerBuilder::buildDevContainer();
     }
-
-
+    
     /**
      * @param null $class
      * @return mixed

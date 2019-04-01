@@ -13,8 +13,8 @@ class RepositoryContainer
     {
         // We will use a custom bind for the repository classes
         // and bind the repository contract with the repository adapter class.
-        $parameterName  = $parameter->getType()->getName();
-        $repository     = app()->namespace()->repository();
+        $parameterName = $parameter->getType()->getName();
+        $repository = app()->namespace()->repository();
 
         $parameterNameWord  = str_replace('\\','',$parameterName);
         $repositoryWord     = str_replace('\\','',$repository);
@@ -24,10 +24,10 @@ class RepositoryContainer
         if(preg_match('@'.$repositoryWord.'@is',$parameterNameWord)){
 
             //we bind the contract as an adapter
-            $repositoryName=str_replace('Contract','',$parameter->getName());
-            $getRepositoryAdapter=\application::repository($repositoryName,true);
+            $repositoryName = str_replace('Contract','',$parameter->getName());
+            $getRepositoryAdapter = \application::repository($repositoryName,true);
 
-            $param[$parameter->getName()]=app()->resolve($getRepositoryAdapter)->adapter();
+            $param[$parameter->getName()] = app()->resolve($getRepositoryAdapter)->adapter();
         }
 
         return $param;

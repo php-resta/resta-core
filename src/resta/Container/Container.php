@@ -46,6 +46,19 @@ class Container implements ContainerContracts,\ArrayAccess
     protected $values=[];
 
     /**
+     * @param $make
+     * @param array $bind
+     * @return array
+     */
+    public function applicationProviderBinding($make,$bind=array())
+    {
+        //service container is an automatic application provider
+        //that we can bind to the special class di in the dependency condition.
+        //This method is automatically added to the classes resolved by the entire make bind method.
+        return array_merge($bind,['app'=>$make]);
+    }
+
+    /**
      * @param null $object
      * @param null $callback
      * @return mixed
@@ -92,6 +105,65 @@ class Container implements ContainerContracts,\ArrayAccess
 
     /**
      * @param $object
+     * @param bool $container
+     * @return mixed
+     *
+     * @throws \DI\DependencyException
+     * @throws \DI\NotFoundException
+     */
+    private function consoleKernelObject($object,$container=false)
+    {
+        //we use the console bindings class to specify the classes to be preloaded in the console application.
+        //Thus, classes that can not be bound with http are called without closure in global loaders directory.
+        $this->resolve(ConsoleBindings::class)->console($object,$container);
+
+        //The console application must always return the kernel method.
+        return $this->kernel();
+    }
+
+    /**
+     * @param $object
+     * @param $callback
+     * @param bool $container
+     * @return mixed
+     * @throws \DI\DependencyException
+     * @throws \DI\NotFoundException
+     */
+    private function consoleKernelObjectChecker($object,$callback,$container=false)
+    {
+        //we check whether the callback value is a callable function.
+        $isCallableForCallback = is_callable($callback);
+
+        //we automatically load a global loaders for the bind method
+        //and assign it to the object name in the kernel object with bind,
+        //which you can easily use in the booted classes for kernel object assignments.
+        $this->globalAssignerForBind($object,$callback);
+
+        //If the console object returns true,
+        //we do not cancel binding operations
+        //We are getting what applies to console with consoleKernelObject.
+        if($this->console() AND $isCallableForCallback) return $this->consoleKernelObject($object,$container);
+
+        //If the application is not a console operation, we re-bind to existing methods synchronously.
+        return ($container) ? $this->containerBuild($object,$callback,true) : $this->build($object,$callback,true);
+    }
+
+    /**
+     * @param $object
+     * @param $callback
+     *
+     * @throws \DI\DependencyException
+     * @throws \DI\NotFoundException
+     */
+    private function consoleShared($object,$callback)
+    {
+        //The console share is evaluated as a true variable to be assigned as the 3rd parameter in the classes to be bound.
+        //The work to be done here is to bind the classes to be included in the console share privately.
+        $this->kernelAssigner()->consoleShared($object,$callback);
+    }
+
+    /**
+     * @param $object
      * @param $callback
      * @param bool $sync
      * @return mixed
@@ -118,6 +190,35 @@ class Container implements ContainerContracts,\ArrayAccess
         return $this->kernel();
     }
 
+    /**
+     * @param $class
+     * @param $bind
+     */
+    private function contextualBindCleaner($class,$bind)
+    {
+        //the context bind objects are checked again and the bind sequence submitted by
+        //the user is checked and forced to re-instantiate the object.
+        if(isset(self::$instance[$class]) && self::$bindParams[$class]!==$bind){
+            unset(self::$instance[$class]);
+            unset(self::$bindParams[$class]);
+        }
+    }
+
+    /**
+     * @param $object
+     * @param $callback
+     *
+     * @throws \DI\DependencyException
+     * @throws \DI\NotFoundException
+     */
+    private function globalAssignerForBind($object,$callback)
+    {
+        //we automatically load a global loaders for the bind method
+        //and assign it to the object name in the kernel object with bind,
+        //which you can easily use in the booted classes for kernel object assignments.
+        $this->resolve(GlobalAssignerForBind::class)->getAssigner($object,$callback);
+
+    }
 
     /**
      * Register an existing instance as shared in the container.
@@ -187,6 +288,123 @@ class Container implements ContainerContracts,\ArrayAccess
         //Otherwise, when the bind object and callback are sent, the closure class inherits
         //the applicationProvider object and the resolve method is called
         return ($object===null) ? $this->kernel() : $this->{$makeBuild}($object,$callback);
+    }
+
+    /**
+     * @param $offset
+     * @return bool
+     */
+    public function offsetExists($offset) {
+        return isset($this->container[$offset]);
+    }
+
+    /**
+     * @param $offset
+     * @return null
+     */
+    public function offsetGet($offset) {
+
+        return $this->resolve($this->instances['containerInstanceResolve'],[
+            'instances' => $this->instances
+        ])->{$offset}();
+    }
+
+    /**
+     * @param $offset
+     * @param $value
+     */
+    public function offsetSet($offset, $value) {}
+
+    /**
+     * @param $offset
+     */
+    public function offsetUnset($offset) {
+        unset($this->container[$offset]);
+    }
+
+    /**
+     * @param $key
+     * @param $object
+     * @param null $concrete
+     * @return bool|mixed
+     */
+    public function register($key,$object,$concrete=null)
+    {
+        // we assign the values ​​required
+        // for register to the global value variable.
+        $this->values['key']        = $key;
+        $this->values['object']     = $object;
+        $this->values['concrete']   = $concrete;
+
+        // If there is an instance of the application class,
+        // the register method is saved both in this example and in the global.
+        if(defined('appInstance')){
+
+            // where we will assign both the global instance
+            // and the registered application object.
+            $this->setAppInstance($this->singleton());
+            $this->setAppInstance(core());
+
+            return false;
+        }
+
+        // we are just doing global instance here.
+        $this->setAppInstance($this->singleton());
+    }
+
+    /**
+     * @param $instance
+     * @param bool $withConcrete
+     * @return bool
+     */
+    private function registerProcess($instance,$withConcrete=false)
+    {
+        // values recorded without concrete.
+        // or values deleted
+        if(false===$withConcrete){
+
+            //values registered without concrete
+            $instance->{$this->values['key']}=$this->values['object'];
+            return false;
+        }
+
+        //values registered with concrete
+        $instance->{$this->values['key']}[$this->values['object']]=$this->values['concrete'];
+    }
+
+    /**
+     * @param $class
+     * @param array $bind
+     * @return mixed
+     *
+     * @throws \DI\DependencyException
+     * @throws \DI\NotFoundException
+     */
+    public function resolve($class,$bind=array())
+    {
+        //the context bind objects are checked again and the bind sequence submitted by
+        //the user is checked and forced to re-instantiate the object.
+        $this->contextualBindCleaner($class,$bind);
+
+        //We do an instance check to get the static instance values of
+        //the classes to be resolved with the make bind method.
+        if(!isset(self::$instance[$class])){
+
+            //bind params object
+            self::$bindParams[$class]=$bind;
+
+            //By singleton checking, we solve the dependency injection of the given class.
+            //Thus, each class can be called together with its dependency.
+            self::$instance[$class]=DIContainerManager::make($class,$this->applicationProviderBinding($this,self::$bindParams[$class]));
+            $this->singleton()->resolve[$class]=self::$instance[$class];
+
+            //return resolve class
+            return self::$instance[$class];
+        }
+
+        //if the class to be resolved has already been loaded,
+        //we get the instance value that was saved to get the recurring instance.
+        return self::$instance[$class];
 
     }
 
@@ -244,192 +462,6 @@ class Container implements ContainerContracts,\ArrayAccess
     }
 
     /**
-     * @param $object
-     * @param bool $container
-     * @return mixed
-     *
-     * @throws \DI\DependencyException
-     * @throws \DI\NotFoundException
-     */
-    private function consoleKernelObject($object,$container=false)
-    {
-        //we use the console bindings class to specify the classes to be preloaded in the console application.
-        //Thus, classes that can not be bound with http are called without closure in global loaders directory.
-        $this->resolve(ConsoleBindings::class)->console($object,$container);
-
-        //The console application must always return the kernel method.
-        return $this->kernel();
-    }
-
-    /**
-     * @param $object
-     * @param $callback
-     * @throws \DI\DependencyException
-     * @throws \DI\NotFoundException
-     */
-    private function consoleShared($object,$callback)
-    {
-        //The console share is evaluated as a true variable to be assigned as the 3rd parameter in the classes to be bound.
-        //The work to be done here is to bind the classes to be included in the console share privately.
-        $this->kernelAssigner()->consoleShared($object,$callback);
-    }
-
-    /**
-     * @param $object
-     * @param $callback
-     * @throws \DI\DependencyException
-     * @throws \DI\NotFoundException
-     */
-    private function globalAssignerForBind($object,$callback)
-    {
-        //we automatically load a global loaders for the bind method
-        //and assign it to the object name in the kernel object with bind,
-        //which you can easily use in the booted classes for kernel object assignments.
-        $this->resolve(GlobalAssignerForBind::class)->getAssigner($object,$callback);
-
-    }
-
-    /**
-     * @param $object
-     * @param $callback
-     * @param bool $container
-     * @return mixed
-     * @throws \DI\DependencyException
-     * @throws \DI\NotFoundException
-     */
-    private function consoleKernelObjectChecker($object,$callback,$container=false)
-    {
-        //we check whether the callback value is a callable function.
-        $isCallableForCallback = is_callable($callback);
-
-        //we automatically load a global loaders for the bind method
-        //and assign it to the object name in the kernel object with bind,
-        //which you can easily use in the booted classes for kernel object assignments.
-        $this->globalAssignerForBind($object,$callback);
-
-        //If the console object returns true,
-        //we do not cancel binding operations
-        //We are getting what applies to console with consoleKernelObject.
-        if($this->console() AND $isCallableForCallback) return $this->consoleKernelObject($object,$container);
-
-        //If the application is not a console operation, we re-bind to existing methods synchronously.
-        return ($container) ? $this->containerBuild($object,$callback,true) : $this->build($object,$callback,true);
-    }
-
-    /**
-     * @param $class
-     * @param array $bind
-     * @return mixed
-     *
-     * @throws \DI\DependencyException
-     * @throws \DI\NotFoundException
-     */
-    public function resolve($class,$bind=array())
-    {
-        //the context bind objects are checked again and the bind sequence submitted by
-        //the user is checked and forced to re-instantiate the object.
-        $this->contextualBindCleaner($class,$bind);
-
-        //We do an instance check to get the static instance values of
-        //the classes to be resolved with the make bind method.
-        if(!isset(self::$instance[$class])){
-
-            //bind params object
-            self::$bindParams[$class]=$bind;
-
-            //By singleton checking, we solve the dependency injection of the given class.
-            //Thus, each class can be called together with its dependency.
-            self::$instance[$class]=DIContainerManager::make($class,$this->applicationProviderBinding($this,self::$bindParams[$class]));
-            $this->singleton()->resolve[$class]=self::$instance[$class];
-
-            //return resolve class
-            return self::$instance[$class];
-        }
-
-        //if the class to be resolved has already been loaded,
-        //we get the instance value that was saved to get the recurring instance.
-        return self::$instance[$class];
-
-    }
-
-    /**
-     * @param $class
-     * @param $bind
-     */
-    private function contextualBindCleaner($class,$bind)
-    {
-        //the context bind objects are checked again and the bind sequence submitted by
-        //the user is checked and forced to re-instantiate the object.
-        if(isset(self::$instance[$class]) && self::$bindParams[$class]!==$bind){
-            unset(self::$instance[$class]);
-            unset(self::$bindParams[$class]);
-        }
-    }
-
-    /**
-     * @param $make
-     * @param array $bind
-     * @return array
-     */
-    public function applicationProviderBinding($make,$bind=array())
-    {
-        //service container is an automatic application provider
-        //that we can bind to the special class di in the dependency condition.
-        //This method is automatically added to the classes resolved by the entire make bind method.
-        return array_merge($bind,['app'=>$make]);
-    }
-
-    /**
-     * @param $key
-     * @param $object
-     * @param null $concrete
-     * @return bool|mixed
-     */
-    public function register($key,$object,$concrete=null)
-    {
-        // we assign the values ​​required
-        // for register to the global value variable.
-        $this->values['key']        = $key;
-        $this->values['object']     = $object;
-        $this->values['concrete']   = $concrete;
-
-        // If there is an instance of the application class,
-        // the register method is saved both in this example and in the global.
-        if(defined('appInstance')){
-
-            // where we will assign both the global instance
-            // and the registered application object.
-            $this->setAppInstance($this->singleton());
-            $this->setAppInstance(core());
-
-            return false;
-        }
-
-        // we are just doing global instance here.
-        $this->setAppInstance($this->singleton());
-    }
-
-    /**
-     * @param $instance
-     * @param bool $withConcrete
-     * @return bool
-     */
-    private function registerProcess($instance,$withConcrete=false)
-    {
-        // values recorded without concrete.
-        // or values deleted
-        if(false===$withConcrete){
-
-            //values registered without concrete
-            $instance->{$this->values['key']}=$this->values['object'];
-            return false;
-        }
-
-        //values registered with concrete
-        $instance->{$this->values['key']}[$this->values['object']]=$this->values['concrete'];
-    }
-
-    /**
      * @param $instance
      * @return bool
      */
@@ -472,40 +504,6 @@ class Container implements ContainerContracts,\ArrayAccess
         // It is used to delete
         // both key and sequence members.
         unset(core()->{$key}[$object]);
-    }
-
-    /**
-     * @param $offset
-     * @param $value
-     */
-    public function offsetSet($offset, $value) {
-
-    }
-
-    /**
-     * @param $offset
-     * @return bool
-     */
-    public function offsetExists($offset) {
-        return isset($this->container[$offset]);
-    }
-
-    /**
-     * @param $offset
-     */
-    public function offsetUnset($offset) {
-        unset($this->container[$offset]);
-    }
-
-    /**
-     * @param $offset
-     * @return null
-     */
-    public function offsetGet($offset) {
-
-        return $this->resolve($this->instances['containerInstanceResolve'],[
-            'instances' => $this->instances
-        ])->{$offset}();
     }
 
     /**

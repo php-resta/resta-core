@@ -20,17 +20,6 @@ class ContainerInstanceResolver
     }
 
     /**
-     * reflection resolve for instance
-     *
-     * @return mixed
-     */
-    public function reflection()
-    {
-        //we solve the reflection method with the resolve method.
-        return app()->resolve($this->instances[__FUNCTION__]);
-    }
-
-    /**
      * container resolve for instance
      *
      * @return array
@@ -54,6 +43,17 @@ class ContainerInstanceResolver
 
         }
         return [];
+    }
+
+    /**
+     * reflection resolve for instance
+     *
+     * @return mixed
+     */
+    public function reflection()
+    {
+        //we solve the reflection method with the resolve method.
+        return app()->resolve($this->instances[__FUNCTION__]);
     }
 
     /**
