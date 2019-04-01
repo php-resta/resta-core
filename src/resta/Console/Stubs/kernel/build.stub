@@ -1,0 +1,11 @@
+<?php
+
+return [
+
+    /**
+     * application builders
+     */
+    'builders' => [
+        'Kernel' => path()->kernel(),
+    ],
+];
