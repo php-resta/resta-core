@@ -27,7 +27,7 @@ class ContainerKernelAssigner extends ApplicationProvider
     public function container()
     {
         //We are initializing the array property for the service container object.
-        if(!isset(core()->serviceContainer)){
+        if(!isset($this->app['serviceContainer'])){
             $this->app->register('serviceContainer',[]);
         }
     }
@@ -52,10 +52,10 @@ class ContainerKernelAssigner extends ApplicationProvider
     {
         //We check that the concrete object
         //is an object that can be retrieved.
-        if(!isset(core()->{$object}) && class_exists($concrete)){
+        if(!isset($this->app[$object]) && class_exists($concrete)){
 
             //get global object instance
-            $globalObjectInstance=$this->getGlobalObjectInstance($object);
+            $globalObjectInstance = $this->getGlobalObjectInstance($object);
 
             //get concrete instance
             $concreteInstance = $this->app->resolve($concrete);
@@ -82,7 +82,7 @@ class ContainerKernelAssigner extends ApplicationProvider
     {
         //if a pre loader class wants to have before kernel values,
         //it must return a callback to the bind method
-        $concrete=$this->getConcrete($concrete);
+        $concrete = $this->getConcrete($concrete);
 
         //the value is directly assigned to the kernel object.
         //The value is moved throughout the application in the kernel of the application object.
@@ -108,7 +108,7 @@ class ContainerKernelAssigner extends ApplicationProvider
     {
         //We check that the concrete object
         //is an object that can be retrieved.
-        if(isset(core()->serviceContainer) && !isset(core()->serviceContainer[$object])){
+        if(isset($this->app['serviceContainer']) && !isset($this->app['serviceContainer'][$object])){
 
             //the value corresponding to the bind value for the global object is assigned and
             //the resolve method is called for the dependency method.

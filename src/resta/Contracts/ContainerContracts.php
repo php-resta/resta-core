@@ -2,7 +2,21 @@
 
 namespace Resta\Contracts;
 
-interface ContainerContracts {
+interface ContainerContracts
+{
+    /**
+     * @method container
+     * @param $object null
+     * @param $callback null
+     * @return mixed
+     */
+    public function bind($object=null,$callback=null);
+
+    /**
+     * @method kernel
+     * @return mixed
+     */
+    public function kernel();
 
     /**
      * @method bind
@@ -13,26 +27,18 @@ interface ContainerContracts {
      */
     public function make($object=null,$callback=null,$container=false);
 
-
     /**
-     * @method container
-     * @param $object null
-     * @param $callback null
+     * @param null $object
+     * @param null $callback
      * @return mixed
      */
-    public function bind($object=null,$callback=null);
+    public function share($object=null,$callback=null);
 
     /**
      * @method singleton
      * @return mixed
      */
     public function singleton();
-
-    /**
-     * @method kernel
-     * @return mixed
-     */
-    public function kernel();
 
     /**
      * @param $class

@@ -191,6 +191,31 @@ class Container implements ContainerContracts,\ArrayAccess
     }
 
     /**
+     * @param null $object
+     * @param null $callback
+     * @return mixed
+     *
+     * @throws \DI\DependencyException
+     * @throws \DI\NotFoundException
+     */
+    public function share($object=null,$callback=null)
+    {
+        //we check whether the boolean value of the singleton variable used
+        //for booting does not reset every time the object variable to be assigned to the kernel variable is true
+        $this->singleton();
+
+        //The console share is evaluated as a true variable to be assigned as the 3rd parameter in the classes to be bound.
+        //The work to be done here is to bind the classes to be included in the console share privately.
+        $this->consoleShared($object,$callback);
+
+        //If the bind method does not have parameters object and callback, the value is directly assigned to the kernel object.
+        //Otherwise, when the bind object and callback are sent, the closure class inherits
+        //the applicationProvider object and the resolve method is called
+        return ($object===null) ? $this->kernel() : $this->build($object,$callback);
+
+    }
+
+    /**
      * @throws \DI\DependencyException
      * @throws \DI\NotFoundException
      */
@@ -210,8 +235,8 @@ class Container implements ContainerContracts,\ArrayAccess
 
             //after first initializing, the singleton variable is set to true,
             //and subsequent incoming classes can inherit the loaded object.
-            $this->singleton=true;
-            $this->kernel=\application::kernelBindObject();
+            $this->singleton = true;
+            $this->kernel = \application::kernelBindObject();
         }
 
         //kernel object taken over
@@ -263,7 +288,6 @@ class Container implements ContainerContracts,\ArrayAccess
         $this->resolve(GlobalAssignerForBind::class)->getAssigner($object,$callback);
 
     }
-
 
     /**
      * @param $object
