@@ -7,15 +7,17 @@ return [
      * all providers names
      */
     'providers' => [
-        'AppServiceProvider'        => __kernelProviderDir__\AppServiceProvider::class,
-        'RouteServiceProvider'      => __kernelProviderDir__\RouteServiceProvider::class,
+        'AppServiceProvider'        => App\Mobi\Kernel\Providers\AppServiceProvider::class,
+        'RouteServiceProvider'      => App\Mobi\Kernel\Providers\RouteServiceProvider::class,
     ],
 
     /**
-     * get paths for application
+     * builders for application
      */
-     'paths' => [
-        'route' => path()->version().''.DIRECTORY_SEPARATOR.'Routes'
+     'builder' => [
+        'paths' => [
+            'Kernel' => path()->kernel(),
+        ]
      ]
 
 ];
