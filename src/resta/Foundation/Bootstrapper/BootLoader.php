@@ -26,6 +26,8 @@ class BootLoader extends ApplicationProvider implements BootContracts
     private $bootstrapper;
 
     /**
+     * app console method
+     *
      * @return mixed|void
      */
     private function appConsole()
@@ -41,16 +43,18 @@ class BootLoader extends ApplicationProvider implements BootContracts
     }
 
     /**
+     * default distributor boot method
+     *
      * @return mixed|void
      */
     public function boot()
     {
-        if(method_exists($this,$this->bootstrapper)){
-            $this->{$this->bootstrapper}();
-        }
+        $this->{$this->bootstrapper}();
     }
 
     /**
+     * config provider boot
+     *
      * @return mixed|void
      */
     private function configProvider()
@@ -58,13 +62,15 @@ class BootLoader extends ApplicationProvider implements BootContracts
         // this is your application's config installer.
         // you can easily access the config variables with the config installer.
         if($this->app->checkBindings('config')===false){
-            $this->app->make('config',function(){
-                return Config::class;
-            },true);
+            $this->app->share('config',function($app){
+                return $app['revision']['configProvider'] ?? Config::class;
+            });
         }
     }
 
     /**
+     * encrypter boot
+     *
      * @return mixed|void
      */
     private function encrypter()
@@ -72,13 +78,15 @@ class BootLoader extends ApplicationProvider implements BootContracts
         // the rest system will assign a random key to your application for you.
         // this application will single the advantages of using the rest system for your application in particular.
         if(core()->isAvailableStore && $this->app->checkBindings('encrypter')===false){
-            $this->app->make('encrypter',function(){
-                return EncrypterProvider::class;
+            $this->app->make('encrypter',function($app){
+                return $app['revision']['encrypter'] ?? EncrypterProvider::class;
             });
         }
     }
 
     /**
+     * environment boot
+     *
      * @return mixed|void
      */
     private function environment()
@@ -87,13 +95,15 @@ class BootLoader extends ApplicationProvider implements BootContracts
         // the environment where the application is running.for example,
         // you may wish to use a different cache driver locally than you do on your production server.
         if($this->app->checkBindings('environment')===false){
-            $this->app->make('environment',function(){
-                return EnvironmentConfiguration::class;
-            },true);
+            $this->app->share('environment',function($app){
+                return $app['revision']['environment'] ?? EnvironmentConfiguration::class;
+            });
         }
     }
 
     /**
+     * event dispatcher boot
+     *
      * @return mixed|void
      */
     private function eventDispatcher()
@@ -102,14 +112,16 @@ class BootLoader extends ApplicationProvider implements BootContracts
         // that allow your application components to communicate
         // with each other by dispatching events and listening to them.
         if($this->app->checkBindings('eventDispatcher')===false){
-            $this->app->make('eventDispatcher',function(){
-                return app()->namespace()->serviceEventDispatcher();
-            },true);
+            $this->app->share('eventDispatcher',function($app){
+                return $app['revision']['eventDispatcher'] ?? app()->namespace()->serviceEventDispatcher();
+            });
         }
 
     }
 
     /**
+     * logger boot
+     *
      * @return mixed|void
      */
     private function logger()
@@ -118,14 +130,16 @@ class BootLoader extends ApplicationProvider implements BootContracts
         // rest system provides robust logging services that allow you to log messages to files,
         // the system error log, and even to Slack to notify your entire team.
         if($this->app->checkBindings('logger')===false){
-            $this->app->make('logger',function(){
-                return LoggerService::class;
-            },true);
+            $this->app->share('logger',function($app){
+                return $app['revision']['logger'] ?? LoggerService::class;
+            });
         }
 
     }
 
     /**
+     * middleware boot
+     *
      * @return mixed|void
      */
     private function middleware()
@@ -134,13 +148,15 @@ class BootLoader extends ApplicationProvider implements BootContracts
         // thus, if you make http request your application, you can verify with an intermediate middleware layer
         // and throw an exception.
         if(core()->isAvailableStore && $this->app->checkBindings('middleware')===false){
-            $this->app->make('middleware',function(){
-                return ApplicationMiddleware::class;
+            $this->app->make('middleware',function($app){
+                return $app['revision']['middleware'] ?? ApplicationMiddleware::class;
             });
         }
     }
 
     /**
+     * response manager boot
+     *
      * @return mixed|void
      */
     private function responseManager()
@@ -148,13 +164,15 @@ class BootLoader extends ApplicationProvider implements BootContracts
         // we determine kind of output with the response manager
         // json as default or [xml,wsdl]
         if($this->app->checkBindings('response')===false){
-            $this->app->make('response',function(){
-                return ResponseApplication::class;
+            $this->app->make('response',function($app){
+                return $app['revision']['responseManager'] ?? ResponseApplication::class;
             });
         }
     }
 
     /**
+     * router boot
+     *
      * @return mixed|void
      */
     private function router()
@@ -163,21 +181,23 @@ class BootLoader extends ApplicationProvider implements BootContracts
         // a route operation is passed through the url process and output is sent to the screen according to
         // the method file to be called by the application
         if(core()->isAvailableStore && $this->app->checkBindings('router')===false){
-            $this->app->make('router',function(){
-                return Router::class;
+            $this->app->make('router',function($app){
+                return $app['revision']['router'] ?? Router::class;
             });
         }
     }
 
     /**
+     * service provider boot
+     *
      * @return mixed|void
      */
     private function serviceProvider()
     {
         if($this->app->checkBindings('serviceProvider')===false){
-            $this->app->make('serviceProvider',function(){
-                return ServiceProvider::class;
-            },true);
+            $this->app->share('serviceProvider',function($app){
+                return $app['revision']['serviceProvider'] ?? ServiceProvider::class;
+            });
         }
     }
 
@@ -192,6 +212,8 @@ class BootLoader extends ApplicationProvider implements BootContracts
     }
 
     /**
+     * url provider boot
+     *
      * @return mixed|void
      */
     private function urlProvider()
@@ -199,10 +221,27 @@ class BootLoader extends ApplicationProvider implements BootContracts
         // with url parsing,the application route for
         // the rest project is determined after the route variables from the URL are assigned to the kernel url object.
         if(core()->isAvailableStore && $this->app->checkBindings('url')===false){
-            $this->app->make('url',function(){
-                return UrlParseApplication::class;
+            $this->app->make('url',function($app){
+                return $app['revision']['urlProvider'] ?? UrlParseApplication::class;
             });
         }
+    }
 
+    /**
+     * special revision boot
+     *
+     * @param $name
+     * @param $arguments
+     */
+    public function __call($name,$arguments)
+    {
+        // we use the methodological context
+        // for kernel group values that are replaced with revision.
+       $revisionBoot = array_search($name,app()['revision']);
+       if(method_exists($this,$revisionBoot)){
+           return $this->{$revisionBoot}();
+       }
+
+       exception()->badFunctionCall('There is no boot method named '.$name);
     }
 }

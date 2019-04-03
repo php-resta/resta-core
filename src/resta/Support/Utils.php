@@ -240,7 +240,7 @@ class Utils
      */
     public static function callbackProcess($callback)
     {
-        return (is_callable($callback)) ? call_user_func($callback) : $callback;
+        return (is_callable($callback)) ? call_user_func_array($callback,[app()]) : $callback;
     }
 
     /**

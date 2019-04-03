@@ -3,11 +3,17 @@
 namespace Resta\Foundation\Bootstrapper;
 
 use Src\Manifest;
+use Resta\Support\Utils;
 use Resta\Support\ClosureDispatcher;
 use Resta\Contracts\ApplicationContracts;
 
 class KernelManifestManager
 {
+    /**
+     * @var $app
+     */
+    protected $app;
+
     /**
      * @var array $makerList
      */
@@ -25,7 +31,7 @@ class KernelManifestManager
     public function __construct(ApplicationContracts $app)
     {
         //default manifest is application
-        $this->manifest = $app;
+        $this->manifest = $this->app = $app;
 
         // if there is manifest propery in the resta
         // in this case,manifest property is manifest class
@@ -120,8 +126,12 @@ class KernelManifestManager
 
                 // the revision list is presented as a helper method to prevent
                 // the listener application being booted from taking the entire listener individually.
-                if(count($revision) && isset($revision[$makerKey])){
+                if(count($revision) && isset($revision[$makerKey]) && Utils::isNamespaceExists($revision[$makerKey])){
                     $this->makerList[$makerKey] = $revision[$makerKey];
+
+                    // if a kernel group key that is changed to revision is an actual class,
+                    // we will save this class to the container object.
+                    $this->app->register('revision',$makerValue,$revision[$makerKey]);
                 }
             }
         }

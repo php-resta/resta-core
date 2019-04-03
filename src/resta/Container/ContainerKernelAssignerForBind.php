@@ -2,6 +2,7 @@
 
 namespace Resta\Container;
 
+use Resta\Support\Utils;
 use Resta\Foundation\ApplicationProvider;
 
 class ContainerKernelAssignerForBind extends ApplicationProvider
@@ -28,7 +29,7 @@ class ContainerKernelAssignerForBind extends ApplicationProvider
 
         //we register the bound object to the kernel bindings property.
         if(is_callable($callback)){
-            if(class_exists($call = call_user_func($callback))){
+            if(class_exists($call = Utils::callbackProcess($callback))){
                 $this->app->register('bindings',$bindClass,$this->app->resolve($call));
             }
         }
