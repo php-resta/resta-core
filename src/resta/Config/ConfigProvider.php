@@ -24,6 +24,9 @@ class ConfigProvider extends ApplicationProvider implements ConfigProviderContra
         //set config container instance
         $this->app->instance('config',$this);
 
+        //automatically add values ​​to the configuration files.
+        $this->loadPreDefinedConfigurationFiles();
+
         //set config values
         $this->setConfig();
 
@@ -36,15 +39,30 @@ class ConfigProvider extends ApplicationProvider implements ConfigProviderContra
     }
 
     /**
+     * load pre defined configuration files
+     *
+     * @return void
+     */
+    private function loadPreDefinedConfigurationFiles()
+    {
+        $this->app->loadConfig(function(){
+
+            return [
+                'Kernel'    => path()->kernel().''.DIRECTORY_SEPARATOR.''.StaticPathList::$kernel.'.php',
+                'Response'  => path()->storeConfigDir().''.DIRECTORY_SEPARATOR.'Response.php',
+
+            ];
+        });
+    }
+
+    /**
+     * register configuration
+     *
      * @param array $files
      * @return mixed|void
      */
-    public function registerConfiguration($files=array())
+    private function registerConfiguration($files=array())
     {
-        // we are adding kernel variables
-        $files['Kernel']    = path()->kernel().''.DIRECTORY_SEPARATOR.''.StaticPathList::$kernel.'.php';
-        $files['Response']  = path()->storeConfigDir().''.DIRECTORY_SEPARATOR.'Response.php';
-
         // we are saving all paths in
         // the config directory of each application.
         foreach($files as $key=>$file){

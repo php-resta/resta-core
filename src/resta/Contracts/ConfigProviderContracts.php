@@ -10,10 +10,4 @@ interface ConfigProviderContracts
      */
     public function setConfig($path=null);
 
-    /**
-     * @param array $files
-     * @return mixed
-     */
-    public function registerConfiguration($files=array());
-
 }
