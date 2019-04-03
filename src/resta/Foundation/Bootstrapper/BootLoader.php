@@ -34,7 +34,8 @@ class BootLoader extends ApplicationProvider implements BootContracts
     {
         //if the console is true
         //console app runner
-        if($this->app->runningInConsole() && core()->isAvailableStore && $this->app->checkBindings('appConsole')===false){
+        if($this->app->runningInConsole()
+            && $this->app['isAvailableStore'] && $this->app->checkBindings('appConsole')===false){
 
             //If the second parameter is sent true to the application builder,
             //all operations are performed by the console and the custom booting are executed
