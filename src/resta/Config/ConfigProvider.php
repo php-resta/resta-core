@@ -2,6 +2,7 @@
 
 namespace Resta\Config;
 
+use Resta\Support\Arr;
 use Resta\Support\Str;
 use Resta\Support\Utils;
 use Resta\Contracts\HandleContracts;
@@ -12,10 +13,33 @@ use Resta\Foundation\PathManager\StaticPathList;
 class ConfigProvider extends ApplicationProvider implements ConfigProviderContracts,HandleContracts
 {
     /**
+     * config provider handle
+     *
+     * @return void
+     */
+    public function handle()
+    {
+        define('config',true);
+
+        //set config container instance
+        $this->app->instance('config',$this);
+
+        //set config values
+        $this->setConfig();
+
+        // Finally, we will set
+        // the application's timezone and encoding based on the configuration
+        if(config('app')!==null){
+            date_default_timezone_set(config('app.timezone'));
+            mb_internal_encoding('UTF-8');
+        }
+    }
+
+    /**
      * @param array $files
      * @return mixed|void
      */
-    public function globalAssigner($files=array())
+    public function register($files=array())
     {
         // we are adding kernel variables
         $files['Kernel']    = path()->kernel().''.DIRECTORY_SEPARATOR.''.StaticPathList::$kernel.'.php';
@@ -45,29 +69,6 @@ class ConfigProvider extends ApplicationProvider implements ConfigProviderContra
     }
 
     /**
-     * config provider handle
-     *
-     * @return void
-     */
-    public function handle()
-    {
-        define('config',true);
-
-        //set config container instance
-        $this->app->instance('config',$this);
-
-        //set config values
-        $this->setConfig();
-
-        // Finally, we will set
-        // the application's timezone and encoding based on the configuration
-        if(config('app')!==null){
-            date_default_timezone_set(config('app.timezone'));
-            mb_internal_encoding('UTF-8');
-        }
-    }
-
-    /**
      * @param null $path
      */
     public function setConfig($path=null)
@@ -84,6 +85,6 @@ class ConfigProvider extends ApplicationProvider implements ConfigProviderContra
 
         //The config object is a kernel object
         //that can be used to call all class and array files in the config directory of the project.
-        $this->globalAssigner($configFiles ?? $path);
+        $this->register($configFiles ?? $path);
     }
 }
