@@ -82,6 +82,10 @@ class ApplicationBaseRegister extends ApplicationProvider implements HandleContr
      */
     private function mainLoader()
     {
+        // for revision records,
+        // the master key is assigned as revision.
+        $this->app->register('revision',[]);
+
         //we're saving the directory where kernel files are running to the kernel object.
         $this->app->register('corePath',str_replace('Foundation','',__DIR__.''));
 
