@@ -2,7 +2,13 @@
 
 namespace Resta\Contracts;
 
-interface ConfigProviderContracts {
+interface ConfigProviderContracts
+{
+    /**
+     * @param array $files
+     * @return mixed
+     */
+    public function globalAssigner($files=array());
 
     /**
      * @param null $path

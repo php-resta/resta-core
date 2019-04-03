@@ -2,29 +2,59 @@
 
 namespace Resta\Config;
 
+use Resta\Support\Str;
 use Resta\Support\Utils;
+use Resta\Contracts\HandleContracts;
 use Resta\Foundation\ApplicationProvider;
 use Resta\Contracts\ConfigProviderContracts;
+use Resta\Foundation\PathManager\StaticPathList;
 
-class ConfigProvider extends ApplicationProvider implements ConfigProviderContracts
+class ConfigProvider extends ApplicationProvider implements ConfigProviderContracts,HandleContracts
 {
     /**
-     * @var $globalInstance ConfigGlobalInstance
+     * @param array $files
+     * @return mixed|void
      */
-    protected static $globalInstance;
+    public function globalAssigner($files=array())
+    {
+        // we are adding kernel variables
+        $files['Kernel']    = path()->kernel().''.DIRECTORY_SEPARATOR.''.StaticPathList::$kernel.'.php';
+        $files['Response']  = path()->storeConfigDir().''.DIRECTORY_SEPARATOR.'Response.php';
+
+        // we are saving all paths in
+        // the config directory of each application.
+        foreach($files as $key=>$file){
+
+            if(is_array($file)){
+
+                $this->app->register('appConfig',Str::lower($key),[
+                    'namespace' => null,
+                    'file'      => null,
+                    'data'      => $file
+                ]);
+            }
+
+            elseif(file_exists($file)){
+
+                $this->app->register('appConfig',Str::lower($key),[
+                    'namespace' =>Utils::getNamespace($file),
+                    'file'      =>$file
+                ]);
+            }
+        }
+    }
 
     /**
-     * @param ConfigKernelAssigner $config
+     * config provider handle
+     *
+     * @return void
      */
-    public function handle(ConfigKernelAssigner $config)
+    public function handle()
     {
         define('config',true);
 
         //set config container instance
         $this->app->instance('config',$this);
-
-        //global instance general property
-        self::$globalInstance = $config;
 
         //set config values
         $this->setConfig();
@@ -54,6 +84,6 @@ class ConfigProvider extends ApplicationProvider implements ConfigProviderContra
 
         //The config object is a kernel object
         //that can be used to call all class and array files in the config directory of the project.
-        self::$globalInstance->setConfig($configFiles ?? $path);
+        $this->globalAssigner($configFiles ?? $path);
     }
 }
