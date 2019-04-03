@@ -39,7 +39,7 @@ class ConfigProvider extends ApplicationProvider implements ConfigProviderContra
      * @param array $files
      * @return mixed|void
      */
-    public function register($files=array())
+    public function registerConfiguration($files=array())
     {
         // we are adding kernel variables
         $files['Kernel']    = path()->kernel().''.DIRECTORY_SEPARATOR.''.StaticPathList::$kernel.'.php';
@@ -85,6 +85,6 @@ class ConfigProvider extends ApplicationProvider implements ConfigProviderContra
 
         //The config object is a kernel object
         //that can be used to call all class and array files in the config directory of the project.
-        $this->register($configFiles ?? $path);
+        $this->registerConfiguration($configFiles ?? $path);
     }
 }

@@ -14,6 +14,6 @@ interface ConfigProviderContracts
      * @param array $files
      * @return mixed
      */
-    public function register($files=array());
+    public function registerConfiguration($files=array());
 
 }
