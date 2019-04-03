@@ -46,11 +46,9 @@ class ConfigProvider extends ApplicationProvider implements ConfigProviderContra
     private function loadPreDefinedConfigurationFiles()
     {
         $this->app->loadConfig(function(){
-
             return [
                 'Kernel'    => path()->kernel().''.DIRECTORY_SEPARATOR.''.StaticPathList::$kernel.'.php',
                 'Response'  => path()->storeConfigDir().''.DIRECTORY_SEPARATOR.'Response.php',
-
             ];
         });
     }
