@@ -4,9 +4,13 @@ namespace Resta\Response;
 
 use Resta\Support\Utils;
 use Resta\Support\ClosureDispatcher;
+use Resta\Foundation\ApplicationProvider;
 
-class ResponseApplication extends ResponseOutput
+class ResponseApplication extends ApplicationProvider
 {
+    //get response output
+    use ResponseOutput;
+
     /**
      * @return mixed
      */
@@ -63,10 +67,12 @@ class ResponseApplication extends ResponseOutput
 
         //if out putter is not null
         if(Utils::isNamespaceExists($formatter)){
-            
+
             //We resolve the response via the service container
             //and run the handle method.
-            return app()->resolve($formatter)->{$this->getResponseKind()}($this->getOutPutter());
+            $result = app()->resolve($formatter)->{$this->getResponseKind()}($this->getOutPutter());
+
+            $this->app->register('result',$result);
         }
     }
 

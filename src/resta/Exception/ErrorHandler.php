@@ -84,7 +84,7 @@ class ErrorHandler extends ApplicationProvider {
     public function handle()
     {
         //sets which php errors are reported
-        //error_reporting(0);
+        error_reporting(0);
 
         // in general we will use the exception class
         // in the store/config directory to make it possible
@@ -194,7 +194,7 @@ class ErrorHandler extends ApplicationProvider {
 
 
         //set json app exception
-        core()->router=$appException;
+        core()->routerResult=$appException;
 
         $restaOutHandle = null;
 

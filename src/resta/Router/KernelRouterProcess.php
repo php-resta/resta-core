@@ -20,7 +20,7 @@ class KernelRouterProcess extends ApplicationProvider
     private function pickRouter()
     {
         $singleton=core();
-        $singleton->routerSpecifications['router']=(isset($singleton->pick)) ? $singleton->pick[0] : $singleton->router;
+        $singleton->routerSpecifications['router']=(isset($singleton->pick)) ? $singleton->pick[0] : $singleton->routerResult;
     }
 
     /**
@@ -72,7 +72,7 @@ class KernelRouterProcess extends ApplicationProvider
         //If this is the case, we collect these values and assign them to the router variable.
         //if it is not, the router will send the default value to the output.
         if(!isset($singleton->pick)){
-            $singleton->routerSpecifications['router']=(isset($singleton->stack)) ? $singleton->stack : $singleton->router;
+            $singleton->routerSpecifications['router']=(isset($singleton->stack)) ? $singleton->stack : $singleton->routerResult;
         }
     }
 

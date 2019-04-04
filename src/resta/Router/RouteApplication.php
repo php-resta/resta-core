@@ -53,10 +53,10 @@ class RouteApplication extends ApplicationProvider
      */
     public function handle()
     {
-        $this->app->register('routeOutput',$this->callController());
+        $this->app->register('routerResult',$this->callController());
 
         //we call our services as controller
-        return $this->app['routeOutput'];
+        return $this->app['routerResult'];
     }
 
     /**

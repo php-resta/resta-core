@@ -246,7 +246,7 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
         // this is the main calling place of your application.
         // if you come via http, the kernel response value is appraised.
         // if you come via console, the kernel console value is appraised.
-        return ($this->console()) ? null : $this->kernel->response;
+        return ($this->console()) ? null : $this['result'];
     }
 
     /**

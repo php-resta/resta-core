@@ -5,7 +5,7 @@ namespace Resta\Response;
 use Resta\Config\ConfigProcess;
 use Resta\Router\KernelRouterProcess;
 
-class ResponseOutput
+trait ResponseOutput
 {
     /**
      * @var $printer

@@ -21,9 +21,6 @@ class ConfigProvider extends ApplicationProvider implements ConfigProviderContra
     {
         define('config',true);
 
-        //register to container config value
-        //$this->app->register('config',$this);
-
         //automatically add values ​​to the configuration files.
         $this->loadPreDefinedConfigurationFiles();
 
