@@ -66,7 +66,7 @@ class KernelRouterProcess extends ApplicationProvider
     private function stackRouter()
     {
         //singleton object
-        $singleton=core();
+        $singleton = core();
 
         //if there is no singleton pick
         //If this is the case, we collect these values and assign them to the router variable.

@@ -63,7 +63,7 @@ class ResponseApplication extends ResponseOutput
 
         //if out putter is not null
         if(Utils::isNamespaceExists($formatter)){
-
+            
             //We resolve the response via the service container
             //and run the handle method.
             return app()->resolve($formatter)->{$this->getResponseKind()}($this->getOutPutter());
