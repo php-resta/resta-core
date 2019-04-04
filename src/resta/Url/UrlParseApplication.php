@@ -3,9 +3,10 @@
 namespace Resta\Url;
 
 use Resta\Support\Utils;
+use Resta\Foundation\ApplicationProvider;
 use Resta\Foundation\PathManager\StaticPathList;
 
-class UrlParseApplication
+class UrlParseApplication extends ApplicationProvider
 {
     /**
      * @var array
@@ -89,6 +90,7 @@ class UrlParseApplication
         $this->assignUrlList();
 
         //we make url parse resolving with resolved
+        $this->app->register('url',$this->urlList);
         return (new UrlParseParamResolved)->urlParamResolve($this);
     }
 

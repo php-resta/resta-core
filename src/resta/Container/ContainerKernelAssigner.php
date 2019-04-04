@@ -81,7 +81,10 @@ class ContainerKernelAssigner extends ApplicationProvider
 
             //the value corresponding to the bind value for the global object is assigned and
             //the resolve method is called for the dependency injection.
-            $this->app->register($object,$registerObjectInstance);
+            if($registerObjectInstance!==null){
+                $this->app->register($object,$registerObjectInstance);
+            }
+
         }
     }
 
