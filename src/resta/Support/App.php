@@ -57,6 +57,14 @@ class App
 
     }
 
+    /**
+     * @return \Resta\Contracts\ApplicationContracts|\Resta\Contracts\ApplicationHelpersContracts|\Resta\Contracts\ContainerContracts
+     */
+    private static function app()
+    {
+        return app();
+    }
+
     private static function factory()
     {
         $factory = app()->namespace()->factory().'\Factory';
