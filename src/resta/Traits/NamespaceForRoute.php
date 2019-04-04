@@ -23,7 +23,7 @@ trait NamespaceForRoute
      */
     public function namespace()
     {
-        return core()->url['namespace'];
+        return core()->urlComponent['namespace'];
     }
 
     /**
@@ -47,7 +47,7 @@ trait NamespaceForRoute
      */
     public function method()
     {
-        return strtolower(httpMethod()).''.ucfirst(core()->url['method']);
+        return strtolower(httpMethod()).''.ucfirst(core()->urlComponent['method']);
     }
 
     /**
@@ -74,7 +74,7 @@ trait NamespaceForRoute
      */
     public function param()
     {
-        return core()->url['param'];
+        return core()->urlComponent['param'];
     }
 
     /**

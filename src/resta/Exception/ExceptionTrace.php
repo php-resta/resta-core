@@ -60,8 +60,8 @@ class ExceptionTrace extends ApplicationProvider
 
             Dependencies::loadBootstrapperNeedsForException();
 
-            if(isset($value['file']) && isset(core()->url)){
-                if(preg_match('@'.core()->url['project'].'|boot|providers@',$value['file'])){
+            if(isset($value['file']) && isset(core()->urlComponent)){
+                if(preg_match('@'.core()->urlComponent['project'].'|boot|providers@',$value['file'])){
 
                     $this->app->terminate('exceptionFile');
                     $this->app->terminate('exceptionLine');

@@ -89,8 +89,10 @@ class UrlParseApplication extends ApplicationProvider
         //assign url list
         $this->assignUrlList();
 
+        //register to container urlComponent value
+        $this->app->register('urlComponent',$this->urlList);
+
         //we make url parse resolving with resolved
-        $this->app->register('url',$this->urlList);
         return (new UrlParseParamResolved)->urlParamResolve($this);
     }
 
