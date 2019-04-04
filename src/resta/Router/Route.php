@@ -74,7 +74,15 @@ class Route extends RouteHttpManager
         $patterns = $routes['pattern'];
         $urlRoute = array_filter(route(),'strlen');
 
-        foreach ($patterns as $key=>$pattern){
+        $patternList = [];
+
+        foreach($routes['data'] as $patternKey=>$routeData){
+            if($routeData['http']==httpMethod()){
+                $patternList[$patternKey]=$patterns[$patternKey];
+            }
+        }
+
+        foreach ($patternList as $key=>$pattern){
 
             $pattern = array_filter($pattern,'strlen');
             $diff = Arr::arrayDiffKey($pattern,$urlRoute);
@@ -93,7 +101,7 @@ class Route extends RouteHttpManager
 
                 if($matches){
 
-                    $isArrayEqual = self::checkArrayEqual($patterns,$urlRoute);
+                    $isArrayEqual = self::checkArrayEqual($patternList,$urlRoute);
 
                     if($isArrayEqual===null){
                         return $key;
