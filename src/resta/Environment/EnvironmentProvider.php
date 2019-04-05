@@ -17,7 +17,7 @@ class EnvironmentProvider extends ApplicationProvider
     {
         //environment is recognized as a production environment directly
         //if there is no env object in the environment variable.
-        $isProduction=(isset($environment['env'])) ? $environment['env'] : 'production';
+        $isProduction = (isset($environment['env'])) ? $environment['env'] : 'production';
 
         //we issue a controlled environment key map for the submitted environment
         return (count($var)===0) ? $isProduction : self::getEnvironmentForVariables($var,$environment);
@@ -52,7 +52,7 @@ class EnvironmentProvider extends ApplicationProvider
 
         //where we do the checks for the environment file type,
         //and if no configuration file is found, the system throws an exception.
-        $configuration=app()->resolve(CheckEnvironmentFile::class)->checkConfiguration();
+        $configuration = $this->app->resolve(CheckEnvironmentFile::class)->checkConfiguration();
 
         //We are globalizing environment variables.
         $this->set($configuration);
@@ -67,7 +67,7 @@ class EnvironmentProvider extends ApplicationProvider
     private function set($configuration=null)
     {
         //we are get the environment value
-        $environment=(count($configuration)) ? $configuration['env'] : 'production';
+        $environment = (count($configuration)) ? $configuration['env'] : 'production';
 
         //we are doing global registration for env and var value.
         $this->app->register('env',$environment);
