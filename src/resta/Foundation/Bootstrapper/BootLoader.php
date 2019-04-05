@@ -3,7 +3,8 @@
 namespace Resta\Foundation\Bootstrapper;
 
 use Resta\Support\Utils;
-use Resta\Logger\LoggerService;
+use Resta\Logger\LoggerProvider;
+use Resta\Config\ConfigProvider;
 use Resta\Exception\ErrorHandler;
 use Resta\Contracts\BootContracts;
 use Resta\Url\UrlParseApplication;
@@ -11,7 +12,6 @@ use Resta\Provider\ServiceProvider;
 use Resta\Response\ResponseApplication;
 use Resta\Foundation\ApplicationProvider;
 use Resta\Contracts\ApplicationContracts;
-use Resta\Config\ConfigProvider as Config;
 use Resta\Environment\EnvironmentProvider;
 use Resta\Middleware\ApplicationMiddleware;
 use Resta\Console\Console as ConsoleManager;
@@ -64,7 +64,7 @@ class BootLoader extends ApplicationProvider implements BootContracts
         // you can easily access the config variables with the config installer.
         if($this->app->checkBindings('config')===false){
             $this->app->share('config',function($app){
-                return $app['revision']['configProvider'] ?? Config::class;
+                return $app['revision']['configProvider'] ?? ConfigProvider::class;
             });
         }
     }
@@ -132,7 +132,7 @@ class BootLoader extends ApplicationProvider implements BootContracts
         // the system error log, and even to Slack to notify your entire team.
         if($this->app->checkBindings('logger')===false){
             $this->app->share('logger',function($app){
-                return $app['revision']['logger'] ?? LoggerService::class;
+                return $app['revision']['logger'] ?? LoggerProvider::class;
             });
         }
 

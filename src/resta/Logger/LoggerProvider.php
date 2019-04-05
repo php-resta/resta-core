@@ -3,8 +3,10 @@
 namespace Resta\Logger;
 
 use Resta\Support\Utils;
+use Resta\Contracts\HandleContracts;
+use Resta\Foundation\ApplicationProvider;
 
-class LoggerService
+class LoggerProvider extends ApplicationProvider implements HandleContracts
 {
     /**
      * @var $adapter
@@ -32,13 +34,15 @@ class LoggerService
      */
     private function getLoggerType()
     {
-        return (core()->responseSuccess) ? 'info' : 'error';
+        return ($this->app['responseSuccess']) ? 'info' : 'error';
     }
 
     /**
-     * @param LoggerKernelAssigner $logger
+     * logger application handle
+     *
+     * @return mixed|void
      */
-    public function handle(LoggerKernelAssigner $logger)
+    public function handle()
     {
         //set define for logger
         define('logger',true);
@@ -53,11 +57,11 @@ class LoggerService
 
             //We are getting the path to
             //the service log file in the project's version directory.
-            $appBase = app()->resolve($loggerNamespace);
+            $appBase = $this->app->resolve($loggerNamespace);
 
             // we send the resulting adapter property as
             // a reference to the bind automatic instance class.
-            $logger->setLogger($appBase,$appBase->adapter,$this);
+            $this->setLogger($appBase,$appBase->adapter,$this);
         }
 
     }
@@ -70,10 +74,10 @@ class LoggerService
      */
     public function logHandler($printer,$file="access",$type='info')
     {
-        if(isset(core()->log)){
+        if(isset($this->app['log'])){
 
             //we get the log object that was previously assigned.
-            $log = core()->log;
+            $log = $this->app['log'];
 
             $base = current($log);
 
@@ -95,8 +99,8 @@ class LoggerService
                 // in the production log messages,
                 // we have to get the production log message kernel variable
                 // in order not to show an external error to the user
-                $logOutput = (isset(core()->productionLogMessage)) ?
-                    core()->productionLogMessage :
+                $logOutput = (isset($this->app['productionLogMessage'])) ?
+                    $this->app['productionLogMessage'] :
                     $printer;
 
                 call_user_func_array([$base,$adapter],[$logOutput,$file,$type]);
@@ -106,5 +110,22 @@ class LoggerService
             return $printer;
         }
 
+    }
+
+    /**
+     * register to container for logger
+     *
+     * @param mixed ...$params
+     */
+    public function setLogger(...$params){
+
+        // params list
+        [$base,$adapter,$loggerService] = $params;
+
+        // we take the adapter attribute for the log log
+        // from the service log class and save it to the kernel object.
+        $this->app->register('logger',app()->namespace()->logger());
+        $this->app->register('loggerService',$loggerService);
+        $this->app->register('log',$adapter,$base);
     }
 }
