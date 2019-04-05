@@ -14,6 +14,8 @@ class LoggerProvider extends ApplicationProvider implements HandleContracts
     protected $adapter;
 
     /**
+     * check logger configuration
+     *
      * @param $printer
      * @param callable $callback
      * @return mixed
@@ -30,6 +32,8 @@ class LoggerProvider extends ApplicationProvider implements HandleContracts
     }
 
     /**
+     * get logger type
+     *
      * @return string
      */
     private function getLoggerType()
@@ -67,6 +71,8 @@ class LoggerProvider extends ApplicationProvider implements HandleContracts
     }
 
     /**
+     * logger handler for application
+     *
      * @param $printer
      * @param string $file
      * @param string $type
