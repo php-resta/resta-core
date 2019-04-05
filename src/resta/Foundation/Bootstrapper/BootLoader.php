@@ -16,7 +16,7 @@ use Resta\Middleware\ApplicationMiddleware;
 use Resta\Console\Console as ConsoleManager;
 use Resta\Router\RouteApplication as Router;
 use Resta\Environment\EnvironmentConfiguration;
-use Resta\Encrypter\Encrypter as EncrypterProvider;
+use Resta\Encrypter\EncrypterProvider as EncrypterProvider;
 
 class BootLoader extends ApplicationProvider implements BootContracts
 {
