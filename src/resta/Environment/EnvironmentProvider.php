@@ -35,10 +35,7 @@ class EnvironmentProvider extends ApplicationProvider implements HandleContracts
     {
         //environment variable specified by the variable is checked in the defined file
         //and the value is returned accordingly.
-        if(isset($environment[$var[0]])){
-            return $environment[$var[0]];
-        }
-        return $var[1];
+        return $environment[$var[0]] ?? $var[1];
     }
 
     /**
@@ -67,11 +64,8 @@ class EnvironmentProvider extends ApplicationProvider implements HandleContracts
      */
     private function set($configuration=null)
     {
-        //we are get the environment value
-        $environment = (count($configuration)) ? $configuration['env'] : 'production';
-
         //we are doing global registration for env and var value.
-        $this->app->register('env',$environment);
+        $this->app->register('env',$this->environment());
         $this->app->register('environmentVariables',$configuration);
     }
 }
