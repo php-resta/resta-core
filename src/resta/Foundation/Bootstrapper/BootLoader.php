@@ -10,10 +10,10 @@ use Resta\Contracts\BootContracts;
 use Resta\Url\UrlParseApplication;
 use Resta\Provider\ServiceProvider;
 use Resta\Response\ResponseApplication;
+use Resta\Middleware\MiddlewareProvider;
 use Resta\Foundation\ApplicationProvider;
 use Resta\Contracts\ApplicationContracts;
 use Resta\Environment\EnvironmentProvider;
-use Resta\Middleware\ApplicationMiddleware;
 use Resta\Console\Console as ConsoleManager;
 use Resta\Router\RouteApplication as Router;
 use Resta\Encrypter\EncrypterProvider as EncrypterProvider;
@@ -150,7 +150,7 @@ class BootLoader extends ApplicationProvider implements BootContracts
         // and throw an exception.
         if(core()->isAvailableStore && $this->app->checkBindings('middleware')===false){
             $this->app->make('middleware',function($app){
-                return $app['revision']['middleware'] ?? ApplicationMiddleware::class;
+                return $app['revision']['middleware'] ?? MiddlewareProvider::class;
             });
         }
     }
