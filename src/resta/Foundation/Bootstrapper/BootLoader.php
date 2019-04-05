@@ -12,10 +12,10 @@ use Resta\Response\ResponseApplication;
 use Resta\Foundation\ApplicationProvider;
 use Resta\Contracts\ApplicationContracts;
 use Resta\Config\ConfigProvider as Config;
+use Resta\Environment\EnvironmentProvider;
 use Resta\Middleware\ApplicationMiddleware;
 use Resta\Console\Console as ConsoleManager;
 use Resta\Router\RouteApplication as Router;
-use Resta\Environment\EnvironmentProvider;
 use Resta\Encrypter\EncrypterProvider as EncrypterProvider;
 
 class BootLoader extends ApplicationProvider implements BootContracts
