@@ -41,6 +41,8 @@ class EnvironmentProvider extends ApplicationProvider
     }
 
     /**
+     * environment provider handle
+     *
      * @return void
      */
     public function handle()
@@ -57,6 +59,8 @@ class EnvironmentProvider extends ApplicationProvider
     }
 
     /**
+     * register to container for environment
+     *
      * @param null $configuration
      * @return void
      */
