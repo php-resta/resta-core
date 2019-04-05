@@ -14,7 +14,7 @@ class EnvironmentProvider extends ApplicationProvider implements HandleContracts
      * @param null $environment
      * @return string
      */
-    public static function environment($var=array(),$environment=null)
+    public function environment($var=array(),$environment=null)
     {
         //environment is recognized as a production environment directly
         //if there is no env object in the environment variable.

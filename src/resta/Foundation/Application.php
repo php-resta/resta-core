@@ -224,7 +224,7 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
             $arguments = (isset(func_get_args()[0]))
                 ? func_get_args()[0] : func_get_args();
 
-            return EnvironmentProvider::environment(
+            return $this['environment']->environment(
                 $arguments,$this['environmentVariables']
             );
         }
