@@ -144,7 +144,7 @@ class MiddlewareProvider extends ApplicationProvider implements HandleContracts
             //then the middleware is conditioned and the services are individually checked according to
             //the degree of conformity with the middlewareOdds method and
             //the middleware is executed under the specified condition.
-            $checkOdds=Utils::strtolower($this->middlewareKeyOdds()[count($key)]);
+            $checkOdds = Utils::strtolower($this->middlewareKeyOdds()[count($key)]);
             if(Utils::isArrayEqual($key,$checkOdds)) return true;
         }
 
