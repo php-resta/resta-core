@@ -6,7 +6,6 @@ use Defuse\Crypto\Key;
 use Resta\Support\Utils;
 use Defuse\Crypto\Crypto;
 use Resta\Foundation\ApplicationProvider;
-use Resta\GlobalLoaders\Encrypter as EncrypterGlobalInstance;
 
 class EncrypterProvider extends ApplicationProvider
 {
