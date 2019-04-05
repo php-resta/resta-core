@@ -2,9 +2,10 @@
 
 namespace Resta\Environment;
 
+use Resta\Contracts\HandleContracts;
 use Resta\Foundation\ApplicationProvider;
 
-class EnvironmentProvider extends ApplicationProvider
+class EnvironmentProvider extends ApplicationProvider implements HandleContracts
 {
     /**
      * get environtment
