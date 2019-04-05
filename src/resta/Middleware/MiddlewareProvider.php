@@ -11,12 +11,12 @@ class MiddlewareProvider extends ApplicationProvider implements HandleContracts
     /**
      * @var array $middleware
      */
-    protected $middleware=array();
+    protected $middleware = array();
 
     /**
      * @var bool
      */
-    public $after=false;
+    public $after = false;
 
     /**
      * check namespace and specificCondition
@@ -117,7 +117,7 @@ class MiddlewareProvider extends ApplicationProvider implements HandleContracts
      *
      * @return void
      */
-    public function setMiddleware()
+    private function setMiddleware()
     {
         //We are logging the kernel for the middleware class and the exclude class.
         $this->app->register('middlewareClass',$this->app->resolve(app()->namespace()->serviceMiddleware()));
@@ -158,7 +158,7 @@ class MiddlewareProvider extends ApplicationProvider implements HandleContracts
      * @param $middleValue
      * @return void
      */
-    public function pointer($middleValue)
+    private function pointer($middleValue)
     {
         if(isset($this->app['pointer']['middlewareList'])){
 
