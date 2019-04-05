@@ -5,9 +5,10 @@ namespace Resta\Encrypter;
 use Defuse\Crypto\Key;
 use Resta\Support\Utils;
 use Defuse\Crypto\Crypto;
+use Resta\Contracts\HandleContracts;
 use Resta\Foundation\ApplicationProvider;
 
-class EncrypterProvider extends ApplicationProvider
+class EncrypterProvider extends ApplicationProvider implements HandleContracts
 {
     /**
      * encrypter provider handle
