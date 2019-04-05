@@ -15,7 +15,7 @@ use Resta\Config\ConfigProvider as Config;
 use Resta\Middleware\ApplicationMiddleware;
 use Resta\Console\Console as ConsoleManager;
 use Resta\Router\RouteApplication as Router;
-use Resta\Environment\EnvironmentConfiguration;
+use Resta\Environment\EnvironmentProvider;
 use Resta\Encrypter\EncrypterProvider as EncrypterProvider;
 
 class BootLoader extends ApplicationProvider implements BootContracts
@@ -97,7 +97,7 @@ class BootLoader extends ApplicationProvider implements BootContracts
         // you may wish to use a different cache driver locally than you do on your production server.
         if($this->app->checkBindings('environment')===false){
             $this->app->share('environment',function($app){
-                return $app['revision']['environment'] ?? EnvironmentConfiguration::class;
+                return $app['revision']['environment'] ?? EnvironmentProvider::class;
             });
         }
     }

@@ -8,9 +8,9 @@ use Resta\Traits\ApplicationPath;
 use Illuminate\Support\Collection;
 use Resta\Support\ClosureDispatcher;
 use Resta\Contracts\ApplicationContracts;
+use Resta\Environment\EnvironmentProvider;
 use Resta\Contracts\ConfigProviderContracts;
 use Resta\Middleware\MiddlewareKernelProvider;
-use Resta\Environment\EnvironmentConfiguration;
 use Resta\Contracts\ApplicationHelpersContracts;
 use Resta\Foundation\Bootstrapper\Bootstrappers;
 use Resta\Foundation\Bootstrapper\BootFireCallback;
@@ -224,7 +224,7 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
             $arguments = (isset(func_get_args()[0]))
                 ? func_get_args()[0] : func_get_args();
 
-            return EnvironmentConfiguration::environment(
+            return EnvironmentProvider::environment(
                 $arguments,$this['environmentVariables']
             );
         }

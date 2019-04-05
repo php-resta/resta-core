@@ -2,9 +2,13 @@
 
 namespace Resta\Environment;
 
-class EnvironmentConfiguration
+use Resta\Foundation\ApplicationProvider;
+
+class EnvironmentProvider extends ApplicationProvider
 {
     /**
+     * get environtment
+     *
      * @param array $var
      * @param null $environment
      * @return string
@@ -20,6 +24,8 @@ class EnvironmentConfiguration
     }
 
     /**
+     * get environment for variables
+     *
      * @param array $var
      * @param null $environment
      * @return mixed
@@ -35,9 +41,9 @@ class EnvironmentConfiguration
     }
 
     /**
-     * @param EnvironmentKernelAssigner $environment
+     * @return void
      */
-    public function handle(EnvironmentKernelAssigner $environment)
+    public function handle()
     {
         //set define for config
         define ('environment',true);
@@ -47,6 +53,20 @@ class EnvironmentConfiguration
         $configuration=app()->resolve(CheckEnvironmentFile::class)->checkConfiguration();
 
         //We are globalizing environment variables.
-        $environment->set($configuration);
+        $this->set($configuration);
+    }
+
+    /**
+     * @param null $configuration
+     * @return void
+     */
+    private function set($configuration=null)
+    {
+        //we are get the environment value
+        $environment=(count($configuration)) ? $configuration['env'] : 'production';
+
+        //we are doing global registration for env and var value.
+        $this->app->register('env',$environment);
+        $this->app->register('environmentVariables',$configuration);
     }
 }
