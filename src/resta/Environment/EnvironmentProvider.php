@@ -65,7 +65,7 @@ class EnvironmentProvider extends ApplicationProvider implements HandleContracts
     private function set($configuration=null)
     {
         //we are doing global registration for env and var value.
-        $this->app->register('env',$this->environment());
         $this->app->register('environmentVariables',$configuration);
+        $this->app->register('env',$this->environment([],$this->app['environmentVariables']));
     }
 }
