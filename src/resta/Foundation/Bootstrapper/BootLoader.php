@@ -3,6 +3,7 @@
 namespace Resta\Foundation\Bootstrapper;
 
 use Resta\Support\Utils;
+use Resta\Router\RouteProvider;
 use Resta\Logger\LoggerProvider;
 use Resta\Config\ConfigProvider;
 use Resta\Exception\ErrorHandler;
@@ -15,7 +16,6 @@ use Resta\Foundation\ApplicationProvider;
 use Resta\Contracts\ApplicationContracts;
 use Resta\Environment\EnvironmentProvider;
 use Resta\Console\Console as ConsoleManager;
-use Resta\Router\RouteApplication as Router;
 use Resta\Encrypter\EncrypterProvider as EncrypterProvider;
 
 class BootLoader extends ApplicationProvider implements BootContracts
@@ -183,7 +183,7 @@ class BootLoader extends ApplicationProvider implements BootContracts
         // the method file to be called by the application
         if(core()->isAvailableStore && $this->app->checkBindings('router')===false){
             $this->app->make('router',function($app){
-                return $app['revision']['router'] ?? Router::class;
+                return $app['revision']['router'] ?? RouteProvider::class;
             });
         }
     }
