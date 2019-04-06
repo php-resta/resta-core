@@ -6,7 +6,7 @@ use Resta\Support\Utils;
 use Resta\Foundation\ApplicationProvider;
 use Resta\Foundation\PathManager\StaticPathList;
 
-class UrlParseApplication extends ApplicationProvider
+class UrlProvider extends ApplicationProvider
 {
     /**
      * @var array
@@ -19,6 +19,8 @@ class UrlParseApplication extends ApplicationProvider
     protected $urlNames=['project','version','endpoint','method'];
 
     /**
+     * assign url list
+     *
      * @return void
      */
     public function assignUrlList()
@@ -46,11 +48,13 @@ class UrlParseApplication extends ApplicationProvider
         $this->urlList['parameters']=array_slice($query,3);
 
         //url global instance
-        core()->urlKernelAssigner->definitor($this->urlList);
+        $this->definitor($this->urlList);
 
     }
 
     /**
+     * convert array for query
+     *
      * @return array
      */
     public function convertArrayForQuery()
@@ -70,6 +74,26 @@ class UrlParseApplication extends ApplicationProvider
     }
 
     /**
+     * url definitor
+     *
+     * @param $urlList
+     * @return void
+     */
+    public function definitor($urlList)
+    {
+        //We define global URL objects globally for the application.
+        define('version',           $urlList['version'].'');
+        define('app',               $urlList['project']);
+        define('endpoint',          $urlList['endpoint']);
+        define('method',            $urlList['method']);
+
+        //route parameters kernel object register
+        $this->app->register('routeParameters',$urlList['parameters']);
+    }
+
+    /**
+     * get url list values
+     *
      * @param $key
      * @param $value
      */
@@ -81,6 +105,8 @@ class UrlParseApplication extends ApplicationProvider
 
 
     /**
+     * url provider application handle
+     *
      * @return mixed
      */
     public function handle()

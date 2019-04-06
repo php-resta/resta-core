@@ -3,12 +3,12 @@
 namespace Resta\Foundation\Bootstrapper;
 
 use Resta\Support\Utils;
+use Resta\Url\UrlProvider;
 use Resta\Router\RouteProvider;
 use Resta\Logger\LoggerProvider;
 use Resta\Config\ConfigProvider;
 use Resta\Exception\ErrorHandler;
 use Resta\Contracts\BootContracts;
-use Resta\Url\UrlParseApplication;
 use Resta\Provider\ServiceProvider;
 use Resta\Response\ResponseProvider;
 use Resta\Middleware\MiddlewareProvider;
@@ -92,7 +92,7 @@ class BootLoader extends ApplicationProvider implements BootContracts
      */
     private function environment()
     {
-        // it is often helpful to have different configuration values based on
+        // it is often helpful to have different configuration values based onUrlParseApplication
         // the environment where the application is running.for example,
         // you may wish to use a different cache driver locally than you do on your production server.
         if($this->app->checkBindings('environment')===false){
@@ -223,7 +223,7 @@ class BootLoader extends ApplicationProvider implements BootContracts
         // the rest project is determined after the route variables from the URL are assigned to the kernel url object.
         if(core()->isAvailableStore && $this->app->checkBindings('url')===false){
             $this->app->make('url',function($app){
-                return $app['revision']['urlProvider'] ?? UrlParseApplication::class;
+                return $app['revision']['urlProvider'] ?? UrlProvider::class;
             });
         }
     }
