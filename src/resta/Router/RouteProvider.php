@@ -44,7 +44,8 @@ class RouteProvider extends ApplicationProvider
             // if the method in the instance object exists,
             // this method is executed to produce the output.
             if(method_exists($this->app['instanceController'],$this->app['method'])){
-                return DIContainerManager::callBind([$this->app['instanceController'],$this->app['method']],$this->app->applicationProviderBinding($this->app));
+                return DIContainerManager::callBind([$this->app['instanceController'],$this->app['method']],
+                    $this->app->applicationProviderBinding($this->app));
             }
 
             //throw exception as unsuccessful
