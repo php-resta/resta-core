@@ -13,8 +13,11 @@ class ConsoleEventServiceProvider extends ServiceProviderManager
      */
     public function register()
     {
+        //your console events should only be run for the console.
         if($this->app->runningInConsole()){
 
+            // by default we have written a log event.
+            // according to your needs you can write the event.
             $this->app->event('console','log',function($args){
                 return call_user_func([$this,'log'],$args);
             });
@@ -27,7 +30,7 @@ class ConsoleEventServiceProvider extends ServiceProviderManager
      * @param $args
      * @return void
      */
-    public function log($args)
+    private function log($args)
     {
         return logger('consoleEvent')->info($args);
     }
