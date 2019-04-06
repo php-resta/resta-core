@@ -9,7 +9,7 @@ use Resta\Exception\ErrorHandler;
 use Resta\Contracts\BootContracts;
 use Resta\Url\UrlParseApplication;
 use Resta\Provider\ServiceProvider;
-use Resta\Response\ResponseApplication;
+use Resta\Response\ResponseProvider;
 use Resta\Middleware\MiddlewareProvider;
 use Resta\Foundation\ApplicationProvider;
 use Resta\Contracts\ApplicationContracts;
@@ -166,7 +166,7 @@ class BootLoader extends ApplicationProvider implements BootContracts
         // json as default or [xml,wsdl]
         if($this->app->checkBindings('response')===false){
             $this->app->make('response',function($app){
-                return $app['revision']['responseManager'] ?? ResponseApplication::class;
+                return $app['revision']['responseManager'] ?? ResponseProvider::class;
             });
         }
     }

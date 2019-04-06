@@ -6,12 +6,14 @@ use Resta\Support\Utils;
 use Resta\Support\ClosureDispatcher;
 use Resta\Foundation\ApplicationProvider;
 
-class ResponseApplication extends ApplicationProvider
+class ResponseProvider extends ApplicationProvider
 {
     //get response output
     use ResponseOutput;
 
     /**
+     * app response type
+     *
      * @return mixed
      */
     private function appResponseType()
@@ -35,6 +37,20 @@ class ResponseApplication extends ApplicationProvider
     }
 
     /**
+     * formatter
+     *
+     * @return \Resta\Config\ConfigProcess
+     */
+    private function formatter()
+    {
+        //we get and handle the adapter classes in
+        //the output array according to the base object.
+        return config('response.outputter.formatter');
+    }
+
+    /**
+     * get controller instance
+     *
      * @return mixed
      */
     private function getControllerInstance()
@@ -44,6 +60,8 @@ class ResponseApplication extends ApplicationProvider
     }
 
     /**
+     * get response kind
+     *
      * @return mixed
      */
     private function getResponseKind()
@@ -55,6 +73,8 @@ class ResponseApplication extends ApplicationProvider
     }
 
     /**
+     * response application handle
+     *
      * @return mixed
      */
     public function handle()
@@ -77,16 +97,8 @@ class ResponseApplication extends ApplicationProvider
     }
 
     /**
-     * @return \Resta\Config\ConfigProcess
-     */
-    private function formatter()
-    {
-        //we get and handle the adapter classes in
-        //the output array according to the base object.
-        return config('response.outputter.formatter');
-    }
-
-    /**
+     * output formatter
+     *
      * @param array $data
      * @return array
      */

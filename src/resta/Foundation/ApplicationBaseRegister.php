@@ -9,9 +9,9 @@ use Resta\Exception\ErrorHandler;
 use Store\Services\RequestService;
 use Resta\Support\ClassAliasGroup;
 use Resta\Support\ReflectionProcess;
+use Resta\Response\ResponseProvider;
 use Resta\Contracts\HandleContracts;
 use Resta\Support\ClosureDispatcher;
-use Resta\Response\ResponseApplication;
 use Resta\Foundation\ApplicationProvider;
 use Symfony\Component\HttpFoundation\Request;
 use Resta\Foundation\Bootstrapper\BootLoader;
@@ -136,7 +136,7 @@ class ApplicationBaseRegister extends ApplicationProvider implements HandleContr
         $this->app->register('responseType','json');
 
         //we first load the response class as a singleton object to allow you to send output anywhere
-        $this->app->register('out',$this->app->resolve(ResponseApplication::class));
+        $this->app->register('out',$this->app->resolve(ResponseProvider::class));
 
         //The HttpFoundation component defines an object-oriented layer for the HTTP specification.
         //The HttpFoundation component replaces these default PHP global variables and functions by an object-oriented layer
