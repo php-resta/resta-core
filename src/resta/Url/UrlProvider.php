@@ -9,7 +9,7 @@ use Resta\Foundation\PathManager\StaticPathList;
 class UrlProvider extends ApplicationProvider
 {
     /**
-     * @var array
+     * @var array $urlList
      */
     public $urlList = [];
 
