@@ -106,7 +106,7 @@ class RouteProvider extends ApplicationProvider
     {
         // we record the route parameter with
         // the controller method in the serviceConf variable in the kernel..
-        $method = strtolower(app()->singleton()->url['method']);
+        $method = strtolower($this->app['urlComponent']['method']);
 
         // based on the serviceConf variable,
         // we are doing parameter bindings in the method context in the routeParameters array key.
