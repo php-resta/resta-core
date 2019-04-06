@@ -29,6 +29,11 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
     protected const VERSION = '1.0.0';
 
     /**
+     * @var array $events
+     */
+    protected $events = [];
+
+    /**
      * load bootstrappers for kernel.
      *
      * @var string
@@ -234,6 +239,21 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
         // and we have to reinstall the environment to remove it.
         $this->loadIfNotExistBoot([__FUNCTION__]);
         return $this->environment();
+    }
+
+    /**
+     * set event for application
+     *
+     * @param $eventName
+     * @param $abstract
+     * @param $concrete
+     * @return mixed|void
+     */
+    public function event($eventName, $abstract,$concrete)
+    {
+        $this->events[$eventName][$abstract] = $concrete;
+
+        $this->register('events',$eventName,$this->events[$eventName]);
     }
 
     /**
