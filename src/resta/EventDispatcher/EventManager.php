@@ -86,7 +86,7 @@ class EventManager extends EventHandler
 
             //get subscriber namespace
             $subscriberNamespace = $subscriberDirectory.'\\'.ucfirst($this->event);
-/**
+
             if(Utils::isNamespaceExists($subscriberNamespace)){
 
                 // After resolving the subscriber object with the help of the service container,
