@@ -92,8 +92,8 @@ class RouteProvider extends ApplicationProvider
         $namespace = $this->getControllerNamespace();
 
         //utils make bind via dependency injection named as service container
-        $this->app->register('serviceConf',              $this->app['fileSystem']->callFile(StaticPathModel::getServiceConf()));
-        $this->app->register('instanceController',       $this->app->resolve($namespace));
+        $this->app->register('serviceConf',$this->app['fileSystem']->callFile(StaticPathModel::getServiceConf()));
+        $this->app->register('instanceController',$this->app->resolve($namespace));
     }
 
     /**
