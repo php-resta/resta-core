@@ -35,6 +35,24 @@ class Console extends ApplicationProvider {
     }
 
     /**
+     * console event handler
+     *
+     * @param $args
+     * @return mixed
+     */
+    protected function consoleEventHandler($args)
+    {
+        if(isset($args['event']) && isset($this->app['events']['console'])){
+
+            if(isset($this->app['events']['console'][strtolower($args['event'])])){
+
+                $event = $this->app['events']['console'][strtolower($args['event'])];
+                return call_user_func_array($event,['arg'=>$args]);
+            }
+        }
+    }
+
+    /**
      * @method consoleProcess
      * @return mixed
      */
@@ -51,18 +69,26 @@ class Console extends ApplicationProvider {
                 exception()->badMethodCall('this command is not runnable');
             }
 
+            //get console arguments
+            $consoleArguments = $this->getConsoleArgumentsWithKey();
+
             // we get the instance data of the kernel command class of the system.
-            $commander=(new $this->consoleClassNamespace($this->getConsoleArgumentsWithKey(),$this));
+            $commander = (new $this->consoleClassNamespace($consoleArguments,$this));
 
             // we check the command rules of each command class.
-            return $this->prepareCommander($commander,function($commander){
+            $this->prepareCommander($commander,function($commander){
                 return $commander->{$this->getConsoleClassMethod()}();
             });
-        });
 
+            //console event handler
+            $this->consoleEventHandler($consoleArguments);
+
+        });
     }
 
     /**
+     * console application handle
+     *
      * @return mixed
      */
     public function handle()

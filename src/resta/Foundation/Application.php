@@ -251,7 +251,7 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
      */
     public function event($eventName, $abstract,$concrete)
     {
-        $this->events[$eventName][$abstract] = $concrete;
+        $this->events[$eventName][strtolower($abstract)] = $concrete;
 
         $this->register('events',$eventName,$this->events[$eventName]);
     }
