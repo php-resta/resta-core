@@ -114,7 +114,9 @@ class BootLoader extends ApplicationProvider implements BootContracts
         // with each other by dispatching events and listening to them.
         if($this->app->checkBindings('eventDispatcher')===false){
             $this->app->share('eventDispatcher',function($app){
-                return $app['revision']['eventDispatcher'] ?? app()->namespace()->serviceEventDispatcher();
+                if(Utils::isNamespaceExists(app()->namespace()->serviceEventDispatcher())){
+                    return $app['revision']['eventDispatcher'] ?? app()->namespace()->serviceEventDispatcher();
+                }
             });
         }
 

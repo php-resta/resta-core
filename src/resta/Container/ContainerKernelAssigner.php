@@ -45,19 +45,6 @@ class ContainerKernelAssigner extends ApplicationProvider
 
     /**
      * @param $object
-     * @return null
-     * @return void
-     */
-    private function getGlobalObjectInstance($object)
-    {
-        $globalObject = $object.'KernelAssigner';
-        $issetGlobalObject = (isset(core()->{$globalObject}));
-
-        return ($issetGlobalObject) ? core()->{$globalObject} : null;
-    }
-
-    /**
-     * @param $object
      * @param $concrete
      * @return void
      */
@@ -66,9 +53,6 @@ class ContainerKernelAssigner extends ApplicationProvider
         //We check that the concrete object
         //is an object that can be retrieved.
         if(!isset($this->app[$object]) && class_exists($concrete)){
-
-            //get global object instance
-            $globalObjectInstance = $this->getGlobalObjectInstance($object);
 
             //get concrete instance
             $concreteInstance = $this->app->resolve($concrete);
@@ -80,7 +64,7 @@ class ContainerKernelAssigner extends ApplicationProvider
             // this method is executed if the concrete instance contains the handle method.
             // if no handle method is included, the concrete instance is returned directly.
             $registerObjectInstance = (method_exists($concreteInstance,'handle'))
-                ? $concreteInstance->handle($globalObjectInstance)
+                ? $concreteInstance->handle()
                 : $concreteInstance;
 
         }
@@ -110,6 +94,9 @@ class ContainerKernelAssigner extends ApplicationProvider
         if($value==="serviceContainer"){
             $this->setServiceContainer($object,$concrete);
         }
+
+        //we register the bound object to the kernel bindings property.
+        $this->app->register('bindings',$object,$this->app->resolve($concrete));
 
     }
 

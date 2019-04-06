@@ -6,7 +6,6 @@ use Resta\Support\Utils;
 use Resta\Console\ConsoleBindings;
 use Resta\Contracts\ContainerContracts;
 use Resta\Container\ContainerKernelAssigner;
-use Resta\Container\ContainerKernelAssignerForBind as GlobalAssignerForBind;
 
 class Container implements ContainerContracts,\ArrayAccess
 {
@@ -90,11 +89,6 @@ class Container implements ContainerContracts,\ArrayAccess
         //We are getting what applies to console with consoleKernelObject.
         if($sync===false) return $this->consoleKernelObjectChecker($object,$callback);
 
-        //we automatically load a global loaders for the bind method
-        //and assign it to the object name in the kernel object with bind,
-        //which you can easily use in the booted classes for kernel object assignments.
-        $this->globalAssignerForBind($object,$callback);
-
         //the value corresponding to the bind value for the global object is assigned and
         //the resolve method is called for the dependency injection.
         $this->kernelAssigner()->setKernelObject($object,$callback);
@@ -134,11 +128,6 @@ class Container implements ContainerContracts,\ArrayAccess
     {
         //we check whether the callback value is a callable function.
         $isCallableForCallback = is_callable($callback);
-
-        //we automatically load a global loaders for the bind method
-        //and assign it to the object name in the kernel object with bind,
-        //which you can easily use in the booted classes for kernel object assignments.
-        $this->globalAssignerForBind($object,$callback);
 
         //If the console object returns true,
         //we do not cancel binding operations
@@ -203,22 +192,6 @@ class Container implements ContainerContracts,\ArrayAccess
             unset(self::$instance[$class]);
             unset(self::$bindParams[$class]);
         }
-    }
-
-    /**
-     * @param $object
-     * @param $callback
-     *
-     * @throws \DI\DependencyException
-     * @throws \DI\NotFoundException
-     */
-    private function globalAssignerForBind($object,$callback)
-    {
-        //we automatically load a global loaders for the bind method
-        //and assign it to the object name in the kernel object with bind,
-        //which you can easily use in the booted classes for kernel object assignments.
-        $this->resolve(GlobalAssignerForBind::class)->getAssigner($object,$callback);
-
     }
 
     /**
