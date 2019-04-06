@@ -11,12 +11,12 @@ class UrlProvider extends ApplicationProvider
     /**
      * @var array
      */
-    public $urlList=[];
+    public $urlList = [];
 
     /**
      * @var array $urlNames
      */
-    protected $urlNames=['project','version','endpoint','method'];
+    protected $urlNames = ['project','version','endpoint','method'];
 
     /**
      * assign url list
@@ -28,7 +28,7 @@ class UrlProvider extends ApplicationProvider
         // We treat the url parameters in the size of
         // the application usage and get the values
         // ​​to be processed throughout the application in query format.
-        $query=$this->convertArrayForQuery();
+        $query = $this->convertArrayForQuery();
 
         foreach ($query as $key=>$value){
 
@@ -41,11 +41,11 @@ class UrlProvider extends ApplicationProvider
         // If there is no method key in the urlList property,
         // then by default we assign the index to the method property.
         if(!isset($this->urlList['method'])){
-            $this->urlList['method']='index';
+            $this->urlList['method'] = 'index';
         }
 
         //determines the endpoint method for your project
-        $this->urlList['parameters']=array_slice($query,3);
+        $this->urlList['parameters'] = array_slice($query,3);
 
         //url global instance
         $this->definitor($this->urlList);
@@ -61,7 +61,7 @@ class UrlProvider extends ApplicationProvider
     {
         //convert array for query
         //we are removing the first empty element from the array due to the slash sign.
-        $arrayForQuery=explode("/",request()->getPathInfo());
+        $arrayForQuery = explode("/",request()->getPathInfo());
 
         array_shift($arrayForQuery);
 
@@ -82,10 +82,10 @@ class UrlProvider extends ApplicationProvider
     public function definitor($urlList)
     {
         //We define global URL objects globally for the application.
-        define('version',           $urlList['version'].'');
-        define('app',               $urlList['project']);
-        define('endpoint',          $urlList['endpoint']);
-        define('method',            $urlList['method']);
+        define('version',$urlList['version'].'');
+        define('app',$urlList['project']);
+        define('endpoint',$urlList['endpoint']);
+        define('method',$urlList['method']);
 
         //route parameters kernel object register
         $this->app->register('routeParameters',$urlList['parameters']);
@@ -100,7 +100,7 @@ class UrlProvider extends ApplicationProvider
     private function getUrlListValues($key,$value)
     {
         //If the value from the url is an external value, the default format is applied.
-        $this->urlList[$this->urlNames[$key]]=(strlen($value)>0) ? $value : null;
+        $this->urlList[$this->urlNames[$key]] = (strlen($value)>0) ? $value : null;
     }
 
 
