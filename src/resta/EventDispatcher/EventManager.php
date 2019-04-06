@@ -7,7 +7,7 @@ use Resta\Container\DIContainerManager;
 
 class EventManager extends EventHandler
 {
-    /**,
+    /**
      * @var $event
      */
     protected $event;
