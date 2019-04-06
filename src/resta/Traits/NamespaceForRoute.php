@@ -105,7 +105,7 @@ trait NamespaceForRoute
         //If controller does not have a method after checking whether the method specified in the controller class exists,
         //then by default we assign a default method value of indexAction.
         //This value must match the class strictly, otherwise the controller can not be called
-        if(method_exists($this->instanceController(),$this->getPrefixMethod())){
+        if(method_exists($this->app['instanceController'],$this->getPrefixMethod())){
 
             //method value as normal
             return $this->setViaDefine($this->getPrefixMethod(),$globalInstance);
