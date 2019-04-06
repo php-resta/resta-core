@@ -5,6 +5,7 @@ namespace Resta\Console;
 use Resta\Config\ConfigLoader as Config;
 use Resta\Foundation\ApplicationProvider;
 use Resta\Encrypter\Encrypter as EncrypterProvider;
+use Resta\Support\Utils;
 
 class ConsoleBindings extends ApplicationProvider {
 
@@ -61,16 +62,15 @@ class ConsoleBindings extends ApplicationProvider {
 
     /**
      * @param $object
+     * @param $callback
      * @param $container
-     * @return void
      */
-    public function console($object,$container){
+    public function console($object,$callback,$container){
 
         //If the console argument is an operator that exists in the resta kernel,
         //we run a callback method to check it. The bindings for the custom application commander will be run.
-        /**$this->checkMainConsoleRunner(function() use($object,$container) {
-            $this->bindForAppCommand($object,$container);
-        });*/
         $this->bindForAppCommand($object,$container);
+
+        $this->app->register($object,$this->app->resolve(Utils::callbackProcess($callback)));
     }
 }

@@ -100,16 +100,17 @@ class Container implements ContainerContracts,\ArrayAccess
     /**
      * @param $object
      * @param bool $container
+     * @param $callback
      * @return mixed
      *
      * @throws \DI\DependencyException
      * @throws \DI\NotFoundException
      */
-    private function consoleKernelObject($object,$container=false)
+    private function consoleKernelObject($object,$callback,$container=false)
     {
         //we use the console bindings class to specify the classes to be preloaded in the console application.
         //Thus, classes that can not be bound with http are called without closure in global loaders directory.
-        $this->resolve(ConsoleBindings::class)->console($object,$container);
+        $this->resolve(ConsoleBindings::class)->console($object,$callback,$container);
 
         //The console application must always return the kernel method.
         return $this->kernel();
@@ -132,7 +133,7 @@ class Container implements ContainerContracts,\ArrayAccess
         //If the console object returns true,
         //we do not cancel binding operations
         //We are getting what applies to console with consoleKernelObject.
-        if($this->console() AND $isCallableForCallback) return $this->consoleKernelObject($object,$container);
+        if($this->console() AND $isCallableForCallback) return $this->consoleKernelObject($object,$callback,$container);
 
         //If the application is not a console operation, we re-bind to existing methods synchronously.
         return ($container) ? $this->containerBuild($object,$callback,true) : $this->build($object,$callback,true);
