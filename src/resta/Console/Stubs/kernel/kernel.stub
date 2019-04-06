@@ -10,14 +10,4 @@ return [
         'AppServiceProvider'        => App\Mobi\Kernel\Providers\AppServiceProvider::class,
         'RouteServiceProvider'      => App\Mobi\Kernel\Providers\RouteServiceProvider::class,
     ],
-
-    /**
-     * builders for application
-     */
-     'builder' => [
-        'paths' => [
-            'Kernel' => path()->kernel(),
-        ]
-     ]
-
 ];

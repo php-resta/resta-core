@@ -1,0 +1,34 @@
+<?php
+
+namespace __kernelProviderDir__;
+
+use Resta\Provider\ServiceProviderManager;
+
+class ConsoleEventServiceProvider extends ServiceProviderManager
+{
+    /**
+     * register service provider
+     *
+     * @return void
+     */
+    public function register()
+    {
+        if($this->app->runningInConsole()){
+
+            $this->app->event('console','log',function($args){
+                return call_user_func([$this,'log'],$args);
+            });
+        }
+    }
+
+    /**
+     * log for console event
+     *
+     * @param $args
+     * @return void
+     */
+    public function log($args)
+    {
+        return logger('consoleEvent')->info($args);
+    }
+}
