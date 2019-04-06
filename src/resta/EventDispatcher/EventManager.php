@@ -13,24 +13,28 @@ class EventManager extends EventHandler
     protected $event;
 
     /**
+     * assigner dispatches
+     *
      * @param $event
      * @param $callable
      */
     protected function assignerDispatches($event,$callable)
     {
         //set to dispatches event variable
-        $this->dispatches['event']=$event;
+        $this->dispatches['event'] = $event;
 
         //if callback is used in the normal dispatcher method.
         if(is_callable($callable)){
-            $this->dispatches['callableResult']=call_user_func($callable);
+            $this->dispatches['callableResult'] = call_user_func($callable);
         }
 
         //get event name by class_basename
-        $this->dispatches['eventName']=lcfirst(class_basename($event));
+        $this->dispatches['eventName'] = lcfirst(class_basename($event));
     }
 
     /**
+     * check callable result and param
+     *
      * @return bool
      */
     protected function checkCallableResultAndParam()
@@ -41,18 +45,20 @@ class EventManager extends EventHandler
     }
 
     /**
+     * event listen
+     *
      * @param $listen
      */
     protected function eventListen($listen)
     {
         // the listening object will be resolved to the namespace value
         // in the listeners array and then the service container method via dependency injection.
-        $listenNamespace=app()->namespace()->optionalListeners().'\\'.ucfirst($listen);
+        $listenNamespace = app()->namespace()->optionalListeners().'\\'.ucfirst($listen);
 
         // if the callback comes,
         // we will set the callback object in the param property of the event object.
         if($this->checkCallableResultAndParam()){
-            $this->dispatches['event']->param=$this->dispatches['callableResult'];
+            $this->dispatches['event']->param = $this->dispatches['callableResult'];
         }
 
         // we call it with the bind property of
@@ -63,27 +69,29 @@ class EventManager extends EventHandler
     }
 
     /**
+     * event subscriber handler
+     *
      * @param $dispatcher
      * @return mixed
      */
     private function eventSubscribeHandler($dispatcher)
     {
         //get subscriber directory namespace
-        $subscriberDirectory=app()->namespace()->optionalSubscribers();
+        $subscriberDirectory = app()->namespace()->optionalSubscribers();
 
         foreach ($dispatcher->subscribe as $subscribe){
 
             //set event object for subscribe
-            $this->event=$subscribe;
+            $this->event = $subscribe;
 
             //get subscriber namespace
-            $subscriberNamespace=$subscriberDirectory.'\\'.ucfirst($this->event);
-
+            $subscriberNamespace = $subscriberDirectory.'\\'.ucfirst($this->event);
+/**
             if(Utils::isNamespaceExists($subscriberNamespace)){
 
                 // After resolving the subscriber object with the help of the service container,
                 // we call the subscriber method.
-                $subscriberInstance=app()->resolve($subscriberNamespace,['param'=>null]);
+                $subscriberInstance = $this->app->resolve($subscriberNamespace,['param'=>null]);
                 $subscriberInstance->subscriber($this);
             }
         }
@@ -93,6 +101,8 @@ class EventManager extends EventHandler
     }
 
     /**
+     * event subscriber process
+     *
      * @param $key
      * @param $listeners
      * @param callable $callable
@@ -123,20 +133,24 @@ class EventManager extends EventHandler
     }
 
     /**
+     * get listeners
+     *
      * @return mixed
      */
     protected function getListeners()
     {
-        if(isset(core()->events)) {
-            return core()->events;
+        if(isset($this->app['events'])) {
+            return $this->app['events'];
         }
         return $this->listen;
     }
 
     /**
-     * @param EventDispatcherKernelAssigner $eventDispatcher
+     * event provider application handle
+     *
+     * @return void
      */
-    public function handle(EventDispatcherKernelAssigner $eventDispatcher)
+    public function handle()
     {
         //set constant event-dispatcher
         define('event-dispatcher',true);
@@ -145,13 +159,25 @@ class EventManager extends EventHandler
         // the registered bindings object.
         // we apply this value to the registered object
         // because it is used in outgoing simple calls.
-        $dispatcher=core()->bindings['eventDispatcher'];
+        $dispatcher = $this->app['eventDispatcher'];
 
         //get subscribe event list with event subscribe handler
-        $dispatcherList=$this->eventSubscribeHandler($dispatcher);
+        $dispatcherList = $this->eventSubscribeHandler($dispatcher);
 
         //we save to kernel object value of the event-dispatcher
-        $eventDispatcher->setEventDispatcher($dispatcherList);
+        $this->setEventDispatcher($dispatcherList);
+    }
+
+    /**
+     * set event dispatcher
+     *
+     * @param $dispatcher
+     * @return void
+     */
+    public function setEventDispatcher($dispatcher)
+    {
+        //we save to kernel object value of the event-dispatcher
+        $this->app->register('events',$dispatcher);
     }
 }
 
