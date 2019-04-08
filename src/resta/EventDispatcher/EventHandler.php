@@ -40,7 +40,7 @@ class EventHandler extends EventDetached implements EventDispatcherContracts
         // you need to connect a listener to the dispatcher
         // so that it can be notified when the event is dispatched.
         // A call to the dispatcher's addListener() method associates any valid PHP callable to an event:
-        $this->listen=array_merge($this->getListeners(),[$this->event=>['subscriber'=>$subscriber]]);
+        $this->listen = array_merge($this->getListeners(),[$this->event=>['subscriber'=>$subscriber]]);
     }
 }
 
