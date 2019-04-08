@@ -242,21 +242,6 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
     }
 
     /**
-     * set event for application
-     *
-     * @param $eventName
-     * @param $abstract
-     * @param $concrete
-     * @return mixed|void
-     */
-    public function event($eventName, $abstract,$concrete)
-    {
-        $this->events[$eventName][strtolower($abstract)] = $concrete;
-
-        $this->register('events',$eventName,$this->events[$eventName]);
-    }
-
-    /**
      * handle application
      *
      * @return void|mixed

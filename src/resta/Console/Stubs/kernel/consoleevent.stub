@@ -18,7 +18,7 @@ class ConsoleEventServiceProvider extends ServiceProviderManager
 
             // by default we have written a log event.
             // according to your needs you can write the event.
-            $this->app->event('console','log',function($args){
+            event()->addListener('console','log',function($args){
                 return call_user_func([$this,'log'],$args);
             });
         }
@@ -28,7 +28,7 @@ class ConsoleEventServiceProvider extends ServiceProviderManager
      * log for console event
      *
      * @param $args
-     * @return void
+     * @return mixed
      */
     private function log($args)
     {

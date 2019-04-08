@@ -5,23 +5,16 @@ namespace Resta\Contracts;
 interface EventDispatcherContracts
 {
     /**
-     * @param $event
-     * @param null $callable
+     * @param $eventName
+     * @param $abstract
+     * @param $concrete
      * @return mixed
      */
-    public function dispatcher($event, $callable = null);
-
-    /**
-     * @param array $listener
-     * @return mixed
-     */
-    public function addListener($listener=array());
+    public function addListener($eventName,$abstract,$concrete);
 
     /**
      * @param array $subscriber
      * @return mixed
      */
     public function addSubscriber($subscriber=array());
-
-
 }

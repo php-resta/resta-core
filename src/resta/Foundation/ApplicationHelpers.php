@@ -147,10 +147,7 @@ if (!function_exists('event')) {
      */
     function event($event=null)
     {
-        if($event===null){
-            return app()->singleton()->bindings['eventDispatcher'];
-        }
-        return app()->singleton()->bindings['eventDispatcher']->dispatcher($event);
+        return app()->singleton()->bindings['eventDispatcher'];
     }
 }
 

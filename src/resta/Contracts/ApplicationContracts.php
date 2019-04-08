@@ -43,14 +43,6 @@ interface ApplicationContracts {
    public function environment($environment=array());
 
     /**
-     * @param $eventName
-     * @param $abstract
-     * @param $concrete
-     * @return mixed
-     */
-   public function event($eventName,$abstract,$concrete);
-
-    /**
      * @return mixed
      */
    public function handle();

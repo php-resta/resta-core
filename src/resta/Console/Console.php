@@ -42,14 +42,20 @@ class Console extends ApplicationProvider {
      */
     protected function consoleEventHandler($args)
     {
-        if(isset($args['event']) && isset($this->app['events']['console'])){
+        if(isset($this->app['eventDispatcher'])){
 
-            if(isset($this->app['events']['console'][strtolower($args['event'])])){
+            $listeners = event()->getListeners();
 
-                $event = $this->app['events']['console'][strtolower($args['event'])];
-                return call_user_func_array($event,['arg'=>$args]);
+            if(isset($args['event']) && isset($listeners['console'])){
+
+                if(isset($listeners['console'][strtolower($args['event'])])){
+
+                    $event = $listeners['console'][strtolower($args['event'])];
+                    return call_user_func_array($event,['arg'=>$args]);
+                }
             }
         }
+
     }
 
     /**
