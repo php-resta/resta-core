@@ -2,9 +2,10 @@
 
 namespace __exceptionNamespace__;
 
+use Exception;
 use __versionNamespace__\ServiceAnnotationsManager;
 
-class __exception__Exception extends \Exception
+class __exception__Exception extends Exception
 {
     //get app annotations controller
     use ServiceAnnotationsManager;

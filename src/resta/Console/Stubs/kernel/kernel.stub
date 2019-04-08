@@ -9,6 +9,6 @@ return [
     'providers' => [
         'AppServiceProvider'                => App\Mobi\Kernel\Providers\AppServiceProvider::class,
         'RouteServiceProvider'              => App\Mobi\Kernel\Providers\RouteServiceProvider::class,
-        //'ConsoleEventServiceProvider'     => \App\Mobi\Kernel\Providers\ConsoleEventServiceProvider::class,
+        'ConsoleEventServiceProvider'       => \App\Mobi\Kernel\Providers\ConsoleEventServiceProvider::class,
     ],
 ];
