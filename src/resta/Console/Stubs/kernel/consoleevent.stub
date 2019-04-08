@@ -16,10 +16,10 @@ class ConsoleEventServiceProvider extends ServiceProviderManager
         //your console events should only be run for the console.
         if($this->app->runningInConsole()){
 
-            // by default we have written a log event.
+            // by default we have written a migration event.
             // according to your needs you can write the event.
-            event()->addListener('console','log',function($args){
-                return call_user_func([$this,'log'],$args);
+            event()->addListener('console','default',function($args){
+                call_user_func_array([$this,'createModelForMigration'],[$args]);
             });
         }
     }
@@ -30,8 +30,14 @@ class ConsoleEventServiceProvider extends ServiceProviderManager
      * @param $args
      * @return mixed
      */
-    private function log($args)
+    private function createModelForMigration($args)
     {
-        return logger('consoleEvent')->info($args);
+        // if there is a value of migration create and model for the argument values,
+        // then a model will be created when that migration is created.
+        if($args['class']=="migration" && $args['classMethod']=="create" && isset($args['model'])){
+
+            // The symfony process will be executed as an application method.
+            $this->app->command('model create','model:'.strtolower($args['model']));
+        }
     }
 }

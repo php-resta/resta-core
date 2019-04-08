@@ -60,6 +60,8 @@ trait ConsoleArguments {
 
         $listKey=[];
         $listKey['project']=null;
+        $listKey['class'] = strtolower(class_basename($this->consoleClassNamespace));
+        $listKey['classMethod'] = strtolower($this->getConsoleClassMethod());
 
         foreach($getConsoleClassRealArguments as $key=>$value){
 

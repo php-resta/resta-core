@@ -48,11 +48,17 @@ class Console extends ApplicationProvider {
 
             if(isset($args['event']) && isset($listeners['console'])){
 
-                if(isset($listeners['console'][strtolower($args['event'])])){
+                if(strtolower($args['event'])!=='default' && isset($listeners['console'][strtolower($args['event'])])){
 
                     $event = $listeners['console'][strtolower($args['event'])];
-                    return call_user_func_array($event,['arg'=>$args]);
+                    return call_user_func_array($event,['app'=>$this->app,'args'=>$args,]);
                 }
+            }
+
+            if(isset($listeners['console']['default'])){
+
+                $event = $listeners['console']['default'];
+                return call_user_func_array($event,['args'=>$args,'app'=>$this->app]);
             }
         }
 
