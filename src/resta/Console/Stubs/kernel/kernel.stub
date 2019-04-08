@@ -7,8 +7,8 @@ return [
      * all providers names
      */
     'providers' => [
-        'AppServiceProvider'                => App\Mobi\Kernel\Providers\AppServiceProvider::class,
-        'RouteServiceProvider'              => App\Mobi\Kernel\Providers\RouteServiceProvider::class,
-        'ConsoleEventServiceProvider'       => \App\Mobi\Kernel\Providers\ConsoleEventServiceProvider::class,
+        'AppServiceProvider'                => __kernelProviderDir__\AppServiceProvider::class,
+        'RouteServiceProvider'              => __kernelProviderDir__\RouteServiceProvider::class,
+        'ConsoleEventServiceProvider'       => __kernelProviderDir__\ConsoleEventServiceProvider::class,
     ],
 ];
