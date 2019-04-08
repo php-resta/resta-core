@@ -11,6 +11,13 @@ interface ApplicationContracts {
     public function checkBindings($object);
 
     /**
+     * @param $command
+     * @param array $arguments
+     * @return mixed
+     */
+    public function command($command,$arguments=array());
+
+    /**
      * @return array
      */
     public function commandList();

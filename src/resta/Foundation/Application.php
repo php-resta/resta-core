@@ -2,6 +2,7 @@
 
 namespace Resta\Foundation;
 
+use Resta\Support\Process;
 use Resta\Support\Str;
 use Resta\Config\Config;
 use Resta\Traits\ApplicationPath;
@@ -140,6 +141,22 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
         // the booted objects are saved to the kernel.
         // this method checks whether these objects are registered.
         return (isset($this['bindings'],$this['bindings'][$object]));
+    }
+
+    /**
+     * handle application command
+     *
+     * @param $command
+     * @param array $arguments
+     * @return mixed|void
+     */
+    public function command($command, $arguments = array())
+    {
+        // the Process class executes a command in a sub-process,
+        // taking care of the differences between operating system
+        // and escaping arguments to prevent security issues.
+        // It replaces PHP functions like exec, passthru, shell_exec and system
+        return $this->resolve(Process::class,['command'=>$command,'args'=>$arguments])->handle();
     }
 
     /**
