@@ -2,9 +2,6 @@
 
 namespace Resta\EventDispatcher;
 
-use Resta\Support\Utils;
-use Resta\Container\DIContainerManager;
-
 class EventManager extends EventHandler
 {
     /**
