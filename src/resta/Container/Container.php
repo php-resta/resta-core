@@ -254,7 +254,6 @@ class Container implements ContainerContracts,\ArrayAccess
             $this->consoleShared($object,$callback);
         }
 
-
         //If the third parameter passed to the bind method carries a container value,
         //then you will not be able to fire the build method instead of the make method.
         $makeBuild = ($container==="container") ? 'containerBuild' : 'build';

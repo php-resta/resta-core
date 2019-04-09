@@ -43,7 +43,15 @@ class ContainerResolve extends ApplicationProvider
             // Unpack the container object and
             // bind it to the param variable.
             $parameterName = $parameter->getName();
-            $parameterResolve = app()->resolve($containers[$parameter->getType()->getName()]);
+
+            //get container object
+            $resolveObject = $containers[$parameter->getType()->getName()];
+
+            // if the container object is an object,
+            // it is served directly without resolving it.
+            $parameterResolve = (is_object($resolveObject))
+                ? $resolveObject
+                : app()->resolve($resolveObject);
 
             //return result for parameter of the container
             return [$parameterName=>$parameterResolve];
