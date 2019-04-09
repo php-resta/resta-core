@@ -2,11 +2,12 @@
 
 namespace Resta\Support;
 
+use Resta\Contracts\HandleContracts;
 use Resta\Foundation\ApplicationProvider;
 use Symfony\Component\Process\Process as ProcessHandler;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 
-class Command extends ApplicationProvider
+class Command extends ApplicationProvider implements HandleContracts
 {
     /**
      * @var $arguments
