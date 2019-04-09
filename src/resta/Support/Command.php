@@ -14,13 +14,14 @@ class Command extends ApplicationProvider
     protected $arguments;
 
     /**
-     * Process constructor.
+     * Command constructor.
      *
-     * @param $command
-     * @param $args
+     * @param mixed ...$params
      */
-    public function __construct($command,$args)
+    public function __construct(...$params)
     {
+        [$command,$args]    = $params;
+
         $this->arguments[]  = 'php';
         $this->arguments[]  = 'api';
         $this->arguments    = array_merge($this->arguments,explode(" ",$command));
