@@ -3,10 +3,9 @@
 namespace __kernelProviderDir__;
 
 use Resta\Router\Route;
-use Resta\Contracts\BootContracts;
 use Resta\Provider\ServiceProviderManager;
 
-class RouteServiceProvider extends ServiceProviderManager implements BootContracts
+class RouteServiceProvider extends ServiceProviderManager
 {
     /**
      * boot service provider

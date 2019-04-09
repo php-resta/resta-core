@@ -2,10 +2,9 @@
 
 namespace __kernelProviderDir__;
 
-use Resta\Contracts\BootContracts;
 use Resta\Provider\ServiceProviderManager;
 
-class AppServiceProvider extends ServiceProviderManager implements BootContracts
+class AppServiceProvider extends ServiceProviderManager
 {
     /**
      * boot service provider
