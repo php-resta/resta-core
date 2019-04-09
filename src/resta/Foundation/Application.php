@@ -2,9 +2,9 @@
 
 namespace Resta\Foundation;
 
-use Resta\Support\Process;
 use Resta\Support\Str;
 use Resta\Config\Config;
+use Resta\Support\Process;
 use Resta\Traits\ApplicationPath;
 use Illuminate\Support\Collection;
 use Resta\Support\ClosureDispatcher;
