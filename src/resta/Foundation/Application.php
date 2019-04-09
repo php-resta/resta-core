@@ -4,7 +4,7 @@ namespace Resta\Foundation;
 
 use Resta\Support\Str;
 use Resta\Config\Config;
-use Resta\Support\Process;
+use Resta\Support\Command;
 use Resta\Traits\ApplicationPath;
 use Illuminate\Support\Collection;
 use Resta\Support\ClosureDispatcher;
@@ -156,7 +156,7 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
         // taking care of the differences between operating system
         // and escaping arguments to prevent security issues.
         // It replaces PHP functions like exec, passthru, shell_exec and system
-        return $this->resolve(Process::class,['command'=>$command,'args'=>$arguments])->handle();
+        return $this->resolve(Command::class,['command'=>$command,'args'=>$arguments])->handle();
     }
 
     /**
