@@ -2,12 +2,11 @@
 
 namespace Resta\Support;
 
-use Resta\Contracts\HandleContracts;
 use Resta\Foundation\ApplicationProvider;
 use Symfony\Component\Process\Process as ProcessHandler;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 
-class Command extends ApplicationProvider implements HandleContracts
+class Command extends ApplicationProvider
 {
     /**
      * @var $arguments
@@ -15,14 +14,13 @@ class Command extends ApplicationProvider implements HandleContracts
     protected $arguments;
 
     /**
-     * Command constructor.
+     * Process constructor.
      *
-     * @param mixed ...$params
+     * @param $command
+     * @param $args
      */
-    public function __construct(...$params)
+    public function __construct($command,$args)
     {
-        [$command,$args]    = $params;
-
         $this->arguments[]  = 'php';
         $this->arguments[]  = 'api';
         $this->arguments    = array_merge($this->arguments,explode(" ",$command));
