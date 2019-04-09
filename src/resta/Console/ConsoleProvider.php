@@ -6,8 +6,8 @@ use Resta\Support\Utils;
 use Resta\Support\ClosureDispatcher;
 use Resta\Foundation\ApplicationProvider;
 
-class Console extends ApplicationProvider {
-
+class ConsoleProvider extends ApplicationProvider
+{
     //get console arguments
     use ConsoleArguments;
 
@@ -20,8 +20,8 @@ class Console extends ApplicationProvider {
      * @param callable $callback
      * @return mixed
      */
-    public function checkConsoleNamespace(callable $callback){
-
+    public function checkConsoleNamespace(callable $callback)
+    {
         // we check that they are in
         // the console to run the console commands in the kernel.
         if(Utils::isNamespaceExists($this->consoleClassNamespace)){
@@ -68,8 +68,8 @@ class Console extends ApplicationProvider {
      * @method consoleProcess
      * @return mixed
      */
-    protected function consoleProcess(){
-
+    protected function consoleProcess()
+    {
         //We create a namespace for the console and we assign to a variable the path of this class.
         $this->consoleClassNamespace = $this->consoleClassNamespace();
 
@@ -123,8 +123,8 @@ class Console extends ApplicationProvider {
      * @param callable $callback
      * @return mixed
      */
-    protected function prepareCommander($commander,callable $callback){
-
+    protected function prepareCommander($commander,callable $callback)
+    {
         // closure binding custom command,move custom namespace as specific
         // call prepare commander firstly for checking command builder
         $closureCommand     = app()->resolve(ClosureDispatcher::class,['bind'=>$commander]);

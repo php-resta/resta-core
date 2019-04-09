@@ -9,7 +9,7 @@ use Resta\Support\ClosureDispatcher;
 use Resta\Foundation\ApplicationProvider;
 use Resta\Foundation\PathManager\StaticPathModel;
 
-class ErrorHandler extends ApplicationProvider {
+class ErrorProvider extends ApplicationProvider {
 
     /**
      * @var $lang

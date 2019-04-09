@@ -8,6 +8,7 @@ use Resta\Router\RouteProvider;
 use Resta\Logger\LoggerProvider;
 use Resta\Config\ConfigProvider;
 use Resta\Exception\ErrorHandler;
+use Resta\Console\ConsoleProvider;
 use Resta\Contracts\BootContracts;
 use Resta\Provider\ServiceProvider;
 use Resta\Response\ResponseProvider;
@@ -15,7 +16,6 @@ use Resta\Middleware\MiddlewareProvider;
 use Resta\Foundation\ApplicationProvider;
 use Resta\Contracts\ApplicationContracts;
 use Resta\Environment\EnvironmentProvider;
-use Resta\Console\Console as ConsoleManager;
 use Resta\Encrypter\EncrypterProvider as EncrypterProvider;
 
 class BootLoader extends ApplicationProvider implements BootContracts
@@ -39,7 +39,7 @@ class BootLoader extends ApplicationProvider implements BootContracts
 
             //If the second parameter is sent true to the application builder,
             //all operations are performed by the console and the custom booting are executed
-            $this->app->make('appConsole',ConsoleManager::class,true);
+            $this->app->make('appConsole',ConsoleProvider::class,true);
         }
     }
 

@@ -5,8 +5,8 @@ namespace Resta\Foundation;
 use Resta\Support\App;
 use Resta\Support\Utils;
 use Resta\Support\FileProcess;
-use Resta\Exception\ErrorHandler;
 use Store\Services\RequestService;
+use Resta\Exception\ErrorProvider;
 use Resta\Support\ClassAliasGroup;
 use Resta\Support\ReflectionProcess;
 use Resta\Response\ResponseProvider;
@@ -70,7 +70,7 @@ class ApplicationBaseRegister extends ApplicationProvider implements HandleContr
         // or when you need to trigger an error under certain conditions (using trigger_error()).
         if($this->app['isAvailableStore']){
             $this->app->make('exception',function(){
-                return ErrorHandler::class;
+                return ErrorProvider::class;
             });
         }
     }
