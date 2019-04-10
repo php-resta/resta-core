@@ -2,9 +2,7 @@
 
 namespace __controllerNamespace__\__resourceInController__;
 
-use App\__project__\__version__\ServiceBaseController;
-
-class __resource__ extends ServiceBaseController
+class __resource__
 {
     /**
      * resource class for __serviceClass__
