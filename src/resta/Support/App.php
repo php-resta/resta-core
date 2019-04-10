@@ -6,11 +6,11 @@ use Lingua\Lingua;
 use Resta\Support\Str;
 use Resta\Support\Utils;
 use Resta\Config\Config;
-use Store\Services\Cache;
-use Resta\Config\ConfigProcess;
 use Store\Services\Crypt;
+use Resta\Config\ConfigProcess;
 use Store\Services\DateCollection;
 use Store\Services\Redis as Redis;
+use Resta\Cache\CacheManager as Cache;
 use Store\Services\HttpSession as Session;
 use Store\Services\DateCollection as Date;
 use Store\Services\AppCollection as Collection;
@@ -223,7 +223,7 @@ class App
     /**
      * @return mixed
      */
-    private static function redis()
+    public static function redis()
     {
         if(!isset(self::$instance['redis'])){
 

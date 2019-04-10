@@ -22,10 +22,17 @@ class ContainerResolve extends ApplicationProvider
         // the parameters of the class's methods.
         $param = $this->reflectionMethodParameters($class,$param);
 
-        // as a result
-        // we return the resolved class to the callback class
-        $params = (object)['class'=>$class,'param'=>$param];
-        return call_user_func_array($callback,[$params]);
+        // the results of a number of processes will be given
+        // before the container pipeline method is given.
+        return $this->app->resolve(ContainerPipelineResolve::class)->handle(
+            function() use($class,$param,$callback)
+            {
+                // as a result
+                // we return the resolved class to the callback class
+                $params = (object)['class'=>$class,'param'=>$param];
+                return call_user_func_array($callback,[$params]);
+            });
+
     }
 
     /**
@@ -73,6 +80,18 @@ class ContainerResolve extends ApplicationProvider
     }
 
     /**
+     * get class encrypter
+     *
+     * @param $class
+     * @return string
+     */
+    private function getClassEncrypter($class)
+    {
+        //the serialized class data
+        return md5(serialize($class));
+    }
+
+    /**
      * @param $class
      * @return mixed
      */
@@ -81,6 +100,40 @@ class ContainerResolve extends ApplicationProvider
         [$class,$method] = [$class[0],$class[1]];
 
         return $this->app['reflection']($class)->reflectionMethodParams($method);
+    }
+
+    /**
+     * is cache method for application route
+     *
+     * @param $reflection
+     * @param $class
+     * @return array
+     */
+    private function isCacheMethod($reflection,$class)
+    {
+        $cacheData = [];
+
+        // if you have information about cache in
+        // the document section of the method, the cache process is executed.
+        if(preg_match('#@cache\((.*?)\)\r\n#is',$reflection->document,$cache)){
+
+            // if the cache information
+            // with regular expression does not contain null data.
+            if($cache!==null && isset($cache[1])){
+
+                //as static we inject the name value into the cache data.
+                $cacheData = ['cache'=>['name'=>$this->getClassEncrypter($class)]];
+
+                //cache data with the help of foreach data are transferred into the cache.
+                foreach(array_filter(explode(" ",$cache[1]),'strlen') as $item){
+
+                    $items = explode("=",$item);
+                    $cacheData['cache'][$items[0]] = $items[1];
+                }
+            }
+        }
+
+        return $cacheData;
     }
 
     /**
@@ -103,6 +156,9 @@ class ContainerResolve extends ApplicationProvider
         // and then we get the parameters in array.
         $reflection = $this->getReflectionMethod($class);
         $parameters = $reflection->parameters;
+
+        // This method is handled as cache if method cache is available.
+        $this->app->register('methodCache',$this->isCacheMethod($reflection,$class));
 
         // we group the parameters into type and
         // name and bind them with the necessary logic.
