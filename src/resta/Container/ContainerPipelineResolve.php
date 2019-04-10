@@ -17,10 +17,14 @@ class ContainerPipelineResolve extends ApplicationProvider
      */
     protected function cacheProcess($callback)
     {
+        //we do cache key control for method cache container data.
         if(isset($this->app['methodCache']['cache'])){
 
+            //get cache data
             $cache = $this->app['methodCache']['cache'];
 
+            // we're processing the output using the cache manager's methods.
+            // The cache method we are using is going through the cache process.
             return (new CacheManager())
                 ->adapter($cache['adapter'] ?? null)
                 ->name($cache['name'])
@@ -41,8 +45,11 @@ class ContainerPipelineResolve extends ApplicationProvider
      */
     public function handle(callable $callback)
     {
+        // the container pipeline method fires
+        // the handle method and will return feedback after doing a number of operations here.
         $callback = $this->cacheProcess($callback);
 
+        //return callback
         return $callback;
     }
 }
