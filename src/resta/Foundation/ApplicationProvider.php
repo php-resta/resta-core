@@ -8,6 +8,8 @@ use Resta\Contracts\ApplicationContracts;
 abstract class ApplicationProvider
 {
     /**
+     * application instance
+     *
      * @var $app ApplicationContracts|ContainerContracts
      */
     protected $app;
@@ -23,6 +25,8 @@ abstract class ApplicationProvider
     }
 
     /**
+     * get application instance
+     *
      * @return ApplicationContracts|ContainerContracts
      */
     public function app()
