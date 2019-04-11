@@ -3,6 +3,7 @@
 namespace Resta\Foundation;
 
 use Resta\Support\App;
+use Resta\Support\Macro;
 use Resta\Support\Utils;
 use Resta\Support\FileProcess;
 use Store\Services\RequestService;
@@ -102,6 +103,9 @@ class ApplicationBaseRegister extends ApplicationProvider implements HandleContr
 
         //set closure bind instance for bootLoader class
         $this->app->register('closureBootLoader',ClosureDispatcher::bind($this->app['bootLoader']));
+
+        //set register for macro
+        $this->app->register('macro',$this->app->resolve(Macro::class));
 
     }
 

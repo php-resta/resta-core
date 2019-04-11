@@ -2,6 +2,8 @@
 
 namespace Resta\Cache;
 
+use Store\Services\Cache;
+
 class CacheManager extends CacheAdapter
 {
     /**
@@ -20,14 +22,9 @@ class CacheManager extends CacheAdapter
     protected $adapter = 'file';
 
     /**
-     * @var $name
+     * @var string $name
      */
     protected $name;
-
-    public function __construct()
-    {
-
-    }
 
     /**
      * change cache adapter
@@ -45,6 +42,8 @@ class CacheManager extends CacheAdapter
     }
 
     /**
+     * cache name
+     *
      * @param null $name
      * @return $this
      */
@@ -60,6 +59,8 @@ class CacheManager extends CacheAdapter
     }
 
     /**
+     * cache expire
+     *
      * @param $expire
      * @return $this
      */
@@ -75,6 +76,8 @@ class CacheManager extends CacheAdapter
     }
 
     /**
+     * get cache
+     *
      * @param callable $callback
      * @return mixed
      *
@@ -83,7 +86,7 @@ class CacheManager extends CacheAdapter
     public function get(callable $callback)
     {
         //cache adapter state.
-        $this->{$this->adapter}();
+        $this->cache = $this->{$this->adapter}($this);
 
         //With backtrace, we can specify an automatic name.
         //This will automatically detect which service is running in the service.
@@ -108,5 +111,4 @@ class CacheManager extends CacheAdapter
         // retrieve the value stored by the item
         return $cacheItem->get();
     }
-
 }

@@ -2,6 +2,8 @@
 
 namespace Resta\Cache;
 
+use Resta\Support\Macro;
+use Store\Services\Cache;
 use Symfony\Component\Cache\Adapter\RedisAdapter;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 
@@ -12,9 +14,9 @@ class CacheAdapter
      *
      * return mixed
      */
-    public function file()
+    private function file()
     {
-        $this->cache = new FilesystemAdapter(
+        return new FilesystemAdapter(
 
         // the subdirectory of the main cache directory where cache items are stored
             $namespace = '',
@@ -35,9 +37,9 @@ class CacheAdapter
      *
      * return mixed
      */
-    public function redis()
+    private function redis()
     {
-        $this->cache = new RedisAdapter(
+        return new RedisAdapter(
 
             $redisClient = \application::redis(),
 
@@ -49,6 +51,19 @@ class CacheAdapter
             $defaultLifetime = $this->expire
 
         );
+    }
 
+    /**
+     * check parent class or child class for adapter method
+     *
+     * @param $name
+     * @param $arguments
+     * @return mixed
+     */
+    public function __call($name, $arguments)
+    {
+        return app()['macro'](Cache::class)->isMacro($name)->get(pos($arguments),function() use($name){
+            return $this->{$name}();
+        });
     }
 }
