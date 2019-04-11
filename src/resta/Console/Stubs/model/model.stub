@@ -10,7 +10,7 @@ class __file__ extends Eloquent
     /**
      * @var $table string
      */
-    protected $table='users';
+    protected $table='__table__';
 
     /**
      * @var array $fillable
