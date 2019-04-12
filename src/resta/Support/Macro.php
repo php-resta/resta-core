@@ -23,33 +23,30 @@ class Macro extends ApplicationProvider
     protected $class;
 
     /**
-     * @var $method
-     */
-    protected $method;
-
-    /**
      * check conditions for macro
      *
-     * @param $method
      * @return bool
      */
-    protected function checkMacroConditions($method)
+    protected function checkMacroConditions()
     {
         return is_string($this->macro) &&
         Utils::isNamespaceExists($this->macro) &&
-        $this->app->resolve($this->macro) instanceof MacroAbleContracts &&
-        method_exists($this->app->resolve($this->macro),$method);
+        $this->app->resolve($this->macro) instanceof MacroAbleContracts;
     }
 
     /**
      * get macro object
      *
+     * @param $method
      * @param callable $callback
+     * @return mixed
      */
-    public function get(callable $callback)
+    public function get($method,callable $callback)
     {
         if($this->isMacro){
-            return $this->app->resolve($this->macro)->macro($this->method,$this->class);
+            if(method_exists($resolve = $this->app->resolve($this->macro),$method)){
+                return $resolve->macro($this->class);
+            }
         }
         return call_user_func($callback);
     }
@@ -58,21 +55,34 @@ class Macro extends ApplicationProvider
      * is availability macro for class
      *
      * @param $class
-     * @param $method
      * @return $this
      */
-    public function isMacro($method,$class)
+    public function isMacro($class)
     {
         // if the macro class is a valid object,
         // then this macro will return a boolean value if it has the specified methode.
-        if($this->checkMacroConditions($method)){
+        if($this->checkMacroConditions()){
 
             $this->isMacro  = true;
             $this->class    = $class;
-            $this->method   = $method;
         }
 
         return $this;
+    }
+
+    /**
+     * check been runnable with which macro
+     *
+     * @param $macro
+     * @param $concrete
+     * @param $method
+     * @return mixed
+     */
+    public function with($macro,$concrete,$method)
+    {
+        return $this($macro)->isMacro($concrete)->get($method,function() use($concrete){
+            return $concrete;
+        });
     }
 
     /**

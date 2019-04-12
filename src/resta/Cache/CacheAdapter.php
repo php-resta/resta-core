@@ -2,19 +2,18 @@
 
 namespace Resta\Cache;
 
-use Resta\Support\Macro;
-use Store\Services\Cache;
+use Resta\Foundation\ApplicationProvider;
 use Symfony\Component\Cache\Adapter\RedisAdapter;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 
-class CacheAdapter
+class CacheAdapter extends ApplicationProvider
 {
     /**
      * cache file adapter
      *
      * return mixed
      */
-    private function file()
+    public function file()
     {
         return new FilesystemAdapter(
 
@@ -37,7 +36,7 @@ class CacheAdapter
      *
      * return mixed
      */
-    private function redis()
+    public function redis()
     {
         return new RedisAdapter(
 
@@ -51,19 +50,5 @@ class CacheAdapter
             $defaultLifetime = $this->expire
 
         );
-    }
-
-    /**
-     * check parent class or child class for adapter method
-     *
-     * @param $name
-     * @param $class
-     * @return mixed
-     */
-    public function __call($name, $class)
-    {
-        return app()['macro'](Cache::class)->isMacro($name,pos($class))->get(function() use($name){
-            return $this->{$name}();
-        });
     }
 }

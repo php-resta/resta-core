@@ -19,16 +19,15 @@ trait Macroable
     /**
      * get macro method
      *
-     * @param $method
-     * @param $macro
+     * @param $class
      * @return mixed
      */
-   public function macro($method,$class)
+   public function macro($class)
    {
        $this->class  = $class;
        $this->macro = $this;
 
-       return $this->{$method}();
+       return $this;
    }
 
     /**

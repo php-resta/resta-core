@@ -25,7 +25,7 @@ class ContainerPipelineResolve extends ApplicationProvider
 
             // we're processing the output using the cache manager's methods.
             // The cache method we are using is going through the cache process.
-            return (new CacheManager())
+            return ($this->app->resolve(CacheManager::class))
                 ->adapter($cache['adapter'] ?? null)
                 ->name($cache['name'])
                 ->expire($cache['expire'] ?? null)

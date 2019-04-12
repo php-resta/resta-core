@@ -85,8 +85,15 @@ class CacheManager extends CacheAdapter
      */
     public function get(callable $callback)
     {
-        //cache adapter state.
-        $this->cache = $this->{$this->adapter}($this);
+        // this class has a macro that can be managed by the user.
+        // macros work as an extensible version of the classes.
+        $macro = $this->app['macro']->with(Cache::class,$this,$this->adapter);
+
+        //set cache macroable object
+        $this->cache = $macro->{$this->adapter}($callback);
+
+        //this method may show continuity depending on the macro.
+        if(false === $this instanceof $macro) return ;
 
         //With backtrace, we can specify an automatic name.
         //This will automatically detect which service is running in the service.
@@ -110,5 +117,18 @@ class CacheManager extends CacheAdapter
 
         // retrieve the value stored by the item
         return $cacheItem->get();
+    }
+
+    /**
+     * check macro availability for adapter method
+     *
+     * @param $class
+     * @return mixed
+     */
+    private function macro($class)
+    {
+        return app()['macro'](Cache::class)->isMacro($class)->get(function() use($class){
+            return $class;
+        });
     }
 }

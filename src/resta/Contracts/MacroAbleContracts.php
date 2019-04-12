@@ -5,11 +5,10 @@ namespace Resta\Contracts;
 interface MacroAbleContracts
 {
     /**
-     * @param $method
      * @param $class
      * @return mixed
      */
-    public function macro($method,$class);
+    public function macro($class);
 
     /**
      * @param $name
