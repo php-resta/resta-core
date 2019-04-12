@@ -81,7 +81,6 @@ class Macro extends ApplicationProvider
     public function with($macro,$concrete,$method)
     {
         if($this->macro === null){
-
             return $this($macro)->isMacro($concrete)->get($method,function() use($concrete){
                 return $concrete;
             });
