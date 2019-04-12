@@ -12,9 +12,9 @@ trait Macroable
     protected $macro;
 
     /**
-     * @var $data
+     * @var $class
      */
-    protected $data;
+    protected $class;
 
     /**
      * get macro method
@@ -23,9 +23,9 @@ trait Macroable
      * @param $macro
      * @return mixed
      */
-   public function macro($method,$data)
+   public function macro($method,$class)
    {
-       $this->data  = $data;
+       $this->class  = $class;
        $this->macro = $this;
 
        return $this->{$method}();
@@ -39,7 +39,7 @@ trait Macroable
      */
    public function __get($name)
    {
-       return ClosureDispatcher::bind($this->data)->call(function() use($name){
+       return ClosureDispatcher::bind($this->class)->call(function() use($name){
           return $this->{$name};
        });
    }

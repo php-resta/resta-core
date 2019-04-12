@@ -57,12 +57,12 @@ class CacheAdapter
      * check parent class or child class for adapter method
      *
      * @param $name
-     * @param $arguments
+     * @param $class
      * @return mixed
      */
-    public function __call($name, $arguments)
+    public function __call($name, $class)
     {
-        return app()['macro'](Cache::class)->isMacro($name)->get(pos($arguments),function() use($name){
+        return app()['macro'](Cache::class)->isMacro($name,pos($class))->get(function() use($name){
             return $this->{$name}();
         });
     }

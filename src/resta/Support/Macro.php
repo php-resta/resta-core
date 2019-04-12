@@ -2,6 +2,7 @@
 
 namespace Resta\Support;
 
+use Resta\Contracts\MacroAbleContracts;
 use Resta\Foundation\ApplicationProvider;
 
 class Macro extends ApplicationProvider
@@ -17,19 +18,38 @@ class Macro extends ApplicationProvider
     protected $macro;
 
     /**
+     * @var $class
+     */
+    protected $class;
+
+    /**
      * @var $method
      */
     protected $method;
+
+    /**
+     * check conditions for macro
+     *
+     * @param $method
+     * @return bool
+     */
+    protected function checkMacroConditions($method)
+    {
+        return is_string($this->macro) &&
+        Utils::isNamespaceExists($this->macro) &&
+        $this->app->resolve($this->macro) instanceof MacroAbleContracts &&
+        method_exists($this->app->resolve($this->macro),$method);
+    }
 
     /**
      * get macro object
      *
      * @param callable $callback
      */
-    public function get($childClass,callable $callback)
+    public function get(callable $callback)
     {
         if($this->isMacro){
-            return $this->app->resolve($this->macro)->macro($this->method,$childClass);
+            return $this->app->resolve($this->macro)->macro($this->method,$this->class);
         }
         return call_user_func($callback);
     }
@@ -37,18 +57,18 @@ class Macro extends ApplicationProvider
     /**
      * is availability macro for class
      *
+     * @param $class
      * @param $method
-     * @return bool
+     * @return $this
      */
-    public function isMacro($method)
+    public function isMacro($method,$class)
     {
         // if the macro class is a valid object,
         // then this macro will return a boolean value if it has the specified methode.
-        if(is_string($this->macro) &&
-            Utils::isNamespaceExists($this->macro) &&
-            method_exists($this->app->resolve($this->macro),$method)){
+        if($this->checkMacroConditions($method)){
 
             $this->isMacro  = true;
+            $this->class    = $class;
             $this->method   = $method;
         }
 
