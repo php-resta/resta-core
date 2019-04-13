@@ -2,11 +2,12 @@
 
 namespace Resta\Core\Tests\Container;
 
+use OverflowException;
 use DI\NotFoundException;
 use DI\DependencyException;
 use Resta\Core\Tests\AbstractTest;
 use Resta\Container\DIContainerManager;
-use Resta\Contracts\ApplicationContracts;
+use Resta\Contracts\{ApplicationContracts};
 use Resta\Core\Tests\Container\Dummy\ContainerBindClass;
 use Resta\Core\Tests\Container\Dummy\ContainerBindCallClass;
 use Resta\Core\Tests\Container\Dummy\ContainerBindInterface;
@@ -31,8 +32,6 @@ class ContainerBindTest extends AbstractTest
 
             });
         }
-
-
     }
 
     /**
@@ -64,7 +63,7 @@ class ContainerBindTest extends AbstractTest
 
         });
 
-        static::$app->bind("bindApp2",function(ApplicationContracts $app)
+        static::$app->bind("bindApp2",function()
         {
             return 'bindApp2';
 
@@ -78,7 +77,26 @@ class ContainerBindTest extends AbstractTest
         $this->assertTrue(true,isset(static::$app['serviceContainer']['bindApp2']));
         $this->assertSame("bindApp2",static::$app['serviceContainer']['bindApp2']);
         $this->assertSame("bindApp2",bind()->bindApp2);
+    }
 
+    /**
+     * @throws DependencyException
+     * @throws NotFoundException
+     */
+    public function testContainerBindMultipleEntity()
+    {
+        $this->expectException(OverflowException::class);
 
+        static::$app->bind("multiple",function(ApplicationContracts $app)
+        {
+            return $app;
+
+        });
+
+        static::$app->bind("multiple",function()
+        {
+            return 'bindApp2';
+
+        });
     }
 }
