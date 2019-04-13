@@ -2,7 +2,9 @@
 
 namespace Resta\Core\Tests\Foundation;
 
+use Resta\Contracts\ApplicationContracts;
 use Resta\Core\Tests\AbstractTest;
+use Resta\Foundation\Application;
 
 class ApplicationBaseRegisterTest extends AbstractTest
 {
@@ -25,23 +27,24 @@ class ApplicationBaseRegisterTest extends AbstractTest
     public function testApplicationBaseRegister()
     {
         $this->assertTrue(true,defined('appInstance'));
-        $this->assertTrue(true,isset($this->app['revision']));
-        $this->assertTrue(true,isset($this->app['corePath']));
-        $this->assertTrue(true,isset($this->app['container']));
-        $this->assertTrue(true,isset($this->app['appClass']));
-        $this->assertTrue(true,isset($this->app['appClosureInstance']));
-        $this->assertTrue(true,isset($this->app['closureBootLoader']));
-        $this->assertTrue(true,isset($this->app['macro']));
-        $this->assertTrue(true,isset($this->app['instanceController']));
-        $this->assertTrue(true,isset($this->app['responseSuccess']));
-        $this->assertTrue(true,isset($this->app['responseStatus']));
-        $this->assertTrue(true,isset($this->app['responseType']));
-        $this->assertTrue(true,isset($this->app['out']));
-        $this->assertTrue(true,isset($this->app['request']));
-        $this->assertTrue(true,isset($this->app['get']));
-        $this->assertTrue(true,isset($this->app['post']));
-        $this->assertTrue(true,isset($this->app['httpMethod']));
-        $this->assertTrue(true,isset($this->app['fileSystem']));
+        $this->assertTrue(true,isset(static::$app['revision']));
+        $this->assertTrue(true,is_array(static::$app['revision']));
+        $this->assertTrue(true,isset(static::$app['corePath']));
+        $this->assertTrue(true,isset(static::$app['container']));
+        $this->assertTrue(true,isset(static::$app['appClass']));
+        $this->assertTrue(true,isset(static::$app['appClosureInstance']));
+        $this->assertTrue(true,isset(static::$app['closureBootLoader']));
+        $this->assertTrue(true,isset(static::$app['macro']));
+        $this->assertTrue(true,isset(static::$app['instanceController']));
+        $this->assertTrue(true,isset(static::$app['responseSuccess']));
+        $this->assertTrue(true,isset(static::$app['responseStatus']));
+        $this->assertTrue(true,isset(static::$app['responseType']));
+        $this->assertTrue(true,isset(static::$app['out']));
+        $this->assertTrue(true,isset(static::$app['request']));
+        $this->assertTrue(true,isset(static::$app['get']));
+        $this->assertTrue(true,isset(static::$app['post']));
+        $this->assertTrue(true,isset(static::$app['httpMethod']));
+        $this->assertTrue(true,isset(static::$app['fileSystem']));
         $this->assertTrue(true,defined('httpMethod'));
 
     }
