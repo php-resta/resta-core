@@ -30,11 +30,6 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
     protected const VERSION = '1.0.0';
 
     /**
-     * @var array $events
-     */
-    protected $events = [];
-
-    /**
      * load bootstrappers for kernel.
      *
      * @var string
