@@ -42,47 +42,6 @@ class Controller extends ConsoleOutputter {
         'all'       => [],
     ];
 
-    public function all()
-    {
-        echo $this->info('All Route Controller Lists :');
-
-        $this->table->setHeaders(['route','http','method','parameters','define','middleware','event','doc','status']);
-
-        $controllers = (config('controller')===null) ? [] : config('controller');
-
-        foreach ($controllers as $controller=>$detail){
-
-            foreach ($detail as $namespace=>$permission){
-
-                $call = new CallController($namespace);
-
-                $methods = $call->getControllerMethods();
-
-                foreach ($methods as $http=>$method){
-
-                    $parameters = $call->getParameters($method['default']);
-
-                    $this->table->addRow([
-                        $controller,
-                        $http,
-                        $method['short'],
-                        '/'.implode("/",$parameters['route']),
-                        $parameters['define'],
-                        '',
-                        '',
-                        '',
-                        json_encode($permission)
-                    ]);
-                }
-
-
-            }
-
-        }
-
-        echo $this->table->getTable();
-    }
-
     /**
      * @method create
      * @return mixed
@@ -124,6 +83,16 @@ class Controller extends ConsoleOutputter {
 
             // and as a result we print the result on the console screen.
             echo $this->classical(' > Resource Controller called as "'.$this->argument['resource'].'" has been successfully created in the '.$this->directory['resource'].'');
+
+        }
+        elseif(isset($this->argument['file']) && file_exists($this->directory['endpoint'])){
+
+            $this->touch['service/controllerfile']   = $this->directory['endpoint'].''.DIRECTORY_SEPARATOR.''.$this->argument['file'].''. $this->argument['callClassPrefix'].'.php';
+
+            $this->file->touch($this);
+
+            // and as a result we print the result on the console screen.
+            echo $this->classical(' > Controller called as "'.$this->argument['file'].'" has been successfully created in the '.$this->directory['endpoint'].'');
 
         }
         else{

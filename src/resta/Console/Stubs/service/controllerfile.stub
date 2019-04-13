@@ -1,0 +1,18 @@
+<?php
+
+namespace __controllerNamespace__;
+
+class __file____callClassPrefix__ extends App
+{
+    /**
+     * #define: get __file__
+     *
+     * @return mixed|array
+     */
+    public function index()
+    {
+        return [
+            'endpoint'=>'__file__'
+        ];
+    }
+}
