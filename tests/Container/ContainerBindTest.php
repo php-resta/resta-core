@@ -23,11 +23,16 @@ class ContainerBindTest extends AbstractTest
     {
         parent::setUp();
 
-        static::$app->bind(ContainerBindInterface::class,function()
-        {
-            return ContainerBindClass::class;
+        if(!isset(static::$app['serviceContainer']['Resta\Core\Tests\Container\Dummy\ContainerBindInterface'])){
 
-        });
+            static::$app->bind(ContainerBindInterface::class,function()
+            {
+                return ContainerBindClass::class;
+
+            });
+        }
+
+
     }
 
     /**
