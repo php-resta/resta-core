@@ -37,4 +37,25 @@ class ContainerTest extends AbstractTest
         $this->assertSame(1,app()->resolve(ResolveDummy::class,['dummy'=>1])->getDummy());
         $this->assertSame(6,app()->resolve(ResolveDummy::class,['dummy'=>1])->getCounter());
     }
+
+
+    /**
+     * @throws \DI\DependencyException
+     * @throws \DI\NotFoundException
+     */
+    public function testShareContainer()
+    {
+        $this->assertTrue(true,static::$app->console());
+
+        static::$app->share("consoleShareControl",function()
+        {
+           return ResolveDummy::class;
+        });
+
+
+        $this->assertTrue(true,static::$app['consoleShared']['consoleShareControl']);
+        $this->assertSame("Resta\Core\Tests\Container\Dummy\ResolveDummy",static::$app['consoleShared']['consoleShareControl']);
+        $this->assertSame("Resta\Core\Tests\Container\Dummy\ResolveDummy",get_class(static::$app['consoleShareControl']));
+        $this->assertInstanceOf(ResolveDummy::class,static::$app['consoleShareControl']);
+    }
 }

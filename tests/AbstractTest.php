@@ -18,7 +18,7 @@ abstract class AbstractTest extends TestCase
     protected function setUp()
     {
         if(static::$app===null){
-            static::$app = new Application(false);
+            static::$app = new Application(true);
         }
 
         parent::setUp();
