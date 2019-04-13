@@ -58,4 +58,20 @@ class ContainerTest extends AbstractTest
         $this->assertSame("Resta\Core\Tests\Container\Dummy\ResolveDummy",get_class(static::$app['consoleShareControl']));
         $this->assertInstanceOf(ResolveDummy::class,static::$app['consoleShareControl']);
     }
+
+    /**
+     * @throws \DI\DependencyException
+     * @throws \DI\NotFoundException
+     */
+    public function testMakeContainer()
+    {
+        static::$app->make("consoleShareControl2",function()
+        {
+            return ResolveDummy::class;
+        });
+
+        $this->assertFalse(false,isset(static::$app['consoleShared']['consoleShareControl2']));
+        $this->assertFalse(false,isset(static::$app['bindings']['consoleShareControl2']));
+
+    }
 }

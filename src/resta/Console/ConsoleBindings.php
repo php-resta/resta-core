@@ -2,12 +2,11 @@
 
 namespace Resta\Console;
 
-use Resta\Config\ConfigLoader as Config;
-use Resta\Foundation\ApplicationProvider;
-use Resta\Encrypter\Encrypter as EncrypterProvider;
 use Resta\Support\Utils;
+use Resta\Foundation\ApplicationProvider as ApplicationProviderAlias;
 
-class ConsoleBindings extends ApplicationProvider {
+class ConsoleBindings extends ApplicationProviderAlias
+{
 
     //console arguments trait
     use ConsoleArguments;
@@ -19,7 +18,7 @@ class ConsoleBindings extends ApplicationProvider {
 
     /**
      * @method bindConsoleShared
-     * @return void
+     * @return array
      */
     private function bindConsoleShared(){
 
