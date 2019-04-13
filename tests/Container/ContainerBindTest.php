@@ -2,8 +2,11 @@
 
 namespace Resta\Core\Tests\Container;
 
+use DI\NotFoundException;
+use DI\DependencyException;
 use Resta\Core\Tests\AbstractTest;
 use Resta\Container\DIContainerManager;
+use Resta\Contracts\ApplicationContracts;
 use Resta\Core\Tests\Container\Dummy\ContainerBindClass;
 use Resta\Core\Tests\Container\Dummy\ContainerBindCallClass;
 use Resta\Core\Tests\Container\Dummy\ContainerBindInterface;
@@ -13,8 +16,8 @@ class ContainerBindTest extends AbstractTest
     /**
      * @return mixed|void
      *
-     * @throws \DI\DependencyException
-     * @throws \DI\NotFoundException
+     * @throws DependencyException
+     * @throws NotFoundException
      */
     protected function setUp()
     {
@@ -42,5 +45,35 @@ class ContainerBindTest extends AbstractTest
     public function testContainerBindCall()
     {
         $this->assertTrue(true,DIContainerManager::callBind([ContainerBindCallClass::class,'get'],static::$app->applicationProviderBinding(static::$app)));
+    }
+
+    /**
+     * @throws DependencyException
+     * @throws NotFoundException
+     */
+    public function testCallbackReturnBind()
+    {
+        static::$app->bind("bindApp",function(ApplicationContracts $app)
+        {
+            return $app;
+
+        });
+
+        static::$app->bind("bindApp2",function(ApplicationContracts $app)
+        {
+            return 'bindApp2';
+
+        });
+
+
+        $this->assertTrue(true,isset(static::$app['serviceContainer']['bindApp']));
+        $this->assertInstanceOf(ApplicationContracts::class,static::$app['serviceContainer']['bindApp']);
+        $this->assertInstanceOf(ApplicationContracts::class,bind()->bindApp);
+
+        $this->assertTrue(true,isset(static::$app['serviceContainer']['bindApp2']));
+        $this->assertSame("bindApp2",static::$app['serviceContainer']['bindApp2']);
+        $this->assertSame("bindApp2",bind()->bindApp2);
+
+
     }
 }

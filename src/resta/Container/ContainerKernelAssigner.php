@@ -96,7 +96,7 @@ class ContainerKernelAssigner extends ApplicationProvider
         }
 
         // we will resolve the value of concrete according to whether it is an object.
-        $detectorBindings = (is_object($concrete)) ? $concrete : $this->app->resolve($concrete);
+        $detectorBindings = (is_object($concrete)) ? $concrete : Utils::resolverClass($concrete);
 
         //we register the bound object to the kernel bindings property.
         $this->app->register('bindings',$object,$detectorBindings);

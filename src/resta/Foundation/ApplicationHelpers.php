@@ -66,6 +66,14 @@ if (!function_exists('auth')) {
     }
 }
 
+if (!function_exists('bind')) {
+
+    function bind()
+    {
+        return (object)app()['serviceContainer'];
+    }
+}
+
 if (!function_exists('bundleName')) {
 
     /**

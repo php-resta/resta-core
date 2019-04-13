@@ -416,4 +416,17 @@ class Utils
             'trace'
         ];
     }
+
+    /**
+     * @param $class
+     * @return mixed
+     */
+    public static function resolverClass($class)
+    {
+        if(self::isNamespaceExists($class)){
+            return app()->resolve($class);
+        }
+
+        return $class;
+    }
 }
