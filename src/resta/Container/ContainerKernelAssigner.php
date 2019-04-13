@@ -118,5 +118,11 @@ class ContainerKernelAssigner extends ApplicationProvider
             //the resolve method is called for the dependency method.
             $this->app->register('serviceContainer',$object,$concrete);
         }
+        else{
+
+            // the service container objects are saved only once.
+            // Overflow exception is thrown on multiple records.
+            exception()->overflow('The "'.$object.'" object was previously saved into service container.');
+        }
     }
 }

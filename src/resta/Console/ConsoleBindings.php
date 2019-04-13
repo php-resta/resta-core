@@ -71,6 +71,21 @@ class ConsoleBindings extends ApplicationProvider {
         //we run a callback method to check it. The bindings for the custom application commander will be run.
         $this->bindForAppCommand($object,$container);
 
-        $this->app->register($object,$this->app->resolve(Utils::callbackProcess($callback)));
+        //closure object
+        $callBackResolve = Utils::callbackProcess($callback);
+
+        // if the callbackresolve variable represents a class,
+        // we directly register it's resolved status to the container object.
+        if(Utils::isNamespaceExists($callBackResolve)){
+            $this->app->register($object,$this->app->resolve(Utils::callbackProcess($callback)));
+        }
+        else{
+
+            // if callbackresolve doesn't represent a class,
+            // we're register it's no resolved status.
+            $this->app->register($object,Utils::callbackProcess($callback));
+        }
+
+
     }
 }
