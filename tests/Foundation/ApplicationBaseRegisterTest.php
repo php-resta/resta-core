@@ -2,8 +2,6 @@
 
 namespace Resta\Core\Tests\Foundation;
 
-use Resta\Foundation\ApplicationBaseRegister;
-use Resta\Support\Dependencies;
 use Resta\Core\Tests\AbstractTest;
 
 class ApplicationBaseRegisterTest extends AbstractTest
