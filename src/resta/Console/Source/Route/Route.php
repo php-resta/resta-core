@@ -42,11 +42,13 @@ class Route extends ConsoleOutputter {
 
         echo $this->info('All Route Controller Lists :');
 
-        $this->table->setHeaders(['endpoint','http','namespace','method','definition','middleware','event','doc','status']);
+        $this->table->setHeaders(['no','endpoint','http','namespace','method','definition','middleware','event','doc','status']);
 
         $routes = Router::getRoutes();
         $routeData = isset($routes['data']) ? $routes['data'] : [];
         $routePattern = isset($routes['pattern']) ? $routes['pattern'] : [];
+
+        $counter=0;
 
         foreach($routeData as $key=>$data){
 
@@ -63,17 +65,43 @@ class Route extends ConsoleOutputter {
                 }
             }
 
-            $this->table->addRow([
-                $endpoint.'/'.implode("/",$routePattern[$key]),
-                $data['http'],
-                $controllerNamespace,
-                $data['method'],
-                $methodDefinition,
-                '',
-                '',
-                '',
-                ''
-            ]);
+            $endpointData = $endpoint.'/'.implode("/",$routePattern[$key]);
+
+            if(isset($this->argument['filter'])){
+
+                if(preg_match('@'.$this->argument['filter'].'@is',$endpointData)){
+
+                    $this->table->addRow([
+                        ++$counter,
+                        $endpointData,
+                        $data['http'],
+                        $controllerNamespace,
+                        $data['method'],
+                        $methodDefinition,
+                        '',
+                        '',
+                        '',
+                        ''
+                    ]);
+                }
+            }
+            else{
+
+                $this->table->addRow([
+                    ++$counter,
+                    $endpointData,
+                    $data['http'],
+                    $controllerNamespace,
+                    $data['method'],
+                    $methodDefinition,
+                    '',
+                    '',
+                    '',
+                    ''
+                ]);
+            }
+
+
         }
 
 
