@@ -39,14 +39,12 @@ class CacheManager extends CacheAdapter
     {
         parent::__construct($app);
 
-        if(config('cache.default')!==null){
+        //get configuration variables from application
+        $config = $this->app->resolve(CacheConfigDetector::class)->getConfig();
 
-            $default = config('cache.default');
-
-            $this->adapter  = config('cache.stores.'.$default.'.driver');
-            $this->path     = config('cache.stores.'.$default.'.path');
-            $this->expire   = config('cache.stores.'.$default.'.expire');
-        }
+        $this->adapter  = $config['adapter'];
+        $this->path     = $config['path'];
+        $this->expire   = $config['expire'];
     }
 
     /**
@@ -115,9 +113,6 @@ class CacheManager extends CacheAdapter
         //set cache macroable object
         $this->cache = $macro->{$this->adapter}($callback);
 
-        //this method may show continuity depending on the macro.
-        if(false === $this instanceof $macro) return ;
-
         //With backtrace, we can specify an automatic name.
         //This will automatically detect which service is running in the service.
         $backtrace = debug_backtrace()[1];
@@ -126,6 +121,9 @@ class CacheManager extends CacheAdapter
         if($this->name===null) {
             $this->name = md5($backtrace['function'].'_'.$backtrace['class']);
         }
+
+        //this method may show continuity depending on the macro.
+        if(false === $this instanceof $macro) return ;
 
         // retrieve the cache item
         $cacheItem = $this->cache->getItem($this->name);
