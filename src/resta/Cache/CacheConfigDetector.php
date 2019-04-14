@@ -22,7 +22,7 @@ class CacheConfigDetector extends ApplicationProvider
 
             $default = config('cache.default');
 
-            $this->config['adapter']  = config('cache.stores.'.$default.'.driver') ?? 'file';
+            $this->config['adapter']  = config('cache.stores.'.$default.'.driver') ?? exception()->invalidArgument('driver for '.$default.' within cache config is not valid');
             $this->config['path']     = config('cache.stores.'.$default.'.path') ?? path()->appResourche().'/Cache' ;
             $this->config['expire']   = config('cache.stores.'.$default.'.expire') ?? 0;
         }

@@ -105,6 +105,7 @@ return [
         'redis' => [
             'driver'        => 'redis',
             'connection'    => 'cache',
+            'expire'        => 30,
         ],
 
     ],
