@@ -112,6 +112,7 @@ class Project extends ConsoleOutputter {
         $this->touch['config/redis']                = $this->config().'/Redis.php';
         $this->touch['config/app']                  = $this->config().'/App.php';
         $this->touch['config/autoservice']          = $this->config().'/AutoServices.php';
+        $this->touch['config/cache']                = $this->config().'/Cache.php';
         $this->touch['config/cors']                 = $this->config().'/Cors.php';
         $this->touch['config/database']             = $this->config().'/Database.php';
         $this->touch['config/authenticate']         = $this->config().'/Authenticate.php';

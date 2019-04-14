@@ -1,5 +1,10 @@
 <?php
 
+use Store\Services\Cache;
+use App\Mobi\Kernel\Providers\AppServiceProvider;
+use App\Mobi\Kernel\Providers\RouteServiceProvider;
+use App\Mobi\Kernel\Providers\ConsoleEventServiceProvider;
+
 return [
 
     /**
@@ -7,8 +12,17 @@ return [
      * all providers names
      */
     'providers' => [
-        'AppServiceProvider'                => __kernelProviderDir__\AppServiceProvider::class,
-        'RouteServiceProvider'              => __kernelProviderDir__\RouteServiceProvider::class,
-        'ConsoleEventServiceProvider'       => __kernelProviderDir__\ConsoleEventServiceProvider::class,
+        'AppServiceProvider'                => AppServiceProvider::class,
+        'RouteServiceProvider'              => RouteServiceProvider::class,
+        'ConsoleEventServiceProvider'       => ConsoleEventServiceProvider::class,
     ],
+
+    /**
+     * macro classes are user-replaceable classes by the resta kernel.
+     * a list of Macro classes is managed only through the kernel.
+     * your own macro classes are outside this feature.
+     */
+    'macros' => [
+        'cache' => Cache::class,
+    ]
 ];

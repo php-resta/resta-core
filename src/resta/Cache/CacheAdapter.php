@@ -26,7 +26,7 @@ class CacheAdapter extends ApplicationProvider
 
             // the main cache directory (the application needs read-write permissions on it)
             // if none is specified, a directory is created inside the system temporary directory
-            $directory = app()->path()->appResourche().'/Cache'
+            $directory = $this->path
         );
 
     }

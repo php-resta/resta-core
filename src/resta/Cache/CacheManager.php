@@ -2,7 +2,7 @@
 
 namespace Resta\Cache;
 
-use Store\Services\Cache;
+use Resta\Contracts\ApplicationContracts;
 
 class CacheManager extends CacheAdapter
 {
@@ -14,17 +14,40 @@ class CacheManager extends CacheAdapter
     /**
      * @var int $expire
      */
-    protected $expire = 30;
+    protected $expire;
 
     /**
      * @var string $file
      */
-    protected $adapter = 'file';
+    protected $adapter;
+
+    /**
+     * @var null $path
+     */
+    protected $path;
 
     /**
      * @var string $name
      */
     protected $name;
+
+    /**
+     * CacheManager constructor.
+     * @param ApplicationContracts $app
+     */
+    public function __construct(ApplicationContracts $app)
+    {
+        parent::__construct($app);
+
+        if(config('cache.default')!==null){
+
+            $default = config('cache.default');
+
+            $this->adapter  = config('cache.stores.'.$default.'.driver');
+            $this->path     = config('cache.stores.'.$default.'.path');
+            $this->expire   = config('cache.stores.'.$default.'.expire');
+        }
+    }
 
     /**
      * change cache adapter
@@ -87,7 +110,7 @@ class CacheManager extends CacheAdapter
     {
         // this class has a macro that can be managed by the user.
         // macros work as an extensible version of the classes.
-        $macro = $this->app['macro']->with(Cache::class,$this,$this->adapter);
+        $macro = $this->app['macro']->with(config('kernel.macros.cache'),$this,$this->adapter);
 
         //set cache macroable object
         $this->cache = $macro->{$this->adapter}($callback);

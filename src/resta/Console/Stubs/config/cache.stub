@@ -1,0 +1,111 @@
+<?php
+
+/**
+ * The Cache component provides features covering simple to advanced caching needs.
+ * It natively implements PSR-6 and the Cache Contract for greatest interoperability.
+ * It is designed for performance and resiliency, ships with ready to use adapters for
+ * the most common caching backends, including proxies for adapting from/to Doctrine Cache and PSR-16.
+ * It enables tag-based invalidation and cache stampede protection.
+ */
+return [
+
+    /*
+    |--------------------------------------------------------------------------
+    | Default Cache Store
+    |--------------------------------------------------------------------------
+    |
+    | This option controls the default cache connection that gets used while
+    | using this caching library. This connection is used when another is
+    | not explicitly specified when executing a given caching function.
+    |
+    | Supported: "apc", "array", "database", "file",
+    |            "memcached", "redis"
+    |
+    */
+
+    'default' => environment('CACHE_DRIVER', 'file'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Cache Stores
+    |--------------------------------------------------------------------------
+    |
+    | Here you may define all of the cache "stores" for your application as
+    | well as their drivers. You may even define multiple stores for the
+    | same cache driver to group types of items stored in your caches.
+    |
+    */
+
+    'stores' => [
+
+        /**
+         * The Alternative PHP Cache (APC) is a free and open opcode cache for PHP.
+         * Its goal is to provide a free, open,
+         * and robust framework for caching and optimizing PHP intermediate code.
+         *
+         * @warning : This extension is considered unmaintained and dead.
+         * However, the source code for this extension is still available within PECL GIT
+         * here: https://git.php.net/?p=pecl/caching/apc.git.
+         */
+        'apc' => [
+            'driver' => 'apc',
+        ],
+
+        /**
+         * array driver
+         * example : https://github.com/symfony/symfony/blob/4.2/src/Symfony/Component/Cache/Adapter/ArrayAdapter.php
+         */
+        'array' => [
+            'driver' => 'array',
+        ],
+
+        /**
+         * database driver
+         */
+        'database' => [
+            'driver'        => 'database',
+            'table'         => 'cache',
+            'connection'    => null,
+        ],
+
+        /**
+         * file driver
+         */
+        'file' => [
+            'driver'    => 'file',
+            'path'      => path()->appResourche().'/Cache',
+            'expire'    => 30 //seconds
+        ],
+
+        /**
+         * memcached driver
+         */
+        'memcached' => [
+            'driver'        => 'memcached',
+            'persistent_id' => environment('MEMCACHED_PERSISTENT_ID','MEMCACHED_PERSISTENT_ID'),
+            'sasl'          => [
+                environment('MEMCACHED_USERNAME','MEMCACHED_USERNAME'),
+                environment('MEMCACHED_PASSWORD','MEMCACHED_PASSWORD'),
+            ],
+            'options' => [
+                // Memcached::OPT_CONNECT_TIMEOUT => 2000,
+            ],
+            'servers' => [
+                [
+                    'host'      => environment('MEMCACHED_HOST', '127.0.0.1'),
+                    'port'      => environment('MEMCACHED_PORT', 11211),
+                    'weight'    => 100,
+                ],
+            ],
+        ],
+
+        /**
+         * redis driver
+         */
+        'redis' => [
+            'driver'        => 'redis',
+            'connection'    => 'cache',
+        ],
+
+    ],
+];
