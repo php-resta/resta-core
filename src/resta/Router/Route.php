@@ -2,6 +2,7 @@
 
 namespace Resta\Router;
 
+use Resta\Foundation\PathManager\StaticPathList;
 use Resta\Support\Arr;
 use Resta\Support\Utils;
 
@@ -144,7 +145,7 @@ class Route extends RouteHttpManager
                     'class'         => $resolve['class'],
                     'method'        => $resolve['method'],
                     'controller'    => $resolve['controller'],
-                    'namespace'     => $resolve['namespace']
+                    'namespace'     => $resolve['namespace'],
                 ];
             }
         }
@@ -239,6 +240,7 @@ class Route extends RouteHttpManager
             'http'          => $function,
             'controller'    => $controller,
             'namespace'     => static::$namespace,
+            'endpoint'      => strtolower(str_replace(StaticPathList::$controllerBundleName,'',static::$namespace))
         ];
     }
 }

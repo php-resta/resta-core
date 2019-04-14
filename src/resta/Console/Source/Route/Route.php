@@ -50,14 +50,14 @@ class Route extends ConsoleOutputter {
 
         foreach($routeData as $key=>$data){
 
-            $endpoint = strtolower(str_replace(StaticPathList::$controller,'',$data['class']));
+            $endpoint = $data['endpoint'];
             $controllerNamespace = Utils::getNamespace($data['controller'].'/'.$data['namespace'].'/'.$data['class']);
 
             $methodDocument = app()['reflection']($controllerNamespace)->reflectionMethodParams($data['method'])->document;
-
+            
             $methodDefinition = '';
 
-            if(preg_match('@#define:(.*?)\r\n@is',$methodDocument,$definition)){
+            if(preg_match('@#define:(.*?)\n@is',$methodDocument,$definition)){
                 if(isset($definition[1])){
                     $methodDefinition = rtrim($definition[1]);
                 }
