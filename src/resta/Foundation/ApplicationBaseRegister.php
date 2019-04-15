@@ -2,6 +2,7 @@
 
 namespace Resta\Foundation;
 
+use League\Pipeline\Pipeline;
 use Resta\Support\App;
 use Resta\Support\Macro;
 use Resta\Support\Utils;
@@ -106,6 +107,9 @@ class ApplicationBaseRegister extends ApplicationProvider implements HandleContr
 
         //set register for macro
         $this->app->register('macro',$this->app->resolve(Macro::class));
+
+        //set register for macro
+        $this->app->register('pipeline',new Pipeline());
 
     }
 
