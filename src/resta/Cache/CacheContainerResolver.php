@@ -38,4 +38,17 @@ class CacheContainerResolver extends ApplicationProvider
 
         return call_user_func($callback);
     }
+
+    /**
+     * pipeline process for cache container
+     *
+     * @param $callback
+     * @return mixed
+     *
+     * @throws \Psr\Cache\InvalidArgumentException
+     */
+    public function __invoke($callback)
+    {
+        return $this->cacheProcess($callback);
+    }
 }

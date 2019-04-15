@@ -17,9 +17,7 @@ class ContainerPipelineResolve extends ApplicationProvider
     {
         // the container pipeline method fires
         // the handle method and will return feedback after doing a number of operations here.
-        $callback = $this->app->resolve(CacheContainerResolver::class)->cacheProcess($callback);
-
-        //return callback
-        return $callback;
+        return $this->app['pipeline']->pipe($this->app->resolve(CacheContainerResolver::class))
+            ->process($callback);
     }
 }
