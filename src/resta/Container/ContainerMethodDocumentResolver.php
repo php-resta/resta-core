@@ -28,6 +28,8 @@ class ContainerMethodDocumentResolver extends ApplicationProvider
         $this->document = $document;
         $this->class = $class;
 
+        // for class method,
+        // if there is cache in document data, it will be saved in container.
         $this->isCacheMethod();
     }
 
