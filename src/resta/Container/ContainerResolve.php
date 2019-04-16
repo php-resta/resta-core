@@ -95,42 +95,7 @@ class ContainerResolve extends ApplicationProvider
 
         return $this->app['reflection']($class)->reflectionMethodParams($method);
     }
-
-    /**
-     * is cache method for application route
-     *
-     * @param $document
-     * @param array $class
-     * @return array
-     */
-    private function isCacheMethod($document,$class=array())
-    {
-        $cacheData = [];
-
-        // if you have information about cache in
-        // the document section of the method, the cache process is executed.
-        if(is_string($document) && preg_match('#@cache\((.*?)\)\r\n#is',$document,$cache)){
-
-            // if the cache information
-            // with regular expression does not contain null data.
-            if($cache!==null && isset($cache[1])){
-
-                //as static we inject the name value into the cache data.
-                $cacheData = ['cache'=>['name'=>Utils::encryptArrayData($class)]];
-
-                //cache data with the help of foreach data are transferred into the cache.
-                foreach(array_filter(explode(" ",$cache[1]),'strlen') as $item){
-
-                    $items = explode("=",$item);
-                    $cacheData['cache'][$items[0]] = $items[1];
-                }
-            }
-        }
-
-        //we save the data stored in the cacheData variable as methodCache.
-        $this->app->register('containerReflection','methodCache',$cacheData);
-    }
-
+    
     /**
      * reflection method parameters
      *
@@ -155,7 +120,8 @@ class ContainerResolve extends ApplicationProvider
         $parameters = $reflection->parameters;
 
         // This method is handled as cache if method cache is available.
-        $this->isCacheMethod($reflection->document,$class);
+        $this->app->resolve(ContainerMethodDocumentResolver::class,
+            ['document'=>$reflection->document,'class'=>$class]);
 
         // we group the parameters into type and
         // name and bind them with the necessary logic.
