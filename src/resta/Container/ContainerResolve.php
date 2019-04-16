@@ -109,7 +109,7 @@ class ContainerResolve extends ApplicationProvider
 
         // if you have information about cache in
         // the document section of the method, the cache process is executed.
-        if(preg_match('#@cache\((.*?)\)\r\n#is',$document,$cache)){
+        if(is_string($document) && preg_match('#@cache\((.*?)\)\r\n#is',$document,$cache)){
 
             // if the cache information
             // with regular expression does not contain null data.
