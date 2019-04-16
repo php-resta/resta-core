@@ -9,6 +9,8 @@ use Resta\Foundation\ApplicationProvider;
 class ContainerResolve extends ApplicationProvider
 {
     /**
+     * container call process with pipeline
+     *
      * @param $class
      * @param $param
      * @param callable $callback
@@ -36,6 +38,8 @@ class ContainerResolve extends ApplicationProvider
     }
 
     /**
+     * check parameter for container
+     *
      * @param $containers
      * @param $parameter
      * @return array
@@ -80,18 +84,8 @@ class ContainerResolve extends ApplicationProvider
     }
 
     /**
-     * get class encrypter
+     * get reflection method
      *
-     * @param $class
-     * @return string
-     */
-    private function getClassEncrypter($class)
-    {
-        //the serialized class data
-        return md5(serialize($class));
-    }
-
-    /**
      * @param $class
      * @return mixed
      */
@@ -105,24 +99,24 @@ class ContainerResolve extends ApplicationProvider
     /**
      * is cache method for application route
      *
-     * @param $reflection
-     * @param $class
+     * @param $document
+     * @param array $class
      * @return array
      */
-    private function isCacheMethod($reflection,$class)
+    private function isCacheMethod($document,$class=array())
     {
         $cacheData = [];
 
         // if you have information about cache in
         // the document section of the method, the cache process is executed.
-        if(preg_match('#@cache\((.*?)\)\r\n#is',$reflection->document,$cache)){
+        if(preg_match('#@cache\((.*?)\)\r\n#is',$document,$cache)){
 
             // if the cache information
             // with regular expression does not contain null data.
             if($cache!==null && isset($cache[1])){
 
                 //as static we inject the name value into the cache data.
-                $cacheData = ['cache'=>['name'=>$this->getClassEncrypter($class)]];
+                $cacheData = ['cache'=>['name'=>Utils::encryptArrayData($class)]];
 
                 //cache data with the help of foreach data are transferred into the cache.
                 foreach(array_filter(explode(" ",$cache[1]),'strlen') as $item){
@@ -133,10 +127,13 @@ class ContainerResolve extends ApplicationProvider
             }
         }
 
-        return $cacheData;
+        //we save the data stored in the cacheData variable as methodCache.
+        $this->app->register('containerReflection','methodCache',$cacheData);
     }
 
     /**
+     * reflection method parameters
+     *
      * @param $class
      * @param $param
      * @return mixed
@@ -158,7 +155,7 @@ class ContainerResolve extends ApplicationProvider
         $parameters = $reflection->parameters;
 
         // This method is handled as cache if method cache is available.
-        $this->app->register('methodCache',$this->isCacheMethod($reflection,$class));
+        $this->isCacheMethod($reflection->document,$class);
 
         // we group the parameters into type and
         // name and bind them with the necessary logic.

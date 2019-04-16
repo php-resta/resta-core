@@ -58,6 +58,18 @@ class Utils
         },$argument);
     }
 
+    /**
+     * encrypt array data
+     *
+     * @param $class
+     * @return string
+     */
+    public static function encryptArrayData($class)
+    {
+        //the serialized class data
+        return md5(serialize($class));
+    }
+
 
     /**
      * @param $argument

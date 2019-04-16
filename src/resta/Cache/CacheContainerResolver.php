@@ -17,10 +17,10 @@ class CacheContainerResolver extends ApplicationProvider
     public function cacheProcess($callback)
     {
         //we do cache key control for method cache container data.
-        if(isset($this->app['methodCache']['cache'])){
+        if(isset($this->app['containerReflection']['methodCache']['cache'])){
 
             //get cache data
-            $cache = $this->app['methodCache']['cache'];
+            $cache = $this->app['containerReflection']['methodCache']['cache'];
 
             //get cache config variables from application 
             $config = $this->app->resolve(CacheConfigDetector::class)->getConfig();
