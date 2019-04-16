@@ -120,8 +120,7 @@ class ContainerResolve extends ApplicationProvider
         $parameters = $reflection->parameters;
 
         // This method is handled as cache if method cache is available.
-        $this->app->resolve(ContainerMethodDocumentResolver::class,
-            ['document'=>$reflection->document,'class'=>$class]);
+        $this->app->resolve(ContainerMethodDocumentResolver::class,['document'=>$reflection->document,'class'=>$class]);
 
         // we group the parameters into type and
         // name and bind them with the necessary logic.
