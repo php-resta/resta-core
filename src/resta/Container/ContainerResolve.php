@@ -119,7 +119,8 @@ class ContainerResolve extends ApplicationProvider
         $reflection = $this->getReflectionMethod($class);
         $parameters = $reflection->parameters;
 
-        // This method is handled as cache if method cache is available.
+        // we provide the user with the container method document and take action.
+        // thus, we help the methods to have a cleaner code structure.
         $this->app->resolve(ContainerMethodDocumentResolver::class,
             ['document'=>$reflection->document,'class'=>$class]);
 
