@@ -12,10 +12,10 @@ abstract class Kernel extends Container
      * @var array
      */
     protected $originGroups=[
-        'url'               => 'urlProvider',
+        'url'               => 'url',
         'environment'       => 'environment',
         'logger'            => 'logger',
-        'config'            => 'configProvider',
+        'config'            => 'config',
         'encrypter'         => 'encrypter',
         'eventDispatcher'   => 'eventDispatcher',
         'serviceProvider'   => 'serviceProvider',
@@ -27,7 +27,7 @@ abstract class Kernel extends Container
      * @var array
      */
     protected $consoleGroups = [
-        'console' => 'appConsole',
+        'console' => 'console',
     ];
 
     /**
@@ -48,7 +48,7 @@ abstract class Kernel extends Container
      */
     protected $reflectionGroups=[
         'router'    => 'router',
-        'response'  => 'responseManager',
+        'response'  => 'response',
     ];
 
     /**

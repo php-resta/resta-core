@@ -38,12 +38,12 @@ class FinalBooting extends ApplicationProvider
     private function bootstrapper($boots=array(),$defaultBoot=true)
     {
         //boot loop make bind calling
-        foreach ($boots as $bootstrapperKey=>$bootstrapper){
+        foreach ($boots as $bootstrapper){
 
             // for the default boot, we overwrite the bootstrapper class's bootstrapper property
             // and load it with the boot method.
             if($defaultBoot){
-                $this->app->loadIfNotExistBoot([$bootstrapperKey]);
+                $this->app->loadIfNotExistBoot([$bootstrapper]);
             }
             // we will use the classical method for classes
             // that will not boot from the kernel.

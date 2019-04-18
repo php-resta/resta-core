@@ -30,7 +30,7 @@ class BootLoader extends ApplicationProvider implements BootContracts
      *
      * @return mixed|void
      */
-    private function appConsole()
+    private function console()
     {
         //if the console is true
         //console app runner
@@ -58,13 +58,13 @@ class BootLoader extends ApplicationProvider implements BootContracts
      *
      * @return mixed|void
      */
-    private function configProvider()
+    private function config()
     {
         // this is your application's config installer.
         // you can easily access the config variables with the config installer.
         if($this->app->checkBindings('config')===false){
             $this->app->share('config',function($app){
-                return $app['revision']['configProvider'] ?? ConfigProvider::class;
+                return $app['revision']['config'] ?? ConfigProvider::class;
             });
         }
     }
@@ -162,13 +162,13 @@ class BootLoader extends ApplicationProvider implements BootContracts
      *
      * @return mixed|void
      */
-    private function responseManager()
+    private function response()
     {
         // we determine kind of output with the response manager
         // json as default or [xml,wsdl]
         if($this->app->checkBindings('response')===false){
             $this->app->make('response',function($app){
-                return $app['revision']['responseManager'] ?? ResponseProvider::class;
+                return $app['revision']['response'] ?? ResponseProvider::class;
             });
         }
     }
@@ -219,13 +219,13 @@ class BootLoader extends ApplicationProvider implements BootContracts
      *
      * @return mixed|void
      */
-    private function urlProvider()
+    private function url()
     {
         // with url parsing,the application route for
         // the rest project is determined after the route variables from the URL are assigned to the kernel url object.
         if(core()->isAvailableStore && $this->app->checkBindings('url')===false){
             $this->app->make('url',function($app){
-                return $app['revision']['urlProvider'] ?? UrlProvider::class;
+                return $app['revision']['url'] ?? UrlProvider::class;
             });
         }
     }
