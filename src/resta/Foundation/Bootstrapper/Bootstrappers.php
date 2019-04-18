@@ -2,8 +2,8 @@
 
 namespace Resta\Foundation\Bootstrapper;
 
-use Resta\Contracts\ApplicationContracts;
 use Resta\Contracts\ContainerContracts;
+use Resta\Contracts\ApplicationContracts;
 use Resta\Foundation\ApplicationBaseRegister as BaseRegister;
 
 class Bootstrappers
@@ -27,7 +27,7 @@ class Bootstrappers
     {
         //The concrete object is the callback class itself that is sent to this class.
         //Once the concrete object has been assigned, we run the bootstrappers sequence
-        $this->app          = $app;
+        $this->app = $app;
 
         //we boot the initial instance for the application.
         (new BaseRegister($this->app))->handle();
