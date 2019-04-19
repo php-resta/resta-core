@@ -2,6 +2,7 @@
 
 namespace Resta\Foundation\Bootstrapper;
 
+use Resta\Support\ClosureDispatcher;
 use Resta\Contracts\ContainerContracts;
 use Resta\Contracts\ApplicationContracts;
 use Resta\Middleware\MiddlewareKernelProvider;
@@ -20,24 +21,78 @@ class Bootstrappers
     protected $app;
 
     /**
+     * load bootstrappers for kernel.
+     *
+     * @var string
+     */
+    protected const LOADBOOTSTRAPPERS = 'loadBootstrappers';
+
+    /**
      * Bootstrappers constructor.
      *
      * @param ApplicationContracts|ContainerContracts $app
      */
     public function __construct(ApplicationContracts $app)
     {
-        //The concrete object is the callback class itself that is sent to this class.
-        //Once the concrete object has been assigned, we run the bootstrappers sequence
+        // the concrete object is the callback class itself that is sent to this class.
+        // once the concrete object has been assigned, we run the bootstrappers sequence
         $this->app = $app;
 
         //we boot the initial instance for the application.
         (new BaseRegister($this->app))->handle();
 
+        //we save the bootstrapper class in container.
+        $this->app->register('bootstrapper',$this);
+
         //call bootstrapper process
         $this->callBootstrapperProcess();
 
-        // we are peeling.
+        //we are peeling.
         $this->peelings();
+    }
+
+    /**
+     * application bootstrappers
+     *
+     * @method bootstrappers
+     * @param $strappers bootstrappers
+     */
+    private function boot($bootstrapper)
+    {
+        //The boot method to be executed can be specified by the user.
+        //We use this method to know how to customize it.
+        BootFireCallback::setBootFire([$this->app,$bootstrapper],function($boot){
+
+            //kernel boots run and service container
+            //makeBuild for service Container
+            $this->bootFire($boot);
+        });
+    }
+
+    /**
+     * kernel boot manager method
+     *
+     * @param null $boot
+     * @param null $maker
+     * @return mixed
+     */
+    public function bootFire($boot=null,$maker=null)
+    {
+        // we can refer to this method
+        // because we can boot classes in the middleware or bootstrapper array.
+        if(is_null($boot) && !is_null($maker)){
+
+            // we create kernel bootstrapping objects
+            // that can be changed by you with the closure dispatcher method.
+            return ClosureDispatcher::bind($this->app->resolve(KernelManifestManager::class))
+                ->call(function() use ($maker){
+                    return $this->handle($maker);
+                });
+        }
+
+        // the boot method to be executed can be specified by the user.
+        // we use this method to know how to customize it.
+        return forward_static_call_array([array_pop($boot),self::LOADBOOTSTRAPPERS],[$boot]);
     }
 
     /**
@@ -56,7 +111,7 @@ class Bootstrappers
             // pass our bootstraper classes through this method.
             // Our goal here is to implement the middleware layer correctly.
             $this->app->resolve(MiddlewareKernelProvider::class)->onionBoot([$group,$booting],function() use($group){
-                $this->makeBootstrapperWithAppClosureInstance($group);
+                $this->boot($group);
             });
 
             return false;
@@ -64,7 +119,7 @@ class Bootstrappers
 
         //system booting for app
         //pre-loaders are the most necessary classes for the system.
-        $this->makeBootstrapperWithAppClosureInstance($group);
+        $this->boot($group);
     }
 
     /**
