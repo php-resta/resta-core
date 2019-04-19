@@ -58,9 +58,8 @@ class Bootstrappers
             $this->app->resolve(MiddlewareKernelProvider::class)->onionBoot([$group,$booting],function() use($group){
 
                 //make bootstrapper with app closure instance for application
-                $this->app['appClosureInstance']->call(function() use($group){
-                    $this->bootstrappers($this,$group);
-                });
+                $this->makeBootstrapperWithAppClosureInstance($group);
+
             });
 
             return false;
@@ -68,9 +67,7 @@ class Bootstrappers
 
         //system booting for app
         //pre-loaders are the most necessary classes for the system.
-        $this->app['appClosureInstance']->call(function() use($group){
-            $this->bootstrappers($this,$group);
-        });
+        $this->makeBootstrapperWithAppClosureInstance($group);
     }
 
     /**
@@ -106,6 +103,24 @@ class Bootstrappers
         $getBootstrappers                   = $this->app->kernelGroupKeys();
         $this->stack['getBootstrappers']    = ($customBootstrapersCount) ? $customBootstrapers : $getBootstrappers;
         $this->stack['onionIdentifier']     = ($customBootstrapersCount) ? false : true;
+    }
+
+    /**
+     * make bootstraper with app closure instace
+     *
+     * @param $group
+     */
+    private function makeBootstrapperWithAppClosureInstance($group)
+    {
+        // if the specified group name is present
+        // in the application kernel group keys, we will do the bootstrapper.
+        if(in_array($group,$this->app->kernelGroupKeys())){
+
+            //make bootstrapper with app closure instance for application
+            $this->app['appClosureInstance']->call(function() use($group){
+                $this->bootstrappers($this,$group);
+            });
+        }
     }
 
     /**

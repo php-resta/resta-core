@@ -88,11 +88,11 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
      * @param $app \Resta\Contracts\ApplicationContracts
      * @param $strappers bootstrappers
      */
-    protected function bootstrappers($app,$strappers)
+    protected function bootstrappers($app,$bootstrapper)
     {
         //The boot method to be executed can be specified by the user.
         //We use this method to know how to customize it.
-        BootFireCallback::setBootFire([$app,$strappers],function($boot){
+        BootFireCallback::setBootFire([$app,$bootstrapper],function($boot){
 
             //kernel boots run and service container
             //makeBuild for service Container
