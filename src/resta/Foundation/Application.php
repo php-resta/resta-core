@@ -7,14 +7,11 @@ use Resta\Config\Config;
 use Resta\Support\Command;
 use Resta\Traits\ApplicationPath;
 use Illuminate\Support\Collection;
-use Resta\Support\ClosureDispatcher;
 use Resta\Contracts\ApplicationContracts;
 use Resta\Environment\EnvironmentProvider;
 use Resta\Contracts\ConfigProviderContracts;
 use Resta\Contracts\ApplicationHelpersContracts;
 use Resta\Foundation\Bootstrapper\Bootstrappers;
-use Resta\Foundation\Bootstrapper\BootFireCallback;
-use Resta\Foundation\Bootstrapper\KernelManifestManager;
 
 class Application extends Kernel implements ApplicationContracts,ApplicationHelpersContracts
 {
