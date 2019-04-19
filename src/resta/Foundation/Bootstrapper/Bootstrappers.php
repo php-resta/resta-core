@@ -86,6 +86,7 @@ class Bootstrappers
             // We send the peelings property to
             // the bootstrapperPeelOnion class.
             $peelings = $this->app['peelings'];
+
             pos($peelings)->onionRun($peelings);
         }
     }
