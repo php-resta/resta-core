@@ -114,6 +114,8 @@ class MiddlewareKernelProvider extends ApplicationProvider
     }
 
     /**
+     * middleware onion boot
+     *
      * @param $onion
      * @param callable $callback
      * @return mixed|null

@@ -74,6 +74,4 @@ class MiddlewareKernelProviderProcess implements LayerInterface
             return core()->bindings['middleware']->after();
         }
     }
-
-
 }
