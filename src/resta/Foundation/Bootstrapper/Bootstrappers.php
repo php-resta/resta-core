@@ -158,24 +158,6 @@ class Bootstrappers
     }
 
     /**
-     * make bootstraper with app closure instace
-     *
-     * @param $group
-     */
-    private function makeBootstrapperWithAppClosureInstance($group)
-    {
-        // if the specified group name is present
-        // in the application kernel group keys, we will do the bootstrapper.
-        if(in_array($group,$this->app->kernelGroupKeys())){
-
-            //make bootstrapper with app closure instance for application
-            $this->app['appClosureInstance']->call(function() use($group){
-                $this->bootstrappers($this,$group);
-            });
-        }
-    }
-
-    /**
      * @method peelings
      * @return mixed|void
      */
