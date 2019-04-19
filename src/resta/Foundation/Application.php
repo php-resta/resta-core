@@ -11,7 +11,6 @@ use Resta\Support\ClosureDispatcher;
 use Resta\Contracts\ApplicationContracts;
 use Resta\Environment\EnvironmentProvider;
 use Resta\Contracts\ConfigProviderContracts;
-use Resta\Middleware\MiddlewareKernelProvider;
 use Resta\Contracts\ApplicationHelpersContracts;
 use Resta\Foundation\Bootstrapper\Bootstrappers;
 use Resta\Foundation\Bootstrapper\BootFireCallback;

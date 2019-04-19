@@ -59,7 +59,6 @@ class Bootstrappers
                 $this->app['appClosureInstance']->call(function() use($group){
                     $this->bootstrappers($this,$group);
                 });
-
             });
 
             return false;
