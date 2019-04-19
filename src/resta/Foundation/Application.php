@@ -66,7 +66,7 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
     {
         // we can refer to this method
         // because we can boot classes in the middleware or bootstrapper array.
-        if($boot===null && $maker!==null){
+        if(is_null($boot) && !is_null($maker)){
 
             // we create kernel bootstrapping objects
             // that can be changed by you with the closure dispatcher method.
