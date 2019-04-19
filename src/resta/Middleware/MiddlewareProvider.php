@@ -14,11 +14,6 @@ class MiddlewareProvider extends ApplicationProvider implements HandleContracts
     protected $middleware = array();
 
     /**
-     * @var bool
-     */
-    public $after = false;
-
-    /**
      * check namespace and specificCondition
      *
      * @return bool
@@ -39,11 +34,6 @@ class MiddlewareProvider extends ApplicationProvider implements HandleContracts
         //set define for middleware
         define('middleware',true);
 
-        // If the after variable is sent normally,
-        // the handle method will be executed.
-        // If true, then the middleware will be executed.
-        $middlewareMethod = ($this->after===false) ? 'handle' : 'after';
-
         // the app instance is a global application example,
         // and a hash is loaded as this hash.
         $this->setMiddleware();
@@ -51,9 +41,27 @@ class MiddlewareProvider extends ApplicationProvider implements HandleContracts
         //When your application is requested, the middleware classes are running before all bootstrapper executables.
         //Thus, if you make http request your application, you can verify with an intermediate middleware layer
         //and throw an exception.
-        $resolveServiceMiddleware = $this->app['middlewareClass']->{$middlewareMethod}();
+        $resolveServiceMiddleware = $this->app['middlewareClass']->handle();
         $this->serviceMiddleware($resolveServiceMiddleware);
 
+    }
+
+    /**
+     * after middleware
+     *
+     * @return void|mixed
+     */
+    public function after()
+    {
+        // the app instance is a global application example,
+        // and a hash is loaded as this hash.
+        $this->setMiddleware();
+
+        //When your application is requested, the middleware classes are running before all bootstrapper executables.
+        //Thus, if you make http request your application, you can verify with an intermediate middleware layer
+        //and throw an exception.
+        $resolveServiceMiddleware = $this->app['middlewareClass']->after();
+        $this->serviceMiddleware($resolveServiceMiddleware);
     }
 
     /**

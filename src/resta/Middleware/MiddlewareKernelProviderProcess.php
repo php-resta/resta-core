@@ -23,11 +23,13 @@ class MiddlewareKernelProviderProcess implements LayerInterface
      */
     public function __construct($onionType=null,$onions=null)
     {
-        $this->onionType=$onionType;
-        $this->onions=$onions;
+        $this->onionType = $onionType;
+        $this->onions = $onions;
     }
 
     /**
+     * get peel
+     *
      * @param $object
      * @param \Closure $next
      * @return mixed
@@ -52,6 +54,8 @@ class MiddlewareKernelProviderProcess implements LayerInterface
     }
 
     /**
+     * onion process
+     *
      * @return mixed
      */
     private function onionsProcess()
@@ -60,12 +64,14 @@ class MiddlewareKernelProviderProcess implements LayerInterface
     }
 
     /**
+     * after peeling
+     *
      * @return mixed|void
      */
     private function afterPeel()
     {
         if(isset(core()->bindings['middleware']) && core()->bindings['middleware']!==null){
-            return core()->bindings['middleware']->after=true;
+            return core()->bindings['middleware']->after();
         }
     }
 

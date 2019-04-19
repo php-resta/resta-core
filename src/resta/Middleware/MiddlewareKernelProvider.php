@@ -49,7 +49,7 @@ class MiddlewareKernelProvider extends ApplicationProvider
         // we will then use the keys of
         // the peelings feature to sort and increase the last value 1.
         $keys = array_keys($this->app['peelings']);
-
+        
         // and since we can not peel,
         // we will include the onion property in the process class respectively and run it as before yada after.
         $bootstrapperPeelOnionProcess = new MiddlewareKernelProviderProcess($this->onionTypes[$group],$this->onionList);
