@@ -47,5 +47,11 @@ interface ContainerContracts
      */
     public function resolve($class,$bind=array());
 
+    /**
+     * @param $class
+     * @return mixed
+     */
+    public function resolved($class);
+
 
 }

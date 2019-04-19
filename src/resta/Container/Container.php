@@ -369,8 +369,8 @@ class Container implements ContainerContracts,\ArrayAccess
 
             //By singleton checking, we solve the dependency injection of the given class.
             //Thus, each class can be called together with its dependency.
-            self::$instance[$class]=DIContainerManager::make($class,$this->applicationProviderBinding($this,self::$bindParams[$class]));
-            $this->singleton()->resolve[$class]=self::$instance[$class];
+            self::$instance[$class] = DIContainerManager::make($class,$this->applicationProviderBinding($this,self::$bindParams[$class]));
+            $this->singleton()->resolved[$class] = self::$instance[$class];
 
             //return resolve class
             return self::$instance[$class];
@@ -379,7 +379,21 @@ class Container implements ContainerContracts,\ArrayAccess
         //if the class to be resolved has already been loaded,
         //we get the instance value that was saved to get the recurring instance.
         return self::$instance[$class];
+    }
 
+    /**
+     * get resolved class
+     *
+     * @param $class
+     * @return mixed
+     */
+    public function resolved($class){
+
+        if(isset($this['resolved'][$class])){
+            return $this['resolved'][$class];
+        }
+
+        exception()->runtime('The class named '.$class.' was not solved before.');
     }
 
     /**

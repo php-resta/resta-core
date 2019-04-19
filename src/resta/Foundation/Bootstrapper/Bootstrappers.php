@@ -4,6 +4,7 @@ namespace Resta\Foundation\Bootstrapper;
 
 use Resta\Contracts\ContainerContracts;
 use Resta\Contracts\ApplicationContracts;
+use Resta\Middleware\MiddlewareKernelProvider;
 use Resta\Foundation\ApplicationBaseRegister as BaseRegister;
 
 class Bootstrappers
@@ -87,7 +88,7 @@ class Bootstrappers
             // the bootstrapperPeelOnion class.
             $peelings = $this->app['peelings'];
 
-            pos($peelings)->onionRun($peelings);
+            $this->app->resolved(MiddlewareKernelProvider::class)->onionRun($peelings);
         }
     }
 }
