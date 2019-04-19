@@ -56,10 +56,7 @@ class Bootstrappers
             // pass our bootstraper classes through this method.
             // Our goal here is to implement the middleware layer correctly.
             $this->app->resolve(MiddlewareKernelProvider::class)->onionBoot([$group,$booting],function() use($group){
-
-                //make bootstrapper with app closure instance for application
                 $this->makeBootstrapperWithAppClosureInstance($group);
-
             });
 
             return false;
