@@ -41,13 +41,15 @@ class Bootstrappers
     }
 
     /**
-     * application call bootstrapper process
+     * application bootstrapper process
      *
-     * @param $group
-     * @param $booting
+     * @param mixed ...$params
+     * @return bool
      */
-    public function bootstrapper($group,$booting,$onion=true)
+    public function bootstrapper(...$params)
     {
+        [$group,$booting,$onion] = $params;
+
         if($onion){
 
             // we will implement a special onion method here and
