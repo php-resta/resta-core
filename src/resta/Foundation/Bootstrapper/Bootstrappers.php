@@ -46,7 +46,7 @@ class Bootstrappers
      * @param mixed ...$params
      * @return bool
      */
-    public function bootstrapper(...$params)
+    private function bootstrapper(...$params)
     {
         [$group,$booting,$onion] = $params;
 
