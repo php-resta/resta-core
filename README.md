@@ -1,6 +1,6 @@
-[![Build Status](https://travis-ci.com/restapix/resta.svg?branch=master)](https://travis-ci.com/restapix/resta)
-[![Total Downloads](https://poser.pugx.org/restapix/resta/downloads)](https://packagist.org/packages/restapix/resta)
-[![License](https://poser.pugx.org/restapix/resta/license)](https://packagist.org/packages/restapix/resta)
+[![Build Status](https://travis-ci.com/restapix/core.svg?branch=master)](https://travis-ci.com/restapix/core)
+[![Total Downloads](https://poser.pugx.org/php-resta/resta-core/downloads)](https://packagist.org/packages/php-resta/resta-core)
+[![License](https://poser.pugx.org/php-resta/resta-core/license)](https://packagist.org/packages/php-resta/resta-core)
 [![Latest Unstable Version](https://poser.pugx.org/restapix/resta/v/unstable)](//packagist.org/packages/restapix/resta)
 
 # Resta - A Great Php Api Designer
