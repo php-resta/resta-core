@@ -82,9 +82,28 @@ class UrlProvider extends ApplicationProvider
     public function definitor($urlList)
     {
         //We define global URL objects globally for the application.
-        define('version',$urlList['version'].'');
+        //check version
+        if(isset($urlList['version']) && preg_match('@V(\d+)@',$urlList['version'])){
+            define('version',$urlList['version']);
+        }
+        else{
+
+            $this->urlList['version'] = 'V1';
+            define('version','V1');
+        }
+
+        //check endpoint
+        if(isset($urlList['endpoint'])){
+            define('endpoint',$urlList['endpoint']);
+        }
+        else{
+
+            $this->urlList['endpoint'] = $urlList['version'] ?? $this->urlList['version'];
+            define('endpoint',$urlList['version'] ?? $this->urlList['version']);
+        }
+
         define('app',$urlList['project']);
-        define('endpoint',$urlList['endpoint']);
+
         define('method',$urlList['method']);
 
         //route parameters kernel object register
