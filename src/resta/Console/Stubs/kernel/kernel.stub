@@ -1,9 +1,9 @@
 <?php
 
 use Store\Services\Cache;
-use App\Mobi\Kernel\Providers\AppServiceProvider;
-use App\Mobi\Kernel\Providers\RouteServiceProvider;
-use App\Mobi\Kernel\Providers\ConsoleEventServiceProvider;
+use __kernelProviderDir__\AppServiceProvider;
+use __kernelProviderDir__\RouteServiceProvider;
+use __kernelProviderDir__\ConsoleEventServiceProvider;
 
 return [
 
