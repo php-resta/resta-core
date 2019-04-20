@@ -1,5 +1,5 @@
 {
-    "name": "restapix/resta",
+    "name": "php-resta/resta-core",
     "type": "library",
     "description": "resta php api restfull framework",
     "keywords": ["php","restapi","restfull"],
