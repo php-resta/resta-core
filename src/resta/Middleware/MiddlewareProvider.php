@@ -138,7 +138,6 @@ class MiddlewareProvider extends ApplicationProvider implements HandleContracts
                 $middlewareNamespace = app()->namespace()->middleware().'\\'.ucfirst($middleVal);
             }
 
-
             //middleware and exclude class instances
             $excludeClass = $this->app['excludeClass'];
             $middlewareClass = $this->app['middlewareClass'];
