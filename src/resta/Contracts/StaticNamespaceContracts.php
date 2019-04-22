@@ -145,6 +145,11 @@ interface StaticNamespaceContracts
     /**
      * @return mixed
      */
+    public function serviceMiddleware();
+
+    /**
+     * @return mixed
+     */
     public function stubs();
 
     /**

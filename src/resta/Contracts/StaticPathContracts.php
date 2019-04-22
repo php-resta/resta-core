@@ -125,6 +125,11 @@ interface StaticPathContracts
     /**
      * @return mixed
      */
+    public function serviceMiddleware();
+
+    /**
+     * @return mixed
+     */
     public function storeConfigDir();
 
     /**
