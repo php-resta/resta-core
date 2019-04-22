@@ -25,15 +25,8 @@ class MiddlewareProvider extends ApplicationProvider implements HandleContracts
      */
     public function after()
     {
-        // the app instance is a global application example,
-        // and a hash is loaded as this hash.
-        $this->setMiddleware();
-
-        //When your application is requested, the middleware classes are running before all bootstrapper executables.
-        //Thus, if you make http request your application, you can verify with an intermediate middleware layer
-        //and throw an exception.
-        $resolveServiceMiddleware = $this->app['middlewareClass']->after();
-        $this->serviceMiddleware($resolveServiceMiddleware);
+        //middleware handle process
+        $this->handleMiddlewareProcess('after');
     }
 
     /**
@@ -64,9 +57,10 @@ class MiddlewareProvider extends ApplicationProvider implements HandleContracts
     /**
      * handle middleware process
      *
+     * @param string $method
      * @return void|mixed
      */
-    public function handleMiddlewareProcess()
+    public function handleMiddlewareProcess($method='handle')
     {
         // the app instance is a global application example,
         // and a hash is loaded as this hash.
@@ -75,7 +69,7 @@ class MiddlewareProvider extends ApplicationProvider implements HandleContracts
         //When your application is requested, the middleware classes are running before all bootstrapper executables.
         //Thus, if you make http request your application, you can verify with an intermediate middleware layer
         //and throw an exception.
-        $resolveServiceMiddleware = $this->app['middlewareClass']->handle();
+        $resolveServiceMiddleware = $this->app['middlewareClass']->{$method}();
         $this->serviceMiddleware($resolveServiceMiddleware);
     }
 
