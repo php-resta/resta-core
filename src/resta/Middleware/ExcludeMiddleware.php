@@ -18,6 +18,11 @@ class ExcludeMiddleware extends ApplicationProvider
     protected $result = true;
 
     /**
+     * @var $middleware
+     */
+    protected $middleware;
+
+    /**
      * middleware exclude
      *
      * @param $middleware
@@ -26,6 +31,8 @@ class ExcludeMiddleware extends ApplicationProvider
      */
     public function exclude($middleware,callable $callback)
     {
+        $this->middleware = $middleware;
+
         //set exclude list for parameters
         $this->excludeList['callback'] = $callback;
         $this->excludeList['middleware'] = $middleware;
@@ -78,7 +85,7 @@ class ExcludeMiddleware extends ApplicationProvider
      */
     private function inArrayExclude($exclude)
     {
-        if(in_array(Utils::strtolower(endpoint),$exclude)){
+        if(in_array(Utils::strtolower($this->middleware['odds']),$exclude)){
             $this->result=false;
         }
     }

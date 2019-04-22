@@ -42,7 +42,7 @@ class Route extends ConsoleOutputter {
 
         echo $this->info('All Route Controller Lists :');
 
-        $this->table->setHeaders(['no','endpoint','http','namespace','method','definition','middleware','event','doc','status']);
+        $this->table->setHeaders(['no','endpoint','http','namespace','method','definition','middleware','doc','status']);
 
         $routes = Router::getRoutes();
         $routeData = isset($routes['data']) ? $routes['data'] : [];
@@ -50,13 +50,25 @@ class Route extends ConsoleOutputter {
 
         $counter=0;
 
+        $application = app();
+
+        $application->loadIfNotExistBoot(['middleware']);
+        $middlewareProvider = $application['middleware'];
+
         foreach($routeData as $key=>$data){
+
+            $middlewareProvider->setKeyOdds('endpoint',$data['endpoint']);
+            $middlewareProvider->setKeyOdds('method',$data['method']);
+            $middlewareProvider->setKeyOdds('http',$data['http']);
+
+            $middlewareProcess = $middlewareProvider->handleMiddlewareProcess();
+            $middleware = $middlewareProvider->getShow();
 
             $endpoint = $data['endpoint'];
             $controllerNamespace = Utils::getNamespace($data['controller'].'/'.$data['namespace'].'/'.$data['class']);
 
             $methodDocument = app()['reflection']($controllerNamespace)->reflectionMethodParams($data['method'])->document;
-            
+
             $methodDefinition = '';
 
             if(preg_match('@#define:(.*?)\n@is',$methodDocument,$definition)){
@@ -78,7 +90,7 @@ class Route extends ConsoleOutputter {
                         $controllerNamespace,
                         $data['method'],
                         $methodDefinition,
-                        '',
+                        implode(",",$middleware),
                         '',
                         '',
                         ''
@@ -94,10 +106,9 @@ class Route extends ConsoleOutputter {
                     $controllerNamespace,
                     $data['method'],
                     $methodDefinition,
-                    '',
-                    '',
-                    '',
-                    ''
+                    implode(",",$middleware),
+                    'not available',
+                    true
                 ]);
             }
 

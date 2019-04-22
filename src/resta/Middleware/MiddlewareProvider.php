@@ -19,6 +19,11 @@ class MiddlewareProvider extends ApplicationProvider implements HandleContracts
     protected $odds = [];
 
     /**
+     * @var array $show
+     */
+    protected $show = [];
+
+    /**
      * after middleware
      *
      * @return void|mixed
@@ -38,6 +43,16 @@ class MiddlewareProvider extends ApplicationProvider implements HandleContracts
     {
         return Utils::isNamespaceExists($this->middleware['namespace'])
             && $this->specificMiddlewareCondition($this->middleware['key']);
+    }
+
+    /**
+     * get show data for middleware
+     *
+     * @return array
+     */
+    public function getShow()
+    {
+        return $this->show;
     }
 
     /**
@@ -70,20 +85,29 @@ class MiddlewareProvider extends ApplicationProvider implements HandleContracts
         //Thus, if you make http request your application, you can verify with an intermediate middleware layer
         //and throw an exception.
         $resolveServiceMiddleware = $this->app['middlewareClass']->{$method}();
-        $this->serviceMiddleware($resolveServiceMiddleware);
+        return $this->serviceMiddleware($resolveServiceMiddleware);
     }
 
     /**
      * middleware key odds
      *
+     * @param $key null
      * @return array
      */
-    public function middlewareKeyOdds()
+    public function middlewareKeyOdds($key=null)
     {
+        // identifying constants for the middleware layer.
+        // with the property of the user, the user is free to determine the constants that the middleware layer wants.
         $method     = $this->odds['method'] ?? method;
         $endpoint   = $this->odds['endpoint'] ?? endpoint;
         $http       = $this->odds['http'] ?? $this->app['httpMethod'];
 
+        //method can only return fixed.
+        if(!is_null($key)){
+            if(isset($$key)) return $$key;
+        }
+
+        //middleware key odds
         return [
             1=>[$endpoint],
             2=>[$endpoint,$method],
@@ -98,6 +122,8 @@ class MiddlewareProvider extends ApplicationProvider implements HandleContracts
      */
     public function serviceMiddleware($middleware=array())
     {
+        $this->show = [];
+
         //It will be run individually according to the rules of
         //the middleware classes specified for the service middleware middleware.
         foreach($middleware as $middleVal=>$middleKey){
@@ -122,33 +148,31 @@ class MiddlewareProvider extends ApplicationProvider implements HandleContracts
             $this->middleware['key']                = $middleKey;
             $this->middleware['class']              = $middlewareClass;
             $this->middleware['middlewareName']     = $middleVal;
+            $this->middleware['odds']               = $this->middlewareKeyOdds('endpoint');
 
             //middleware class for service middleware
             //it will be handled according to the following rule.
             //The exclude class will return a callback and allocate the result as bool to the exclude variable.
             //If the exclude variable is true then the middleware will be run.
-            $excludeClass->exclude($this->middleware,function($exclude) use ($middleVal){
+            $result = $excludeClass->exclude($this->middleware,function($exclude) use ($middleVal){
 
                 if($exclude){
 
-                    //The condition of a specific statement to be handled
+                    //the condition of a specific statement to be handled
                     if($this->checkNamespaceAndSpecificCondition()){
                         $this->pointer($middleVal);
 
-                        //
-                        if($this->app->runningInConsole()) return $this->middleware;
+                        //directly registered to the middleware name show property.
+                        $this->show[] = class_basename($this->middleware['namespace']);
 
                         // the middleware namespace must have handletraitcontract interface property.
                         // otherwise, middleware will not work.
-                        if($this->app->resolve($this->middleware['namespace']) instanceof HandleContracts){
+                        if(false === $this->app->runningInConsole()
+                            && $this->app->resolve($this->middleware['namespace']) instanceof HandleContracts){
                             $this->app->resolve($this->middleware['namespace'])->handle();
                         }
-
                     }
                 }
-
-                //
-                if($this->app->runningInConsole()) return [];
 
             });
         }
@@ -162,6 +186,7 @@ class MiddlewareProvider extends ApplicationProvider implements HandleContracts
      */
     public function setKeyOdds($key=null,$value=null)
     {
+        //user-defined middleware constants.
         if(!is_null($key) && !is_null($value)){
             $this->odds[$key] = $value;
         }
