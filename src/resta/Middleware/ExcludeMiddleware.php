@@ -10,14 +10,16 @@ class ExcludeMiddleware extends ApplicationProvider
     /**
      * @var array $excludeList
      */
-    protected $excludeList=array();
+    protected $excludeList = array();
 
     /**
      * @var $result
      */
-    protected $result=true;
+    protected $result = true;
 
     /**
+     * middleware exclude
+     *
      * @param $middleware
      * @param callable $callback
      * @return mixed
@@ -25,15 +27,19 @@ class ExcludeMiddleware extends ApplicationProvider
     public function exclude($middleware,callable $callback)
     {
         //set exclude list for parameters
-        $this->excludeList['callback']=$callback;
-        $this->excludeList['middleware']=$middleware;
+        $this->excludeList['callback'] = $callback;
+        $this->excludeList['middleware'] = $middleware;
 
         //if there is exclude method
         //in service middleware class
         if($this->existMethod()){
 
             //call exclude method
-            $excludes=$middleware['class']->exclude();
+            /**
+             * @var $serviceMiddleware \Resta\Contracts\ServiceMiddlewareManagerContracts
+             */
+            $serviceMiddleware = $middleware['class'];
+            $excludes = $serviceMiddleware->exclude();
 
             foreach ($excludes as $excludeKey=>$excludeVal){
                 $this->excludeProcess($excludeKey,$excludeVal);
@@ -52,7 +58,7 @@ class ExcludeMiddleware extends ApplicationProvider
     {
         $this->excludeForAll($excludeKey,$excludeVal,function() use ($excludeKey,$excludeVal){
 
-            if($excludeKey==$this->excludeList['middleware']['middlewareName']){
+            if($excludeKey == $this->excludeList['middleware']['middlewareName']){
                 $this->inArrayExclude($excludeVal);
 
             }
@@ -81,7 +87,7 @@ class ExcludeMiddleware extends ApplicationProvider
      * @param $excludeKey
      * @param $excludeVal
      * @param callable $callback
-     * @return mixed|void
+     * @return mixed
      */
     private function excludeForAll($excludeKey,$excludeVal,callable $callback)
     {
