@@ -89,15 +89,23 @@ class MiddlewareProvider extends ApplicationProvider implements HandleContracts
         //the middleware classes specified for the service middleware middleware.
         foreach($middleware as $middleVal=>$middleKey){
 
-            //middleware with capital letters
-            $middlewareName = ucfirst($middleVal);
+            // if the keys in the array in the service middleware class represent a class,
+            // this value is checked, if it does not represent the class,
+            // it is detected as a short name and is searched in the middleware directory.
+            if(Utils::isNamespaceExists($middleVal)){
+                $middlewareNamespace = $middleVal;
+            }
+            else{
+                $middlewareNamespace = app()->namespace()->middleware().'\\'.ucfirst($middleVal);
+            }
+
 
             //middleware and exclude class instances
             $excludeClass = $this->app['excludeClass'];
             $middlewareClass = $this->app['middlewareClass'];
 
             //middleware definitions.
-            $this->middleware['namespace']          = app()->namespace()->middleware().'\\'.$middlewareName;
+            $this->middleware['namespace']          = $middlewareNamespace;
             $this->middleware['key']                = $middleKey;
             $this->middleware['class']              = $middlewareClass;
             $this->middleware['middlewareName']     = $middleVal;
@@ -113,7 +121,13 @@ class MiddlewareProvider extends ApplicationProvider implements HandleContracts
                     //The condition of a specific statement to be handled
                     if($this->checkNamespaceAndSpecificCondition()){
                         $this->pointer($middleVal);
-                        $this->app->resolve($this->middleware['namespace'])->handle();
+
+                        // the middleware namespace must have handletraitcontract interface property.
+                        // otherwise, middleware will not work.
+                        if($this->app->resolve($this->middleware['namespace']) instanceof HandleContracts){
+                            $this->app->resolve($this->middleware['namespace'])->handle();
+                        }
+
                     }
                 }
             });
