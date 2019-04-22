@@ -2,10 +2,10 @@
 
 namespace App\__project__\__version__\Middleware;
 
-use Store\Contracts\HandleTraitContract;
+use Resta\Contracts\HandleContracts;
 use Resta\Middleware\MiddlewareRateLimit;
 
-class RateLimit extends MiddlewareRateLimit implements HandleTraitContract
+class RateLimit extends MiddlewareRateLimit implements HandleContracts
 {
     /**
      * @var array $rateLimits

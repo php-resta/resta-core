@@ -2,9 +2,9 @@
 
 namespace App\__project__\__version__\Middleware;
 
-use Store\Contracts\HandleTraitContract;
+use Resta\Contracts\HandleContracts;
 
-class SetClientTimezone implements HandleTraitContract
+class SetClientTimezone implements HandleContracts
 {
     /**
      * @return void
