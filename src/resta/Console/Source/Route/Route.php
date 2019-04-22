@@ -42,7 +42,7 @@ class Route extends ConsoleOutputter {
 
         echo $this->info('All Route Controller Lists :');
 
-        $this->table->setHeaders(['no','endpoint','http','namespace','method','definition','middleware','doc','status']);
+        $this->table->setHeaders(['no','endpoint','http','namespace','method','definition','beforeMiddleware','afterMiddleware','doc','status']);
 
         $routes = Router::getRoutes();
         $routeData = isset($routes['data']) ? $routes['data'] : [];
@@ -61,8 +61,11 @@ class Route extends ConsoleOutputter {
             $middlewareProvider->setKeyOdds('method',$data['method']);
             $middlewareProvider->setKeyOdds('http',$data['http']);
 
-            $middlewareProcess = $middlewareProvider->handleMiddlewareProcess();
-            $middleware = $middlewareProvider->getShow();
+            $middlewareProvider->handleMiddlewareProcess();
+            $beforeMiddleware = $middlewareProvider->getShow();
+
+            $middlewareProvider->handleMiddlewareProcess('after');
+            $afterMiddleware = $middlewareProvider->getShow();
 
             $endpoint = $data['endpoint'];
             $controllerNamespace = Utils::getNamespace($data['controller'].'/'.$data['namespace'].'/'.$data['class']);
@@ -90,10 +93,11 @@ class Route extends ConsoleOutputter {
                         $controllerNamespace,
                         $data['method'],
                         $methodDefinition,
-                        implode(",",$middleware),
+                        implode(",",$beforeMiddleware),
+                        implode(",",$afterMiddleware),
                         '',
-                        '',
-                        ''
+                        'not available',
+                        true
                     ]);
                 }
             }
@@ -106,7 +110,8 @@ class Route extends ConsoleOutputter {
                     $controllerNamespace,
                     $data['method'],
                     $methodDefinition,
-                    implode(",",$middleware),
+                    implode(",",$beforeMiddleware),
+                    implode(",",$afterMiddleware),
                     'not available',
                     true
                 ]);
