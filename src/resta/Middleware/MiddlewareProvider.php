@@ -11,7 +11,12 @@ class MiddlewareProvider extends ApplicationProvider implements HandleContracts
     /**
      * @var array $middleware
      */
-    protected $middleware = array();
+    protected $middleware = [];
+
+    /**
+     * @var array $odds
+     */
+    protected $odds = [];
 
     /**
      * after middleware
@@ -52,6 +57,17 @@ class MiddlewareProvider extends ApplicationProvider implements HandleContracts
         //set define for middleware
         define('middleware',true);
 
+        //middleware handle process
+        $this->handleMiddlewareProcess();
+    }
+
+    /**
+     * handle middleware process
+     *
+     * @return void|mixed
+     */
+    public function handleMiddlewareProcess()
+    {
         // the app instance is a global application example,
         // and a hash is loaded as this hash.
         $this->setMiddleware();
@@ -61,7 +77,6 @@ class MiddlewareProvider extends ApplicationProvider implements HandleContracts
         //and throw an exception.
         $resolveServiceMiddleware = $this->app['middlewareClass']->handle();
         $this->serviceMiddleware($resolveServiceMiddleware);
-
     }
 
     /**
@@ -69,12 +84,16 @@ class MiddlewareProvider extends ApplicationProvider implements HandleContracts
      *
      * @return array
      */
-    private function middlewareKeyOdds()
+    public function middlewareKeyOdds()
     {
+        $method     = $this->odds['method'] ?? method;
+        $endpoint   = $this->odds['endpoint'] ?? endpoint;
+        $http       = $this->odds['http'] ?? $this->app['httpMethod'];
+
         return [
-            1=>[endpoint],
-            2=>[endpoint,method],
-            3=>[endpoint,method,$this->app['httpMethod']]
+            1=>[$endpoint],
+            2=>[$endpoint,$method],
+            3=>[$endpoint,$method,$http]
         ];
     }
 
@@ -83,7 +102,7 @@ class MiddlewareProvider extends ApplicationProvider implements HandleContracts
      *
      * @param array $middleware
      */
-    private function serviceMiddleware($middleware=array())
+    public function serviceMiddleware($middleware=array())
     {
         //It will be run individually according to the rules of
         //the middleware classes specified for the service middleware middleware.
@@ -122,6 +141,9 @@ class MiddlewareProvider extends ApplicationProvider implements HandleContracts
                     if($this->checkNamespaceAndSpecificCondition()){
                         $this->pointer($middleVal);
 
+                        //
+                        if($this->app->runningInConsole()) return $this->middleware;
+
                         // the middleware namespace must have handletraitcontract interface property.
                         // otherwise, middleware will not work.
                         if($this->app->resolve($this->middleware['namespace']) instanceof HandleContracts){
@@ -130,7 +152,24 @@ class MiddlewareProvider extends ApplicationProvider implements HandleContracts
 
                     }
                 }
+
+                //
+                if($this->app->runningInConsole()) return [];
+
             });
+        }
+    }
+
+    /**
+     * sey middleware key odds
+     *
+     * @param null $key
+     * @param null $value
+     */
+    public function setKeyOdds($key=null,$value=null)
+    {
+        if(!is_null($key) && !is_null($value)){
+            $this->odds[$key] = $value;
         }
     }
 
