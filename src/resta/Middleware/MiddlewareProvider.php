@@ -53,6 +53,20 @@ class MiddlewareProvider extends ApplicationProvider implements HandleContracts
     }
 
     /**
+     * get resolve service middleware
+     *
+     * @return mixed
+     */
+    public function getResolveServiceMiddleware()
+    {
+        if(!is_null($this->serviceMiddleware)){
+            return $this->app->resolve($this->serviceMiddleware);
+        }
+
+        return $this->app['middlewareClass'];
+    }
+
+    /**
      * get assigned service middleware
      *
      * @return mixed
@@ -100,14 +114,14 @@ class MiddlewareProvider extends ApplicationProvider implements HandleContracts
 
         // the middleware class must be subject to
         // the ServiceMiddlewareManagerContracts interface rule to be implemented.
-        if(!$this->app['middlewareClass'] instanceof ServiceMiddlewareManagerContracts){
+        if(!$this->getResolveServiceMiddleware() instanceof ServiceMiddlewareManagerContracts){
             exception()->badMethodCall('Service middleware does not have ServiceMiddlewareManagerContracts');
         }
 
         //When your application is requested, the middleware classes are running before all bootstrapper executables.
         //Thus, if you make http request your application, you can verify with an intermediate middleware layer
         //and throw an exception.
-        $resolveServiceMiddleware = $this->app['middlewareClass']->{$method}();
+        $resolveServiceMiddleware = $this->getResolveServiceMiddleware()->{$method}();
         return $this->serviceMiddleware($resolveServiceMiddleware);
     }
 
@@ -132,9 +146,9 @@ class MiddlewareProvider extends ApplicationProvider implements HandleContracts
 
         //middleware key odds
         return [
-            1=>[strtolower($endpoint)],
-            2=>[strtolower($endpoint).'@'.strtolower($method)],
-            3=>[strtolower($endpoint).'@'.strtolower($method).'@'.strtolower($http)]
+            strtolower($endpoint),
+            strtolower($endpoint).'@'.strtolower($method),
+            strtolower($endpoint).'@'.strtolower($method).'@'.strtolower($http)
         ];
     }
 
@@ -163,14 +177,14 @@ class MiddlewareProvider extends ApplicationProvider implements HandleContracts
 
             //middleware and exclude class instances
             $excludeClass = $this->app['excludeClass'];
-            $middlewareClass = $this->app['middlewareClass'];
+            $middlewareClass = $this->getResolveServiceMiddleware();
 
             //middleware definitions.
             $this->middleware['namespace']          = $middlewareNamespace;
             $this->middleware['key']                = $middleKey;
             $this->middleware['class']              = $middlewareClass;
             $this->middleware['middlewareName']     = $middleVal;
-            $this->middleware['odds']               = $this->middlewareKeyOdds('endpoint');
+            $this->middleware['odds']               = $this->middlewareKeyOdds();
 
             //middleware class for service middleware
             //it will be handled according to the following rule.
@@ -230,7 +244,7 @@ class MiddlewareProvider extends ApplicationProvider implements HandleContracts
             $serviceMiddleware = ServiceMiddlewareManager::class;
         }
 
-        //We are logging the kernel for the middleware class and the exclude class.
+        //We are logging the kernel for the middleware class and the exclude class
         $this->app->register('middlewareClass',$this->app->resolve($serviceMiddleware));
         $this->app->register('excludeClass',$this->app->resolve(ExcludeMiddleware::class));
     }
@@ -264,7 +278,7 @@ class MiddlewareProvider extends ApplicationProvider implements HandleContracts
         if(is_array($key)){
 
             //get middleware odd keys
-            $odds = array_reduce($this->middlewareKeyOdds(),'array_merge',[]);
+            $odds = $this->middlewareKeyOdds();
 
             //If the user definition specified in the middleware key is an array,
             //then the middleware is conditioned and the services are individually checked according to

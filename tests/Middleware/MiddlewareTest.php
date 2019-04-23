@@ -3,6 +3,8 @@
 namespace Resta\Core\Tests\Middleware;
 
 use Resta\Core\Tests\AbstractTest;
+use Resta\Core\Tests\Middleware\Manager\ServiceMiddlewareManager5;
+use Resta\Core\Tests\Middleware\Manager\ServiceMiddlewareManager6;
 use Resta\Middleware\MiddlewareProvider;
 use Resta\Contracts\ServiceMiddlewareManagerContracts;
 use Resta\Core\Tests\Middleware\Manager\ServiceMiddlewareManager;
@@ -51,6 +53,7 @@ class MiddlewareTest extends AbstractTest
         $middleware->setKeyOdds('http','get');
 
         $middleware->handleMiddlewareProcess();
+
         $show = $middleware->getShow();
 
         $this->assertSame("Authenticate",implode($show));
@@ -66,7 +69,6 @@ class MiddlewareTest extends AbstractTest
         $middleware = static::$app['middleware'];
 
         $middleware->setserviceMiddleware(ServiceMiddlewareManager2::class);
-
         $middleware->setKeyOdds('endpoint','users');
         $middleware->setKeyOdds('method','index');
         $middleware->setKeyOdds('http','get');
@@ -117,5 +119,45 @@ class MiddlewareTest extends AbstractTest
         $show = $middleware->getShow();
 
         $this->assertSame("Authenticate",implode($show));
+    }
+
+    /**
+     * @throws \DI\DependencyException
+     * @throws \DI\NotFoundException
+     */
+    public function testMiddlewareBaseExclude1()
+    {
+        $middleware = static::$app['middleware'];
+
+        $middleware->setserviceMiddleware(ServiceMiddlewareManager5::class);
+
+        $middleware->setKeyOdds('endpoint','users');
+        $middleware->setKeyOdds('method','index');
+        $middleware->setKeyOdds('http','get');
+
+        $middleware->handleMiddlewareProcess();
+        $show = $middleware->getShow();
+
+        $this->assertSame("",implode($show));
+    }
+
+    /**
+     * @throws \DI\DependencyException
+     * @throws \DI\NotFoundException
+     */
+    public function testMiddlewareBaseExclude2()
+    {
+        $middleware = static::$app['middleware'];
+
+        $middleware->setserviceMiddleware(ServiceMiddlewareManager6::class);
+
+        $middleware->setKeyOdds('endpoint','users');
+        $middleware->setKeyOdds('method','index');
+        $middleware->setKeyOdds('http','get');
+
+        $middleware->handleMiddlewareProcess();
+        $show = $middleware->getShow();
+
+        $this->assertSame("",implode($show));
     }
 }

@@ -87,7 +87,8 @@ class ExcludeMiddleware extends ApplicationProvider
      */
     private function inArrayExclude($exclude)
     {
-        if(in_array(Utils::strtolower($this->middleware['odds']),$exclude)){
+        if(isset($exclude[0])
+            && in_array($exclude[0],$this->middleware['odds'])){
             $this->result = false;
         }
     }
