@@ -53,6 +53,16 @@ class MiddlewareProvider extends ApplicationProvider implements HandleContracts
     }
 
     /**
+     * get assigned service middleware
+     *
+     * @return mixed
+     */
+    public function getServiceMiddleware()
+    {
+        return $this->serviceMiddleware;
+    }
+
+    /**
      * get show data for middleware
      *
      * @return array
