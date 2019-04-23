@@ -5,6 +5,7 @@ namespace Resta\Middleware;
 use Resta\Support\Utils;
 use Resta\Contracts\HandleContracts;
 use Resta\Foundation\ApplicationProvider;
+use Resta\Support\AppData\ServiceMiddlewareManager;
 use Resta\Contracts\ServiceMiddlewareManagerContracts;
 
 class MiddlewareProvider extends ApplicationProvider implements HandleContracts
@@ -23,6 +24,11 @@ class MiddlewareProvider extends ApplicationProvider implements HandleContracts
      * @var array $middleware
      */
     protected $middleware = [];
+
+    /**
+     * @var $serviceMiddleware
+     */
+    protected $serviceMiddleware;
 
     /**
      * after middleware
@@ -205,9 +211,30 @@ class MiddlewareProvider extends ApplicationProvider implements HandleContracts
      */
     private function setMiddleware()
     {
+        //get service middleware namespace
+        $serviceMiddleware = $this->serviceMiddleware ?? app()->namespace()->serviceMiddleware();
+
+        // if the service middleware does not represent a class,
+        // then in this case core support is assigned as a class service middleware.
+        if(Utils::isNamespaceExists($serviceMiddleware)===false){
+            $serviceMiddleware = ServiceMiddlewareManager::class;
+        }
+
         //We are logging the kernel for the middleware class and the exclude class.
-        $this->app->register('middlewareClass',$this->app->resolve(app()->namespace()->serviceMiddleware()));
+        $this->app->register('middlewareClass',$this->app->resolve($serviceMiddleware));
         $this->app->register('excludeClass',$this->app->resolve(ExcludeMiddleware::class));
+    }
+
+    /**
+     * set service middleware
+     *
+     * @param null $serviceMiddleware
+     */
+    public function setserviceMiddleware($serviceMiddleware=null)
+    {
+        if(!is_null($serviceMiddleware)){
+            $this->serviceMiddleware = $serviceMiddleware;
+        }
     }
 
     /**

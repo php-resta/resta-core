@@ -150,7 +150,7 @@ class BootLoader extends ApplicationProvider implements BootContracts
         // when your application is requested, the middleware classes are running before all bootstrapper executables.
         // thus, if you make http request your application, you can verify with an intermediate middleware layer
         // and throw an exception.
-        if(core()->isAvailableStore && $this->app->checkBindings('middleware')===false){
+        if($this->app->checkBindings('middleware')===false){
             $this->app->make('middleware',function($app){
                 return $app['revision']['middleware'] ?? MiddlewareProvider::class;
             });
