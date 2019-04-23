@@ -116,9 +116,9 @@ class MiddlewareProvider extends ApplicationProvider implements HandleContracts
 
         //middleware key odds
         return [
-            1=>[$endpoint],
-            2=>[$endpoint,$method],
-            3=>[$endpoint,$method,$http]
+            1=>[strtolower($endpoint)],
+            2=>[strtolower($endpoint).'@'.strtolower($method)],
+            3=>[strtolower($endpoint).'@'.strtolower($method).'@'.strtolower($http)]
         ];
     }
 
@@ -226,12 +226,18 @@ class MiddlewareProvider extends ApplicationProvider implements HandleContracts
         //if it is array,check odds
         if(is_array($key)){
 
+            //get middleware odd keys
+            $odds = array_reduce($this->middlewareKeyOdds(),'array_merge',[]);
+
             //If the user definition specified in the middleware key is an array,
             //then the middleware is conditioned and the services are individually checked according to
             //the degree of conformity with the middlewareOdds method and
             //the middleware is executed under the specified condition.
-            $checkOdds = Utils::strtolower($this->middlewareKeyOdds()[count($key)]);
-            if(Utils::isArrayEqual($key,$checkOdds)) return true;
+            foreach($key as $item){
+                if(in_array($item,$odds)){
+                    return true;
+                }
+            }
         }
 
         //return false
