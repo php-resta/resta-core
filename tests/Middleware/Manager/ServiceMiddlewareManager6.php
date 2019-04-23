@@ -33,7 +33,7 @@ class ServiceMiddlewareManager6 implements ServiceMiddlewareManagerContracts
     {
         return [
             'all'=>['hook','login','logout'],
-            Authenticate::class => ['users','products']
+            Authenticate::class => ['users','products','blog@create','blog']
         ];
     }
 }
