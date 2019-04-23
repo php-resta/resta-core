@@ -56,9 +56,7 @@ class MiddlewareTest extends AbstractTest
         $this->assertSame("Authenticate",implode($show));
 
     }
-use Resta\Core\Tests\Middleware\Manager\ServiceMiddlewareManager2;
-use Resta\Core\Tests\Middleware\Manager\ServiceMiddlewareManager3;
-use Resta\Core\Tests\Middleware\Manager\ServiceMiddlewareManager4;
+
     /**
      * @throws \DI\DependencyException
      * @throws \DI\NotFoundException
