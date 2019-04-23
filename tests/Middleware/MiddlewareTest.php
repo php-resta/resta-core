@@ -281,5 +281,14 @@ class MiddlewareTest extends AbstractTest
         $show = $middleware->getShow();
 
         $this->assertSame("Mid1,Mid2",implode(",",$show));
+
+        $middleware->setKeyOdds('endpoint','orders');
+        $middleware->setKeyOdds('method','update');
+        $middleware->setKeyOdds('http','delete');
+
+        $middleware->handleMiddlewareProcess();
+        $show = $middleware->getShow();
+
+        $this->assertSame("",implode(",",$show));
     }
 }

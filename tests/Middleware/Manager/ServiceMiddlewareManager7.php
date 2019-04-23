@@ -35,7 +35,7 @@ class ServiceMiddlewareManager7 implements ServiceMiddlewareManagerContracts
     {
         return [
             'all'=>['hook','login','logout'],
-            Mid2::class => ['products@create','users@post'],
+            Mid2::class => ['products@create','users@post','orders@update@delete'],
             Mid1::class => ['users@create','users@post']
         ];
     }
