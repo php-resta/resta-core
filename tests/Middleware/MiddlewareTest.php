@@ -5,6 +5,7 @@ namespace Resta\Core\Tests\Middleware;
 use Resta\Core\Tests\AbstractTest;
 use Resta\Core\Tests\Middleware\Manager\ServiceMiddlewareManager5;
 use Resta\Core\Tests\Middleware\Manager\ServiceMiddlewareManager6;
+use Resta\Core\Tests\Middleware\Manager\ServiceMiddlewareManager7;
 use Resta\Middleware\MiddlewareProvider;
 use Resta\Contracts\ServiceMiddlewareManagerContracts;
 use Resta\Core\Tests\Middleware\Manager\ServiceMiddlewareManager;
@@ -177,5 +178,108 @@ class MiddlewareTest extends AbstractTest
         $show = $middleware->getShow();
 
         $this->assertSame("",implode($show));
+    }
+
+    /**
+     * @throws \DI\DependencyException
+     * @throws \DI\NotFoundException
+     */
+    public function testMiddlewareBaseMultiple()
+    {
+        $middleware = static::$app['middleware'];
+
+        $middleware->setserviceMiddleware(ServiceMiddlewareManager7::class);
+
+        $middleware->setKeyOdds('endpoint','users');
+        $middleware->setKeyOdds('method','index');
+        $middleware->setKeyOdds('http','get');
+
+        $middleware->handleMiddlewareProcess();
+        $show = $middleware->getShow();
+
+        $this->assertSame("Mid1,Mid2",implode(",",$show));
+
+
+        $middleware->setKeyOdds('endpoint','products');
+        $middleware->setKeyOdds('method','index');
+        $middleware->setKeyOdds('http','get');
+
+        $middleware->handleMiddlewareProcess();
+        $show = $middleware->getShow();
+
+        $this->assertSame("Mid2",implode(",",$show));
+
+        $middleware->setKeyOdds('endpoint','products');
+        $middleware->setKeyOdds('method','create');
+        $middleware->setKeyOdds('http','get');
+
+        $middleware->handleMiddlewareProcess();
+        $show = $middleware->getShow();
+
+        $this->assertSame("",implode(",",$show));
+
+        $middleware->setKeyOdds('endpoint','users');
+        $middleware->setKeyOdds('method','create');
+        $middleware->setKeyOdds('http','get');
+
+        $middleware->handleMiddlewareProcess();
+        $show = $middleware->getShow();
+
+        $this->assertSame("Mid2",implode(",",$show));
+
+
+        $middleware->setKeyOdds('endpoint','users');
+        $middleware->setKeyOdds('method','post');
+        $middleware->setKeyOdds('http','get');
+
+        $middleware->handleMiddlewareProcess();
+        $show = $middleware->getShow();
+
+        $this->assertSame("",implode(",",$show));
+
+        $middleware->setKeyOdds('endpoint','hook');
+        $middleware->setKeyOdds('method','post');
+        $middleware->setKeyOdds('http','get');
+
+        $middleware->handleMiddlewareProcess();
+        $show = $middleware->getShow();
+
+        $this->assertSame("",implode(",",$show));
+
+        $middleware->setKeyOdds('endpoint','login');
+        $middleware->setKeyOdds('method','post');
+        $middleware->setKeyOdds('http','get');
+
+        $middleware->handleMiddlewareProcess();
+        $show = $middleware->getShow();
+
+        $this->assertSame("",implode(",",$show));
+
+        $middleware->setKeyOdds('endpoint','logout');
+        $middleware->setKeyOdds('method','post');
+        $middleware->setKeyOdds('http','get');
+
+        $middleware->handleMiddlewareProcess();
+        $show = $middleware->getShow();
+
+        $this->assertSame("",implode(",",$show));
+
+        $middleware->setKeyOdds('endpoint','orders');
+        $middleware->setKeyOdds('method','update');
+        $middleware->setKeyOdds('http','get');
+
+        $middleware->handleMiddlewareProcess();
+        $show = $middleware->getShow();
+
+        $this->assertSame("Mid2",implode(",",$show));
+
+        $middleware->setKeyOdds('endpoint','orders');
+        $middleware->setKeyOdds('method','update');
+        $middleware->setKeyOdds('http','post');
+
+        $middleware->handleMiddlewareProcess();
+        $show = $middleware->getShow();
+
+        $this->assertSame("Mid1,Mid2",implode(",",$show));
     }
 }
