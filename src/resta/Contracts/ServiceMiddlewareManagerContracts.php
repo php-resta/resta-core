@@ -2,7 +2,12 @@
 
 namespace Resta\Contracts;
 
-interface ServiceMiddlewareManagerContracts {
+interface ServiceMiddlewareManagerContracts
+{
+    /**
+     * @return mixed
+     */
+    public function handle();
 
     /**
      * @return mixed

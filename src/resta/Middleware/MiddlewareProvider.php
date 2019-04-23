@@ -5,14 +5,10 @@ namespace Resta\Middleware;
 use Resta\Support\Utils;
 use Resta\Contracts\HandleContracts;
 use Resta\Foundation\ApplicationProvider;
+use Resta\Contracts\ServiceMiddlewareManagerContracts;
 
 class MiddlewareProvider extends ApplicationProvider implements HandleContracts
 {
-    /**
-     * @var array $middleware
-     */
-    protected $middleware = [];
-
     /**
      * @var array $odds
      */
@@ -22,6 +18,11 @@ class MiddlewareProvider extends ApplicationProvider implements HandleContracts
      * @var array $show
      */
     protected $show = [];
+
+    /**
+     * @var array $middleware
+     */
+    protected $middleware = [];
 
     /**
      * after middleware
@@ -80,6 +81,12 @@ class MiddlewareProvider extends ApplicationProvider implements HandleContracts
         // the app instance is a global application example,
         // and a hash is loaded as this hash.
         $this->setMiddleware();
+
+        // the middleware class must be subject to
+        // the ServiceMiddlewareManagerContracts interface rule to be implemented.
+        if(!$this->app['middlewareClass'] instanceof ServiceMiddlewareManagerContracts){
+            exception()->badMethodCall('Service middleware does not have ServiceMiddlewareManagerContracts');
+        }
 
         //When your application is requested, the middleware classes are running before all bootstrapper executables.
         //Thus, if you make http request your application, you can verify with an intermediate middleware layer

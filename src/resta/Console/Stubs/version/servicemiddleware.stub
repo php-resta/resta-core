@@ -2,10 +2,9 @@
 
 namespace App\__project__\__version__;
 
-use Resta\Contracts\HandleContracts;
 use Resta\Contracts\ServiceMiddlewareManagerContracts;
 
-class ServiceMiddlewareManager implements HandleContracts,ServiceMiddlewareManagerContracts
+class ServiceMiddlewareManager implements ServiceMiddlewareManagerContracts
 {
     /**
      * @return array
