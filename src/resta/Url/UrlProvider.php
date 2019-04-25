@@ -2,6 +2,7 @@
 
 namespace Resta\Url;
 
+use Resta\Support\Arr;
 use Resta\Support\Utils;
 use Resta\Foundation\ApplicationProvider;
 use Resta\Foundation\PathManager\StaticPathList;
@@ -29,6 +30,10 @@ class UrlProvider extends ApplicationProvider
         // the application usage and get the values
         // ​​to be processed throughout the application in query format.
         $query = $this->convertArrayForQuery();
+
+        // if the version in the query array does not conform to the format,
+        // it will be formatted.
+        $query = $this->queryFormatProcess($query);
 
         foreach ($query as $key=>$value){
 
@@ -81,26 +86,9 @@ class UrlProvider extends ApplicationProvider
      */
     public function definitor($urlList)
     {
-        //We define global URL objects globally for the application.
-        //check version
-        if(isset($urlList['version']) && preg_match('@V(\d+)@',$urlList['version'])){
-            define('version',$urlList['version']);
-        }
-        else{
+        define('version',$urlList['version']);
 
-            $this->urlList['version'] = 'V1';
-            define('version','V1');
-        }
-
-        //check endpoint
-        if(isset($urlList['endpoint'])){
-            define('endpoint',$urlList['endpoint']);
-        }
-        else{
-
-            $this->urlList['endpoint'] = $urlList['version'] ?? $this->urlList['version'];
-            define('endpoint',$urlList['version'] ?? $this->urlList['version']);
-        }
+        define('endpoint',$urlList['endpoint']);
 
         define('app',$urlList['project']);
 
@@ -139,6 +127,27 @@ class UrlProvider extends ApplicationProvider
 
         //we make url parse resolving with resolved
         return (new UrlParseParamResolved)->urlParamResolve($this);
+    }
+
+    /**
+     * get query format process
+     *
+     * @param $query
+     * @return mixed
+     */
+    private function queryFormatProcess($query)
+    {
+        // at urlNames property,
+        // we get the key of the version value registered.
+        $versionKey = array_search('version',$this->urlNames);
+
+        // if the query array has a version key,
+        // and the value does not start with Vnumber, the version will definitely be formatted.
+        if(isset($query[$versionKey]) && !preg_match('@V(\d+)@',$query[$versionKey])){
+            $query = Arr::overwriteWith($query,[$versionKey=>'V1']);
+        }
+
+        return $query;
     }
 
 

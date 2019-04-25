@@ -591,4 +591,22 @@ class Arr
         return false;
     }
 
+    /**
+     * overwrite with
+     *
+     * @param $original
+     * @param array $overwrite
+     */
+    public static function overwriteWith($original,$overwrite=array())
+    {
+        foreach ($original as $key=>$item){
+
+            if(array_key_exists($key,$overwrite)){
+                array_splice($original,$key,0,$overwrite[$key]);
+            }
+        }
+
+        return $original;
+    }
+
 }
