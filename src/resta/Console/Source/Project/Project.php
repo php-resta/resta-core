@@ -56,7 +56,7 @@ class Project extends ConsoleOutputter {
         }
 
         //$this->directory['optionalDir'] = $this->optional();
-        
+
         //get project directory all path
         $this->directory['kernelDir']               = $this->kernel();
         $this->directory['middleWareDir']           = $this->middleware();
@@ -71,9 +71,9 @@ class Project extends ConsoleOutputter {
         $this->directory['resourceCacheDir']        = $this->resource().'/'.StaticPathModel::$cache;
         $this->directory['languageDir']             = $this->language();
         $this->directory['languageEnDir']           = $this->language().'/en';
-        $this->directory['sessionDir']              = $this->session();
         $this->directory['callDir']                 = $this->controller();
         $this->directory['configDir']               = $this->config();
+        $this->directory['testDir']                 = $this->test();
         //$this->directory['sourceDir']               = $this->sourceDir();
         //$this->directory['sourceSupportDir']        = $this->sourceSupportDir();
         //$this->directory['sourceSupportTraitDir']   = $this->sourceSupportDir().'/Traits';
@@ -88,6 +88,7 @@ class Project extends ConsoleOutputter {
         $this->touch['kernel/version']              = $this->kernel().'/Version.php';
         $this->touch['kernel/app']                  = $this->provider().'/AppServiceProvider.php';
         $this->touch['kernel/route']                = $this->provider().'/RouteServiceProvider.php';
+        $this->touch['tests/index']                 = $this->test().'/index.html';
         $this->touch['kernel/consoleevent']         = $this->provider().'/ConsoleEventServiceProvider.php';
         $this->touch['middleware/authenticate']     = $this->middleware().'/Authenticate.php';
         $this->touch['middleware/ratelimit']        = $this->middleware().'/RateLimit.php';
@@ -105,8 +106,6 @@ class Project extends ConsoleOutputter {
         $this->touch['resource/index']              = $this->resource().'/index.html';
         $this->touch['resource/index']              = $this->resource().'/'.StaticPathModel::$cache.'/index.html';
         $this->touch['stub/index']                  = $this->stub().'/index.html';
-        $this->touch['session/index']               = $this->session().'/index.html';
-        $this->touch['service/index']               = $this->controller().'/index.html';
         $this->touch['config/hateoas']              = $this->config().'/Hateoas.php';
         //$this->touch['config/response']             = $this->config().'/Response.php';
         $this->touch['config/redis']                = $this->config().'/Redis.php';

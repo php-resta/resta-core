@@ -59,14 +59,13 @@ class Controller extends ConsoleOutputter {
         $this->directory['endpoint']            = app()->path()->controller().''.DIRECTORY_SEPARATOR.''.$controller.''.StaticPathList::$controllerBundleName;
         $this->directory['resource']            = $this->directory['endpoint'].'/'.$resourceInController;
         $this->directory['policy']              = $this->directory['endpoint'].'/Policy';
-        $this->directory['test']                = $this->directory['endpoint'].'/Test';
         $this->directory['configuration']       = $this->directory['endpoint'].'/'.$configurationInController;
 
 
         $this->argument['controllerNamespace']  = app()->namespace()->controller().'\\'.$controller.''.StaticPathList::$controllerBundleName;
         $this->argument['serviceClass']         = $controller;
         $this->argument['callClassPrefix']      = StaticPathModel::$callClassPrefix;
-        
+
         $fullNamespaceForController             = $this->argument['controllerNamespace'].'\\'.$this->argument['serviceClass'].''.$this->argument['callClassPrefix'];
 
         $this->directory['routes']       = path()->route();
@@ -108,7 +107,6 @@ class Controller extends ConsoleOutputter {
             $this->touch['service/dummy']           = $this->directory['configuration'].''.DIRECTORY_SEPARATOR.'Dummy.yaml';
             $this->touch['service/doc']             = $this->directory['configuration'].''.DIRECTORY_SEPARATOR.'Doc.yaml';
             $this->touch['service/readme']          = $this->directory['endpoint'].''.DIRECTORY_SEPARATOR.'README.md';
-            $this->touch['service/testIndex']       = $this->directory['test'].''.DIRECTORY_SEPARATOR.'index.html';
             $this->touch['service/policy']          = $this->directory['policy'].''.DIRECTORY_SEPARATOR.''.$this->argument['serviceClass'].''. $this->argument['callClassPrefix'].'Policy.php';
 
             $this->file->touch($this,[
@@ -160,7 +158,7 @@ class Controller extends ConsoleOutputter {
 
                 Utils::changeClass($newName,
                     [
-                       $this->argument['controller']=>$this->argument['rename']
+                        $this->argument['controller']=>$this->argument['rename']
                     ]);
 
             }

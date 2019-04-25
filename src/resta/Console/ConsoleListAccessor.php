@@ -103,6 +103,14 @@ trait ConsoleListAccessor {
         return $this->version().'/'.StaticPathModel::$config;
     }
 
+    /**
+     * @return mixed
+     */
+    public function test(){
+
+        return $this->projectPath().'/'.StaticPathModel::$test;
+    }
+
 
     /**
      * @return mixed

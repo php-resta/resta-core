@@ -32,7 +32,7 @@ class StaticPathList
     /**
      * @var string
      */
-    public static $controllerBundleName='Bundle';
+    public static $controllerBundleName='';
 
     /**
      * @var string
@@ -82,7 +82,7 @@ class StaticPathList
     /**
      * @var $controller
      */
-    public static $controller='Controller';
+    public static $controller='Controllers';
 
     /**
      * @var $platform
@@ -112,12 +112,18 @@ class StaticPathList
     /**
      * @var $migration
      */
-    public static $migration='Migration';
+    public static $migration='Migrations';
 
     /**
      * @var $config
      */
     public static $config='Config';
+
+    /**
+     * @var $config
+     */
+    public static $test='Tests';
+
 
     /**
      * @var $optional
@@ -142,7 +148,7 @@ class StaticPathList
     /**
      * @var $exception
      */
-    public static $exception='Exception';
+    public static $exception='Exceptions';
 
     /**
      * @var $job
