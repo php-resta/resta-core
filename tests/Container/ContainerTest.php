@@ -91,9 +91,8 @@ class ContainerTest extends AbstractTest
      */
     public function testContainerGetHasArray()
     {
-        static::$app->register('a1',0,'c1');
-        static::$app->register('a1',1,'c2');
-        $this->assertTrue(true,static::$app->has('a'));
+        static::$app->register('a1','0','c1');
+        static::$app->register('a1','1','c2');
         $this->assertSame(['c1','c2'],static::$app->get('a1'));
 
         $this->assertTrue(true,static::$app->has('a1.0'));
