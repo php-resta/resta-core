@@ -13,6 +13,18 @@ interface ContainerContracts
     public function bind($object=null,$callback=null);
 
     /**
+     * @param $abstract
+     * @return mixed
+     */
+    public function get($abstract);
+
+    /**
+     * @param $abstract
+     * @return mixed
+     */
+    public function has($abstract);
+
+    /**
      * @method kernel
      * @return mixed
      */

@@ -196,6 +196,66 @@ class Container implements ContainerContracts,\ArrayAccess
     }
 
     /**
+     * get abstract data in container
+     *
+     * @param $abstract
+     * @return null
+     */
+    public function get($abstract)
+    {
+        //get instance container
+        $container = $this;
+
+        // the has method can have a dotted string value so
+        // we need to be able to control the string or array within the container.
+        foreach (explode(".",$abstract) as $item){
+            $container = $container[$item];
+        }
+
+        return $container;
+    }
+
+    /**
+     * check abstract data in container
+     *
+     * @param $abstract
+     * @return bool
+     */
+    public function has($abstract)
+    {
+        $bools = [];
+
+        //get instance container
+        $container = $this;
+
+        // the has method can have a dotted string value so
+        // we need to be able to control the string or array within the container.
+        foreach (explode(".",$abstract) as $item){
+
+            // this blog will work
+            // if the data in the container loop points to an array.
+            if(!is_array($container)){
+
+                // we are querying the value of
+                // the items corresponding to the dotted value in the container.
+                // the control result is transferred to the bools array.
+                $container = $container[$item];
+                $bools[] = is_null($container) ? false : true;
+            }
+            else{
+
+                // if the container array corresponds to a string,
+                // the bools array is filled with the isset control directly.
+                $bools[] = isset($container[$item]) ? true : false;
+            }
+        }
+
+        // the method returns false if the bools sequence is false,
+        // otherwise it will return true.
+        return in_array(false,$bools) ? false : true;
+    }
+
+    /**
      * Register an existing instance as shared in the container.
      *
      * @param  string  $abstract
