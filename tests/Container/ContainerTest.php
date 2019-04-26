@@ -102,5 +102,17 @@ class ContainerTest extends AbstractTest
         $this->assertSame('c1',static::$app->get('a1.0'));
         $this->assertSame('c2',static::$app->get('a1.1'));
         $this->assertSame(null,static::$app->get('a1.2'));
+
+        static::$app->register('b1',0,'c1');
+        static::$app->register('b1',1,'c2');
+        $this->assertSame(['c1','c2'],static::$app->get('b1'));
+
+        $this->assertTrue(true,static::$app->has('b1.0'));
+        $this->assertTrue(true,static::$app->has('b1.1'));
+        $this->assertFalse(false,static::$app->has('b1.2'));
+
+        $this->assertSame('c1',static::$app->get('b1.0'));
+        $this->assertSame('c2',static::$app->get('b1.1'));
+        $this->assertSame(null,static::$app->get('b1.2'));
     }
 }
