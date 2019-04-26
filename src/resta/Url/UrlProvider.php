@@ -57,7 +57,10 @@ class UrlProvider extends ApplicationProvider
         $this->urlList['parameters'] = array_slice($query,3);
 
         //url global instance
+        if($this->app->has('routeParameters')===false){
         $this->definitor($this->urlList);
+    }
+
 
     }
 
