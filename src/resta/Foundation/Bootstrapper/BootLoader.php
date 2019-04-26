@@ -223,7 +223,8 @@ class BootLoader extends ApplicationProvider implements BootContracts
     {
         // with url parsing,the application route for
         // the rest project is determined after the route variables from the URL are assigned to the kernel url object.
-        if(core()->isAvailableStore && $this->app->checkBindings('url')===false){
+        if(count(array_filter(Utils::getRequestPathInfo(),'strlen'))
+            && $this->app->checkBindings('url')===false){
             $this->app->make('url',function($app){
                 return $app['revision']['url'] ?? UrlProvider::class;
             });

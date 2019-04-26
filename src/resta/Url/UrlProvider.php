@@ -3,9 +3,8 @@
 namespace Resta\Url;
 
 use Resta\Support\Arr;
-use Resta\Support\Utils;
 use Resta\Foundation\ApplicationProvider;
-use Resta\Foundation\PathManager\StaticPathList;
+use Resta\Support\Utils;
 
 class UrlProvider extends ApplicationProvider
 {
@@ -66,7 +65,7 @@ class UrlProvider extends ApplicationProvider
     {
         //convert array for query
         //we are removing the first empty element from the array due to the slash sign.
-        $arrayForQuery = explode("/",request()->getPathInfo());
+        $arrayForQuery = $this->getRequestPathInfo();
 
         array_shift($arrayForQuery);
 
@@ -96,6 +95,21 @@ class UrlProvider extends ApplicationProvider
 
         //route parameters kernel object register
         $this->app->register('routeParameters',$urlList['parameters']);
+    }
+
+    /**
+     * get request path info
+     *
+     * @param array $path
+     * @return array
+     */
+    public function getRequestPathInfo($path=array())
+    {
+        if(count($path)){
+            return $path;
+        }
+
+        return Utils::getRequestPathInfo();
     }
 
     /**

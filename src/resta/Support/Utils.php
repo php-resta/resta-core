@@ -441,4 +441,12 @@ class Utils
 
         return $class;
     }
+
+    /**
+     * @return array
+     */
+    public static function getRequestPathInfo()
+    {
+        return explode("/",request()->getPathInfo());
+    }
 }
