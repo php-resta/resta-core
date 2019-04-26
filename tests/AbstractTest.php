@@ -4,6 +4,7 @@ namespace Resta\Core\Tests;
 
 use PHPUnit\Framework\TestCase;
 use Resta\Foundation\Application;
+use Resta\Support\BootStaticManager;
 
 abstract class AbstractTest extends TestCase
 {
@@ -17,6 +18,10 @@ abstract class AbstractTest extends TestCase
      */
     protected function setUp()
     {
+        BootStaticManager::setPath([
+            'core','test'
+        ]);
+
         if(static::$app===null){
             static::$app = new Application(true);
         }

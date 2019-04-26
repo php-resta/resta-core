@@ -447,6 +447,9 @@ class Utils
      */
     public static function getRequestPathInfo()
     {
-        return explode("/",request()->getPathInfo());
+        if(is_null(BootStaticManager::getRequestPath())){
+            return explode("/",request()->getPathInfo());
+        }
+        return BootStaticManager::getRequestPath();
     }
 }

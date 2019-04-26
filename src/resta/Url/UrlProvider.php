@@ -14,6 +14,11 @@ class UrlProvider extends ApplicationProvider
     public $urlList = [];
 
     /**
+     * @var $path
+     */
+    private $path;
+
+    /**
      * @var array $urlNames
      */
     protected $urlNames = ['project','version','endpoint','method'];
@@ -63,18 +68,23 @@ class UrlProvider extends ApplicationProvider
      */
     public function convertArrayForQuery()
     {
+        //set path for query
+        $query = $this->path;
+
         //convert array for query
         //we are removing the first empty element from the array due to the slash sign.
-        $arrayForQuery = $this->getRequestPathInfo();
+        if(is_null($this->path)){
+            $query = $this->getRequestPathInfo();
+        }
 
-        array_shift($arrayForQuery);
+        array_shift($query);
 
         //we set the first letter of the array elements
         //to be big according to the project standards
         return array_map(
             function($query) {
                 return ucfirst($query);
-            },$arrayForQuery);
+            },$query);
     }
 
     /**
@@ -86,15 +96,22 @@ class UrlProvider extends ApplicationProvider
     public function definitor($urlList)
     {
         define('version',$urlList['version']);
-
         define('endpoint',$urlList['endpoint']);
-
         define('app',$urlList['project']);
-
         define('method',$urlList['method']);
 
         //route parameters kernel object register
         $this->app->register('routeParameters',$urlList['parameters']);
+    }
+
+    /**
+     * get path
+     *
+     * @return mixed
+     */
+    public function getPath()
+    {
+        return $this->path;
     }
 
     /**
@@ -106,10 +123,11 @@ class UrlProvider extends ApplicationProvider
     public function getRequestPathInfo($path=array())
     {
         if(count($path)){
-            return $path;
+            $this->path = $path;
         }
-
-        return Utils::getRequestPathInfo();
+        else{
+            return Utils::getRequestPathInfo();
+        }
     }
 
     /**
