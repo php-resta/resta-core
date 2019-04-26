@@ -58,10 +58,8 @@ class UrlProvider extends ApplicationProvider
 
         //url global instance
         if($this->app->has('routeParameters')===false){
-        $this->definitor($this->urlList);
-    }
-
-
+            $this->definitor($this->urlList);
+        }
     }
 
     /**
