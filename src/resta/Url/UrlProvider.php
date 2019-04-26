@@ -3,8 +3,8 @@
 namespace Resta\Url;
 
 use Resta\Support\Arr;
-use Resta\Foundation\ApplicationProvider;
 use Resta\Support\Utils;
+use Resta\Foundation\ApplicationProvider;
 
 class UrlProvider extends ApplicationProvider
 {
