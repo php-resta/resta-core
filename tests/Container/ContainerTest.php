@@ -74,4 +74,30 @@ class ContainerTest extends AbstractTest
         $this->assertFalse(false,isset(static::$app['bindings']['consoleShareControl2']));
 
     }
+
+    /**
+     * @throws \DI\DependencyException
+     * @throws \DI\NotFoundException
+     */
+    public function testHasAndGetContainer()
+    {
+        static::$app->register('a','b');
+        $this->assertTrue(true,static::$app->has('a'));
+        $this->assertSame('b',static::$app->get('a'));
+
+        static::$app->register('a1',0,'c1');
+        static::$app->register('a1',1,'c2');
+        $this->assertTrue(true,static::$app->has('a'));
+        $this->assertSame(['c1','c2'],static::$app->get('a1'));
+
+        $this->assertTrue(true,static::$app->has('a1.0'));
+        $this->assertTrue(true,static::$app->has('a1.1'));
+        $this->assertFalse(false,static::$app->has('a1.2'));
+
+        $this->assertSame('c1',static::$app->get('a1.0'));
+        $this->assertSame('c2',static::$app->get('a1.1'));
+        $this->assertFalse(false,static::$app->get('a1.1.2'));
+
+
+    }
 }
