@@ -135,7 +135,7 @@ class MiddlewareProvider extends ApplicationProvider implements HandleContracts
     {
         // identifying constants for the middleware layer.
         // with the property of the user, the user is free to determine the constants that the middleware layer wants.
-        $method     = $this->odds['method'] ?? method;
+        $method     = $this->odds['method'] ?? implode("/",$this->app['routeParameters']);
         $endpoint   = $this->odds['endpoint'] ?? endpoint;
         $http       = $this->odds['http'] ?? $this->app['httpMethod'];
 
