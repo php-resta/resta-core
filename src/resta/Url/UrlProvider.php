@@ -181,7 +181,10 @@ class UrlProvider extends ApplicationProvider
         }
         else{
             $query[$versionKey] = 'V1';
-            $query[$versionKey+1] = NULL;
+            if(!isset($query[$versionKey+1])){
+                $query[$versionKey+1] = NULL;
+            }
+
         }
 
         return $query;
