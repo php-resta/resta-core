@@ -179,6 +179,10 @@ class UrlProvider extends ApplicationProvider
         if(isset($query[$versionKey]) && !preg_match('@V(\d+)@',$query[$versionKey])){
             $query = Arr::overwriteWith($query,[$versionKey=>'V1']);
         }
+        else{
+            $query[$versionKey] = 'V1';
+            $query[$versionKey+1] = NULL;
+        }
 
         return $query;
     }
