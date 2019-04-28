@@ -104,4 +104,26 @@ class UrlComponentTest extends AbstractTest
         $this->assertSame('C1',$params['parameters'][2]);
 
     }
+
+
+    /**
+     * @return void|mixed
+     */
+    public function testUrlComponent5()
+    {
+        $url = static::$app->get('url');
+
+        $url->getRequestPathInfo(['','core']);
+
+        $url->handle();
+
+        $params = $url->urlList;
+
+        $this->assertTrue(true,is_array($params));
+        $this->assertSame(5,count($params));
+        $this->assertSame("Core",$params['project']);
+        $this->assertSame("V1",$params['version']);
+        $this->assertSame(NULL,$params['endpoint']);
+
+    }
 }
