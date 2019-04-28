@@ -4,11 +4,12 @@ namespace Resta\Foundation;
 
 use Resta\Support\Str;
 use Resta\Config\Config;
+use DI\NotFoundException;
 use Resta\Support\Command;
+use DI\DependencyException;
 use Resta\Traits\ApplicationPath;
 use Illuminate\Support\Collection;
 use Resta\Contracts\ApplicationContracts;
-use Resta\Environment\EnvironmentProvider;
 use Resta\Contracts\ConfigProviderContracts;
 use Resta\Contracts\ApplicationHelpersContracts;
 use Resta\Foundation\Bootstrapper\Bootstrappers;
@@ -49,6 +50,7 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
      * check if the object in binding is available
      *
      * @param $object
+     * @return bool|mixed
      */
     public function checkBindings($object)
     {
@@ -62,7 +64,10 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
      *
      * @param $command
      * @param array $arguments
-     * @return mixed|void
+     * @return mixed
+     *
+     * @throws DependencyException
+     * @throws NotFoundException
      */
     public function command($command, $arguments = array())
     {
@@ -90,8 +95,8 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
      * @param null $config
      * @return mixed|void
      *
-     * @throws \DI\DependencyException
-     * @throws \DI\NotFoundException
+     * @throws DependencyException
+     * @throws NotFoundException
      */
     public function config($config=null)
     {
@@ -214,7 +219,7 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
         // we get the names of
         // the kernel properties ended with groups through the Collection class.
         [$groups] = Collection::make($properties)->partition(function($properties){
-           return Str::endsWith($properties,'Groups');
+            return Str::endsWith($properties,'Groups');
         });
 
         //as a result, kernel groups are being returned.
@@ -264,6 +269,7 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
      * load if not exist boot
      *
      * @param array $loaders
+     * @return mixed|void
      */
     public function loadIfNotExistBoot($loaders=array())
     {
@@ -300,7 +306,7 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
     /**
      * check if the request is console
      *
-     * @return bool
+     * @return bool|mixed
      */
     public function runningInConsole()
     {
@@ -343,7 +349,7 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
     /**
      * Get the version number of the application.
      *
-     * @return string
+     * @return mixed|string
      */
     public function version()
     {
