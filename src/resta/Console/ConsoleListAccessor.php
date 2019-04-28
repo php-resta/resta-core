@@ -20,8 +20,8 @@ trait ConsoleListAccessor {
 
     public function projectName(){
 
-        $projectParse=explode("/",$this->project);
-        return end($projectParse);
+        $projectParse=explode("\\",$this->argument['project']);
+        return current($projectParse);
     }
     /**
      * @return mixed
