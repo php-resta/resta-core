@@ -161,7 +161,7 @@ class ErrorProvider extends ApplicationProvider {
         $vendorDirectory = str_replace(root.''.DIRECTORY_SEPARATOR.'','',$this->data['errFile']);
 
         if(Str::startsWith($vendorDirectory,'vendor')
-            && Str::startsWith($vendorDirectory,'vendor/restapix')===false)
+            && Str::startsWith($vendorDirectory,'vendor/php-resta')===false)
         {
             $externalMessage = ($environment==="production") ?
                 'An unexpected external error has occurred' :
