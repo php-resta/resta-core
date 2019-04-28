@@ -54,6 +54,10 @@ class Controller extends ConsoleOutputter {
 
         $this->argument['bundleName'] = $controller.''.StaticPathList::$controllerBundleName;
 
+        if(!file_exists(app()->path()->controller())){
+            $this->directory['createController'] = app()->path()->controller();
+        }
+
         //Processes related to argument variables via console.
         $this->argument['methodPrefix']         = StaticPathModel::$methodPrefix;
         $this->directory['endpoint']            = app()->path()->controller().''.DIRECTORY_SEPARATOR.''.$controller.''.StaticPathList::$controllerBundleName;

@@ -106,11 +106,9 @@ class ConsoleOutputter extends ConsolePrepare {
             $this->argument['sourceNamespace']      = app()->namespace()->optionalSource();
             $this->argument['versionNamespace']     = app()->namespace()->version();
 
-            $this->projectPrefix=StaticPathModel::projectPrefix($this->argument['group']);
 
-            $projectPrefixNamespace=str_replace("/","\\",$this->projectPrefix);
+            $this->argument['project']=$this->argument['project'].'\\'.StaticPathList::$projectPrefixGroup;
 
-            $this->argument['project']=$this->argument['project'].'\\'.$projectPrefixNamespace.'';
 
             $this->project=StaticPathModel::appPath().'/'.str_replace('\\','/',$this->argument['project']);
             
