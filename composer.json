@@ -28,8 +28,8 @@
         "predis/predis": "^1.0",
         "symfony/var-dumper": "*",
         "monolog/monolog": "^1.22",
-        "symfony/console": "^3.2",
-        "symfony/debug": "^3.2",
+        "symfony/console": "^4.2",
+        "symfony/debug": "^4.2",
         "vlucas/phpdotenv": "^2.4",
         "guzzlehttp/guzzle": "^6.2",
         "symfony/finder": "^4.0",
@@ -42,7 +42,7 @@
         "symfony/event-dispatcher": "^3.2",
         "spatie/array-to-xml": "^2.3",
         "defuse/php-encryption": "^2.1",
-        "symfony/process": "^4.0",
+        "symfony/process": "^4.2",
         "zendframework/zend-validator": "^2.10",
         "aligurbuz/lingua": "^1.0",
         "mobiledetect/mobiledetectlib": "^2.8",
@@ -53,6 +53,7 @@
         "doctrine/dbal": "^2.7",
         "symfony/stopwatch": "^4.1",
         "fzaninotto/faker": "^1.7",
-        "league/pipeline": "^1.0"
+        "league/pipeline": "^1.0",
+        "illuminate/queue": "^5.8"
     }
 }
