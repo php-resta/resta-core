@@ -7,6 +7,7 @@ use Resta\Support\Str;
 use Resta\Support\Utils;
 use Resta\Config\Config;
 use Store\Services\Crypt;
+use Store\Services\Queue;
 use Resta\Config\ConfigProcess;
 use Store\Services\DateCollection;
 use Store\Services\Redis as Redis;
@@ -177,6 +178,20 @@ class App
     private static function session()
     {
         return new Session();
+    }
+
+    /**
+     * @return mixed
+     */
+    private static function queue()
+    {
+        if(!isset(self::$instance['queue'])){
+
+            self::$instance['queue']=(new Queue());
+            return self::$instance['queue'];
+
+        }
+        return self::$instance['queue'];
     }
 
     /**
