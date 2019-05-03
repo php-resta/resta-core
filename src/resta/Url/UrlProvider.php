@@ -180,7 +180,11 @@ class UrlProvider extends ApplicationProvider
             $query = Arr::overwriteWith($query,[$versionKey=>'V1']);
         }
         else{
-            $query[$versionKey] = 'V1';
+
+            if(!isset($query[$versionKey])){
+                $query[$versionKey] = 'V1';
+            }
+
             if(!isset($query[$versionKey+1])){
                 $query[$versionKey+1] = NULL;
             }
