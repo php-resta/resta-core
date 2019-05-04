@@ -7,6 +7,13 @@ use Resta\Support\Utils;
 class UrlVersionIdentifier
 {
     /**
+     * list supported version numbers
+     *
+     * @var array
+     */
+    private static $supportedVersions = ['V1'];
+
+    /**
      * get client version
      *
      * @return null|string
@@ -46,13 +53,26 @@ class UrlVersionIdentifier
     }
 
     /**
+     * @param array $versions
+     * @return array
+     */
+    private static function getSupportedVersions($versions=array())
+    {
+        if(count($versions)){
+            return $versions;
+        }
+        return self::$supportedVersions;
+    }
+
+    /**
      * get supported versions
      *
+     * @param array $versions
      * @return mixed
      */
-    public static function supportedVersions()
+    public static function supportedVersions($versions=array())
     {
-        return self::versionNamespace()::getSupportedVersions();
+        return self::versionNamespace()::getSupportedVersions($versions);
     }
 
     /**
@@ -80,6 +100,11 @@ class UrlVersionIdentifier
      */
     public static function versionNamespace()
     {
-        return app()->namespace()->kernel().'\Version';
+        if(file_exists(app()->path()->kernel())){
+            return app()->namespace()->kernel().'\Version';
+        }
+
+        return new static();
+
     }
 }

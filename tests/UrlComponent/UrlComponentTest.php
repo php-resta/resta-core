@@ -3,6 +3,7 @@
 namespace Resta\Core\Tests\UrlComponent;
 
 use Resta\Core\Tests\AbstractTest;
+use Resta\Url\UrlVersionIdentifier;
 
 class UrlComponentTest extends AbstractTest
 {
@@ -27,6 +28,10 @@ class UrlComponentTest extends AbstractTest
        $this->assertSame("index",$params['method']);
        $this->assertSame([],$params['parameters']);
 
+       $supportedVersions = UrlVersionIdentifier::supportedVersions(['V1']);
+
+       $this->assertTrue(true,in_array($params['version'],$supportedVersions));
+       $this->assertFalse(false,in_array('V2',$supportedVersions));
    }
 
 
@@ -50,6 +55,16 @@ class UrlComponentTest extends AbstractTest
         $this->assertSame("Test",$params['endpoint']);
         $this->assertSame("index",$params['method']);
         $this->assertSame([],$params['parameters']);
+
+        $supportedVersions = UrlVersionIdentifier::supportedVersions(['V1']);
+
+        $this->assertTrue(true,in_array($params['version'],$supportedVersions));
+        $this->assertFalse(false,in_array('V2',$supportedVersions));
+
+        $supportedVersions = UrlVersionIdentifier::supportedVersions(['V1','V2']);
+
+        $this->assertTrue(true,in_array($params['version'],$supportedVersions));
+        $this->assertTrue(true,in_array('V2',$supportedVersions));
 
     }
 
@@ -77,6 +92,16 @@ class UrlComponentTest extends AbstractTest
         $this->assertSame('B1',$params['parameters'][1]);
         $this->assertSame('C1',$params['parameters'][2]);
 
+        $supportedVersions = UrlVersionIdentifier::supportedVersions(['V1']);
+
+        $this->assertTrue(true,in_array($params['version'],$supportedVersions));
+        $this->assertFalse(false,in_array('V2',$supportedVersions));
+
+        $supportedVersions = UrlVersionIdentifier::supportedVersions(['V1','V2']);
+
+        $this->assertTrue(true,in_array($params['version'],$supportedVersions));
+        $this->assertTrue(true,in_array('V2',$supportedVersions));
+
     }
 
     /**
@@ -103,6 +128,16 @@ class UrlComponentTest extends AbstractTest
         $this->assertSame('B1',$params['parameters'][1]);
         $this->assertSame('C1',$params['parameters'][2]);
 
+        $supportedVersions = UrlVersionIdentifier::supportedVersions(['V1']);
+
+        $this->assertTrue(true,in_array($params['version'],$supportedVersions));
+        $this->assertFalse(false,in_array('V2',$supportedVersions));
+
+        $supportedVersions = UrlVersionIdentifier::supportedVersions(['V1','V2']);
+
+        $this->assertTrue(true,in_array($params['version'],$supportedVersions));
+        $this->assertTrue(true,in_array('V2',$supportedVersions));
+
     }
 
 
@@ -124,6 +159,16 @@ class UrlComponentTest extends AbstractTest
         $this->assertSame("Core",$params['project']);
         $this->assertSame("V1",$params['version']);
         $this->assertSame(NULL,$params['endpoint']);
+
+        $supportedVersions = UrlVersionIdentifier::supportedVersions(['V1']);
+
+        $this->assertTrue(true,in_array($params['version'],$supportedVersions));
+        $this->assertFalse(false,in_array('V2',$supportedVersions));
+
+        $supportedVersions = UrlVersionIdentifier::supportedVersions(['V1','V2']);
+
+        $this->assertTrue(true,in_array($params['version'],$supportedVersions));
+        $this->assertTrue(true,in_array('V2',$supportedVersions));
 
     }
 }
