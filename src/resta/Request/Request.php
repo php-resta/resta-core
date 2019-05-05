@@ -188,7 +188,9 @@ class Request extends RequestClient implements HandleContracts
             $generators = array_merge($generators,$this->generators);
         }
 
-        $this->generatorMethod($generators);
+        if(isset($generators)){
+            $this->generatorMethod($generators);
+        }
     }
 
     /**
