@@ -33,13 +33,13 @@ class RequestHttpManager extends ApplicationProvider
     {
         $inputs = $this->app->get($this->method);
 
-        $content = json_decode($this->app['request']->getContent());
+        $content = json_decode($this->app['request']->getContent(),1);
 
         if(is_array($inputs) && count($inputs)){
             return $inputs;
         }
 
-        return $content;
+        return is_array($content) ? $content : [];
     }
 
     /**
