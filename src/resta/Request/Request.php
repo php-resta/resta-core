@@ -185,7 +185,7 @@ class Request extends RequestClient implements HandleContracts
         // check the presence of the generator object
         // and operate the generator over this object.
         if($this->checkProperties('generators')){
-            $generators = array_merge($generators,$this->generators);
+            $generators = array_merge(isset($generators) ? $generators: [],$this->generators);
         }
 
         if(isset($generators)){
