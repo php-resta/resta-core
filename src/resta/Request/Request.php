@@ -12,17 +12,17 @@ class Request extends RequestClient implements HandleContracts
     /**
      * @var array $origin
      */
-    protected $origin=[];
+    protected $origin = [];
 
     /**
      * @var array $inputs
      */
-    protected $inputs=[];
+    protected $inputs = [];
 
     /**
      * @var array $except
      */
-    protected $except=[];
+    protected $except = [];
 
     /**
      * @var $capsule
@@ -40,12 +40,20 @@ class Request extends RequestClient implements HandleContracts
     protected $reflection;
 
     /**
-     * RequestClient constructor.
+     * @var $data
+     */
+    protected $requestHttp;
+
+    /**
+     * Request constructor.
      */
     public function __construct()
     {
-        //We assign httpMethod constant to property to method name.
-        $this->method = httpMethod();
+        //reflection process
+        $this->reflection = app()['reflection']($this);
+
+        //get http method via request http manager class
+        $this->requestHttp = app()->resolve(RequestHttpManager::class);
 
         // if we leave the request process to the application side,
         // then in this case we refer to the requestClient object in
@@ -54,6 +62,8 @@ class Request extends RequestClient implements HandleContracts
     }
 
     /**
+     * auto validate
+     *
      * @return mixed
      */
     private function autoValidate($validate)
@@ -78,12 +88,14 @@ class Request extends RequestClient implements HandleContracts
     }
 
     /**
+     * check http method
+     *
      * @return void|mixed
      */
     private function checkHttpMethod()
     {
         //get http method
-        $method=$this->method;
+        $method = $this->requestHttp->getMethod();
 
         // Determines which HTTP method
         // the request object will be exposed to.
@@ -101,6 +113,8 @@ class Request extends RequestClient implements HandleContracts
     }
 
     /**
+     * check properties
+     *
      * @param $properties
      * @return bool
      */
@@ -113,6 +127,8 @@ class Request extends RequestClient implements HandleContracts
     }
 
     /**
+     * get request except
+     *
      * @param $except
      * @return $this
      */
@@ -120,19 +136,21 @@ class Request extends RequestClient implements HandleContracts
     {
         // the except parameter is a callable value.
         if(is_callable($except)){
-            $call=call_user_func_array($except,[$this]);
-            $except=$call;
+            $call = call_user_func_array($except,[$this]);
+            $except = $call;
         }
 
         // except with the except exceptions property
         // and then assigning them to the inputs property.
-        $this->except=array_merge($this->except,$except);
-        $this->inputs=array_diff_key($this->inputs,array_flip($this->except));
+        $this->except = array_merge($this->except,$except);
+        $this->inputs = array_diff_key($this->inputs,array_flip($this->except));
 
         return $this;
     }
 
     /**
+     * expected inputs
+     *
      * @return void|mixed
      */
     private function expectedInputs()
@@ -152,38 +170,39 @@ class Request extends RequestClient implements HandleContracts
     }
 
     /**
+     * generator manager
+     *
      * @return void|mixed
      */
     private function generatorManager()
     {
-
         // check the presence of the generator object
         // and operate the generator over this object.
         if($this->checkProperties('auto_generators')){
-            $this->generators = array_merge($this->generators,$this->auto_generators);
+            $generators = $this->auto_generators;
         }
 
         // check the presence of the generator object
         // and operate the generator over this object.
         if($this->checkProperties('generators')){
-            $this->generatorMethod($this->generators);
+            $generators = array_merge($generators,$this->generators);
         }
 
-
+        $this->generatorMethod($generators);
     }
 
     /**
+     * generator method
+     *
      * @param $generators
      */
     private function generatorMethod($generators)
     {
-
-
         //generator array object
         foreach ($generators as $generator){
 
             //generator method name
-            $generatorMethodName=$generator.'generator';
+            $generatorMethodName = $generator.'Generator';
 
             // if the generator method is present,
             // the fake value is assigned.
@@ -191,8 +210,23 @@ class Request extends RequestClient implements HandleContracts
 
                 //fake registration
                 if(!isset($this->inputs[$generator])){
-                    $this->{$generator}=$this->{$generatorMethodName}();
-                    $this->inputs[$generator]=$this->{$generatorMethodName}();
+                    $this->{$generator} = $this->{$generatorMethodName}();
+                    $this->inputs[$generator] = $this->{$generatorMethodName}();
+                }
+                else {
+
+                    if($this->checkProperties('auto_generators_dont_overwrite')
+                        && in_array($generator,$this->auto_generators_dont_overwrite)){
+                        $this->{$generator} = $this->{$generatorMethodName}();
+                        $this->inputs[$generator] = $this->{$generatorMethodName}();
+                    }
+
+                    if($this->checkProperties('generators_dont_overwrite')
+                        && in_array($generator,$this->generators_dont_overwrite)){
+                        $this->{$generator} = $this->{$generatorMethodName}();
+                        $this->inputs[$generator] = $this->{$generatorMethodName}();
+                    }
+
                 }
 
                 $this->registerRequestInputs($generator);
@@ -201,6 +235,8 @@ class Request extends RequestClient implements HandleContracts
     }
 
     /**
+     * get inputs
+     *
      * @return array
      */
     protected function get()
@@ -209,6 +245,8 @@ class Request extends RequestClient implements HandleContracts
     }
 
     /**
+     * get client objects
+     *
      * @return array
      */
     private function getClientObjects()
@@ -217,6 +255,8 @@ class Request extends RequestClient implements HandleContracts
     }
 
     /**
+     * get object vars
+     *
      * @return array
      */
     private function getObjects()
@@ -225,19 +265,15 @@ class Request extends RequestClient implements HandleContracts
     }
 
     /**
+     * request handle
+     *
      * @return void
      */
     public function handle()
     {
-        //reflection process
-        $this->reflection = new ReflectionProcess($this);
-
-        //get http method
-        $method=$this->method;
-
         //we record the values ​​
         //that coming with the post.
-        $this->initClient($method);
+        $this->initClient();
 
         // we update the input values ​​after
         // we receive and check the saved objects.
@@ -250,23 +286,25 @@ class Request extends RequestClient implements HandleContracts
     }
 
     /**
-     * @method initClient
-     * @param $method
+     * get init client
+     *
      * @return void
      */
-    private function initClient($method)
+    private function initClient()
     {
         // we use the http method to write
         // the values to the inputs and origin properties.
-        foreach($method() as $key=>$value){
+        foreach($this->requestHttp->resolve() as $key=>$value){
 
             //inputs and origin properties
-            $this->inputs[$key]=$value;
-            $this->origin[$key]=$value;
+            $this->inputs[$key] = $value;
+            $this->origin[$key] = $value;
         }
     }
 
     /**
+     * checkt annotations
+     *
      * @param $method
      * @param $key
      *
@@ -282,10 +320,10 @@ class Request extends RequestClient implements HandleContracts
         if(preg_match('@exception\((.*?)\)\r\n@is',$annotation,$exception)){
 
             $exceptionSpaceExplode = explode(" ",$exception[1]);
-           foreach ($exceptionSpaceExplode as $exceptions){
-               $exceptionsDotExplode = explode(":",$exceptions);
-               $exceptionParamList[$key][$exceptionsDotExplode[0]] = $exceptionsDotExplode[1];
-           }
+            foreach ($exceptionSpaceExplode as $exceptions){
+                $exceptionsDotExplode = explode(":",$exceptions);
+                $exceptionParamList[$key][$exceptionsDotExplode[0]] = $exceptionsDotExplode[1];
+            }
 
             if(isset($exceptionParamList[$key]['params'])){
                 $paramsCommaExplode = explode(",",$exceptionParamList[$key]['params']);
@@ -309,21 +347,43 @@ class Request extends RequestClient implements HandleContracts
 
         if(preg_match('@regex\((.*?)\)\r\n@is',$annotation,$regex)){
             if(isset($this->inputs[$key])){
-                if(!preg_match('@'.$regex[1].'@is',$this->inputs[$key])){
 
-                    if(isset($exceptionParamList[$key])){
-                        $keyParams = ($exceptionParamList[$key]['params']) ?? [];
-                        exception($exceptionParamList[$key]['name'],$keyParams)->unexpectedValue($key.' input value is not valid as format ('.$regex[1].')');
+                if(is_array($this->inputs[$key])){
+
+                    foreach ($this->inputs[$key] as $inputKey=>$inputValue){
+
+                        if(!preg_match('@'.$regex[1].'@is',$inputValue)){
+                            if(isset($exceptionParamList[$key])){
+                                $keyParams = ($exceptionParamList[$key]['params']) ?? [];
+                                exception($exceptionParamList[$key]['name'],$keyParams)->unexpectedValue($key.' input value is not valid as format ('.$regex[1].')');
+                            }
+                            else{
+                                exception()->unexpectedValue($key.' input value is not valid as format ('.$regex[1].')');
+                            }
+                        }
                     }
-                    else{
-                        exception()->unexpectedValue($key.' input value is not valid as format ('.$regex[1].')');
+
+                }
+                else{
+
+                    if(!preg_match('@'.$regex[1].'@is',$this->inputs[$key])){
+                        if(isset($exceptionParamList[$key])){
+                            $keyParams = ($exceptionParamList[$key]['params']) ?? [];
+                            exception($exceptionParamList[$key]['name'],$keyParams)->unexpectedValue($key.' input value is not valid as format ('.$regex[1].')');
+                        }
+                        else{
+                            exception()->unexpectedValue($key.' input value is not valid as format ('.$regex[1].')');
+                        }
                     }
                 }
+
             }
         }
     }
 
     /**
+     * request properties
+     *
      * @return void|mixed
      */
     private function requestProperties()
@@ -347,6 +407,8 @@ class Request extends RequestClient implements HandleContracts
     }
 
     /**
+     * set client objects
+     *
      * @return mixed
      */
     private function setClientObjects()
@@ -370,13 +432,15 @@ class Request extends RequestClient implements HandleContracts
     }
 
     /**
+     * register request inputs
+     *
      * @param $key
      */
     private function registerRequestInputs($key)
     {
         // the method name to be used with
         // the http method.
-        $requestMethod=$this->method.''.ucfirst($key);
+        $requestMethod = $this->requestHttp->getMethod().''.ucfirst($key);
 
         // the request update to be performed using
         // the method name to be used with the http method.
@@ -388,6 +452,8 @@ class Request extends RequestClient implements HandleContracts
     }
 
     /**
+     * set request inputs
+     *
      * @param $method
      * @param $key
      */
@@ -405,15 +471,15 @@ class Request extends RequestClient implements HandleContracts
                 $this->inputs[$key] = [];
                 foreach ($inputKeys as $input){
 
-                    $this->{$key} = $input;
-                    $keyMethod=$this->{$method}();
-                    $this->inputs[$key][]=$keyMethod;
+                    $this->{$key}           = $input;
+                    $keyMethod              = $this->{$method}();
+                    $this->inputs[$key][]   = $keyMethod;
                 }
             }
             else{
                 if(isset($this->inputs[$key])){
-                    $keyMethod=$this->{$method}();
-                    $this->inputs[$key]=$keyMethod;
+                    $keyMethod = $this->{$method}();
+                    $this->inputs[$key] = $keyMethod;
                 }
 
             }
@@ -421,6 +487,8 @@ class Request extends RequestClient implements HandleContracts
     }
 
     /**
+     * validation
+     *
      * @return void
      */
     private function validation()

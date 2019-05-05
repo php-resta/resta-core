@@ -8,7 +8,12 @@ trait __request__RequestGenerator
      * auto generator for inputs
      * @var array
      */
-    protected $generators=[];
+    protected $generators = [];
 
-    //
+    /**
+     * generators dont overwrite
+     *
+     * @var array
+     */
+    protected $generators_dont_overwrite = [];
 }
