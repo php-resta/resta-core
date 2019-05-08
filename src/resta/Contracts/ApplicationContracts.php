@@ -23,10 +23,10 @@ interface ApplicationContracts {
     public function commandList();
 
     /**
-     * @param null $config
+     * @param string $config
      * @return mixed
      */
-    public function config($config=null);
+    public function config($config);
 
     /**
      * @return mixed

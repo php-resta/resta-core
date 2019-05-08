@@ -93,13 +93,13 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
     /**
      * get configuration values
      *
-     * @param null|string $config
-     * @return mixed|void
+     * @param string $config
+     * @return mixed
      *
      * @throws DependencyException
      * @throws NotFoundException
      */
-    public function config($config=null)
+    public function config($config)
     {
         if($this->checkBindings(__FUNCTION__)){
             return Config::make($config)->get();
