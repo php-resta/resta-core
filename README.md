@@ -2,7 +2,7 @@
 [![Total Downloads](https://poser.pugx.org/php-resta/resta-core/downloads)](https://packagist.org/packages/php-resta/resta-core)
 [![License](https://poser.pugx.org/php-resta/resta-core/license)](https://packagist.org/packages/php-resta/resta-core)
 [![Latest Unstable Version](https://poser.pugx.org/restapix/resta/v/unstable)](//packagist.org/packages/restapix/resta)
-
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/php-resta/resta-core/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/php-resta/resta-core/?branch=master)
 # Resta - A Great Php Api Designer
 
 > **Note:** The repository contains core of the resta.
