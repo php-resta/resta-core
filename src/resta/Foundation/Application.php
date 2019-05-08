@@ -286,8 +286,11 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
      */
     public function manifest($maker)
     {
+        /** @var Bootstrappers $bootstrapper */
+        $bootstrapper = $this['bootstrapper'];
+
         //kernel manifest bootstrapper
-        return $this['bootstrapper']->bootFire(null,$maker);
+        return $bootstrapper->bootFire(null,$maker);
     }
 
     /**
