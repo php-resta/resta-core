@@ -65,14 +65,11 @@ class ServiceProvider extends  ApplicationProvider
     public function getServiceProviders()
     {
         //set service providers for providers property
-        if($this->providers===null){
+        /** @scrutinizer ignore-call */
+        $providers = $this->app->serviceProviders();
 
-            /** @scrutinizer ignore-call */
-            $providers = $this->app->serviceProviders();
-
-            if(count($providers)){
-                $this->providers = $providers;
-            }
+        if(count($providers)){
+            $this->providers = $providers;
         }
 
         return $this->providers;

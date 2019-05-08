@@ -10,7 +10,7 @@ abstract class ApplicationProvider
     /**
      * application instance
      *
-     * @var ApplicationContracts|ContainerContracts $app
+     * @var $app
      */
     protected $app;
 
