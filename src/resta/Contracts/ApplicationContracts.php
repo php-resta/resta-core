@@ -39,11 +39,6 @@ interface ApplicationContracts {
    public function corePath();
 
     /**
-     * @return mixed
-     */
-   public function detectEnvironmentForApplicationKey();
-
-    /**
      * @param array $environment
      * @return mixed
      */

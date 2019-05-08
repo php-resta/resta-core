@@ -2,7 +2,6 @@
 
 namespace Resta\Foundation;
 
-use Resta\Environment\EnvironmentProvider;
 use Resta\Support\Str;
 use Resta\Config\Config;
 use DI\NotFoundException;
@@ -11,6 +10,7 @@ use DI\DependencyException;
 use Resta\Traits\ApplicationPath;
 use Illuminate\Support\Collection;
 use Resta\Contracts\ApplicationContracts;
+use Resta\Environment\EnvironmentProvider;
 use Resta\Contracts\ConfigProviderContracts;
 use Resta\Contracts\ApplicationHelpersContracts;
 use Resta\Foundation\Bootstrapper\Bootstrappers;
@@ -51,9 +51,9 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
      * check if the object in binding is available
      *
      * @param string $object
-     * @return bool|mixed
+     * @return bool
      */
-    public function checkBindings($object)
+    public function checkBindings($object) : bool
     {
         // the booted objects are saved to the kernel.
         // this method checks whether these objects are registered.
@@ -93,7 +93,7 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
     /**
      * get configuration values
      *
-     * @param null $config
+     * @param null|string $config
      * @return mixed|void
      *
      * @throws DependencyException
@@ -117,7 +117,7 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
      *
      * @return bool
      */
-    public function console()
+    public function console() : bool
     {
         // controlling the console object is
         // intended to make sure that the kernel bootstrap classes do not work.
@@ -134,23 +134,6 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
         // get the directory
         // where kernel files are running to the kernel object.
         return core()->corePath ?: null;
-    }
-
-    /**
-     * detect environment according to application key
-     *
-     * @return mixed|string
-     */
-    public function detectEnvironmentForApplicationKey()
-    {
-        if(isset($this['applicationKey'])){
-
-            // application key, but if it has a null value
-            // then we move the environment value to the production environment.
-            return ($this['applicationKey']===null) ? 'production' : $this->environment();
-        }
-
-        return $this->environment();
     }
 
     /**
@@ -184,7 +167,7 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
     /**
      * handle application
      *
-     * @return void|mixed
+     * @return mixed
      */
     public function handle()
     {
@@ -199,7 +182,7 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
      *
      * @return bool
      */
-    public function isLocale()
+    public function isLocale() : bool
     {
         //check environment for local
         return $this->environment() === 'local';

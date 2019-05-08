@@ -33,7 +33,7 @@ class ErrorProvider extends ApplicationProvider {
 
         // application key, but if it has a null value
         // then we move the environment value to the production environment.
-        return $this->app->detectEnvironmentForApplicationKey();
+        return $this->app->environment();
     }
 
     /**
