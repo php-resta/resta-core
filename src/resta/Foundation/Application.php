@@ -2,6 +2,7 @@
 
 namespace Resta\Foundation;
 
+use Resta\Environment\EnvironmentProvider;
 use Resta\Support\Str;
 use Resta\Config\Config;
 use DI\NotFoundException;
@@ -165,7 +166,14 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
             $arguments = (isset(func_get_args()[0]))
                 ? func_get_args()[0] : func_get_args();
 
-            return $this['environment']->environment(
+            /**
+             * get container instance for environment
+             *
+             * @var EnvironmentProvider $environmentContainer
+             */
+            $environmentContainer = $this['environment'];
+
+            return $environmentContainer->environment(
                 $arguments,$this['environmentVariables']
             );
         }
