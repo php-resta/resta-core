@@ -27,7 +27,7 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
     protected const VERSION = '1.0.0';
 
     /**
-     * @var bool $console
+     * @var bool
      */
     protected $console;
 
@@ -49,7 +49,7 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
     /**
      * check if the object in binding is available
      *
-     * @param $object
+     * @param string $object
      * @return bool|mixed
      */
     public function checkBindings($object)
@@ -62,7 +62,7 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
     /**
      * handle application command
      *
-     * @param $command
+     * @param string $command
      * @param array $arguments
      * @return mixed
      *
@@ -83,7 +83,7 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
      *
      * @return array
      */
-    public function commandList()
+    public function commandList() : array
     {
         //get command list from kernel
         return $this->commandList;
@@ -114,7 +114,7 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
     /**
      * console kernel object
      *
-     * @return bool|mixed|null
+     * @return bool
      */
     public function console()
     {
@@ -206,7 +206,7 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
      *
      * @return array
      */
-    public function kernelGroupKeys()
+    public function kernelGroupKeys() : array
     {
         $properties = [];
 
@@ -229,9 +229,9 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
     /**
      * kernel groups name lists
      *
-     * @return array|void
+     * @return array
      */
-    public function kernelGroupList()
+    public function kernelGroupList() : array
     {
         $list = [];
 
@@ -294,7 +294,7 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
     /**
      * get kernel maker from manifest
      *
-     * @param $maker
+     * @param string $maker
      * @return mixed
      */
     public function manifest($maker)
@@ -306,9 +306,9 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
     /**
      * check if the request is console
      *
-     * @return bool|mixed
+     * @return bool
      */
-    public function runningInConsole()
+    public function runningInConsole() : bool
     {
         //Determine if the application is running in the console.
         return php_sapi_name() === 'cli' || php_sapi_name() === 'phpdbg';
@@ -319,7 +319,7 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
      *
      * @return array
      */
-    public function serviceProviders()
+    public function serviceProviders() : array
     {
         //get project providers from config kernel
         $providers = (is_array(config('kernel.providers')))
