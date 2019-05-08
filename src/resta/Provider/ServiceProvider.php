@@ -29,6 +29,7 @@ class ServiceProvider extends  ApplicationProvider
 
             // after determining whether the register or boot methods
             // we are running the provider.
+            /** @scrutinizer ignore-call */
             $providerInstance = $this->app->resolve($provider);
 
             //we need to do method check for provider.
@@ -36,6 +37,7 @@ class ServiceProvider extends  ApplicationProvider
                 $providerInstance->{$method}();
 
                 if($method=="register"){
+                    /** @scrutinizer ignore-call */
                     $this->app->register('loadedProviders',$key,$provider);
                 }
             }
@@ -53,6 +55,7 @@ class ServiceProvider extends  ApplicationProvider
 
             // for loaded providers,
             // we register an empty array for the container object.
+            /** @scrutinizer ignore-call */
             $this->app->register('loadedProviders',[]);
         }
     }
