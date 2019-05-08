@@ -84,9 +84,9 @@ class CustomBooter
     }
 
     /**
-     * @param $booter
+     * return void
      */
-    private function booterManifest($booter)
+    private function booterManifest()
     {
         //custom boot class
         $booterManifest = $this->bootNamespace;
@@ -105,10 +105,9 @@ class CustomBooter
     }
 
     /**
-     * @param $boot
      * @return mixed
      */
-    private function getBooterList($boot)
+    private function getBooterList()
     {
         //kernel boot name
         $kernelBootName = $this->boot;

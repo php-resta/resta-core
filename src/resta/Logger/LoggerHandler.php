@@ -155,19 +155,18 @@ class LoggerHandler implements LoggerInterface
      *
      * @param  mixed  $level
      * @param  string  $message
-     * @param  array  $context
      * @return void
      */
-    protected function writeLog($level, $message, $context)
+    protected function writeLog($level, $message)
     {
-        $file=($this->file===null) ? $level : $this->file;
+        $file = ($this->file===null) ? $level : $this->file;
 
         if($this->adapter!==null){
 
             $adapter = $this->adapter;
 
-            $adapter = ClosureDispatcher::bind($this->logger)->call(function() use($adapter){
-                return $this->adapter=$adapter;
+            ClosureDispatcher::bind($this->logger)->call(function() use($adapter){
+                return $this->adapter = $adapter;
             });
         }
 

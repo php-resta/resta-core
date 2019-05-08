@@ -153,7 +153,7 @@ if (!function_exists('event')) {
     /**
      * @return EventManager
      */
-    function event($event=null)
+    function event()
     {
         return app()->singleton()->bindings['eventDispatcher'];
     }
