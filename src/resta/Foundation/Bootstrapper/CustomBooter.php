@@ -111,9 +111,6 @@ class CustomBooter
         $kernelBootName = $this->boot;
 
         //We specify the method call for the booter list.
-        return core()->appClosureInstance
-            ->call(function() use ($kernelBootName) {
-                return $this->manifest($kernelBootName);
-            });
+        return app()->manifest($kernelBootName);
     }
 }
