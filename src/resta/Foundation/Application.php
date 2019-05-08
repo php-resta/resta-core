@@ -341,7 +341,7 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
     {
         // save the globally identified paths to
         // the global container object of the resta.
-        if($name!==null && $path!==null && file_exists($path)){
+        if(!is_null($name) && !is_null($path) && file_exists($path)){
             $this->register('paths',$name,$path);
         }
     }
