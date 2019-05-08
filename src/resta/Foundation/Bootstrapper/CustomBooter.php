@@ -3,7 +3,6 @@
 namespace Resta\Foundation\Bootstrapper;
 
 use Resta\Support\Utils;
-use Resta\Support\ClosureDispatcher;
 use Resta\Foundation\PathManager\StaticPathList;
 
 class CustomBooter
@@ -40,13 +39,12 @@ class CustomBooter
     }
 
     /**
-     * @param $booter
      * @return array|mixed
      */
-    private function addCustomBooter($booter)
+    private function addCustomBooter()
     {
         //normally we will assign a variable to our booterList list.
-        $booterList = $this->getBooterList($booter);
+        $booterList = $this->getBooterList();
 
         //Now, let's get our custom boot list.
         //Let's assign the final state to our booterList list along with our custom boot list.
@@ -57,8 +55,8 @@ class CustomBooter
 
             //Your custom boot objects in
             //the boot directory should not be in the middlewaregroups list.
-            if(false===pos($booter)->console() && !in_array($this->bootNamespace,$booterList)){
-                $this->booterManifest($booter);
+            if(false===app()->console() && !in_array($this->bootNamespace,$booterList)){
+                $this->booterManifest();
             }
         }
 
@@ -75,12 +73,12 @@ class CustomBooter
         //if the boot list belongs to the custom booter,
         //then we can boot our custom boot objects by adding them at the end of this class.
         if(array_pop($booter)==$this->customBooter){
-            return $this->addCustomBooter($booter);
+            return $this->addCustomBooter();
         }
 
         //If the boot list does not belong to the booter list,
         //we normally send the boot list exactly as it is.
-        return $this->getBooterList($booter);
+        return $this->getBooterList();
     }
 
     /**
