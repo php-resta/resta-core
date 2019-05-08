@@ -166,11 +166,7 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
             $arguments = (isset(func_get_args()[0]))
                 ? func_get_args()[0] : func_get_args();
 
-            /**
-             * get container instance for environment
-             *
-             * @var EnvironmentProvider $environmentContainer
-             */
+            /** @var EnvironmentProvider $environmentContainer */
             $environmentContainer = $this['environment'];
 
             return $environmentContainer->environment(
