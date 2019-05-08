@@ -10,9 +10,9 @@ class ServiceProvider extends  ApplicationProvider
     /**
      * all service providers
      *
-     * @var string
+     * @var array
      */
-    protected $providers;
+    protected $providers = [];
 
     /**
      * apply provider class
@@ -66,6 +66,8 @@ class ServiceProvider extends  ApplicationProvider
     {
         //set service providers for providers property
         if($this->providers===null){
+
+            /** @scrutinizer ignore-call */
             $providers = $this->app->serviceProviders();
 
             if(count($providers)){
@@ -73,7 +75,7 @@ class ServiceProvider extends  ApplicationProvider
             }
         }
 
-        return $this->providers ?: [];
+        return $this->providers;
     }
 
     /**
