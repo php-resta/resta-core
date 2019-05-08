@@ -108,11 +108,11 @@ interface ApplicationContracts {
     public function serviceProviders();
 
     /**
-     * @param null $name
-     * @param null $path
+     * @param string $name
+     * @param string $path
      * @return mixed
      */
-   public function setPaths($name=null,$path=null);
+   public function setPaths($name,$path);
 
     /**
      * @return mixed

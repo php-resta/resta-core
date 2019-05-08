@@ -320,11 +320,11 @@ class Application extends Kernel implements ApplicationContracts,ApplicationHelp
     /**
      * application structure directory paths changing
      *
-     * @param null $name
-     * @param null $path
+     * @param string $name
+     * @param string $path
      * @return mixed|void
      */
-    public function setPaths($name=null,$path=null)
+    public function setPaths($name,$path)
     {
         // save the globally identified paths to
         // the global container object of the resta.
