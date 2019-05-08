@@ -10,15 +10,15 @@ class ServiceProvider extends  ApplicationProvider
     /**
      * all service providers
      *
-     * @var $providers
+     * @var string
      */
     protected $providers;
 
     /**
      * apply provider class
      *
-     * @param $key
-     * @param $provider
+     * @param string $key
+     * @param string $provider
      * @param string $method
      */
     private function applyProvider($key,$provider,$method='register')

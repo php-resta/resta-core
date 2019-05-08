@@ -90,14 +90,6 @@ interface ApplicationContracts {
     public function manifest($maker);
 
     /**
-     * @param $key
-     * @param $object
-     * @param null $concrete
-     * @return mixed
-     */
-    public function register($key,$object,$concrete=null);
-
-    /**
      * @return mixed
      */
     public function runningInConsole();

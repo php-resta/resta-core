@@ -40,6 +40,14 @@ interface ContainerContracts
     public function make($object=null,$callback=null,$container=false);
 
     /**
+     * @param $key
+     * @param $object
+     * @param null $concrete
+     * @return mixed
+     */
+    public function register($key,$object,$concrete=null);
+
+    /**
      * @param null $object
      * @param null $callback
      * @return mixed
