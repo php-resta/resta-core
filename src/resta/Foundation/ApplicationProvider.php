@@ -29,7 +29,7 @@ abstract class ApplicationProvider
      *
      * @return ApplicationContracts|ContainerContracts
      */
-    public function app() : object
+    public function app()
     {
         return $this->app;
     }
