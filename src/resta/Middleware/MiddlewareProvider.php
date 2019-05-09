@@ -190,7 +190,7 @@ class MiddlewareProvider extends ApplicationProvider implements HandleContracts
             //it will be handled according to the following rule.
             //The exclude class will return a callback and allocate the result as bool to the exclude variable.
             //If the exclude variable is true then the middleware will be run.
-            $result = $excludeClass->exclude($this->middleware,function($exclude) use ($middleVal){
+            $excludeClass->exclude($this->middleware,function($exclude) use ($middleVal){
 
                 if($exclude){
 
