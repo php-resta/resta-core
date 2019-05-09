@@ -38,7 +38,17 @@ class UrlVersionIdentifier
     }
 
     /**
-     * get application current version
+     * console version
+     *
+     * @return null
+     */
+    private static function consoleVersion()
+    {
+        return null;
+    }
+
+    /**
+     * get application console version
      *
      * @return mixed
      */
