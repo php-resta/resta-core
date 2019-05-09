@@ -25,11 +25,6 @@ class UrlParseException
             throw new \DomainException('Version Number is not supported');
         }
 
-        if(UrlVersionIdentifier::checkPathUrlVersion($data['version'])===false){
-            throw new \DomainException('The version you specified does not exist.');
-        }
-
-
         //If there is no endpoint on the url
         //we throw an exception
         if($data['endpoint']===null){
