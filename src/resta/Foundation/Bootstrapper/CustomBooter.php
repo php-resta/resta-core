@@ -13,7 +13,7 @@ class CustomBooter
     protected $boot;
 
     /**
-     * @var null
+     * @var string
      */
     protected $bootNamespace;
 
