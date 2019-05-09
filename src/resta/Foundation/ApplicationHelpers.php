@@ -22,7 +22,7 @@ use Resta\Foundation\PathManager\StaticPathList;
 if (!function_exists('app')) {
 
     /**
-     * @return ApplicationContracts|ApplicationHelpersContracts|ContainerContracts
+     * @return ApplicationContracts|ApplicationHelpersContracts
      */
     function app()
     {

@@ -2,7 +2,15 @@
 
 namespace Resta\Contracts;
 
-interface ApplicationContracts {
+interface ApplicationContracts
+{
+    /**
+     * @method container
+     * @param $object null
+     * @param $callback null
+     * @return mixed
+     */
+    public function bind($object=null,$callback=null);
 
     /**
      * @param $object
@@ -45,9 +53,21 @@ interface ApplicationContracts {
    public function environment($environment=array());
 
     /**
+     * @param $abstract
+     * @return mixed
+     */
+    public function get($abstract);
+
+    /**
      * @return mixed
      */
    public function handle();
+
+    /**
+     * @param $abstract
+     * @return mixed
+     */
+    public function has($abstract);
 
     /**
      * @param $abstract
@@ -60,6 +80,12 @@ interface ApplicationContracts {
      * @return mixed
      */
    public function isLocale();
+
+    /**
+     * @method kernel
+     * @return mixed
+     */
+    public function kernel();
 
     /**
      * @return array
@@ -84,10 +110,40 @@ interface ApplicationContracts {
     public function loadIfNotExistBoot($loaders=array());
 
     /**
+     * @method bind
+     * @param $object null
+     * @param $callback null
+     * @param $container false
+     * @return mixed
+     */
+    public function make($object=null,$callback=null,$container=false);
+
+    /**
      * @param $maker
      * @return mixed
      */
     public function manifest($maker);
+
+    /**
+     * @param $key
+     * @param $object
+     * @param null $concrete
+     * @return mixed
+     */
+    public function register($key,$object,$concrete=null);
+
+    /**
+     * @param $class
+     * @param array $bind
+     * @return mixed
+     */
+    public function resolve($class,$bind=array());
+
+    /**
+     * @param $class
+     * @return mixed
+     */
+    public function resolved($class);
 
     /**
      * @return mixed
@@ -107,8 +163,20 @@ interface ApplicationContracts {
    public function setPaths($name,$path);
 
     /**
+     * @param null $object
+     * @param null $callback
+     * @return mixed
+     */
+    public function share($object=null,$callback=null);
+
+    /**
+     * @method singleton
+     * @return mixed
+     */
+    public function singleton();
+
+    /**
      * @return mixed
      */
    public function version();
-
 }
