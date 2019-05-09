@@ -8,17 +8,17 @@ use Resta\Support\ClosureDispatcher;
 class LoggerHandler implements LoggerInterface
 {
     /**
-     * @var $logger
+     * @var string
      */
     protected $logger;
 
     /**
-     * @var $file
+     * @var null
      */
     protected $file;
 
     /**
-     * @var $adapter
+     * @var string
      */
     protected $adapter;
 
@@ -51,7 +51,7 @@ class LoggerHandler implements LoggerInterface
      */
     public function alert($message, array $context = [])
     {
-        return $this->writeLog(__FUNCTION__,$message,$context);
+        $this->writeLog(__FUNCTION__,$message,$context);
     }
 
     /**
@@ -63,7 +63,7 @@ class LoggerHandler implements LoggerInterface
      */
     public function critical($message, array $context = [])
     {
-        return $this->writeLog(__FUNCTION__,$message,$context);
+        $this->writeLog(__FUNCTION__,$message,$context);
     }
 
     /**
@@ -75,7 +75,7 @@ class LoggerHandler implements LoggerInterface
      */
     public function debug($message, array $context = [])
     {
-        return $this->writeLog(__FUNCTION__,$message,$context);
+        $this->writeLog(__FUNCTION__,$message,$context);
     }
 
     /**
@@ -87,7 +87,7 @@ class LoggerHandler implements LoggerInterface
      */
     public function emergency($message, array $context = [])
     {
-        return $this->writeLog(__FUNCTION__,$message,$context);
+        $this->writeLog(__FUNCTION__,$message,$context);
     }
 
     /**
@@ -99,7 +99,7 @@ class LoggerHandler implements LoggerInterface
      */
     public function error($message, array $context = [])
     {
-        return $this->writeLog(__FUNCTION__,$message,$context);
+        $this->writeLog(__FUNCTION__,$message,$context);
     }
 
     /**
@@ -111,7 +111,7 @@ class LoggerHandler implements LoggerInterface
      */
     public function info($message, array $context = [])
     {
-        return $this->writeLog(__FUNCTION__,$message,$context);
+        $this->writeLog(__FUNCTION__,$message,$context);
     }
 
     /**
@@ -135,7 +135,7 @@ class LoggerHandler implements LoggerInterface
      */
     public function notice($message, array $context = [])
     {
-        return $this->writeLog(__FUNCTION__,$message,$context);
+        $this->writeLog(__FUNCTION__,$message,$context);
     }
 
     /**
@@ -147,17 +147,18 @@ class LoggerHandler implements LoggerInterface
      */
     public function warning($message, array $context = [])
     {
-        return $this->writeLog(__FUNCTION__,$message,$context);
+        $this->writeLog(__FUNCTION__,$message,$context);
     }
 
     /**
      * Write a message to the log.
      *
-     * @param  mixed  $level
-     * @param  string  $message
+     * @param mixed $level
+     * @param string $message
+     * @param $context
      * @return void
      */
-    protected function writeLog($level, $message)
+    protected function writeLog($level, $message,$context)
     {
         $file = ($this->file===null) ? $level : $this->file;
 
@@ -173,6 +174,8 @@ class LoggerHandler implements LoggerInterface
         if($this->logger!==null){
             $this->logger->logHandler($message,$file,$level);
         }
+
+        return $context;
 
     }
 }
