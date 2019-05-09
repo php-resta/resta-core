@@ -125,6 +125,16 @@ interface ApplicationContracts
     public function manifest($maker);
 
     /**
+     * @return StaticNamespaceContracts
+     */
+    public function namespace();
+
+    /**
+     * @return StaticPathContracts
+     */
+    public function path();
+
+    /**
      * @param $key
      * @param $object
      * @param null $concrete

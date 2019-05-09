@@ -15,7 +15,7 @@ use Resta\Contracts\ConfigProviderContracts;
 use Resta\Contracts\ApplicationHelpersContracts;
 use Resta\Foundation\Bootstrapper\Bootstrappers;
 
-class Application extends Kernel implements ApplicationContracts,ApplicationHelpersContracts
+class Application extends Kernel implements ApplicationContracts
 {
     //get app paths
     use ApplicationPath;
