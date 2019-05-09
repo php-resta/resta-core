@@ -75,9 +75,9 @@ class UrlVersionIdentifier
     }
 
     /**
-     * get application version number
+     * get version
      *
-     * @return null
+     * @return mixed|string|null
      */
     public static function version()
     {
