@@ -40,11 +40,11 @@ class UrlVersionIdentifier
     /**
      * console version
      *
-     * @return null
+     * @return mixed
      */
     private static function consoleVersion()
     {
-        return null;
+        return static::$supportedVersions[0];
     }
 
     /**
@@ -58,7 +58,7 @@ class UrlVersionIdentifier
             return self::versionNamespace()::consoleVersion();
         }
 
-        return null;
+        return static::consoleVersion();
     }
 
     /**
