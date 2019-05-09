@@ -12,7 +12,6 @@ use Illuminate\Support\Collection;
 use Resta\Contracts\ApplicationContracts;
 use Resta\Environment\EnvironmentProvider;
 use Resta\Contracts\ConfigProviderContracts;
-use Resta\Contracts\ApplicationHelpersContracts;
 use Resta\Foundation\Bootstrapper\Bootstrappers;
 
 class Application extends Kernel implements ApplicationContracts
