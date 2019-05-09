@@ -30,10 +30,9 @@ class UrlVersionIdentifier
     /**
      * check path url version
      *
-     * @param null $version
      * @return bool
      */
-    public static function checkPathUrlVersion($version=null)
+    public static function checkPathUrlVersion()
     {
         return (file_exists(path()->version())) ? true : false;
     }
@@ -94,9 +93,9 @@ class UrlVersionIdentifier
     }
 
     /**
-     * get application version class
+     * get version namespace
      *
-     * @return string
+     * @return UrlVersionIdentifier|string
      */
     public static function versionNamespace()
     {
