@@ -44,7 +44,7 @@ class UrlVersionIdentifier
      */
     private static function consoleVersion()
     {
-        return static::$supportedVersions[0];
+        return self::$supportedVersions[0];
     }
 
     /**
@@ -58,7 +58,7 @@ class UrlVersionIdentifier
             return self::versionNamespace()::consoleVersion();
         }
 
-        return static::consoleVersion();
+        return self::consoleVersion();
     }
 
     /**
