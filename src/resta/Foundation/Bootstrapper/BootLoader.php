@@ -7,21 +7,19 @@ use Resta\Url\UrlProvider;
 use Resta\Router\RouteProvider;
 use Resta\Logger\LoggerProvider;
 use Resta\Config\ConfigProvider;
-use Resta\Exception\ErrorHandler;
 use Resta\Console\ConsoleProvider;
 use Resta\Contracts\BootContracts;
 use Resta\Provider\ServiceProvider;
 use Resta\Response\ResponseProvider;
 use Resta\Middleware\MiddlewareProvider;
 use Resta\Foundation\ApplicationProvider;
-use Resta\Contracts\ApplicationContracts;
 use Resta\Environment\EnvironmentProvider;
 use Resta\Encrypter\EncrypterProvider as EncrypterProvider;
 
 class BootLoader extends ApplicationProvider implements BootContracts
 {
     /**
-     * @var $bootstrapper
+     * @var string
      */
     private $bootstrapper;
 
@@ -207,9 +205,9 @@ class BootLoader extends ApplicationProvider implements BootContracts
     /**
      * set bootstrapper property
      *
-     * @param null $bootstrapper
+     * @param string $bootstrapper
      */
-    public function setBootstrapper($bootstrapper=null)
+    public function setBootstrapper($bootstrapper)
     {
         $this->bootstrapper = $bootstrapper;
     }
@@ -236,13 +234,14 @@ class BootLoader extends ApplicationProvider implements BootContracts
      *
      * @param $name
      * @param $arguments
+     * @return mixed
      */
     public function __call($name,$arguments)
     {
         // we use the methodological context
         // for kernel group values that are replaced with revision.
-       $revisionBoot = array_search($name,app()['revision']);
-       if(method_exists($this,$revisionBoot)){
+       $revisionBoot = array_search($name,app()->get('revision'));
+       if(is_string($revisionBoot) && method_exists($this,$revisionBoot)){
            return $this->{$revisionBoot}();
        }
 
