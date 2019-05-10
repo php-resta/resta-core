@@ -46,7 +46,7 @@ class BootLoader extends ApplicationProvider implements BootContracts
     /**
      * default distributor boot method
      *
-     * @return mixed|void
+     * @return void
      */
     public function boot()
     {

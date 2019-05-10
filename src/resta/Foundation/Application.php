@@ -279,7 +279,7 @@ class Application extends Kernel implements ApplicationContracts
                     /** @var BootLoader $bootLoader */
                     $bootLoader = $this;
                     $bootLoader->setBootstrapper($kernelGroupList[$loader]);
-                    return $bootLoader->boot();
+                    $bootLoader->boot();
                 });
             }
         }
