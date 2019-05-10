@@ -2,7 +2,6 @@
 
 namespace Resta\Foundation\Bootstrapper;
 
-use Resta\Support\ClosureDispatcher;
 use Resta\Contracts\ContainerContracts;
 use Resta\Contracts\ApplicationContracts;
 use Resta\Middleware\MiddlewareKernelProvider;
@@ -16,7 +15,7 @@ class Bootstrappers
     protected $stack = [];
 
     /**
-     * @var $app ApplicationContracts|ContainerContracts
+     * @var ApplicationContracts $app
      */
     protected $app;
 
@@ -52,10 +51,9 @@ class Bootstrappers
     }
 
     /**
-     * application bootstrappers
+     * kernel manifest boot
      *
-     * @method bootstrappers
-     * @param $strappers bootstrappers
+     * @param $bootstrapper
      */
     private function boot($bootstrapper)
     {
@@ -65,29 +63,29 @@ class Bootstrappers
 
             //kernel boots run and service container
             //makeBuild for service Container
-            $this->bootFire($boot);
+            $this->bootFire($boot,null);
         });
     }
 
     /**
      * kernel boot manager method
      *
-     * @param null $boot
-     * @param null $maker
+     * @param array $boot
+     * @param string $maker
      * @return mixed
      */
-    public function bootFire($boot=null,$maker=null)
+    public function bootFire($boot,$maker)
     {
         // we can refer to this method
         // because we can boot classes in the middleware or bootstrapper array.
         if(is_null($boot) && !is_null($maker)){
 
+            /** @var KernelManifestManager $kernelManifestBind */
+            $kernelManifestBind = $this->app->resolve(KernelManifestManager::class);
+
             // we create kernel bootstrapping objects
             // that can be changed by you with the closure dispatcher method.
-            return ClosureDispatcher::bind($this->app->resolve(KernelManifestManager::class))
-                ->call(function() use ($maker){
-                    return $this->handle($maker);
-                });
+            return $kernelManifestBind->handle($maker);
         }
 
         // the boot method to be executed can be specified by the user.

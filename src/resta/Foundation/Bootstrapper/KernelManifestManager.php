@@ -2,7 +2,6 @@
 
 namespace Resta\Foundation\Bootstrapper;
 
-use Src\Manifest;
 use Resta\Support\Utils;
 use Resta\Support\ClosureDispatcher;
 use Resta\Contracts\ApplicationContracts;
@@ -10,7 +9,7 @@ use Resta\Contracts\ApplicationContracts;
 class KernelManifestManager
 {
     /**
-     * @var $app
+     * @var $app ApplicationContracts
      */
     protected $app;
 
@@ -36,7 +35,7 @@ class KernelManifestManager
         // if there is manifest propery in the resta
         // in this case,manifest property is manifest class
         if($app['isAvailableStore']){
-            $this->manifest = $this->manifest->resolve(Manifest::class);
+            $this->manifest = $this->manifest->resolve("Src\Manifest");
         }
 
         //closure dispatcher for manifest property
@@ -58,7 +57,7 @@ class KernelManifestManager
      * @param $maker
      * @return mixed
      */
-    protected function handle($maker)
+    public function handle($maker)
     {
         $app = clone $this;
 
