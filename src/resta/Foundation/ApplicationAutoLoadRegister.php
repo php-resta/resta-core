@@ -7,12 +7,12 @@ use Resta\Support\ClassAliasGroup;
 class ApplicationAutoLoadRegister
 {
     /**
-     * @var $class
+     * @var string
      */
     private $class;
 
     /**
-     * @var $classPath
+     * @var string
      */
     private $classPath;
 
