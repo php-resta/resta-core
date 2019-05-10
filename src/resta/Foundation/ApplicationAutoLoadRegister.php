@@ -76,7 +76,7 @@ class ApplicationAutoLoadRegister
         $systemApp = [];
 
         if(defined('app')){
-            $systemApp = (new ClassAliasGroup())->handle($class);
+            $systemApp = (new ClassAliasGroup())->handle();
         }
 
         if(!file_exists($class)){
