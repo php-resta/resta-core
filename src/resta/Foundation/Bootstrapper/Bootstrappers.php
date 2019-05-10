@@ -70,7 +70,7 @@ class Bootstrappers
     /**
      * kernel boot manager method
      *
-     * @param array $boot
+     * @param string $boot
      * @param string $maker
      * @return mixed
      */
