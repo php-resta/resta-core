@@ -245,7 +245,7 @@ class Application extends Kernel implements ApplicationContracts
 
             //set your path for config loader
             return tap($this['config'],function(ConfigProviderContracts $config) use($callback) {
-                return $config->setConfig(call_user_func($callback));
+                $config->setConfig(call_user_func($callback));
             });
         }
 
