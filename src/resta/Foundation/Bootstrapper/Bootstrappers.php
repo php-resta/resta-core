@@ -78,7 +78,7 @@ class Bootstrappers
     {
         // we can refer to this method
         // because we can boot classes in the middleware or bootstrapper array.
-        if(is_null($boot) && !is_null($maker)){
+        if(!is_array($boot) && !is_null($maker)){
 
             /** @var KernelManifestManager $kernelManifestBind */
             $kernelManifestBind = $this->app->resolve(KernelManifestManager::class);
