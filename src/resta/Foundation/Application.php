@@ -2,6 +2,7 @@
 
 namespace Resta\Foundation;
 
+use Resta\Foundation\Bootstrapper\BootLoader;
 use Resta\Support\Str;
 use Resta\Config\Config;
 use DI\NotFoundException;
@@ -12,6 +13,7 @@ use Illuminate\Support\Collection;
 use Resta\Contracts\ApplicationContracts;
 use Resta\Environment\EnvironmentProvider;
 use Resta\Contracts\ConfigProviderContracts;
+use Resta\Contracts\ClosureDispatcherContracts;
 use Resta\Foundation\Bootstrapper\Bootstrappers;
 
 class Application extends Kernel implements ApplicationContracts
@@ -262,6 +264,9 @@ class Application extends Kernel implements ApplicationContracts
         //get kernel group list from application
         $kernelGroupList = $this->kernelGroupList();
 
+        /** @var ClosureDispatcherContracts $closureBootLoader */
+        $closureBootLoader = $this['closureBootLoader'];
+
         foreach ($loaders as $loader){
 
             // if a service needs another boot service,
@@ -269,9 +274,12 @@ class Application extends Kernel implements ApplicationContracts
             if(isset($kernelGroupList[$loader]) && $this->checkBindings($loader)===false){
 
                 //with the boot loader kernel,we get the boot loader method.
-                $this['closureBootLoader']->call(function() use($loader,$kernelGroupList) {
-                    $this->bootstrapper = $kernelGroupList[$loader];
-                    return $this->boot();
+                $closureBootLoader->call(function() use($loader,$kernelGroupList) {
+
+                    /** @var BootLoader $bootLoader */
+                    $bootLoader = $this;
+                    $bootLoader->setBootstrapper($kernelGroupList[$loader]);
+                    return $bootLoader->boot();
                 });
             }
         }
