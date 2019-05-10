@@ -7,18 +7,15 @@ use Resta\Support\Macro;
 use Resta\Support\Utils;
 use League\Pipeline\Pipeline;
 use Resta\Support\FileProcess;
-use Store\Services\RequestService;
 use Resta\Exception\ErrorProvider;
 use Resta\Support\ClassAliasGroup;
 use Resta\Support\ReflectionProcess;
 use Resta\Response\ResponseProvider;
 use Resta\Contracts\HandleContracts;
 use Resta\Support\ClosureDispatcher;
-use Resta\Foundation\ApplicationProvider;
 use Symfony\Component\HttpFoundation\Request;
 use Resta\Foundation\Bootstrapper\BootLoader;
 use Resta\Container\ContainerInstanceResolver;
-use Resta\Foundation\ApplicationGlobalAccessor as GlobalAccessor;
 
 class ApplicationBaseRegister extends ApplicationProvider implements HandleContracts
 {
@@ -41,9 +38,10 @@ class ApplicationBaseRegister extends ApplicationProvider implements HandleContr
     }
 
     /**
-     * application preloader handle
+     * application pre loading
      *
-     * @return void|mixed
+     * @return mixed|void
+     *
      */
     public function handle()
     {
@@ -97,7 +95,7 @@ class ApplicationBaseRegister extends ApplicationProvider implements HandleContr
 
         // We are saving the application class to
         // the container object for the appClass value.
-        $this->app->register('appClass',new \application());
+        $this->app->register('appClass',new App());
 
         //set closure bind instance for application
         $this->app->register('appClosureInstance',ClosureDispatcher::bind(app()));
@@ -130,10 +128,7 @@ class ApplicationBaseRegister extends ApplicationProvider implements HandleContr
     }
 
     /**
-     * set global accessor
-     *
-     * @throws \DI\DependencyException
-     * @throws \DI\NotFoundException
+     * @return void
      */
     private function setGlobalAccessor()
     {
@@ -146,9 +141,11 @@ class ApplicationBaseRegister extends ApplicationProvider implements HandleContr
         //we first load the response class as a singleton object to allow you to send output anywhere
         $this->app->register('out',$this->app->resolve(ResponseProvider::class));
 
+        $requestService = "Store\Services\RequestService";
+
         //The HttpFoundation component defines an object-oriented layer for the HTTP specification.
         //The HttpFoundation component replaces these default PHP global variables and functions by an object-oriented layer
-        if(Utils::isNamespaceExists(RequestService::class)){
+        if(Utils::isNamespaceExists($requestService)){
 
             Request::setFactory(function(array $query = array(),
                                          array $request = array(),
@@ -156,9 +153,9 @@ class ApplicationBaseRegister extends ApplicationProvider implements HandleContr
                                          array $cookies = array(),
                                          array $files = array(),
                                          array $server = array(),
-                                         $content = null)
+                                         $content = null) use ($requestService)
             {
-                return new RequestService($query,
+                return new $requestService($query,
                     $request,
                     $attributes,
                     $cookies,
