@@ -2,7 +2,6 @@
 
 namespace Resta\Foundation;
 
-use Resta\Foundation\Bootstrapper\BootLoader;
 use Resta\Support\Str;
 use Resta\Config\Config;
 use DI\NotFoundException;
@@ -13,6 +12,7 @@ use Illuminate\Support\Collection;
 use Resta\Contracts\ApplicationContracts;
 use Resta\Environment\EnvironmentProvider;
 use Resta\Contracts\ConfigProviderContracts;
+use Resta\Foundation\Bootstrapper\BootLoader;
 use Resta\Contracts\ClosureDispatcherContracts;
 use Resta\Foundation\Bootstrapper\Bootstrappers;
 
