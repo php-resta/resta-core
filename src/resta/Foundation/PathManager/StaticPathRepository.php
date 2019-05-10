@@ -314,7 +314,7 @@ class StaticPathRepository
 
             $prefixGroup = Str::slashToBackSlash(StaticPathList::$projectPrefixGroup);
 
-            $app = $this->app($app).''.DIRECTORY_SEPARATOR.''.$prefixGroup.''.DIRECTORY_SEPARATOR.''.UrlVersionIdentifier::version(true);
+            $app = $this->app($app).''.DIRECTORY_SEPARATOR.''.$prefixGroup.''.DIRECTORY_SEPARATOR.''.UrlVersionIdentifier::version();
 
             return $app;
 
