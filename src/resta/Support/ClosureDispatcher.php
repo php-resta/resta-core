@@ -2,7 +2,9 @@
 
 namespace Resta\Support;
 
-class ClosureDispatcher
+use Resta\Contracts\ClosureDispatcherContracts;
+
+class ClosureDispatcher implements ClosureDispatcherContracts
 {
     /**
      * @var $bind
@@ -15,7 +17,7 @@ class ClosureDispatcher
      */
     public function __construct($bind)
     {
-        $this->bind=$bind;
+        $this->bind = $bind;
     }
 
     /**
