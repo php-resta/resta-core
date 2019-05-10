@@ -235,7 +235,7 @@ class Application extends Kernel implements ApplicationContracts
      * customer configuration loader for core
      *
      * @param callable $callback
-     * @return mixed
+     * @return mixed|void
      */
     public function loadConfig(callable $callback)
     {
@@ -244,13 +244,14 @@ class Application extends Kernel implements ApplicationContracts
         if($this['config'] instanceof ConfigProviderContracts){
 
             //set your path for config loader
-            return tap($this['config'],function(ConfigProviderContracts $config) use($callback) {
+            tap($this['config'],function(ConfigProviderContracts $config) use($callback) {
                 $config->setConfig(call_user_func($callback));
             });
         }
-
-        //set config instance exception for application
-        exception()->unexpectedValue('config instance is not loaded for application container');
+        else{
+            //set config instance exception for application
+            exception()->unexpectedValue('config instance is not loaded for application container');
+        }
     }
 
     /**
