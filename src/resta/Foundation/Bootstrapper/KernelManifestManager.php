@@ -16,7 +16,7 @@ class KernelManifestManager
     /**
      * @var array $makerList
      */
-    protected $makerList=[];
+    protected $makerList = [];
 
     /**
      * @var object $manifest
