@@ -50,7 +50,7 @@ class CacheManager extends CacheAdapter
     /**
      * change cache adapter
      *
-     * @param string $adapter
+     * @param null|string $adapter
      * @return $this
      */
     public function adapter($adapter)
@@ -65,7 +65,7 @@ class CacheManager extends CacheAdapter
     /**
      * cache name
      *
-     * @param string $name
+     * @param null|string $name
      * @return $this
      */
     public function name($name)
@@ -82,7 +82,7 @@ class CacheManager extends CacheAdapter
     /**
      * cache expire
      *
-     * @param string $expire
+     * @param null|string $expire
      * @return $this
      */
     public function expire($expire)
