@@ -82,7 +82,7 @@ class CacheManager extends CacheAdapter
     /**
      * cache expire
      *
-     * @param int $expire
+     * @param int|mixed $expire
      * @return $this
      */
     public function expire($expire)
