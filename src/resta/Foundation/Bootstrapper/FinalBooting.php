@@ -10,7 +10,7 @@ use Resta\Foundation\ApplicationProvider;
 class FinalBooting extends ApplicationProvider
 {
     /**
-     * @var $boot array
+     * @var array
      */
     private $boot = array();
 
