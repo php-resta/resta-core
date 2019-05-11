@@ -82,14 +82,14 @@ class CacheManager extends CacheAdapter
     /**
      * cache expire
      *
-     * @param null|int $expire
+     * @param int $expire
      * @return $this
      */
     public function expire($expire)
     {
         //Cache data is set at the time.
         //Data will be valid in this time.
-        if(!is_null($expire)){
+        if(is_numeric($expire)){
             $this->expire = $expire;
         }
 
