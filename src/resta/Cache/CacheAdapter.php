@@ -2,6 +2,7 @@
 
 namespace Resta\Cache;
 
+use Resta\Support\App;
 use Resta\Foundation\ApplicationProvider;
 use Symfony\Component\Cache\Adapter\RedisAdapter;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
@@ -40,7 +41,7 @@ class CacheAdapter extends ApplicationProvider
     {
         return new RedisAdapter(
 
-            $redisClient = \application::redis(),
+            $redisClient = App::redis(),
 
             // the subdirectory of the main cache directory where cache items are stored
             $namespace = '',
