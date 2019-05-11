@@ -7,7 +7,7 @@ use Resta\Contracts\ApplicationContracts;
 class CacheManager extends CacheAdapter
 {
     /**
-     * @var $cache FilesystemAdapter
+     * @var string
      */
     protected $cache;
 
@@ -50,12 +50,12 @@ class CacheManager extends CacheAdapter
     /**
      * change cache adapter
      *
-     * @param null $adapter
+     * @param string $adapter
      * @return $this
      */
-    public function adapter($adapter=null)
+    public function adapter($adapter)
     {
-        if($adapter!==null){
+        if(!is_null($adapter)){
             $this->adapter = $adapter;
         }
 
@@ -65,14 +65,14 @@ class CacheManager extends CacheAdapter
     /**
      * cache name
      *
-     * @param null $name
+     * @param string $name
      * @return $this
      */
-    public function name($name=null)
+    public function name($name)
     {
         //name variable is
         //the name of the cache data set to be created.
-        if($name!==null){
+        if(!is_null($name)){
             $this->name = $name;
         }
 
@@ -82,14 +82,14 @@ class CacheManager extends CacheAdapter
     /**
      * cache expire
      *
-     * @param $expire
+     * @param string $expire
      * @return $this
      */
-    public function expire($expire=null)
+    public function expire($expire)
     {
         //Cache data is set at the time.
         //Data will be valid in this time.
-        if($expire!==null){
+        if(!is_null($expire)){
             $this->expire = $expire;
         }
 
