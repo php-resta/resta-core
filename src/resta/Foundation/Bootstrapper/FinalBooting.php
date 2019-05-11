@@ -17,7 +17,7 @@ class FinalBooting extends ApplicationProvider
     /**
      * FinalBooting constructor.
      *
-     * @param $app
+     * @param ApplicationContracts $app
      * @param array $boot
      */
     public function __construct($app,$boot=array())
@@ -71,11 +71,9 @@ class FinalBooting extends ApplicationProvider
     }
 
     /**
-     * application bootstrapper handle
+     * application final booting handle
      *
-     * @param $app
-     * @param $boot
-     * @return mixed|void
+     * return mixed
      */
     private function handle()
     {
