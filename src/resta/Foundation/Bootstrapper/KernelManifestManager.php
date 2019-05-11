@@ -9,7 +9,7 @@ use Resta\Contracts\ApplicationContracts;
 class KernelManifestManager
 {
     /**
-     * @var $app ApplicationContracts
+     * @var ApplicationContracts $app
      */
     protected $app;
 
@@ -19,7 +19,7 @@ class KernelManifestManager
     protected $makerList=[];
 
     /**
-     * @var $manifest
+     * @var object $manifest
      */
     protected $manifest;
 
