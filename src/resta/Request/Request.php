@@ -127,6 +127,18 @@ class Request extends RequestClient implements HandleContracts
     }
 
     /**
+     * register container for request
+     *
+     * @return mixed|void
+     */
+    private function containerRegister()
+    {
+        // we are saving the expected values ​​for the request in container.
+        // this record can be returned in exception information.
+        app()->register('requestExpected',$this->expected);
+    }
+
+    /**
      * get request except
      *
      * @param $except
@@ -158,10 +170,6 @@ class Request extends RequestClient implements HandleContracts
         // expected method is executed.
         // this method is a must for http method values to be found in this property.
         if($this->checkProperties('expected')){
-
-            // we are saving the expected values ​​for the request in container.
-            // this record can be returned in exception information.
-            app()->register('request.expected',$this->expected);
 
             // if the expected values are not found in the inputs array,
             // the exception will be thrown.
@@ -277,6 +285,9 @@ class Request extends RequestClient implements HandleContracts
      */
     public function handle()
     {
+        //set container for request
+        $this->containerRegister();
+
         //we record the values ​​
         //that coming with the post.
         $this->initClient();
