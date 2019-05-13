@@ -320,85 +320,6 @@ class Request extends RequestClient implements HandleContracts
     }
 
     /**
-     * checkt annotations
-     *
-     * @param $method
-     * @param $key
-     *
-     * @throws \ReflectionException
-     */
-    private function checkAnnotations($method,$key)
-    {
-        $reflection = $this->reflection->reflectionMethodParams($method);
-        $annotation = $reflection->document;
-
-        $exceptionParamList = [];
-
-        if(preg_match('@exception\((.*?)\)\r\n@is',$annotation,$exception)){
-
-            $exceptionSpaceExplode = explode(" ",$exception[1]);
-            foreach ($exceptionSpaceExplode as $exceptions){
-                $exceptionsDotExplode = explode(":",$exceptions);
-                $exceptionParamList[$key][$exceptionsDotExplode[0]] = $exceptionsDotExplode[1];
-            }
-
-            if(isset($exceptionParamList[$key]['params'])){
-                $paramsCommaExplode = explode(",",$exceptionParamList[$key]['params']);
-                unset($exceptionParamList[$key]['params']);
-                foreach ($paramsCommaExplode as $params){
-                    $paramsEqualExplode = explode("=",$params);
-                    if(isset($paramsEqualExplode[0]) && isset($paramsEqualExplode[1])){
-                        $exceptionParamList[$key]['params'][$paramsEqualExplode[0]] = $paramsEqualExplode[1];
-                    }
-                }
-            }
-        }
-
-        if(preg_match('@remove\((.*?)\)\r\n@is',$annotation,$remove)){
-            if(isset($this->inputs[$key])){
-                if(preg_match('@'.$remove[1].'@is',$this->inputs[$key])){
-                    unset($this->inputs[$key]);
-                }
-            }
-        }
-
-        if(preg_match('@regex\((.*?)\)\r\n@is',$annotation,$regex)){
-            if(isset($this->inputs[$key])){
-
-                if(is_array($this->inputs[$key])){
-
-                    foreach ($this->inputs[$key] as $inputKey=>$inputValue){
-
-                        if(!preg_match('@'.$regex[1].'@is',$inputValue)){
-                            if(isset($exceptionParamList[$key])){
-                                $keyParams = ($exceptionParamList[$key]['params']) ?? [];
-                                exception($exceptionParamList[$key]['name'],$keyParams)->unexpectedValue($key.' input value is not valid as format ('.$regex[1].')');
-                            }
-                            else{
-                                exception()->unexpectedValue($key.' input value is not valid as format ('.$regex[1].')');
-                            }
-                        }
-                    }
-
-                }
-                else{
-
-                    if(!preg_match('@'.$regex[1].'@is',$this->inputs[$key])){
-                        if(isset($exceptionParamList[$key])){
-                            $keyParams = ($exceptionParamList[$key]['params']) ?? [];
-                            exception($exceptionParamList[$key]['name'],$keyParams)->unexpectedValue($key.' input value is not valid as format ('.$regex[1].')');
-                        }
-                        else{
-                            exception()->unexpectedValue($key.' input value is not valid as format ('.$regex[1].')');
-                        }
-                    }
-                }
-
-            }
-        }
-    }
-
-    /**
      * request properties
      *
      * @return void|mixed
@@ -479,7 +400,8 @@ class Request extends RequestClient implements HandleContracts
         if(method_exists($this,$method) && $this->reflection->reflectionMethodParams($method)->isProtected){
 
             //check annotations for method
-            $this->checkAnnotations($method,$key);
+            $annotation = app()->resolve(RequestAnnotationManager::class,['request'=>$this]);
+            $annotation->annotation($method,$key);
 
             if(isset($this->inputs[$key]) && is_array($this->inputs[$key])){
 
