@@ -192,6 +192,10 @@ class ErrorProvider extends ApplicationProvider {
             $this->app->register('productionLogMessage',core()->out->outputFormatter($productionLogMessage));
         }
 
+        if(app()->has('requestExpected') && config('app.requestWithError')===true){
+            $appException['request']['expected'] = app()->get('requestExpected');
+        }
+
 
         //set json app exception
         core()->routerResult=$appException;

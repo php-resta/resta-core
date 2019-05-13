@@ -159,6 +159,10 @@ class Request extends RequestClient implements HandleContracts
         // this method is a must for http method values to be found in this property.
         if($this->checkProperties('expected')){
 
+            // we are saving the expected values ​​for the request in container.
+            // this record can be returned in exception information.
+            app()->register('request.expected',$this->expected);
+
             // if the expected values are not found in the inputs array,
             // the exception will be thrown.
             foreach ($this->expected as $expected){

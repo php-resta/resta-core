@@ -122,4 +122,15 @@ return [
     */
     'pagination' => 10,
 
+    /*
+     |--------------------------------------------------------------------------
+     | Request With Error
+     |--------------------------------------------------------------------------
+     |
+     | This key will share the expected property of your specified request models with exception.
+     | Client-based useful feature.Default is set to true.
+     |
+     */
+     'requestWithError' => true,
+
 ];
