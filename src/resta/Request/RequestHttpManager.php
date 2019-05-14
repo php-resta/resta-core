@@ -8,7 +8,7 @@ use Resta\Foundation\ApplicationProvider;
 class RequestHttpManager extends ApplicationProvider
 {
     /**
-     * @var $method
+     * @var string $method
      */
     protected $method;
 
