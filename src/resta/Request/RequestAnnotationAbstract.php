@@ -8,7 +8,7 @@ use Resta\Foundation\ApplicationProvider;
 abstract class RequestAnnotationAbstract extends ApplicationProvider
 {
     /**
-     * @var string $request
+     * @var object $request
      */
     protected $request;
 
