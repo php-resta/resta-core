@@ -2,9 +2,7 @@
 
 namespace Resta\Request;
 
-use Resta\Support\ClosureDispatcher;
 use Resta\Contracts\ApplicationContracts;
-use Resta\Foundation\ApplicationProvider;
 
 class RequestAnnotationManager extends RequestAnnotationAbstract
 {
@@ -33,12 +31,11 @@ class RequestAnnotationManager extends RequestAnnotationAbstract
     }
 
     /**
-     * checkt annotations
+     * check annotation
      *
      * @param $method
      * @param $key
-     *
-     * @throws \ReflectionException
+     * @return mixed|void
      */
     public function annotation($method,$key)
     {
@@ -66,37 +63,40 @@ class RequestAnnotationManager extends RequestAnnotationAbstract
     {
         if(isset($this->exceptionParams[$key])){
 
+            //get key params for exception params
             $keyParams = ($this->exceptionParams[$key]['params']) ?? [];
 
+            //catch exception
             exception($this->exceptionParams[$key]['name'],$keyParams)
                 ->unexpectedValue($key.' input value is not valid as format ('.$data.')');
         }
         else{
-
-            exception()
-                ->unexpectedValue($key.' input value is not valid as format ('.$data.')');
+            //catch exception
+            exception()->unexpectedValue($key.' input value is not valid as format ('.$data.')');
         }
     }
 
     /**
      * get request exception from annotation
      *
-     * @param string $key
-     * @param $annotation
+     * @param $key
      */
     private function getException($key)
     {
         if(preg_match('@exception\((.*?)\)\r\n@is',$this->annotation,$exception)){
 
             $exceptionSpaceExplode = explode(" ",$exception[1]);
+
             foreach ($exceptionSpaceExplode as $exceptions){
                 $exceptionsDotExplode = explode(":",$exceptions);
                 $this->exceptionParams[$key][$exceptionsDotExplode[0]] = $exceptionsDotExplode[1];
             }
 
             if(isset($this->exceptionParams[$key]['params'])){
+
                 $paramsCommaExplode = explode(",",$this->exceptionParams[$key]['params']);
                 unset($this->exceptionParams[$key]['params']);
+
                 foreach ($paramsCommaExplode as $params){
                     $paramsEqualExplode = explode("=",$params);
                     if(isset($paramsEqualExplode[0]) && isset($paramsEqualExplode[1])){
@@ -123,7 +123,7 @@ class RequestAnnotationManager extends RequestAnnotationAbstract
                 // our inputs can be array and in this case we offer array option for user comfort.
                 if(is_array($this->inputs[$key])){
 
-                    foreach ($this->inputs[$key] as $this->inputsKey=>$this->inputsValue){
+                    foreach ($this->inputs[$key] as $this->inputsKey => $this->inputsValue){
                         if(!preg_match('@'.$regex[1].'@is',$this->inputsValue)){
                             $this->catchException($key,$regex[1]);
                         }
