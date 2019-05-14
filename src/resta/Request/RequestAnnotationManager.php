@@ -109,9 +109,13 @@ class RequestAnnotationManager extends RequestAnnotationAbstract
      */
     private function getRegex($key)
     {
+        // with the method based regex annotation,
+        // we check the rule definition for our requests.
         if(preg_match('@regex\((.*?)\)\r\n@is',$this->annotation,$regex)){
             if(isset($this->inputs[$key])){
 
+                // for the definition of rules,
+                // our inputs can be array and in this case we offer array option for user comfort.
                 if(is_array($this->inputs[$key])){
 
                     foreach ($this->inputs[$key] as $this->inputsKey=>$this->inputsValue){
@@ -122,6 +126,7 @@ class RequestAnnotationManager extends RequestAnnotationAbstract
                 }
                 else{
 
+                    // we control the regex rule that evaluates when only string arrives.
                     if(!preg_match('@'.$regex[1].'@is',$this->inputs[$key])){
                         $this->catchException($key,$regex[1]);
                     }
