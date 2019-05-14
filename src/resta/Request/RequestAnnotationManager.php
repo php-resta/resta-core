@@ -14,7 +14,7 @@ class RequestAnnotationManager extends RequestAnnotationAbstract
     protected $exceptionParams = [];
 
     /**
-     * @var $annotation
+     * @var string $annotation
      */
     protected $annotation;
 
@@ -47,13 +47,13 @@ class RequestAnnotationManager extends RequestAnnotationAbstract
         $this->annotation = $reflection->document;
 
         //get remove from request object
-        $this->getRemove();
+        $this->getRemove($key);
 
         //get exception values from request object
-        $this->getException();
+        $this->getException($key);
 
         //get regex from request object
-        $this->getRegex($method,$key);
+        $this->getRegex($key);
     }
 
     /**
@@ -76,9 +76,10 @@ class RequestAnnotationManager extends RequestAnnotationAbstract
     /**
      * get request exception from annotation
      *
+     * @param string $key
      * @param $annotation
      */
-    private function getException()
+    private function getException($key)
     {
         if(preg_match('@exception\((.*?)\)\r\n@is',$this->annotation,$exception)){
 
@@ -104,10 +105,9 @@ class RequestAnnotationManager extends RequestAnnotationAbstract
     /**
      * get regular expression from request object
      *
-     * @param $method
      * @param $key
      */
-    private function getRegex($method,$key)
+    private function getRegex($key)
     {
         if(preg_match('@regex\((.*?)\)\r\n@is',$this->annotation,$regex)){
             if(isset($this->inputs[$key])){
@@ -133,9 +133,10 @@ class RequestAnnotationManager extends RequestAnnotationAbstract
     /**
      * get remove regex pattern with request object
      *
+     * @param string $key
      * @return void|mixed
      */
-    private function getRemove()
+    private function getRemove($key)
     {
         if(preg_match('@remove\((.*?)\)\r\n@is',$this->annotation,$remove)){
             if(isset($this->inputs[$key])){
