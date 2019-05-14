@@ -65,11 +65,16 @@ class RequestAnnotationManager extends RequestAnnotationAbstract
     private function catchException($key,$data)
     {
         if(isset($this->exceptionParams[$key])){
+
             $keyParams = ($this->exceptionParams[$key]['params']) ?? [];
-            exception($this->exceptionParams[$key]['name'],$keyParams)->unexpectedValue($key.' input value is not valid as format ('.$data.')');
+
+            exception($this->exceptionParams[$key]['name'],$keyParams)
+                ->unexpectedValue($key.' input value is not valid as format ('.$data.')');
         }
         else{
-            exception()->unexpectedValue($key.' input value is not valid as format ('.$data.')');
+
+            exception()
+                ->unexpectedValue($key.' input value is not valid as format ('.$data.')');
         }
     }
 
