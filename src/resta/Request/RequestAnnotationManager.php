@@ -51,13 +51,16 @@ class RequestAnnotationManager extends RequestAnnotationAbstract
 
         //get regex from request object
         $this->getRegex($key);
+
+        //get regex from request object
+        $this->getRules($key);
     }
 
     /**
      * catch exception from regex method
      *
-     * @param $key
-     * @param $data
+     * @param string $key
+     * @param null|string $data
      */
     private function catchException($key,$data)
     {
@@ -152,6 +155,31 @@ class RequestAnnotationManager extends RequestAnnotationAbstract
             if(isset($this->inputs[$key])){
                 if(preg_match('@'.$remove[1].'@is',$this->inputs[$key])){
                     unset($this->inputs[$key]);
+                }
+            }
+        }
+    }
+
+    /**
+     * check rules from request
+     *
+     * @param $key
+     */
+    private function getRules($key)
+    {
+        if(preg_match('@rule\((.*?)\)\r\n@is',$this->annotation,$rule)){
+
+            $requestRules = $this->getReflection('rules');
+
+            $rules = explode(":",$rule[1]);
+            if(isset($this->inputs[$key])){
+                foreach($rules as $rule){
+                    if(isset($requestRules[$rule])){
+                        if(!preg_match('@'.$requestRules[$rule].'@',$this->inputs[$key])){
+                            exception($rule,['key'=>$key])
+                                ->invalidArgument($key.' input value is not valid for '.$rule.' request rule');
+                        }
+                    }
                 }
             }
         }

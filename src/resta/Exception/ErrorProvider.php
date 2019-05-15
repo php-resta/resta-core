@@ -297,7 +297,7 @@ class ErrorProvider extends ApplicationProvider {
 
             $langMessage=trans('exception.'.core()->exceptionTranslate);
 
-            if(property_exists(core(),'exceptionTranslateParams')){
+            if(!is_null($langMessage) && property_exists(core(),'exceptionTranslateParams')){
 
                 if(count(core()->exceptionTranslateParams[core()->exceptionTranslate])){
                     foreach (core()->exceptionTranslateParams[core()->exceptionTranslate] as $key=>$value){

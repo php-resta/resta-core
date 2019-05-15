@@ -14,6 +14,17 @@ trait Request
     ];
 
     /**
+     * request rules
+     *
+     * @var array
+     */
+     protected $rules = [
+         'capital'   => '[A-Z]',
+         'min6Char'  => '.{6,}',
+         'max6Char'  => '^.{0,6}$'
+     ];
+
+    /**
      * @var $page
      */
     protected $page;
