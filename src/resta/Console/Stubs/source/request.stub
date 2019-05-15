@@ -19,9 +19,12 @@ trait Request
      * @var array
      */
      protected $rules = [
-         'capital'   => '[A-Z]',
-         'min6Char'  => '.{6,}',
-         'max6Char'  => '^.{0,6}$'
+         'capital'          => '[A-Z]',
+         'min6Char'         => '.{6,}',
+         'max6Char'         => '^.{0,6}$',
+         'integer'          => '^[0-9]+$',
+         'string'           => '^[a-zA-Z]+$',
+         'alphaNumeric'     => '^[a-zA-Z]+[a-zA-Z0-9._\-]+$',
      ];
 
     /**

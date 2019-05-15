@@ -174,8 +174,21 @@ class Request extends RequestClient implements HandleContracts
             // if the expected values are not found in the inputs array,
             // the exception will be thrown.
             foreach ($this->expected as $expected){
-                if(!isset($this->inputs[$expected])){
-                    exception()->unexpectedValue('You absolutely have to send the value '.$expected.' for request object');
+
+                $expectedValues = [];
+
+                // mandatory expected data for each key | can be separated by.
+                // this is evaluated as "or".
+                foreach($expectedData = explode("|",$expected) as $inputs){
+                    if(!isset($this->inputs[$inputs])){
+                        $expectedValues[] = $inputs;
+                    }
+                }
+
+                // if the expectedData and expectedValues ​​
+                // array are numerically equal to the expected key, the exception is thrown.
+                if(count($expectedData)===count($expectedValues)){
+                    exception()->unexpectedValue('You absolutely have to send the value '.implode(" or ",$expectedValues).' for request object');
                 }
             }
         }
