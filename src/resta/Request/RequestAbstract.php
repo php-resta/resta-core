@@ -31,7 +31,11 @@ abstract class RequestAbstract
      */
     protected function getAutoGenerators()
     {
-        return $this->auto_generators;
+        if(property_exists($this,'auto_generators')){
+            return $this->auto_generators;
+        }
+        return [];
+
     }
 
     /**
@@ -41,7 +45,11 @@ abstract class RequestAbstract
      */
     protected function getAutoGeneratorsDontOverwrite()
     {
-        return $this->auto_generators_dont_overwrite;
+        if(property_exists($this,'auto_generators_dont_overwrite')){
+            return $this->auto_generators_dont_overwrite;
+        }
+        return [];
+
     }
 
     /**
@@ -61,7 +69,11 @@ abstract class RequestAbstract
      */
     protected function getGenerators()
     {
-        return $this->generators;
+        if(property_exists($this,'generators')){
+            return $this->generators;
+        }
+        return [];
+
     }
 
     /**
@@ -71,7 +83,11 @@ abstract class RequestAbstract
      */
     protected function getGeneratorsDontOverwrite()
     {
-        return $this->generators_dont_overwrite;
+        if(property_exists($this,'generators_dont_overwrite')){
+            return $this->generators_dont_overwrite;
+        }
+        return [];
+
     }
 
     /**
