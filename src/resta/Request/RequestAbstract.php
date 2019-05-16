@@ -53,4 +53,15 @@ abstract class RequestAbstract
     {
         return $this->origin;
     }
+
+    /**
+     * __get magic method
+     *
+     * @param $name
+     * @return mixed
+     */
+    public function __get($name)
+    {
+        return $this->$name;
+    }
 }
