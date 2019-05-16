@@ -35,6 +35,16 @@ abstract class RequestAbstract
     }
 
     /**
+     * get auto_generators_dont_overwrite
+     *
+     * @return mixed
+     */
+    protected function getAutoGeneratorsDontOverwrite()
+    {
+        return $this->auto_generators_dont_overwrite;
+    }
+
+    /**
      * get client objects
      *
      * @return array
@@ -52,6 +62,16 @@ abstract class RequestAbstract
     protected function getGenerators()
     {
         return $this->generators;
+    }
+
+    /**
+     * get auto_generators_dont_overwrite
+     *
+     * @return mixed
+     */
+    protected function getGeneratorsDontOverwrite()
+    {
+        return $this->generators_dont_overwrite;
     }
 
     /**

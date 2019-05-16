@@ -241,13 +241,13 @@ class Request extends RequestAbstract implements HandleContracts
                 else {
 
                     if($this->checkProperties('auto_generators_dont_overwrite')
-                        && in_array($generator,$this->auto_generators_dont_overwrite)){
+                        && in_array($generator,$this->getAutoGeneratorsDontOverwrite())){
                         $this->{$generator} = $this->{$generatorMethodName}();
                         $this->inputs[$generator] = $this->{$generatorMethodName}();
                     }
 
                     if($this->checkProperties('generators_dont_overwrite')
-                        && in_array($generator,$this->generators_dont_overwrite)){
+                        && in_array($generator,$this->getGeneratorsDontOverwrite())){
                         $this->{$generator} = $this->{$generatorMethodName}();
                         $this->inputs[$generator] = $this->{$generatorMethodName}();
                     }
