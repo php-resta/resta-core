@@ -25,6 +25,16 @@ abstract class RequestAbstract
     }
 
     /**
+     * get auto generators data
+     *
+     * @return mixed
+     */
+    protected function getAutoGenerators()
+    {
+        return $this->auto_generators;
+    }
+
+    /**
      * get client objects
      *
      * @return array
@@ -32,6 +42,16 @@ abstract class RequestAbstract
     protected function getClientObjects()
     {
         return array_diff_key($this->getObjects(),['inputs'=>[]]);
+    }
+
+    /**
+     * get generators data
+     *
+     * @return mixed
+     */
+    protected function getGenerators()
+    {
+        return $this->generators;
     }
 
     /**

@@ -202,13 +202,13 @@ class Request extends RequestAbstract implements HandleContracts
         // check the presence of the generator object
         // and operate the generator over this object.
         if($this->checkProperties('auto_generators')){
-            $generators = $this->auto_generators;
+            $generators = $this->getAutoGenerators();
         }
 
         // check the presence of the generator object
         // and operate the generator over this object.
         if($this->checkProperties('generators')){
-            $generators = array_merge(isset($generators) ? $generators: [],$this->generators);
+            $generators = array_merge(isset($generators) ? $generators: [],$this->getGenerators());
         }
 
         if(isset($generators)){
@@ -371,12 +371,10 @@ class Request extends RequestAbstract implements HandleContracts
     }
 
     /**
-     * set request input
+     * set request inputs
      *
      * @param $method
      * @param $key
-     *
-     * @throws \ReflectionException
      */
     private function setRequestInputs($method,$key)
     {
