@@ -3,44 +3,33 @@
 namespace Resta\Request;
 
 use Resta\Support\Utils;
-use Store\Services\RequestClient;
 use Resta\Contracts\HandleContracts;
 use Resta\Support\ReflectionProcess;
 
-class Request extends RequestClient implements HandleContracts
+class Request extends RequestAbstract implements HandleContracts
 {
-    /**
-     * @var array $origin
-     */
-    protected $origin = [];
-
-    /**
-     * @var array $inputs
-     */
-    protected $inputs = [];
-
     /**
      * @var array $except
      */
     protected $except = [];
 
     /**
-     * @var $capsule
+     * @var string $capsule
      */
     protected $capsule;
 
     /**
-     * @var $method
+     * @var string $method
      */
     protected $method;
 
     /**
-     * @var $reflection ReflectionProcess
+     * @var ReflectionProcess $reflection
      */
     protected $reflection;
 
     /**
-     * @var $data
+     * @var string $data
      */
     protected $requestHttp;
 
@@ -55,23 +44,29 @@ class Request extends RequestClient implements HandleContracts
         //get http method via request http manager class
         $this->requestHttp = app()->resolve(RequestHttpManager::class);
 
-        // if we leave the request process to the application side,
-        // then in this case we refer to the requestClient object in
-        // the services section of the store directory.
-        (property_exists($this,'app') && $this->app) ? parent::handle() : $this->handle();
+        //handle request
+        $this->handle();
     }
 
     /**
-     * auto validate
-     *
-     * @return mixed
+     * @param $validate
      */
     private function autoValidate($validate)
     {
+        //we get the values ​​to auto-validate.
         foreach ($this->{$validate} as $object=>$datas){
+
+            // the auto-validate value must necessarily represent a class.
+            // otherwise auto-validate is not used.
             if(Utils::isNamespaceExists($object)){
                 $getObjectInstance = app()->resolve($object);
+
+                // we get the index values,
+                // which are called methods of the auto-validate value that represents the class.
                 foreach ($datas as $dataKey=>$data){
+
+                    // if the methods of the auto-validate class resolved by the container resolve method apply,
+                    // the process of auto-validate automatic implementation will be completed.
                     if(is_numeric($dataKey) && method_exists($getObjectInstance,$data)){
                         if(isset($this->origin[$data])){
                             if(!is_array($this->origin[$data])){
@@ -107,7 +102,8 @@ class Request extends RequestClient implements HandleContracts
 
                 //exception batMethodCall
                 exception()->badMethodCall(
-                    'Invalid http method process for '.class_basename($this).'.That is accepted http methods ['.implode(",",$this->http).'] ');
+                    'Invalid http method process for 
+                    '.class_basename($this).'.That is accepted http methods ['.implode(",",$this->http).'] ');
             }
         }
     }
@@ -177,7 +173,7 @@ class Request extends RequestClient implements HandleContracts
 
                 $expectedValues = [];
 
-                // mandatory expected data for each key | can be separated by.
+                // mandatory expected data for each key can be separated by | operator.
                 // this is evaluated as "or".
                 foreach($expectedData = explode("|",$expected) as $inputs){
                     if(!isset($this->inputs[$inputs])){
@@ -188,7 +184,9 @@ class Request extends RequestClient implements HandleContracts
                 // if the expectedData and expectedValues ​​
                 // array are numerically equal to the expected key, the exception is thrown.
                 if(count($expectedData)===count($expectedValues)){
-                    exception()->unexpectedValue('You absolutely have to send the value '.implode(" or ",$expectedValues).' for request object');
+                    exception()
+                        ->unexpectedValue('You absolutely have to send the value 
+                        '.implode(" or ",$expectedValues).' for request object');
                 }
             }
         }
@@ -259,36 +257,6 @@ class Request extends RequestClient implements HandleContracts
                 $this->registerRequestInputs($generator);
             }
         }
-    }
-
-    /**
-     * get inputs
-     *
-     * @return array
-     */
-    protected function get()
-    {
-        return $this->inputs;
-    }
-
-    /**
-     * get client objects
-     *
-     * @return array
-     */
-    private function getClientObjects()
-    {
-        return array_diff_key($this->getObjects(),['inputs'=>[]]);
-    }
-
-    /**
-     * get object vars
-     *
-     * @return array
-     */
-    private function getObjects()
-    {
-        return get_object_vars($this);
     }
 
     /**
@@ -403,10 +371,12 @@ class Request extends RequestClient implements HandleContracts
     }
 
     /**
-     * set request inputs
+     * set request input
      *
      * @param $method
      * @param $key
+     *
+     * @throws \ReflectionException
      */
     private function setRequestInputs($method,$key)
     {
@@ -439,29 +409,17 @@ class Request extends RequestClient implements HandleContracts
     }
 
     /**
-     * validation
+     * validation for request
      *
      * @return void
      */
     private function validation()
     {
-        if(property_exists($this,'autoObjectValidate') && is_array($this->autoObjectValidate) && count($this->autoObjectValidate)){
+        // the auto object validate property is the property
+        // where all of your request values ​​are automatically validated.
+        if(property_exists($this,'autoObjectValidate')
+            && is_array($this->autoObjectValidate) && count($this->autoObjectValidate)){
             $this->autoValidate('autoObjectValidate');
-        }
-        // we need to find the rule method
-        // because we can not validate it.
-        if(method_exists($this,'rule')){
-            $this->rule();
-        }
-
-        // if we only want to make a rule of
-        // the specified request object, we will use
-        // the rule method with the prefix of the request object.
-        $validName=strtolower(str_replace('Request','',class_basename($this))).'Rule';
-
-        //if the specified method exists;
-        if(method_exists($this,$validName)){
-            $this->{$validName}();
         }
     }
 }
