@@ -1,0 +1,12 @@
+<?php
+
+if (!function_exists('yourHelper')) {
+
+    /**
+     * @return mixed
+     */
+    function yourHelper()
+    {
+        return 'yourHelper';
+    }
+}

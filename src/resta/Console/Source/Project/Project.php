@@ -43,6 +43,7 @@ class Project extends ConsoleOutputter {
         $this->argument['kernelProviderDir']    = Utils::getNamespace($this->provider());
         $this->argument['factoryDir']           = app()->namespace()->factory();
         $this->directory['projectDir']          = $this->projectPath();
+        $this->directory['helpersDir']          = app()->path()->helpers();
 
         $recursiveDefaultDirectory = explode("\\",$this->argument['project']);
         $this->argument['applicationName'] = pos($recursiveDefaultDirectory);
@@ -83,8 +84,9 @@ class Project extends ConsoleOutputter {
 
         //get project file all path
         //$this->touch['publish']                     = $this->project.'/publish.php';
-        //$this->touch['main/version']                = $this->project.'/version.php';
+        $this->touch['helpers/general']             = $this->directory['helpersDir'].'/General.php';
         $this->touch['kernel/kernel']               = $this->kernel().'/Kernel.php';
+        $this->touch['kernel/helper']               = $this->provider().'/HelperServiceProvider.php';
         $this->touch['kernel/version']              = $this->kernel().'/Version.php';
         $this->touch['kernel/app']                  = $this->provider().'/AppServiceProvider.php';
         $this->touch['kernel/route']                = $this->provider().'/RouteServiceProvider.php';

@@ -3,6 +3,7 @@
 use Store\Services\Cache;
 use __kernelProviderDir__\AppServiceProvider;
 use __kernelProviderDir__\RouteServiceProvider;
+use __kernelProviderDir__\HelperServiceProvider;
 use __kernelProviderDir__\ConsoleEventServiceProvider;
 
 return [
@@ -12,6 +13,7 @@ return [
      * all providers names
      */
     'providers' => [
+        'HelperServiceProvider'             => HelperServiceProvider::class,
         'AppServiceProvider'                => AppServiceProvider::class,
         'RouteServiceProvider'              => RouteServiceProvider::class,
         'ConsoleEventServiceProvider'       => ConsoleEventServiceProvider::class,

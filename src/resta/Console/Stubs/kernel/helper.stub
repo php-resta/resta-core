@@ -1,0 +1,20 @@
+<?php
+
+namespace __kernelProviderDir__;
+
+use Resta\Provider\ServiceProviderManager;
+
+class HelperServiceProvider extends ServiceProviderManager
+{
+    /**
+     * register service provider
+     *
+     * @return void
+     */
+    public function register()
+    {
+       foreach (glob(path()->helpers() . '/*.php') as $file) {
+            $this->app->get('fileSystem')->callFile($file);
+       }
+    }
+}
