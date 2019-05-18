@@ -27,10 +27,10 @@ class ConsoleEventServiceProvider extends ServiceProviderManager
     /**
      * log for console event
      *
-     * @param $args
-     * @return mixed
+     * @param array $args
+     * @return mixed|void
      */
-    private function createModelForMigration($args)
+    private function createModelForMigration($args=array())
     {
         // if there is a value of migration create and model for the argument values,
         // then a model will be created when that migration is created.

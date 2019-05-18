@@ -120,6 +120,11 @@ class StaticPathList
     public static $config='Config';
 
     /**
+     * @var string $helpers
+     */
+    public static $helpers='Helpers';
+
+    /**
      * @var $config
      */
     public static $test='Tests';

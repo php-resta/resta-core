@@ -44,6 +44,11 @@ interface StaticNamespaceContracts
     /**
      * @return mixed
      */
+    public function helpers();
+
+    /**
+     * @return mixed
+     */
     public function kernel();
 
     /**

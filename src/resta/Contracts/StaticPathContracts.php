@@ -51,6 +51,11 @@ interface StaticPathContracts
     public function config();
 
     /**
+     * @return mixed
+     */
+    public function helpers();
+
+    /**
      * @param null $controller
      * @param bool $bool
      * @return mixed

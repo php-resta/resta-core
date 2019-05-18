@@ -65,6 +65,18 @@ class StaticPathRepository
     }
 
     /**
+     * @param null $app
+     * @return string
+     */
+    public function appHelpers($app=null)
+    {
+        if(isset(core()->paths['config'])){
+            return core()->paths['config'];
+        }
+        return $this->appVersion($app).''.DIRECTORY_SEPARATOR.''.StaticPathList::$helpers;
+    }
+
+    /**
      * @return null|string
      */
     private function appDetector()

@@ -71,7 +71,7 @@ class Project extends ConsoleOutputter {
         $this->directory['resourceCacheDir']        = $this->resource().'/'.StaticPathModel::$cache;
         $this->directory['languageDir']             = $this->language();
         $this->directory['languageEnDir']           = $this->language().'/en';
-        $this->directory['callDir']                 = $this->controller();
+        //$this->directory['callDir']                 = $this->controller();
         $this->directory['configDir']               = $this->config();
         $this->directory['testDir']                 = $this->test();
         //$this->directory['sourceDir']               = $this->sourceDir();
