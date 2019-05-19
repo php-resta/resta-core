@@ -76,6 +76,7 @@ abstract class Kernel extends Container
         'Resta\Console\Source\Token\Token'                  => ['isRunnable' => true],
         'Resta\Console\Source\Factory\Factory'              => ['isRunnable' => true],
         'Resta\Console\Source\Route\Route'                  => ['isRunnable' => true],
+        'Resta\Console\Source\Helper\Helper'                => ['isRunnable' => true],
     ];
 
     /**
