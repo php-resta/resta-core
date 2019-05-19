@@ -41,7 +41,6 @@ class Project extends ConsoleOutputter
     {
         $this->argument['kernelDir']            = Utils::getNamespace($this->kernel());
         $this->argument['kernelProviderDir']    = Utils::getNamespace($this->provider());
-        $this->directory['helpersDir']          = app()->path()->helpers();
         $this->argument['factoryDir']           = app()->namespace()->factory();
         $this->directory['projectDir']          = $this->projectPath();
 
@@ -75,6 +74,7 @@ class Project extends ConsoleOutputter
         //$this->directory['callDir']                 = $this->controller();
         $this->directory['configDir']               = $this->config();
         $this->directory['testDir']                 = $this->test();
+        //$this->directory['helpersDir']              = app()->path()->helpers();
         //$this->directory['sourceDir']               = $this->sourceDir();
         //$this->directory['sourceSupportDir']        = $this->sourceSupportDir();
         //$this->directory['sourceSupportTraitDir']   = $this->sourceSupportDir().'/Traits';
@@ -84,9 +84,9 @@ class Project extends ConsoleOutputter
 
         //get project file all path
         //$this->touch['publish']                     = $this->project.'/publish.php';
-        $this->touch['helpers/general']             = app()->path()->helpers().'/General.php';
         $this->touch['kernel/kernel']               = $this->kernel().'/Kernel.php';
         $this->touch['kernel/helper']               = $this->provider().'/HelperServiceProvider.php';
+        //$this->touch['helpers/general']             = app()->path()->helpers().'/General.php';
         $this->touch['kernel/version']              = $this->kernel().'/Version.php';
         $this->touch['kernel/app']                  = $this->provider().'/AppServiceProvider.php';
         $this->touch['kernel/route']                = $this->provider().'/RouteServiceProvider.php';
