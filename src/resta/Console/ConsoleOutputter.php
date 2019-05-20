@@ -95,7 +95,7 @@ class ConsoleOutputter extends ConsolePrepare {
         $this->app=$app;
         $this->argument=$argument;
         $this->file=new FileProcess();
-        $table=require_once ('ConsoleTable.php');
+        require_once ('ConsoleTable.php');
         $this->table=new \console_table();
 
 
