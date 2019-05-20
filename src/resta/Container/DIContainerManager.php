@@ -16,7 +16,7 @@ class DIContainerManager extends ApplicationProvider
     }
 
     /**
-     * @param null|object $class
+     * @param null|string $class
      * @return mixed
      *
      * @throws \DI\DependencyException
@@ -34,7 +34,7 @@ class DIContainerManager extends ApplicationProvider
     }
 
     /**
-     * @param null|object $class
+     * @param null|string $class
      * @param array $param
      * @return mixed|null
      *
@@ -53,7 +53,7 @@ class DIContainerManager extends ApplicationProvider
     }
 
     /**
-     * @param null|object $class
+     * @param null|string $class
      * @return null|object
      *
      * @throws \DI\DependencyException
@@ -70,7 +70,7 @@ class DIContainerManager extends ApplicationProvider
     }
 
     /**
-     * @param null $class
+     * @param null|string $class
      * @param array $param
      * @return mixed
      */
