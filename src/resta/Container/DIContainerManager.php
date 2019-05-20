@@ -2,7 +2,6 @@
 
 namespace Resta\Container;
 
-use Resta\Container\ContainerResolve;
 use Resta\Foundation\ApplicationProvider;
 
 class DIContainerManager extends ApplicationProvider
@@ -15,9 +14,9 @@ class DIContainerManager extends ApplicationProvider
         //di-container
         return \DI\ContainerBuilder::buildDevContainer();
     }
-    
+
     /**
-     * @param null $class
+     * @param null|object $class
      * @return mixed
      *
      * @throws \DI\DependencyException
@@ -26,14 +25,16 @@ class DIContainerManager extends ApplicationProvider
     public static function resolve($class=null)
     {
         //class resolve
-        if($class!==null){
+        if(!is_null($class)){
             $container = self::callBuild();
             return $container->get($class);
         }
+
+        return null;
     }
 
     /**
-     * @param null $class
+     * @param null|object $class
      * @param array $param
      * @return mixed|null
      *
@@ -52,7 +53,7 @@ class DIContainerManager extends ApplicationProvider
     }
 
     /**
-     * @param null $class
+     * @param null|object $class
      * @return null|object
      *
      * @throws \DI\DependencyException
