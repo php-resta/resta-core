@@ -16,7 +16,7 @@ class GraceContainer
     ];
 
     /**
-     * @var $reflection
+     * @var object $reflection
      */
     protected $reflection;
 
