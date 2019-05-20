@@ -46,9 +46,6 @@ class Event extends ConsoleOutputter {
         $this->argument['listenNamespace']=app()->namespace()->optionalListeners().'';
         $this->argument['subscriberNamespace']=app()->namespace()->optionalSubscribers().'';
 
-
-        $eventDispatcher=app()->namespace()->version().'\ServiceEventDispatcherManager';
-
         $eventDispatchers=app()->resolve(ClosureDispatcher::class,['bind'=>app()['eventDispatcher']])->call(function(){
             return [
               'listen'      => $this->listen,
