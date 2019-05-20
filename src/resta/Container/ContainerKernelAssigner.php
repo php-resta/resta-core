@@ -72,8 +72,8 @@ class ContainerKernelAssigner extends ApplicationProvider
 
     /**
      * @param $object
-     * @param $concrete
-     * @param null $value
+     * @param object $concrete
+     * @param null|string $value
      * @return void
      */
     public function setKernelObject($object,$concrete,$value=null)
@@ -84,7 +84,7 @@ class ContainerKernelAssigner extends ApplicationProvider
 
         //the value is directly assigned to the kernel object.
         //The value is moved throughout the application in the kernel of the application object.
-        if($value===null){
+        if(is_null($value)){
             $this->setKernel($object,$concrete);
         }
 
