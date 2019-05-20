@@ -22,7 +22,7 @@ class ContainerInstanceResolver
     /**
      * container resolve for instance
      *
-     * @param null $name
+     * @param null|string $name
      * @return array
      */
     public function container($name=null)
@@ -32,7 +32,7 @@ class ContainerInstanceResolver
 
             // if methoda is a null parameter,
             // then we send direct container values.
-            if($name===null){
+            if(is_null($name)){
                 return (array)$this->instances['container'];
             }
 
