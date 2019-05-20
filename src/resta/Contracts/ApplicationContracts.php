@@ -137,7 +137,7 @@ interface ApplicationContracts
     /**
      * @param $key
      * @param $object
-     * @param null $concrete
+     * @param null|string|object $concrete
      * @return mixed
      */
     public function register($key,$object,$concrete=null);
