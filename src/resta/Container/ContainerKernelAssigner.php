@@ -63,7 +63,7 @@ class ContainerKernelAssigner extends ApplicationProvider
 
             // this method is executed if the concrete instance contains the handle method.
             // if no handle method is included, the concrete instance is returned directly.
-            $registerObjectInstance = (method_exists($concreteInstance,'handle'))
+            (method_exists($concreteInstance,'handle'))
                 ? $concreteInstance->handle()
                 : $concreteInstance;
 
