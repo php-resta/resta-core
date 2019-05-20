@@ -8,18 +8,20 @@ use Resta\Foundation\ApplicationProvider;
 class ContainerMethodDocumentResolver extends ApplicationProvider
 {
     /**
-     * @var $document
+     * @var string $document
      */
     protected $document;
 
     /**
-     * @var $class
+     * @var array $class
      */
     protected $class;
 
     /**
      * ContainerMethodDocumentResolver constructor.
      * @param $app
+     * @param $document
+     * @param array $class
      */
     public function __construct($app,$document,$class=array())
     {
