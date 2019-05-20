@@ -53,7 +53,7 @@ class DIContainerManager extends ApplicationProvider
     }
 
     /**
-     * @param null|string $class
+     * @param null|object $class
      * @return null|object
      *
      * @throws \DI\DependencyException
