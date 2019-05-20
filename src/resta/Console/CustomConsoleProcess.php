@@ -3,10 +3,8 @@
 namespace Resta\Console;
 
 use Resta\Support\Utils;
-use Resta\Console\ConsoleOutputter;
 use Resta\Support\ClosureDispatcher;
 use Resta\Container\DIContainerManager;
-use Resta\Foundation\PathManager\StaticPathModel;
 
 class CustomConsoleProcess extends ConsoleOutputter
 {
