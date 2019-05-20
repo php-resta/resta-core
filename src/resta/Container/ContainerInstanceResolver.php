@@ -5,13 +5,13 @@ namespace Resta\Container;
 class ContainerInstanceResolver
 {
     /**
-     * @var $instances
+     * @var object $instances
      */
     protected $instances;
 
     /**
      * ContainerInstanceResolver constructor.
-     * @param $instances
+     * @param object $instances
      */
     public function __construct($instances)
     {
@@ -22,6 +22,7 @@ class ContainerInstanceResolver
     /**
      * container resolve for instance
      *
+     * @param null $name
      * @return array
      */
     public function container($name=null)
@@ -61,7 +62,7 @@ class ContainerInstanceResolver
      *
      * @param $name
      * @param $arguments
-     * @return null
+     * @return mixed
      */
     public function __call($name, $arguments)
     {
