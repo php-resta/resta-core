@@ -103,7 +103,7 @@ trait ConsoleArguments {
 
         $arguments=$this->getArguments();
 
-        $getConsoleArgumentsWithKey=$this->getConsoleArgumentsWithKey();
+        $this->getConsoleArgumentsWithKey();
 
         if(isset($arguments[2])){
             $app=$arguments[2];
