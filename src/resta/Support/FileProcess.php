@@ -8,17 +8,17 @@ use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 class FileProcess
 {
     /**
-     * @var $fs
+     * @var object
      */
     public $fs;
 
     /**
-     * @var $stubPath
+     * @var string
      */
     public $stubPath;
 
     /**
-     * @var $data
+     * @var string
      */
     protected $data;
 
@@ -142,7 +142,7 @@ class FileProcess
 
             $this->setDirectory($stubberDirectoryList);
         }
-        
+
         foreach ($this->data->touch as $execution=>$executionFile){
 
             $executionArray=explode("/",$execution);
@@ -220,5 +220,25 @@ class FileProcess
             return require_once($file);
         }
         return null;
+    }
+
+    /**
+     * write to file for data
+     *
+     * @param null|string $file
+     * @param null|string $data
+     */
+    public function writeFile($file=null,$data=null)
+    {
+        if(!is_null($file) && !is_null($data)){
+
+            $dt = fopen($file, "r");
+            $content = fread($dt, filesize($file));
+            fclose($dt);
+
+            $dt = fopen($file, "w");
+            fwrite($dt, $data);
+            fclose($dt);
+        }
     }
 }
