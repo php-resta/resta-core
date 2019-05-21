@@ -54,6 +54,9 @@ class PhpUnitManager
             $list[$newKey][$key] = $value;
         }
 
-        return $list;
+        //the test suite data is being overwrite with newly added data.
+        $this->data['testsuites']['testsuite'] = $list;
+
+        return $this->data;
     }
 }
