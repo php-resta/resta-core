@@ -41,10 +41,10 @@ class Test extends ConsoleOutputter {
         }
 
         $this->argument['testPath'] = app()->namespace()->tests();
-        $this->argument['testNamespace'] = ucfirst($this->argument['test']);
+        $this->argument['testNamespace'] = ucfirst($this->argument['test']).'Test';
         $this->argument['projectName'] = strtolower($this->projectName());
 
-        $this->touch['test/test']= app()->path()->tests().'/'.ucfirst($this->argument['test']).'.php';
+        $this->touch['test/test']= app()->path()->tests().'/'.$this->argument['testNamespace'].'.php';
 
 
         $this->file->touch($this);
