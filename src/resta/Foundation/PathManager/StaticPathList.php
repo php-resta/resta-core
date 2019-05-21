@@ -50,154 +50,153 @@ class StaticPathList
     public static $appPath=null;
 
     /**
-     * @var $kernel
+     * @var string
      */
     public static $kernel='Kernel';
 
     /**
-     * @var $repository
+     * @var string
      */
     public static $repository='Repository';
 
     /**
-     * @var $listener
+     * @var string
      */
     public static $listener='Listener';
 
     /**
-     * @var $repository
+     * @var string
      */
     public static $serviceAnnotations='ServiceAnnotationsManager';
 
     /**
-     * @var $repository
+     * @var string
      */
     public static $serviceMiddleware='ServiceMiddlewareManager';
 
     /**
-     * @var $storage
+     * @var string
      */
     public static $storage='Storage';
 
     /**
-     * @var $controller
+     * @var string
      */
     public static $controller='Controllers';
 
     /**
-     * @var $platform
+     * @var string
      */
     public static $platform='__Platform';
 
     /**
-     * @var $sourcePath
+     * @var string
      */
     public static $sourcePath='Source';
 
     /**
-     * @var $sourceRequest
+     * @var string
      */
     public static $sourceRequest='Request';
 
     /**
-     * @var $model
+     * @var string
      */
     public static $model='Model';
 
     /**
-     * @var $builder
+     * @var string
      */
     public static $builder='Builder';
 
     /**
-     * @var $migration
+     * @var string
      */
     public static $migration='Migrations';
 
     /**
-     * @var $config
+     * @var string
      */
     public static $config='Config';
 
     /**
-     * @var string $helpers
+     * @var string
      */
     public static $helpers='Helpers';
 
     /**
-     * @var $config
+     * @var string
      */
     public static $test='Tests';
 
 
     /**
-     * @var $optional
+     * @var string
      */
     public static $optional='Optional';
 
     /**
-     * @var $events
+     * @var string
      */
     public static $events='Events';
 
     /**
-     * @var $listeners
+     * @var string
      */
     public static $listeners='Listeners';
 
     /**
-     * @var $subscribers
+     * @var string
      */
     public static $subscribers='Subscribers';
 
     /**
-     * @var $exception
+     * @var string
      */
     public static $exception='Exceptions';
 
     /**
-     * @var $job
+     * @var string
      */
     public static $job='Job';
 
 
     /**
-     * @var $webservice
+     * @var string
      */
     public static $webservice='Webservice';
 
     /**
-     * @var $log
+     * @var string
      */
     public static $log='Log';
 
-
     /**
-     * @var $resource
+     * @var string
      */
     public static $resource='Resource';
 
     /**
-     * @var $cache
+     * @var string
      */
     public static $cache='Cache';
 
     /**
-     * @var $language
+     * @var string
      */
     public static $language='Language';
     /**
-     * @var $session
+     * @var string
      */
     public static $session='Session';
 
     /**
-     * @var $middleware
+     * @var string
      */
     public static $middleware='Middleware';
 
     /**
-     * @var string $route
+     * @var string
      */
     public static $route='Routes';
 
@@ -207,47 +206,47 @@ class StaticPathList
     public static $request='Request';
 
     /**
-     * @var $factory
+     * @var string
      */
     public static $factory='Factory';
 
     /**
-     * @var $node
+     * @var string
      */
     public static $node='Node';
 
     /**
-     * @var $node
+     * @var string
      */
     public static $provider='Providers';
 
     /**
-     * @var $once
+     * @var string
      */
     public static $once='Once';
 
     /**
-     * @var $command
+     * @var string
      */
     public static $command='Command';
 
     /**
-     * @var $stub
+     * @var string
      */
     public static $stub='Stub';
 
     /**
-     * @var $store
+     * @var string
      */
     public static $store='Store';
 
     /**
-     * @var $boot
+     * @var string
      */
     public static $boot='Boot';
 
     /**
-     * @var $store
+     * @var string
      */
     public static $autoService='Autoservice';
 }

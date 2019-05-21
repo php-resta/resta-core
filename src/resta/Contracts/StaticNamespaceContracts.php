@@ -130,6 +130,11 @@ interface StaticNamespaceContracts
     /**
      * @return mixed
      */
+    public function tests();
+
+    /**
+     * @return mixed
+     */
     public function optionalSource();
 
     /**

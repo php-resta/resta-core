@@ -56,6 +56,11 @@ interface StaticPathContracts
     public function helpers();
 
     /**
+     * @return mixed
+     */
+    public function tests();
+
+    /**
      * @param null $controller
      * @param bool $bool
      * @return mixed
