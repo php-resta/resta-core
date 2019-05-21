@@ -1,0 +1,19 @@
+<?php
+
+namespace __testPath__;
+
+use PHPUnit\Framework\TestCase;
+
+class __testNamespace__ extends TestCase
+{
+    /**
+     * A basic test example.
+     * @group __projectName__
+     *
+     * @return void
+     */
+    public function testIndex()
+    {
+        $this->assertTrue(true);
+    }
+}

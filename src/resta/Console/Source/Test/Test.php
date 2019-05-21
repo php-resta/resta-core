@@ -4,9 +4,6 @@ namespace Resta\Console\Source\Test;
 
 use Resta\Console\ConsoleOutputter;
 use Resta\Console\ConsoleListAccessor;
-use Resta\Support\Utils;
-use Symfony\Component\Process\Process;
-use Symfony\Component\Process\Exception\ProcessFailedException;
 
 class Test extends ConsoleOutputter {
 
@@ -15,33 +12,39 @@ class Test extends ConsoleOutputter {
     /**
      * @var $type
      */
-    public $type='test';
+    public $type = 'test';
 
     /**
      * @var $define
      */
-    public $define='test run on console';
+    public $define = 'creates test file for application';
 
     /**
      * @var $commandRule
      */
-    public $commandRule=[];
+    public $commandRule = ['test'];
 
     /**
      * @method generate
      * @return mixed
      */
-    public function run()
+    public function create()
     {
-        $path = str_replace(root.'/','',path()->controller()).'/'.$this->argument['controller'];
-        $process = new Process(array('vendor/bin/phpunit','--bootstrap','index.php',$path));
-        $process->run();
 
-        // executes after the command finishes
-        if (!$process->isSuccessful()) {
-            throw new ProcessFailedException($process);
+        if(!file_exists(app()->path()->tests())){
+            $this->directory['test'] = app()->path()->tests();
+            $this->file->makeDirectory($this);
         }
 
-        echo $this->classical($process->getOutput());
+        $this->argument['testPath'] = app()->namespace()->tests();
+        $this->argument['testNamespace'] = ucfirst($this->argument['test']);
+        $this->argument['projectName'] = strtolower($this->projectName());
+
+        $this->touch['test/test']= app()->path()->tests().'/'.ucfirst($this->argument['test']).'.php';
+
+
+        $this->file->touch($this);
+
+        echo $this->classical(' > Test file called as "'.$this->argument['test'].'" has been successfully created in the '.app()->namespace()->tests().'');
     }
 }
