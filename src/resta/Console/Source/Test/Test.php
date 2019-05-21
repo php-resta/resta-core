@@ -79,6 +79,7 @@ class Test extends ConsoleOutputter {
     public function run()
     {
         $process = new Process(['vendor'.DIRECTORY_SEPARATOR.'bin'.DIRECTORY_SEPARATOR.'phpunit','--group',strtolower($this->projectName())]);
+        $process->setTty(true);
 
         try {
             $process->mustRun();
