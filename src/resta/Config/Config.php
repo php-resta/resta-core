@@ -50,6 +50,26 @@ class Config implements AccessorContracts
     }
 
     /**
+     * get config instance
+     *
+     * @return Config
+     */
+    public static function getInstance()
+    {
+        return new self();
+    }
+
+    /**
+     * get config macro class from application kernel
+     *
+     * @return Config
+     */
+    public static function macro()
+    {
+        return self::make('kernel.macros.config')->get();
+    }
+
+    /**
      * @param null $config
      * @return Config
      */

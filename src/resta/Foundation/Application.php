@@ -4,6 +4,7 @@ namespace Resta\Foundation;
 
 use Resta\Support\Str;
 use Resta\Config\Config;
+use Resta\Support\Macro;
 use DI\NotFoundException;
 use Resta\Support\Command;
 use DI\DependencyException;
@@ -103,7 +104,17 @@ class Application extends Kernel implements ApplicationContracts
     public function config($config)
     {
         if($this->checkBindings(__FUNCTION__)){
-            return Config::make($config)->get();
+
+            /** @var Macro $macro */
+            $macro = $this['macro'];
+
+            // this includes the configuration macro class.
+            // therefore, you can expand your configuration settings from
+            // the application kernel identifier to the desired class.
+            return $macro->withStatic(Config::macro(),function() use($config){
+                return Config::make($config);
+            })->get();
+
         }
 
         // if the environment is not booted,
