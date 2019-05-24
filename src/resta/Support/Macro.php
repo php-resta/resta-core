@@ -13,19 +13,19 @@ class Macro extends ApplicationProvider
     protected $isMacro = false;
 
     /**
-     * @var $macro
+     * @var string $macro
      */
     protected $macro;
 
     /**
-     * @var $class
+     * @var string $class
      */
     protected $class;
 
     /**
      * @var string
      */
-    protected $values = null;
+    protected $values;
 
     /**
      * check conditions for macro
@@ -61,7 +61,7 @@ class Macro extends ApplicationProvider
      * @param callable $callback
      * @return mixed
      */
-    public function get($method=null,callable $callback)
+    public function get($method,callable $callback)
     {
         if($this->isMacro){
 
@@ -153,7 +153,7 @@ class Macro extends ApplicationProvider
     /**
      * invoke construct for macro
      *
-     * @param null $macro
+     * @param null|string $macro
      * @return $this
      */
     public function __invoke($macro=null)
