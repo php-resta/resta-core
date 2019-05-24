@@ -7,7 +7,7 @@ use Resta\Contracts\ClosureDispatcherContracts;
 class ClosureDispatcher implements ClosureDispatcherContracts
 {
     /**
-     * @var $bind
+     * @var string|object $bind
      */
     protected $bind;
 
