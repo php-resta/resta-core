@@ -23,6 +23,11 @@ class Macro extends ApplicationProvider
     protected $class;
 
     /**
+     * @var string
+     */
+    protected $values = null;
+
+    /**
      * check conditions for macro
      *
      * @param bool $static
@@ -61,7 +66,7 @@ class Macro extends ApplicationProvider
         if($this->isMacro){
 
             if(is_null($method) && Utils::isNamespaceExists($this->macro)){
-                return $this->app->resolve($this->macro);
+                return $this->app->resolve($this->macro)($this->getValues());
             }
 
             if(method_exists($resolve = $this->app->resolve($this->macro),$method)){
@@ -69,6 +74,16 @@ class Macro extends ApplicationProvider
             }
         }
         return call_user_func($callback);
+    }
+
+    /**
+     * get values for macro
+     *
+     * @return mixed
+     */
+    public function getValues()
+    {
+        return $this->values;
     }
 
     /**
@@ -89,6 +104,17 @@ class Macro extends ApplicationProvider
         }
 
         return $this;
+    }
+
+    /**
+     * set values for macro
+     *
+     * @param $values
+     * @return mixed
+     */
+    public function setValues($values)
+    {
+        return $this->values = $values;
     }
 
     /**
@@ -118,13 +144,10 @@ class Macro extends ApplicationProvider
      */
     public function withStatic($macro,$concrete)
     {
-        if($this->macro === null){
-
-            return $this($macro)->isMacro($concrete,true)->get(null,is_callable($concrete) ?
-                $concrete : function() use($concrete){
-                    return $concrete;
-                });
-        }
+        return $this($macro)->isMacro($concrete,true)->get(null,is_callable($concrete) ?
+            $concrete : function() use($concrete){
+                return $concrete;
+            });
     }
 
     /**

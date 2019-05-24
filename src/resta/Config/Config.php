@@ -4,19 +4,19 @@ namespace Resta\Config;
 
 use Resta\Support\Arr;
 use Resta\Support\Str;
-use Resta\Support\Utils;
+use Resta\Support\Macro;
 use Resta\Support\FileProcess;
 use Resta\Contracts\AccessorContracts;
 
 class Config implements AccessorContracts
 {
     /**
-     * @var null $config
+     * @var null|string $config
      */
     private static $config = null;
 
     /**
-     * @var null $configProcessInstance
+     * @var null|object $configProcessInstance
      */
     private static $configProcessInstance = null;
 
@@ -50,6 +50,16 @@ class Config implements AccessorContracts
     }
 
     /**
+     * get config data
+     *
+     * @return mixed
+     */
+    public static function getConfig()
+    {
+        return self::$config;
+    }
+
+    /**
      * get config instance
      *
      * @return Config
@@ -62,10 +72,15 @@ class Config implements AccessorContracts
     /**
      * get config macro class from application kernel
      *
+     * @param null|string $config
      * @return Config
      */
-    public static function macro()
+    public static function macro($config=null)
     {
+        /** @var Macro $macro */
+        $macro = app()->get('macro');
+        $macro->setValues($config);
+
         return self::make('kernel.macros.config')->get();
     }
 
