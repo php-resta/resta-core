@@ -49,9 +49,6 @@ class ApplicationBaseRegister extends ApplicationProvider implements HandleContr
         //and easily resolve an encrypted instance of all the kernel variables in our helper class.
         ClassAliasGroup::setAlias(App::class,'application');
 
-        //set base instances
-        $this->setBaseInstances();
-
         //we define the general application instance object.
         define('appInstance',(base64_encode(serialize($this))));
 
@@ -62,7 +59,7 @@ class ApplicationBaseRegister extends ApplicationProvider implements HandleContr
         $this->isAvailableStore();
 
         //global accessor handling
-       $this->setGlobalAccessor();
+        $this->setGlobalAccessor();
 
         // sets a user-defined error handler function
         // this function can be used for defining your own way of handling errors during runtime,
@@ -82,6 +79,16 @@ class ApplicationBaseRegister extends ApplicationProvider implements HandleContr
      */
     private function mainLoader()
     {
+        //set containerInstanceResolve class
+        $this->app->register('containerInstanceResolve',ContainerInstanceResolver::class);
+
+        //register as instance application object
+        // and container instance resolve
+        //set core instance value
+        $this->app->register('kernel',$this->app->singleton());
+        $this->app->register('bootLoader',$this->app->resolve(BootLoader::class));
+        $this->app->register('reflection',ReflectionProcess::class);
+
         // for revision records,
         // the master key is assigned as revision.
         $this->app->register('revision',[]);
@@ -109,22 +116,6 @@ class ApplicationBaseRegister extends ApplicationProvider implements HandleContr
         //set register for macro
         $this->app->register('pipeline',new Pipeline());
 
-    }
-
-    /**
-     * set base instances
-     *
-     * @return void|mixed
-     */
-    private function setBaseInstances()
-    {
-        //register as instance application object
-        // and container instance resolve
-        //set core instance value
-        $this->app->instance('container',$this->app->singleton());
-        $this->app->instance('bootLoader',$this->app->resolve(BootLoader::class));
-        $this->app->instance('containerInstanceResolve',ContainerInstanceResolver::class);
-        $this->app->instance('reflection',ReflectionProcess::class);
     }
 
     /**

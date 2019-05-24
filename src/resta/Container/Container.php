@@ -343,9 +343,7 @@ class Container implements ContainerContracts,\ArrayAccess
      */
     public function offsetGet($offset) {
 
-        return $this->resolve($this->instances['containerInstanceResolve'],[
-            'instances' => $this->instances
-        ])->{$offset}();
+        return $this->resolve($this->singleton()->containerInstanceResolve)->{$offset}();
     }
 
     /**

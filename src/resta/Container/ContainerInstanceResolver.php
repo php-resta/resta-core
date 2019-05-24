@@ -2,21 +2,26 @@
 
 namespace Resta\Container;
 
-class ContainerInstanceResolver
+use Resta\Contracts\ApplicationContracts;
+use Resta\Foundation\ApplicationProvider;
+
+class ContainerInstanceResolver extends ApplicationProvider
 {
     /**
-     * @var object $instances
+     * @var object
      */
-    protected $instances;
+    protected $kernel;
 
     /**
      * ContainerInstanceResolver constructor.
-     * @param object $instances
+     * @param ApplicationContracts $app
      */
-    public function __construct($instances)
+    public function __construct(ApplicationContracts $app)
     {
-        //get container instances
-        $this->instances = $instances;
+        parent::__construct($app);
+
+        //get container values for kernel
+        $this->kernel = $this->app->singleton();
     }
 
     /**
@@ -28,12 +33,12 @@ class ContainerInstanceResolver
     public function container($name=null)
     {
         //check container value for kernel
-        if(isset($this->instances['container'])){
+        if(isset($this->kernel->kernel)){
 
             // if methoda is a null parameter,
             // then we send direct container values.
             if(is_null($name)){
-                return (array)$this->instances['container'];
+                return (array)$this->kernel->kernel;
             }
 
             // if there is an existing value in the container as the method parameter,
@@ -41,7 +46,6 @@ class ContainerInstanceResolver
             if(isset($this->container()[$name])){
                 return $this->container()[$name];
             }
-
         }
         return null;
     }
@@ -54,7 +58,7 @@ class ContainerInstanceResolver
     public function reflection()
     {
         //we solve the reflection method with the resolve method.
-        return app()->resolve($this->instances[__FUNCTION__]);
+        return app()->resolve($this->kernel->{__FUNCTION__});
     }
 
     /**
@@ -67,6 +71,6 @@ class ContainerInstanceResolver
     public function __call($name, $arguments)
     {
         //we call container instance as data
-        return $this->instances[$name] ?? $this->container($name);
+        return $this->container($name);
     }
 }
