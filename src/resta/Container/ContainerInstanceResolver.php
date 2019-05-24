@@ -2,26 +2,21 @@
 
 namespace Resta\Container;
 
-use Resta\Contracts\ApplicationContracts;
-use Resta\Foundation\ApplicationProvider;
-
-class ContainerInstanceResolver extends ApplicationProvider
+class ContainerInstanceResolver
 {
     /**
-     * @var object
+     * @var object $instances
      */
-    protected $kernel;
+    protected $instances;
 
     /**
      * ContainerInstanceResolver constructor.
-     * @param ApplicationContracts $app
+     * @param object $instances
      */
-    public function __construct(ApplicationContracts $app)
+    public function __construct($instances)
     {
-        parent::__construct($app);
-
-        //get container values for kernel
-        $this->kernel = $this->app->singleton();
+        //get container instances
+        $this->instances = $instances;
     }
 
     /**
@@ -33,12 +28,12 @@ class ContainerInstanceResolver extends ApplicationProvider
     public function container($name=null)
     {
         //check container value for kernel
-        if(isset($this->kernel->kernel)){
+        if(isset($this->instances['container'])){
 
             // if methoda is a null parameter,
             // then we send direct container values.
             if(is_null($name)){
-                return (array)$this->kernel->kernel;
+                return (array)$this->instances['container'];
             }
 
             // if there is an existing value in the container as the method parameter,
@@ -46,6 +41,7 @@ class ContainerInstanceResolver extends ApplicationProvider
             if(isset($this->container()[$name])){
                 return $this->container()[$name];
             }
+
         }
         return null;
     }
@@ -58,7 +54,7 @@ class ContainerInstanceResolver extends ApplicationProvider
     public function reflection()
     {
         //we solve the reflection method with the resolve method.
-        return app()->resolve($this->kernel->{__FUNCTION__});
+        return app()->resolve($this->instances[__FUNCTION__]);
     }
 
     /**
@@ -71,6 +67,6 @@ class ContainerInstanceResolver extends ApplicationProvider
     public function __call($name, $arguments)
     {
         //we call container instance as data
-        return $this->container($name);
+        return $this->instances[$name] ?? $this->container($name);
     }
 }
