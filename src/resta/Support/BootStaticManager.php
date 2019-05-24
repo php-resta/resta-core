@@ -5,14 +5,14 @@ namespace Resta\Support;
 class BootStaticManager
 {
     /**
-     * @var $requestPath
+     * @var string $requestPath
      */
     private static $requestPath;
 
     /**
      * set application request path
      *
-     * @param null $path
+     * @param null|string $path
      */
     public static function setPath($path=null)
     {
