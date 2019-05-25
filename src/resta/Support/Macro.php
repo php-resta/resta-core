@@ -65,10 +65,6 @@ class Macro extends ApplicationProvider
     {
         if($this->isMacro){
 
-            if(is_null($method) && Utils::isNamespaceExists($this->macro)){
-                return $this->app->resolve($this->macro)($this->getValues());
-            }
-
             if(method_exists($resolve = $this->app->resolve($this->macro),$method)){
                 return $resolve->macro($this->class);
             }
