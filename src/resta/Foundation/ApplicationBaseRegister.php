@@ -53,7 +53,7 @@ class ApplicationBaseRegister extends ApplicationProvider implements HandleContr
         $this->setBaseInstances();
 
         //we define the general application instance object.
-        define('appInstance',(base64_encode(serialize($this))));
+        define('appInstance',(base64_encode(serialize($this->app))));
 
         //main loader for application
         $this->mainLoader();

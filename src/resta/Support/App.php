@@ -255,7 +255,7 @@ class App
      */
     public function route($param=null)
     {
-        $kernel=self::getAppInstance()->app()->kernel;
+        $kernel=self::getAppInstance()->kernel;
 
         $saltRouteParameters=$kernel->routeParameters;
         $urlMethod=strtolower($kernel->urlComponent['method']);
