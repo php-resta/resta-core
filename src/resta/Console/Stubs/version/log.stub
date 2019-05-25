@@ -9,7 +9,7 @@ use Monolog\Handler\RotatingFileHandler;
 class ServiceLogManager
 {
     /**
-     * @var $adapter
+     * @var string
      */
     public $adapter='file';
 
