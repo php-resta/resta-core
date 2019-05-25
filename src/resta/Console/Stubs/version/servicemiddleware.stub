@@ -9,7 +9,7 @@ class ServiceMiddlewareManager implements ServiceMiddlewareManagerContracts
     /**
      * @return array
      */
-    public function handle()
+    public function handle() : array
     {
         return [
               //'authenticate'=>'all',
@@ -20,7 +20,7 @@ class ServiceMiddlewareManager implements ServiceMiddlewareManagerContracts
     /**
      * @return array
      */
-    public function after()
+    public function after() : array
     {
         return [];
     }
@@ -28,7 +28,7 @@ class ServiceMiddlewareManager implements ServiceMiddlewareManagerContracts
      /**
       * @return array
       */
-     public function exclude()
+     public function exclude() : array
      {
         return [
             'all'=>['hook','login','logout']

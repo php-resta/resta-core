@@ -2,6 +2,7 @@
 
 namespace App\__project__\__version__;
 
+use Exception;
 use Monolog\Logger;
 use Monolog\Handler\RotatingFileHandler;
 
@@ -17,7 +18,7 @@ class ServiceLogManager
      * @param string $file
      * @param string $type
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function file($output,$file="access",$type="info")
     {
