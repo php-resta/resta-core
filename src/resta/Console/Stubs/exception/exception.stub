@@ -3,6 +3,7 @@
 namespace __exceptionNamespace__;
 
 use Exception;
+use Throwable;
 use __versionNamespace__\ServiceAnnotationsManager;
 
 class __exception__Exception extends Exception
