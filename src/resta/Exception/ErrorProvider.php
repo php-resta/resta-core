@@ -229,13 +229,13 @@ class ErrorProvider extends ApplicationProvider {
     private function getAppException($environment,$message)
     {
         return $this->data['appExceptionSuccess']+$this->data['exception']::$environment(
-            $this->data['errNo'],
-            $message,
-            $this->data['errFile'],
-            $this->data['errLine'],
-            $this->data['errType'],
-            $this->data['lang']
-        );
+                $this->data['errNo'],
+                $message,
+                $this->data['errFile'],
+                $this->data['errLine'],
+                $this->data['errType'],
+                $this->data['lang']
+            );
     }
 
     /**
@@ -311,8 +311,7 @@ class ErrorProvider extends ApplicationProvider {
             }
         }
 
-        if(class_exists($this->data['errorClassNamespace'])
-            && Str::startsWith($this->data['errorClassNamespace'],'App')){
+        if(class_exists($this->data['errorClassNamespace'])){
 
             ClosureDispatcher::bind($this->data['errorClassNamespace'])->call(function() use ($clone) {
                 if(property_exists($this,'lang')){
