@@ -11,31 +11,35 @@ class __exception__Exception extends Exception
     use ServiceAnnotationsManager;
 
     /**
-     * @var string $message
-     */
-    protected $message = '__exception__ Exception';
-
-    /**
      * @var string $lang
      */
     protected $lang = '__exception__';
 
     /**
-     * @var string
+     * NotFoundException constructor.
+     *
+     * @param string $message
+     * @param int $code
+     * @param Throwable|null $previous
      */
-     protected $code = 400;
+     public function __construct($message = "__exception__ Exception", $code = 400, Throwable $previous = null)
+     {
+        parent::__construct($message, $code, $previous);
+     }
 
     /**
+     * make event for exception
+     *
      * @method event
      * @param $exception
      * @return mixed|void
      */
-    public function event($exception)
-    {
-        /**
-         * You can run the event directly when the exception is thrown.
-         * As an example you can log.
-        */
-        //logger()->emergency($exception);
-    }
+     public function event($exception)
+     {
+         /**
+          * You can run the event directly when the exception is thrown.
+          * As an example you can log.
+         */
+         //logger()->emergency($exception);
+     }
 }

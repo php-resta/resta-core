@@ -189,7 +189,7 @@ trait NamespaceForRoute
     {
         //If auto service is present, this auto service will be accepted as endpoint namespace.
         return $this->checkEndpointForAutoService()->getNamespaceForAutoService($instance,function(){
-            throw new \DomainException('Any endpoint is not available');
+            exception()->notFoundException('Any endpoint is not available');
         });
     }
 
