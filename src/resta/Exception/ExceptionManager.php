@@ -2,96 +2,144 @@
 
 namespace Resta\Exception;
 
+use LogicException;
+use RangeException;
+use DomainException;
+use LengthException;
+use RuntimeException;
+use OverflowException;
+use UnderflowException;
+use OutOfRangeException;
+use BadMethodCallException;
+use UnexpectedValueException;
+use BadFunctionCallException;
+use InvalidArgumentException;
 use Resta\Contracts\ExceptionContracts;
 
-class ExceptionManager extends ExceptionTrace implements ExceptionContracts {
-
+class ExceptionManager extends ExceptionTrace implements ExceptionContracts
+{
     /**
      * @var array
      */
-    protected $data=[];
+    protected $data = [];
 
     /**
-     * @param null $msg
+     * invalid argument exception
+     *
+     * @param null|string $msg
      */
-    public function invalidArgument($msg=null){
-        throw new \InvalidArgumentException($msg);
+    public function invalidArgument($msg=null)
+    {
+        throw new InvalidArgumentException($msg);
     }
 
     /**
-     * @param null $msg
+     * bad function call exception
+     *
+     * @param null|string $msg
      */
-    public function badFunctionCall($msg=null){
-        throw new \BadFunctionCallException($msg);
+    public function badFunctionCall($msg=null)
+    {
+        throw new BadFunctionCallException($msg);
     }
 
     /**
-     * @param null $msg
+     * bad method call
+     *
+     * @param null|string $msg
      */
-    public function badMethodCall($msg=null){
-        throw new \BadMethodCallException($msg);
+    public function badMethodCall($msg=null)
+    {
+        throw new BadMethodCallException($msg);
     }
 
     /**
-     * @param null $msg
+     * domain exception
+     *
+     * @param null|string $msg
      */
-    public function domain($msg=null){
-        throw new \DomainException($msg);
+    public function domain($msg=null)
+    {
+        throw new DomainException($msg);
     }
 
     /**
-     * @param null $msg
+     * length exception
+     *
+     * @param null|string $msg
      */
-    public function length($msg=null){
-        throw new \LengthException($msg);
+    public function length($msg=null)
+    {
+        throw new LengthException($msg);
     }
 
     /**
-     * @param null $msg
+     * logic exception
+     *
+     * @param null|string $msg
      */
-    public function logic($msg=null){
-        throw new \LogicException($msg);
+    public function logic($msg=null)
+    {
+        throw new LogicException($msg);
     }
 
     /**
-     * @param null $msg
+     * out of range exception
+     *
+     * @param null|string $msg
      */
-    public function outOfRange($msg=null){
-        throw new \OutOfRangeException($msg);
+    public function outOfRange($msg=null)
+    {
+        throw new OutOfRangeException($msg);
     }
 
     /**
-     * @param null $msg
+     * overflow exception
+     *
+     * @param null|string $msg
      */
-    public function overflow($msg=null){
-        throw new \OverflowException($msg);
+    public function overflow($msg=null)
+    {
+        throw new OverflowException($msg);
     }
 
     /**
-     * @param null $msg
+     * range exception
+     *
+     * @param null|string $msg
      */
-    public function range($msg=null){
-        throw new \RangeException($msg);
+    public function range($msg=null)
+    {
+        throw new RangeException($msg);
     }
 
     /**
-     * @param null $msg
+     * runtime exception
+     *
+     * @param null|string $msg
      */
-    public function runtime($msg=null){
-        throw new \RuntimeException($msg);
+    public function runtime($msg=null)
+    {
+        throw new RuntimeException($msg);
     }
 
     /**
-     * @param null $msg
+     * underflow exception
+     *
+     * @param null|string $msg
      */
-    public function underflow($msg=null){
-        throw new \UnderflowException($msg);
+    public function underflow($msg=null)
+    {
+        throw new UnderflowException($msg);
     }
 
     /**
-     * @param null $msg
+     * unexpexted value exception
+     *
+     * @param null|string $msg
      */
-    public function unexpectedValue($msg=null){
-        throw new \UnexpectedValueException($msg);
+    public function unexpectedValue($msg=null)
+    {
+        throw new UnexpectedValueException($msg);
     }
 }
