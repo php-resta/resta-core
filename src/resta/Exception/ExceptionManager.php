@@ -19,11 +19,6 @@ use Resta\Contracts\ExceptionContracts;
 class ExceptionManager extends ExceptionTrace implements ExceptionContracts
 {
     /**
-     * @var array
-     */
-    protected $data = [];
-
-    /**
      * invalid argument exception
      *
      * @param null|string $msg
