@@ -79,6 +79,16 @@ class ExceptionManager extends ExceptionTrace implements ExceptionContracts
     }
 
     /**
+     * not found exception
+     *
+     * @throws NotFoundException
+     */
+    public function notFoundException()
+    {
+        throw new NotFoundException;
+    }
+
+    /**
      * out of range exception
      *
      * @param null|string $msg
