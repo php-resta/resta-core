@@ -13,7 +13,7 @@ class UrlParseException
     public function exception($data=array())
     {
         if(!isset($data['project']) and !isset($data['version'])){
-            throw new DomainException('No Project or Version');
+            exception()->notFoundException('No Project or Version');
         }
 
         //get app path for checking
@@ -22,7 +22,7 @@ class UrlParseException
         //If there is no project on the url
         //we throw an exception
         if($data['project']===null OR !file_exists($appPath)){
-            throw new DomainException('No Project');
+            exception()->notFoundException('No Project');
         }
 
         if(!in_array($data['version'],UrlVersionIdentifier::supportedVersions())){
@@ -32,7 +32,7 @@ class UrlParseException
         //If there is no endpoint on the url
         //we throw an exception
         if($data['endpoint']===null){
-            throw new DomainException('No Endpoint');
+            exception()->notFoundException('No Endpoint');
         }
     }
 }

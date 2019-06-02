@@ -84,12 +84,13 @@ class ExceptionManager extends ExceptionTrace implements ExceptionContracts
     /**
      * not found exception
      *
+     * @param null|string $msg
      * @return mixed|void
      *
      */
-    public function notFoundException()
+    public function notFoundException($msg=null)
     {
-        return $this->notFound;
+        return $this->notFound($msg);
     }
 
     /**

@@ -41,9 +41,10 @@ interface ExceptionContracts {
     public function logic($msg=null);
 
     /**
+     * @param null|string $msg
      * @return mixed
      */
-    public function notFoundException();
+    public function notFoundException($msg=null);
 
     /**
      * @param null|string $msg

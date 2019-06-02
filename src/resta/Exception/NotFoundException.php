@@ -3,21 +3,24 @@
 namespace Resta\Exception;
 
 use Exception;
+use Throwable;
 
 class NotFoundException extends Exception
 {
     /**
      * @var string
      */
-    protected $message = 'The requested endpoint was not found.';
-
-    /**
-     * @var string
-     */
     protected $lang = 'notFoundException';
 
     /**
-     * @var string
+     * NotFoundException constructor.
+     *
+     * @param string $message
+     * @param int $code
+     * @param Throwable|null $previous
      */
-    protected $code = 404;
+    public function __construct($message = "The requested endpoint was not found.", $code = 404, Throwable $previous = null)
+    {
+        parent::__construct($message, $code, $previous);
+    }
 }
