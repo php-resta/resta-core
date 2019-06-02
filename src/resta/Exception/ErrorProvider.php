@@ -311,7 +311,10 @@ class ErrorProvider extends ApplicationProvider {
             }
         }
 
-        if(class_exists($this->data['errorClassNamespace'])){
+        if(class_exists($this->data['errorClassNamespace'])
+            &&
+            (Str::startsWith($this->data['errorClassNamespace'],'App')
+                || Str::startsWith($this->data['errorClassNamespace'],__NAMESPACE__))){
 
             ClosureDispatcher::bind($this->data['errorClassNamespace'])->call(function() use ($clone) {
                 if(property_exists($this,'lang')){
