@@ -99,30 +99,28 @@ class ExceptionTrace extends ApplicationProvider
             }
         }
 
-        // if the callNamespace variable does not exist,
-        // the exception is not found.
-        // and no action is taken.
-        if(!isset($callNamespace)) return;
+        if(isset($callNamespace)){
 
-        // we will set the information about the exception trace,
-        // and then bind it specifically to the event method.
-        $customExceptionTrace                       = Utils::trace(1);
-        $customExceptionTrace['exception']          = $nameNamespace;
-        $customExceptionTrace['callNamespace']      = $callNamespace;
-        $customExceptionTrace['parameters']['get']  = get();
-        $customExceptionTrace['parameters']['post'] = post();
+            // we will set the information about the exception trace,
+            // and then bind it specifically to the event method.
+            $customExceptionTrace                       = Utils::trace(1);
+            $customExceptionTrace['exception']          = $nameNamespace;
+            $customExceptionTrace['callNamespace']      = $callNamespace;
+            $customExceptionTrace['parameters']['get']  = get();
+            $customExceptionTrace['parameters']['post'] = post();
 
 
-        // we register the custom exception trace value with the global kernel object.
-        $this->app->register('exceptiontrace',$customExceptionTrace);
+            // we register the custom exception trace value with the global kernel object.
+            $this->app->register('exceptiontrace',$customExceptionTrace);
 
-        //If the developer wants to execute an event when calling a special exception,
-        //we process the event method.
-        if(method_exists($callNamespace,'event')){
-            $callNamespace->event($customExceptionTrace);
+            //If the developer wants to execute an event when calling a special exception,
+            //we process the event method.
+            if(method_exists($callNamespace,'event')){
+                $callNamespace->event($customExceptionTrace);
+            }
+
+            //throw exception
+            throw new $callNamespace();
         }
-
-        //throw exception
-        throw new $callNamespace();
     }
 }
