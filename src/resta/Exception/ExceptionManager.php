@@ -16,6 +16,9 @@ use BadFunctionCallException;
 use InvalidArgumentException;
 use Resta\Contracts\ExceptionContracts;
 
+/**
+ * @property void notFound
+ */
 class ExceptionManager extends ExceptionTrace implements ExceptionContracts
 {
     /**
@@ -81,11 +84,12 @@ class ExceptionManager extends ExceptionTrace implements ExceptionContracts
     /**
      * not found exception
      *
-     * @throws NotFoundException
+     * @return mixed|void
+     *
      */
     public function notFoundException()
     {
-        throw new NotFoundException;
+        return $this->notFound;
     }
 
     /**

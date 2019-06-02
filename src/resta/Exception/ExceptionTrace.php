@@ -83,8 +83,26 @@ class ExceptionTrace extends ApplicationProvider
         //call the exception class in the application to get the instance.
         $nameException = ucfirst($name).'Exception';
         $nameNamespace = app()->namespace()->exception().'\\'.$nameException;
-        $callNamespace = new $nameNamespace;
 
+        // first, you are looking for an exception
+        // in the application directory class.
+        if(Utils::isNamespaceExists($nameNamespace)){
+            $callNamespace = new $nameNamespace;
+        }
+        else{
+
+            // if you do not have an exception in the application directory,
+            // this time we are looking for an exception in the core directory.
+            $nameNamespace = __NAMESPACE__.'\\'.$nameException;
+            if(Utils::isNamespaceExists($nameNamespace)){
+                $callNamespace = new $nameNamespace;
+            }
+        }
+
+        // if the callNamespace variable does not exist,
+        // the exception is not found.
+        // and no action is taken.
+        if(!isset($callNamespace)) return;
 
         // we will set the information about the exception trace,
         // and then bind it specifically to the event method.
