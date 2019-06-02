@@ -186,6 +186,13 @@ interface ApplicationContracts
     public function singleton();
 
     /**
+     * @param string $key
+     * @param null|string $object
+     * @return mixed
+     */
+    public function terminate($key,$object=null);
+
+    /**
      * @return mixed
      */
    public function version();

@@ -540,9 +540,8 @@ class Container implements ContainerContracts,\ArrayAccess
     }
 
     /**
-     * @param $instance
-     * @param $key
-     * @param null $object
+     * @param string $key
+     * @param null|string $object
      * @return mixed
      */
     public function terminate($key,$object=null)
