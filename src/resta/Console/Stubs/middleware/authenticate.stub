@@ -12,7 +12,7 @@ class Authenticate implements HandleContracts
     public function handle()
     {
         if(auth()->check()===false){
-            exception()->domain('Authenticate permission error');
+            exception()->authenticate;
         }
     }
 }

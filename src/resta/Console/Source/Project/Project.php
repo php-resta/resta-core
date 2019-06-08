@@ -43,6 +43,8 @@ class Project extends ConsoleOutputter
         $this->argument['kernelProviderDir']    = Utils::getNamespace($this->provider());
         $this->argument['factoryDir']           = app()->namespace()->factory();
         $this->directory['projectDir']          = $this->projectPath();
+        $this->directory['exceptionDir']        = app()->path()->exception();
+        $this->argument['exceptionNamespace']   = app()->namespace()->exception();
 
         $recursiveDefaultDirectory = explode("\\",$this->argument['project']);
         $this->argument['applicationName'] = pos($recursiveDefaultDirectory);
@@ -128,6 +130,7 @@ class Project extends ConsoleOutputter
         $this->touch['app/gitignore']               = $this->projectPath().'/.gitignore';
         $this->touch['app/composer']                = $this->projectPath().'/composer.json';
         $this->touch['test/index']                  = $this->storage().'/index.html';
+        $this->touch['exception/authenticate']      = $this->directory['exceptionDir'] .'/AuthenticateException.php';
 
         //set project touch
         $this->file->touch($this);
