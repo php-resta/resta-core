@@ -59,7 +59,8 @@
         "fzaninotto/faker": "^1.7",
         "league/pipeline": "^1.0",
         "illuminate/queue": "^5.8",
-        "illuminate/events": "^5.8"
+        "illuminate/events": "^5.8",
+        "aligurbuz/lingua": "dev-master"
     },
     "require-dev": {
         "composer/composer": "^1.8"
