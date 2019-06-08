@@ -2,7 +2,11 @@
     "name": "php-resta/resta-core",
     "type": "library",
     "description": "resta php api restfull framework",
-    "keywords": ["php","restapi","restfull"],
+    "keywords": [
+        "php",
+        "restapi",
+        "restfull"
+    ],
     "homepage": "https://github.com/php-resta/resta-core",
     "license": "MIT",
     "authors": [
@@ -11,19 +15,20 @@
             "email": "galiant781@gmail.com"
         }
     ],
-
     "autoload": {
         "psr-4": {
             "Resta\\": "src/resta/",
             "Resta\\Core\\Tests\\": "tests"
         },
-        "files": ["src/resta/Foundation/ApplicationHelpers.php"]
+        "files": [
+            "src/resta/Foundation/ApplicationHelpers.php"
+        ]
     },
     "require": {
         "php-di/php-di": "^5.4",
         "ocramius/proxy-manager": "~1.0|~2.0",
-        "symfony/yaml": "2.*",
-        "nesbot/carbon": "^1.21",
+        "symfony/yaml": "4.*",
+        "nesbot/carbon": "^2.0.0",
         "symfony/http-foundation": "^3.2",
         "predis/predis": "^1.0",
         "symfony/var-dumper": "*",
@@ -44,7 +49,6 @@
         "defuse/php-encryption": "^2.1",
         "symfony/process": "^4.2",
         "zendframework/zend-validator": "^2.10",
-        "aligurbuz/lingua": "^1.0",
         "mobiledetect/mobiledetectlib": "^2.8",
         "aligurbuz/migratio": "^2.0",
         "phpunit/phpunit": "^6.3",
@@ -56,5 +60,8 @@
         "league/pipeline": "^1.0",
         "illuminate/queue": "^5.8",
         "illuminate/events": "^5.8"
+    },
+    "require-dev": {
+        "composer/composer": "^1.8"
     }
 }
