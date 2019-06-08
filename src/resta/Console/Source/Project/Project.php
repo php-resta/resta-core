@@ -43,7 +43,6 @@ class Project extends ConsoleOutputter
         $this->argument['kernelProviderDir']    = Utils::getNamespace($this->provider());
         $this->argument['factoryDir']           = app()->namespace()->factory();
         $this->directory['projectDir']          = $this->projectPath();
-        $this->directory['exceptionDir']        = app()->path()->exception();
         $this->argument['exceptionNamespace']   = app()->namespace()->exception();
 
         $recursiveDefaultDirectory = explode("\\",$this->argument['project']);
@@ -80,6 +79,7 @@ class Project extends ConsoleOutputter
         //$this->directory['sourceDir']               = $this->sourceDir();
         //$this->directory['sourceSupportDir']        = $this->sourceSupportDir();
         //$this->directory['sourceSupportTraitDir']   = $this->sourceSupportDir().'/Traits';
+        $this->directory['exceptionDir']            = app()->path()->exception();
 
         //set project directory
         $this->file->makeDirectory($this);
