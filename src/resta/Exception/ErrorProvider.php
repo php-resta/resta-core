@@ -9,28 +9,33 @@ use Resta\Support\ClosureDispatcher;
 use Resta\Foundation\ApplicationProvider;
 use Resta\Foundation\PathManager\StaticPathModel;
 
-class ErrorProvider extends ApplicationProvider {
-
+class ErrorProvider extends ApplicationProvider
+{
     /**
-     * @var $lang
+     * @var null|string
      */
-    public $lang = null;
+    public $lang;
 
     /**
-     * @var $exception
+     * @var string
      */
     protected $exception;
 
     /**
-     * @var $data array
+     * @var array
      */
-    protected $data=array();
+    protected $data = array();
+
+    /**
+     * @var array
+     */
+    protected $result = [];
 
     /**
      * @return mixed|string
      */
-    private function getEnvironmentStatus(){
-
+    private function getEnvironmentStatus()
+    {
         // application key, but if it has a null value
         // then we move the environment value to the production environment.
         return $this->app->environment();
@@ -39,9 +44,9 @@ class ErrorProvider extends ApplicationProvider {
     /**
      * @return void|mixed
      */
-    private function getStatusFromContext(){
-
-        $exception=$this->exception;
+    private function getStatusFromContext()
+    {
+        $exception = $this->exception;
 
         if(isset(core()->exceptiontrace))
         {
@@ -58,14 +63,16 @@ class ErrorProvider extends ApplicationProvider {
         $this->app->register('responseStatus',$this->data['status']);
 
 
-        $optionalException=str_replace("\\","\\\\",$this->app->namespace()->exception());
+        $optionalException = str_replace("\\","\\\\",$this->app->namespace()->exception());
 
         if(preg_match('@'.$optionalException.'@is',$this->data['errType'])){
 
             //linux test
-            $trace=$this->data['errContext']['trace'];
+            $trace = $this->data['errContext']['trace'];
             if(preg_match('@Stack trace:\n#0(.*)\n#1@is',$trace,$traceArray)){
-                $traceFile=str_replace(root,'',$traceArray[1]);
+
+                $traceFile = str_replace(root,'',$traceArray[1]);
+
                 if(preg_match('@(.*)\((\d+)\)@is',$traceFile,$traceResolve)){
                     $this->data['errFile']=$traceResolve[1];
                     $this->data['errLine']=(int)$traceResolve[2];
@@ -73,13 +80,25 @@ class ErrorProvider extends ApplicationProvider {
             }
 
 
-            $this->data['errType']=class_basename($this->data['errType']);
+            $this->data['errType'] = class_basename($this->data['errType']);
+        }
+
+        if(is_array($meta = config('response.meta'))){
+
+            //set as the success object is false
+            $this->data['appExceptionSuccess'] = [];
+        }
+        else{
+
+            //set as the success object is false
+            $this->data['appExceptionSuccess'] = ['success'=>(bool)false,'status'=>$this->data['status']];
         }
     }
 
     /**
-     * @method handle
-     * return void
+     * error provider handle
+     *
+     * @return void
      */
     public function handle()
     {
@@ -89,7 +108,7 @@ class ErrorProvider extends ApplicationProvider {
         // in general we will use the exception class
         // in the store/config directory to make it possible
         // to change the user-based exceptions.
-        $this->exception=StaticPathModel::$store.'\Config\Exception';
+        $this->exception = StaticPathModel::$store.'\Config\Exception';
 
         //This function can be used for defining your own way of handling errors during runtime,
         //for example in applications in which you need to do cleanup of data/files when a critical error happens,
@@ -104,11 +123,13 @@ class ErrorProvider extends ApplicationProvider {
     }
 
     /**
-     * @param null $errNo
-     * @param null $errStr
-     * @param null $errFile
-     * @param null $errLine
-     * @param null $errContext
+     * set error handler
+     *
+     * @param null|string $errNo
+     * @param null|string $errStr
+     * @param null|string $errFile
+     * @param null|string $errLine
+     * @param null|string $errContext
      */
     public function setErrorHandler($errNo=null, $errStr=null, $errFile=null, $errLine=null, $errContext=null)
     {
@@ -119,9 +140,7 @@ class ErrorProvider extends ApplicationProvider {
         // in general we will use the exception class
         // in the store/config directory to make it possible
         // to change the user-based exceptions.
-        $this->data['exception'] = $this->exception;
-
-        //constant object as default
+        $this->data['exception']            = $this->exception;
         $this->data['errType']              = 'Undefined';
         $this->data['errStrReal']           = $errStr;
         $this->data['errorClassNamespace']  = null;
@@ -133,27 +152,17 @@ class ErrorProvider extends ApplicationProvider {
         // and then clear the Uncaught statement from inside.
         $this->getUncaughtProcess();
 
+        //get status from context
         $this->getStatusFromContext();
-
-        if(is_array($meta=config('response.meta'))){
-
-            //set as the success object is false
-            $this->data['appExceptionSuccess']=[];
-        }
-        else{
-
-            //set as the success object is false
-            $this->data['appExceptionSuccess']=['success'=>(bool)false,'status'=>$this->data['status']];
-        }
 
         //get lang message for exception
         $this->getLangMessageForException();
 
         if(property_exists(core(),'exceptiontrace')){
 
-            $customExceptionTrace=core()->exceptiontrace;
-            $this->data['errFile']=$customExceptionTrace['file'];
-            $this->data['errLine']=$customExceptionTrace['line'];
+            $customExceptionTrace   = core()->exceptiontrace;
+            $this->data['errFile']  = $customExceptionTrace['file'];
+            $this->data['errLine']  = $customExceptionTrace['line'];
         }
 
         $environment = $this->getEnvironmentStatus();
@@ -167,7 +176,7 @@ class ErrorProvider extends ApplicationProvider {
                 'An unexpected external error has occurred' :
                 $this->data['errStrReal'];
 
-            $appException=$this->getAppException($environment,$externalMessage);
+            $this->result = $this->getAppException($environment,$externalMessage);
 
 
             //Get or Set the HTTP response code
@@ -179,7 +188,7 @@ class ErrorProvider extends ApplicationProvider {
         }
         else{
 
-            $appException=$this->getAppException($environment,$this->data['errStrReal']);
+            $this->result = $this->getAppException($environment,$this->data['errStrReal']);
 
             //Get or Set the HTTP response code
             http_response_code($this->data['status']);
@@ -192,18 +201,17 @@ class ErrorProvider extends ApplicationProvider {
             $this->app->register('productionLogMessage',core()->out->outputFormatter($productionLogMessage));
         }
 
-        if(app()->has('requestExpected') && config('app.requestWithError')===true){
-            $appException['request']['expected'] = app()->get('requestExpected');
-        }
+        // exception extender The exception information
+        // that is presented as an extra to the exception result set.
+        $this->result = $this->getExceptionExtender();
 
 
         //set json app exception
-        core()->routerResult=$appException;
+        core()->routerResult = $this->result;
 
         $restaOutHandle = null;
 
         if(!defined('responseApp')){
-
             $restaOutHandle=core()->out->handle();
         }
 
@@ -212,14 +220,13 @@ class ErrorProvider extends ApplicationProvider {
             //header set and symfony response call
             header('Content-type:application/json;charset=utf-8');
 
-            echo json_encode(core()->out->outputFormatter($appException));
+            echo json_encode(core()->out->outputFormatter($this->result));
             exit();
         }
         else{
             echo $restaOutHandle;
             exit();
         }
-
     }
 
     /**
@@ -239,19 +246,31 @@ class ErrorProvider extends ApplicationProvider {
     }
 
     /**
-     * @method fatalErrorShutdownHandler
+     * get exception extender object
+     *
+     * @return mixed
+     */
+    private function getExceptionExtender()
+    {
+        return $this->app->resolve(ExceptionExtender::class,
+            ['result'=>$this->result])->getResult();
+    }
+
+    /**
+     * fatal error shutdown handler
+     *
+     * @return mixed
      */
     public function fatalErrorShutdownHandler()
     {
         //get fatal error
-        $last_error =error_get_last();
+        $last_error = error_get_last();
 
-        $this->inStactTrace($last_error);
+        $this->inStackTrace($last_error);
 
-        if($last_error!==null){
+        if(!is_null($last_error)){
 
             if(!defined('methodName')){
-
                 define('methodName',null);
             }
 
@@ -273,7 +292,7 @@ class ErrorProvider extends ApplicationProvider {
     /**
      * @param $error
      */
-    public function inStactTrace($error)
+    public function inStackTrace($error)
     {
         if(isset(core()->urlComponent)){
             if(!preg_match('@'.core()->urlComponent['project'].'@',$error['file']) && !isset(core()->exceptionFile)){
@@ -289,8 +308,8 @@ class ErrorProvider extends ApplicationProvider {
     /**
      * @return void|mixed
      */
-    private function getLangMessageForException(){
-
+    private function getLangMessageForException()
+    {
         $clone = clone $this;
 
         if(property_exists(core(),'exceptionTranslate')){
@@ -339,10 +358,12 @@ class ErrorProvider extends ApplicationProvider {
     }
 
     /**
+     * get uncaught process
+     *
      * @return void|mixed
      */
-    private function getUncaughtProcess(){
-
+    private function getUncaughtProcess()
+    {
         // catch exception via preg match
         // and then clear the Uncaught statement from inside.
         if(preg_match('@(.*?):@is',$this->data['errStrReal'],$errArr)){
@@ -362,6 +383,16 @@ class ErrorProvider extends ApplicationProvider {
         else{
             $this->data['errContext']['trace']=$this->data['errStrReal'];
         }
+    }
+
+    /**
+     * get result for exception
+     *
+     * @return array
+     */
+    public function getResult()
+    {
+        return $this->result;
     }
 
 }
