@@ -117,6 +117,6 @@ trait ConsoleArguments
             define('group',StaticPathList::$projectPrefixGroup);
         }
 
-        if(!defined('app') and isset($arguments[2])) define('app',isset($app) ?: null);
+        if(!defined('app') and isset($arguments[2])) define('app',isset($app) ? $app : null);
     }
 }
