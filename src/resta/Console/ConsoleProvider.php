@@ -12,11 +12,13 @@ class ConsoleProvider extends ApplicationProvider
     use ConsoleArguments;
 
     /**
-     * @var $consoleClassNamespace
+     * @var string
      */
     public $consoleClassNamespace;
 
     /**
+     * check console namespace
+     *
      * @param callable $callback
      * @return mixed
      */
@@ -65,7 +67,8 @@ class ConsoleProvider extends ApplicationProvider
     }
 
     /**
-     * @method consoleProcess
+     * console process
+     *
      * @return mixed
      */
     protected function consoleProcess()
@@ -119,6 +122,8 @@ class ConsoleProvider extends ApplicationProvider
     }
 
     /**
+     * prepare commander
+     *
      * @param $commander
      * @param callable $callback
      * @return mixed
@@ -127,11 +132,11 @@ class ConsoleProvider extends ApplicationProvider
     {
         // closure binding custom command,move custom namespace as specific
         // call prepare commander firstly for checking command builder
-        $closureCommand     = app()->resolve(ClosureDispatcher::class,['bind'=>$commander]);
+        $closureCommand = app()->resolve(ClosureDispatcher::class,['bind'=>$commander]);
 
         //assign commander method name
         $closureCommand->prepareBind['methodName']=$this->getConsoleClassMethod();
-        $prepareCommander   = $commander->prepareCommander($closureCommand);
+        $prepareCommander = $commander->prepareCommander($closureCommand);
 
         if(!$prepareCommander['status']){
             echo $commander->exception($prepareCommander);
@@ -143,6 +148,8 @@ class ConsoleProvider extends ApplicationProvider
     }
 
     /**
+     * is runnable kernel command list
+     *
      * @return bool
      */
     private function isRunnableKernelCommandList()

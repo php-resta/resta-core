@@ -6,15 +6,15 @@ use Resta\Support\Utils;
 use Resta\Url\UrlVersionIdentifier;
 use Resta\Foundation\PathManager\StaticPathList;
 
-trait ConsoleArguments {
-
+trait ConsoleArguments
+{
     /**
-     * @method getArguments
+     * get arguments
+     *
      * @return array
      */
     public function getArguments()
     {
-
         //if there is no arguments constant
         if(!defined('arguments'))  define ('arguments',['api']);
 
@@ -23,43 +23,47 @@ trait ConsoleArguments {
     }
 
     /**
-     * @method getConsoleClass
+     * get console class
+     *
      * @return mixed
      */
-    public function getConsoleClass(){
-
+    public function getConsoleClass()
+    {
         return current($this->getArguments());
     }
 
     /**
-     * @method getConsoleClassMethod
+     * get console class method
+     *
      * @return mixed
      */
-    public function getConsoleClassMethod(){
-
+    public function getConsoleClassMethod()
+    {
         return $this->getArguments()[1];
     }
 
     /**
-     * @method getConsoleClassMethod
-     * @return mixed
+     * get console class real arguments
+     *
+     * @return array
      */
-    public function getConsoleClassRealArguments(){
-
+    public function getConsoleClassRealArguments()
+    {
         return array_slice($this->getArguments(),2);
     }
 
     /**
-     * @method getConsoleArgumentsWithKey
+     * get console arguments with key
+     *
      * @return array
      */
-    public function getConsoleArgumentsWithKey(){
-
+    public function getConsoleArgumentsWithKey()
+    {
         //get console class real arguments
-        $getConsoleClassRealArguments=$this->getConsoleClassRealArguments();
+        $getConsoleClassRealArguments = $this->getConsoleClassRealArguments();
 
-        $listKey=[];
-        $listKey['project']=null;
+        $listKey = [];
+        $listKey['project'] = null;
 
         if(property_exists($this,'consoleClassNamespace')){
             $listKey['class'] = strtolower(class_basename($this->consoleClassNamespace));
@@ -69,50 +73,50 @@ trait ConsoleArguments {
         foreach($getConsoleClassRealArguments as $key=>$value){
 
             if($key=="0"){
-
-                $listKey['project']=$value;
+                $listKey['project'] = $value;
             }
             else{
 
-                $colonExplode=explode(":",$value);
-                $listKey[strtolower($colonExplode[0])]=ucfirst($colonExplode[1]);
+                $colonExplode = explode(":",$value);
+                $listKey[strtolower($colonExplode[0])] = ucfirst($colonExplode[1]);
             }
-
         }
 
         //get app version
-        $listKey['version']=UrlVersionIdentifier::version();
+        $listKey['version'] = UrlVersionIdentifier::version();
 
         return $listKey;
-
     }
 
     /**
+     * console class namespace
+     *
      * @return string
      */
-    public function consoleClassNamespace(){
+    public function consoleClassNamespace()
+    {
         return 'Resta\Console\\Source\\'.$this->getConsoleClass().'\\'.$this->getConsoleClass();
     }
 
     /**
-     * @method defineAppnameForCustomConsole
+     * define app name for custom console
+     *
      * @return void
      */
     public function defineAppnameForCustomConsole()
     {
-
-        $arguments=$this->getArguments();
+        $arguments = $this->getArguments();
 
         $this->getConsoleArgumentsWithKey();
 
         if(isset($arguments[2])){
-            $app=$arguments[2];
+            $app = $arguments[2];
         }
 
         if(!defined('group')){
             define('group',StaticPathList::$projectPrefixGroup);
         }
 
-        if(!defined('app') and isset($arguments[2])) define('app',$app);
+        if(!defined('app') and isset($arguments[2])) define('app',isset($app) ?: null);
     }
 }
