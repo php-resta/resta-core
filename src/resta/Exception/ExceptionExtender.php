@@ -36,6 +36,16 @@ class ExceptionExtender extends ApplicationProvider
     }
 
     /**
+     * get result for exception
+     *
+     * @return array
+     */
+    public function getResult()
+    {
+        return $this->result;
+    }
+
+    /**
      * get request expected items
      *
      * @return void
@@ -49,15 +59,5 @@ class ExceptionExtender extends ApplicationProvider
                 $this->result['request']['expected'] = $requestExpected;
             }
         }
-    }
-
-    /**
-     * get result for exception
-     *
-     * @return array
-     */
-    public function getResult()
-    {
-        return $this->result;
     }
 }
