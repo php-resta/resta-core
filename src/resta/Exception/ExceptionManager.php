@@ -94,6 +94,18 @@ class ExceptionManager extends ExceptionTrace implements ExceptionContracts
     }
 
     /**
+     * file not found exception
+     *
+     * @param null|string $msg
+     * @return mixed|void
+     *
+     */
+    public function fileNotFoundException($msg=null)
+    {
+        return $this->fileNotFound($msg);
+    }
+
+    /**
      * out of range exception
      *
      * @param null|string $msg

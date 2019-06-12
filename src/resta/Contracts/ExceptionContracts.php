@@ -2,8 +2,8 @@
 
 namespace Resta\Contracts;
 
-interface ExceptionContracts {
-
+interface ExceptionContracts
+{
     /**
      * @param null|string $msg
      * @return mixed
@@ -45,6 +45,12 @@ interface ExceptionContracts {
      * @return mixed
      */
     public function notFoundException($msg=null);
+
+    /**
+     * @param null|string $msg
+     * @return mixed
+     */
+    public function fileNotFoundException($msg=null);
 
     /**
      * @param null|string $msg

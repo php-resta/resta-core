@@ -2,6 +2,7 @@
 
 use Faker\Factory;
 use Faker\Generator;
+use Resta\Support\Filesystem;
 use Resta\Logger\LoggerHandler;
 use Store\Services\RequestService;
 use Resta\Exception\ExceptionManager;
@@ -138,6 +139,17 @@ if (!function_exists('dd')) {
         $args = func_get_args();
         call_user_func_array('dump', $args);
         die();
+    }
+}
+
+if (!function_exists('files')) {
+
+    /**
+     * @return Filesystem
+     */
+    function files() : Filesystem
+    {
+        return app()->resolve(Filesystem::class);
     }
 }
 
