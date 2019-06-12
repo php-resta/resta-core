@@ -8,6 +8,8 @@ use Resta\Foundation\ApplicationProvider;
 
 class ExceptionTrace extends ApplicationProvider
 {
+    protected const removeExceptionFileItems = 'Helpers';
+
     /**
      * ExceptionTrace constructor.
      * @param $app
@@ -79,7 +81,7 @@ class ExceptionTrace extends ApplicationProvider
      */
     public function __get($name)
     {
-        $this->customException($name);
+        $this->customException($name,null,debug_backtrace());
     }
 
     /**
@@ -87,8 +89,9 @@ class ExceptionTrace extends ApplicationProvider
      *
      * @param $name
      * @param null|string $msg
+     * @param array $trace
      */
-    public function customException($name,$msg=null)
+    public function customException($name,$msg=null,$trace=array())
     {
         //We use the magic method for the exception and
         //call the exception class in the application to get the instance.
@@ -112,9 +115,11 @@ class ExceptionTrace extends ApplicationProvider
 
         if(isset($callNamespace)){
 
+            $traceForCustom = Utils::removeTrace($trace,self::removeExceptionFileItems);
+
             // we will set the information about the exception trace,
             // and then bind it specifically to the event method.
-            $customExceptionTrace                       = Utils::trace(1);
+            $customExceptionTrace                       = $traceForCustom[0];
             $customExceptionTrace['exception']          = $nameNamespace;
             $customExceptionTrace['callNamespace']      = $callNamespace;
             $customExceptionTrace['parameters']['get']  = get();
@@ -149,6 +154,6 @@ class ExceptionTrace extends ApplicationProvider
      */
     public function __call($name, $arguments)
     {
-        $this->customException($name,current($arguments));
+        $this->customException($name,current($arguments),debug_backtrace());
     }
 }

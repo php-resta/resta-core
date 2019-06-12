@@ -4,6 +4,7 @@ namespace Resta\Support;
 
 use Resta\Support\YamlManager;
 use Resta\Container\ContainerResolve;
+use Resta\Support\YamlManager;
 
 class Utils
 {
@@ -84,7 +85,7 @@ class Utils
             return strtolower($argument);
         },$argument);
     }
-    
+
     /**
      * @param array $data
      * @return string
@@ -241,8 +242,8 @@ class Utils
         $rootDelete=str_replace(root.''.DIRECTORY_SEPARATOR.'src'.DIRECTORY_SEPARATOR.'app'.DIRECTORY_SEPARATOR.'','',$namespace);
 
         return 'App\\'.self::generatorNamespace(
-          explode(''.DIRECTORY_SEPARATOR.'',$rootDelete)
-        );
+                explode(''.DIRECTORY_SEPARATOR.'',$rootDelete)
+            );
 
     }
 
@@ -337,7 +338,7 @@ class Utils
         }
         closedir($dp);
     }
-    
+
     /**
      * @return array
      */
@@ -451,5 +452,24 @@ class Utils
             return explode("/",request()->getPathInfo());
         }
         return BootStaticManager::getRequestPath();
+    }
+
+    /**
+     * @param $trace
+     * @param null $remove
+     * @return array
+     */
+    public static function removeTrace($trace,$remove=null)
+    {
+        $list = [];
+
+        foreach($trace as $key=>$item){
+
+            if(isset($item['file']) && !preg_match('@'.$remove.'@',$item['file'])){
+                $list[$key] = $item;
+            }
+        }
+
+        return array_values($list);
     }
 }
