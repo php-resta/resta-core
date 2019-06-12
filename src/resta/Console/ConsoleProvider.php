@@ -5,6 +5,7 @@ namespace Resta\Console;
 use Resta\Support\Utils;
 use Resta\Support\ClosureDispatcher;
 use Resta\Foundation\ApplicationProvider;
+use Resta\Contracts\ConsoleOutputterContracts;
 
 class ConsoleProvider extends ApplicationProvider
 {
@@ -14,7 +15,7 @@ class ConsoleProvider extends ApplicationProvider
     /**
      * @var string
      */
-    public $consoleClassNamespace;
+    protected $consoleClassNamespace;
 
     /**
      * check console namespace
@@ -39,10 +40,10 @@ class ConsoleProvider extends ApplicationProvider
     /**
      * console event handler
      *
-     * @param $args
-     * @return mixed
+     * @param array $args
+     * @return void|mixed
      */
-    protected function consoleEventHandler($args)
+    protected function consoleEventHandler($args=array())
     {
         if(isset($this->app['eventDispatcher'])){
 
@@ -104,7 +105,7 @@ class ConsoleProvider extends ApplicationProvider
     /**
      * console application handle
      *
-     * @return mixed
+     * @return void|mixed
      */
     public function handle()
     {
@@ -124,18 +125,20 @@ class ConsoleProvider extends ApplicationProvider
     /**
      * prepare commander
      *
-     * @param $commander
+     * @param ConsoleOutputterContracts $commander
      * @param callable $callback
      * @return mixed
      */
-    protected function prepareCommander($commander,callable $callback)
+    protected function prepareCommander(ConsoleOutputterContracts $commander,callable $callback)
     {
         // closure binding custom command,move custom namespace as specific
         // call prepare commander firstly for checking command builder
         $closureCommand = app()->resolve(ClosureDispatcher::class,['bind'=>$commander]);
 
         //assign commander method name
-        $closureCommand->prepareBind['methodName']=$this->getConsoleClassMethod();
+        $closureCommand->prepareBind['methodName'] = $this->getConsoleClassMethod();
+
+        dd($commander);
         $prepareCommander = $commander->prepareCommander($closureCommand);
 
         if(!$prepareCommander['status']){

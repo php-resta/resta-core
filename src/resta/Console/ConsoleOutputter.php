@@ -4,11 +4,12 @@ namespace Resta\Console;
 
 use Resta\Traits\ConsoleColor;
 use Resta\Support\FileProcess;
+use Resta\Contracts\ConsoleOutputterContracts;
 use Resta\Foundation\PathManager\StaticPathList;
 use Resta\Foundation\PathManager\StaticPathModel;
 
-class ConsoleOutputter extends ConsolePrepare {
-
+class ConsoleOutputter extends ConsolePrepare implements ConsoleOutputterContracts
+{
     //console color
     use ConsoleColor;
 
@@ -23,45 +24,44 @@ class ConsoleOutputter extends ConsolePrepare {
     private $background_colors = array();
 
     /**
-     * @var $project
+     * @var string
      */
     public $project;
 
     /**
-     * @var $argument
+     * @var array
      */
-    public  $argument;
+    public  $argument = array();
 
     /**
-     * @var $file
+     * @var string
      */
     public $file;
 
     /**
-     * @var $directory
+     * @var array
      */
-    public $directory=array();
+    public $directory = array();
 
     /**
-     * @var $app
+     * @var string
      */
     public $app;
 
     /**
-     * @var $table
+     * @var object
      */
     public $table;
 
     /**
-     * @var $touch
+     * @var array
      */
-    public $touch=array();
+    public $touch = array();
 
     /**
      * ConsoleOutputter constructor.
      * @param $argument
      * @param $app
-     * @param $command
      */
     public function __construct($argument,$app) {
 
@@ -92,11 +92,11 @@ class ConsoleOutputter extends ConsolePrepare {
         $this->background_colors['cyan'] = '46';
         $this->background_colors['light_gray'] = '47';
 
-        $this->app=$app;
-        $this->argument=$argument;
-        $this->file=new FileProcess();
+        $this->app = $app;
+        $this->argument = $argument;
+        $this->file = new FileProcess();
         require_once ('ConsoleTable.php');
-        $this->table=new \console_table();
+        $this->table = new \console_table();
 
 
         if(isset($this->argument['project'])){
@@ -107,11 +107,11 @@ class ConsoleOutputter extends ConsolePrepare {
             $this->argument['versionNamespace']     = app()->namespace()->version();
 
 
-            $this->argument['project']=$this->argument['project'].'\\'.StaticPathList::$projectPrefixGroup;
+            $this->argument['project'] = $this->argument['project'].'\\'.StaticPathList::$projectPrefixGroup;
 
 
-            $this->project=StaticPathModel::appPath().'/'.str_replace('\\','/',$this->argument['project']);
-            
+            $this->project = StaticPathModel::appPath().'/'.str_replace('\\','/',$this->argument['project']);
+
 
         }
 
@@ -139,15 +139,17 @@ class ConsoleOutputter extends ConsolePrepare {
     }
 
     /**
-     * @param $commander
-     * @return string
+     * @param array $commander
+     * @return mixed|string
      */
-    public function exception($commander){
+    public function exception($commander=array()){
         return $this->error('[['.$commander['argument'].']] parameter is missing for commander');
     }
 
     /**
      * @param $data
+     * @param string $seperate
+     * @return mixed|string
      */
     public function checkGroupArgument($data,$seperate="\\"){
 

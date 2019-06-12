@@ -2,17 +2,19 @@
 
 namespace Resta\Console;
 
-use Resta\Contracts\ConsolePrepareContracts;
-
-class ConsolePrepare implements ConsolePrepareContracts
+/**
+ * @property  commandRule
+ * @property  argument
+ */
+class ConsolePrepare
 {
     /**
      * @var array $prepareBind
      */
-    protected $prepareBind=[];
+    protected $prepareBind = [];
 
     /**
-     * @param $commander
+     * @param object $commander
      * @return array|mixed
      */
     public function prepareCommander($commander)
