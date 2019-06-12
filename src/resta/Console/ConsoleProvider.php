@@ -138,7 +138,6 @@ class ConsoleProvider extends ApplicationProvider
         //assign commander method name
         $closureCommand->prepareBind['methodName'] = $this->getConsoleClassMethod();
 
-        dd($commander);
         $prepareCommander = $commander->prepareCommander($closureCommand);
 
         if(!$prepareCommander['status']){
