@@ -4,7 +4,6 @@ namespace Resta\Support;
 
 use Resta\Support\YamlManager;
 use Resta\Container\ContainerResolve;
-use Resta\Support\YamlManager;
 
 class Utils
 {
