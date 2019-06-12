@@ -34,7 +34,7 @@ class ConsoleOutputter extends ConsolePrepare implements ConsoleOutputterContrac
     public  $argument = array();
 
     /**
-     * @var string
+     * @var object
      */
     public $file;
 
