@@ -34,7 +34,7 @@ if (!function_exists('app')) {
 if (!function_exists('appInstance')) {
 
     /**
-     * @return ApplicationProvider
+     * @return mixed
      */
     function appInstance()
     {
