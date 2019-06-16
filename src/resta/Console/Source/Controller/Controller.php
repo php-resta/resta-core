@@ -148,7 +148,7 @@ class Controller extends ConsoleOutputter {
 
             rename($path,$newPathName);
 
-            $getAllFiles = Utils::getAllFilesInDirectory($newPathName);
+            $getAllFiles = files()->getAllFilesInDirectory($newPathName);
 
             $getPathWithPhpExtensions = Utils::getPathWithPhpExtension($getAllFiles,$newPathName);
 
