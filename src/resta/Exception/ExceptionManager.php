@@ -17,7 +17,8 @@ use InvalidArgumentException;
 use Resta\Contracts\ExceptionContracts;
 
 /**
- * @property void notFound
+ * @method notFound($name,$arguments=array())
+ * @method fileNotFound($name,$arguments=array())
  */
 class ExceptionManager extends ExceptionTrace implements ExceptionContracts
 {
@@ -85,7 +86,7 @@ class ExceptionManager extends ExceptionTrace implements ExceptionContracts
      * not found exception
      *
      * @param null|string $msg
-     * @return mixed|void
+     * @return null
      *
      */
     public function notFoundException($msg=null)

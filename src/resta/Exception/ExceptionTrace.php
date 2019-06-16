@@ -150,9 +150,9 @@ class ExceptionTrace extends ApplicationProvider
      * set custom exception with message
      *
      * @param $name
-     * @param $arguments
+     * @param array $arguments
      */
-    public function __call($name, $arguments)
+    public function __call($name, $arguments=array())
     {
         $this->customException($name,current($arguments),debug_backtrace());
     }
