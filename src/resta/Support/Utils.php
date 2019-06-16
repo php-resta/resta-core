@@ -294,31 +294,6 @@ class Utils
     }
 
     /**
-     * @param $dir
-     * @param $dirPermissions
-     * @param $filePermissions
-     */
-    public  static function chmod_r($dir, $dirPermissions, $filePermissions)
-    {
-        $dp = opendir($dir);
-        while($file = readdir($dp)) {
-            if (($file == ".") || ($file == ".."))
-                continue;
-
-            $fullPath = $dir."/".$file;
-
-            if(is_dir($fullPath)) {
-                chmod($fullPath, $dirPermissions);
-                self::chmod_r($fullPath, $dirPermissions, $filePermissions);
-            } else {
-                chmod($fullPath, $filePermissions);
-            }
-
-        }
-        closedir($dp);
-    }
-
-    /**
      * @return array
      */
     public static function getServiceConf()
@@ -368,7 +343,7 @@ class Utils
 
     /**
      * @param $files
-     * @param null $reelPath
+     * @param null|string $reelPath
      * @return array
      */
     public static function getPathWithPhpExtension($files,$reelPath=null)
@@ -435,7 +410,7 @@ class Utils
 
     /**
      * @param $trace
-     * @param null $remove
+     * @param null|string $remove
      * @return array
      */
     public static function removeTrace($trace,$remove=null)
