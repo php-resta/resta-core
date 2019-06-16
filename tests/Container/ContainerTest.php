@@ -115,4 +115,30 @@ class ContainerTest extends AbstractTest
         $this->assertSame('c2',static::$app->get('b1.1'));
         $this->assertSame(null,static::$app->get('b1.2'));
     }
+
+    public function testContainerTerminate()
+    {
+        static::$app->terminate('a1','0');
+
+        $this->assertSame(null,static::$app->get('a1.0'));
+        $this->assertSame(null,static::$app['a1']['0']);
+        $this->assertSame(null,app()->get('a1.0'));
+        $this->assertSame('c2',static::$app->get('a1.1'));
+        $this->assertSame('c2',static::$app['a1']['1']);
+        $this->assertSame('c2',app()->get('a1.1'));
+
+        static::$app->terminate('a1','1');
+
+        $this->assertSame(null,static::$app->get('a1.1'));
+        $this->assertSame(null,static::$app['a1']['1']);
+        $this->assertSame(null,app()->get('a1.1'));
+        $this->assertSame([],static::$app->get('a1'));
+        $this->assertSame([],app()->get('a1'));
+
+        static::$app->terminate('a1');
+        $this->assertSame(null,static::$app->get('a1'));
+        $this->assertSame(null,static::$app['a1']);
+        $this->assertSame(null,app()->get('a1'));
+
+    }
 }

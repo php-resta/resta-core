@@ -2,27 +2,27 @@
 
 namespace Resta\Container;
 
-use Resta\Support\Utils;
+use DI\NotFoundException;
+use DI\DependencyException;
 use Resta\Console\ConsoleBindings;
 use Resta\Contracts\ContainerContracts;
-use Resta\Container\ContainerKernelAssigner;
 
 class Container implements ContainerContracts,\ArrayAccess
 {
     /**
-     * @var $singleton
+     * @var bool
      */
-    public $singleton=false;
+    public $singleton = false;
 
     /**
-     * @var $kernel
+     * @var
      */
     public $kernel;
 
     /**
      * @var array  $instance
      */
-    private static $instance=[];
+    private static $instance = [];
 
     /**
      * @var array $instances
@@ -32,17 +32,17 @@ class Container implements ContainerContracts,\ArrayAccess
     /**
      * @var array $bindParams
      */
-    private static $bindParams=[];
+    private static $bindParams = [];
 
     /**
-     * @var $unregister
+     * @var
      */
     protected $unregister;
 
     /**
      * @var array
      */
-    protected $values=[];
+    protected $values = [];
 
     /**
      * @param $make
@@ -62,8 +62,8 @@ class Container implements ContainerContracts,\ArrayAccess
      * @param null $callback
      * @return mixed
      *
-     * @throws \DI\DependencyException
-     * @throws \DI\NotFoundException
+     * @throws DependencyException
+     * @throws NotFoundException
      */
     public function bind($object=null,$callback=null)
     {
@@ -79,8 +79,8 @@ class Container implements ContainerContracts,\ArrayAccess
      * @param bool $sync
      * @return mixed
      *
-     * @throws \DI\DependencyException
-     * @throws \DI\NotFoundException
+     * @throws DependencyException
+     * @throws NotFoundException
      */
     private function build($object,$callback,$sync=false)
     {
@@ -103,8 +103,8 @@ class Container implements ContainerContracts,\ArrayAccess
      * @param $callback
      * @return mixed
      *
-     * @throws \DI\DependencyException
-     * @throws \DI\NotFoundException
+     * @throws DependencyException
+     * @throws NotFoundException
      */
     private function consoleKernelObject($object,$callback,$container=false)
     {
@@ -122,8 +122,8 @@ class Container implements ContainerContracts,\ArrayAccess
      * @param bool $container
      * @return mixed
      *
-     * @throws \DI\DependencyException
-     * @throws \DI\NotFoundException
+     * @throws DependencyException
+     * @throws NotFoundException
      */
     private function consoleKernelObjectChecker($object,$callback,$container=false)
     {
@@ -143,8 +143,8 @@ class Container implements ContainerContracts,\ArrayAccess
      * @param $object
      * @param $callback
      *
-     * @throws \DI\DependencyException
-     * @throws \DI\NotFoundException
+     * @throws DependencyException
+     * @throws NotFoundException
      */
     private function consoleShared($object,$callback)
     {
@@ -159,8 +159,8 @@ class Container implements ContainerContracts,\ArrayAccess
      * @param bool $sync
      * @return mixed
      *
-     * @throws \DI\DependencyException
-     * @throws \DI\NotFoundException
+     * @throws DependencyException
+     * @throws NotFoundException
      */
     public function containerBuild($object,$callback,$sync=false)
     {
@@ -289,8 +289,8 @@ class Container implements ContainerContracts,\ArrayAccess
     /**
      * @return mixed
      *
-     * @throws \DI\DependencyException
-     * @throws \DI\NotFoundException
+     * @throws DependencyException
+     * @throws NotFoundException
      */
     public function kernelAssigner()
     {
@@ -304,8 +304,8 @@ class Container implements ContainerContracts,\ArrayAccess
      * @param bool $container
      * @return mixed
      *
-     * @throws \DI\DependencyException
-     * @throws \DI\NotFoundException
+     * @throws DependencyException
+     * @throws NotFoundException
      */
     public function make($object=null,$callback=null,$container=false)
     {
@@ -338,8 +338,11 @@ class Container implements ContainerContracts,\ArrayAccess
     }
 
     /**
-     * @param $offset
-     * @return null
+     * @param mixed $offset
+     * @return mixed
+     *
+     * @throws DependencyException
+     * @throws NotFoundException
      */
     public function offsetGet($offset) {
 
@@ -416,8 +419,8 @@ class Container implements ContainerContracts,\ArrayAccess
      * @param array $bind
      * @return mixed
      *
-     * @throws \DI\DependencyException
-     * @throws \DI\NotFoundException
+     * @throws DependencyException
+     * @throws NotFoundException
      */
     public function resolve($class,$bind=array())
     {
@@ -430,7 +433,7 @@ class Container implements ContainerContracts,\ArrayAccess
         if(!isset(self::$instance[$class])){
 
             //bind params object
-            self::$bindParams[$class]=$bind;
+            self::$bindParams[$class] = $bind;
 
             //By singleton checking, we solve the dependency injection of the given class.
             //Thus, each class can be called together with its dependency.
@@ -466,8 +469,8 @@ class Container implements ContainerContracts,\ArrayAccess
      * @param null $callback
      * @return mixed
      *
-     * @throws \DI\DependencyException
-     * @throws \DI\NotFoundException
+     * @throws DependencyException
+     * @throws NotFoundException
      */
     public function share($object=null,$callback=null)
     {
@@ -487,8 +490,8 @@ class Container implements ContainerContracts,\ArrayAccess
     }
 
     /**
-     * @throws \DI\DependencyException
-     * @throws \DI\NotFoundException
+     * @throws DependencyException
+     * @throws NotFoundException
      */
     private function serviceContainerObject()
     {
@@ -550,11 +553,13 @@ class Container implements ContainerContracts,\ArrayAccess
         // sent to just terminate a key.
         if($object===null){
             unset(core()->{$key});
+            unset($this->singleton()->{$key});
             return false;
         }
 
         // It is used to delete
         // both key and sequence members.
+        unset($this->singleton()->{$key}[$object]);
         unset(core()->{$key}[$object]);
     }
 
