@@ -2,39 +2,12 @@
 
 namespace Resta\Support;
 
-use Resta\Container\ContainerResolve;
-
 class Utils
 {
     /**
      * @var array $bool
      */
     private static $bool = [];
-
-    /**
-     * @return ContainerResolve
-     */
-    public static function callBuild()
-    {
-        //di-container
-        return ContainerResolve::buildDevContainer();
-    }
-
-
-    /**
-     * get container resolve
-     *
-     * @param null $class
-     * @return mixed
-     */
-    public static function resolve($class=null)
-    {
-        //class resolve
-        if($class!==null){
-            $container = self::callBuild();
-            return $container->get($class);
-        }
-    }
 
     /**
      * string upper case
