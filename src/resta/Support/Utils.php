@@ -187,11 +187,14 @@ class Utils
                 $content=str_replace($key,$value,$content);
             }
 
-            $dt = fopen($executionPath, "w");
-            fwrite($dt, $content);
-            fclose($dt);
+            $forWrite = fopen($executionPath, "w");
 
-            return true;
+            if($forWrite!==false){
+                fwrite($forWrite, $content);
+                fclose($forWrite);
+
+                return true;
+            }
         }
 
         return false;
