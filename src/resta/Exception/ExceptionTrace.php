@@ -13,7 +13,7 @@ class ExceptionTrace extends ApplicationProvider
     /**
      * ExceptionTrace constructor.
      * @param $app
-     * @param null $name
+     * @param null|string $name
      * @param array $params
      */
     public function __construct($app,$name=null,$params=array())
