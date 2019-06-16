@@ -2,7 +2,6 @@
 
 namespace Resta\Support;
 
-use Resta\Support\YamlManager;
 use Resta\Container\ContainerResolve;
 
 class Utils
@@ -10,28 +9,23 @@ class Utils
     /**
      * @var array $bool
      */
-    private static $bool=[];
+    private static $bool = [];
 
     /**
-     * @var array
-     */
-    private static $recursiveArray= [];
-
-    /**
-     * @return \DI\Container
+     * @return ContainerResolve
      */
     public static function callBuild()
     {
         //di-container
-        return \DI\ContainerBuilder::buildDevContainer();
+        return ContainerResolve::buildDevContainer();
     }
 
 
     /**
+     * get container resolve
+     *
      * @param null $class
      * @return mixed
-     * @throws \DI\DependencyException
-     * @throws \DI\NotFoundException
      */
     public static function resolve($class=null)
     {
@@ -43,6 +37,8 @@ class Utils
     }
 
     /**
+     * string upper case
+     *
      * @param $argument
      * @param bool $shift
      * @return array
