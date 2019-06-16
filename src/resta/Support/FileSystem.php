@@ -593,7 +593,7 @@ class Filesystem
                     if ($include_dirs) {$subresults[] = str_replace($basedir, '', $path);}
                     // optionally get file list for all subdirectories
                     if ($recursive) {
-                        $subdirresults = self::getAllFilesInDirectory($path, $recursive, $basedir, $include_dirs);
+                        $subdirresults = $this->getAllFilesInDirectory($path, $recursive, $basedir, $include_dirs);
                         $results = array_merge($results, $subdirresults);
                     }
                 } else {
