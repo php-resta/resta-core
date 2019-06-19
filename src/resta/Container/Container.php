@@ -210,6 +210,10 @@ class Container implements ContainerContracts,\ArrayAccess
         // we need to be able to control the string or array within the container.
         foreach (explode(".",$abstract) as $item){
             $container = $container[$item];
+
+            if(is_null($container)){
+                return null;
+            }
         }
 
         return $container;
