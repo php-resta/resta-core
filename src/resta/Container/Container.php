@@ -209,7 +209,7 @@ class Container implements ContainerContracts,\ArrayAccess
         // the has method can have a dotted string value so
         // we need to be able to control the string or array within the container.
         foreach (explode(".",$abstract) as $item){
-            if(isset($container[$item])){
+            if(isset($container[$item]) || empty($container[$item])){
                 $container = $container[$item];
             }
             else{
@@ -384,8 +384,8 @@ class Container implements ContainerContracts,\ArrayAccess
 
             // where we will assign both the global instance
             // and the registered application object.
-            $this->setAppInstance($this->singleton());
             $this->setAppInstance(core());
+            $this->setAppInstance($this->singleton());
 
             return false;
         }
