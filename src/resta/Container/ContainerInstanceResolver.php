@@ -42,6 +42,12 @@ class ContainerInstanceResolver
                 return $this->container()[$name];
             }
 
+            // if there is no $name value in the container as the method parameter,
+            // we check this value directly in the core object.
+            if(property_exists(core(),$name)){
+                return core()->{$name};
+            }
+
         }
         return null;
     }
