@@ -209,10 +209,16 @@ class Container implements ContainerContracts,\ArrayAccess
         // the has method can have a dotted string value so
         // we need to be able to control the string or array within the container.
         foreach (explode(".",$abstract) as $item){
-            $container = $container[$item];
-
-            if(is_null($container)){
-                return null;
+            if(isset($container[$item])){
+                $container = $container[$item];
+            }
+            else{
+                if(empty($container[$item])){
+                    $container = $container[$item];
+                }
+                else{
+                    return null;
+                }
             }
         }
 
