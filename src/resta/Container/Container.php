@@ -209,7 +209,7 @@ class Container implements ContainerContracts,\ArrayAccess
         // the has method can have a dotted string value so
         // we need to be able to control the string or array within the container.
         foreach (explode(".",$abstract) as $item){
-            if(isset($container[$item]) || empty($container[$item])){
+            if(isset($container[$item])){
                 $container = $container[$item];
             }
             else{
@@ -244,14 +244,14 @@ class Container implements ContainerContracts,\ArrayAccess
                 // we are querying the value of
                 // the items corresponding to the dotted value in the container.
                 // the control result is transferred to the bools array.
-                $container = $this->get($item);
+                $container = $container[$item];
                 $bools[] = is_null($container) ? false : true;
             }
             else{
 
                 // if the container array corresponds to a string,
                 // the bools array is filled with the isset control directly.
-                $bools[] = $this->get($item) ? true : false;
+                $bools[] = isset($container[$item]) ? true : false;
             }
         }
 
@@ -384,8 +384,8 @@ class Container implements ContainerContracts,\ArrayAccess
 
             // where we will assign both the global instance
             // and the registered application object.
-            $this->setAppInstance(core());
             $this->setAppInstance($this->singleton());
+            $this->setAppInstance(core());
 
             return false;
         }
