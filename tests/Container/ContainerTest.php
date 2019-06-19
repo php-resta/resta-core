@@ -116,7 +116,7 @@ class ContainerTest extends AbstractTest
         $this->assertSame(null,static::$app->get('b1.2'));
     }**/
 
-    public function testContainerTerminate()
+    /**public function testContainerTerminate()
     {
         static::$app->terminate('a1','0');
 
@@ -140,5 +140,5 @@ class ContainerTest extends AbstractTest
         $this->assertFalse(false,isset(static::$app['a1']));
         $this->assertSame(null,app()->get('a1'));
 
-    }
+    }**/
 }
