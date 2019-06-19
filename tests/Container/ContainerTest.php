@@ -89,7 +89,7 @@ class ContainerTest extends AbstractTest
     /**
      * @return void|mixed
      */
-    /**public function testContainerGetHasArray()
+    public function testContainerGetHasArray()
     {
         static::$app->register('a1','0','c1');
         static::$app->register('a1','1','c2');
@@ -114,7 +114,7 @@ class ContainerTest extends AbstractTest
         $this->assertSame('c1',static::$app->get('b1.0'));
         $this->assertSame('c2',static::$app->get('b1.1'));
         $this->assertSame(null,static::$app->get('b1.2'));
-    }**/
+    }
 
     /**public function testContainerTerminate()
     {

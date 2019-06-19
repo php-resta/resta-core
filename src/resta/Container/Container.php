@@ -244,14 +244,14 @@ class Container implements ContainerContracts,\ArrayAccess
                 // we are querying the value of
                 // the items corresponding to the dotted value in the container.
                 // the control result is transferred to the bools array.
-                $container = $container[$item];
+                $container = $this->get($item);
                 $bools[] = is_null($container) ? false : true;
             }
             else{
 
                 // if the container array corresponds to a string,
                 // the bools array is filled with the isset control directly.
-                $bools[] = isset($container[$item]) ? true : false;
+                $bools[] = $this->get($item) ? true : false;
             }
         }
 
