@@ -213,7 +213,9 @@ class Container implements ContainerContracts,\ArrayAccess
                 $container = $container[$item];
             }
             else{
-                return null;
+                if(!is_null($container[$item])){
+                    $container = $container[$item];
+                }
             }
         }
 
