@@ -204,7 +204,7 @@ class Container implements ContainerContracts,\ArrayAccess
     public function get($abstract)
     {
         //get instance container
-        $container = $this;
+        $container = app();
 
         // the has method can have a dotted string value so
         // we need to be able to control the string or array within the container.
