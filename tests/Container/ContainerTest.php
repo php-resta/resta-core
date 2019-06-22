@@ -138,7 +138,28 @@ class ContainerTest extends AbstractTest
         static::$app->terminate('a1');
         $this->assertSame(null,static::$app->get('a1'));
         $this->assertFalse(false,isset(static::$app['a1']));
-        $this->assertSame(null,app()->get('a1'));
+
+
+        static::$app->terminate('b1','0');
+
+        $this->assertSame(null,static::$app->get('b1.0'));
+        $this->assertFalse(false,isset(static::$app['b1']['0']));
+        $this->assertSame(null,app()->get('b1.0'));
+        $this->assertSame('c2',static::$app->get('b1.1'));
+        $this->assertSame('c2',static::$app['b1']['1']);
+        $this->assertSame('c2',app()->get('b1.1'));
+
+        static::$app->terminate('b1','1');
+
+        $this->assertSame(null,static::$app->get('b1.1'));
+        $this->assertFalse(false,isset(static::$app['b1']['1']));
+        $this->assertSame(null,app()->get('b1.1'));
+        $this->assertSame([],static::$app->get('b1'));
+        $this->assertSame([],app()->get('b1'));
+
+        static::$app->terminate('b1');
+        $this->assertSame(null,static::$app->get('b1'));
+        $this->assertFalse(false,isset(static::$app['b1']));
 
     }
 
@@ -147,6 +168,9 @@ class ContainerTest extends AbstractTest
      */
     public function testContainerGetHasArrayWithAppInstance()
     {
+        $this->assertSame(null,app()->get('a1'));
+        $this->assertSame(null,app()->get('b1'));
+
         app()->register('a1','0','c1');
         app()->register('a1','1','c2');
         $this->assertSame(['c1','c2'],app()->get('a1'));
@@ -161,6 +185,32 @@ class ContainerTest extends AbstractTest
 
         app()->register('b1',0,'c1');
         app()->register('b1',1,'c2');
+        $this->assertSame(['c1','c2'],app()->get('b1'));
+
+        $this->assertTrue(true,app()->has('b1.0'));
+        $this->assertTrue(true,app()->has('b1.1'));
+        $this->assertFalse(false,app()->has('b1.2'));
+
+        $this->assertSame('c1',app()->get('b1.0'));
+        $this->assertSame('c2',app()->get('b1.1'));
+        $this->assertSame(null,app()->get('b1.2'));
+
+
+
+        static::$app->register('a1','0','c1');
+        static::$app->register('a1','1','c2');
+        $this->assertSame(['c1','c2'],app()->get('a1'));
+
+        $this->assertTrue(true,app()->has('a1.0'));
+        $this->assertTrue(true,app()->has('a1.1'));
+        $this->assertFalse(false,app()->has('a1.2'));
+
+        $this->assertSame('c1',app()->get('a1.0'));
+        $this->assertSame('c2',app()->get('a1.1'));
+        $this->assertSame(null,app()->get('a1.2'));
+
+        static::$app->register('b1',0,'c1');
+        static::$app->register('b1',1,'c2');
         $this->assertSame(['c1','c2'],app()->get('b1'));
 
         $this->assertTrue(true,app()->has('b1.0'));
