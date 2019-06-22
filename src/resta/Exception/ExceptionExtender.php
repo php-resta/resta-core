@@ -54,8 +54,8 @@ class ExceptionExtender extends ApplicationProvider
     {
         // we will look at the requestExpected container value to show
         // the expected values ​​for the request object in the exception output.
-        if(app()->has('requestExpected') && config('app.requestWithError')===true){
-            if($requestExpected = app()->get('requestExpected')){
+        if($this->app->has('requestExpected') && config('app.requestWithError')===true){
+            if($requestExpected = $this->app->get('requestExpected')){
                 $this->result['request']['expected'] = $requestExpected;
             }
         }

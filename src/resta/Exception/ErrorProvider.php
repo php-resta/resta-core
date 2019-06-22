@@ -48,13 +48,13 @@ class ErrorProvider extends ApplicationProvider
     {
         $exception = $this->exception;
 
-        if(isset(core()->exceptiontrace))
+        if($this->app->has('exceptiontrace'))
         {
-            $this->data['status'] = (int)core()->exceptiontrace['callNamespace']->getCode();
+            $this->data['status'] = (int)$this->app['exceptiontrace']['callNamespace']->getCode();
         }
         else {
 
-            $this->data['status']=(int)$exception::exceptionTypeCodes($this->data['errType']);
+            $this->data['status'] = (int)$exception::exceptionTypeCodes($this->data['errType']);
         }
 
         $this->app->terminate('responseSuccess');
@@ -74,8 +74,8 @@ class ErrorProvider extends ApplicationProvider
                 $traceFile = str_replace(root,'',$traceArray[1]);
 
                 if(preg_match('@(.*)\((\d+)\)@is',$traceFile,$traceResolve)){
-                    $this->data['errFile']=$traceResolve[1];
-                    $this->data['errLine']=(int)$traceResolve[2];
+                    $this->data['errFile'] = $traceResolve[1];
+                    $this->data['errLine'] = (int)$traceResolve[2];
                 }
             }
 
@@ -158,9 +158,9 @@ class ErrorProvider extends ApplicationProvider
         //get lang message for exception
         $this->getLangMessageForException();
 
-        if(property_exists(core(),'exceptiontrace')){
+        if($this->app->has('exceptiontrace')){
 
-            $customExceptionTrace   = core()->exceptiontrace;
+            $customExceptionTrace   = $this->app['exceptiontrace'];
             $this->data['errFile']  = $customExceptionTrace['file'];
             $this->data['errLine']  = $customExceptionTrace['line'];
         }
@@ -198,7 +198,7 @@ class ErrorProvider extends ApplicationProvider
         if($environment==="production"){
 
             $productionLogMessage = $this->getAppException('local',$this->data['errStrReal']);
-            $this->app->register('productionLogMessage',core()->out->outputFormatter($productionLogMessage));
+            $this->app->register('productionLogMessage',$this->app->get('out')->outputFormatter($productionLogMessage));
         }
 
         // exception extender The exception information
@@ -207,12 +207,12 @@ class ErrorProvider extends ApplicationProvider
 
 
         //set json app exception
-        core()->routerResult = $this->result;
+        $this->app->register('routerResult',$this->result);
 
         $restaOutHandle = null;
 
         if(!defined('responseApp')){
-            $restaOutHandle=core()->out->handle();
+            $restaOutHandle = $this->app->get('out')->handle();
         }
 
         if($restaOutHandle===null){
@@ -220,7 +220,7 @@ class ErrorProvider extends ApplicationProvider
             //header set and symfony response call
             header('Content-type:application/json;charset=utf-8');
 
-            echo json_encode(core()->out->outputFormatter($this->result));
+            echo json_encode($this->app->get('out')->outputFormatter($this->result));
             exit();
         }
         else{
@@ -274,9 +274,9 @@ class ErrorProvider extends ApplicationProvider
                 define('methodName',null);
             }
 
-            if(isset(core()->exceptionFile)){
-                $last_error['file'] = core()->exceptionFile;
-                $last_error['line'] = core()->exceptionLine;
+            if($this->app->has('exceptionFile')){
+                $last_error['file'] = $this->app['exceptionFile'];
+                $last_error['line'] = $this->app['exceptionLine'];
             }
 
             $this->setErrorHandler(
@@ -294,8 +294,9 @@ class ErrorProvider extends ApplicationProvider
      */
     public function inStackTrace($error)
     {
-        if(isset(core()->urlComponent)){
-            if(!preg_match('@'.core()->urlComponent['project'].'@',$error['file']) && !isset(core()->exceptionFile)){
+        if($this->app->has('urlComponent')){
+            if(!preg_match('@'.$this->app['urlComponent']['project'].'@',$error['file'])
+                && !$this->app->has('exceptionFile')){
                 if(preg_match('@ in\s(.*?)\n@is',$error['message'],$result)){
                     $errorMessage = explode(":",$result[1]);
                     $this->app->register('exceptionFile',$errorMessage[0]);
@@ -312,21 +313,21 @@ class ErrorProvider extends ApplicationProvider
     {
         $clone = clone $this;
 
-        if(property_exists(core(),'exceptionTranslate')){
+        if($this->app->has('exceptionTranslate')){
 
-            $langMessage=trans('exception.'.core()->exceptionTranslate);
+            $langMessage = trans('exception.'.$this->app->get('exceptionTranslate'));
 
-            if(!is_null($langMessage) && property_exists(core(),'exceptionTranslateParams')){
+            if(!is_null($langMessage) && $this->app->has('exceptionTranslateParams')){
 
-                if(count(core()->exceptionTranslateParams[core()->exceptionTranslate])){
-                    foreach (core()->exceptionTranslateParams[core()->exceptionTranslate] as $key=>$value){
+                if(count($this->app['exceptionTranslateParams'][$this->app['exceptionTranslate']])){
+                    foreach ($this->app['exceptionTranslateParams'][$this->app['exceptionTranslate']] as $key=>$value){
                         $langMessage=preg_replace('@\('.$key.'\)@is',$value,$langMessage);
                     }
                 }
             }
 
             if($langMessage!==null){
-                $this->data['errStrReal']=$langMessage;
+                $this->data['errStrReal'] = $langMessage;
             }
         }
 
@@ -337,23 +338,23 @@ class ErrorProvider extends ApplicationProvider
 
             ClosureDispatcher::bind($this->data['errorClassNamespace'])->call(function() use ($clone) {
                 if(property_exists($this,'lang')){
-                    $clone->lang=$this->lang;
+                    $clone->lang = $this->lang;
                 }
             });
         }
 
-        $this->data['lang']=$lang=$clone->lang;
+        $this->data['lang'] = $lang = $clone->lang;
 
         if($lang!==null){
-            $langMessage=trans('exception.'.$lang);
+            $langMessage = trans('exception.'.$lang);
         }
         else{
-            $langMessage=null;
+            $langMessage = null;
         }
 
 
         if($langMessage!==null){
-            $this->data['errStrReal']=$langMessage;
+            $this->data['errStrReal'] = $langMessage;
         }
     }
 
@@ -378,10 +379,10 @@ class ErrorProvider extends ApplicationProvider
         }
 
         if($this->data['errType']==="Undefined"){
-            $this->data['errStrReal']=$this->data['errStrReal'];
+            $this->data['errStrReal'] = $this->data['errStrReal'];
         }
         else{
-            $this->data['errContext']['trace']=$this->data['errStrReal'];
+            $this->data['errContext']['trace'] = $this->data['errStrReal'];
         }
     }
 
