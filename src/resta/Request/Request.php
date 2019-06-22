@@ -2,6 +2,7 @@
 
 namespace Resta\Request;
 
+use ReflectionException as ReflectionExceptionAlias;
 use Resta\Support\Utils;
 use Resta\Contracts\HandleContracts;
 use Resta\Support\ReflectionProcess;
@@ -14,7 +15,7 @@ class Request extends RequestAbstract implements HandleContracts
     protected $except = [];
 
     /**
-     * @var string $capsule
+     * @var string $capsuleexpected
      */
     protected $capsule;
 
@@ -49,6 +50,8 @@ class Request extends RequestAbstract implements HandleContracts
     }
 
     /**
+     * auto validate
+     *
      * @param $validate
      */
     private function autoValidate($validate)
@@ -102,8 +105,7 @@ class Request extends RequestAbstract implements HandleContracts
 
                 //exception batMethodCall
                 exception()->badMethodCall(
-                    'Invalid http method process for 
-                    '.class_basename($this).'.That is accepted http methods ['.implode(",",$this->http).'] ');
+                    'Invalid http method process for '.class_basename($this).'.That is accepted http methods ['.implode(",",$this->http).'] ');
             }
         }
     }
@@ -185,8 +187,7 @@ class Request extends RequestAbstract implements HandleContracts
                 // array are numerically equal to the expected key, the exception is thrown.
                 if(count($expectedData)===count($expectedValues)){
                     exception()
-                        ->unexpectedValue('You absolutely have to send the value 
-                        '.implode(" or ",$expectedValues).' for request object');
+                        ->unexpectedValue('You absolutely have to send the value '.implode(" or ",$expectedValues).' for request object');
                 }
             }
         }
@@ -195,7 +196,7 @@ class Request extends RequestAbstract implements HandleContracts
     /**
      * generator manager
      *
-     * @return void|mixed
+     * @throws ReflectionExceptionAlias
      */
     private function generatorManager()
     {
@@ -220,6 +221,8 @@ class Request extends RequestAbstract implements HandleContracts
      * generator method
      *
      * @param $generators
+     *
+     * @throws ReflectionExceptionAlias
      */
     private function generatorMethod($generators)
     {
@@ -262,7 +265,9 @@ class Request extends RequestAbstract implements HandleContracts
     /**
      * request handle
      *
-     * @return void
+     * @return mixed|void
+     *
+     * @throws ReflectionExceptionAlias
      */
     public function handle()
     {
@@ -328,7 +333,7 @@ class Request extends RequestAbstract implements HandleContracts
     /**
      * set client objects
      *
-     * @return mixed
+     * @throws ReflectionExceptionAlias
      */
     private function setClientObjects()
     {
@@ -354,6 +359,8 @@ class Request extends RequestAbstract implements HandleContracts
      * register request inputs
      *
      * @param $key
+     *
+     * @throws ReflectionExceptionAlias
      */
     private function registerRequestInputs($key)
     {
@@ -375,6 +382,8 @@ class Request extends RequestAbstract implements HandleContracts
      *
      * @param $method
      * @param $key
+     *
+     * @throws ReflectionExceptionAlias
      */
     private function setRequestInputs($method,$key)
     {
