@@ -321,7 +321,9 @@ class ErrorProvider extends ApplicationProvider
 
                 if(count($this->app['exceptionTranslateParams'][$this->app['exceptionTranslate']])){
                     foreach ($this->app['exceptionTranslateParams'][$this->app['exceptionTranslate']] as $key=>$value){
-                        $langMessage=preg_replace('@\('.$key.'\)@is',$value,$langMessage);
+
+                        $valueLangName = !is_null(trans('default.'.$value)) ? trans('default.'.$value) : $value;
+                        $langMessage=preg_replace('@\('.$key.'\)@is',$valueLangName,$langMessage);
                     }
                 }
             }

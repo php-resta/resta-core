@@ -186,7 +186,7 @@ class Request extends RequestAbstract implements HandleContracts
                 // if the expectedData and expectedValues ​​
                 // array are numerically equal to the expected key, the exception is thrown.
                 if(count($expectedData)===count($expectedValues)){
-                    exception()
+                    exception($expected)
                         ->unexpectedValue('You absolutely have to send the value '.implode(" or ",$expectedValues).' for request object');
                 }
             }
