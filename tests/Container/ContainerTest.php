@@ -141,4 +141,34 @@ class ContainerTest extends AbstractTest
         $this->assertSame(null,app()->get('a1'));
 
     }
+
+    /**
+     * @return void|mixed
+     */
+    public function testContainerGetHasArrayWithAppInstance()
+    {
+        app()->register('a1','0','c1');
+        app()->register('a1','1','c2');
+        $this->assertSame(['c1','c2'],app()->get('a1'));
+
+        $this->assertTrue(true,app()->has('a1.0'));
+        $this->assertTrue(true,app()->has('a1.1'));
+        $this->assertFalse(false,app()->has('a1.2'));
+
+        $this->assertSame('c1',app()->get('a1.0'));
+        $this->assertSame('c2',app()->get('a1.1'));
+        $this->assertSame(null,app()->get('a1.2'));
+
+        app()->register('b1',0,'c1');
+        app()->register('b1',1,'c2');
+        $this->assertSame(['c1','c2'],app()->get('b1'));
+
+        $this->assertTrue(true,app()->has('b1.0'));
+        $this->assertTrue(true,app()->has('b1.1'));
+        $this->assertFalse(false,app()->has('b1.2'));
+
+        $this->assertSame('c1',app()->get('b1.0'));
+        $this->assertSame('c2',app()->get('b1.1'));
+        $this->assertSame(null,app()->get('b1.2'));
+    }
 }
