@@ -2,10 +2,10 @@
 
 namespace Resta\Request;
 
-use ReflectionException as ReflectionExceptionAlias;
 use Resta\Support\Utils;
 use Resta\Contracts\HandleContracts;
 use Resta\Support\ReflectionProcess;
+use ReflectionException as ReflectionExceptionAlias;
 
 class Request extends RequestAbstract implements HandleContracts
 {
