@@ -46,7 +46,18 @@ class ConfigTest extends AbstractTest
     public function testRequest3()
     {
         $request = new UserRequest(['username'=>'aligurbuz']);
-
         $this->assertSame(['username'=>'aligurbuz'],$request->all());
+    }
+
+    /**
+     * test request 4
+     *
+     * @throws ReflectionExceptionAlias
+     */
+    public function testRequest4()
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('username input value is not valid for min6Char request rule');
+        new UserRequest(['username'=>'ali']);
     }
 }
