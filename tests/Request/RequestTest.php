@@ -60,4 +60,17 @@ class ConfigTest extends AbstractTest
         $this->expectExceptionMessage('username input value is not valid for min6Char request rule');
         new UserRequest(['username'=>'ali']);
     }
+
+    /**
+     * test request 5
+     *
+     * @throws ReflectionExceptionAlias
+     */
+    public function testRequest5()
+    {
+        $request = new UserRequest(['username'=>'aligurbuz','password'=>'123456']);
+        $inputs = $request->all();
+        $this->assertTrue(true,isset($inputs['asa']));
+        $this->assertSame(32,strlen($inputs['password']));
+    }
 }

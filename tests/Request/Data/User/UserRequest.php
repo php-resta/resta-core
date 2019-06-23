@@ -29,6 +29,11 @@ class UserRequest extends RequestProvider
     protected $username;
 
     /**
+     * @var string
+     */
+    protected $password;
+
+    /**
      * get username input value for request
      *
      * @rule(min6Char)
@@ -37,6 +42,14 @@ class UserRequest extends RequestProvider
     protected function username()
     {
         return $this->username;
+    }
+
+    /**
+     * @return string
+     */
+    protected function password()
+    {
+        return md5($this->password);
     }
 
 
