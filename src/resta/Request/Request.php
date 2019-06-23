@@ -10,40 +10,52 @@ use ReflectionException as ReflectionExceptionAlias;
 class Request extends RequestAbstract implements HandleContracts
 {
     /**
-     * @var array $except
+     * @var array
      */
     protected $except = [];
 
     /**
-     * @var string $capsuleexpected
+     * @var string
      */
     protected $capsule;
 
     /**
-     * @var string $method
+     * @var string
      */
     protected $method;
 
     /**
-     * @var ReflectionProcess $reflection
+     * @var ReflectionProcess
      */
     protected $reflection;
 
     /**
-     * @var string $data
+     * @var null|object
      */
     protected $requestHttp;
 
     /**
-     * Request constructor.
+     * @var null|array
      */
-    public function __construct()
+    protected $clientData;
+
+    /**
+     * Request constructor.
+     *
+     * @param null|array $clientData
+     *
+     * @throws ReflectionExceptionAlias
+     */
+    public function __construct($clientData=null)
     {
         //reflection process
         $this->reflection = app()['reflection']($this);
 
         //get http method via request http manager class
         $this->requestHttp = app()->resolve(RequestHttpManager::class);
+
+        //get request client data
+        $this->clientData = ($clientData===null) ? $this->requestHttp->resolve() : $clientData;
 
         //handle request
         $this->handle();
@@ -297,7 +309,7 @@ class Request extends RequestAbstract implements HandleContracts
     {
         // we use the http method to write
         // the values to the inputs and origin properties.
-        foreach($this->requestHttp->resolve() as $key=>$value){
+        foreach($this->clientData as $key=>$value){
 
             //inputs and origin properties
             $this->inputs[$key] = $value;
@@ -308,7 +320,7 @@ class Request extends RequestAbstract implements HandleContracts
     /**
      * request properties
      *
-     * @return void|mixed
+     * @throws ReflectionExceptionAlias
      */
     private function requestProperties()
     {
