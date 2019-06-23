@@ -17,14 +17,36 @@ class ConfigTest extends AbstractTest
     }
 
     /**
-     * test request
+     * test request 1
      *
      * @throws ReflectionExceptionAlias
      */
-    public function testRequest()
+    public function testRequest1()
     {
         $this->expectException(\UnexpectedValueException::class);
         new UserRequest(['a'=>'b']);
+    }
 
+    /**
+     * test request 2
+     *
+     * @throws ReflectionExceptionAlias
+     */
+    public function testRequest2()
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        new UserRequest(['username'=>'b']);
+    }
+
+    /**
+     * test request 3
+     *
+     * @throws ReflectionExceptionAlias
+     */
+    public function testRequest3()
+    {
+        $request = new UserRequest(['username'=>'aligurbuz']);
+
+        $this->assertSame(['username'=>'aligurbuz'],$request->all());
     }
 }
