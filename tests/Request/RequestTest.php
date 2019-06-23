@@ -70,7 +70,35 @@ class ConfigTest extends AbstractTest
     {
         $request = new UserRequest(['username'=>'aligurbuz','password'=>'123456']);
         $inputs = $request->all();
-        $this->assertTrue(true,isset($inputs['asa']));
+        $username = (isset($inputs['username'])) ? true : false;
+        $password = (isset($inputs['password'])) ? true : false;
+        $this->assertSame(true,$username);
+        $this->assertSame(true,$password);
         $this->assertSame(32,strlen($inputs['password']));
+    }
+
+    /**
+     * test request 6
+     *
+     * @throws ReflectionExceptionAlias
+     */
+    public function testRequest6()
+    {
+        $request = new UserRequest(['username'=>'aligurbuz','page'=>1]);
+        $inputs = $request->all();
+        $page = (isset($inputs['page'])) ? true : false;
+        $this->assertSame(true,$page);
+    }
+
+    /**
+     * test request 6
+     *
+     * @throws ReflectionExceptionAlias
+     */
+    public function testRequest7()
+    {
+        $this->expectException(\UnexpectedValueException::class);
+        $this->expectExceptionMessage('page input value is not valid as format (^\d+$)');
+        new UserRequest(['email'=>'resta@gmail.com','page'=>'x']);
     }
 }
