@@ -2,9 +2,9 @@
 
 namespace Resta\Console\Source\Worker;
 
+use Resta\Support\Utils;
 use Resta\Console\ConsoleOutputter;
 use Resta\Console\ConsoleListAccessor;
-use Resta\Support\Utils;
 
 class Worker extends ConsoleOutputter {
 
