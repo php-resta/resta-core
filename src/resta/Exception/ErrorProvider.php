@@ -246,7 +246,10 @@ class ErrorProvider extends ApplicationProvider
      */
     private function getExceptionExtender()
     {
-        return $this->app->resolve(ExceptionExtender::class,
+        return $this->app->resolve(
+            $this->app->get('macro')->call('exceptionExtender',function(){
+                return ExceptionExtender::class;
+            }),
             ['result'=>$this->result])->getResult();
     }
 

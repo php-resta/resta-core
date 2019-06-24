@@ -28,6 +28,27 @@ class Macro extends ApplicationProvider
     protected $values;
 
     /**
+     * @param null|string $macro
+     * @param callable $callback
+     * @return mixed|null
+     */
+    public function call($macro,callable $callback)
+    {
+        if(!is_null($macro)){
+
+            //get macro class from kernel macros
+            $macroCall = config('kernel.macros.'.$macro);
+
+            //if macroCall class is available and an object.
+            if(!is_null($macroCall) && Utils::isNamespaceExists($macroCall)){
+                return $macroCall;
+            }
+        }
+
+        return call_user_func($callback);
+    }
+
+    /**
      * check conditions for macro
      *
      * @param bool $static

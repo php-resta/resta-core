@@ -1,6 +1,7 @@
 <?php
 
 use Store\Services\Cache;
+use Store\Services\ExceptionExtender;
 use __kernelProviderDir__\AppServiceProvider;
 use __kernelProviderDir__\RouteServiceProvider;
 use __kernelProviderDir__\HelperServiceProvider;
@@ -25,6 +26,7 @@ return [
      * your own macro classes are outside this feature.
      */
     'macros' => [
-        'cache' => Cache::class,
+        'cache'             => Cache::class,
+        'exceptionExtender' => ExceptionExtender::class
     ]
 ];
