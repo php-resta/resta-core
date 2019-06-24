@@ -2,8 +2,8 @@
 
 namespace Resta\Contracts;
 
-interface WorkerContracts {
-
+interface WorkerContracts
+{
     /**
      * @return bool
      */
