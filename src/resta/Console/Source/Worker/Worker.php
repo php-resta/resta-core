@@ -49,8 +49,8 @@ class Worker extends ConsoleOutputter {
                 }
 
                 if(is_callable($registeredWorkers[$worker])){
-                    echo $this->classical($registeredWorkers[$worker](1));
-                    sleep(10);
+                    echo $this->classical($registeredWorkers[$worker]((isset($this->argument['data']) && is_string($this->argument['data'])) ? $this->argument['data'] : null));
+                    sleep((isset($this->argument['sleep']) && is_numeric($this->argument['sleep'])) ? $this->argument['sleep'] : 0);
                 }
 
             }
