@@ -1,0 +1,11 @@
+<?php
+
+namespace __workerNamespace__;
+
+class __workerClass__
+{
+    public function handle()
+    {
+        //
+    }
+}

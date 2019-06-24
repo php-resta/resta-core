@@ -129,6 +129,11 @@ class StaticPathList
      */
     public static $test='Tests';
 
+    /**
+     * @var string
+     */
+    public static $workers='Workers';
+
 
     /**
      * @var string

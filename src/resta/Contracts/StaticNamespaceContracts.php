@@ -135,6 +135,11 @@ interface StaticNamespaceContracts
     /**
      * @return mixed
      */
+    public function workers();
+
+    /**
+     * @return mixed
+     */
     public function optionalSource();
 
     /**

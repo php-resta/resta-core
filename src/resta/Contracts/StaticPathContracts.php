@@ -61,6 +61,11 @@ interface StaticPathContracts
     public function tests();
 
     /**
+     * @return mixed
+     */
+    public function workers();
+
+    /**
      * @param null $controller
      * @param bool $bool
      * @return mixed

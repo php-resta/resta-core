@@ -22,12 +22,12 @@ class Worker extends ConsoleOutputter {
     /**
      * @var $commandRule
      */
-    public $commandRule = ['get'=>['worker']];
+    public $commandRule = ['worker'];
 
     /**
-     * @return mixed
+     * @inheritDoc
      */
-    public function get()
+    public function run()
     {
         $worker = strtolower($this->argument['worker']);
 
@@ -43,4 +43,28 @@ class Worker extends ConsoleOutputter {
 
         exception()->runtime('Any worker is not available');
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function create()
+    {
+        if(!file_exists(app()->path()->workers())){
+            $this->directory['worker'] = app()->path()->workers();
+            $this->file->makeDirectory($this);
+        }
+
+        $this->argument['workerNamespace'] = app()->namespace()->workers();
+        $this->argument['workerClass'] = ucfirst($this->argument['worker']).'';
+        $this->argument['projectName'] = strtolower($this->projectName());
+
+        $this->touch['worker/worker']= app()->path()->workers().'/'.$this->argument['worker'].'.php';
+
+
+        $this->file->touch($this);
+
+        echo $this->classical(' > Worker file called as "'.$this->argument['worker'].'" has been successfully created in the '.app()->path()->workers().'');
+    }
+
+
 }

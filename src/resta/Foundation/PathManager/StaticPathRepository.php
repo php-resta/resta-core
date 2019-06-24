@@ -74,14 +74,19 @@ class StaticPathRepository
     }
 
     /**
-     * @param null $app
      * @return string
      */
-    public function appTests($app=null)
+    public function appTests()
     {
-        $tests     = $this->app().''.DIRECTORY_SEPARATOR.''.StaticPathList::$test;
+        return $this->app().''.DIRECTORY_SEPARATOR.''.StaticPathList::$test;
+    }
 
-        return $tests;
+    /**
+     * @return string
+     */
+    public function appWorkers()
+    {
+        return  $this->appVersion(null).''.DIRECTORY_SEPARATOR.''.StaticPathList::$workers;
     }
 
     /**
