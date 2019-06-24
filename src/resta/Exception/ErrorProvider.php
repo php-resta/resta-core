@@ -334,7 +334,7 @@ class ErrorProvider extends ApplicationProvider
 
             ClosureDispatcher::bind($this->data['errorClassNamespace'])->call(function() use ($clone) {
                 if(property_exists($this,'lang')){
-                    $clone->lang = $this->lang;
+                    $clone->setLang($this->lang);
                 }
             });
         }
@@ -379,6 +379,14 @@ class ErrorProvider extends ApplicationProvider
     public function getResult()
     {
         return $this->result;
+    }
+
+    /**
+     * @param null|string $lang
+     */
+    public function setLang($lang=null)
+    {
+        $this->lang = $lang;
     }
 
 }
