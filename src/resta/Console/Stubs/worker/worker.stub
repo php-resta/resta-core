@@ -2,10 +2,52 @@
 
 namespace __workerNamespace__;
 
-class __workerClass__
+use Resta\Contracts\WorkerContracts;
+use Resta\Contracts\ApplicationContracts;
+use Resta\Foundation\ApplicationProvider;
+
+class __workerClass__ extends ApplicationProvider implements WorkerContracts
 {
-    public function handle()
+    /**
+     * @var int
+     */
+    protected $sleep = 10;
+
+    /**
+     * @var array
+     */
+    protected $data = array();
+
+    /**
+     * Sms constructor.
+     *
+     * @param ApplicationContracts $app
+     * @param array $data
+     */
+    public function __construct(ApplicationContracts $app,$data=array())
     {
-        //
+        parent::__construct($app);
+
+        $this->data = $data;
+    }
+
+    /**
+     * worker handle
+     *
+     * @return bool
+     */
+    public function handle() : bool
+    {
+        return true;
+    }
+
+    /**
+     * get worker sleep
+     *
+     * @return int
+     */
+    public function getSleep() : int
+    {
+        return $this->sleep;
     }
 }

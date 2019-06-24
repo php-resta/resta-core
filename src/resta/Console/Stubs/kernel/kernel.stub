@@ -5,6 +5,7 @@ use Store\Services\ExceptionExtender;
 use __kernelProviderDir__\AppServiceProvider;
 use __kernelProviderDir__\RouteServiceProvider;
 use __kernelProviderDir__\HelperServiceProvider;
+use __kernelProviderDir__\WorkerServiceProvider;
 use __kernelProviderDir__\ConsoleEventServiceProvider;
 
 return [
@@ -18,6 +19,7 @@ return [
         'AppServiceProvider'                => AppServiceProvider::class,
         'RouteServiceProvider'              => RouteServiceProvider::class,
         'ConsoleEventServiceProvider'       => ConsoleEventServiceProvider::class,
+        'WorkerServiceProvider'             => WorkerServiceProvider::class,
     ],
 
     /**

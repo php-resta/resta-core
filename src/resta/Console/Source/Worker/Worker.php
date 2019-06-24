@@ -4,6 +4,7 @@ namespace Resta\Console\Source\Worker;
 
 use Resta\Console\ConsoleOutputter;
 use Resta\Console\ConsoleListAccessor;
+use Resta\Support\Utils;
 
 class Worker extends ConsoleOutputter {
 
@@ -34,9 +35,24 @@ class Worker extends ConsoleOutputter {
         $registeredWorkers = app()->get('worker');
 
         if(isset($registeredWorkers[$worker])){
+
+            if(!is_callable($registeredWorkers[$worker]) && Utils::isNamespaceExists($registeredWorkers[$worker])) {
+                $resolve = app()->resolve($registeredWorkers[$worker],['data'=>(array)$this->argument['data']]);
+            }
+
             while(true){
-                echo $this->classical($registeredWorkers[$worker](1));
-                sleep(10);
+
+                if(isset($resolve)){
+                    $result = $resolve->handle();
+                    echo $this->classical($worker.' worker called : '.$result);
+                    sleep($resolve->getSleep());
+                }
+
+                if(is_callable($registeredWorkers[$worker])){
+                    echo $this->classical($registeredWorkers[$worker](1));
+                    sleep(10);
+                }
+
             }
             exit();
         }
