@@ -3,7 +3,6 @@
 namespace Resta\Exception;
 
 use Resta\Support\Str;
-use Resta\Support\Utils;
 use Resta\Support\Dependencies;
 use Resta\Support\ClosureDispatcher;
 use Resta\Foundation\ApplicationProvider;
@@ -14,10 +13,10 @@ class ErrorProvider extends ApplicationProvider
     /**
      * @var null|string
      */
-    public $lang;
+    protected $lang;
 
     /**
-     * @var string
+     * @var null|object
      */
     protected $exception;
 
@@ -32,13 +31,18 @@ class ErrorProvider extends ApplicationProvider
     protected $result = [];
 
     /**
-     * @return mixed|string
+     * get status according to exception trace
+     *
+     * @return void
      */
-    private function getEnvironmentStatus()
+    private function getStatusAccordingToExceptionTrace()
     {
-        // application key, but if it has a null value
-        // then we move the environment value to the production environment.
-        return $this->app->environment();
+        if($this->app->has('exceptiontrace')) {
+            $this->data['status'] = (int)$this->app['exceptiontrace']['callNamespace']->getCode();
+        }
+        else {
+            $this->data['status'] = (int)$this->exception::exceptionTypeCodes($this->data['errType']);
+        }
     }
 
     /**
@@ -46,16 +50,7 @@ class ErrorProvider extends ApplicationProvider
      */
     private function getStatusFromContext()
     {
-        $exception = $this->exception;
-
-        if($this->app->has('exceptiontrace'))
-        {
-            $this->data['status'] = (int)$this->app['exceptiontrace']['callNamespace']->getCode();
-        }
-        else {
-
-            $this->data['status'] = (int)$exception::exceptionTypeCodes($this->data['errType']);
-        }
+        $this->getStatusAccordingToExceptionTrace();
 
         $this->app->terminate('responseSuccess');
         $this->app->terminate('responseStatus');
@@ -67,7 +62,7 @@ class ErrorProvider extends ApplicationProvider
 
         if(preg_match('@'.$optionalException.'@is',$this->data['errType'])){
 
-            //linux test
+            //trace pattern
             $trace = $this->data['errContext']['trace'];
             if(preg_match('@Stack trace:\n#0(.*)\n#1@is',$trace,$traceArray)){
 
@@ -165,7 +160,7 @@ class ErrorProvider extends ApplicationProvider
             $this->data['errLine']  = $customExceptionTrace['line'];
         }
 
-        $environment = $this->getEnvironmentStatus();
+        $environment = $this->app->environment();
 
         $vendorDirectory = str_replace(root.''.DIRECTORY_SEPARATOR.'','',$this->data['errFile']);
 
@@ -193,7 +188,6 @@ class ErrorProvider extends ApplicationProvider
             //Get or Set the HTTP response code
             http_response_code($this->data['status']);
         }
-
 
         if($environment==="production"){
 
@@ -323,7 +317,7 @@ class ErrorProvider extends ApplicationProvider
                     foreach ($this->app['exceptionTranslateParams'][$this->app['exceptionTranslate']] as $key=>$value){
 
                         $valueLangName = !is_null(trans('default.'.$value)) ? trans('default.'.$value) : $value;
-                        $langMessage=preg_replace('@\('.$key.'\)@is',$valueLangName,$langMessage);
+                        $langMessage = preg_replace('@\('.$key.'\)@is',$valueLangName,$langMessage);
                     }
                 }
             }
@@ -345,15 +339,9 @@ class ErrorProvider extends ApplicationProvider
             });
         }
 
-        $this->data['lang'] = $lang = $clone->lang;
+        $this->data['lang'] = $clone->lang;
 
-        if($lang!==null){
-            $langMessage = trans('exception.'.$lang);
-        }
-        else{
-            $langMessage = null;
-        }
-
+        $langMessage = (!is_null($this->data['lang'])) ? trans('exception.'.$this->data['lang']) : null;
 
         if($langMessage!==null){
             $this->data['errStrReal'] = $langMessage;
@@ -371,21 +359,16 @@ class ErrorProvider extends ApplicationProvider
         // and then clear the Uncaught statement from inside.
         if(preg_match('@(.*?):@is',$this->data['errStrReal'],$errArr)){
 
-            $this->data['errType']=trim(str_replace('Uncaught','',$errArr[1]));
-            $this->data['errorClassNamespace']=$this->data['errType'];
+            $this->data['errType'] = trim(str_replace('Uncaught','',$errArr[1]));
+            $this->data['errorClassNamespace'] = $this->data['errType'];
         }
 
         if(preg_match('@Uncaught@is',$this->data['errStrReal'])
             && preg_match('@(.*?):(.*?)\sin\s@is',$this->data['errStrReal'],$errStrRealArray)){
-            $this->data['errStrReal']=trim($errStrRealArray[2]);
+            $this->data['errStrReal'] = trim($errStrRealArray[2]);
         }
 
-        if($this->data['errType']==="Undefined"){
-            $this->data['errStrReal'] = $this->data['errStrReal'];
-        }
-        else{
-            $this->data['errContext']['trace'] = $this->data['errStrReal'];
-        }
+        $this->data['errContext']['trace'] = $this->data['errStrReal'];
     }
 
     /**
