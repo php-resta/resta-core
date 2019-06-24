@@ -12,6 +12,6 @@ interface WorkerContracts
     /**
      * @return int
      */
-    public function getSleep() : int ;
+    public function getSleep() : int;
 
 }
