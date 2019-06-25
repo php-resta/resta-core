@@ -32,6 +32,10 @@ abstract class WorkerManagerAbstract extends ApplicationProvider
             exception()->runtime('The worker can only be run as cli..');
         }
 
+        if($this->app->has('WORKER')===false){
+            exception()->runtime('The worker console manipulation for WORKER container value');
+        }
+
         $this->args = $args;
 
         $this->worker = $this->app->get('worker');
@@ -127,7 +131,10 @@ abstract class WorkerManagerAbstract extends ApplicationProvider
      */
     public function __call($name, $arguments)
     {
-        $job = __NAMESPACE__.'\\'.ucfirst($name).'Job';
+        $job = $this->app->get('macro')->call($this->getApply().'Worker',function() use($name){
+           return __NAMESPACE__.'\\'.ucfirst($name).'Job';
+        });
+
         if(Utils::isNamespaceExists($job)){
             return $this->app->resolve($job,['worker'=>$this])->execute();
         }

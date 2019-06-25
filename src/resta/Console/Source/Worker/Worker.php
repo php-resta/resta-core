@@ -30,6 +30,24 @@ class Worker extends ConsoleOutputter {
      */
     public function run()
     {
+        $workerName = $this->projectName().'-'.$this->argument['worker'];
+        app()->register('WORKER',$workerName);
+        app()->register('PROJECT_NAME',strtolower($this->projectName()));
+        app()->register('WORKER_STATUS',false);
+
+        app()->resolve(WorkerManager::class,['args'=>$this->argument])->execute();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function stop()
+    {
+        $workerName = $this->projectName().'-'.$this->argument['worker'];
+        app()->register('WORKER',$workerName);
+        app()->register('PROJECT_NAME',strtolower($this->projectName()));
+        app()->register('WORKER_STATUS',true);
+
         app()->resolve(WorkerManager::class,['args'=>$this->argument])->execute();
     }
 
