@@ -1,0 +1,14 @@
+<?php
+
+return [
+    'commands' => [
+        'status'    => 'sudo service supervisor status',
+        'reread'    => 'sudo supervisorctl reread',
+        'update'    => 'sudo supervisorctl update',
+        'start'     => 'sudo supervisorctl start',
+        'stop'      => 'sudo supervisorctl stop',
+        'workers'   => 'sudo supervisorctl status',
+    ],
+    'path' => '/etc/supervisor/conf.d'
+
+];
