@@ -2,39 +2,10 @@
 
 namespace Resta\Worker;
 
-use Resta\Support\Process;
 use Resta\Contracts\JobContracts;
-use Resta\Contracts\ApplicationContracts;
-use Resta\Foundation\ApplicationProvider;
-use Resta\Contracts\WorkerManagerContracts;
 
-class SupervisorJob extends ApplicationProvider implements JobContracts
+class SupervisorJob extends JobAbstract implements JobContracts
 {
-    /**
-     * @var null|object
-     */
-    protected $worker;
-
-    /**
-     * @var Process
-     */
-    protected $process;
-
-    /**
-     * DefaultJob constructor.
-     *
-     * @param ApplicationContracts $app
-     * @param WorkerManagerContracts $worker
-     */
-    public function __construct(ApplicationContracts $app,WorkerManagerContracts $worker)
-    {
-        parent::__construct($app);
-
-        $this->worker = $worker;
-
-        $this->process = new Process();
-    }
-
     /**
      * execute job
      *
@@ -44,22 +15,45 @@ class SupervisorJob extends ApplicationProvider implements JobContracts
     {
         $this->isSupervisorRunning();
 
-        if($this->app->get('WORKER_STATUS')===true){
-
-            $this->stopWorkerForSupervisor();
-        }
-        else{
-
-            $this->putConfigurationFile();
-
-            $this->reReadForSupervisor();
-
-            $this->updateForSupervisor();
-
-            $this->startWorkerForSupervisor();
-        }
+        $this->{$this->jobProcessor()}();
 
         echo $this->getWorkersForSupervisor();
+    }
+
+    /**
+     * start job
+     *
+     * @return mixed|void
+     */
+    public function start()
+    {
+        $this->putConfigurationFile();
+
+        $this->reReadForSupervisor();
+
+        $this->updateForSupervisor();
+
+        $this->startWorkerForSupervisor();
+    }
+
+    /**
+     * stop job
+     *
+     * @return mixed|void
+     */
+    public function stop()
+    {
+        $this->stopWorkerForSupervisor();
+    }
+
+    /**
+     * get status worker
+     *
+     * @return mixed|void
+     */
+    public function status()
+    {
+        //
     }
 
     /**
@@ -75,11 +69,11 @@ class SupervisorJob extends ApplicationProvider implements JobContracts
     /**
      * check if the supervisor is or not running
      *
-     * @return bool
+     * @return mixed|void
      */
     public function isSupervisorRunning()
     {
-        return $this->process->command(config('supervisor.commands.status'));
+        $this->process->command(config('supervisor.commands.status'));
     }
 
     /**
@@ -125,13 +119,13 @@ class SupervisorJob extends ApplicationProvider implements JobContracts
             files()->put($path,'
 [program:'.$this->app()->get('WORKER').']
 process_name=%(program_name)s_%(process_num)02d
-command=php '.root.'/api worker run '.$this->app->get('PROJECT_NAME').' worker:'.$this->worker->getWorker().'
+command=php '.root.'/api worker start '.$this->app->get('PROJECT_NAME').' worker:'.$this->worker->getWorker().' apply:default
 autostart=true
 autorestart=true
 user=root
 numprocs=1
 redirect_stderr=true
-stdout_logfile='.root.'/worker.log
+stdout_logfile='.config('supervisor.log').'/worker.log
 ');
         }
 
@@ -146,5 +140,4 @@ stdout_logfile='.root.'/worker.log
     {
         return $this->process->command(config('supervisor.commands.update'));
     }
-
 }

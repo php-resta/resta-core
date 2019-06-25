@@ -9,6 +9,7 @@ return [
         'stop'      => 'sudo supervisorctl stop',
         'workers'   => 'sudo supervisorctl status',
     ],
-    'path' => '/etc/supervisor/conf.d'
+    'path' => '/etc/supervisor/conf.d',
+    'log'   => '__resourcePath__',
 
 ];

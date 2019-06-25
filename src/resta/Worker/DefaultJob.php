@@ -38,4 +38,27 @@ class DefaultJob extends ApplicationProvider implements JobContracts
         }
     }
 
+    /**
+     * @return mixed|void
+     */
+    public function start()
+    {
+        // TODO: Implement start() method.
+    }
+
+    /**
+     * @return mixed|void
+     */
+    public function stop()
+    {
+        // TODO: Implement stop() method.
+    }
+
+    /**
+     * @return mixed|void
+     */
+    public function status()
+    {
+        // TODO: Implement status() method.
+    }
 }

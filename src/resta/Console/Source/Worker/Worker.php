@@ -28,11 +28,13 @@ class Worker extends ConsoleOutputter {
     /**
      * @inheritDoc
      */
-    public function run()
+    public function start()
     {
         $workerName = $this->projectName().'-'.$this->argument['worker'];
         app()->register('WORKER',$workerName);
         app()->register('PROJECT_NAME',strtolower($this->projectName()));
+        app()->register('WORKER_START',true);
+        app()->register('WORKER_STOP',false);
         app()->register('WORKER_STATUS',false);
 
         app()->resolve(WorkerManager::class,['args'=>$this->argument])->execute();
@@ -46,6 +48,23 @@ class Worker extends ConsoleOutputter {
         $workerName = $this->projectName().'-'.$this->argument['worker'];
         app()->register('WORKER',$workerName);
         app()->register('PROJECT_NAME',strtolower($this->projectName()));
+        app()->register('WORKER_START',false);
+        app()->register('WORKER_STOP',true);
+        app()->register('WORKER_STATUS',false);
+
+        app()->resolve(WorkerManager::class,['args'=>$this->argument])->execute();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function status()
+    {
+        $workerName = $this->projectName().'-'.$this->argument['worker'];
+        app()->register('WORKER',$workerName);
+        app()->register('PROJECT_NAME',strtolower($this->projectName()));
+        app()->register('WORKER_START',false);
+        app()->register('WORKER_STOP',false);
         app()->register('WORKER_STATUS',true);
 
         app()->resolve(WorkerManager::class,['args'=>$this->argument])->execute();

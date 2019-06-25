@@ -52,7 +52,7 @@ abstract class WorkerManagerAbstract extends ApplicationProvider
             return $this->args['apply'];
         }
 
-        return 'default';
+        return 'supervisor';
     }
 
     /**

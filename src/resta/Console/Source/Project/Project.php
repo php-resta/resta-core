@@ -44,6 +44,7 @@ class Project extends ConsoleOutputter
         $this->argument['factoryDir']           = app()->namespace()->factory();
         $this->directory['projectDir']          = $this->projectPath();
         $this->argument['exceptionNamespace']   = app()->namespace()->exception();
+        $this->argument['resourcePath']         = app()->path()->appResourche();
 
         $recursiveDefaultDirectory = explode("\\",$this->argument['project']);
         $this->argument['applicationName'] = pos($recursiveDefaultDirectory);
