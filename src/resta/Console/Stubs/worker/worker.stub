@@ -34,11 +34,11 @@ class __workerClass__ extends ApplicationProvider implements WorkerContracts
     /**
      * worker handle
      *
-     * @return bool
+     * @return mixed
      */
-    public function handle() : bool
+    public function handle()
     {
-        return true;
+        return 'handle';
     }
 
     /**

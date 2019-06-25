@@ -2,7 +2,7 @@
 
 namespace Resta\Console\Source\Worker;
 
-use Resta\Support\Utils;
+use Resta\Worker\WorkerManager;
 use Resta\Console\ConsoleOutputter;
 use Resta\Console\ConsoleListAccessor;
 
@@ -30,34 +30,7 @@ class Worker extends ConsoleOutputter {
      */
     public function run()
     {
-        $worker = strtolower($this->argument['worker']);
-
-        $registeredWorkers = app()->get('worker');
-
-        if(isset($registeredWorkers[$worker])){
-
-            if(!is_callable($registeredWorkers[$worker]) && Utils::isNamespaceExists($registeredWorkers[$worker])) {
-                $resolve = app()->resolve($registeredWorkers[$worker],['data'=>(array)$this->argument['data']]);
-            }
-
-            while(true){
-
-                if(isset($resolve)){
-                    $result = $resolve->handle();
-                    echo $this->classical($worker.' worker called : '.$result);
-                    sleep($resolve->getSleep());
-                }
-
-                if(is_callable($registeredWorkers[$worker])){
-                    echo $this->classical($registeredWorkers[$worker]((isset($this->argument['data']) && is_string($this->argument['data'])) ? $this->argument['data'] : null));
-                    sleep((isset($this->argument['sleep']) && is_numeric($this->argument['sleep'])) ? $this->argument['sleep'] : 0);
-                }
-
-            }
-            exit();
-        }
-
-        exception()->runtime('Any worker is not available');
+        app()->resolve(WorkerManager::class,['args'=>$this->argument])->execute();
     }
 
     /**

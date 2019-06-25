@@ -5,9 +5,9 @@ namespace Resta\Contracts;
 interface WorkerContracts
 {
     /**
-     * @return bool
+     * @return mixed
      */
-    public function handle() : bool;
+    public function handle();
 
     /**
      * @return int
