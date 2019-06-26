@@ -53,7 +53,27 @@ class SupervisorJob extends JobAbstract implements JobContracts
      */
     public function status()
     {
-        //
+        $this->getWorkersForSupervisor();
+    }
+
+    /**
+     * cleans worker
+     *
+     * @return mixed|void
+     */
+    public function clear()
+    {
+        $this->cleanWorkerForSupervisor();
+    }
+
+    /**
+     * get workers for supervisor
+     *
+     * @return mixed
+     */
+    private function cleanWorkerForSupervisor()
+    {
+        return $this->process->command(config('supervisor.commands.remove').' '.$this->app->get('WORKER').'');
     }
 
     /**
@@ -99,11 +119,11 @@ class SupervisorJob extends JobAbstract implements JobContracts
     /**
      * stop worker for supervisor
      *
-     * @return mixed
+     * @return mixed|void
      */
     public function stopWorkerForSupervisor()
     {
-        return $this->process->command(config('supervisor.commands.stop').' '.$this->app->get('WORKER').':*');
+        $this->process->command(config('supervisor.commands.stop').' '.$this->app->get('WORKER').':*');
     }
 
     /**

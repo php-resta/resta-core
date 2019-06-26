@@ -23,4 +23,9 @@ interface JobContracts
      * @return mixed|void
      */
     public function status();
+
+    /**
+     * @return mixed
+     */
+    public function clear();
 }

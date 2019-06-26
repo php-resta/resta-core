@@ -11,6 +11,7 @@ class Process
      * command process
      *
      * @param null|string $command
+     * @return mixed|void
      */
     public function command($command=null)
     {

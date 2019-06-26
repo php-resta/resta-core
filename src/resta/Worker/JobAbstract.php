@@ -52,6 +52,10 @@ class JobAbstract extends ApplicationProvider
         if($this->app->get('WORKER_STATUS')===true){
             return 'status';
         }
+
+        if($this->app->get('WORKER_CLEAR')===true){
+            return 'clear';
+        }
     }
 
 }

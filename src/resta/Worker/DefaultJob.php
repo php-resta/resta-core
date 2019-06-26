@@ -61,4 +61,14 @@ class DefaultJob extends ApplicationProvider implements JobContracts
     {
         // TODO: Implement status() method.
     }
+
+    /**
+     * cleans worker
+     *
+     * @return mixed|void
+     */
+    public function clear()
+    {
+        //
+    }
 }

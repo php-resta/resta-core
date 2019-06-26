@@ -8,6 +8,7 @@ return [
         'start'     => 'sudo supervisorctl start',
         'stop'      => 'sudo supervisorctl stop',
         'workers'   => 'sudo supervisorctl status',
+        'remove'    => 'sudo supervisorctl remove',
     ],
     'path' => '/etc/supervisor/conf.d',
     'log'   => '__resourcePath__',
