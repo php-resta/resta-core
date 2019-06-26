@@ -23,6 +23,6 @@ class Process
             throw new ProcessFailedException($process);
         }
 
-        echo $process->getOutput();
+        return $process->getOutput();
     }
 }

@@ -69,11 +69,11 @@ class SupervisorJob extends JobAbstract implements JobContracts
     /**
      * get workers for supervisor
      *
-     * @return mixed
+     * @return mixed|void
      */
     private function cleanWorkerForSupervisor()
     {
-        return $this->process->command(config('supervisor.commands.remove').' '.$this->app->get('WORKER').'');
+        $this->process->command(config('supervisor.commands.remove').' '.$this->app->get('WORKER').'');
     }
 
     /**
@@ -83,7 +83,17 @@ class SupervisorJob extends JobAbstract implements JobContracts
      */
     public function getWorkersForSupervisor()
     {
-        return $this->process->command(config('supervisor.commands.workers'));
+        $list = [];
+
+        $status = array_filter(explode("\n",$this->process->command(config('supervisor.commands.workers'))),'strlen');
+
+        foreach ($status as $item){
+            if(preg_match('@'.$this->app->get('PROJECT_NAME').'.*@is',$item,$array)){
+                $list[] = $item;
+            }
+        }
+
+        return implode(PHP_EOL,$list).''.PHP_EOL;
     }
 
     /**
@@ -93,7 +103,7 @@ class SupervisorJob extends JobAbstract implements JobContracts
      */
     public function isSupervisorRunning()
     {
-        $this->process->command(config('supervisor.commands.status'));
+        return $this->process->command(config('supervisor.commands.status'));
     }
 
     /**
@@ -123,7 +133,7 @@ class SupervisorJob extends JobAbstract implements JobContracts
      */
     public function stopWorkerForSupervisor()
     {
-        $this->process->command(config('supervisor.commands.stop').' '.$this->app->get('WORKER').':*');
+        return $this->process->command(config('supervisor.commands.stop').' '.$this->app->get('WORKER').':*');
     }
 
     /**
@@ -137,6 +147,7 @@ class SupervisorJob extends JobAbstract implements JobContracts
 
         if(files()->exists($path)===false){
             files()->put($path,'
+[group:'.$this->app->get('PROJECT_NAME').']
 [program:'.$this->app()->get('WORKER').']
 process_name=%(program_name)s_%(process_num)02d
 command=php '.root.'/api worker start '.$this->app->get('PROJECT_NAME').' worker:'.$this->worker->getWorker().' apply:default
