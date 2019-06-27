@@ -2,9 +2,9 @@
 
 namespace Resta\Router;
 
-use Resta\Foundation\PathManager\StaticPathList;
 use Resta\Support\Arr;
 use Resta\Support\Utils;
+use Resta\Foundation\PathManager\StaticPathList;
 
 class Route extends RouteHttpManager
 {
@@ -32,7 +32,7 @@ class Route extends RouteHttpManager
     protected static $mappers = [];
 
     /**
-     * @var null $namespace
+     * @var null|string $namespace
      */
     protected static $namespace;
 
@@ -73,18 +73,30 @@ class Route extends RouteHttpManager
             $list = [];
 
             foreach ($patterns as $key=>$pattern){
+
+                // if the initial value of the pattern data is present
+                // and the first value from urlmethod does not match
+                // and does not match the custom regex variable,
+                // we empty the contents of the data.
                 if(isset($pattern[0])){
                     if($pattern[0] !== $urlMethod[0] && !self::isMatchVaribleRegexPattern($pattern[0])){
                         $list[$key] = [];
                     }
                 }
 
+                // if the contents of the directory are not normally emptied,
+                // we continue to save the list according to keyin status.
                 if(!isset($list[$key])){
                     $list[$key] = $pattern;
                 }
 
+                // This is very important.
+                // Route matches can be variable-based or static string-based.
+                // In this case, we remove the other matches based on the static string match.
                 if(isset($pattern[0]) && $pattern[0]==$urlMethod[0]){
 
+                    // static matches will not be deleted retrospectively.
+                    // this condition will check this.
                     if(isset($list[$key-1],$list[$key-1][0]) && $list[$key-1][0]!==$urlMethod[0]){
                         unset($list[$key-1]);
                     }
@@ -100,7 +112,7 @@ class Route extends RouteHttpManager
     }
 
     /**
-     * get route getPatternResolve
+     * get route pattern resolve
      *
      * @return array|int|string
      */
@@ -287,13 +299,15 @@ class Route extends RouteHttpManager
     }
 
     /**
-     * is matc variable regex pattern
+     * is route variable regex pattern
      *
      * @param null $value
      * @return bool
      */
     public static function isMatchVaribleRegexPattern($value=null)
     {
+        // determines if the variable that can be used
+        // in the route file meets the regex rule.
         return (preg_match('@\{(.*?)\}@is',$value)) ? true : false;
     }
 }
