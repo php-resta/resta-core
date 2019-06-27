@@ -28,6 +28,10 @@ class Stubber
      */
     protected $file;
 
+    /**
+     * Stubber constructor.
+     * @param $schema
+     */
     public function __construct($schema)
     {
         $this->file     = new Filesystem();
@@ -45,6 +49,8 @@ class Stubber
         if(!isset($params[3])){
             return [$this->config['paths'][0]];
         }
+
+        return [];
     }
 
     /**
@@ -76,6 +82,7 @@ class Stubber
 
     /**
      * @param $params
+     * @return array
      */
     public function get($params)
     {
@@ -148,9 +155,9 @@ class Stubber
 
     /**
      * @param $path
-     * @param string $mode
+     * @param int $mode
      */
-    private function  makeDirectory($path,$mode='0777')
+    private function  makeDirectory($path,$mode=0777)
     {
         return $this->file->mkdir($path,$mode);
     }
