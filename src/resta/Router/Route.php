@@ -2,9 +2,9 @@
 
 namespace Resta\Router;
 
+use Resta\Foundation\PathManager\StaticPathList;
 use Resta\Support\Arr;
 use Resta\Support\Utils;
-use Resta\Foundation\PathManager\StaticPathList;
 
 class Route extends RouteHttpManager
 {
@@ -294,10 +294,6 @@ class Route extends RouteHttpManager
      */
     public static function isMatchVaribleRegexPattern($value=null)
     {
-        if(preg_match('@\{(.*?)\}@is',$value)){
-            return true;
-        }
-
-        return false;
+        return (preg_match('@\{(.*?)\}@is',$value)) ? true : false;
     }
 }
