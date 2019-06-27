@@ -3,6 +3,7 @@
 return [
     'commands' => [
         'status'    => 'sudo service supervisor status',
+        'up'        => 'sudo service supervisor start',
         'reread'    => 'sudo supervisorctl reread',
         'update'    => 'sudo supervisorctl update',
         'start'     => 'sudo supervisorctl start',

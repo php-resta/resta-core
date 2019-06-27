@@ -20,7 +20,7 @@ class Process
 
         // executes after the command finishes
         if (!$process->isSuccessful()) {
-            throw new ProcessFailedException($process);
+            return false;
         }
 
         return $process->getOutput();

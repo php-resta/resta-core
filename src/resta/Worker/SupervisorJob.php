@@ -103,7 +103,22 @@ class SupervisorJob extends JobAbstract implements JobContracts
      */
     public function isSupervisorRunning()
     {
+        $supervisorStatus = $this->process->command(config('supervisor.commands.status'));
+
+        if(false===$supervisorStatus){
+            $this->upSupervisor();
+        }
         return $this->process->command(config('supervisor.commands.status'));
+    }
+
+    /**
+     * up service supervisor
+     *
+     * @return mixed|void
+     */
+    public function upSupervisor()
+    {
+        return $this->process->command(config('supervisor.commands.up'));
     }
 
     /**
