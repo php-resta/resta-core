@@ -3,6 +3,7 @@
 namespace Resta\Worker;
 
 use Resta\Support\Utils;
+use Resta\Contracts\JobContracts;
 use Resta\Foundation\ApplicationProvider;
 use Resta\Contracts\ApplicationContracts;
 
@@ -131,14 +132,20 @@ abstract class WorkerManagerAbstract extends ApplicationProvider
      */
     public function __call($name, $arguments)
     {
-        $job = $this->app->get('macro')->call($this->getApply().'Worker',function() use($name){
-           return __NAMESPACE__.'\\'.ucfirst($name).'Job';
+        $job = $this->app->get('macro')->call(strtolower($this->getApply()).'Job',function() use($name){
+            return __NAMESPACE__.'\\'.ucfirst($name).'Job';
         });
 
         if(Utils::isNamespaceExists($job)){
-            return $this->app->resolve($job,['worker'=>$this])->execute();
+
+            /** @var JobContracts $resolve */
+            $resolve = $this->app->resolve($job,['worker'=>$this]);
+
+            if($resolve instanceof JobContracts){
+                return $resolve->execute();
+            }
         }
 
-        exception()->runtime('Job Class not found');
+        exception()->runtime('Job Class not found or not instance of JobContracts');
     }
 }
