@@ -60,6 +60,46 @@ class Route extends RouteHttpManager
     }
 
     /**
+     * matching url method
+     *
+     * @param $patterns
+     * @param $urlMethod
+     * @return array
+     */
+    private static function matchingUrlMethod($patterns,$urlMethod)
+    {
+        if(isset($urlMethod[0])){
+
+            $list = [];
+
+            foreach ($patterns as $key=>$pattern){
+                if(isset($pattern[0])){
+                    if($pattern[0] !== $urlMethod[0] && !self::isMatchVaribleRegexPattern($pattern[0])){
+                        $list[$key] = [];
+                    }
+                }
+
+                if(!isset($list[$key])){
+                    $list[$key] = $pattern;
+                }
+
+                if(isset($pattern[0]) && $pattern[0]==$urlMethod[0]){
+
+                    if(isset($list[$key-1],$list[$key-1][0]) && $list[$key-1][0]!==$urlMethod[0]){
+                        unset($list[$key-1]);
+                    }
+
+                    $list[$key] = $pattern;
+                }
+            }
+
+            $patterns = $list;
+        }
+
+        return $patterns;
+    }
+
+    /**
      * get route getPatternResolve
      *
      * @return array|int|string
@@ -83,6 +123,8 @@ class Route extends RouteHttpManager
             }
         }
 
+        $patternList = self::matchingUrlMethod($patternList,$urlRoute);
+
         foreach ($patternList as $key=>$pattern){
 
             $pattern = array_filter($pattern,'strlen');
@@ -93,7 +135,7 @@ class Route extends RouteHttpManager
                 $matches = true;
 
                 foreach ($pattern as $patternKey=>$patternValue){
-                    if(!preg_match('@\{(.*?)\}@is',$patternValue)){
+                    if(!self::isMatchVaribleRegexPattern($patternValue)){
                         if($patternValue!==$urlRoute[$patternKey]){
                             $matches = false;
                         }
@@ -173,9 +215,9 @@ class Route extends RouteHttpManager
 
         // in the paths data,
         // we run the route mapper values ​​and the route files one by one.
-       foreach (self::$paths as $mapper=>$controller){
-           core()->fileSystem->callFile($mapper);
-       }
+        foreach (self::$paths as $mapper=>$controller){
+            core()->fileSystem->callFile($mapper);
+        }
     }
 
     /**
@@ -242,5 +284,20 @@ class Route extends RouteHttpManager
             'namespace'     => static::$namespace,
             'endpoint'      => strtolower(str_replace(StaticPathList::$controllerBundleName,'',static::$namespace))
         ];
+    }
+
+    /**
+     * is matc variable regex pattern
+     *
+     * @param null $value
+     * @return bool
+     */
+    public static function isMatchVaribleRegexPattern($value=null)
+    {
+        if(preg_match('@\{(.*?)\}@is',$value)){
+            return true;
+        }
+
+        return false;
     }
 }
