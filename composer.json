@@ -18,7 +18,8 @@
     "autoload": {
         "psr-4": {
             "Resta\\": "src/resta/",
-            "Resta\\Core\\Tests\\": "tests"
+            "Resta\\Core\\Tests\\": "tests",
+            "Migratio\\": "src/resta/Database/Migration/Src/"
         },
         "files": [
             "src/resta/Foundation/ApplicationHelpers.php"
@@ -50,7 +51,6 @@
         "symfony/process": "^4.2",
         "zendframework/zend-validator": "^2.10",
         "mobiledetect/mobiledetectlib": "^2.8",
-        "aligurbuz/migratio": "^2.0",
         "phpunit/phpunit": "^6.3",
         "optimus/onion": "~1.0",
         "zendframework/zend-db": "^2.9",

@@ -1,0 +1,17 @@
+{
+    "name": "aligurbuz/migratio",
+    "description": "It is a package that automatically creates your migration files",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "aligurbuz",
+            "email": "galiant781@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Migratio\\": "Src/"
+        }
+    },
+    "require": {}
+}
