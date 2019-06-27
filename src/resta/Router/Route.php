@@ -2,9 +2,9 @@
 
 namespace Resta\Router;
 
-use Resta\Foundation\PathManager\StaticPathList;
 use Resta\Support\Arr;
 use Resta\Support\Utils;
+use Resta\Foundation\PathManager\StaticPathList;
 
 class Route extends RouteHttpManager
 {
