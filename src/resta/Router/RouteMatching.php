@@ -20,6 +20,7 @@ class RouteMatching extends ApplicationProvider
 
     /**
      * RouteMatching constructor.
+     *
      * @param ApplicationContracts $app
      * @param null|object $route
      */
@@ -140,7 +141,7 @@ class RouteMatching extends ApplicationProvider
             }
 
             $patterns = $list;
-            $this->unset = true;
+            $this->unset = false;
         }
 
         return $patterns;
