@@ -195,4 +195,20 @@ class Route extends RouteHttpManager
         // in the route file meets the regex rule.
         return (preg_match('@\{(.*?)\}@is',$value)) ? true : false;
     }
+
+
+    /**
+     * is optional route variable regex pattern
+     *
+     * @param null $value
+     * @return bool
+     */
+    public static function isOptionalVaribleRegexPattern($value=null)
+    {
+        // determines if the variable that can be used
+        // in the route file meets the regex rule.
+        return preg_match('@\{[a-z]+\?\}@is',$value) ? true : false;
+    }
+
+
 }

@@ -2,7 +2,6 @@
 
 namespace Resta\Router;
 
-use Resta\Support\Arr;
 use Resta\Contracts\ApplicationContracts;
 use Resta\Foundation\ApplicationProvider;
 
@@ -12,11 +11,6 @@ class RouteMatching extends ApplicationProvider
      * @var null|object
      */
     protected $route;
-
-    /**
-     * @var bool
-     */
-    private $unset = false;
 
     /**
      * RouteMatching constructor.
@@ -55,95 +49,113 @@ class RouteMatching extends ApplicationProvider
             }
         }
 
-        $patternList = $this->matchingUrlMethod($patternList,$urlRoute);
+        $scoredList = [];
 
         foreach ($patternList as $key=>$pattern){
 
-            $pattern = array_filter($pattern,'strlen');
-            $diff = Arr::arrayDiffKey($pattern,$urlRoute);
+            $patternCount = $this->getPatternRealCount($pattern);
 
-            if($diff){
+            if(isset($patternCount['optional'])){
+                $optionalCount = count($patternCount['default']) + count($patternCount['optional']);
+            }
 
-                $matches = true;
+            if(count($urlRoute) == count($patternCount['default']) ||
+                (isset($optionalCount) && count($urlRoute)>count($patternCount['default']) && $optionalCount>=count($urlRoute))
+            ){
 
-                foreach ($pattern as $patternKey=>$patternValue){
-                    if(!$this->route->isMatchVaribleRegexPattern($patternValue)){
-                        if($patternValue!==$urlRoute[$patternKey]){
-                            $matches = false;
+                foreach ($pattern as $pkey=>$item){
+
+                    if($this->route->isMatchVaribleRegexPattern($item)===false){
+                        if(isset($urlRoute[$pkey]) && $urlRoute[$pkey]==$item){
+                            $scoredList[$key][] = 3;
+                        }
+                    }
+
+                    if($this->route->isMatchVaribleRegexPattern($item) && !$this->route->isOptionalVaribleRegexPattern($item)){
+                        if(isset($urlRoute[$pkey])){
+                            $scoredList[$key][] = 2;
+                        }
+                    }
+
+                    if($this->route->isMatchVaribleRegexPattern($item) && $this->route->isOptionalVaribleRegexPattern($item)){
+                        if(isset($urlRoute[$pkey])){
+                            $scoredList[$key][] = 1;
                         }
                     }
                 }
-
-                if($matches){
-
-                    $isArrayEqual = $this->route->checkArrayEqual($patternList,$urlRoute);
-
-                    if($isArrayEqual===null){
-                        return $key;
-                    }
-                    return $isArrayEqual;
-                }
             }
 
-            if(count($pattern)-1 == count(route())){
-                if(preg_match('@\{[a-z]+\?\}@is',end($pattern))){
-                    return $key;
-                }
-            }
         }
+
+        return $this->showKeyAccordingToScoredList($scoredList);
+
     }
 
     /**
-     * matching url method
+     * get pattern real count
      *
-     * @param $patterns
-     * @param $urlMethod
+     * @param $pattern
      * @return array
      */
-    public function matchingUrlMethod($patterns,$urlMethod)
+    private function getPatternRealCount($pattern)
     {
-        if(isset($urlMethod[0])){
+        $list = [];
 
-            $list = [];
-
-            foreach ($patterns as $key=>$pattern){
-
-                // if the initial value of the pattern data is present
-                // and the first value from urlmethod does not match
-                // and does not match the custom regex variable,
-                // we empty the contents of the data.
-                if(isset($pattern[0])){
-                    if($pattern[0] !== $urlMethod[0] && !$this->route->isMatchVaribleRegexPattern($pattern[0])){
-                        $list[$key] = [];
-                    }
-                }
-
-                // if the contents of the directory are not normally emptied,
-                // we continue to save the list according to keyin status.
-                if(!isset($list[$key])){
-                    $list[$key] = $pattern;
-                }
-
-                // This is very important.
-                // Route matches can be variable-based or static string-based.
-                // In this case, we remove the other matches based on the static string match.
-                if(isset($pattern[0]) && $pattern[0]==$urlMethod[0]){
-
-                    // static matches will not be deleted retrospectively.
-                    // this condition will check this.
-                    if($this->unset===false){
-                        unset($list);
-                        $this->unset = true;
-                    }
-
-                    $list[$key] = $pattern;
-                }
+        foreach ($pattern as $key=>$value){
+            if(($this->route->isMatchVaribleRegexPattern($value)===false) || ($this->route->isMatchVaribleRegexPattern($value)
+                    && !$this->route->isOptionalVaribleRegexPattern($value))){
+                $list['default'][$key] = $value;
             }
 
-            $patterns = $list;
-            $this->unset = false;
+            if(($this->route->isMatchVaribleRegexPattern($value)
+                && $this->route->isOptionalVaribleRegexPattern($value))){
+                $list['optional'][] = true;
+            }
         }
 
-        return $patterns;
+        return $list;
+    }
+
+    /**
+     * show key according tp scored list
+     *
+     * @param array $scoredList
+     * @return false|int|string
+     */
+    private function showKeyAccordingToScoredList($scoredList=array())
+    {
+        $scored = [];
+
+        foreach($scoredList as $key=>$item){
+            $scored[$key] = array_sum($item);
+        }
+
+        if(count($scored)){
+            return array_search(max($scored),$scored);
+        }
+
+        return null;
+
+    }
+
+    /**
+     * is same on static strings
+     *
+     * @param $pattern
+     * @return bool
+     */
+    private function isSameOnStaticStrings($pattern)
+    {
+        $route = route();
+
+        foreach ($pattern as $key=>$item) {
+            if($this->route->isMatchVaribleRegexPattern($item)===false){
+                if(isset($route[$key]) && $item!==$route[$key]){
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 }
