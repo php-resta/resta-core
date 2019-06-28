@@ -2,7 +2,6 @@
 
 namespace Resta\Router;
 
-use Resta\Support\Arr;
 use Resta\Support\Utils;
 use Resta\Foundation\PathManager\StaticPathList;
 
@@ -43,7 +42,7 @@ class Route extends RouteHttpManager
      * @param $urlRoute
      * @return int|string
      */
-    private static function checkArrayEqual($patterns,$urlRoute)
+    public static function checkArrayEqual($patterns,$urlRoute)
     {
         // calculates the equality difference between
         // the route pattern and the urlRoute value.
@@ -60,120 +59,6 @@ class Route extends RouteHttpManager
     }
 
     /**
-     * matching url method
-     *
-     * @param $patterns
-     * @param $urlMethod
-     * @return array
-     */
-    private static function matchingUrlMethod($patterns,$urlMethod)
-    {
-        if(isset($urlMethod[0])){
-
-            $list = [];
-
-            foreach ($patterns as $key=>$pattern){
-
-                // if the initial value of the pattern data is present
-                // and the first value from urlmethod does not match
-                // and does not match the custom regex variable,
-                // we empty the contents of the data.
-                if(isset($pattern[0])){
-                    if($pattern[0] !== $urlMethod[0] && !self::isMatchVaribleRegexPattern($pattern[0])){
-                        $list[$key] = [];
-                    }
-                }
-
-                // if the contents of the directory are not normally emptied,
-                // we continue to save the list according to keyin status.
-                if(!isset($list[$key])){
-                    $list[$key] = $pattern;
-                }
-
-                // This is very important.
-                // Route matches can be variable-based or static string-based.
-                // In this case, we remove the other matches based on the static string match.
-                if(isset($pattern[0]) && $pattern[0]==$urlMethod[0]){
-
-                    // static matches will not be deleted retrospectively.
-                    // this condition will check this.
-                    if(isset($list[$key-1],$list[$key-1][0]) && $list[$key-1][0]!==$urlMethod[0]){
-                        unset($list[$key-1]);
-                    }
-
-                    $list[$key] = $pattern;
-                }
-            }
-
-            $patterns = $list;
-        }
-
-        return $patterns;
-    }
-
-    /**
-     * get route pattern resolve
-     *
-     * @return array|int|string
-     */
-    private static function getPatternResolve()
-    {
-        $routes = self::getRoutes();
-
-        if(!isset($routes['pattern'])){
-            return [];
-        }
-
-        $patterns = $routes['pattern'];
-        $urlRoute = array_filter(route(),'strlen');
-
-        $patternList = [];
-
-        foreach($routes['data'] as $patternKey=>$routeData){
-            if($routeData['http']==httpMethod()){
-                $patternList[$patternKey]=$patterns[$patternKey];
-            }
-        }
-
-        $patternList = self::matchingUrlMethod($patternList,$urlRoute);
-
-        foreach ($patternList as $key=>$pattern){
-
-            $pattern = array_filter($pattern,'strlen');
-            $diff = Arr::arrayDiffKey($pattern,$urlRoute);
-
-            if($diff){
-
-                $matches = true;
-
-                foreach ($pattern as $patternKey=>$patternValue){
-                    if(!self::isMatchVaribleRegexPattern($patternValue)){
-                        if($patternValue!==$urlRoute[$patternKey]){
-                            $matches = false;
-                        }
-                    }
-                }
-
-                if($matches){
-
-                    $isArrayEqual = self::checkArrayEqual($patternList,$urlRoute);
-
-                    if($isArrayEqual===null){
-                        return $key;
-                    }
-                    return $isArrayEqual;
-                }
-            }
-
-            if(count($pattern)-1 == count(route())){
-                if(preg_match('@\{[a-z]+\?\}@is',end($pattern))){
-                    return $key;
-                }
-            }
-        }
-    }
-
-    /**
      * get route getRouteResolve
      *
      * @return array
@@ -183,7 +68,7 @@ class Route extends RouteHttpManager
         // get routes data and the resolving pattern
         // Both are interrelated.
         $routes         = self::getRoutes();
-        $patternResolve = self::getPatternResolve();
+        $patternResolve = app()->resolve(RouteMatching::class,['route'=>new self()])->getPatternResolve();
 
         //if routes data is available in pattern resolve.
         if(isset($routes['data'][$patternResolve])){
