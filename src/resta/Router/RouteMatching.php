@@ -55,6 +55,8 @@ class RouteMatching extends ApplicationProvider
 
             $patternCount = $this->getPatternRealCount($pattern);
 
+            if(count($urlRoute)==0 && count($urlRoute)==0) return 0;
+
             if(isset($patternCount['optional'])){
                 $optionalCount = count($patternCount['default']) + count($patternCount['optional']);
             }
@@ -100,6 +102,7 @@ class RouteMatching extends ApplicationProvider
     private function getPatternRealCount($pattern)
     {
         $list = [];
+        $list['default'] = [];
 
         foreach ($pattern as $key=>$value){
             if(($this->route->isMatchVaribleRegexPattern($value)===false) || ($this->route->isMatchVaribleRegexPattern($value)
