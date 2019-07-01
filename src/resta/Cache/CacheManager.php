@@ -136,6 +136,8 @@ class CacheManager extends CacheAdapter
             return $data;
         }
 
+        $this->app->register('illuminator','cache',['name'=>$this->name]);
+
         // retrieve the value stored by the item
         return $cacheItem->get();
     }
