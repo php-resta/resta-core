@@ -70,6 +70,9 @@ class Route extends RouteHttpManager
         $routes         = self::getRoutes();
         $patternResolve = app()->resolve(RouteMatching::class,['route'=>new self()])->getPatternResolve();
 
+        //
+        self::updateRouteParameters($patternResolve);
+
         //if routes data is available in pattern resolve.
         if(isset($routes['data'][$patternResolve])){
 
@@ -89,6 +92,36 @@ class Route extends RouteHttpManager
             }
         }
         return [];
+    }
+
+    /**
+     * update route parameters
+     *
+     * @param $patternResolvedKey
+     * @return mixed|void
+     */
+    private static function updateRouteParameters($patternResolvedKey)
+    {
+        $list = [];
+
+        if(isset(static::$routes['pattern'][$patternResolvedKey])){
+
+            $routeParameters = static::$routes['pattern'][$patternResolvedKey];
+            $route = route();
+
+            foreach($routeParameters as $key=>$param){
+
+                $param = str_replace('{','',$param);
+                $param = str_replace('?','',$param);
+                $param = str_replace('}','',$param);
+
+                if(isset($route[$key])){
+                    $list[$param] = $route[$key];
+                }
+            }
+        }
+
+        app()->register('routeParams',$list);
     }
 
     /**

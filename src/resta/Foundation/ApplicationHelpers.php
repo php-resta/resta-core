@@ -330,9 +330,14 @@ if (!function_exists('route')) {
      */
     function route($key=null)
     {
-        return array_map(function($route){
-            return strtolower($route);
-        },app()->singleton()->appClass->route($key));
+        if(is_null($key)){
+            return array_map(function($route){
+                return strtolower($route);
+            },app()->singleton()->appClass->route($key));
+        }
+
+        return app()->singleton()->appClass->route($key);
+
     }
 }
 

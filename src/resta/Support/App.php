@@ -3,25 +3,21 @@
 namespace Resta\Support;
 
 use Lingua\Lingua;
-use Resta\Support\Str;
-use Resta\Support\Utils;
-use Resta\Config\Config;
 use Store\Services\Crypt;
 use Store\Services\Queue;
-use Resta\Config\ConfigProcess;
-use Store\Services\DateCollection;
 use Store\Services\Redis as Redis;
 use Resta\Cache\CacheManager as Cache;
 use Store\Services\HttpSession as Session;
 use Store\Services\DateCollection as Date;
 use Store\Services\AppCollection as Collection;
+use Resta\Foundation\PathManager\StaticPathModel;
 
 class App
 {
     /**
      * @var array
      */
-    protected static $instance=[];
+    protected static $instance = [];
 
     /**
      * @param $service
@@ -139,7 +135,7 @@ class App
     {
         $locale = (count($arg)=="0") ? config('app.locale','en') : current($arg);
 
-       return app()->resolve(Date::class)->setLocale($locale);
+        return app()->resolve(Date::class)->setLocale($locale);
     }
 
     /**
@@ -258,29 +254,16 @@ class App
         $kernel=self::getAppInstance()->kernel;
 
         $saltRouteParameters=$kernel->routeParameters;
-        $urlMethod=strtolower($kernel->urlComponent['method']);
-
-        $serviceConfRouteParameters=[];
-        if(isset($kernel->serviceConf['routeParameters'][$urlMethod])){
-            $serviceConfRouteParameters=$kernel->serviceConf['routeParameters'][$urlMethod];
-        }
-
-        $list=[];
-
-        foreach ($saltRouteParameters as $key=>$value){
-            if(isset($serviceConfRouteParameters[$key])){
-                $list[$serviceConfRouteParameters[$key]]=$value;
-            }
-            else{
-                $list[$key]=$value;
-            }
-        }
 
         if($param===null){
-            return $list;
+            return $saltRouteParameters;
         }
 
-        return (isset($list[$param])) ? strtolower($list[$param]) : null;
+        $saltRouteParameters = (self::app()->get('routeParams')) ?: $saltRouteParameters;
+
+        return (isset($saltRouteParameters[$param])) ? strtolower($saltRouteParameters[$param]) : null;
+
+
     }
 
     /**
