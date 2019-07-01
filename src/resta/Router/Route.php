@@ -2,6 +2,7 @@
 
 namespace Resta\Router;
 
+use Resta\Support\Str;
 use Resta\Support\Utils;
 use Resta\Foundation\PathManager\StaticPathList;
 
@@ -67,10 +68,10 @@ class Route extends RouteHttpManager
     {
         // get routes data and the resolving pattern
         // Both are interrelated.
-        $routes         = self::getRoutes();
+        $routes = self::getRoutes();
         $patternResolve = app()->resolve(RouteMatching::class,['route'=>new self()])->getPatternResolve();
 
-        //
+        // we set the route variables for the route assistant.
         self::updateRouteParameters($patternResolve);
 
         //if routes data is available in pattern resolve.
@@ -91,6 +92,7 @@ class Route extends RouteHttpManager
                 ];
             }
         }
+
         return [];
     }
 
@@ -111,9 +113,7 @@ class Route extends RouteHttpManager
 
             foreach($routeParameters as $key=>$param){
 
-                $param = str_replace('{','',$param);
-                $param = str_replace('?','',$param);
-                $param = str_replace('}','',$param);
+                $param = Str::replaceWordArray(['{','}','?'],'',$param);
 
                 if(isset($route[$key])){
                     $list[$param] = $route[$key];

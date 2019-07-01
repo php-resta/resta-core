@@ -3,17 +3,13 @@
 namespace Resta\Container;
 
 use Resta\Support\Arr;
-use Resta\Container\NameContainers\SpecialNameContainer;
-use Resta\Container\NameContainers\RouteContainer as Route;
 
 class GraceContainer
 {
     /**
      * @var array $nameContainers
      */
-    protected $nameContainers=[
-        'route'=>Route::class
-    ];
+    protected $nameContainers = [];
 
     /**
      * @var object $reflection
@@ -30,8 +26,12 @@ class GraceContainer
     }
 
     /**
+     * check name container
+     *
      * @param $parameter \ReflectionParameter
      * @return bool
+     *
+     * @throws \ReflectionException
      */
     public function checkNameContainer($parameter)
     {
@@ -40,9 +40,13 @@ class GraceContainer
     }
 
     /**
+     * get name containers
+     *
      * @param $parameter \ReflectionParameter
      * @param $param
      * @return array
+     *
+     * @throws \ReflectionException
      */
     protected function getNameContainers($parameter,$param)
     {
@@ -52,17 +56,10 @@ class GraceContainer
 
             // we do the name control for the container here,
             // and if we have the name container we are checking, we make a handle make bind.
-            $nameContainers=$this->nameContainers[$parameter->getName()];
+            $nameContainers = $this->nameContainers[$parameter->getName()];
             return app()->resolve($nameContainers,[
                 'reflection' => $this->reflection
             ])->resolveContainer($parameter->getDefaultValue(),$param);
-        }
-
-        // In particular, name container values can be specified and
-        // they are injected directly into the methods contextually.
-        if(isset(core()->serviceContainer[$parameter->getName()])){
-            return app()->resolve(SpecialNameContainer::class)->resolveContainer($parameter,$param);
-
         }
 
         return [];
@@ -72,6 +69,8 @@ class GraceContainer
      * @param $parameter \ReflectionParameter
      * @param $param
      * @return mixed
+     *
+     * @throws \ReflectionException
      */
     public function graceContainerBuilder($parameter,$param)
     {

@@ -296,6 +296,26 @@ class Str
     }
 
     /**
+     * replace word array
+     *
+     * @param array $word
+     * @param $replace
+     * @param $subject
+     * @return string
+     */
+    public static function replaceWordArray($word, $replace, $subject)
+    {
+        if(is_array($word)){
+
+            foreach ($word as $value) {
+                $subject = str_replace($value,$replace,$subject);
+            }
+        }
+
+        return $subject;
+    }
+
+    /**
      * Replace a given value in the string sequentially with an array.
      *
      * @param  string  $search
