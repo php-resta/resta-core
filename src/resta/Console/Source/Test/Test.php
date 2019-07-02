@@ -26,7 +26,7 @@ class Test extends ConsoleOutputter
     /**
      * @var $commandRule
      */
-    public $commandRule = ['create'=>['test']];
+    public $commandRule = [];
 
     /**
      * @method generate
@@ -34,6 +34,10 @@ class Test extends ConsoleOutputter
      */
     public function create()
     {
+        if(isset($this->argument['controller'])){
+            $this->argument['test'] = $this->argument['controller'];
+        }
+
         $type = (isset($this->argument['type'])) ? $this->argument['type'] : 'Unit';
 
         if(!file_exists(app()->path()->tests())){
@@ -54,7 +58,15 @@ class Test extends ConsoleOutputter
         $this->argument['testNamespace'] = ucfirst($this->argument['test']).'Test';
         $this->argument['projectName'] = strtolower($this->projectName());
 
-        $this->touch['test/test']= $dirWithType.'/'.$this->argument['testNamespace'].'.php';
+        if(isset($this->argument['controller']) && is_string($this->argument['controller'])){
+
+            $this->argument['controllerForHttpRequest'] = strtolower($this->argument['controller']);
+            $this->touch['test/testforcontroller']= $dirWithType.'/'.$this->argument['testNamespace'].'.php';
+        }
+        else{
+            $this->touch['test/test']= $dirWithType.'/'.$this->argument['testNamespace'].'.php';
+        }
+
 
 
         $this->file->touch($this);

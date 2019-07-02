@@ -3,13 +3,14 @@
 namespace __testNamespace__;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Psr7\Response;
 use Resta\Foundation\Application;
 use PHPUnit\Framework\TestCase as TestBaseCase;
 
 abstract class TestCase extends TestBaseCase
 {
     /**
-     * @var null|object
+     * @var Client
      */
     protected $client;
 
@@ -44,11 +45,12 @@ abstract class TestCase extends TestBaseCase
      *
      * @param $path
      * @param array $params
-     * @return mixed
+     * @return Response
+     *
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function get($path,$params=array())
     {
         return $this->client->request('GET',workingPath.'/'.$path,$params);
     }
 }
-

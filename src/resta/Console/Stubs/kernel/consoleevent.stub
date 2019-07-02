@@ -20,6 +20,7 @@ class ConsoleEventServiceProvider extends ServiceProviderManager
             // according to your needs you can write the event.
             event()->addListener('console','default',function($args){
                 call_user_func_array([$this,'createModelForMigration'],[$args]);
+                call_user_func_array([$this,'createTestForController'],[$args]);
             });
         }
     }
@@ -38,6 +39,23 @@ class ConsoleEventServiceProvider extends ServiceProviderManager
 
             // The symfony process will be executed as an application method.
             $this->app->command('model create','model:'.strtolower($args['model']));
+        }
+    }
+
+    /**
+     * controller test file for console event
+     *
+     * @param array $args
+     * @return mixed|void
+     */
+    private function createTestForController($args=array())
+    {
+        // if there is a value of controller and create for the argument values,
+        // then a test file will be created when that controller is created.
+        if($args['class']=="controller" && $args['classMethod']=="create" && isset($args['controller'])){
+
+            // The symfony process will be executed as an application method.
+            $this->app->command('test create','controller:'.strtolower($args['controller']).'');
         }
     }
 }

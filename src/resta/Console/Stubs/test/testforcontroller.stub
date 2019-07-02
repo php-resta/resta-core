@@ -1,0 +1,22 @@
+<?php
+
+namespace __testDirPath__;
+
+use __testPath__\TestCase;
+
+class __testNamespace__ extends TestCase
+{
+    /**
+     * A basic test example.
+     * @group __projectName__
+     *
+     * @return void
+     *
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function testIndex()
+    {
+        $request = $this->get('__controllerForHttpRequest__',[]);
+        $this->assertSame(200,$request->getStatusCode());
+    }
+}
