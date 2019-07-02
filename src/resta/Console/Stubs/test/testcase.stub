@@ -2,9 +2,53 @@
 
 namespace __testNamespace__;
 
+use GuzzleHttp\Client;
+use Resta\Foundation\Application;
 use PHPUnit\Framework\TestCase as TestBaseCase;
 
 abstract class TestCase extends TestBaseCase
 {
+    /**
+     * @var null|object
+     */
+    protected $client;
 
+    /**
+     * @var null|Application
+     */
+    protected static $app;
+
+    /**
+     * test set up method
+     *
+     * @return mixed|void
+     */
+    protected function setUp()
+    {
+        require_once __DIR__.'/../../../../bootstrapper'.DIRECTORY_SEPARATOR.'ApplicationStart.php';
+
+        define('arguments',['api','test','phpUnit','mobi']);
+        define('rootDir',end(explode('/',root)));
+
+        if(static::$app===null){
+            static::$app = new Application(true);
+        }
+
+        define('workingPath',config('app.url').'/'.rootDir.'/public/'.strtolower(app));
+
+        $this->client = new Client();
+    }
+
+    /**
+     * get method for http client
+     *
+     * @param $path
+     * @param array $params
+     * @return mixed
+     */
+    public function get($path,$params=array())
+    {
+        return $this->client->request('GET',workingPath.'/'.$path,$params);
+    }
 }
+

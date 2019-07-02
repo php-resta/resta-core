@@ -99,4 +99,9 @@ class Test extends ConsoleOutputter
             echo $exception->getMessage();
         }
     }
+
+    public function phpUnit()
+    {
+
+    }
 }
