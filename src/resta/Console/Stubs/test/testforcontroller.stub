@@ -3,6 +3,7 @@
 namespace __testDirPath__;
 
 use __testPath__\TestCase;
+use GuzzleHttp\Exception\GuzzleException;
 
 class __testNamespace__ extends TestCase
 {
@@ -12,7 +13,7 @@ class __testNamespace__ extends TestCase
      *
      * @return void
      *
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws GuzzleException
      */
     public function testIndex()
     {
