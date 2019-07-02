@@ -33,9 +33,9 @@ abstract class TestCase extends TestBaseCase
         }
 
         if(!defined('rootDir')){
-            define('rootDir',end(explode('/',root)));
+            $root = explode('/',root);
+            define('rootDir',end($root));
         }
-
 
         if(static::$app===null){
             static::$app = new Application(true);
