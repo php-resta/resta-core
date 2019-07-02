@@ -29,7 +29,7 @@ abstract class TestCase extends TestBaseCase
         require_once __DIR__.'/../../../../bootstrapper'.DIRECTORY_SEPARATOR.'ApplicationStart.php';
 
         if(!defined('arguments')){
-            define('arguments',['api','test','phpUnit','mobi']);
+            define('arguments',['api','test','phpUnit','__projectName__']);
         }
 
         if(!defined('rootDir')){

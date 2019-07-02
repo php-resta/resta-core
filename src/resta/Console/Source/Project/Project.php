@@ -39,6 +39,7 @@ class Project extends ConsoleOutputter
      */
     public function create()
     {
+        $this->argument['projectName']          = strtolower($this->projectName());
         $this->argument['kernelDir']            = Utils::getNamespace($this->kernel());
         $this->argument['kernelProviderDir']    = Utils::getNamespace($this->provider());
         $this->argument['factoryDir']           = app()->namespace()->factory();
