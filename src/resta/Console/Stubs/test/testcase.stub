@@ -1,0 +1,10 @@
+<?php
+
+namespace __testNamespace__;
+
+use PHPUnit\Framework\TestCase as TestBaseCase;
+
+abstract class TestCase extends TestBaseCase
+{
+
+}

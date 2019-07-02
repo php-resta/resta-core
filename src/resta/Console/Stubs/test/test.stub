@@ -1,8 +1,8 @@
 <?php
 
-namespace __testPath__;
+namespace __testDirPath__;
 
-use PHPUnit\Framework\TestCase;
+use __testPath__\TestCase;
 
 class __testNamespace__ extends TestCase
 {

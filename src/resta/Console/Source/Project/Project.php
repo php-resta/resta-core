@@ -45,6 +45,7 @@ class Project extends ConsoleOutputter
         $this->directory['projectDir']          = $this->projectPath();
         $this->argument['exceptionNamespace']   = app()->namespace()->exception();
         $this->argument['resourcePath']         = app()->path()->appResourche();
+        $this->argument['testNamespace']             = app()->namespace()->tests();
 
         $recursiveDefaultDirectory = explode("\\",$this->argument['project']);
         $this->argument['applicationName'] = pos($recursiveDefaultDirectory);
@@ -94,7 +95,7 @@ class Project extends ConsoleOutputter
         $this->touch['kernel/app']                  = $this->provider().'/AppServiceProvider.php';
         $this->touch['kernel/worker']               = $this->provider().'/WorkerServiceProvider.php';
         $this->touch['kernel/route']                = $this->provider().'/RouteServiceProvider.php';
-        $this->touch['tests/index']                 = $this->test().'/index.html';
+        $this->touch['test/testcase']              = $this->test().'/TestCase.php';
         $this->touch['kernel/consoleevent']         = $this->provider().'/ConsoleEventServiceProvider.php';
         $this->touch['middleware/authenticate']     = $this->middleware().'/Authenticate.php';
         $this->touch['middleware/ratelimit']        = $this->middleware().'/RateLimit.php';

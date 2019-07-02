@@ -9,8 +9,8 @@ use Resta\Console\ConsoleListAccessor;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 
-class Test extends ConsoleOutputter {
-
+class Test extends ConsoleOutputter
+{
     use ConsoleListAccessor;
 
     /**
@@ -34,22 +34,32 @@ class Test extends ConsoleOutputter {
      */
     public function create()
     {
+        $type = (isset($this->argument['type'])) ? $this->argument['type'] : 'Unit';
 
         if(!file_exists(app()->path()->tests())){
             $this->directory['test'] = app()->path()->tests();
             $this->file->makeDirectory($this);
         }
 
+        $dirWithType = app()->path()->tests().'/'.$type;
+
+
+        if(!file_exists($dirWithType)){
+            $this->directory['testType'] = $dirWithType;
+            $this->file->makeDirectory($this);
+        }
+
         $this->argument['testPath'] = app()->namespace()->tests();
+        $this->argument['testDirPath'] = app()->namespace()->tests().'\\'.$type;
         $this->argument['testNamespace'] = ucfirst($this->argument['test']).'Test';
         $this->argument['projectName'] = strtolower($this->projectName());
 
-        $this->touch['test/test']= app()->path()->tests().'/'.$this->argument['testNamespace'].'.php';
+        $this->touch['test/test']= $dirWithType.'/'.$this->argument['testNamespace'].'.php';
 
 
         $this->file->touch($this);
 
-        echo $this->classical(' > Test file called as "'.$this->argument['test'].'" has been successfully created in the '.app()->namespace()->tests().'');
+        echo $this->classical(' > Test file called as "'.$this->argument['test'].'" has been successfully created in the '.$dirWithType.'');
     }
 
     /**
