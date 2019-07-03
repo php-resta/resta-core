@@ -13,6 +13,7 @@ abstract class Kernel extends Container
      */
     protected $originGroups=[
         'url'               => 'url',
+        'route'             => 'route',
         'environment'       => 'environment',
         'logger'            => 'logger',
         'config'            => 'config',
@@ -38,9 +39,7 @@ abstract class Kernel extends Container
     protected $middlewareGroups=[
         'middleware' => 'middleware'
     ];
-    /**
-     *
-     */
+
     /**
      * get reflection groups
      *

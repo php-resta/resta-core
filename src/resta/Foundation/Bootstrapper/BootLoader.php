@@ -2,6 +2,7 @@
 
 namespace Resta\Foundation\Bootstrapper;
 
+use Resta\Router\Route;
 use Resta\Support\Utils;
 use Resta\Url\UrlProvider;
 use Resta\Router\RouteProvider;
@@ -176,6 +177,23 @@ class BootLoader extends ApplicationProvider implements BootContracts
      *
      * @return mixed|void
      */
+    private function route()
+    {
+        // route operations are the last part of the system run. In this section,
+        // a route operation is passed through the url process and output is sent to the screen according to
+        // the method file to be called by the application
+        if(core()->isAvailableStore && $this->app->checkBindings('route')===false){
+            $this->app->share('route',function($app){
+                return $app['revision']['route'] ?? Route::class;
+            });
+        }
+    }
+
+    /**
+     * router boot
+     *
+     * @return mixed|void
+     */
     private function router()
     {
         // route operations are the last part of the system run. In this section,
@@ -240,11 +258,11 @@ class BootLoader extends ApplicationProvider implements BootContracts
     {
         // we use the methodological context
         // for kernel group values that are replaced with revision.
-       $revisionBoot = array_search($name,app()->get('revision'));
-       if(is_string($revisionBoot) && method_exists($this,$revisionBoot)){
-           return $this->{$revisionBoot}();
-       }
+        $revisionBoot = array_search($name,app()->get('revision'));
+        if(is_string($revisionBoot) && method_exists($this,$revisionBoot)){
+            return $this->{$revisionBoot}();
+        }
 
-       exception()->badFunctionCall('There is no boot method named '.$name);
+        exception()->badFunctionCall('There is no boot method named '.$name);
     }
 }
