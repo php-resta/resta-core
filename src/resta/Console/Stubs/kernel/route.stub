@@ -14,10 +14,7 @@ class RouteServiceProvider extends ServiceProviderManager
      */
     public function boot()
     {
-        // we are bind the route class.
-        $this->app->share('route',function(){
-            return Route::class;
-        });
+        //
     }
 
     /**
@@ -27,16 +24,7 @@ class RouteServiceProvider extends ServiceProviderManager
      */
     public function register()
     {
-        // we will record the path data for the route.
-        // We set the routeMapper variables and the route path.
-        Route::setPath(function(){
-
-            // we are sending the controller and routes.php path.
-            return [
-                //'controllerPath'    => 'controllerPath',
-                //'routePath'         => 'routePath',
-            ];
-        });
+        //
     }
 
 }

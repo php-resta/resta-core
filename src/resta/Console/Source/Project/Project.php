@@ -95,7 +95,7 @@ class Project extends ConsoleOutputter
         $this->touch['kernel/version']              = $this->kernel().'/Version.php';
         $this->touch['kernel/app']                  = $this->provider().'/AppServiceProvider.php';
         $this->touch['kernel/worker']               = $this->provider().'/WorkerServiceProvider.php';
-        //$this->touch['kernel/route']                = $this->provider().'/RouteServiceProvider.php';
+        $this->touch['kernel/route']                = $this->provider().'/RouteServiceProvider.php';
         $this->touch['test/testcase']              = $this->test().'/TestCase.php';
         $this->touch['kernel/consoleevent']         = $this->provider().'/ConsoleEventServiceProvider.php';
         $this->touch['middleware/authenticate']     = $this->middleware().'/Authenticate.php';
