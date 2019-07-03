@@ -2,6 +2,7 @@
 
 namespace Resta\Foundation;
 
+use Resta\Container\DIContainerManager;
 use Resta\Support\App;
 use Resta\Support\Macro;
 use Resta\Support\Utils;
@@ -62,7 +63,7 @@ class ApplicationBaseRegister extends ApplicationProvider implements HandleContr
         $this->isAvailableStore();
 
         //global accessor handling
-       $this->setGlobalAccessor();
+        $this->setGlobalAccessor();
 
         // sets a user-defined error handler function
         // this function can be used for defining your own way of handling errors during runtime,
@@ -108,6 +109,10 @@ class ApplicationBaseRegister extends ApplicationProvider implements HandleContr
 
         //set register for macro
         $this->app->register('pipeline',new Pipeline());
+
+        $this->app->register('di',function($instance,$method){
+            return DIContainerManager::callBind([$instance,$method],$this->app->applicationProviderBinding($this->app));
+        });
 
     }
 

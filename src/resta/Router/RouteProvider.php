@@ -40,12 +40,11 @@ class RouteProvider extends ApplicationProvider
     {
         //we finally process the method of the class invoked by the user as a process and prepare it for the response
         return app()->resolve(RouteWatch::class)->watch(function(){
-            
+
             // if the method in the instance object exists,
             // this method is executed to produce the output.
             if(method_exists($this->app['instanceController'],$this->app['method'])){
-                return DIContainerManager::callBind([$this->app['instanceController'],$this->app['method']],
-                    $this->app->applicationProviderBinding($this->app));
+                return $this->app['di']($this->app['instanceController'],$this->app['method']);
             }
 
             //throw exception as unsuccessful

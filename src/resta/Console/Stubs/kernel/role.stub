@@ -1,0 +1,30 @@
+<?php
+
+namespace __kernelProviderDir__;
+
+use Resta\Role\RoleManager;
+use Resta\Role\RoleInterface;
+use Resta\Provider\ServiceProviderManager;
+
+class RoleServiceProvider extends ServiceProviderManager
+{
+    /**
+     * boot service provider
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        //
+    }
+
+    /**
+     * register service provider
+     *
+     * @return void
+     */
+    public function register()
+    {
+        $this->app->bind(RoleInterface::class,RoleManager::class);
+    }
+}
