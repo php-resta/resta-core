@@ -2,22 +2,20 @@
 
 use Faker\Factory;
 use Faker\Generator;
+use Resta\Router\Route;
 use Resta\Support\Filesystem;
 use Resta\Logger\LoggerHandler;
 use Store\Services\RequestService;
 use Resta\Exception\ExceptionManager;
 use Resta\Support\HigherOrderTapProxy;
 use Resta\Response\ResponseOutManager;
-use Resta\Contracts\ContainerContracts;
 use Resta\EventDispatcher\EventManager;
 use Resta\Contracts\ExceptionContracts;
 use Resta\Contracts\StaticPathContracts;
 use Resta\Contracts\ApplicationContracts;
-use Resta\Foundation\ApplicationProvider;
 use Resta\Authenticate\AuthenticateContract;
 use Resta\Authenticate\AuthenticateProvider;
 use Symfony\Component\HttpFoundation\Request;
-use Resta\Contracts\ApplicationHelpersContracts;
 use Resta\Foundation\PathManager\StaticPathList;
 
 if (!function_exists('app')) {
@@ -319,6 +317,23 @@ if (!function_exists('resolve')) {
     function resolve($class,$bind=array())
     {
         return app()->resolve($class,$bind);
+    }
+}
+
+if (!function_exists('policy')) {
+
+    /**
+     * @return mixed
+     */
+    function policy()
+    {
+        $policyPath = implode('/',[
+            Route::getRouteControllerNamespace(),
+            'Policy',
+            Route::getRouteControllerClass().'Policy'
+        ]);
+
+        return app()->resolve(\Resta\Support\Utils::getNamespace($policyPath));
     }
 }
 

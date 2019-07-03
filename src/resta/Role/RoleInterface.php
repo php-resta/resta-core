@@ -5,6 +5,11 @@ namespace Resta\Role;
 interface RoleInterface
 {
     /**
+     * @return bool
+     */
+    public function directly();
+
+    /**
      * @return mixed
      */
     public function getAdapter();

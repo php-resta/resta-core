@@ -17,6 +17,16 @@ class RoleManager extends ApplicationProvider implements RoleInterface
     protected $resource = 'Resta\\Role\\Resource';
 
     /**
+     * passing directly
+     *
+     * @return bool
+     */
+    public function directly()
+    {
+        return true;
+    }
+
+    /**
      * get resource path
      *
      * @return string

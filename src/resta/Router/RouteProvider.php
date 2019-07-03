@@ -62,10 +62,13 @@ class RouteProvider extends ApplicationProvider
      */
     public function handle()
     {
-        $this->app->register('routerResult',$this->callController());
+        return $this->app->resolve(RoutePolicy::class)->gate(function(){
 
-        //we call our services as controller
-        return $this->app['routerResult'];
+            $this->app->register('routerResult',$this->callController());
+
+            //we call our services as controller
+            return $this->app['routerResult'];
+        });
     }
 
     /**
