@@ -3,6 +3,7 @@
 use Faker\Factory;
 use Faker\Generator;
 use Resta\Router\Route;
+use Resta\Support\Utils;
 use Resta\Support\Filesystem;
 use Resta\Logger\LoggerHandler;
 use Store\Services\RequestService;
@@ -333,7 +334,14 @@ if (!function_exists('policy')) {
             Route::getRouteControllerClass().'Policy'
         ]);
 
-        return app()->resolve(\Resta\Support\Utils::getNamespace($policyPath));
+        $policyNamespace = Utils::getNamespace($policyPath);
+
+        if(Utils::isNamespaceExists($policyNamespace)){
+            return app()->resolve(Utils::getNamespace($policyPath));
+        }
+
+        return stdClass::class;
+
     }
 }
 

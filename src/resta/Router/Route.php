@@ -76,6 +76,22 @@ class Route extends RouteHttpManager
     }
 
     /**
+     * get route controller class
+     *
+     * @return string
+     */
+    public static function getRouteControllerMethod()
+    {
+        $route = self::getRouteResolve();
+
+        if(isset($route['method'])){
+            return $route['method'];
+        }
+
+        return null;
+    }
+
+    /**
      * get route controller namespace
      *
      * @return string
