@@ -9,6 +9,16 @@ class Generator
     /**
      * @var null|string
      */
+    protected $file;
+
+    /**
+     * @var null|object
+     */
+    protected $fileSystem;
+
+    /**
+     * @var null|string
+     */
     protected $path;
 
     /**
@@ -34,16 +44,17 @@ class Generator
     /**
      * Generator constructor.
      * @param null $path
+     * @param null $fileSystem
      */
-    public function __construct($path=null)
+    public function __construct($path=null,$fileSystem=null)
     {
         $this->path = $path;
+
+        $this->fileSystem = $fileSystem;
 
         $this->namespace = Utils::getNamespace($this->path);
 
         $this->createPath();
-
-        $this->stubPath = app()->corePath().'Console/Stubs/generator';
     }
 
     /**
@@ -54,8 +65,8 @@ class Generator
     public function createPath()
     {
         if(!file_exists($this->path)){
-            if(!files()->makeDirectory($this->path)){
-                exception()->runtime($this->path.' makeDirectory fail');
+            if(!$this->fileSystem->makeDirectory($this->path)){
+                throw new \Error($this->path.' makeDirectory fail');
             }
         }
     }
@@ -66,22 +77,34 @@ class Generator
      * @param null $name
      * @param array $replacement
      *
+     * @return Generator
+     *
      * @throws FileNotFoundException
      */
     public function createFile($name=null,$replacement=array())
     {
         if(file_exists($this->path) && !is_null($name)){
 
-            $content = files()->get($this->getStubFile());
+            $content = $this->fileSystem->get($this->getStubFile());
+            $this->file = $this->path.''.DIRECTORY_SEPARATOR.''.ucfirst($name).'.php';
 
-            $file = $this->path.''.DIRECTORY_SEPARATOR.''.ucfirst($name).'.php';
-
-            if(files()->put($file,$content)!==FALSE){
-
+            if($this->fileSystem->put($this->file,$content)!==FALSE){
                 $this->name = $name;
-                $this->replaceFileContent($replacement,$file);
+                $this->replaceFileContent($replacement,$this->file);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * creates method to file for generator
+     *
+     * @param array $params
+     */
+    public function createMethod($params=array())
+    {
+
     }
 
     /**
@@ -91,7 +114,13 @@ class Generator
      */
     public function getStubFile()
     {
-        return $this->stubPath.''.DIRECTORY_SEPARATOR.''.$this->type.'.stub';
+        $stubFile = $this->stubPath.''.DIRECTORY_SEPARATOR.''.$this->type.'.stub';
+
+        if(!file_exists($stubFile)){
+            throw new \Error($stubFile.' path is not available');
+        }
+
+        return $stubFile;
     }
 
     /**
@@ -100,20 +129,18 @@ class Generator
      * @param $replacement
      * @param $file
      * @return void
-     *
-     * @throws FileNotFoundException
      */
     private function replaceFileContent($replacement,$file)
     {
         $replacementVariables = $this->replacementVariables($replacement);
-        $content = files()->get($file);
+        $content = $this->fileSystem->get($file);
 
         foreach ($replacementVariables as $key=>$replacementVariable){
             $search = '/__'.$key.'__/';
             $replace = $replacementVariable;
             $content = preg_replace($search,$replace,$content);
         }
-        files()->replace($file,$content);
+        $this->fileSystem->replace($file,$content);
     }
 
     /**
@@ -130,6 +157,16 @@ class Generator
         return array_map(function($item){
             return ucfirst($item);
         },$replacement);
+    }
+
+    /**
+     * set stub path
+     *
+     * @param $stubPath
+     */
+    public function setStubPath($stubPath)
+    {
+        $this->stubPath = $stubPath;
     }
 
 }
