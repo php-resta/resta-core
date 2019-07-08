@@ -1,0 +1,7 @@
+
+$this->replaceFileContent([
+                ''.$this->getAccessibleMethodValue($method).' function '.$method.'\('.$this->getMethodParameters($method).'\)\n.*{\n.*\n.*}' => ''.$this->getAccessibleMethodValue($method).' function '.$method.'('.$this->getMethodParameters($method).')
+    {
+        '.$body.'
+    }'
+            ],$this->file,true);

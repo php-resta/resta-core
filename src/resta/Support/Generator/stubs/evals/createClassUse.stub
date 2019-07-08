@@ -1,0 +1,13 @@
+
+      $useString = [];
+
+            foreach ($uses as $use) {
+
+                $useString[] = '
+use ' . $use . ';';
+            }
+
+            $this->replaceFileContent([
+                'namespace '.$this->regexEscape($this->namespace).';' => 'namespace '.$this->namespace.';
+'.implode('',$useString).''
+            ],$this->file,true);

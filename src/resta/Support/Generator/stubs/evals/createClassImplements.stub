@@ -1,0 +1,40 @@
+
+if(preg_match('@class.*(.*?).*@',$this->getClassString(),$strings)){
+                $statements = explode(' ',$strings[0]);
+
+                $className = $statements[1];
+
+                if(in_array('extends',$statements) && !in_array('implements',$statements)){
+                    $extendsAliasName = $statements[array_search('extends',$statements)+1];
+
+                    $this->replaceFileContent([
+                        'class\s.*\n{' =>'class '.$className.' extends '.$extendsAliasName.' implements '.implode(',',$implementList).'
+{'
+                    ],$this->file,true);
+                }
+                elseif(in_array('extends',$statements) && in_array('implements',$statements)){
+
+                    $extendsAliasName = $statements[array_search('extends',$statements)+1];
+
+                    $this->replaceFileContent([
+                        'class\s.*\n{' =>'class '.$className.' extends '.$extendsAliasName.' implements '.end($statements).','.implode(',',$implementList).'
+{'
+                    ],$this->file,true);
+                }
+                elseif(!in_array('extends',$statements) && in_array('implements',$statements)){
+
+                    $this->replaceFileContent([
+                        'class\s.*\n{' =>'class '.$className.' implements '.end($statements).','.implode(',',$implementList).'
+{'
+                    ],$this->file,true);
+                }
+                else{
+
+                    $this->replaceFileContent([
+                        'class\s.*\n{' =>'class '.$className.' implements '.implode(',',$implementList).'
+{'
+                    ],$this->file,true);
+
+                }
+
+            }

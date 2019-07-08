@@ -1,0 +1,5 @@
+
+$this->replaceFileContent([
+                    'class\s.*\n{' =>'class '.$className.' extends '.$alias.'
+{'
+                ],$this->file,true);

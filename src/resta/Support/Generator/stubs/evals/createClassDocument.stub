@@ -1,0 +1,18 @@
+
+$documentString = [];
+$documentString[] = '/**';
+
+foreach ($documents as $document) {
+
+    $documentString[] = '
+* ' . $document . '';
+
+}
+
+$documentString[] = '
+*/';
+
+$this->replaceFileContent([
+    'class\s.*\n{' => implode('',$documentString).'
+'.$this->getClassString()
+],$this->file,true);

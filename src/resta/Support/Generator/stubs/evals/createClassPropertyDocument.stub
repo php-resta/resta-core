@@ -1,0 +1,16 @@
+
+    $documentString = [];
+            $documentString[] = '/**';
+
+            foreach ($documents as $document){
+                $documentString[] = '
+     * '.$document.'';
+            }
+
+            $documentString[] = '
+     */';
+
+            $this->replaceFileContent([
+                $this->regexEscape($property) => implode('',$documentString).'
+    '.$property
+            ],$this->file,true);
