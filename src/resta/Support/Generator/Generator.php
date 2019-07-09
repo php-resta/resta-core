@@ -195,8 +195,26 @@ class Generator extends GeneratorAbstract
      */
     public function createMethod($methods=array())
     {
-        if(preg_match('@class\s.*\n{@',$this->fileSystem->get($this->file),$parse) && count($methods)){
+        if(preg_match('@'.$this->type.'\s.*\n{@',$this->fileSystem->get($this->file),$parse) && count($methods)){
             $content = '<?php'.$this->fileSystem->get($this->getEval('createMethod'));
+            eval("?>$content");
+
+            $this->createClassProperty([],true);
+            $this->loaded['createMethod'] = true;
+        }
+    }
+
+    /**
+     * creates abstract method for generator
+     *
+     * @param array $methods
+     *
+     * @throws FileNotFoundException
+     */
+    public function createMethodAbstract($methods=array())
+    {
+        if(preg_match('@'.$this->type.'\s.*\n{@',$this->fileSystem->get($this->file),$parse) && count($methods)){
+            $content = '<?php'.$this->fileSystem->get($this->getEval('createMethodAbstract'));
             eval("?>$content");
 
             $this->createClassProperty([],true);
@@ -222,7 +240,7 @@ class Generator extends GeneratorAbstract
     }
 
     /**
-     * creates method for generator
+     * creates method body for generator
      *
      * @param array $methods
      *
@@ -232,6 +250,21 @@ class Generator extends GeneratorAbstract
     {
         foreach ($methods as $method=>$body){
             $content = '<?php'.$this->fileSystem->get($this->getEval('createMethodBody'));
+            eval("?>$content");
+        }
+    }
+
+    /**
+     * creates abstract method document for generator
+     *
+     * @param array $methods
+     *
+     * @throws FileNotFoundException
+     */
+    public function createMethodAbstractDocument($methods=array())
+    {
+        foreach ($methods as $method=>$documents){
+            $content = '<?php'.$this->fileSystem->get($this->getEval('createMethodAbstractDocument'));
             eval("?>$content");
         }
     }
@@ -252,6 +285,39 @@ class Generator extends GeneratorAbstract
     }
 
     /**
+     * creates interface method for generator
+     *
+     * @param array $methods
+     *
+     * @throws FileNotFoundException
+     */
+    public function createMethodImplement($methods=array())
+    {
+        if(preg_match('@'.$this->type.'\s.*\n{@',$this->fileSystem->get($this->file),$parse) && count($methods)){
+            $content = '<?php'.$this->fileSystem->get($this->getEval('createMethodImplement'));
+            eval("?>$content");
+
+            $this->createClassProperty([],true);
+            $this->loaded['createMethod'] = true;
+        }
+    }
+
+    /**
+     * creates interface method document for generator
+     *
+     * @param array $methods
+     *
+     * @throws FileNotFoundException
+     */
+    public function createMethodImplementDocument($methods=array())
+    {
+        foreach ($methods as $method=>$documents){
+            $content = '<?php'.$this->fileSystem->get($this->getEval('createMethodImplementDocument'));
+            eval("?>$content");
+        }
+    }
+
+    /**
      * accessible properties method for generator
      *
      * @param array $methods
@@ -264,6 +330,40 @@ class Generator extends GeneratorAbstract
         foreach($methods as $method=>$parameter) {
             $this->methodParameters[$method] = $parameter;
             $content = '<?php'.$this->fileSystem->get($this->getEval('createMethodParameters'));
+            eval("?>$content");
+        }
+    }
+
+    /**
+     * accessible properties abstract for generator
+     *
+     * @param array $methods
+     * @return void|mixed
+     *
+     * @throws FileNotFoundException
+     */
+    public function createMethodAbstractParameters($methods=array())
+    {
+        foreach($methods as $method=>$parameter) {
+            $this->methodParameters[''.$this->type.'_'.$method] = $parameter;
+            $content = '<?php'.$this->fileSystem->get($this->getEval('createMethodAbstractParameters'));
+            eval("?>$content");
+        }
+    }
+
+    /**
+     * accessible properties interface for generator
+     *
+     * @param array $methods
+     * @return void|mixed
+     *
+     * @throws FileNotFoundException
+     */
+    public function createMethodImplementParameters($methods=array())
+    {
+        foreach($methods as $method=>$parameter) {
+            $this->methodParameters[''.$this->type.'_'.$method] = $parameter;
+            $content = '<?php'.$this->fileSystem->get($this->getEval('createMethodImplementParameters'));
             eval("?>$content");
         }
     }

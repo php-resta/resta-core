@@ -1,0 +1,18 @@
+
+  $list = [];
+
+            foreach ($methods as $method){
+
+                if(!preg_match('@abstract.*function.*'.$method.'@',$this->getClassString())){
+
+                    $list[] = '
+    abstract '.$this->getAccessibleMethodValue($method).' function '.$method.'('.$this->getMethodParameters($method).');
+            ';
+                }
+
+
+            }
+
+            $this->replaceFileContent([
+                $parse[0] => $parse[0].' '.implode('',$list)
+            ],$this->file,true);

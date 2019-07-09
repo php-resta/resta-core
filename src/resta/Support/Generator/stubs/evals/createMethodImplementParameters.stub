@@ -1,0 +1,6 @@
+
+$this->replaceFileContent([
+
+                'public function '.$method.'\(\)' => 'public function '.$method.'('.$parameter.')'
+
+            ],$this->file,true);

@@ -1,0 +1,8 @@
+<?php
+
+namespace __namespace__;
+
+abstract class __class__
+{
+
+}

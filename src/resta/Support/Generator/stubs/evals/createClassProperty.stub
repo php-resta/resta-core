@@ -1,5 +1,5 @@
 
-if(preg_match('@class\s.*\n{@',$this->fileSystem->get($this->file),$parse)){
+if(preg_match('@'.$this->type.'\s.*\n{@',$this->fileSystem->get($this->file),$parse)){
                         $this->replaceFileContent([
                             $parse[0] => $parse[0].'
     '.$property.'

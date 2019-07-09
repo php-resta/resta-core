@@ -13,6 +13,6 @@ $documentString[] = '
 */';
 
 $this->replaceFileContent([
-    'class\s.*\n{' => implode('',$documentString).'
+    ''.$this->type.'\s.*\n{' => implode('',$documentString).'
 '.$this->getClassString()
 ],$this->file,true);

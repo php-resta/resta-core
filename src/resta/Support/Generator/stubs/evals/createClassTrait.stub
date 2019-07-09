@@ -1,6 +1,6 @@
 
 $this->replaceFileContent([
-                'class\s.*\n{' => $this->getClassString().'
+                ''.$this->type.'\s.*\n{' => $this->getClassString().'
     use '.$trait.'
     '
             ],$this->file,true);

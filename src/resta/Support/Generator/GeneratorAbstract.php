@@ -48,6 +48,11 @@ abstract class GeneratorAbstract
     protected $type = 'class';
 
     /**
+     * @var string
+     */
+    protected $format;
+
+    /**
      * @var null|string
      */
     protected $stubPath;
@@ -80,6 +85,8 @@ abstract class GeneratorAbstract
      */
     public function __construct($path,$name,Filesystem $fileSystem=null)
     {
+        $this->format = $this->type;
+
         $this->path = $path;
 
         $this->name = $name;
@@ -149,7 +156,7 @@ abstract class GeneratorAbstract
      */
     protected function getClassString()
     {
-        if(preg_match('@class\s.*\n{@',$this->fileSystem->get($this->file),$parse)){
+        if(preg_match('@'.$this->type.'\s.*\n{@',$this->fileSystem->get($this->file),$parse)){
             return $parse[0];
         }
 
@@ -188,7 +195,7 @@ abstract class GeneratorAbstract
      */
     public function getStubFile()
     {
-        $stubFile = $this->stubPath.''.DIRECTORY_SEPARATOR.''.$this->type.'.stub';
+        $stubFile = $this->stubPath.''.DIRECTORY_SEPARATOR.''.$this->format.'.stub';
 
         if(!file_exists($stubFile)){
             throw new \Error($stubFile.' path is not available');
@@ -258,6 +265,24 @@ abstract class GeneratorAbstract
         return array_map(function($item){
             return ucfirst($item);
         },$replacement);
+    }
+
+    /**
+     * set format for generator
+     *
+     * @param $format
+     */
+    public function setFormat($format)
+    {
+        $this->format = $format;
+
+        if($this->format=='abstract'){
+            $this->type = 'abstract class';
+        }
+
+        if($this->format=='interface'){
+            $this->type = $this->format;
+        }
     }
 
     /**

@@ -1,0 +1,16 @@
+
+$documentString = [];
+            $documentString[] = '/**';
+
+            foreach ($documents as $document){
+                $documentString[] = '
+     * '.$document.'';
+            }
+
+            $documentString[] = '
+     */';
+
+            $this->replaceFileContent([
+                ''.$this->getAccessibleMethodValue($method).' function '.$method.'\('.$this->getMethodParameters($method).'\)' => ''.implode('',$documentString).'
+    '.$this->getAccessibleMethodValue($method).' function '.$method.'('.$this->getMethodParameters($method,false).')'
+            ],$this->file,true);
