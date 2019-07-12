@@ -7,6 +7,7 @@ use Migratio\Contract\SchemaContract;
 use Migratio\Resource\PullManager\Pulling;
 use Migratio\Resource\PushManager\Pushing;
 use Migratio\Resource\StubManager\Stubber;
+use Resta\Exception\FileNotFoundException;
 
 class Schema extends SchemaHelper implements SchemaContract
 {
@@ -16,28 +17,28 @@ class Schema extends SchemaHelper implements SchemaContract
     public $params = array();
 
     /**
-     * @var $config
+     * @var string
      */
     protected $config;
 
     /**
-     * @var $connection
+     * @var null|object
      */
     protected $connection;
 
     /**
-     * @var $driver
+     * @var string
      */
     protected $driver;
 
     /**
-     * @var $grammarPath
+     * @var string
      */
     protected $grammarPath = 'Migratio\GrammarStructure';
 
     /**
      * Schema constructor.
-     * @param null $config
+     * @param null|mixed $config
      */
     public function __construct($config=null)
     {
@@ -48,7 +49,11 @@ class Schema extends SchemaHelper implements SchemaContract
     }
 
     /**
+     * migration pull
+     *
      * @return Pulling|mixed
+     *
+     * @throws FileNotFoundException
      */
     public function pull()
     {
@@ -58,6 +63,8 @@ class Schema extends SchemaHelper implements SchemaContract
     }
 
     /**
+     * migration push
+     *
      * @return Pushing|mixed
      */
     public function push()
@@ -68,6 +75,8 @@ class Schema extends SchemaHelper implements SchemaContract
     }
 
     /**
+     * migration stub
+     *
      * @return mixed|void
      */
     public function stub(...$params)

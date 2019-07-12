@@ -2,28 +2,24 @@
 
 namespace Migratio\Resource\PushManager;
 
-use Migratio\GrammarStructure\Mysql\QueryBuilder;
-
 trait PushingProcess
 {
     /**
-     * @return void
+     * process handler
+     *
+     * @return mixed|string
      */
     public function processHandler()
     {
-        $results = [];
-
         return $this->errorHandler(function(){
             
             foreach ($this->list as $table =>$datas){
 
                 foreach ($datas as $data){
 
-                    $queryBuilder = $this->schema->getGrammarPath().'\QueryBuilder';
+                    $query = $this->queryBuilder($table,$data);
 
-                    $query = (new $queryBuilder($this->schema,$table,$data))->handle();
-
-                    $status =($query['result']!==false) ? true : false;
+                    $query = $query->handle();
 
                     $results[]= [
                         'success'=>$status,
@@ -41,7 +37,10 @@ trait PushingProcess
     }
 
     /**
+     * error handler
+     *
      * @param callable $callback
+     * @return mixed|string
      */
     public function errorHandler(callable $callback)
     {

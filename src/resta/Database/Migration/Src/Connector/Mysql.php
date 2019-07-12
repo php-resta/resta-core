@@ -17,11 +17,18 @@ class Mysql extends QueryBase
     protected $connection;
 
     /**
+     * @var mixed
+     */
+    protected $config;
+
+    /**
      * Mysql constructor.
      * @param $config
      */
     public function __construct($config)
     {
+        $this->config = $config;
+
         if(is_null(self::$instance)){
 
             //get pdo dsn
@@ -31,6 +38,16 @@ class Mysql extends QueryBase
 
             self::$instance=true;
         }
+    }
+
+    /**
+     * get config
+     *
+     * @return mixed
+     */
+    public function getConfig()
+    {
+        return $this->config;
     }
 
     /**
