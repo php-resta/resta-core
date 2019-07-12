@@ -21,6 +21,8 @@ trait PushingProcess
 
                     $query = $query->handle();
 
+                    $status =($query['result']!==false) ? true : false;
+
                     $results[]= [
                         'success'=>$status,
                         'file'=>$data->getFile(),
