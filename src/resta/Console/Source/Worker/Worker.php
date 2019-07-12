@@ -94,7 +94,7 @@ class Worker extends ConsoleOutputter {
      */
     public function status()
     {
-        if(is_null($this->argument['worker'])){
+        if(!isset($this->argument['worker'])){
             $this->allWorkers('status',true);
             exit();
         }
