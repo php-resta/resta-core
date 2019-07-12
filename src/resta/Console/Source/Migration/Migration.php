@@ -61,7 +61,8 @@ class Migration extends ConsoleOutputter {
 
         foreach ($pushResult as $key=>$value) {
 
-            $file = end(explode("/",$pushResult[$key]['file']));
+            $pushResultFile = explode("/",$pushResult[$key]['file']);
+            $file = end($pushResultFile);
 
             if($pushResult[$key]['success']===true){
 
