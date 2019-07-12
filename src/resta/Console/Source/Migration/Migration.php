@@ -43,7 +43,9 @@ class Migration extends ConsoleOutputter {
      */
     public function pull()
     {
-        //
+        $schema = $this->getSchema();
+
+        $schema->pull();
     }
 
     /**
