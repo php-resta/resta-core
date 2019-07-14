@@ -5,19 +5,19 @@ namespace Resta\Authenticate\Resource;
 class AuthLoginManager extends ResourceManager
 {
     /**
-     * @var $credentials
+     * @var mixed|array
      */
     protected $credentials;
 
     /**
      * @var bool
      */
-    protected $using=false;
+    protected $using = false;
 
     /**
      * AuthLoginManager constructor.
      * @param $credentials
-     * @param \Resta\Authenticate\AuthenticateProvider $auth
+     * @param $auth
      */
     public function __construct($credentials,$auth)
     {
@@ -25,13 +25,15 @@ class AuthLoginManager extends ResourceManager
 
         // where the control mechanism of the credentials
         // values received from the user-defined yada config setting is made.
-        $this->credentials=new AuthLoginCredentialsManager($this->getCredentials($credentials),$this->using);
+        $this->credentials = new AuthLoginCredentialsManager($this->getCredentials($credentials),$this);
 
         //query login
         $this->loginProcess();
     }
 
     /**
+     * get credentials for authenticate
+     * 
      * @param $credentials
      */
     private function getCredentials($credentials)
@@ -41,12 +43,22 @@ class AuthLoginManager extends ResourceManager
         // as an array to the login method.
         if(is_array($credentials) && count($credentials)){
 
-            $this->using=true;
+            $this->using = true;
             return $credentials;
         }
 
         //get credentials as default
         return $this->auth->getCredentials();
+    }
+
+    /**
+     * get using
+     *
+     * @return bool
+     */
+    public function getUsing()
+    {
+        return $this->using;
     }
 
     /**

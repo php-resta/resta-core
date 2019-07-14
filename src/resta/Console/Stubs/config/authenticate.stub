@@ -20,7 +20,7 @@ return [
     */
     'guard'=>[
         'default'=>[
-            'driver'            => 'eloquent',
+            'request'           => 'default',
             'model'             => 'default',
             'credentials'       => ['username','password'],
             'http'              => ['login'=>'post'],

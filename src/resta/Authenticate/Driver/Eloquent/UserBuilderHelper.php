@@ -2,6 +2,8 @@
 
 namespace Resta\Authenticate\Driver\Eloquent;
 
+use Resta\Authenticate\Resource\AuthLoginCredentialsManager;
+
 class UserBuilderHelper
 {
     /**
@@ -23,7 +25,7 @@ class UserBuilderHelper
     }
 
     /**
-     * @param $driver
+     * @param null|object
      * @return mixed
      */
     protected function callbackQueryWithoutCredentials($driver)
@@ -111,13 +113,15 @@ class UserBuilderHelper
     }
 
     /**
-     * @param $credentials
+     * set query
+     * 
+     * @param AuthLoginCredentialsManager $credentials
      * @return mixed
      */
     protected function setQuery($credentials)
     {
         //we get the model specified for the builder.
-        $driver=$this->query['driver'];
+        $driver = $this->query['driver'];
 
         if(count($credentials->get())==0){
 
@@ -153,11 +157,11 @@ class UserBuilderHelper
 
             // we go to the method that produces
             // the classical token value and get the token value.
-            $this->auth->params['token']=($token===null) ? $this->auth->getTokenData() : $token;
+            $this->auth->params['token'] = ($token===null) ? $this->auth->getTokenData() : $token;
 
             // we update the token value.
             // if there is no update, we reset the status value to 0.
-            $update=$this->auth->params['builder']->update(['token'=>$this->auth->params['token']]);
+            $update = $this->auth->params['builder']->update(['token'=>$this->auth->params['token']]);
 
             if(!$update){
                 $this->auth->params['status']=0;

@@ -2,6 +2,7 @@
 
 namespace Resta\Authenticate;
 
+use Resta\Authenticate\Resource\AuthLoginCredentialsManager;
 use Resta\Request\Request as RequestClient;
 
 class AuthenticateRequest extends RequestClient
@@ -13,29 +14,38 @@ class AuthenticateRequest extends RequestClient
      *
      * @var array $autoInject
      */
-    protected $autoInject=[];
+    protected $autoInject = [];
 
     /**
      * The values ​​expected by the server.
+     *
      * @var array
      */
-    protected $expected=[];
+    protected $expected = [];
 
     /**
      * mandatory http method.
+     *
      * @var array
      */
-    protected $http=[];
+    protected $http = [];
+
+    /**
+     * @var null|object
+     */
+    protected $credentials;
 
     /**
      * AuthenticateRequest constructor.
-     * @param $credentials
+     * @param AuthLoginCredentialsManager $credentials
      */
     public function __construct($credentials)
     {
+        $this->credentials = $credentials;
+
         //credentials loop for expected property
-        foreach ($credentials as $credential){
-            $this->expected[]=$credential;
+        foreach ($this->credentials->get() as $credential){
+            $this->expected[] = $credential;
         }
 
         parent::__construct();
@@ -46,12 +56,12 @@ class AuthenticateRequest extends RequestClient
      */
     public function credentials($credentials)
     {
-        $credentials=[];
+        $credentials = [];
 
         foreach ($this->inputs as $inputKey=>$inputValue){
 
             if(in_array($inputKey,$this->expected)){
-                $credentials[$inputKey]=$inputValue;
+                $credentials[$inputKey] = $inputValue;
             }
         }
 
@@ -59,10 +69,15 @@ class AuthenticateRequest extends RequestClient
     }
 
     /**
-     * @return void
+     * @var string
      */
-    public function rule()
+    protected $password;
+
+    /**
+     * @return string
+     */
+    protected function password()
     {
-        //
+        return md5(sha1($this->password));
     }
 }

@@ -9,25 +9,25 @@ class ConfigProvider
     /**
      * @var string
      */
-    protected $driverDefaultNamespace="\Resta\Authenticate\Driver";
+    protected $driverDefaultNamespace = "\Resta\Authenticate\Driver";
 
     /**
      * @var string $store
      */
-    protected $store='session';
+    protected $store = 'session';
 
     /**
-     * @var $config
+     * @var null|mixed
      */
     protected $config;
 
     /**
-     * @var $driver
+     * @var string
      */
     protected $driver;
 
     /**
-     * @var $model
+     * @var null|mixed
      */
     protected $model;
 
@@ -44,16 +44,20 @@ class ConfigProvider
     }
 
     /**
+     * get authenticate config values
+     *
      * @return void|mixed
      */
     public function config()
     {
-        $this->config=config('authenticate');
+        $this->config = config('authenticate');
 
         return $this->config;
     }
 
     /**
+     * auth client query
+     *
      * @return string
      */
     public function getAddToWhere()
@@ -65,6 +69,8 @@ class ConfigProvider
     }
 
     /**
+     * get config token
+     *
      * @return string
      */
     public function getConfigToken()
@@ -76,6 +82,8 @@ class ConfigProvider
     }
 
     /**
+     * get credentials
+     *
      * @return string
      */
     public function getCredentials()
@@ -84,11 +92,13 @@ class ConfigProvider
     }
 
     /**
+     * get driver builder namespace
+     *
      * @return string
      */
     public function getDriverBuilderNamespace()
     {
-        $model=$this->getModel();
+        $model = $this->getModel();
 
         if($model=="Default"){
 
@@ -97,29 +107,35 @@ class ConfigProvider
     }
 
     /**
+     * get driver for authenticate
+     *
      * @return string
      */
     public function getDriver()
     {
-        $this->driver=ucfirst($this->config['guard'][$this->guard]['driver']);
-
-        return $this->driver;
+        return 'Eloquent';
     }
 
     /**
+     * get driver namespace
+     *
      * @return string
      */
     public function getDriverNamespace()
     {
-        $model=$this->getModel();
+        $this->getModel();
 
-        if($model=="Default"){
+        if($this->model=="Default"){
 
             return $this->driverDefaultNamespace.'\\'.$this->getDriver().'\\User';
         }
+
+        return $this->model;
     }
 
     /**
+     * get http for authenticate
+     *
      * @return string
      */
     public function getHttp()
@@ -128,16 +144,30 @@ class ConfigProvider
     }
 
     /**
+     * get model for authenticate
+     *
      * @return string
      */
     public function getModel()
     {
-        $this->model=ucfirst($this->config['guard'][$this->guard]['model']);
+        $this->model = ucfirst($this->config['guard'][$this->guard]['model']);
 
         return $this->model;
     }
 
     /**
+     * get request for authenticate
+     *
+     * @return string
+     */
+    public function getRequest()
+    {
+        return ucfirst($this->config['guard'][$this->guard]['request']);
+    }
+
+    /**
+     * get token key for authenticate
+     *
      * @return string
      */
     public function getTokenKey()
@@ -146,6 +176,8 @@ class ConfigProvider
     }
 
     /**
+     * set authenticate needs
+     *
      * @return void|mixed
      */
     protected function setAuthenticateNeeds()
@@ -156,12 +188,14 @@ class ConfigProvider
     }
 
     /**
+     * store for authenticate
+     *
      * @param $store
      * @return $this
      */
     public function store($store)
     {
-        $this->store=$store;
+        $this->store = $store;
 
         return $this;
     }

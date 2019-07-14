@@ -2,6 +2,7 @@
 
 namespace Resta\Authenticate\Driver\Eloquent;
 
+use Resta\Authenticate\AuthenticateProvider;
 use Resta\Authenticate\Driver\BuilderContract;
 use Resta\Authenticate\Driver\BuilderParamGenerator;
 
@@ -11,7 +12,7 @@ class UserBuilder extends UserBuilderHelper implements BuilderContract
     use BuilderParamGenerator;
 
     /**
-     * @var $app
+     * @var AuthenticateProvider
      */
     protected $auth;
 
@@ -22,19 +23,21 @@ class UserBuilder extends UserBuilderHelper implements BuilderContract
     public function __construct($auth)
     {
         //authenticate instance
-        $this->auth=$auth;
+        $this->auth = $auth;
 
         parent::__construct();
     }
 
     /**
+     * check builder
+     *
      * @param $token
      */
     public function check($token)
     {
         // using the driver object we write the query builder statement.
         // we do the values of the query with the token that are sent.
-        $query=$this->checkQuery($token);
+        $query = $this->checkQuery($token);
 
         // with query we bind the returned values to the params property of the auth object.
         // and so the auth object will make a final return with these values.
@@ -42,14 +45,16 @@ class UserBuilder extends UserBuilderHelper implements BuilderContract
     }
 
     /**
-     * @param $credentials \Resta\Authenticate\Resource\AuthLoginCredentialsManager
+     * login builder
+     *
+     * @param \Resta\Authenticate\Resource\AuthLoginCredentialsManager $credentials
      * @return mixed|void
      */
     public function login($credentials)
     {
         // using the driver object we write the query builder statement.
         // we do the values of the query with the credentials that are sent.
-        $query=$this->setQuery($credentials);
+        $query = $this->setQuery($credentials);
 
         // with query we bind the returned values to the params property of the auth object.
         // and so the auth object will make a final return with these values.
@@ -57,7 +62,7 @@ class UserBuilder extends UserBuilderHelper implements BuilderContract
 
         // we assign the credential hash value
         // to the global of the authenticate object.
-        $this->auth->credentialHash=$credentials->getCredentialHash();
+        $this->auth->credentialHash = $credentials->getCredentialHash();
 
         // when the query succeeds,
         // we update the token value.
@@ -65,13 +70,15 @@ class UserBuilder extends UserBuilderHelper implements BuilderContract
     }
 
     /**
+     * logout builder
+     *
      * @param $token
      */
     public function logout($token)
     {
         // using the driver object we write the query builder statement.
         // we do the values of the query with the token that are sent.
-        $query=$this->logoutQuery($token);
+        $query = $this->logoutQuery($token);
 
         // with query we bind the returned values to the params property of the auth object.
         // and so the auth object will make a final return with these values.

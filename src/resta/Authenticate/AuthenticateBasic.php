@@ -23,7 +23,7 @@ trait AuthenticateBasic
      */
     protected function checkProcessHttpMethod($type)
     {
-        $getHttp=(array)$this->getHttp();
+        $getHttp = (array)$this->getHttp();
 
         // we will determine whether
         // the http path is correct for this method.

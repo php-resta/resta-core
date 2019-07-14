@@ -17,7 +17,7 @@ trait AuthenticateException
      */
     public function credentials()
     {
-        exception()->domain('credentials fail for authenticate');
+        exception()->invalidArgument('credentials fail for authenticate');
     }
 
     /**
@@ -30,12 +30,12 @@ trait AuthenticateException
 
     public function logoutException()
     {
-        exception()->domain('You are already logout');
+        exception()->runtime('You are already logout');
     }
 
     public function tokenException()
     {
-        exception()->domain('Your token is missing for authenticate process');
+        exception()->invalidArgument('Your token is missing for authenticate process');
     }
 
     /**
@@ -43,6 +43,6 @@ trait AuthenticateException
      */
     public function update()
     {
-        exception()->domain('Updating Token for authenticate is missing.');
+        exception()->invalidArgument('Updating Token for authenticate is missing.');
     }
 }

@@ -14,9 +14,11 @@ class AuthenticateProvider extends ConfigProvider implements AuthenticateContrac
     /**
      * @var string
      */
-    protected $guard='default';
+    protected $guard = 'default';
 
     /**
+     * check if the authenticated of user
+     *
      * @return bool
      */
     public function check()
@@ -36,8 +38,11 @@ class AuthenticateProvider extends ConfigProvider implements AuthenticateContrac
     }
 
     /**
-     * @param $store
-     * @return $this
+     * authenticate guard adapter
+     *
+     * @param $guard
+     * @return $this|mixed
+     *
      */
     public function guard($guard)
     {
@@ -49,6 +54,8 @@ class AuthenticateProvider extends ConfigProvider implements AuthenticateContrac
     }
 
     /**
+     * get id for the authenticated user
+     *
      * @return bool
      */
     public function id()
@@ -61,7 +68,9 @@ class AuthenticateProvider extends ConfigProvider implements AuthenticateContrac
     }
 
     /**
-     * @param null $credentials
+     * login for authenticate
+     *
+     * @param null|array $credentials
      * @param bool $objectReturn
      * @return $this|mixed
      */
@@ -85,6 +94,8 @@ class AuthenticateProvider extends ConfigProvider implements AuthenticateContrac
     }
 
     /**
+     * logout the authenticated user
+     *
      * @return mixed|void
      */
     public function logout()
@@ -108,6 +119,8 @@ class AuthenticateProvider extends ConfigProvider implements AuthenticateContrac
     }
 
     /**
+     * get token the authanticated user
+     *
      * @return bool
      */
     public function token()
@@ -120,6 +133,8 @@ class AuthenticateProvider extends ConfigProvider implements AuthenticateContrac
     }
 
     /**
+     * get if exist the authenticated user
+     *
      * @return bool
      */
     public function user()
@@ -132,6 +147,8 @@ class AuthenticateProvider extends ConfigProvider implements AuthenticateContrac
     }
 
     /**
+     * get user information the authenticated user
+     *
      * @return bool
      */
     public function userData()

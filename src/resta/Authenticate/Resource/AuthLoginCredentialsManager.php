@@ -7,38 +7,46 @@ use Resta\Authenticate\AuthenticateRequest;
 class AuthLoginCredentialsManager
 {
     /**
-     * @var $credentials
+     * @var null|array
      */
     protected $credentials;
 
     /**
-     * @var null
+     * @var null|string
      */
-    protected $credentialHash=null;
+    protected $credentialHash;
 
     /**
-     * @var $request
+     * @var null|object
      */
-    protected $request=null;
+    protected $request;
+
+    /**
+     * @var null|AuthLoginManager
+     */
+    protected $manager;
 
     /**
      * AuthLoginCredentialsManager constructor.
      * @param $credentials
-     * @param bool $using
+     * @param null|AuthLoginManager $manager
      */
-    public function __construct($credentials,$using=false)
+    public function __construct($credentials,$manager)
     {
         //get credentials as default
-        $this->credentials=$credentials;
+        $this->credentials = $credentials;
+
+        //set manager for auth login
+        $this->manager = $manager;
 
         //get credential hash
         $this->setCredentialHash();
 
-        if($using===false){
+        if($this->manager->getUsing()===false){
 
             // the request object will help you process
             // the credentials and get them correctly.
-            $this->request=new AuthenticateRequest($this->credentials);
+            $this->request = $this->getRequest();
         }
 
         //request handle
@@ -46,6 +54,8 @@ class AuthLoginCredentialsManager
     }
 
     /**
+     * get credentials
+     *
      * @return mixed
      */
     public function get()
@@ -55,7 +65,9 @@ class AuthLoginCredentialsManager
     }
 
     /**
-     * @return null
+     * get credential hash
+     *
+     * @return null|string
      */
     public function getCredentialHash()
     {
@@ -64,23 +76,54 @@ class AuthLoginCredentialsManager
     }
 
     /**
+     * get manager
+     *
+     * @return AuthLoginManager|null
+     */
+    public function getManager()
+    {
+        return $this->manager;
+    }
+
+    /**
+     * get request for authenticate
+     *
+     * @return mixed
+     */
+    public function getRequest()
+    {
+        $request = $this->manager->getAuth()->getRequest();
+
+        if($request=='Default'){
+            return new AuthenticateRequest($this);
+        }
+
+        return new $request($this->credentials);
+    }
+
+    /**
+     * credential handle
+     *
      * @return void|mixed
      */
     private function handle()
     {
         // with the request object we get
         // the credentials values through the all method.
-        $this->credentials=($this->request===null) ? $this->get() : $this->request->credentials($this->credentials);
+        $this->credentials = (is_null($this->request)) ? $this->get()
+            : $this->request->credentials($this->credentials);
     }
 
     /**
+     * set credential hash
+     *
      * @return void|mixed
      */
     private function setCredentialHash()
     {
         //set credential hash
         if(count($this->credentials)){
-            $this->credentialHash=md5(sha1(implode("|",$this->credentials)));
+            $this->credentialHash = md5(sha1(implode("|",$this->credentials)));
         }
     }
 }

@@ -5,12 +5,14 @@ namespace Resta\Authenticate\Driver;
 trait BuilderParamGenerator
 {
     /**
+     * get param values for query basic
+     *
      * @param $type
      * @param $query
      */
     protected function paramValues(...$params)
     {
-        list($type,$query)=$params;
+        [$type,$query] = $params;
 
         // with query we bind the returned values to the params property of the auth object.
         // and so the auth object will make a final return with these values.

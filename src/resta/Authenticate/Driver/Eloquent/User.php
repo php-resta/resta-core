@@ -8,5 +8,5 @@ class User extends Eloquent
     /**
      * @var $table string
      */
-    protected $table='users';
+    protected $table = 'users';
 }
