@@ -100,15 +100,18 @@ class UserBuilderHelper
     }
 
     /**
+     * query add to where
+     *
      * @param $query
+     * @param null|array$credentials
      */
-    protected function queryAddToWhere($query)
+    protected function queryAddToWhere($query,$credentials)
     {
         // if the addToWhereClosure value is a closure,
         // then in this case we actually run
         // the closure object and add it to the query value.
         if($this->isCallableAddToWhere()){
-            $this->query['addToWhere']($query);
+            return $this->query['addToWhere']($query,$credentials);
         }
     }
 
@@ -122,12 +125,17 @@ class UserBuilderHelper
     {
         //we get the model specified for the builder.
         $driver = $this->query['driver'];
-
+        
         if(count($credentials->get())==0){
 
             // if the credential array is empty in the config section,
             // then you must run the query with a callable value of addToWhere value.
             return $this->callbackQueryWithoutCredentials($driver);
+        }
+
+        //
+        if($this->isCallableAddToWhere()){
+            return $this->queryAddToWhere($driver,$credentials->get());
         }
 
         // using the driver object we write the query builder statement.
@@ -143,7 +151,7 @@ class UserBuilderHelper
             // if the addToWhereClosure value is a closure,
             // then in this case we actually run
             // the closure object and add it to the query value.
-            $this->queryAddToWhere($query);
+            $this->queryAddToWhere($query,$credentials->get());
         });
     }
 

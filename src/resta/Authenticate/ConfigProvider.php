@@ -98,12 +98,14 @@ class ConfigProvider
      */
     public function getDriverBuilderNamespace()
     {
-        $model = $this->getModel();
+        $this->getModel();
 
-        if($model=="Default"){
+        if($this->model=="Default"){
 
             return $this->driverDefaultNamespace.'\\'.$this->getDriver().'\\UserBuilder';
         }
+
+        return $this->model;
     }
 
     /**

@@ -51,21 +51,9 @@ class AuthenticateRequest extends RequestClient
         parent::__construct();
     }
 
-    /**
-     * @param $credentials
-     */
-    public function credentials($credentials)
+    public function all()
     {
-        $credentials = [];
-
-        foreach ($this->inputs as $inputKey=>$inputValue){
-
-            if(in_array($inputKey,$this->expected)){
-                $credentials[$inputKey] = $inputValue;
-            }
-        }
-
-        return $credentials;
+        return $this->inputs;
     }
 
     /**

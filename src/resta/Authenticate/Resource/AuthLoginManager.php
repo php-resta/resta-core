@@ -28,7 +28,9 @@ class AuthLoginManager extends ResourceManager
         $this->credentials = new AuthLoginCredentialsManager($this->getCredentials($credentials),$this);
 
         //query login
-        $this->loginProcess();
+        if($this->auth->getModel()=="Default"){
+            $this->loginProcess();
+        }
     }
 
     /**
@@ -64,10 +66,10 @@ class AuthLoginManager extends ResourceManager
     /**
      * @return void|mixed
      */
-    private function loginProcess()
+    public function loginProcess()
     {
         // Finally, we attempt to login the user by running
         // the login method of the builder object.
-        $this->driverBuilderInstance->login($this->credentials);
+        return $this->driverBuilderInstance->login($this->credentials);
     }
 }

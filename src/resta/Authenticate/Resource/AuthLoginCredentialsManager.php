@@ -98,7 +98,7 @@ class AuthLoginCredentialsManager
             return new AuthenticateRequest($this);
         }
 
-        return new $request($this->credentials);
+        return new $request();
     }
 
     /**
@@ -111,7 +111,7 @@ class AuthLoginCredentialsManager
         // with the request object we get
         // the credentials values through the all method.
         $this->credentials = (is_null($this->request)) ? $this->get()
-            : $this->request->credentials($this->credentials);
+            : $this->request->all();
     }
 
     /**
