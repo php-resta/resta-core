@@ -9,7 +9,7 @@ class UserBuilderHelper
     /**
      * @var array
      */
-    protected $query=[];
+    protected $query = [];
 
     /**
      * UserBuilderHelper constructor.
@@ -18,10 +18,10 @@ class UserBuilderHelper
     {
         //in addition to the default credentials values
         // ​​on the user side, a closure method is executed and an extra query occurs.
-        $this->query['addToWhere']=$this->auth->getAddToWhere();
+        $this->query['addToWhere'] = $this->auth->getAddToWhere();
 
         //we get the model specified for the builder.
-        $this->query['driver']=$this->auth->getDriverNamespace();
+        $this->query['driver'] = $this->auth->getDriverNamespace();
     }
 
     /**
@@ -100,12 +100,13 @@ class UserBuilderHelper
     }
 
     /**
-     * query add to where
+     * get query add to where
      *
      * @param $query
-     * @param null|array$credentials
+     * @param array $credentials
+     * @return mixed
      */
-    protected function queryAddToWhere($query,$credentials)
+    protected function queryAddToWhere($query,$credentials=array())
     {
         // if the addToWhereClosure value is a closure,
         // then in this case we actually run
@@ -117,7 +118,7 @@ class UserBuilderHelper
 
     /**
      * set query
-     * 
+     *
      * @param AuthLoginCredentialsManager $credentials
      * @return mixed
      */
@@ -125,7 +126,7 @@ class UserBuilderHelper
     {
         //we get the model specified for the builder.
         $driver = $this->query['driver'];
-        
+
         if(count($credentials->get())==0){
 
             // if the credential array is empty in the config section,
@@ -151,7 +152,7 @@ class UserBuilderHelper
             // if the addToWhereClosure value is a closure,
             // then in this case we actually run
             // the closure object and add it to the query value.
-            $this->queryAddToWhere($query,$credentials->get());
+            $this->queryAddToWhere($query,$credentials->get(),$credentials->get());
         });
     }
 
