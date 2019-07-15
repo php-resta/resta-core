@@ -74,18 +74,16 @@ class UserBuilderHelper
 
     /**
      * @param $token
-     * @return mixed
+     * @return mixed|void
      */
     protected function logoutQuery($token)
     {
-        //we get the model specified for the builder.
-        $driver=$this->query['driver'];
-
         //token query for builder
-        $query=$driver::where(function($query) use($token) {
+        return DeviceToken::where(function($query) use($token) {
 
             //where query for token
-            $query->where('token',$token);
+            $query->where('token_integer',crc32(md5($token)));
+            $query->where('device_agent_integer',crc32(md5($_SERVER['HTTP_USER_AGENT'])));
 
             // if the addToWhereClosure value is a closure,
             // then in this case we actually run
@@ -93,8 +91,6 @@ class UserBuilderHelper
             $this->queryAddToWhere($query);
 
         });
-
-        return $query;
     }
 
     /**
@@ -188,7 +184,8 @@ class UserBuilderHelper
 
         if(!is_null($token_integer)){
 
-            if(DeviceToken::where('device_agent_integer',crc32(md5($_SERVER['HTTP_USER_AGENT'])))->count()==0){
+            if(DeviceToken::where('user_id',$this->auth->params['authId'])
+                ->where('device_agent_integer',crc32(md5($_SERVER['HTTP_USER_AGENT'])))->count()==0){
                 return DeviceToken::create([
                     'user_id' => $this->auth->params['authId'],
                     'token' => $this->auth->params['token'],
@@ -208,6 +205,26 @@ class UserBuilderHelper
                 ]);
             }
 
+        }
+
+    }
+
+    /**
+     * delete device token for token
+     *
+     * @return mixed
+     */
+    protected function deleteDeviceToken()
+    {
+        $token_integer = crc32(md5($this->auth->getTokenData()));
+
+        if(!is_null($token_integer)){
+
+            if(DeviceToken::where('user_id',$this->auth->params['authId'])
+                    ->where('device_agent_integer',crc32(md5($_SERVER['HTTP_USER_AGENT'])))->count()){
+
+                DeviceToken::where('token_integer',$token_integer)->delete();
+            }
         }
 
     }

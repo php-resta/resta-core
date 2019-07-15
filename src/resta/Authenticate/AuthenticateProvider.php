@@ -164,4 +164,20 @@ class AuthenticateProvider extends ConfigProvider implements AuthenticateContrac
             return $data;
         });
     }
+
+    /**
+     * get token sent by user
+     *
+     * @return null|string
+     */
+    public function getTokenSentByUser()
+    {
+        //get headers
+        $headers = headers();
+
+        //get token key from config
+        $tokenKey = $this->getTokenKey();
+
+        return (isset($headers[$tokenKey])) ? $headers[$tokenKey][0] : null;
+    }
 }

@@ -37,16 +37,10 @@ trait AuthenticateBasic
      */
     protected function checkTokenViaHeaders(callable $callback)
     {
-        //get headers
-        $headers = headers();
-
-        //get token key from config
-        $tokenKey=$this->getTokenKey();
-
         // if there is a token in the headers,
         // we return the callback.
-        if(isset($headers[$tokenKey])){
-            return call_user_func_array($callback,[$headers[$tokenKey][0]]);
+        if(!is_null($this->getTokenSentByUser())){
+            return call_user_func_array($callback,[$this->getTokenSentByUser()]);
         }
 
         //token false

@@ -89,6 +89,8 @@ class UserBuilder extends UserBuilderHelper implements BuilderContract
         $this->paramValues('logout',$query);
 
         //token updating as null
-        $this->updateToken(md5(time()));
+        if(isset($this->auth->params['authToken'])){
+            $this->deleteDeviceToken();
+        }
     }
 }
