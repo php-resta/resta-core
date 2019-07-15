@@ -7,7 +7,7 @@ trait AuthenticateResponse
     /**
      * @var array $params
      */
-    public $params=[];
+    public $params = [];
 
     /**
      * @return bool
@@ -65,7 +65,7 @@ trait AuthenticateResponse
         }
 
         //in the params property, we set the exception type according to the exception value.
-        $exceptionType=(isset($this->params['exception'])) ? $this->params['exception'] : 'credentials';
+        $exceptionType = (isset($this->params['exception'])) ? $this->params['exception'] : 'credentials';
 
         // if the status is unsuccessful,
         // the direct exception will be thrown away.

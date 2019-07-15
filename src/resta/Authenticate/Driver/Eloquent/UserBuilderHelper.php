@@ -48,14 +48,12 @@ class UserBuilderHelper
      */
     protected function checkQuery($token)
     {
-        //we get the model specified for the builder.
-        $driver=$this->query['driver'];
-
         //token query for builder
-        return $driver::where(function($query) use($token) {
+        return DeviceToken::where(function($query) use($token) {
 
             //where query for token
-            $query->where('token',$token);
+            $query->where('token_integer',crc32(md5($token)));
+            $query->where('device_agent_integer',crc32(md5($_SERVER['HTTP_USER_AGENT'])));
 
             // if the addToWhereClosure value is a closure,
             // then in this case we actually run
@@ -173,9 +171,44 @@ class UserBuilderHelper
             $update = $this->auth->params['builder']->update(['token'=>$this->auth->params['token']]);
 
             if(!$update){
-                $this->auth->params['status']=0;
-                $this->auth->params['exception']='update';
+                $this->auth->params['status'] = 0;
+                $this->auth->params['exception'] = 'update';
             }
         }
+    }
+
+    /**
+     * save device token for token
+     *
+     * @return mixed
+     */
+    protected function saveDeviceToken()
+    {
+        $token_integer = crc32(md5($this->auth->params['token']));
+
+        if(!is_null($token_integer)){
+
+            if(DeviceToken::where('device_agent_integer',crc32(md5($_SERVER['HTTP_USER_AGENT'])))->count()==0){
+                return DeviceToken::create([
+                    'user_id' => $this->auth->params['authId'],
+                    'token' => $this->auth->params['token'],
+                    'token_integer' => $token_integer,
+                    'device_agent' => $_SERVER['HTTP_USER_AGENT'],
+                    'device_agent_integer' => crc32(md5($_SERVER['HTTP_USER_AGENT'])),
+                    'expire' => 0
+                ]);
+            }
+            else{
+
+                return DeviceToken::where('user_id',$this->auth->params['authId'])
+                    ->where('device_agent_integer',crc32(md5($_SERVER['HTTP_USER_AGENT'])))
+                    ->update([
+                    'token' => $this->auth->params['token'],
+                    'token_integer' => $token_integer
+                ]);
+            }
+
+        }
+
     }
 }

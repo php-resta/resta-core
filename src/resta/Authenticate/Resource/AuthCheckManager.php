@@ -5,7 +5,7 @@ namespace Resta\Authenticate\Resource;
 class AuthCheckManager extends ResourceManager
 {
     /**
-     * @var $token
+     * @var string
      */
     protected $token;
 
@@ -19,7 +19,7 @@ class AuthCheckManager extends ResourceManager
         parent::__construct($auth);
 
         //token value received by client
-        $this->token=$token;
+        $this->token = $token;
 
         //query check
         $this->checkProcess();

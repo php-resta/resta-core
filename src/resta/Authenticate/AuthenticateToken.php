@@ -20,7 +20,7 @@ trait AuthenticateToken
 
             // a real token will be generated after
             // you get the first method of the query builder value.
-            $authData=$this->params['data'];
+            $authData = $this->params['data'];
 
             // we refer to the token closure feature on the config to enable
             // the creation of user-based tokens on the application side.

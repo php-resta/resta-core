@@ -67,6 +67,10 @@ class UserBuilder extends UserBuilderHelper implements BuilderContract
         // when the query succeeds,
         // we update the token value.
         $this->updateToken();
+        
+        if(isset($this->auth->params['authToken'])){
+            $this->saveDeviceToken();
+        }
     }
 
     /**
