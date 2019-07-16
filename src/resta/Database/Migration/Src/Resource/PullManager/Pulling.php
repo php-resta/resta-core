@@ -26,7 +26,7 @@ class Pulling extends BaseManager
 
         foreach ($dbtables as $dbtable){
             //if(!in_array($dbtable,$list)){
-
+            
                 $informations = $this->tableInformations($dbtable);
 
                 $dbtable = ucfirst($dbtable);
@@ -41,6 +41,14 @@ class Pulling extends BaseManager
                 ]);
 
                 files()->put($makeDirectory.''.DIRECTORY_SEPARATOR.''.$migrationName.'.php',$content);
+                
+                /**if(substr($dbtable,-1)=='s'){
+                    app()->command('model create','model:'.strtolower(substr($dbtable,0,-1)));
+                }
+                else{
+                    app()->command('model create','model:'.strtolower($dbtable));
+                }**/
+                
             //}
         }
     }
@@ -61,10 +69,13 @@ class Pulling extends BaseManager
 
         $indexes = $this->schema->getConnection()->showIndexes($table);
         $multipleIndexes = $this->getMultipleIndex($indexes);
+        
 
         $list = [];
 
         foreach ($columns as $key=>$data){
+            
+            $data['Type'] = rtrim(str_replace('unsigned','',$data['Type']));
 
             $field      = $data['Field'];
             $list[]     = '$wizard->name(\''.$field.'\')';
@@ -167,6 +178,30 @@ class Pulling extends BaseManager
         }
         elseif($column=='date'){
             return 'date()';
+        }
+        elseif($column=='text'){
+            return 'text()';
+        }
+        elseif($column=='timestamp'){
+            return 'timestamp';
+        }
+        elseif($column=='mediumint'){
+            return 'mediumint()';
+        }
+        elseif($column=='tinyint'){
+            return 'tinyint()';
+        }
+        elseif($column=='float'){
+            return 'float()';
+        }
+        elseif($column=='mediumtext'){
+            return 'mediumtext()';
+        }
+        elseif($column=='mediumblob'){
+            return 'mediumblob()';
+        }
+        elseif($column=='blob'){
+            return 'blob()';
         }
         elseif(preg_match('@enum.*\((.*?)\)@',$column,$enum)){
             return 'enum(['.$enum[1].'])';

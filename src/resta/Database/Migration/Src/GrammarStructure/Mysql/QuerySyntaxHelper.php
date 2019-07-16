@@ -59,11 +59,24 @@ class QuerySyntaxHelper
      */
     protected function getValueWithIsset($name)
     {
+        $nameKey = array_search($name,$this->data['names']);
+        
         $list   = [];
         $list[] = $this->getNullableValue($this->data['nullable'],$name);
         $list[] = (isset($this->data['autoIncrement'][$name])) ? 'AUTO_INCREMENT' : '';
         $list[] = (isset($this->data['primaryKey'][$name])) ? 'PRIMARY KEY' : '';
-        $list[] = (isset($this->data['default'][$name])) ? ' DEFAULT "'.$this->data['default'][$name].'"' : '';
+        
+        if($this->data['types'][$nameKey]=='timestamp' && !isset($this->data['default'][$nameKey])){
+            $this->data['default'][$name] = 'CURRENT_TIMESTAMP';
+        }
+        
+        if($this->data['types'][$nameKey]!=='timestamp'){
+            $list[] = (isset($this->data['default'][$name])) ? ' DEFAULT "'.$this->data['default'][$name].'"' : '';
+        }
+        else{
+            $list[] = (isset($this->data['default'][$name])) ? ' DEFAULT '.$this->data['default'][$name].'' : '';
+        }
+        
         $list[] = (isset($this->data['comment'][$name])) ? ' COMMENT "'.$this->data['comment'][$name].'"' : '';
 
         return $list;
@@ -78,7 +91,7 @@ class QuerySyntaxHelper
     {
         //get unique
         if(isset($this->data['unique'][$name])){
-            $this->data['uniqueValueList'][]      = 'UNIQUE INDEX '.$this->data['unique'][$name]['name'].' ('.$this->data['unique'][$name]['value'].' ASC)';
+            $this->data['uniqueValueList'][]      = 'UNIQUE INDEX '.$name.' ('.$this->data['unique'][$name]['value'].' ASC)';
         }
     }
 
@@ -89,7 +102,7 @@ class QuerySyntaxHelper
     {
         //get index
         if(isset($this->data['index'][$name])){
-            $this->data['indexValueList'][]  = 'INDEX '.$this->data['index'][$name]['name'].' ('.$this->data['index'][$name]['value'].')';
+            $this->data['indexValueList'][]  = 'INDEX '.$name.' ('.$this->data['index'][$name]['value'].')';
         }
     }
 

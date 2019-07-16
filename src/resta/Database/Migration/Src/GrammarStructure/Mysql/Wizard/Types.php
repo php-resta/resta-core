@@ -21,10 +21,10 @@ class Types
     }
 
     /**
-     * @param $value
+     * @param null|string $value
      * @return WizardContract
      */
-    public function bigint($value)
+    public function bigint($value=20)
     {
         $this->wizard->setTypes(__FUNCTION__,$value);
 
@@ -32,10 +32,10 @@ class Types
     }
 
     /**
-     * @param $value
+     * @param null|string $value
      * @return WizardContract
      */
-    public function binary($value)
+    public function binary($value=null)
     {
         $this->wizard->setTypes(__FUNCTION__,$value);
 
@@ -43,10 +43,10 @@ class Types
     }
 
     /**
-     * @param $value
+     * @param null|string $value
      * @return WizardContract
      */
-    public function bit($value)
+    public function bit($value=null)
     {
         $this->wizard->setTypes(__FUNCTION__,$value);
 
@@ -189,10 +189,43 @@ class Types
     }
 
     /**
-     * @param $value
+     * @param null|string $value
      * @return WizardContract
      */
-    public function text($value)
+    public function text($value=null)
+    {
+        $this->wizard->setTypes(__FUNCTION__,$value);
+
+        return $this->wizard;
+    }
+
+    /**
+     * @param null|string $value
+     * @return WizardContract
+     */
+    public function time($value=null)
+    {
+        $this->wizard->setTypes(__FUNCTION__,$value);
+
+        return $this->wizard;
+    }
+
+    /**
+     * @param mixed $value
+     * @return WizardContract
+     */
+    public function mediumint($value=8)
+    {
+        $this->wizard->setTypes(__FUNCTION__,$value);
+
+        return $this->wizard;
+    }
+
+    /**
+     * @param mixed $value
+     * @return WizardContract
+     */
+    public function mediumblob($value=null)
     {
         $this->wizard->setTypes(__FUNCTION__,$value);
 
@@ -203,31 +236,9 @@ class Types
      * @param $value
      * @return WizardContract
      */
-    public function time($value)
+    public function timestamp()
     {
-        $this->wizard->setTypes(__FUNCTION__,$value);
-
-        return $this->wizard;
-    }
-
-    /**
-     * @param $value
-     * @return WizardContract
-     */
-    public function mediumint($value)
-    {
-        $this->wizard->setTypes(__FUNCTION__,$value);
-
-        return $this->wizard;
-    }
-
-    /**
-     * @param $value
-     * @return WizardContract
-     */
-    public function timestamp($value)
-    {
-        $this->wizard->setTypes(__FUNCTION__,$value);
+        $this->wizard->setTypes(__FUNCTION__,null);
 
         return $this->wizard;
     }
@@ -243,10 +254,10 @@ class Types
     }
 
     /**
-     * @param $value
+     * @param mixed $value
      * @return WizardContract
      */
-    public function smallint($value)
+    public function smallint($value=5)
     {
         $this->wizard->setTypes(__FUNCTION__,$value);
 
@@ -254,10 +265,10 @@ class Types
     }
 
     /**
-     * @param $value
+     * @param mixed $value
      * @return WizardContract
      */
-    public function tinyint($value)
+    public function tinyint($value=3)
     {
         $this->wizard->setTypes(__FUNCTION__,$value);
 
@@ -265,10 +276,10 @@ class Types
     }
 
     /**
-     * @param $value
+     * @param null|string $value
      * @return WizardContract
      */
-    public function tinytext($value)
+    public function tinytext($value=null)
     {
         $this->wizard->setTypes(__FUNCTION__,$value);
 
@@ -287,10 +298,10 @@ class Types
     }
 
     /**
-     * @param $value
+     * @param null|string $value
      * @return WizardContract
      */
-    public function year($value)
+    public function year($value=null)
     {
         $this->wizard->setTypes(__FUNCTION__,$value);
 

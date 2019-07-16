@@ -8,7 +8,7 @@ use Migratio\Contract\WizardAlterContract;
 class WizardAlter extends Wizard implements WizardContract,WizardAlterContract
 {
     /**
-     * @var $after
+     * @var string
      */
     protected $after;
 
@@ -18,7 +18,7 @@ class WizardAlter extends Wizard implements WizardContract,WizardAlterContract
      */
     public function __construct($wizard)
     {
-        $this->wizard=$wizard;
+        $this->wizard = $wizard;
     }
 
     /**

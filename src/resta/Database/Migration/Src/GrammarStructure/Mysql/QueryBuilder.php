@@ -41,7 +41,7 @@ class QueryBuilder extends QuerySyntax
     public function handle()
     {
         $schemaType = $this->object->getSchemaType();
-
+        
         return $this->{$schemaType}();
     }
 

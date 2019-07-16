@@ -16,7 +16,7 @@ trait PushingProcess
             foreach ($this->list as $table =>$datas){
 
                 foreach ($datas as $data){
-
+                    
                     $query = $this->queryBuilder($table,$data);
 
                     $query = $query->handle();
