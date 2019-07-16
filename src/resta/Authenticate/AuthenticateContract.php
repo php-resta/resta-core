@@ -10,15 +10,20 @@ interface AuthenticateContract
     public function check();
 
     /**
-     * @param $guard
      * @return mixed
      */
-    public function guard($guard);
+    public function currentDeviceToken();
 
     /**
      * @return mixed
      */
-    public function id();
+    public function allDeviceTokens();
+
+    /**
+     * @param $guard
+     * @return mixed
+     */
+    public function guard($guard);
 
     /**
      * @param array $credentials
@@ -39,18 +44,8 @@ interface AuthenticateContract
     public function store($store);
 
     /**
-     * @param $store
-     * @return mixed
-     */
-    public function token();
-
-    /**
      * @return mixed
      */
     public function user();
-
-    /**
-     * @return mixed
-     */
-    public function userData();
+    
 }

@@ -2,6 +2,7 @@
 
 namespace Resta\Authenticate;
 
+use Resta\Authenticate\Resource\AuthUserManager;
 use Resta\Authenticate\Resource\AuthCheckManager;
 use Resta\Authenticate\Resource\AuthLoginManager;
 use Resta\Authenticate\Resource\AuthLogoutManager;
@@ -15,6 +16,20 @@ class AuthenticateProvider extends ConfigProvider implements AuthenticateContrac
      * @var string
      */
     protected $guard = 'default';
+
+    /**
+     * get all device tokens for authenticate
+     *
+     * @return mixed|null
+     */
+    public function allDeviceTokens()
+    {
+        // we obtain the data value obtained via
+        // authenticate availability with the help of callback object.
+        return $this->checkParamsViaAvailability(function(){
+            return (new AuthUserManager($this->currentDeviceToken(),$this))->allDeviceTokens();
+        });
+    }
 
     /**
      * check if the authenticated of user
@@ -38,6 +53,20 @@ class AuthenticateProvider extends ConfigProvider implements AuthenticateContrac
     }
 
     /**
+     * get current device token the authenticated user
+     *
+     * @return mixed
+     */
+    public function currentDeviceToken()
+    {
+        // we obtain the data value obtained via
+        // authenticate availability with the help of callback object.
+        return $this->checkParamsViaAvailability('data',function($data){
+            return $data;
+        });
+    }
+
+    /**
      * authenticate guard adapter
      *
      * @param $guard
@@ -51,20 +80,6 @@ class AuthenticateProvider extends ConfigProvider implements AuthenticateContrac
         $this->setAuthenticateNeeds();
 
         return $this;
-    }
-
-    /**
-     * get id for the authenticated user
-     *
-     * @return bool
-     */
-    public function id()
-    {
-        // we obtain the id value obtained via
-        // authenticate availability with the help of callback object.
-        return $this->checkParamsViaAvailability('authId',function($id){
-            return $id;
-        });
     }
 
     /**
@@ -124,44 +139,16 @@ class AuthenticateProvider extends ConfigProvider implements AuthenticateContrac
     }
 
     /**
-     * get token the authanticated user
+     * get data of the authenticated user
      *
-     * @return bool
-     */
-    public function token()
-    {
-        // we obtain the token value obtained via
-        // authenticate availability with the help of callback object.
-        return $this->checkParamsViaAvailability('authToken',function($token){
-            return $token;
-        });
-    }
-
-    /**
-     * get if exist the authenticated user
-     *
-     * @return bool
+     * @return mixed
      */
     public function user()
     {
         // we obtain the user value obtained via
         // authenticate availability with the help of callback object.
-        return $this->checkParamsViaAvailability('auth',function($user){
-            return $user;
-        });
-    }
-
-    /**
-     * get user information the authenticated user
-     *
-     * @return bool
-     */
-    public function userData()
-    {
-        // we obtain the data value obtained via
-        // authenticate availability with the help of callback object.
-        return $this->checkParamsViaAvailability('data',function($data){
-            return $data;
+        return $this->checkParamsViaAvailability(function(){
+            return (new AuthUserManager($this->currentDeviceToken(),$this))->userProcess();
         });
     }
 

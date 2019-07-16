@@ -44,7 +44,7 @@ trait AuthenticateResponse
         }
 
         //logout exception
-       $this->logoutException();
+       $this->{$this->params['exception']}();
     }
 
     /**

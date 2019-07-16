@@ -3,6 +3,7 @@
 namespace Resta\Authenticate\Driver\Eloquent;
 
 use Resta\Authenticate\Resource\AuthLoginCredentialsManager;
+use Resta\Authenticate\Resource\AuthUserManager;
 
 class UserBuilderHelper
 {
@@ -22,6 +23,19 @@ class UserBuilderHelper
 
         //we get the model specified for the builder.
         $this->query['driver'] = $this->auth->getDriverNamespace();
+    }
+
+    /**
+     * get all device token query
+     *
+     * @param AuthUserManager $manager
+     * @return mixed
+     */
+    protected function allDeviceTokenQuery($manager)
+    {
+        $userId = $manager->getAuth()->params['userId'];
+
+        return DeviceToken::where('user_id',$userId)->get();
     }
 
     /**
@@ -186,13 +200,14 @@ class UserBuilderHelper
 
             if(DeviceToken::where('user_id',$this->auth->params['authId'])
                 ->where('device_agent_integer',crc32(md5($_SERVER['HTTP_USER_AGENT'])))->count()==0){
+
                 return DeviceToken::create([
                     'user_id' => $this->auth->params['authId'],
                     'token' => $this->auth->params['token'],
                     'token_integer' => $token_integer,
                     'device_agent' => $_SERVER['HTTP_USER_AGENT'],
                     'device_agent_integer' => crc32(md5($_SERVER['HTTP_USER_AGENT'])),
-                    'expire' => 0
+                    'expire' => $this->auth->getExpire(),
                 ]);
             }
             else{
@@ -216,16 +231,26 @@ class UserBuilderHelper
      */
     protected function deleteDeviceToken()
     {
-        $token_integer = crc32(md5($this->auth->getTokenData()));
+        $token_integer = crc32(md5($this->auth->getTokenSentByUser()));
 
         if(!is_null($token_integer)){
 
-            if(DeviceToken::where('user_id',$this->auth->params['authId'])
-                    ->where('device_agent_integer',crc32(md5($_SERVER['HTTP_USER_AGENT'])))->count()){
-
-                DeviceToken::where('token_integer',$token_integer)->delete();
-            }
+            DeviceToken::where('token_integer',$token_integer)->delete();
+            
+            return (DeviceToken::where('token_integer',$token_integer)->count()) ? false : true;
         }
 
+    }
+
+    /**
+     * @param AuthUserManager $manager
+     * @return mixed
+     */
+    protected function userProcessQuery($manager)
+    {
+        $userId = $manager->getAuth()->params['userId'];
+        $namespace = $manager->getAuth()->getDriverNamespace();
+
+        return $namespace::find($userId);
     }
 }

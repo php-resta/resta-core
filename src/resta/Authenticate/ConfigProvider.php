@@ -136,6 +136,16 @@ class ConfigProvider
     }
 
     /**
+     * get expire for authenticate
+     * 
+     * @return mixed
+     */
+    public function getExpire()
+    {
+        return $this->config['guard'][$this->guard]['expire'];
+    }
+
+    /**
      * get http for authenticate
      *
      * @return string

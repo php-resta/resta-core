@@ -5,10 +5,21 @@ namespace Resta\Authenticate;
 trait AuthenticateBasic
 {
     /**
-     * @param callable $callback
+     * @param null|string|callable $data
+     * @param callable|null $callback
+     * @return mixed|null
      */
-    protected function checkParamsViaAvailability($data,callable $callback)
+    protected function checkParamsViaAvailability($data,callable $callback=null)
     {
+        if(is_callable($data) && is_null($callback)){
+            
+            // if an authenticate is provided via the existing check method,
+            // then we return the value of the data that we are checking for with callback help.
+            if($this->check()){
+                return call_user_func($data);
+            } 
+        }
+        
         // if an authenticate is provided via the existing check method,
         // then we return the value of the data that we are checking for with callback help.
         if($this->check() && isset($this->params[$data])){

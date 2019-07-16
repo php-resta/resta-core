@@ -9,7 +9,7 @@ trait AuthenticateException
      */
     public function getExceptionForHttp($http)
     {
-        exception()->badMethodCall('Authenticate requests ['.$http.'] as http method');
+        exception('authenticateHttpException')->badMethodCall('Authenticate requests ['.$http.'] as http method');
     }
 
     /**
@@ -17,7 +17,7 @@ trait AuthenticateException
      */
     public function credentials()
     {
-        exception()->invalidArgument('credentials fail for authenticate');
+        exception('authenticateCredentialException')->invalidArgument('credentials fail for authenticate');
     }
 
     /**
@@ -28,21 +28,43 @@ trait AuthenticateException
         return $this->{$exceptionType}();
     }
 
+    /**
+     * logout exception
+     *
+     * @return mixed|void
+     */
     public function logoutException()
     {
-        exception()->runtime('You are already logout');
-    }
-
-    public function tokenException()
-    {
-        exception()->invalidArgument('Your token is missing for authenticate process');
+        exception('authenticateLogoutException')->runtime('no such token data is available.');
     }
 
     /**
-     * @return void|mixed
+     * logout exception
+     *
+     * @return mixed|void
+     */
+    public function logoutInternal()
+    {
+        exception('authenticateLogoutInternal')->runtime('You have failed to sign out. There was a problem with us. Please try again.');
+    }
+
+    /**
+     * token exception
+     *
+     * @return mixed|void
+     */
+    public function tokenException()
+    {
+        exception('authenticateTokenException')->invalidArgument('Your token is missing for authenticate process');
+    }
+
+    /**
+     * update exception
+     *
+     * @return mixed|void
      */
     public function update()
     {
-        exception()->invalidArgument('Updating Token for authenticate is missing.');
+        exception('authenticateUpdateException')->invalidArgument('Updating Token for authenticate is missing.');
     }
 }

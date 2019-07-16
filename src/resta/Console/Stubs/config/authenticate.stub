@@ -27,6 +27,7 @@ return [
             'key'               => 'token',
             'addToWhere'        => null,
             'token'             => null,
+            'expire'            => 0,
         ],
 
     ],

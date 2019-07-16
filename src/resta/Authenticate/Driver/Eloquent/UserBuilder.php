@@ -4,6 +4,7 @@ namespace Resta\Authenticate\Driver\Eloquent;
 
 use Resta\Authenticate\AuthenticateProvider;
 use Resta\Authenticate\Driver\BuilderContract;
+use Resta\Authenticate\Resource\AuthUserManager;
 use Resta\Authenticate\Driver\BuilderParamGenerator;
 
 class UserBuilder extends UserBuilderHelper implements BuilderContract
@@ -26,6 +27,16 @@ class UserBuilder extends UserBuilderHelper implements BuilderContract
         $this->auth = $auth;
 
         parent::__construct();
+    }
+
+    /**
+     * get all device tokens for user
+     *
+     * @param AuthUserManager $manager
+     */
+    public function allDeviceTokens($manager)
+    {
+        return $this->allDeviceTokenQuery($manager);
     }
 
     /**
@@ -90,7 +101,25 @@ class UserBuilder extends UserBuilderHelper implements BuilderContract
 
         //token updating as null
         if(isset($this->auth->params['authToken'])){
-            $this->deleteDeviceToken();
+            if(!$this->deleteDeviceToken()){
+                $this->auth->params['status'] = 0;
+                $this->auth->params['exception'] = 'logoutInternal';
+                return false;
+            }
         }
+
+        if($this->auth->params['status']===0){
+            $this->auth->params['exception'] = 'logoutException';
+        }
+    }
+
+    /**
+     * get user process
+     *
+     * @param AuthUserManager $manager
+     */
+    public function userProcess($manager)
+    {
+        return $this->userProcessQuery($manager);
     }
 }
