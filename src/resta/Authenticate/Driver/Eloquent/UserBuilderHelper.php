@@ -142,11 +142,6 @@ class UserBuilderHelper
             return $this->callbackQueryWithoutCredentials($driver);
         }
 
-        //
-        if($this->isCallableAddToWhere()){
-            return $this->queryAddToWhere($driver,$credentials->get());
-        }
-
         // using the driver object we write the query builder statement.
         // we do the values of the query with the credentials that are sent.
         return $driver::where(function($query) use($credentials) {
@@ -154,7 +149,15 @@ class UserBuilderHelper
             // with the callback method (eloquent model)
             // we write the where clause.
             foreach ($credentials->get() as $credential=>$credentialValue){
-                $query->where($credential,$credentialValue);
+
+                if(app()->has('authenticate.'.$credential)
+                    && is_callable($provider = app()->get('authenticate.'.$credential))){
+                    $query->where($credential,$provider($credentialValue));
+                }
+                else{
+                    $query->where($credential,$credentialValue);
+                }
+
             }
 
             // if the addToWhereClosure value is a closure,

@@ -51,21 +51,11 @@ class AuthenticateRequest extends RequestClient
         parent::__construct();
     }
 
+    /**
+     * @return array
+     */
     public function all()
     {
         return $this->inputs;
-    }
-
-    /**
-     * @var string
-     */
-    protected $password;
-
-    /**
-     * @return string
-     */
-    protected function password()
-    {
-        return md5(sha1($this->password));
     }
 }

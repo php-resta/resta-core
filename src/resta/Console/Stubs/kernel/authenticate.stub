@@ -13,6 +13,12 @@ class AuthenticateServiceProvider extends ServiceProviderManager
      */
     public function register()
     {
-        //
+        /**$this->app->register('authenticate','token',function($auth){
+            return $auth->id;
+        });**/
+
+        $this->app->register('authenticate','password',function($password){
+           return md5(sha1($password));
+        });
     }
 }

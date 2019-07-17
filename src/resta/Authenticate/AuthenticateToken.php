@@ -24,7 +24,7 @@ trait AuthenticateToken
 
             // we refer to the token closure feature on the config to enable
             // the creation of user-based tokens on the application side.
-            return $this->tokenForConfig($authData,function() use($authData){
+            return $this->getTokenFromProvider($authData,function() use($authData){
                 return md5(sha1($authData->id.'__'.$this->credentialHash.'__'.time().'__'.fingerPrint()));
             });
         }
@@ -37,16 +37,12 @@ trait AuthenticateToken
      * @param callable $callback
      * @return mixed
      */
-    private function tokenForConfig($authData,callable $callback)
+    private function getTokenFromProvider($authData,callable $callback)
     {
-        // we get the authenticate token value
-        // from the config values.
-        $configToken=$this->getConfigToken();
-
         // if the token value is a closure value,
         // we will run a user-based token closure.
-        if(is_callable($configToken)){
-            return $configToken($authData);
+        if(app()->has('authenticate.token') && is_callable($token = app()->get('authenticate.token'))){
+            return $token($authData);
         }
 
         // if there is no closure object on the token side,
