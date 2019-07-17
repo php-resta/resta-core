@@ -5,6 +5,7 @@ namespace __testNamespace__;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Response;
 use Resta\Foundation\Application;
+use GuzzleHttp\Exception\GuzzleException;
 use PHPUnit\Framework\TestCase as TestBaseCase;
 
 abstract class TestCase extends TestBaseCase
@@ -56,10 +57,24 @@ abstract class TestCase extends TestBaseCase
      * @param array $params
      * @return Response
      *
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws GuzzleException
      */
     public function get($path,$params=array())
     {
         return $this->client->request('GET',workingPath.'/'.$path,$params);
+    }
+
+    /**
+     * post method for http client
+     *
+     * @param $path
+     * @param array $params
+     * @return Response
+     *
+     * @throws GuzzleException
+     */
+    public function post($path,$params=array())
+    {
+        return $this->client->request('POST',workingPath.'/'.$path,$params);
     }
 }
