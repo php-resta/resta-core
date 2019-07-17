@@ -16,6 +16,7 @@ class Pulling extends BaseManager
     {
         $directory = $this->config['paths'][0];
         $dbtables = $this->schema->getConnection()->showTables();
+        
         $migrations = $this->tableFilters();
 
         $list = [];
@@ -23,24 +24,53 @@ class Pulling extends BaseManager
         foreach ($migrations as $table=>$item){
             $list[] = strtolower($table);
         }
+        
+        echo 'Migrations Pull Tasks:';
+        echo PHP_EOL;
+        echo 'Toplam : '.count($dbtables).' Table';
+        echo PHP_EOL;
 
-        foreach ($dbtables as $dbtable){
-            //if(!in_array($dbtable,$list)){
+        foreach ($dbtables as $dbtablekey=>$dbtable){
             
-                $informations = $this->tableInformations($dbtable);
+            $dbtablekey = $dbtablekey+1;
+            
+            $informations = $this->tableInformations($dbtable);
 
-                $dbtable = ucfirst($dbtable);
-                $makeDirectory = $directory.''.DIRECTORY_SEPARATOR.''.$dbtable;
+            $dbtable = ucfirst($dbtable);
+            $makeDirectory = $directory.''.DIRECTORY_SEPARATOR.''.$dbtable;
+            
+            if(!file_exists($makeDirectory)){
                 files()->makeDirectory($makeDirectory,0755,true);
+                $exist=false;
+            }
+            else{
+                $exist=true;
+            }
 
-                $migrationName = time().'_'.$dbtable.'';
+            $migrationName = time().'_'.$dbtable.'';
+
+            if($exist===false){
 
                 $content = $this->getContentFile($this->getStubPath().''.DIRECTORY_SEPARATOR.'pullCreate.stub',[
                     'className' => $dbtable,
                     'informations' => $informations
                 ]);
 
-                files()->put($makeDirectory.''.DIRECTORY_SEPARATOR.''.$migrationName.'.php',$content);
+                $contentResult = files()->put($makeDirectory.''.DIRECTORY_SEPARATOR.''.$migrationName.'.php',$content);
+            }
+            
+                
+            if(isset($contentResult) && $contentResult!==false){
+                echo $dbtablekey.'- '.$migrationName.' ---> Ok';
+            }
+            elseif($exist){
+                echo $dbtablekey.'- '.$migrationName.' ---> (Already Exist)';
+            }
+            else{
+                echo $dbtablekey.'- '.$migrationName.' ---> Fail';
+            }
+            
+            echo PHP_EOL;
                 
                 /**if(substr($dbtable,-1)=='s'){
                     app()->command('model create','model:'.strtolower(substr($dbtable,0,-1)));
@@ -48,8 +78,6 @@ class Pulling extends BaseManager
                 else{
                     app()->command('model create','model:'.strtolower($dbtable));
                 }**/
-                
-            //}
         }
     }
 
@@ -183,7 +211,7 @@ class Pulling extends BaseManager
             return 'text()';
         }
         elseif($column=='timestamp'){
-            return 'timestamp';
+            return 'timestamp()';
         }
         elseif($column=='mediumint'){
             return 'mediumint()';

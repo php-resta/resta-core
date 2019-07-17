@@ -91,7 +91,7 @@ class QuerySyntaxHelper
     {
         //get unique
         if(isset($this->data['unique'][$name])){
-            $this->data['uniqueValueList'][]      = 'UNIQUE INDEX '.$name.' ('.$this->data['unique'][$name]['value'].' ASC)';
+            $this->data['uniqueValueList'][]      = 'UNIQUE INDEX '.$this->data['unique'][$name]['value'].' ('.$name.' ASC)';
         }
     }
 
@@ -102,7 +102,7 @@ class QuerySyntaxHelper
     {
         //get index
         if(isset($this->data['index'][$name])){
-            $this->data['indexValueList'][]  = 'INDEX '.$name.' ('.$this->data['index'][$name]['value'].')';
+            $this->data['indexValueList'][]  = 'INDEX '.$this->data['index'][$name]['value'].' ('.$name.')';
         }
     }
 
