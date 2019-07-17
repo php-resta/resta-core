@@ -1,0 +1,18 @@
+<?php
+
+namespace __kernelProviderDir__;
+
+use Resta\Provider\ServiceProviderManager;
+
+class AuthenticateServiceProvider extends ServiceProviderManager
+{
+    /**
+     * register service provider
+     *
+     * @return void
+     */
+    public function register()
+    {
+        //
+    }
+}

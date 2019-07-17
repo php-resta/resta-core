@@ -7,6 +7,7 @@ use __kernelProviderDir__\RoleServiceProvider;
 use __kernelProviderDir__\HelperServiceProvider;
 use __kernelProviderDir__\WorkerServiceProvider;
 use __kernelProviderDir__\ConsoleEventServiceProvider;
+use __kernelProviderDir__\AuthenticateServiceProvider;
 
 return [
 
@@ -15,6 +16,7 @@ return [
      * all providers names
      */
     'providers' => [
+        'AuthenticateServiceProvider'       => AuthenticateServiceProvider::class,
         'HelperServiceProvider'             => HelperServiceProvider::class,
         'AppServiceProvider'                => AppServiceProvider::class,
         'ConsoleEventServiceProvider'       => ConsoleEventServiceProvider::class,
