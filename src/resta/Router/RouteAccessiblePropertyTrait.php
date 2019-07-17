@@ -2,7 +2,6 @@
 
 namespace Resta\Router;
 
-use http\Exception;
 use Resta\Support\Utils;
 
 trait RouteAccessiblePropertyTrait
@@ -32,15 +31,38 @@ trait RouteAccessiblePropertyTrait
     }
 
     /**
-     * get static routes
+     * get routes
      *
+     * @param null|string $method
      * @return array
      */
-    public static function getRoutes() : array
+    public static function getRoutes($method=null) : array
     {
         // it collects and
         // executes route data in an array.
-        return static::$routes;
+        if(is_null($method)){
+            return static::$routes;
+        }
+
+        $httpRouteList = [];
+
+        $routes = self::getRoutes();
+
+        if(isset($routes['data'])){
+            foreach ($routes['data'] as $key=>$item){
+                if($item['http']==httpMethod()){
+                    $httpRouteList['data'][$key] = $item;
+                }
+            }
+        }
+
+        if(isset($routes['pattern'],$httpRouteList['data'])){
+            foreach ($httpRouteList['data'] as $key=>$item){
+                $httpRouteList['pattern'][$key] = $routes['pattern'][$key];
+            }
+        }
+
+        return $httpRouteList;
     }
 
     /**

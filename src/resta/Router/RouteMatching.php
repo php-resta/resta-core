@@ -55,7 +55,7 @@ class RouteMatching extends ApplicationProvider
 
             $patternCount = $this->getPatternRealCount($pattern);
 
-            if(count($urlRoute)==0 && count($urlRoute)==0) return 0;
+            if(count($urlRoute)==0 && count($urlRoute)==0) return array_key_first($patternList);
 
             if(isset($patternCount['optional'])){
                 $optionalCount = count($patternCount['default']) + count($patternCount['optional']);
