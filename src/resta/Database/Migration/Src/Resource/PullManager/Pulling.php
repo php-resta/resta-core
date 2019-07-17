@@ -16,7 +16,7 @@ class Pulling extends BaseManager
     {
         $directory = $this->config['paths'][0];
         $dbtables = $this->schema->getConnection()->showTables();
-        
+
         $migrations = $this->tableFilters();
 
         $list = [];
@@ -24,21 +24,21 @@ class Pulling extends BaseManager
         foreach ($migrations as $table=>$item){
             $list[] = strtolower($table);
         }
-        
+
         echo 'Migrations Pull Tasks:';
         echo PHP_EOL;
         echo 'Toplam : '.count($dbtables).' Table';
         echo PHP_EOL;
 
         foreach ($dbtables as $dbtablekey=>$dbtable){
-            
+
             $dbtablekey = $dbtablekey+1;
-            
+
             $informations = $this->tableInformations($dbtable);
 
             $dbtable = ucfirst($dbtable);
             $makeDirectory = $directory.''.DIRECTORY_SEPARATOR.''.$dbtable;
-            
+
             if(!file_exists($makeDirectory)){
                 files()->makeDirectory($makeDirectory,0755,true);
                 $exist=false;
@@ -58,8 +58,14 @@ class Pulling extends BaseManager
 
                 $contentResult = files()->put($makeDirectory.''.DIRECTORY_SEPARATOR.''.$migrationName.'.php',$content);
             }
-            
-                
+
+            if(substr($dbtable,-1)=='s'){
+                app()->command('model create','model:'.strtolower(substr($dbtable,0,-1)).' table:'.$dbtable);
+            }
+            else{
+                app()->command('model create','model:'.strtolower($dbtable).' table:'.$dbtable);
+            }
+
             if(isset($contentResult) && $contentResult!==false){
                 echo $dbtablekey.'- '.$migrationName.' ---> Ok';
             }
@@ -69,15 +75,8 @@ class Pulling extends BaseManager
             else{
                 echo $dbtablekey.'- '.$migrationName.' ---> Fail';
             }
-            
+
             echo PHP_EOL;
-                
-                /**if(substr($dbtable,-1)=='s'){
-                    app()->command('model create','model:'.strtolower(substr($dbtable,0,-1)));
-                }
-                else{
-                    app()->command('model create','model:'.strtolower($dbtable));
-                }**/
         }
     }
 
@@ -97,12 +96,12 @@ class Pulling extends BaseManager
 
         $indexes = $this->schema->getConnection()->showIndexes($table);
         $multipleIndexes = $this->getMultipleIndex($indexes);
-        
+
 
         $list = [];
 
         foreach ($columns as $key=>$data){
-            
+
             $data['Type'] = rtrim(str_replace('unsigned','',$data['Type']));
 
             $field      = $data['Field'];

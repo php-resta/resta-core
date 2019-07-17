@@ -19,13 +19,20 @@ class Command extends ApplicationProvider
      * @param $command
      * @param $args
      */
-    public function __construct($command,$args)
+    public function __construct($app,$command,$args)
     {
+        parent::__construct($app);
+
         $this->arguments[]  = 'php';
         $this->arguments[]  = 'api';
         $this->arguments    = array_merge($this->arguments,explode(" ",$command));
         $this->arguments[]  = strtolower(app);
-        $this->arguments[]  = $args;
+
+        $argsList = explode(' ',$args);
+
+        foreach ($argsList as $item) {
+            $this->arguments[]  = $item;
+        }
     }
 
     /**
