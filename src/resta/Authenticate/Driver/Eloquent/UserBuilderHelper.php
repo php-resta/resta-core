@@ -4,6 +4,7 @@ namespace Resta\Authenticate\Driver\Eloquent;
 
 use Resta\Authenticate\Resource\AuthLoginCredentialsManager;
 use Resta\Authenticate\Resource\AuthUserManager;
+use Resta\Support\Arr;
 
 class UserBuilderHelper
 {
@@ -11,6 +12,21 @@ class UserBuilderHelper
      * @var array
      */
     protected $query = [];
+
+    /**
+     * @var null|array
+     */
+    protected $credentials;
+
+    /**
+     * @var bool
+     */
+    protected $passwordVerify = false;
+
+    /**
+     * @var $password
+     */
+    private $password;
 
     /**
      * UserBuilderHelper constructor.
@@ -39,24 +55,6 @@ class UserBuilderHelper
     }
 
     /**
-     * @param null|object
-     * @return mixed
-     */
-    protected function callbackQueryWithoutCredentials($driver)
-    {
-        if($this->isCallableAddToWhere()){
-
-            return $driver::where(function($query) {
-
-                // if the addToWhereClosure value is a closure,
-                // then in this case we actually run
-                // the closure object and add it to the query value.
-                $this->queryAddToWhere($query);
-            });
-        }
-    }
-
-    /**
      * @param $token
      * @return mixed
      */
@@ -68,22 +66,7 @@ class UserBuilderHelper
             //where query for token
             $query->where('token_integer',crc32(md5($token)));
             $query->where('device_agent_integer',crc32(md5($_SERVER['HTTP_USER_AGENT'])));
-
-            // if the addToWhereClosure value is a closure,
-            // then in this case we actually run
-            // the closure object and add it to the query value.
-            $this->queryAddToWhere($query);
         });
-    }
-
-    /**
-     * @return bool
-     */
-    protected function isCallableAddToWhere()
-    {
-        // addToWhere checks whether
-        // the config value is a callable value.
-        return is_callable($this->query['addToWhere']);
     }
 
     /**
@@ -99,29 +82,37 @@ class UserBuilderHelper
             $query->where('token_integer',crc32(md5($token)));
             $query->where('device_agent_integer',crc32(md5($_SERVER['HTTP_USER_AGENT'])));
 
-            // if the addToWhereClosure value is a closure,
-            // then in this case we actually run
-            // the closure object and add it to the query value.
-            $this->queryAddToWhere($query);
-
         });
     }
 
     /**
-     * get query add to where
+     * check pasword verify
      *
-     * @param $query
-     * @param array $credentials
+     * @param null|object $query
      * @return mixed
      */
-    protected function queryAddToWhere($query,$credentials=array())
+    protected function checkPasswordVerify($query=null)
     {
-        // if the addToWhereClosure value is a closure,
-        // then in this case we actually run
-        // the closure object and add it to the query value.
-        if($this->isCallableAddToWhere()){
-            return $this->query['addToWhere']($query,$credentials);
+        if(is_null($query) && isset($this->credentials['password'])){
+            if(!is_null($password = $this->auth->provider('password'))
+                && $password($this->credentials['password'])=='verify'){
+
+                $this->password = $this->credentials['password'];
+                $this->passwordVerify = true;
+                $this->credentials = Arr::removeKey($this->credentials,['password']);
+
+                return null;
+            }
         }
+
+        if(is_object($query) && $query->count()){
+            $password = $query->first()->password;
+            if(password_verify($this->password,$password)){
+                return $query;
+            }
+        }
+
+        return null;
     }
 
     /**
@@ -135,36 +126,39 @@ class UserBuilderHelper
         //we get the model specified for the builder.
         $driver = $this->query['driver'];
 
-        if(count($credentials->get())==0){
+        //get query credentials
+        $this->credentials = $credentials->get();
 
-            // if the credential array is empty in the config section,
-            // then you must run the query with a callable value of addToWhere value.
-            return $this->callbackQueryWithoutCredentials($driver);
-        }
+        $this->checkPasswordVerify();
 
         // using the driver object we write the query builder statement.
         // we do the values of the query with the credentials that are sent.
-        return $driver::where(function($query) use($credentials) {
+        $query = $driver::where(function($query) use($credentials) {
 
             // with the callback method (eloquent model)
             // we write the where clause.
-            foreach ($credentials->get() as $credential=>$credentialValue){
+            foreach ($this->credentials as $credential=>$credentialValue){
 
-                if(app()->has('authenticate.'.$credential)
-                    && is_callable($provider = app()->get('authenticate.'.$credential))){
+                if(!is_null($provider = $this->auth->provider($credential))){
                     $query->where($credential,$provider($credentialValue));
                 }
                 else{
                     $query->where($credential,$credentialValue);
                 }
-
             }
 
-            // if the addToWhereClosure value is a closure,
-            // then in this case we actually run
-            // the closure object and add it to the query value.
-            $this->queryAddToWhere($query,$credentials->get(),$credentials->get());
+            // for the authenticate query,
+            // the user can add additional queries by the service provider.
+            if(!is_null($addQuery = $this->auth->provider('addQuery'))){
+                $addQuery($query);
+            }
         });
+
+        if(false === $this->passwordVerify){
+            return $query;
+        }
+
+        return $this->checkPasswordVerify($query);
     }
 
     /**
@@ -202,7 +196,7 @@ class UserBuilderHelper
         if(!is_null($token_integer)){
 
             if(DeviceToken::where('user_id',$this->auth->params['authId'])
-                ->where('device_agent_integer',crc32(md5($_SERVER['HTTP_USER_AGENT'])))->count()==0){
+                    ->where('device_agent_integer',crc32(md5($_SERVER['HTTP_USER_AGENT'])))->count()==0){
 
                 return DeviceToken::create([
                     'user_id' => $this->auth->params['authId'],
@@ -218,9 +212,9 @@ class UserBuilderHelper
                 return DeviceToken::where('user_id',$this->auth->params['authId'])
                     ->where('device_agent_integer',crc32(md5($_SERVER['HTTP_USER_AGENT'])))
                     ->update([
-                    'token' => $this->auth->params['token'],
-                    'token_integer' => $token_integer
-                ]);
+                        'token' => $this->auth->params['token'],
+                        'token_integer' => $token_integer
+                    ]);
             }
 
         }
@@ -230,7 +224,7 @@ class UserBuilderHelper
     /**
      * delete device token for token
      *
-     * @return mixed
+     * @return mixed|void
      */
     protected function deleteDeviceToken()
     {
@@ -239,7 +233,7 @@ class UserBuilderHelper
         if(!is_null($token_integer)){
 
             DeviceToken::where('token_integer',$token_integer)->delete();
-            
+
             return (DeviceToken::where('token_integer',$token_integer)->count()) ? false : true;
         }
 

@@ -609,4 +609,24 @@ class Arr
         return $original;
     }
 
+    /**
+     * remove key from array
+     *
+     * @param $data
+     * @param array $remove
+     * @return array
+     */
+    public static function removeKey($data,$remove=array())
+    {
+        $list = [];
+
+        foreach($data as $key=>$value){
+            if(!in_array($key,$remove)){
+                $list[$key] = $value;
+            }
+        }
+
+        return $list;
+    }
+
 }

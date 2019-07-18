@@ -33,6 +33,7 @@ class UserBuilder extends UserBuilderHelper implements BuilderContract
      * get all device tokens for user
      *
      * @param AuthUserManager $manager
+     * @return mixed
      */
     public function allDeviceTokens($manager)
     {
@@ -65,7 +66,12 @@ class UserBuilder extends UserBuilderHelper implements BuilderContract
     {
         // using the driver object we write the query builder statement.
         // we do the values of the query with the credentials that are sent.
-        $query = $this->setQuery($credentials);
+        if(!is_null($provider = $this->auth->provider('login'))){
+            $query = $provider($credentials->get());
+        }
+        else{
+            $query = $this->setQuery($credentials);
+        }
 
         // with query we bind the returned values to the params property of the auth object.
         // and so the auth object will make a final return with these values.
@@ -78,7 +84,7 @@ class UserBuilder extends UserBuilderHelper implements BuilderContract
         // when the query succeeds,
         // we update the token value.
         $this->updateToken();
-        
+
         if(isset($this->auth->params['authToken'])){
             $this->saveDeviceToken();
         }
@@ -88,6 +94,7 @@ class UserBuilder extends UserBuilderHelper implements BuilderContract
      * logout builder
      *
      * @param $token
+     * @return mixed|void
      */
     public function logout($token)
     {
@@ -117,6 +124,7 @@ class UserBuilder extends UserBuilderHelper implements BuilderContract
      * get user process
      *
      * @param AuthUserManager $manager
+     * @return mixed
      */
     public function userProcess($manager)
     {
