@@ -2,8 +2,6 @@
 
 namespace Resta\Authenticate;
 
-use Store\Services\HttpSession as Session;
-
 class ConfigProvider
 {
     /**
@@ -137,7 +135,7 @@ class ConfigProvider
 
     /**
      * get expire for authenticate
-     * 
+     *
      * @return mixed
      */
     public function getExpire()
@@ -185,6 +183,21 @@ class ConfigProvider
     public function getTokenKey()
     {
         return $this->config['guard'][$this->guard]['key'];
+    }
+
+    /**
+     * get provider for authenticate
+     *
+     * @param $key
+     * @return mixed|null
+     */
+    public function provider($key)
+    {
+        if(app()->has('authenticate.'.$key) && is_callable($provider = app()->get('authenticate.'.$key))){
+            return $provider;
+        }
+
+        return null;
     }
 
     /**
