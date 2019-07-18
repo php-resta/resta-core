@@ -242,7 +242,7 @@ if (!function_exists('headers')) {
     /**
      * @param null $param
      * @param null $default
-     * @return array
+     * @return array|string
      */
     function headers($param=null,$default=null)
     {

@@ -31,7 +31,12 @@ class ResponseProvider extends ApplicationProvider
                 return $controllerInstance->response;
             }
 
-            //For auto service, service base is instantiate and response object is accessed.
+            // if the client wishes,
+            // data can be returned in the supported format.
+            if($this->app->has('clientResponseType')){
+                return $this->app->get('clientResponseType');
+            }
+
             return config('app.response');
         });
     }
