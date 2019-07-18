@@ -51,6 +51,7 @@ class Model extends ConsoleOutputter {
         $this->directory['modelDir']=$this->version().'/Model';
         $this->directory['builderDir']=$this->directory['modelDir'].'/Builder';
         $this->directory['contract']=$this->directory['modelDir'].'/Contract';
+        $this->directory['helper']=$this->directory['modelDir'].'/Helper';
 
         //set project directory
         $this->file->makeDirectory($this);
@@ -58,7 +59,11 @@ class Model extends ConsoleOutputter {
         //model set
         $this->touch['model/model']     = $this->model().'/'.$this->argument['file'].'.php';
         $this->touch['model/builder']   = $this->model().'/Builder/'.$this->argument['file'].'Builder.php';
-        $this->touch['model/contract'] = $this->model().'/Contract/'.$this->argument['file'].'Contract.php';
+        $this->touch['model/contract']  = $this->model().'/Contract/'.$this->argument['file'].'Contract.php';
+
+        if(!file_exists($this->directory['helper'].''.DIRECTORY_SEPARATOR.'Scope.php')){
+            $this->touch['model/scope']     = $this->directory['helper'].''.DIRECTORY_SEPARATOR.'Scope.php';
+        }
 
         //set project touch
         $this->file->touch($this,[
