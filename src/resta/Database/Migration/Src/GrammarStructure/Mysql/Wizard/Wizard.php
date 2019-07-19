@@ -8,6 +8,11 @@ use Migratio\Contract\WizardContract;
 class Wizard extends WizardHelper implements WizardContract
 {
     /**
+     * @var array
+     */
+    protected $alterBinds = array();
+
+    /**
      * @var $randomInstance
      */
     public static $randomInstance;

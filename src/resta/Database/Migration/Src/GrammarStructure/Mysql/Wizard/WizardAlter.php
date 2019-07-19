@@ -8,6 +8,11 @@ use Migratio\Contract\WizardAlterContract;
 class WizardAlter extends Wizard implements WizardContract,WizardAlterContract
 {
     /**
+     * @var array
+     */
+    protected $alterBinds = array();
+
+    /**
      * @var string
      */
     protected $after;
