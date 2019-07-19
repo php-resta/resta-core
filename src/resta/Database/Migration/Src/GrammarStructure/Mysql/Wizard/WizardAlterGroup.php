@@ -2,13 +2,15 @@
 
 namespace Migratio\GrammarStructure\Mysql\Wizard;
 
+use Migratio\Contract\NameContract;
 use Migratio\Contract\WizardAlterContract;
 use Migratio\Contract\WizardAlterGroupContract;
 
 class WizardAlterGroup extends Wizard implements WizardAlterGroupContract
 {
     /**
-     * @param $field
+     * add column
+     * 
      * @return WizardAlterContract
      */
     public function addColumn()
@@ -17,7 +19,18 @@ class WizardAlterGroup extends Wizard implements WizardAlterGroupContract
     }
 
     /**
-     * @param $field
+     * drop column
+     * 
+     * @return NameContract
+     */
+    public function dropColumn()
+    {
+        return $this->dropWizardAlterInstance(__FUNCTION__);
+    }
+
+    /**
+     * change column
+     * 
      * @return WizardAlterContract
      */
     public function change()
@@ -26,6 +39,8 @@ class WizardAlterGroup extends Wizard implements WizardAlterGroupContract
     }
 
     /**
+     * get wizard alter instance
+     * 
      * @param $group
      * @return WizardAlter
      */
@@ -34,6 +49,17 @@ class WizardAlterGroup extends Wizard implements WizardAlterGroupContract
         $this->setAlterType('group',$group);
 
         return new WizardAlter($this);
+    }
+
+    /**
+     * @param $group
+     * @return $this
+     */
+    private function dropWizardAlterInstance($group)
+    {
+        $this->setAlterType('group',$group);
+
+        return $this;
     }
 }
 

@@ -134,7 +134,7 @@ class Wizard extends WizardHelper implements WizardContract
            $this->setError('You have written the '.$name.' name more than 1.');
         }
 
-        $this->name[]=$name;
+        $this->name[] = $name;
 
         return new Types($this);
 

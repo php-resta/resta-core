@@ -23,6 +23,7 @@ trait PushingProcess
 
                     $query = $query->handle();
                     
+                    
                     if($query===false){
                         $results[] = [];
                     }

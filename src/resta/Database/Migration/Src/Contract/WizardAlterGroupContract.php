@@ -16,5 +16,10 @@ interface WizardAlterGroupContract {
      */
     public function change();
 
+    /**
+     * @return NameContract
+     */
+    public function dropColumn();
+
 }
 

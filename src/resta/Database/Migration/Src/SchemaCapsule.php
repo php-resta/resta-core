@@ -69,7 +69,8 @@ class SchemaCapsule implements SchemaCapsuleContract
      */
     private function checkErrors($wizard)
     {
-        if(count($wizard->getNames())!==count($wizard->getTypes())){
+        $alterType = $wizard->getAlterType();
+        if(count($wizard->getNames())!==count($wizard->getTypes()) && (isset($alterType['group'])) && $alterType['group']!=='dropColumn'){
             $wizard->setError('name and types are not equal');
         }
     }

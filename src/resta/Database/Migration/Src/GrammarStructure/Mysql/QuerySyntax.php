@@ -4,15 +4,150 @@ namespace Migratio\GrammarStructure\Mysql;
 
 class QuerySyntax extends QuerySyntaxHelper
 {
-
     /**
      * @var array $data
      */
     protected $data = array();
+    
     /**
      * @var array $syntax
      */
     protected $syntax = array();
+
+    /**
+     * @var null|string
+     */
+    protected $group;
+
+    /**
+     * @var array 
+     */
+    protected $alterExtras = array();
+
+    /**
+     * add column
+     * 
+     * @param $alterType
+     * @return array
+     */
+    private function addColumn($alterType)
+    {
+        if(isset($alterType['place'])){
+
+
+            foreach ($alterType['place'] as $placeKey=>$placeValue){
+                $placeList=$placeKey .' '.$placeValue.'';
+            }
+
+            $syntax = implode("",$this->syntax);
+
+            $alterSytanx = 'ALTER TABLE '.$this->table.' ADD COLUMN '.$syntax.' '.$placeList;
+
+            $query=$this->schema->getConnection()->setQueryBasic($alterSytanx);
+
+            if(count($this->alterExtras)){
+                foreach($this->alterExtras as $extra){
+
+                    $extraSyntax = 'ALTER TABLE '.$this->table.' '.$extra.'';
+
+                    $query=$this->schema->getConnection()->setQueryBasic($extraSyntax);
+                }
+            }
+
+            $this->alterExtras = [];
+
+            return [
+                'syntax'=>$syntax,
+                'type'=>'addColumn',
+                'result'=>$query['result'],
+                'message'=>$query['message'],
+            ];
+        }
+
+    }
+
+    /**
+     * change column
+     * 
+     * @param $alterType
+     * @return array
+     */
+    private function change($alterType)
+    {
+        if(isset($alterType['place'])){
+
+            foreach ($alterType['place'] as $placeKey=>$placeValue){
+                $placeList=$placeKey .' '.$placeValue.'';
+            }
+
+            $syntax = implode("",$this->syntax);
+
+            $columns = $this->schema->getConnection()->showColumnsFrom($this->table);
+
+            foreach ($columns as $columnKey=>$columnData){
+                if($columnData['Field']==$placeValue){
+                    $changeAbleField = $columns[$columnKey+1]['Field'];
+                }
+            }
+
+            $syntaxList = explode(' ',$syntax);
+
+            if(current($syntaxList)!==$changeAbleField){
+                $alterSytanx = 'ALTER TABLE '.$this->table.' change '.$changeAbleField.' '.current($syntaxList).'  '.implode(' ',array_splice($syntaxList,1)).' '.$placeList;
+            }
+            else{
+                $alterSytanx = 'ALTER TABLE '.$this->table.' modify '.$syntax.' '.$placeList;
+            }
+
+
+            $query=$this->schema->getConnection()->setQueryBasic($alterSytanx);
+
+            if(count($this->alterExtras)){
+                foreach($this->alterExtras as $extra){
+
+                    $extraSyntax = 'ALTER TABLE '.$this->table.' '.$extra.'';
+
+                    $query=$this->schema->getConnection()->setQueryBasic($extraSyntax);
+                }
+            }
+
+            $this->alterExtras = [];
+
+            return [
+                'syntax'=>$syntax,
+                'type'=>'create',
+                'result'=>$query['result'],
+                'message'=>$query['message'],
+            ];
+        }
+    }
+
+    /**
+     * drop column
+     *
+     * @param $alterType
+     */
+    private function dropColumn($alterType)
+    {
+        if(isset($this->syntax[0])){
+
+            $column = rtrim($this->syntax[0]);
+
+            $alterSytanx = 'alter table '.$this->table.' drop column '.$column;
+
+            $query=$this->schema->getConnection()->setQueryBasic($alterSytanx);
+
+            return [
+                'syntax'=>$this->syntax,
+                'type'=>'alter',
+                'result'=>$query['result'],
+                'message'=>$query['message'],
+            ];
+
+
+        }
+
+    }
 
     /**
      * @return array
@@ -65,21 +200,34 @@ class QuerySyntax extends QuerySyntaxHelper
     }
 
     /**
-     * @return mixed|void
+     * @param null $group
      */
-    private function getDefaultSyntaxGroup()
+    private function getDefaultSyntaxGroup($group=null)
     {
-
         $this->syntax[]=implode(",",$this->getCreateDefaultList());
-
+        
         //get unique values
         if(isset($this->data['uniqueValueList']) && count($this->data['uniqueValueList'])){
-            $this->syntax[]=','.implode(',',$this->data['uniqueValueList']);
+            
+            if($group=='create'){
+                $this->syntax[]=','.implode(',',$this->data['uniqueValueList']);
+            }
+            else{
+                $this->alterExtras[]='ADD '.implode(',',$this->data['uniqueValueList']);
+            }
+            
         }
 
         //get index values
         if(isset($this->data['indexValueList']) && count($this->data['indexValueList'])){
-            $this->syntax[]=','.implode(',',$this->data['indexValueList']);
+
+            if($group=='create'){
+                $this->syntax[]=','.implode(',',$this->data['indexValueList']);
+            }
+            else{
+                $this->alterExtras[]='ADD '.implode(',',$this->data['indexValueList']); 
+            }
+            
         }
 
         //get index values for key
@@ -103,74 +251,12 @@ class QuerySyntax extends QuerySyntaxHelper
         $alterType = $this->object->getAlterType();
 
         $group = $alterType['group'];
-
-        $this->getDefaultSyntaxGroup();
+        
+        $this->getDefaultSyntaxGroup($group);
         
         return $this->{$group}($alterType);
 
     }
     
-    private function change($alterType)
-    {
-        if(isset($alterType['place'])){
-
-            foreach ($alterType['place'] as $placeKey=>$placeValue){
-                $placeList=$placeKey .' '.$placeValue.'';
-            }
-
-            $syntax = implode("",$this->syntax);
-            
-            $columns = $this->schema->getConnection()->showColumnsFrom($this->table);
-            
-            foreach ($columns as $columnKey=>$columnData){
-                if($columnData['Field']==$placeValue){
-                    $changeAbleField = $columns[$columnKey+1]['Field'];
-                }
-            }
-            
-            $syntaxList = explode(' ',$syntax);
-
-            if(current($syntaxList)!==$changeAbleField){
-                $alterSytanx = 'ALTER TABLE '.$this->table.' change '.$changeAbleField.' '.current($syntaxList).'  '.implode(' ',array_splice($syntaxList,1)).' '.$placeList;
-            }
-            else{
-                $alterSytanx = 'ALTER TABLE '.$this->table.' modify '.$syntax.' '.$placeList;
-            }
-            
-
-            $query=$this->schema->getConnection()->setQueryBasic($alterSytanx);
-
-            return [
-                'syntax'=>$syntax,
-                'type'=>'create',
-                'result'=>$query['result'],
-                'message'=>$query['message'],
-            ];
-        }
-    }
-
-    private function addColumn($alterType)
-    {
-        if(isset($alterType['place'])){
-
-            foreach ($alterType['place'] as $placeKey=>$placeValue){
-                $placeList=$placeKey .' '.$placeValue.'';
-            }
-
-            $syntax = implode("",$this->syntax);
-
-            $alterSytanx = 'ALTER TABLE '.$this->table.' ADD COLUMN '.$syntax.' '.$placeList;
-
-            $query=$this->schema->getConnection()->setQueryBasic($alterSytanx);
-
-            return [
-                'syntax'=>$syntax,
-                'type'=>'create',
-                'result'=>$query['result'],
-                'message'=>$query['message'],
-            ];
-        }
-
-    }
 }
 
