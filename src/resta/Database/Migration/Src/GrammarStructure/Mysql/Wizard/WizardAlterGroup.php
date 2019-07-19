@@ -9,12 +9,18 @@ use Migratio\Contract\WizardAlterGroupContract;
 class WizardAlterGroup extends Wizard implements WizardAlterGroupContract
 {
     /**
+     * @var array 
+     */
+    protected $alterBinds = array();
+    
+    /**
      * add column
      * 
      * @return WizardAlterContract
      */
     public function addColumn()
     {
+        $this->alterBinds[] = __FUNCTION__;
         return $this->getWizardAlterInstance(__FUNCTION__);
     }
 
@@ -25,6 +31,7 @@ class WizardAlterGroup extends Wizard implements WizardAlterGroupContract
      */
     public function dropColumn()
     {
+        $this->alterBinds[] = __FUNCTION__;
         return $this->dropWizardAlterInstance(__FUNCTION__);
     }
 
@@ -35,6 +42,7 @@ class WizardAlterGroup extends Wizard implements WizardAlterGroupContract
      */
     public function change()
     {
+        $this->alterBinds[] = __FUNCTION__;
         return $this->getWizardAlterInstance(__FUNCTION__);
     }
 

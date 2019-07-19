@@ -15,6 +15,14 @@ class WizardHelper
     /**
      * @return mixed
      */
+    public function getAlterBinds()
+    {
+        return $this->alterBinds;
+    }
+
+    /**
+     * @return mixed
+     */
     public function getComment()
     {
         return $this->comment;

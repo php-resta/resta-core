@@ -58,9 +58,16 @@ trait PushingProcess
         {
             foreach ($objects as $object)
             {
-                if(count($object->getError())){
-                    return 'error : '.$object->getFile().' -> '.$object->getError()[0].'';
+                $alterBinds = $object->getAlterBinds();
+                
+                if(!is_null($alterBinds) && count($alterBinds)>1){
+                    exception()->runtime('Only one command can be applied to alter groups');
                 }
+                
+                if(count($object->getError())){
+                    exception()->runtime(''.$object->getFile().' -> '.$object->getError()[0].'');
+                }
+                
             }
         }
 
