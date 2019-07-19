@@ -20,6 +20,8 @@ class QuerySyntax extends QuerySyntaxHelper
     public function syntaxCreate()
     {
         $this->getWizardObjects($this->object);
+        
+        $existTables = $this->schema->getConnection()->showTables();
 
         $this->getCreateTableSyntax();
 
@@ -45,15 +47,21 @@ class QuerySyntax extends QuerySyntaxHelper
         }
 
         $syntax = implode("",$this->syntax);
-        
-        $query=$this->schema->getConnection()->setQueryBasic($syntax);
 
-        return [
-            'syntax'=>$syntax,
-            'type'=>'create',
-            'result'=>$query['result'],
-            'message'=>$query['message'],
+        if(in_array($this->table,$existTables)){
+            return false;
+        }
+        else{
+            $query=$this->schema->getConnection()->setQueryBasic($syntax);
+
+            return [
+                'syntax'=>$syntax,
+                'type'=>'create',
+                'result'=>$query['result'],
+                'message'=>$query['message'],
             ];
+        }
+        
     }
 
     /**

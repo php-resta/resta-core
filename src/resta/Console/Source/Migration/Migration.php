@@ -59,41 +59,55 @@ class Migration extends ConsoleOutputter {
 
         echo $this->info('Migration Push Process :');
 
-        $this->table->setHeaders(['id','table','file','type','status','message','seeder']);
+        $list = [];
 
         foreach ($pushResult as $key=>$value) {
 
-            $pushResultFile = explode("/",$pushResult[$key]['file']);
-            $file = end($pushResultFile);
+            if(isset($value['success'])){
 
-            if($pushResult[$key]['success']===true){
+                $list[] = true;
 
-                $this->table->addRow([
-                    $key,
-                    $pushResult[$key]['table'],
-                    $file,
-                    $pushResult[$key]['type'],
-                    'Success',
-                    'Ok',
-                    'No',
-                ]);
-            }
-            else{
+                $pushResultFile = explode("/",$pushResult[$key]['file']);
+                $file = end($pushResultFile);
 
-                $this->table->addRow([
-                    $key,
-                    $pushResult[$key]['table'],
-                    $file,
-                    $pushResult[$key]['type'],
-                    'Fail!',
-                    $pushResult[$key]['message'],
-                    'No',
+                if($pushResult[$key]['success']===true){
 
-                ]);
+                    $this->table->addRow([
+                        $key,
+                        $pushResult[$key]['table'],
+                        $file,
+                        $pushResult[$key]['type'],
+                        'Success',
+                        'Ok',
+                        'No',
+                    ]);
+                }
+                else{
+
+                    $this->table->addRow([
+                        $key,
+                        $pushResult[$key]['table'],
+                        $file,
+                        $pushResult[$key]['type'],
+                        'Fail!',
+                        $pushResult[$key]['message'],
+                        'No',
+
+                    ]);
+                }
             }
         }
 
-        echo $this->table->getTable();
+        if(count($list)){
+            $this->table->setHeaders(['id','table','file','type','status','message','seeder']);
+
+            echo $this->table->getTable();
+        }
+        else{
+            echo $this->classical('No migration was found to apply');
+        }
+
+
     }
 
     /**
@@ -165,7 +179,9 @@ class Migration extends ConsoleOutputter {
             path()->migration(),
             StaticPathModel::storeMigrationPath()
         ],
-            'database'=>DatabaseConnection::getConfig()];
+            'database'=>DatabaseConnection::getConfig(),
+            'arguments' => $this->argument
+        ];
     }
 
     /**

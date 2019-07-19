@@ -37,6 +37,11 @@ class Schema extends SchemaHelper implements SchemaContract
     protected $grammarPath = 'Migratio\GrammarStructure';
 
     /**
+     * @var null|array
+     */
+    protected $arguments;
+
+    /**
      * Schema constructor.
      * @param null|mixed $config
      */
@@ -46,6 +51,7 @@ class Schema extends SchemaHelper implements SchemaContract
         $this->driver           = $this->config['database']['driver'];
         $this->grammarPath      = $this->grammarPath.'\\'.ucfirst($this->driver);
         $this->connection       = (new SqlDefinitor($this->config))->getConnection();
+        $this->arguments        = $this->config['arguments'];
     }
 
     /**

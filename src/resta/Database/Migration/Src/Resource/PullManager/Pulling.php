@@ -14,6 +14,12 @@ class Pulling extends BaseManager
      */
     public function get()
     {
+        if(!isset($this->config['paths'][0])){
+            exit();
+        }
+        
+        $arguments = $this->schema->getArguments();
+        
         $directory = $this->config['paths'][0];
         $dbtables = $this->schema->getConnection()->showTables();
 
@@ -23,6 +29,10 @@ class Pulling extends BaseManager
 
         foreach ($migrations as $table=>$item){
             $list[] = strtolower($table);
+        }
+        
+        if(isset($arguments['only'])){
+            $dbtables = $this->getOnly($dbtables);
         }
 
         echo 'Migrations Pull Tasks:';
@@ -255,6 +265,30 @@ class Pulling extends BaseManager
         }
 
         return null;
+    }
+
+    /**
+     * get only tables
+     * 
+     * @param $tables
+     * @return array
+     */
+    private function getOnly($tables)
+    {
+        $arguments = $this->schema->getArguments();
+        
+        $only = explode(',',$arguments['only']);
+        
+        $list = [];
+        
+        foreach($only as $table){
+            
+            if(in_array($table,$tables) || in_array($table = strtolower($table),$tables)){
+                $list[] = $table;
+            }
+        }
+        
+        return $list;
     }
 
     /**

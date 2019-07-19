@@ -7,6 +7,14 @@ class SchemaHelper
     /**
      * @return mixed
      */
+    public function getArguments()
+    {
+        return $this->arguments;
+    }
+    
+    /**
+     * @return mixed
+     */
     public function getConnection()
     {
         return $this->connection;

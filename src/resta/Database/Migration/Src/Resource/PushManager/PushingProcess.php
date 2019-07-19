@@ -13,6 +13,8 @@ trait PushingProcess
     {
         return $this->errorHandler(function(){
             
+            $results = [];
+            
             foreach ($this->list as $table =>$datas){
 
                 foreach ($datas as $data){
@@ -20,17 +22,22 @@ trait PushingProcess
                     $query = $this->queryBuilder($table,$data);
 
                     $query = $query->handle();
+                    
+                    if($query===false){
+                        $results[] = [];
+                    }
+                    else{
+                        $status =($query['result']!==false) ? true : false;
 
-                    $status =($query['result']!==false) ? true : false;
-
-                    $results[]= [
-                        'success'=>$status,
-                        'file'=>$data->getFile(),
-                        'table'=>$table,
-                        'type'=>$query['type'],
-                        'syntax'=>$query['syntax'],
-                        'message'=>$query['message']
-                    ];
+                        $results[]= [
+                            'success'=>$status,
+                            'file'=>$data->getFile(),
+                            'table'=>$table,
+                            'type'=>$query['type'],
+                            'syntax'=>$query['syntax'],
+                            'message'=>$query['message']
+                        ];
+                    }
                 }
             }
 
