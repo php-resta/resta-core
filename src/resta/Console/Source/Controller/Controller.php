@@ -119,10 +119,6 @@ class Controller extends ConsoleOutputter {
 
             $this->docUpdate();
 
-            Config::make('controller')->set([
-                $this->argument['serviceClass']=> [$fullNamespaceForController=>['all'=>true]]
-            ]);
-
             // and as a result we print the result on the console screen.
             echo $this->classical(' > Controller called as "'.$controller.'" has been successfully created in the '.app()->namespace()->call().'');
 
