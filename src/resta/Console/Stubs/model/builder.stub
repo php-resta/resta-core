@@ -2,13 +2,15 @@
 
 namespace App\__project__\__version__\__model__\Builder;
 
+use Exception;
 use App\__project__\__version__\__model__\__file__;
 use App\__project__\__version__\__model__\Contract\__file__Contract;
-use Store\Packages\Database\Doctrine\Dbal\Connection as Db;
 
 class __file__Builder implements __file__Contract
 {
     /**
+     * get __file__ model
+     *
      * @return mixed
      */
     public function get()
@@ -18,29 +20,38 @@ class __file__Builder implements __file__Contract
     }
 
     /**
+     * create __file__ model
+     *
      * @return mixed
      */
      public function create()
      {
-        //create __file__
+        //create User
         return __file__::create([]);
      }
 
      /**
+      * update __file__ model
+      *
       * @return mixed
       */
      public function update()
      {
-        //update __file__
+        //update User
         return __file__::where()->update([]);
      }
 
-     /**
-      * @return mixed
-      */
+    /**
+     * delete __file__ model
+     *
+     * @return mixed
+     *
+     * @throws Exception
+     */
      public function delete()
      {
-        //delete __file__
+        //delete User
         return __file__::where()->delete();
      }
 }
+
