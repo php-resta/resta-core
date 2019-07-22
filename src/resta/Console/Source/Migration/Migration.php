@@ -117,7 +117,13 @@ class Migration extends ConsoleOutputter {
     {
         $config = $this->getConfig();
 
-        $path = $config['paths'][0];
+        if(!isset($this->argument['group'])){
+            $path = $config['paths'][0];
+        }
+        else{
+            $path = $config['paths'][strtolower($this->argument['group'])];
+        }
+
 
         //set type for stub
         $tablePath = $path.'/'.$this->argument['table'];
@@ -130,7 +136,7 @@ class Migration extends ConsoleOutputter {
             $this->file->fs->chmod($path,0777,000,true);
         }
 
-        $migrationCreate = $this->getSchema()->stub($this->argument['table'],$this->argument['name'],$stubType);
+        $migrationCreate = $this->getSchema()->stub($this->argument,$stubType);
 
         echo $this->info('Migration Create Process :');
 
@@ -175,13 +181,24 @@ class Migration extends ConsoleOutputter {
      */
     private function getConfig()
     {
-        return  ['paths'=>[
-            path()->migration(),
-            StaticPathModel::storeMigrationPath()
+        $paths = ['paths'=>[
+            path()->migration().''.config('database.migrations.default')
         ],
             'database'=>DatabaseConnection::getConfig(),
             'arguments' => $this->argument
         ];
+
+        $paths['paths'] = array_merge($paths['paths'],[StaticPathModel::storeMigrationPath()]);
+
+        foreach (config('database.migrations') as $key=>$item) {
+            if($key!=='default'){
+
+                $otherMigrationPath = path()->migration().''.$item;
+                $paths['paths'] = array_merge($paths['paths'],[$key=>$otherMigrationPath]);
+            }
+        }
+
+        return $paths;
     }
 
     /**
