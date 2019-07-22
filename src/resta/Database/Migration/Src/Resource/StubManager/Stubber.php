@@ -46,11 +46,11 @@ class Stubber
      */
     private function getPaths($params)
     {
-        if(!isset($params[3])){
+        if(!isset($params[0]['group'])){
             return [$this->config['paths'][0]];
         }
-
-        return [];
+        
+        return [$this->config['paths'][strtolower($params[0]['group'])]];
     }
 
     /**
@@ -86,7 +86,10 @@ class Stubber
      */
     public function get($params)
     {
-        list($table,$name,$type) = $params;
+        list($arguments,$type) = $params;
+        
+        $table = $arguments['table'];
+        $name = $arguments['name'];
 
         $results = [];
 

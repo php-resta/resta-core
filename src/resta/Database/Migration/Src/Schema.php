@@ -89,6 +89,6 @@ class Schema extends SchemaHelper implements SchemaContract
     {
         $stubber = new Stubber($this);
 
-        return $stubber->get($params[0]);
+        return $stubber->get(current($params));
     }
 }

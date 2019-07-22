@@ -38,6 +38,11 @@ return [
             'user'      => environment('db_username','user'),
             'password'  => environment('db_password','password'),
         ]
+    ],
+
+    'migrations' => [
+            'default' => '/Schemas',
+            'runnable' => '/Runnable'
     ]
 
 ];
