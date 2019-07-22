@@ -16,5 +16,6 @@ return [
     'login'         => true,
     'logout'        => true,
     'translate'     => true,
+    'endpoints'     => true,
 
 ];

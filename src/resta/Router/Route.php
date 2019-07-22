@@ -175,9 +175,9 @@ class Route extends RouteHttpManager
     /**
      * route handle for route application
      *
-     * @return void|mixed
+     * @param bool $endpoint
      */
-    public function handle()
+    public function handle($endpoint=true)
     {
         // we will record the path data for the route.
         // We set the routeMapper variables and the route path.
@@ -189,7 +189,7 @@ class Route extends RouteHttpManager
                 'controllerPath'    => path()->controller(),
                 'routePath'         => path()->route(),
             ];
-        });
+        },$endpoint);
 
         // in the paths data,
         // we run the route mapper values ​​and the route files one by one.
@@ -199,11 +199,12 @@ class Route extends RouteHttpManager
     }
 
     /**
-     * get route setPath method
+     * get route set path
      *
-     * @param $path
+     * @param callable $callback
+     * @param bool $endpoint
      */
-    public static function setPath(callable $callback)
+    public static function setPath(callable $callback,$endpoint=true)
     {
         $routeDefinitor = call_user_func($callback);
 
@@ -215,7 +216,7 @@ class Route extends RouteHttpManager
 
             // if there is endpoint,
             // then only that endpoint is transferred into the path
-            if(defined('endpoint')){
+            if(defined('endpoint') && $endpoint){
 
                 $routeName      = endpoint.'Route.php';
                 $routeMapper    = $routeDefinitor['routePath'].''.DIRECTORY_SEPARATOR.''.$routeName;
@@ -289,6 +290,65 @@ class Route extends RouteHttpManager
         // determines if the variable that can be used
         // in the route file meets the regex rule.
         return preg_match('@\{[a-z]+\?\}@is',$value) ? true : false;
+    }
+
+    /**
+     * get route mappings
+     *
+     * @return array
+     */
+    public static function getRouteMappings()
+    {
+        (new self())->handle(false);
+
+        $mappings = [];
+        
+        $routes = self::getRoutes();
+        $routeData = isset($routes['data']) ? $routes['data'] : [];
+        $routePattern = isset($routes['pattern']) ? $routes['pattern'] : [];
+
+        $counter = 0;
+
+        $application = app();
+
+        $application->loadIfNotExistBoot(['middleware']);
+        $middlewareProvider = $application['middleware'];
+
+        foreach($routeData as $key=>$data) {
+
+            $middlewareProvider->setKeyOdds('endpoint', $data['endpoint']);
+            $middlewareProvider->setKeyOdds('method', $data['method']);
+            $middlewareProvider->setKeyOdds('http', $data['http']);
+
+            $middlewareProvider->handleMiddlewareProcess();
+            $beforeMiddleware = $middlewareProvider->getShow();
+
+            $middlewareProvider->handleMiddlewareProcess('after');
+            $afterMiddleware = $middlewareProvider->getShow();
+
+            $endpoint = $data['endpoint'];
+            $controllerNamespace = Utils::getNamespace($data['controller'] . '/' . $data['namespace'] . '/' . $data['class']);
+
+            $methodDocument = app()['reflection']($controllerNamespace)->reflectionMethodParams($data['method'])->document;
+
+            $methodDefinition = '';
+
+            if (preg_match('@#define:(.*?)\n@is', $methodDocument, $definition)) {
+                if (isset($definition[1])) {
+                    $methodDefinition = rtrim($definition[1]);
+                }
+            }
+
+            $mappings[$key]['endpoint'] = $endpoint . '/' . implode("/", $routePattern[$key]);
+            $mappings[$key]['http'] = $data['http'];
+            $mappings[$key]['definition'] = $methodDefinition;
+            $mappings[$key]['before'] = implode(",",$beforeMiddleware);
+            $mappings[$key]['after'] = implode(",",$afterMiddleware);
+            $mappings[$key]['doc'] = 'not available';
+
+        }
+        
+        return $mappings;
     }
 
 
