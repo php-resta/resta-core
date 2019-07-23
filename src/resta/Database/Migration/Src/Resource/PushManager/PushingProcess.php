@@ -2,6 +2,9 @@
 
 namespace Migratio\Resource\PushManager;
 
+use Resta\Support\Generator\Generator;
+use Resta\Support\Utils;
+
 trait PushingProcess
 {
     /**
@@ -29,6 +32,10 @@ trait PushingProcess
                     }
                     else{
                         $status =($query['result']!==false) ? true : false;
+                        
+                        if($status){
+                            $this->schema->getConnection()->generateEntity($table);
+                        }
 
                         $results[]= [
                             'success'=>$status,

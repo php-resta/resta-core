@@ -77,6 +77,8 @@ class Pulling extends BaseManager
             }
 
             if(isset($contentResult) && $contentResult!==false){
+                
+                $this->schema->getConnection()->generateEntity($dbtable);
                 echo $dbtablekey.'- '.$migrationName.' ---> Ok';
             }
             elseif($exist){

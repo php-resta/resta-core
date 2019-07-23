@@ -2,6 +2,9 @@
 
 namespace Migratio\GrammarStructure\Mysql\Traits;
 
+use Resta\Support\Generator\Generator;
+use Resta\Support\Utils;
+
 trait QueryStack
 {
     /**
@@ -134,6 +137,106 @@ trait QueryStack
             ];
         }
 
+    }
+
+    /**
+     * @param $table
+     */
+    public function generateEntity($table)
+    {
+        if(in_array($table,$this->showTables()) || in_array($table = strtolower($table),$this->showTables())){
+            
+            $entityDirectory = path()->model().''.DIRECTORY_SEPARATOR.'Entity';
+
+            if(!file_exists($entityDirectory)){
+                files()->makeDirectory($entityDirectory);
+            }
+
+            $columns = $this->showColumnsFrom($table);
+
+            $list = [];
+
+            foreach ($columns as $column) {
+                $list[] = $column['Field'];
+            }
+
+            if(!file_exists($entityDirectory.''.DIRECTORY_SEPARATOR.''.ucfirst($table))){
+                $generator = new Generator($entityDirectory.''.DIRECTORY_SEPARATOR.''.ucfirst($table),$table.'');
+
+                $generator->createClass();
+            }
+
+
+            $abstractClassPath = $entityDirectory.''.DIRECTORY_SEPARATOR.''.ucfirst($table).''.DIRECTORY_SEPARATOR.'Entity';
+            $abstractNamespace = Utils::getNamespace($abstractClassPath.''.DIRECTORY_SEPARATOR.''.ucfirst($table).'Abstract');
+
+            $generator->createClassExtend($abstractNamespace,ucfirst($table).'Abstract');
+
+            $generator = new Generator($abstractClassPath,$table.'Abstract');
+
+            $generator->createClass();
+
+            $method =array_merge([
+                '__construct'
+            ],array_merge($list,['__get']));
+
+            $generator->createMethod($method);
+
+            $generator->createMethodParameters([
+                '__construct' => '$query',
+                '__get' => '$name'
+            ]);
+
+            $methodBodyList = [];
+            $createMethodAccessibleProperty = [];
+            $createMethodDocument = [];
+            $createClassDocument = [];
+
+            foreach ($list as $item) {
+                $methodBodyList[$item] = 'return self::$query->'.$item.';';
+                $createClassDocument[] = '@property $this '.$item;
+                $createMethodAccessibleProperty[$item] = 'protected static';
+                $createMethodDocument[$item] = [
+                    '@return mixed'
+                ];
+            }
+
+            $generator->createClassDocument($createClassDocument);
+
+            $generator->createMethodDocument(array_merge($createMethodDocument,[
+                '__construct' => [
+                    ''.$table.' constructor.',
+                    '@param null|object $query'
+                ],
+                '__get' =>[
+                    'access entity object with magic method',
+                    '',
+                    '@param $name',
+                    '@return mixed'
+                ]
+            ]));
+
+            $createMethodBody = array_merge([
+                '__construct' => 'self::$query = $query;',
+                '__get' => 'return static::{$name}();'
+            ],$methodBodyList);
+
+            $generator->createMethodBody($createMethodBody);
+
+            $generator->createMethodAccessibleProperty($createMethodAccessibleProperty);
+
+
+            $generator->createClassProperty([
+                'protected static $query;'
+            ]);
+
+            $generator->createClassPropertyDocument([
+                'protected static $query' => [
+                    '@var object|null'
+                ]
+            ]);
+        }
+        
     }
 
 }
