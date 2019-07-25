@@ -74,6 +74,10 @@ class ApplicationBaseRegister extends ApplicationProvider implements HandleContr
                 return ErrorProvider::class;
             });
         }
+
+        if(!isset($_SERVER['HTTP_USER_AGENT'])){
+            exception('httpUserAgentError')->invalidArgument('Could not detect http user agent header.');
+        }
     }
 
     /**
