@@ -76,7 +76,7 @@ class ApplicationBaseRegister extends ApplicationProvider implements HandleContr
         }
 
         if(!isset($_SERVER['HTTP_USER_AGENT'])){
-            exception('httpUserAgentError')->invalidArgument('Could not detect http user agent header.');
+            $_SERVER['HTTP_USER_AGENT'] = 'no_user_agent';
         }
     }
 
