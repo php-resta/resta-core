@@ -2,7 +2,6 @@
 
 namespace Resta\Foundation;
 
-use Resta\Container\DIContainerManager;
 use Resta\Support\App;
 use Resta\Support\Macro;
 use Resta\Support\Utils;
@@ -14,6 +13,7 @@ use Resta\Support\ReflectionProcess;
 use Resta\Response\ResponseProvider;
 use Resta\Contracts\HandleContracts;
 use Resta\Support\ClosureDispatcher;
+use Resta\Container\DIContainerManager;
 use Symfony\Component\HttpFoundation\Request;
 use Resta\Foundation\Bootstrapper\BootLoader;
 use Resta\Container\ContainerInstanceResolver;
