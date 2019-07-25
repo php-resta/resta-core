@@ -66,7 +66,10 @@ class ConsoleCommandList extends ConsoleOutputter
             $list = [];
 
             foreach ($commandRule as $rule){
-                $list[] = $rule.':['.$rule.']';
+                if(!is_array($rule)){
+                    $list[] = $rule.':['.$rule.']';
+                }
+
             }
 
             return implode(" ",$list);
