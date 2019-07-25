@@ -112,6 +112,8 @@ class ConsoleProvider extends ApplicationProvider
         //get is running console
         if($this->app->runningInConsole()){
 
+            error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
+
             //run console process
             if(count($this->getArguments())){
                 return $this->consoleProcess();
