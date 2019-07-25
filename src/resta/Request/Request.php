@@ -17,11 +17,6 @@ class Request extends RequestAbstract implements HandleContracts
     /**
      * @var string
      */
-    protected $capsule;
-
-    /**
-     * @var string
-     */
     protected $method;
 
     /**
@@ -92,6 +87,24 @@ class Request extends RequestAbstract implements HandleContracts
                             }
                         }
                     }
+                }
+            }
+        }
+    }
+
+    /**
+     * capsule inputs
+     *
+     * @return void|mixed
+     */
+    private function capsule()
+    {
+        // expected method is executed.
+        // this method is a must for http method values to be found in this property.
+        if($this->checkProperties('capsule')){
+            foreach($this->inputs as $input=>$value){
+                if(!in_array($input,$this->capsule)){
+                    exception('capsuleRequestException')->overflow('The '.$input.' value cannot be sent.');
                 }
             }
         }
@@ -332,6 +345,9 @@ class Request extends RequestAbstract implements HandleContracts
         // contrary to capsule method,
         // expected values must be in the key being sent.
         $this->expectedInputs();
+
+        // get capsule as mandatory values
+        $this->capsule();
 
         // this method determines
         // how the request object will be requested,
