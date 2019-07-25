@@ -2,6 +2,7 @@
 
 namespace Resta\Request;
 
+use Resta\Support\Arr;
 use Resta\Support\Utils;
 use Resta\Contracts\HandleContracts;
 use Resta\Support\ReflectionProcess;
@@ -9,6 +10,11 @@ use ReflectionException as ReflectionExceptionAlias;
 
 class Request extends RequestAbstract implements HandleContracts
 {
+    /**
+     * @var array
+     */
+    protected $capsule = [];
+
     /**
      * @var array
      */
@@ -102,12 +108,43 @@ class Request extends RequestAbstract implements HandleContracts
         // expected method is executed.
         // this method is a must for http method values to be found in this property.
         if($this->checkProperties('capsule')){
+
+            $caret = $this->capsuleCaret();
+
             foreach($this->inputs as $input=>$value){
-                if(!in_array($input,$this->capsule)){
-                    exception('capsuleRequestException')->overflow('The '.$input.' value cannot be sent.');
+
+                if(isset($caret[$input]) || (
+                        $this->checkProperties('capsule') && !in_array($input,$this->capsule)
+                    )){
+                    exception('capsuleRequestException')
+                        ->overflow('The '.$input.' value cannot be sent.');
                 }
             }
         }
+    }
+
+    /**
+     * get capsule caret for request
+     *
+     * @return array
+     */
+    private function capsuleCaret()
+    {
+        $caret = [];
+
+        foreach($this->inputs as $input=>$item){
+            if(in_array('@'.$input,$this->capsule)){
+                $caret[$input] = $item;
+            }
+        }
+
+        foreach ($this->capsule as $item) {
+            if(preg_match('#@.*#is',$item)){
+                $this->capsule = array_diff($this->capsule,[$item]);
+            }
+        }
+
+        return $caret;
     }
 
     /**
