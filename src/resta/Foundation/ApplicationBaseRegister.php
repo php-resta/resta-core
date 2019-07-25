@@ -74,10 +74,6 @@ class ApplicationBaseRegister extends ApplicationProvider implements HandleContr
                 return ErrorProvider::class;
             });
         }
-
-        if(!isset($_SERVER['HTTP_USER_AGENT'])){
-            $_SERVER['HTTP_USER_AGENT'] = 'no_user_agent';
-        }
     }
 
     /**

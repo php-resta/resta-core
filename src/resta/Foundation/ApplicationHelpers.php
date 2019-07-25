@@ -208,7 +208,7 @@ if (!function_exists('fingerPrint')) {
     function fingerPrint()
     {
         return md5(sha1(implode("|",[
-            request()->getClientIp(),$_SERVER['HTTP_USER_AGENT'],applicationKey()
+            request()->getClientIp(),applicationKey()
         ])));
     }
 }
