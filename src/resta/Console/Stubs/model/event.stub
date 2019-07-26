@@ -2,7 +2,7 @@
 
 namespace __modelNamespace__\Helper;
 
-use App\Mobi\Api\V1\Model\Table_event;
+use App\Mobi\Api\V1\Model\TableEvent;
 use Illuminate\Database\Eloquent\Model;
 
 trait Event
@@ -23,7 +23,7 @@ trait Event
            foreach ($dirty as $field=>$value) {
 
                if($field!=='updated_at'){
-                   Table_event::insert([
+                   TableEvent::insert([
                        'table_name' => $model->getTable(),
                        'table_field' => $field,
                        'old_value'  => $model->getOriginal($field),
