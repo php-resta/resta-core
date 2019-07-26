@@ -3,18 +3,21 @@
 namespace __modelNamespace__;
 
 use __modelNamespace__\Helper\Scope;
+use __modelNamespace__\Helper\Event;
 use Illuminate\Database\Eloquent\Model as Eloquent;
 
 /**
  * Class __file__
  * @method static $this pagination()
+ * @method static $this find($id)
+ * @method static $this insert($data=array())
  * @method static $this create($data=array())
  * @method static $this where(callable $callback=null)
  * @package App\__project__\__version__\__model__
  */
 class __file__ extends Eloquent
 {
-    use Scope;
+    use Scope,Event;
 
     /**
      * @var $table string
@@ -32,13 +35,17 @@ class __file__ extends Eloquent
     protected $hidden = [];
 
     /**
-     * The event map for the model.
+     * model event boot
      *
-     * @var array
+     * @return void
      */
-    protected $dispatchesEvents = [
-        'saved'   => 'namespace',
-        'deleted' => 'namespace',
-    ];
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::saved(function($model){
+            $this->getTableChanges($model,'updated');
+        });
+    }
 }
 
