@@ -70,6 +70,10 @@ class Model extends ConsoleOutputter {
             $this->touch['model/scope'] = $this->directory['helper'].''.DIRECTORY_SEPARATOR.'Scope.php';
         }
 
+        if(!file_exists($this->directory['helper'].''.DIRECTORY_SEPARATOR.'Event.php')){
+            $this->touch['model/event'] = $this->directory['helper'].''.DIRECTORY_SEPARATOR.'Event.php';
+        }
+
         //set entity map
 
         $entityDir = $this->directory['modelDir'].''.DIRECTORY_SEPARATOR.'Entity';
