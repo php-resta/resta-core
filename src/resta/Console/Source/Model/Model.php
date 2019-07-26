@@ -2,6 +2,7 @@
 
 namespace Resta\Console\Source\Model;
 
+use Resta\Support\Generator\Generator;
 use Resta\Support\Utils;
 use Resta\Console\ConsoleOutputter;
 use Resta\Console\ConsoleListAccessor;
@@ -39,38 +40,71 @@ class Model extends ConsoleOutputter {
      */
     public function create(){
 
-        $this->argument['file']=$this->argument['model'];
+        $this->argument['file'] = $this->argument['model'];
 
         if(!isset($this->argument['table'])){
-            $this->argument['table']=$this->argument['file'].'s';
+            $this->argument['table'] = $this->argument['file'].'s';
         }
 
         //lower case for table
-        $this->argument['table']=strtolower($this->argument['table']);
+        $this->argument['table'] = strtolower($this->argument['table']);
 
-        $this->directory['modelDir']=$this->version().'/Model';
-        $this->directory['builderDir']=$this->directory['modelDir'].'/Builder';
-        $this->directory['contract']=$this->directory['modelDir'].'/Contract';
-        $this->directory['helper']=$this->directory['modelDir'].'/Helper';
+        $this->directory['modelDir']    = app()->path()->model();
+        $this->directory['builderDir']  = $this->directory['modelDir'].'/Builder';
+        $this->directory['contract']    = $this->directory['modelDir'].'/Contract';
+        $this->directory['helper']      = $this->directory['modelDir'].'/Helper';
+        
+        $this->argument['modelNamespace'] = Utils::getNamespace($this->directory['modelDir']);
+        $this->argument['builderNamespace'] = Utils::getNamespace($this->directory['builderDir']);
+        $this->argument['contractNamespace'] = Utils::getNamespace($this->directory['contract']);
 
         //set project directory
         $this->file->makeDirectory($this);
 
         //model set
-        $this->touch['model/model']     = $this->model().'/'.$this->argument['file'].'.php';
-        $this->touch['model/builder']   = $this->model().'/Builder/'.$this->argument['file'].'Builder.php';
-        $this->touch['model/contract']  = $this->model().'/Contract/'.$this->argument['file'].'Contract.php';
+        $this->touch['model/model']     = $this->directory['modelDir'].''.DIRECTORY_SEPARATOR.''.$this->argument['file'].'.php';
+        $this->touch['model/builder']   = $this->directory['builderDir'].''.DIRECTORY_SEPARATOR.''.$this->argument['file'].'Builder.php';
+        $this->touch['model/contract']  = $this->directory['contract'].''.DIRECTORY_SEPARATOR.''.$this->argument['file'].'Contract.php';
 
         if(!file_exists($this->directory['helper'].''.DIRECTORY_SEPARATOR.'Scope.php')){
-            $this->touch['model/scope']     = $this->directory['helper'].''.DIRECTORY_SEPARATOR.'Scope.php';
+            $this->touch['model/scope'] = $this->directory['helper'].''.DIRECTORY_SEPARATOR.'Scope.php';
         }
 
+        $tableMaps = $this->directory['modelDir'].''.DIRECTORY_SEPARATOR.'Map.php';
+        
+        $generator = new Generator($this->directory['builderDir'],'BuilderMap');
+
+        if(!file_exists($this->directory['builderDir'].''.DIRECTORY_SEPARATOR.'BuilderMap.php')){
+
+            $this->setAnnotations();
+            $generator->createClass();
+        }
+        
+        if(!file_exists($this->touch['model/model'])){
+            
+            $generator->createMethod([
+                strtolower($this->argument['file'])
+            ]);
+            
+            $generator->createMethodBody([
+                strtolower($this->argument['file'])=>'return new '.$this->argument['file'].'Builder();'
+            ]);
+            
+            $generator->createMethodDocument([
+                strtolower($this->argument['file']) => [
+                    $this->argument['file'].' Builder Instance',
+                    '',
+                    '@return '.$this->argument['file'].'Builder'
+                ]
+            ]);
+            
+        }
+        
         //set project touch
         $this->file->touch($this,[
             'stub'=>'Model_Create'
         ]);
-
-        $this->setAnnotations();
+        
 
         echo $this->classical(' > Model called as "'.$this->argument['file'].'" has been successfully created in the '.app()->namespace()->model().'');
     }
@@ -81,7 +115,7 @@ class Model extends ConsoleOutputter {
     private function setAnnotations(){
 
         return Utils::changeClass(path()->serviceAnnotations().'.php',
-            ['Trait ServiceAnnotationsManager'=>'Trait ServiceAnnotationsManager'.PHP_EOL.' * @method \\'.app()->namespace()->builder().'\\'.$this->argument['file'].'Builder '.strtolower($this->argument['file']).'Builder'
+            ['Trait ServiceAnnotationsManager'=>'Trait ServiceAnnotationsManager'.PHP_EOL.' * @property \\'.app()->namespace()->builder().'\BuilderMap builder'
             ]);
     }
 }

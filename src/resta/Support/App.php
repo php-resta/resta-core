@@ -75,7 +75,7 @@ class App
     private static function builder($service)
     {
         //we are making a namespace assignment for the builder.
-        $builder=app()->namespace()->builder().'\\'.$service;
+        $builder=app()->namespace()->builder().'\BuilderMap';
 
         //we are getting builder instance.
         return app()->resolve($builder);

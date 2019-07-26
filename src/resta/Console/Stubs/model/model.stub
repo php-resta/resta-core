@@ -1,8 +1,8 @@
 <?php
 
-namespace App\__project__\__version__\__model__;
+namespace __modelNamespace__;
 
-use App\__project__\__version__\__model__\Helper\Scope;
+use __modelNamespace__\Helper\Scope;
 use Illuminate\Database\Eloquent\Model as Eloquent;
 
 /**

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\__project__\__version__\__model__\Helper;
+namespace __modelNamespace__\Helper;
 
 use Resta\Support\Str;
 use Illuminate\Database\Eloquent\Builder;
