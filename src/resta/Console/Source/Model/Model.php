@@ -53,7 +53,7 @@ class Model extends ConsoleOutputter {
         $this->directory['builderDir']  = $this->directory['modelDir'].'/Builder';
         $this->directory['contract']    = $this->directory['modelDir'].'/Contract';
         $this->directory['helper']      = $this->directory['modelDir'].'/Helper';
-        
+
         $this->argument['modelNamespace'] = Utils::getNamespace($this->directory['modelDir']);
         $this->argument['builderNamespace'] = Utils::getNamespace($this->directory['builderDir']);
         $this->argument['contractNamespace'] = Utils::getNamespace($this->directory['contract']);
@@ -70,8 +70,55 @@ class Model extends ConsoleOutputter {
             $this->touch['model/scope'] = $this->directory['helper'].''.DIRECTORY_SEPARATOR.'Scope.php';
         }
 
-        $tableMaps = $this->directory['modelDir'].''.DIRECTORY_SEPARATOR.'Map.php';
-        
+        //set entity map
+
+        $entityDir = $this->directory['modelDir'].''.DIRECTORY_SEPARATOR.'Entity';
+
+        if(!file_exists($entityDir)){
+            files()->makeDirectory($entityDir);
+        }
+
+        $entityTableName = ucfirst($this->argument['table']);
+
+        $entityClass = $entityDir.''.DIRECTORY_SEPARATOR.''.$entityTableName.''.DIRECTORY_SEPARATOR.''.$entityTableName;
+
+
+        $generator = new Generator($entityDir,'EntityMap');
+
+        if(!file_exists($entityDir.''.DIRECTORY_SEPARATOR.'EntityMap.php')){
+
+            //$this->setAnnotations();
+            $generator->createClass();
+        }
+
+        $generator->createClassUse([
+            Utils::getNamespace($entityClass)
+        ]);
+
+        $generator->createMethod([
+            strtolower($this->argument['table'])
+        ]);
+
+        $generator->createMethodParameters([
+            strtolower($this->argument['table']) => '$query'
+        ]);
+
+        $generator->createMethodBody([
+            strtolower($this->argument['table'])=>'return new '.$entityTableName.'($query);'
+        ]);
+
+        $generator->createMethodDocument([
+            strtolower($this->argument['table']) => [
+                $entityTableName.' Entity Instance',
+                '',
+                '@param $query',
+                '@return '.$entityTableName
+            ]
+        ]);
+
+
+
+        //set builder map
         $generator = new Generator($this->directory['builderDir'],'BuilderMap');
 
         if(!file_exists($this->directory['builderDir'].''.DIRECTORY_SEPARATOR.'BuilderMap.php')){
@@ -79,17 +126,17 @@ class Model extends ConsoleOutputter {
             $this->setAnnotations();
             $generator->createClass();
         }
-        
+
         if(!file_exists($this->touch['model/model'])){
-            
+
             $generator->createMethod([
                 strtolower($this->argument['file'])
             ]);
-            
+
             $generator->createMethodBody([
                 strtolower($this->argument['file'])=>'return new '.$this->argument['file'].'Builder();'
             ]);
-            
+
             $generator->createMethodDocument([
                 strtolower($this->argument['file']) => [
                     $this->argument['file'].' Builder Instance',
@@ -97,14 +144,14 @@ class Model extends ConsoleOutputter {
                     '@return '.$this->argument['file'].'Builder'
                 ]
             ]);
-            
+
         }
-        
+
         //set project touch
         $this->file->touch($this,[
             'stub'=>'Model_Create'
         ]);
-        
+
 
         echo $this->classical(' > Model called as "'.$this->argument['file'].'" has been successfully created in the '.app()->namespace()->model().'');
     }
@@ -114,8 +161,20 @@ class Model extends ConsoleOutputter {
      */
     private function setAnnotations(){
 
-        return Utils::changeClass(path()->serviceAnnotations().'.php',
-            ['Trait ServiceAnnotationsManager'=>'Trait ServiceAnnotationsManager'.PHP_EOL.' * @property \\'.app()->namespace()->builder().'\BuilderMap builder'
-            ]);
+        $entityMap = app()->path()->model().''.DIRECTORY_SEPARATOR.'Entity'.DIRECTORY_SEPARATOR.'EntityMap.php';
+
+        if(file_exists($entityMap)){
+
+            Utils::changeClass(path()->serviceAnnotations().'.php',
+                [
+                    'Trait ServiceAnnotationsManager'=>'Trait ServiceAnnotationsManager'.PHP_EOL.' * @property \\'.app()->namespace()->model().'\Entity\EntityMap entity',
+                    '* @property \\'.app()->namespace()->model().'\Entity\EntityMap entity'=>'* @property \\'.app()->namespace()->model().'\Entity\EntityMap entity'.PHP_EOL.' * @property \\'.app()->namespace()->builder().'\BuilderMap builder',
+                ]);
+        }
+
+
+        /**Utils::changeClass(path()->serviceAnnotations().'.php',
+        ['Trait ServiceAnnotationsManager'=>'Trait ServiceAnnotationsManager'.PHP_EOL.' * @property \\'.app()->namespace()->builder().'\BuilderMap builder'
+        ]);**/
     }
 }

@@ -147,6 +147,10 @@ trait QueryStack
         if(in_array($table,$this->showTables()) || in_array($table = strtolower($table),$this->showTables())){
             
             $entityDirectory = path()->model().''.DIRECTORY_SEPARATOR.'Entity';
+            
+            if(!file_exists(app()->path()->model())){
+                files()->makeDirectory(app()->path()->model());
+            }
 
             if(!file_exists($entityDirectory)){
                 files()->makeDirectory($entityDirectory);

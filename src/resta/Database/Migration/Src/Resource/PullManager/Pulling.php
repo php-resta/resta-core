@@ -69,16 +69,19 @@ class Pulling extends BaseManager
                 $contentResult = files()->put($makeDirectory.''.DIRECTORY_SEPARATOR.''.$migrationName.'.php',$content);
             }
 
-            if(substr($dbtable,-1)=='s'){
-                app()->command('model create','model:'.strtolower(substr($dbtable,0,-1)).' table:'.$dbtable);
-            }
-            else{
-                app()->command('model create','model:'.strtolower($dbtable).' table:'.$dbtable);
-            }
+            
 
             if(isset($contentResult) && $contentResult!==false){
                 
                 $this->schema->getConnection()->generateEntity($dbtable);
+
+                if(substr($dbtable,-1)=='s'){
+                    app()->command('model create','model:'.strtolower(substr($dbtable,0,-1)).' table:'.$dbtable.' entity:'.$dbtable);
+                }
+                else{
+                    app()->command('model create','model:'.strtolower($dbtable).' table:'.$dbtable.' entity:'.$dbtable);
+                }
+                
                 echo $dbtablekey.'- '.$migrationName.' ---> Ok';
             }
             elseif($exist){

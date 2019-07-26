@@ -62,6 +62,19 @@ class App
         return app();
     }
 
+    /**
+     * @param $service
+     * @return mixed
+     */
+    private static function entity($service)
+    {
+        //we are making a namespace assignment for the entity.
+        $entity = app()->namespace()->model().'\Entity\EntityMap';
+
+        //we are getting entity instance.
+        return app()->resolve($entity);
+    }
+
     private static function factory()
     {
         $factory = app()->namespace()->factory().'\Factory';
