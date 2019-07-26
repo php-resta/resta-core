@@ -20,13 +20,13 @@ trait QueryStack
      */
     public function showTables()
     {
-       $tables = $this->connection()->query('SHOW TABLES')->fetchAll();
+        $tables = $this->connection()->query('SHOW TABLES')->fetchAll();
 
-       $list = [];
+        $list = [];
 
         foreach ($tables as $key=>$table) {
             $list[] = $table[0];
-       }
+        }
 
         return $list;
     }
@@ -145,9 +145,9 @@ trait QueryStack
     public function generateEntity($table)
     {
         if(in_array($table,$this->showTables()) || in_array($table = strtolower($table),$this->showTables())){
-            
+
             $entityDirectory = path()->model().''.DIRECTORY_SEPARATOR.'Entity';
-            
+
             if(!file_exists(app()->path()->model())){
                 files()->makeDirectory(app()->path()->model());
             }
@@ -166,8 +166,10 @@ trait QueryStack
 
             if(!file_exists($entityDirectory.''.DIRECTORY_SEPARATOR.''.ucfirst($table))){
                 $generator = new Generator($entityDirectory.''.DIRECTORY_SEPARATOR.''.ucfirst($table),$table.'');
-
                 $generator->createClass();
+            }
+            else{
+                $generator = new Generator($entityDirectory.''.DIRECTORY_SEPARATOR.''.ucfirst($table),$table.'');
             }
 
 
@@ -240,7 +242,7 @@ trait QueryStack
                 ]
             ]);
         }
-        
+
     }
 
 }
