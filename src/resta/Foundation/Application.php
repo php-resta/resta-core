@@ -41,8 +41,8 @@ class Application extends Kernel implements ApplicationContracts
      */
     public function __construct($console=false)
     {
-        // get console status for cli
-        $this->console = $console;
+        //get console status for cli
+        $this->console = (is_bool($console)) ? $console : true;
 
         // the bootstrapper method is the initial process
         // that runs the individual methods that the application initiated.
@@ -68,9 +68,6 @@ class Application extends Kernel implements ApplicationContracts
      * @param string $command
      * @param array $arguments
      * @return mixed
-     *
-     * @throws DependencyException
-     * @throws NotFoundException
      */
     public function command($command, $arguments = array())
     {
