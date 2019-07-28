@@ -142,7 +142,7 @@ class Application extends Kernel implements ApplicationContracts
     {
         // get the directory
         // where kernel files are running to the kernel object.
-        return core()->corePath ?: null;
+        return $this['corePath'] ?: null;
     }
 
     /**
