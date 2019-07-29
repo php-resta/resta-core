@@ -2,6 +2,7 @@
 
 namespace Resta\Cache;
 
+use InvalidArgumentException;
 use Resta\Foundation\ApplicationProvider;
 
 class CacheContainerResolver extends ApplicationProvider
@@ -12,17 +13,17 @@ class CacheContainerResolver extends ApplicationProvider
      * @param $callback
      * @return mixed
      *
-     * @throws \Psr\Cache\InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function cacheProcess($callback)
     {
         //we do cache key control for method cache container data.
-        if(isset($this->app['containerReflection']['methodCache']['cache'])){
+        if(isset($this->app['cache']['methodCache']['cache'])){
 
             //get cache data
-            $cache = $this->app['containerReflection']['methodCache']['cache'];
+            $cache = $this->app['cache']['methodCache']['cache'];
 
-            //get cache config variables from application 
+            //get cache config variables from application
             $config = $this->app->resolve(CacheConfigDetector::class)->getConfig();
 
             // we're processing the output using the cache manager's methods.
@@ -45,7 +46,7 @@ class CacheContainerResolver extends ApplicationProvider
      * @param $callback
      * @return mixed
      *
-     * @throws \Psr\Cache\InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function __invoke($callback)
     {
