@@ -19,7 +19,7 @@ class ContainerMethodDocumentResolver extends ApplicationProvider
 
     /**
      * ContainerMethodDocumentResolver constructor.
-     * 
+     *
      * @param $app
      * @param $reflection
      * @param array $class
@@ -50,7 +50,7 @@ class ContainerMethodDocumentResolver extends ApplicationProvider
         // if you have information about cache in
         // the document section of the method, the cache process is executed.
         if($this->reflection->isAvailableMethodDocument($this->class[1],'cache')){
-            
+
             //as static we inject the name value into the cache data.
             $cacheData = ['cache'=>['name' => Utils::encryptArrayData($this->class)]];
 
@@ -62,12 +62,16 @@ class ContainerMethodDocumentResolver extends ApplicationProvider
                 $cacheData['cache'][$items[0]] = $items[1];
 
                 if(in_array('query',$items)){
-                    $query = get($items[1],null);
-                    if(!is_null($query)){
-                        $cacheData['cache']['name'] = md5(sha1(
-                            $cacheData['cache']['name'].'_'.$items[1].':'.$query
-                        ));
+
+                    foreach(explode(':',$items[1]) as $queryValue){
+                        $query = get($queryValue,null);
+                        if(!is_null($query)){
+                            $cacheData['cache']['name'] = md5(sha1(
+                                $cacheData['cache']['name'].'_'.$queryValue.':'.$query
+                            ));
+                        }
                     }
+
                 }
             }
         }
