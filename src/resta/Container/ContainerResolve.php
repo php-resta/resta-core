@@ -9,6 +9,11 @@ use Resta\Foundation\ApplicationProvider;
 class ContainerResolve extends ApplicationProvider
 {
     /**
+     * @var null|object
+     */
+    private static $reflectionInstance;
+
+    /**
      * container call process with pipeline
      *
      * @param $class
@@ -91,9 +96,30 @@ class ContainerResolve extends ApplicationProvider
      */
     private function getReflectionMethod($class)
     {
+        if(!isset($class[0],$class[1])){
+            exception('containerResolvingMissing')
+                ->runtime('Container class resolving is missing');
+        }
+
         [$class,$method] = [$class[0],$class[1]];
 
-        return $this->app['reflection']($class)->reflectionMethodParams($method);
+        return $this->instanceReflection($this->app['reflection']($class))
+            ->reflectionMethodParams($method);
+    }
+
+    /**
+     * get instance reflection
+     *
+     * @param $instance
+     * @return object|null
+     */
+    public function instanceReflection($instance=null)
+    {
+        if(is_object($instance) && is_null(static::$reflectionInstance)){
+            static::$reflectionInstance = $instance;
+        }
+
+        return static::$reflectionInstance;
     }
     
     /**
@@ -122,7 +148,7 @@ class ContainerResolve extends ApplicationProvider
         // we provide the user with the container method document and take action.
         // thus, we help the methods to have a cleaner code structure.
         $this->app->resolve(ContainerMethodDocumentResolver::class,
-            ['document'=>$reflection->document,'class'=>$class]);
+            ['reflection'=>$this->instanceReflection(),'class'=>$class]);
 
         // we group the parameters into type and
         // name and bind them with the necessary logic.

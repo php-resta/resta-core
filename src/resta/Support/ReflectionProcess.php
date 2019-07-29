@@ -2,6 +2,11 @@
 
 namespace Resta\Support;
 
+use ReflectionClass;
+use ReflectionMethod;
+use ReflectionProperty;
+use ReflectionException;
+
 class ReflectionProcess
 {
     /**
@@ -25,6 +30,11 @@ class ReflectionProcess
     protected $request;
 
     /**
+     * @var null|string
+     */
+    protected $documentData;
+
+    /**
      * Controller constructor.
      * @param $namespace
      */
@@ -36,46 +46,78 @@ class ReflectionProcess
     }
 
     /**
-     * @param null $namespace
-     * @return $this
+     * get document data
+     *
+     * @return string|null
      */
-    public function __invoke($namespace = null)
+    public function getDocumentData()
     {
-        if($namespace!==null){
-            $this->namespace = $namespace;
-        }
-        return $this;
+        return $this->documentData;
     }
 
     /**
-     * @return \ReflectionClass
+     * @return ReflectionProperty[]
      *
-     * @throws \ReflectionException
+     * @throws ReflectionException
+     */
+    public function getProperties()
+    {
+        return $this->getReflectionClass()->getProperties();
+    }
+
+    /**
+     * @return ReflectionClass
+     *
+     * @throws ReflectionException
      */
     public function getReflectionClass()
     {
         if(!isset(static::$singletons['reflectionClass'])){
-            static::$singletons['reflectionClass'] = new \ReflectionClass($this->namespace);
+            static::$singletons['reflectionClass'] = new ReflectionClass($this->namespace);
         }
         return static::$singletons['reflectionClass'];
     }
 
     /**
      * @param $method
-     * @return \ReflectionMethod
+     * @return ReflectionMethod
      *
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public function getReflectionMethod($method)
     {
-        return new \ReflectionMethod($this->namespace,$method);
+        return new ReflectionMethod($this->namespace,$method);
+    }
+
+    /**
+     * resolve if the method document is available for container
+     *
+     * @param null|string $method
+     * @param null|string $param
+     * @return bool
+     *
+     * @throws ReflectionException
+     */
+    public function isAvailableMethodDocument($method=null,$param=null)
+    {
+        $document = $this->reflectionMethodParams($method)->document;
+
+        if(is_string($document)
+            && preg_match('#@'.$param.'\((.*?)\)\r\n#is',$document,$data)) {
+            if (is_array($data) && isset($data[1])) {
+                $this->documentData = $data[1];
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
      * @param $method
      * @return object
      *
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public function reflectionMethodParams($method)
     {
@@ -90,12 +132,14 @@ class ReflectionProcess
     }
 
     /**
-     * @return \ReflectionProperty[]
-     * 
-     * @throws \ReflectionException
+     * @param null $namespace
+     * @return $this
      */
-    public function getProperties()
+    public function __invoke($namespace = null)
     {
-        return $this->getReflectionClass()->getProperties();
+        if($namespace!==null){
+            $this->namespace = $namespace;
+        }
+        return $this;
     }
 }

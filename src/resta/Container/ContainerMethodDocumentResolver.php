@@ -8,26 +8,27 @@ use Resta\Foundation\ApplicationProvider;
 class ContainerMethodDocumentResolver extends ApplicationProvider
 {
     /**
-     * @var string $document
+     * @var null|object
      */
-    protected $document;
+    protected $reflection;
 
     /**
-     * @var array $class
+     * @var array
      */
     protected $class;
 
     /**
      * ContainerMethodDocumentResolver constructor.
+     * 
      * @param $app
-     * @param $document
+     * @param $reflection
      * @param array $class
      */
-    public function __construct($app,$document,$class=array())
+    public function __construct($app,$reflection,$class=array())
     {
         parent::__construct($app);
 
-        $this->document = $document;
+        $this->reflection = $reflection;
         $this->class = $class;
 
         // for class method,
@@ -44,23 +45,20 @@ class ContainerMethodDocumentResolver extends ApplicationProvider
     {
         $cacheData = [];
 
+        if(!isset($this->class[1])) return;
+
         // if you have information about cache in
         // the document section of the method, the cache process is executed.
-        if(is_string($this->document) && preg_match('#@cache\((.*?)\)\r\n#is',$this->document,$cache)){
+        if($this->reflection->isAvailableMethodDocument($this->class[1],'cache')){
 
-            // if the cache information
-            // with regular expression does not contain null data.
-            if($cache!==null && isset($cache[1])){
+            //as static we inject the name value into the cache data.
+            $cacheData = ['cache'=>['name' => Utils::encryptArrayData($this->class)]];
 
-                //as static we inject the name value into the cache data.
-                $cacheData = ['cache'=>['name'=>Utils::encryptArrayData($this->class)]];
+            //cache data with the help of foreach data are transferred into the cache.
+            foreach(array_filter(explode(" ",$this->reflection->getDocumentData()),'strlen') as $item){
 
-                //cache data with the help of foreach data are transferred into the cache.
-                foreach(array_filter(explode(" ",$cache[1]),'strlen') as $item){
-
-                    $items = explode("=",$item);
-                    $cacheData['cache'][$items[0]] = $items[1];
-                }
+                $items = explode("=",$item);
+                $cacheData['cache'][$items[0]] = $items[1];
             }
         }
 
