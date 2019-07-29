@@ -58,7 +58,17 @@ class ContainerMethodDocumentResolver extends ApplicationProvider
             foreach(array_filter(explode(" ",$this->reflection->getDocumentData()),'strlen') as $item){
 
                 $items = explode("=",$item);
+
                 $cacheData['cache'][$items[0]] = $items[1];
+
+                if(in_array('query',$items)){
+                    $query = get($items[1],null);
+                    if(!is_null($query)){
+                        $cacheData['cache']['name'] = md5(sha1(
+                            $cacheData['cache']['name'].'_'.$items[1].':'.$query
+                        ));
+                    }
+                }
             }
         }
 

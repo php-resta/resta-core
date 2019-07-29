@@ -4,6 +4,7 @@ use Store\Services\Cache;
 use Store\Services\ExceptionExtender;
 use __kernelProviderDir__\AppServiceProvider;
 use __kernelProviderDir__\RoleServiceProvider;
+use __kernelProviderDir__\CacheServiceProvider;
 use __kernelProviderDir__\HelperServiceProvider;
 use __kernelProviderDir__\WorkerServiceProvider;
 use __kernelProviderDir__\ConsoleEventServiceProvider;
@@ -22,6 +23,7 @@ return [
         'ConsoleEventServiceProvider'       => ConsoleEventServiceProvider::class,
         'WorkerServiceProvider'             => WorkerServiceProvider::class,
         'RoleServiceProvider'               => RoleServiceProvider::class,
+        'CacheServiceProvider'              => CacheServiceProvider::class,
     ],
 
     /**

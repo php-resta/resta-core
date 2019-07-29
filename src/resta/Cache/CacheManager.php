@@ -131,8 +131,20 @@ class CacheManager extends CacheAdapter
         if (!$cacheItem->isHit()) {
 
             $data=call_user_func($callback);
-            $cacheItem->set($data);
-            $this->cache->save($cacheItem);
+
+            if($this->app->has('cache')
+                && is_callable($cacheProvider = $this->app->get('cache'))){
+
+                if($cacheProvider($data)){
+                    $cacheItem->set($data);
+                    $this->cache->save($cacheItem);
+                }
+            }
+            else{
+                $cacheItem->set($data);
+                $this->cache->save($cacheItem);
+            }
+
             return $data;
         }
 
