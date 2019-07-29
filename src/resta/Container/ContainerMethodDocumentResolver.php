@@ -45,12 +45,12 @@ class ContainerMethodDocumentResolver extends ApplicationProvider
     {
         $cacheData = [];
 
-        if(!isset($this->class[1])) return;
+        if(!isset($this->class[1]) && !is_object($this->class[0])) return;
 
         // if you have information about cache in
         // the document section of the method, the cache process is executed.
         if($this->reflection->isAvailableMethodDocument($this->class[1],'cache')){
-
+            
             //as static we inject the name value into the cache data.
             $cacheData = ['cache'=>['name' => Utils::encryptArrayData($this->class)]];
 
@@ -73,6 +73,7 @@ class ContainerMethodDocumentResolver extends ApplicationProvider
         }
 
         //we save the data stored in the cacheData variable as methodCache.
-        $this->app->register('containerReflection','methodCache',$cacheData);
+        $this->app->register('cache','methodCache',$cacheData);
+        $this->app->register('cache','class',$this->class);
     }
 }

@@ -32,6 +32,11 @@ class CacheManager extends CacheAdapter
     protected $name;
 
     /**
+     * @var bool
+     */
+    protected $cacheServiceProvider = false;
+
+    /**
      * CacheManager constructor.
      * @param ApplicationContracts $app
      */
@@ -60,6 +65,55 @@ class CacheManager extends CacheAdapter
         }
 
         return $this;
+    }
+
+    /**
+     * cache service provider register
+     *
+     * @param $cacheItem
+     * @param $cacheProvider
+     * @param $data
+     */
+    private function cacheServiceProvider($cacheItem,$cacheProvider,$data)
+    {
+        if($cacheProvider($data)){
+            $cacheItem->set($data);
+            $this->cache->save($cacheItem);
+            $this->cacheServiceProvider = true;
+        }
+
+        return $data;
+    }
+
+    /**
+     * get container cache service provider
+     *
+     * @param callable $callback
+     * @param $cacheItem
+     * @param $data
+     * @return bool|mixed
+     */
+    private function containerCacheServiceProvider(callable $callback,$cacheItem,$data)
+    {
+        if($this->app->has('cache.class')){
+
+            $class = $this->app->get('cache.class');
+
+            if(is_callable(
+                $cacheProvider = $this->app->get('cache.'.class_basename($class[0]).':'.$class[1]))
+            ){
+
+                return $this->cacheServiceProvider($cacheItem,$cacheProvider,$data);
+            }
+            elseif(is_callable(
+                $cacheProvider = $this->app->get('cache.'.class_basename($class[0])))
+            )
+            {
+                return $this->cacheServiceProvider($cacheItem,$cacheProvider,$data);
+            }
+        }
+
+        return call_user_func($callback);
     }
 
     /**
@@ -130,22 +184,15 @@ class CacheManager extends CacheAdapter
 
         if (!$cacheItem->isHit()) {
 
-            $data=call_user_func($callback);
+            $data = call_user_func($callback);
 
-            if($this->app->has('cache')
-                && is_callable($cacheProvider = $this->app->get('cache'))){
-
-                if($cacheProvider($data)){
-                    $cacheItem->set($data);
-                    $this->cache->save($cacheItem);
-                }
-            }
-            else{
+            return $this->containerCacheServiceProvider(function() use ($data,$cacheItem){
                 $cacheItem->set($data);
                 $this->cache->save($cacheItem);
-            }
 
-            return $data;
+                return $data;
+
+            },$cacheItem,$data);
         }
 
         $this->app->register('illuminator','cache',['name'=>$this->name]);
