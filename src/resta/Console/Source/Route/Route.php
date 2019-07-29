@@ -42,7 +42,7 @@ class Route extends ConsoleOutputter {
 
         echo $this->info('All Route Controller Lists :');
 
-        $this->table->setHeaders(['no','endpoint','http','namespace','method','definition','beforeMiddleware','afterMiddleware','doc','status']);
+        $this->table->setHeaders(['no','endpoint','http','namespace','method','definition','beforeMiddleware','afterMiddleware','routeCache','doc','status']);
 
         $routes = Router::getRoutes();
         $routeData = isset($routes['data']) ? $routes['data'] : [];
@@ -70,7 +70,14 @@ class Route extends ConsoleOutputter {
             $endpoint = $data['endpoint'];
             $controllerNamespace = Utils::getNamespace($data['controller'].'/'.$data['namespace'].'/'.$data['class']);
 
-            $methodDocument = app()['reflection']($controllerNamespace)->reflectionMethodParams($data['method'])->document;
+            /**
+             * @var ReflectionProcess $reflection
+             */
+            $reflection = app()['reflection']($controllerNamespace);
+            $methodDocument = $reflection->reflectionMethodParams($data['method'])->document;
+
+            $isRouteCache = ($reflection->isAvailableMethodDocument($data['method'],'cache')) ?
+                'available' : '';
 
             $methodDefinition = '';
 
@@ -95,8 +102,9 @@ class Route extends ConsoleOutputter {
                         $methodDefinition,
                         implode(",",$beforeMiddleware),
                         implode(",",$afterMiddleware),
+                        $isRouteCache,
                         '',
-                        'not available',
+                        '',
                         true
                     ]);
                 }
@@ -112,7 +120,8 @@ class Route extends ConsoleOutputter {
                     $methodDefinition,
                     implode(",",$beforeMiddleware),
                     implode(",",$afterMiddleware),
-                    'not available',
+                    $isRouteCache,
+                    '',
                     true
                 ]);
             }
