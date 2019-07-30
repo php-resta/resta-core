@@ -51,7 +51,7 @@ class Container implements ContainerContracts,\ArrayAccess
      */
     public function applicationProviderBinding($make,$bind=array())
     {
-        if(defined('appInstance') && is_array($this->get('bindings'))){
+        if(defined('appInstance')){
             //
         }
 
