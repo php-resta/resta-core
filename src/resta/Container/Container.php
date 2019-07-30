@@ -68,6 +68,10 @@ class Container implements ContainerContracts,\ArrayAccess
      */
     public function bind($object=null,$callback=null,$alias=null)
     {
+        if(!is_null($alias)){
+            $object = $alias;
+        }
+
         //If the bind method does not have parameters object and callback, the value is directly assigned to the kernel object.
         //Otherwise, when the bind object and callback are sent, the closure class inherits
         //the applicationProvider object and the resolve method is called
