@@ -60,12 +60,13 @@ class Container implements ContainerContracts,\ArrayAccess
     /**
      * @param null $object
      * @param null $callback
+     * @param null|string $alias
      * @return mixed
      *
      * @throws DependencyException
      * @throws NotFoundException
      */
-    public function bind($object=null,$callback=null)
+    public function bind($object=null,$callback=null,$alias=null)
     {
         //If the bind method does not have parameters object and callback, the value is directly assigned to the kernel object.
         //Otherwise, when the bind object and callback are sent, the closure class inherits
