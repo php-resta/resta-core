@@ -11,7 +11,7 @@ interface ContainerContracts
      * @param null|string $alias
      * @return mixed
      */
-    public function bind($object=null,$callback=null,$alias=null);
+    public function bind($object=null,$callback=null);
 
     /**
      * @param $abstract

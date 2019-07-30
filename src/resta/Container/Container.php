@@ -51,11 +51,6 @@ class Container implements ContainerContracts,\ArrayAccess
      */
     public function applicationProviderBinding($make,$bind=array())
     {
-        //we will automatically inject all container values ​​bindings into resolved class.
-        if(defined('appInstance') && is_array($bindings = $this->get('bindings'))){
-            $bind = array_merge($bind,$bindings);
-        }
-
         //service container is an automatic application provider
         //that we can bind to the special class di in the dependency condition.
         //This method is automatically added to the classes resolved by the entire make bind method.
@@ -65,20 +60,13 @@ class Container implements ContainerContracts,\ArrayAccess
     /**
      * @param null $object
      * @param null $callback
-     * @param null|string $alias
      * @return mixed
      *
      * @throws DependencyException
      * @throws NotFoundException
      */
-    public function bind($object=null,$callback=null,$alias=null)
+    public function bind($object=null,$callback=null)
     {
-        // if the alias value is not null,
-        // the object value is replaced with the alias value for convenience.
-        if(!is_null($alias)){
-            $object = $alias;
-        }
-
         //If the bind method does not have parameters object and callback, the value is directly assigned to the kernel object.
         //Otherwise, when the bind object and callback are sent, the closure class inherits
         //the applicationProvider object and the resolve method is called
