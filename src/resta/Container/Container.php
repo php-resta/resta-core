@@ -51,6 +51,10 @@ class Container implements ContainerContracts,\ArrayAccess
      */
     public function applicationProviderBinding($make,$bind=array())
     {
+        if(defined('appInstance') && is_array($this->get('bindings'))){
+            //
+        }
+
         //service container is an automatic application provider
         //that we can bind to the special class di in the dependency condition.
         //This method is automatically added to the classes resolved by the entire make bind method.
