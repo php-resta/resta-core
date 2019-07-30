@@ -53,7 +53,7 @@ class Container implements ContainerContracts,\ArrayAccess
     {
         //we will automatically inject all container values ​​bindings into resolved class.
         if(defined('appInstance') && is_array($bindings = $this->get('bindings'))){
-            //$bind = array_merge($bind,$bindings);
+            $bind = array_merge($bind,$bindings);
         }
 
         //service container is an automatic application provider

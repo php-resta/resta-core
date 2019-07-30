@@ -8,9 +8,10 @@ interface ContainerContracts
      * @method container
      * @param $object null
      * @param $callback null
+     * @param null|string $alias
      * @return mixed
      */
-    public function bind($object=null,$callback=null);
+    public function bind($object=null,$callback=null,$alias=null);
 
     /**
      * @param $abstract
