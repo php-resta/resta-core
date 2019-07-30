@@ -437,10 +437,6 @@ class Container implements ContainerContracts,\ArrayAccess
         //the classes to be resolved with the make bind method.
         if(!isset(self::$instance[$class])){
 
-            if(defined('appInstance') && $this->has('bindings')){
-
-            }
-
             //bind params object
             self::$bindParams[$class] = $bind;
 
