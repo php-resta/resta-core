@@ -95,31 +95,37 @@ class Model extends ConsoleOutputter {
             $generator->createClass();
         }
 
-        $generator->createClassUse([
-            Utils::getNamespace($entityClass)
-        ]);
+        $entityMapNamespace = Utils::getNamespace($entityDir.''.DIRECTORY_SEPARATOR.'EntityMap.php');
 
-        $generator->createMethod([
-            strtolower($this->argument['table'])
-        ]);
+        $entityMapNamespaceResolve = new $entityMapNamespace;
 
-        $generator->createMethodParameters([
-            strtolower($this->argument['table']) => '$query'
-        ]);
+        if(!method_exists($entityMapNamespaceResolve,strtolower($this->argument['table']))){
 
-        $generator->createMethodBody([
-            strtolower($this->argument['table'])=>'return new '.$entityTableName.'($query);'
-        ]);
+            $generator->createClassUse([
+                Utils::getNamespace($entityClass)
+            ]);
 
-        $generator->createMethodDocument([
-            strtolower($this->argument['table']) => [
-                $entityTableName.' Entity Instance',
-                '',
-                '@param $query',
-                '@return '.$entityTableName
-            ]
-        ]);
+            $generator->createMethod([
+                strtolower($this->argument['table'])
+            ]);
 
+            $generator->createMethodParameters([
+                strtolower($this->argument['table']) => '$query'
+            ]);
+
+            $generator->createMethodBody([
+                strtolower($this->argument['table'])=>'return new '.$entityTableName.'($query);'
+            ]);
+
+            $generator->createMethodDocument([
+                strtolower($this->argument['table']) => [
+                    $entityTableName.' Entity Instance',
+                    '',
+                    '@param $query',
+                    '@return '.$entityTableName
+                ]
+            ]);
+        }
 
 
         //set builder map
