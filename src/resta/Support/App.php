@@ -288,7 +288,13 @@ class App
     {
         $lang=(new Lingua(path()->appLanguage()));
 
-        $defaultLocale=config('app.locale');
+        if(self::app()->has('locale')){
+            $defaultLocale = self::app()->get('locale');
+        }
+        else{
+            $defaultLocale = config('app.locale');
+        }
+
 
         if(count($select)){
             return $lang->include(['default'])->locale($defaultLocale)->get($data,$select);
