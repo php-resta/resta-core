@@ -35,7 +35,7 @@ class Client extends ConsoleOutputter
 
     /**
      * @method create
-     * @return mixed
+     * @return void|mixed
      */
     public function create()
     {
@@ -71,8 +71,7 @@ class Client extends ConsoleOutputter
         
         //set project touch
         $this->file->touch($this);
-        
-        exit();
-        echo $this->classical(' > Request called as "'.$request.'" has been successfully created in the '.app()->namespace()->optionalSource().'');
+
+        echo $this->classical(' > Client called as "'.$client.'" has been successfully created in the '.app()->namespace()->request().'');
     }
 }
