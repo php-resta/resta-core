@@ -2,14 +2,20 @@
 
 namespace __requestNamespace__\__request__;
 
+use Resta\Contracts\RequestContract;
 use __requestNamespace__\Request;
 use __requestNamespace__\RequestProvider;
 use __requestNamespace__\RequestGenerator;
 
-class __request__Request extends RequestProvider
+class __request__Request extends RequestProvider implements RequestContract
 {
     //request and request generator
     use Request,__request__RequestGenerator,RequestGenerator;
+
+    /**
+     * @var array
+    */
+    protected $capsule = [];
 
     /**
      * The values ​​expected by the server.
