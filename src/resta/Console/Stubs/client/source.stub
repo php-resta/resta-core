@@ -1,0 +1,33 @@
+<?php
+
+namespace __clientSourceNamespace__;
+
+use __clientNameNamespace__\Client;
+use Resta\Contracts\RequestContract;
+use __clientNameNamespace__\ClientProvider;
+use __clientNameNamespace__\ClientGenerator;
+
+class __client__ extends ClientProvider implements RequestContract
+{
+    //request and request generator
+    use Client,__client__Generator,ClientGenerator;
+
+    /**
+     * @var array
+    */
+    protected $capsule = [];
+
+    /**
+     * The values ​​expected by the server.
+     * @var array
+     */
+    protected $expected = [];
+
+    /**
+     * mandatory http method.
+     * @var array
+     */
+    protected $http = [];
+
+
+}

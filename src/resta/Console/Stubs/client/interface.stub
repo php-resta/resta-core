@@ -1,0 +1,11 @@
+<?php
+
+namespace App\__project__\__version__\Optional\__sourcePath__\Endpoint\__service__;
+
+interface Interface__sourcePath__
+{
+    /**
+     * @method handle
+    */
+    public function handle();
+}

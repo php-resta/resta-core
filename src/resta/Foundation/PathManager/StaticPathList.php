@@ -97,7 +97,7 @@ class StaticPathList
     /**
      * @var string
      */
-    public static $sourceRequest='Request';
+    public static $sourceRequest='Client';
 
     /**
      * @var string
@@ -208,7 +208,7 @@ class StaticPathList
     /**
      * @var string
      */
-    public static $request='Request';
+    public static $request='Client';
 
     /**
      * @var string

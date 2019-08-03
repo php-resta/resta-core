@@ -1,0 +1,19 @@
+<?php
+
+namespace __clientSourceNamespace__;
+
+trait __client__Generator
+{
+    /**
+     * auto generator for inputs
+     * @var array
+     */
+    protected $generators = [];
+
+    /**
+     * generators dont overwrite
+     *
+     * @var array
+     */
+    protected $generators_dont_overwrite = [];
+}
