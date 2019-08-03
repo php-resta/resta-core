@@ -115,6 +115,7 @@ class ErrorProvider extends ApplicationProvider
         //they were registered. If you call exit() within one registered shutdown function,
         //processing will stop completely and no other registered shutdown functions will be called.
         register_shutdown_function([$this,'fatalErrorShutdownHandler']);
+
     }
 
     /**
@@ -208,6 +209,8 @@ class ErrorProvider extends ApplicationProvider
         if(!defined('responseApp')){
             $restaOutHandle = $this->app->get('out')->handle();
         }
+
+        header("HTTP/1.1 ".$this->data['status']);
 
         if($restaOutHandle===null){
 
