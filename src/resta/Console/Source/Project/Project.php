@@ -131,6 +131,7 @@ class Project extends ConsoleOutputter
         $this->touch['version/annotations']         = $this->version().'/ServiceAnnotationsManager.php';
         $this->touch['version/servicedispatcher']   = $this->version().'/ServiceEventDispatcherManager.php';
         $this->touch['version/servicemiddleware']   = $this->version().'/ServiceMiddlewareManager.php';
+        $this->touch['version/clientmanager']       = $this->version().'/ClientManager.php';
         //$this->touch['version/base']                = $this->version().'/ServiceBaseController.php';
         $this->touch['version/log']                 = $this->version().'/ServiceLogManager.php';
         //$this->touch['source/apitokentrait']        = $this->sourceSupportDir().'/Traits/ClientApiTokenTrait.php';

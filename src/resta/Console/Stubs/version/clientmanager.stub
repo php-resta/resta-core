@@ -1,0 +1,8 @@
+<?php
+
+namespace App\__project__\__version__;
+
+class ClientManager
+{
+
+}
