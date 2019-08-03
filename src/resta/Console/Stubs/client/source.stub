@@ -3,11 +3,11 @@
 namespace __clientSourceNamespace__;
 
 use __clientNameNamespace__\Client;
-use Resta\Contracts\RequestContract;
+use Resta\Contracts\ClientContract;
 use __clientNameNamespace__\ClientProvider;
 use __clientNameNamespace__\ClientGenerator;
 
-class __client__ extends ClientProvider implements RequestContract
+class __client__ extends ClientProvider implements ClientContract
 {
     //request and request generator
     use Client,__client__Generator,ClientGenerator;

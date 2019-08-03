@@ -454,7 +454,7 @@ class Client extends ClientAbstract implements HandleContracts
         if(method_exists($this,$method) && $this->reflection->reflectionMethodParams($method)->isProtected){
 
             //check annotations for method
-            $annotation = app()->resolve(RequestAnnotationManager::class,['request'=>$this]);
+            $annotation = app()->resolve(ClientAnnotationManager::class,['request'=>$this]);
             $annotation->annotation($method,$key);
 
             if(isset($this->inputs[$key]) && is_array($this->inputs[$key])){

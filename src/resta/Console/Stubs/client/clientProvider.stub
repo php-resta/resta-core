@@ -2,9 +2,9 @@
 
 namespace __clientNameNamespace__;
 
-use Resta\Request\Request as RequestClient;
+use Resta\Client\Client as ClientManager;
 
-class ClientProvider extends RequestClient implements \ArrayAccess {
+class ClientProvider extends ClientManager implements \ArrayAccess {
 
     /**
      * get request input all
