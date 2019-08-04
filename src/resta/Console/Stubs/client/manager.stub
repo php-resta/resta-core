@@ -1,0 +1,10 @@
+<?php
+
+namespace __clientNameDirNamespace__;
+
+use ReflectionException;
+
+class __name__Manager
+{
+
+}

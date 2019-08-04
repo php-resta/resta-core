@@ -2,10 +2,11 @@
 
 namespace Resta\Console\Source\Client;
 
+use Resta\Support\Utils;
 use Resta\Console\ConsoleOutputter;
 use Resta\Console\ConsoleListAccessor;
 use Resta\Foundation\PathManager\StaticPathModel;
-use Resta\Support\Utils;
+use Resta\Support\Generator\Generator;
 
 class Client extends ConsoleOutputter 
 {
@@ -46,17 +47,24 @@ class Client extends ConsoleOutputter
         $this->directory['clientNameCreate']        = path()->request();
         $this->argument['clientNameNamespace']      = Utils::getNamespace($this->directory['clientNameCreate']);
         $this->directory['clientNameDir']           = $this->directory['clientNameCreate'].'/'.$name;
+        $this->argument['clientNameDirNamespace']  = Utils::getNamespace($this->directory['clientNameCreate'].'/'.$name);
         $this->directory['clientSource']            = $this->directory['clientNameDir'].'/'.$client;
         $this->argument['clientSourceNamespace']   = Utils::getNamespace($this->directory['clientNameDir'].'/'.$client.'');
 
         //set project directory
         $this->file->makeDirectory($this);
 
+        if(!file_exists($manager = $this->directory['clientNameDir'].'/'.$name.'Manager.php')){
+            $this->touch['client/manager'] = $manager;
+        }
+
         if(!file_exists($this->directory['clientNameCreate'].'/Client.php')){
             $this->touch['client/client'] = $this->directory['clientNameCreate'].'/Client.php';
             $this->touch['client/clientGenerator'] = $this->directory['clientNameCreate'].'/ClientGenerator.php';
         }
 
+        $clientSourceNamespace = Utils::getNamespace($this->directory['clientSource'].'/'.$client.'.php');
+        
         if(!file_exists($clientSourceName = $this->directory['clientSource'].'/'.$client.'.php')){
             $this->touch['client/source'] = $clientSourceName.'';
             //$this->touch['client/sourcegenerator'] = $this->directory['clientSource'].'/'.$client.'Generator.php';
@@ -71,7 +79,70 @@ class Client extends ConsoleOutputter
         
         //set project touch
         $this->file->touch($this);
+        
+        $nameManager = $name.'Manager';
 
+        $nameGeneratorNamespace = Utils::getNamespace($this->directory['clientNameDir'].''.DIRECTORY_SEPARATOR.''.$nameManager.'.php');
+        
+        $generator = new Generator(path()->version(),'ClientManager');
+        
+        $clientManager = app()->namespace()->version().'\\ClientManager';
+        
+        $clientManagerResolve = new $clientManager;
+        
+        if(!method_exists($clientManagerResolve,strtolower($name))){
+
+            $generator->createMethod([
+                strtolower($name)
+            ]);
+            
+            $generator->createClassUse([
+                $nameGeneratorNamespace 
+            ]);
+            
+            $generator->createMethodBody([
+                strtolower($name) => 'return new '.$nameManager.'();'
+            ]);
+            
+            $generator->createMethodDocument([
+                strtolower($name) => [
+                    '@return '.$nameManager.''
+                ]
+            ]);
+            
+        }
+
+        $nameGenerator = new Generator($this->directory['clientNameDir'],$name.'Manager');
+        
+        $nameGeneratorNamespaceResolve = new $nameGeneratorNamespace;
+
+        if(!method_exists($nameGeneratorNamespaceResolve,strtolower($client))){
+
+            $nameGenerator->createMethod([
+                strtolower($client)
+            ]);
+
+            $nameGenerator->createMethodBody([
+                strtolower($client) => 'return new '.$client.'();'
+            ]);
+
+            $nameGenerator->createMethodDocument([
+                strtolower($client) => [
+                    '@return '.$client.'',
+                    '',
+                    '@throws ReflectionException'
+                ]
+            ]);
+
+
+            $nameGenerator->createClassUse([
+                $clientSourceNamespace
+            ]);
+           
+        }
+
+
+        
         echo $this->classical(' > Client called as "'.$client.'" has been successfully created in the '.app()->namespace()->request().'');
     }
 }
