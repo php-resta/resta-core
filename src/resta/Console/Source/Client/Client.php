@@ -131,6 +131,10 @@ class Client extends ConsoleOutputter
                 strtolower($client)
             ]);
 
+            $nameGenerator->createMethodAccessibleProperty([
+                strtolower($client) => 'protected'
+            ]);
+
             $nameGenerator->createMethodBody([
                 strtolower($client) => 'return new '.$client.'();'
             ]);
@@ -146,6 +150,12 @@ class Client extends ConsoleOutputter
             $nameGenerator->createClassUse([
                 $clientSourceNamespace
             ]);
+
+
+            Utils::changeClass($managerPath,
+                [
+                    'Class '.$name.'Manager'=>'Class '.$name.'Manager'.PHP_EOL.' * @property '.$client.' '.strtolower($client),
+                ]);
         }
 
 

@@ -4,7 +4,23 @@ namespace __clientNameDirNamespace__;
 
 use ReflectionException;
 
+/**
+ * Class __name__Manager
+ * @package __clientNameDirNamespace__
+ */
 class __name__Manager
 {
+    /**
+    * @param $name
+    * @return void|mixed
+    */
+   public function __get($name)
+   {
+        if(method_exists($this,$name)){
+            return $this->{$name}();
+        }
 
+        exception('clientManagerMethodError')
+            ->badMethodCall('Register manager '.$name.' method is missing');
+   }
 }
