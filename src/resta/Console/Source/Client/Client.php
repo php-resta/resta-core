@@ -8,7 +8,7 @@ use Resta\Console\ConsoleListAccessor;
 use Resta\Foundation\PathManager\StaticPathModel;
 use Resta\Support\Generator\Generator;
 
-class Client extends ConsoleOutputter 
+class Client extends ConsoleOutputter
 {
     use ConsoleListAccessor;
 
@@ -64,7 +64,7 @@ class Client extends ConsoleOutputter
         }
 
         $clientSourceNamespace = Utils::getNamespace($this->directory['clientSource'].'/'.$client.'.php');
-        
+
         if(!file_exists($clientSourceName = $this->directory['clientSource'].'/'.$client.'.php')){
             $this->touch['client/source'] = $clientSourceName.'';
             //$this->touch['client/sourcegenerator'] = $this->directory['clientSource'].'/'.$client.'Generator.php';
@@ -75,45 +75,54 @@ class Client extends ConsoleOutputter
         }
 
         $this->touch['client/clientGeneratorFile'] = $this->directory['clientSource'].'/'.$client.'Generator.php';
-        
-        
+
+
         //set project touch
         $this->file->touch($this);
-        
+
         $nameManager = $name.'Manager';
 
-        $nameGeneratorNamespace = Utils::getNamespace($this->directory['clientNameDir'].''.DIRECTORY_SEPARATOR.''.$nameManager.'.php');
-        
+        $nameGeneratorNamespace = Utils::getNamespace($managerPath = $this->directory['clientNameDir'].''.DIRECTORY_SEPARATOR.''.$nameManager.'.php');
+
         $generator = new Generator(path()->version(),'ClientManager');
-        
+
         $clientManager = app()->namespace()->version().'\\ClientManager';
-        
+
         $clientManagerResolve = new $clientManager;
-        
+
         if(!method_exists($clientManagerResolve,strtolower($name))){
 
             $generator->createMethod([
                 strtolower($name)
             ]);
-            
+
             $generator->createClassUse([
-                $nameGeneratorNamespace 
+                $nameGeneratorNamespace
             ]);
-            
+
             $generator->createMethodBody([
                 strtolower($name) => 'return new '.$nameManager.'();'
             ]);
-            
+
             $generator->createMethodDocument([
                 strtolower($name) => [
                     '@return '.$nameManager.''
                 ]
             ]);
-            
+
+            $generator->createMethodAccessibleProperty([
+                strtolower($name) => 'protected'
+            ]);
+
+            Utils::changeClass(path()->version().''.DIRECTORY_SEPARATOR.'ClientManager.php',
+                [
+                    'Class ClientManager'=>'Class ClientManager'.PHP_EOL.' * @property '.$nameManager.' '.strtolower($name),
+                ]);
+
         }
 
         $nameGenerator = new Generator($this->directory['clientNameDir'],$name.'Manager');
-        
+
         $nameGeneratorNamespaceResolve = new $nameGeneratorNamespace;
 
         if(!method_exists($nameGeneratorNamespaceResolve,strtolower($client))){
@@ -134,15 +143,13 @@ class Client extends ConsoleOutputter
                 ]
             ]);
 
-
             $nameGenerator->createClassUse([
                 $clientSourceNamespace
             ]);
-           
         }
 
 
-        
+
         echo $this->classical(' > Client called as "'.$client.'" has been successfully created in the '.app()->namespace()->request().'');
     }
 }

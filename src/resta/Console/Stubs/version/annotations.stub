@@ -8,8 +8,9 @@ use Resta\Contracts\ApplicationContracts;
 
 /**
  * Trait ServiceAnnotationsManager
-  * @property \__factoryDir__\Factory factory
-  * @property ApplicationContracts|ContainerContracts app
+ * @property \App\Mobi\Api\V1\Factory\Factory factory
+ * @property ClientManager client
+ * @property ApplicationContracts|ContainerContracts app
  */
 trait ServiceAnnotationsManager
 {
