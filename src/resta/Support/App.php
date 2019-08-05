@@ -63,6 +63,17 @@ class App
     }
 
     /**
+     * client manager instance
+     *
+     * @return mixed
+     */
+    private static function client()
+    {
+        $clientManager = self::app()->namespace()->version().'\\ClientManager';
+        return new $clientManager;
+    }
+
+    /**
      * @param $service
      * @return mixed
      */
