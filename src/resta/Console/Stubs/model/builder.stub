@@ -4,6 +4,7 @@ namespace __builderNamespace__;
 
 use Exception;
 use __modelNamespace__\__file__;
+use Resta\Contracts\ClientContract;
 use __contractNamespace__\__file__Contract;
 
 class __file__Builder implements __file__Contract
@@ -22,13 +23,20 @@ class __file__Builder implements __file__Contract
     /**
      * create __file__ model
      *
-     * @return mixed
-     */
-     public function create()
-     {
+     * @param ClientContract $client
+     * @return void|mixed
+    */
+    public function create(ClientContract $client)
+    {
         //create User
-        return __file__::create([]);
-     }
+        try{
+             return __file__::create($client->all());
+        }
+        catch (Exception $exception){
+             exception('database_'.$exception->getCode())
+                ->invalidArgument($exception->getMessage());
+        }
+    }
 
      /**
       * update __file__ model
