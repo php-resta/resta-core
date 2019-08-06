@@ -4,11 +4,13 @@ namespace __modelNamespace__;
 
 use __modelNamespace__\Helper\Scope;
 use __modelNamespace__\Helper\Event;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model as Eloquent;
 
 /**
  * Class __file__
  * @method static $this pagination()
+ * @method static $this active()
  * @method static $this find($id)
  * @method static $this insert($data=array())
  * @method static $this create($data=array())
@@ -45,6 +47,20 @@ class __file__ extends Eloquent
 
         static::saved(function($model){
             $this->getTableChanges($model,'updated');
+        });
+
+        // Order by name ASC
+        $order = (!is_null($order = get('order'))) ? $order : 'desc';
+
+        static::addGlobalScope('order', function (Builder $builder) use($order){
+            $builder->orderBy('id', $order);
+        });
+
+        // Order by name ASC
+        $status = (!is_null($status = get('status'))) ? $status : 1;
+
+        static::addGlobalScope('status', function (Builder $builder) use($status){
+            $builder->where('status', $status);
         });
     }
 }
