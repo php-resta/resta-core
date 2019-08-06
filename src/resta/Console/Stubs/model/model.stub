@@ -49,18 +49,19 @@ class __file__ extends Eloquent
             $this->getTableChanges($model,'updated');
         });
 
-        // Order by name ASC
-        $order = (!is_null($order = get('order'))) ? $order : 'desc';
+        // query filter scope
+        $filter = (!is_null($filter = get('filter'))) ? $filter : [];
 
-        static::addGlobalScope('order', function (Builder $builder) use($order){
-            $builder->orderBy('id', $order);
-        });
+        static::addGlobalScope('filter', function (Builder $builder) use($filter){
 
-        // Order by name ASC
-        $status = (!is_null($status = get('status'))) ? $status : 1;
-
-        static::addGlobalScope('status', function (Builder $builder) use($status){
-            $builder->where('status', $status);
+            foreach ($filter as $key=>$item){
+                if($key=='order'){
+                    $builder->orderBy('id', $item);
+                }
+                else{
+                    $builder->where($key,$item);
+                }
+            }
         });
     }
 }
