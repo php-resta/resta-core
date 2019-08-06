@@ -49,18 +49,26 @@ class __file__ extends Eloquent
             $this->getTableChanges($model,'updated');
         });
 
-        // query filter scope
+        //query filter scope
         $filter = (!is_null($filter = get('filter'))) ? $filter : [];
+        $with = (!is_null($with = get('with'))) ? $with : [];
 
-        static::addGlobalScope('filter', function (Builder $builder) use($filter){
+        static::addGlobalScope('filter', function (Builder $builder) use($filter,$with){
 
-            foreach ($filter as $key=>$item){
-                if($key=='order'){
-                    $builder->orderBy('id', $item);
+            $builder->with($with);
+
+            if(count($filter)){
+                foreach ($filter as $key=>$item){
+                    if($key=='order'){
+                        $builder->orderBy('id', $item);
+                    }
+                    else{
+                         $builder->where($key,$item);
+                    }
                 }
-                else{
-                    $builder->where($key,$item);
-                }
+            }
+            else{
+                $builder->orderBy('id','desc');
             }
         });
     }
