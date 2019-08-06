@@ -2,6 +2,8 @@
 
 namespace __contractNamespace__;
 
+use Resta\Contracts\ClientContract;
+
 interface __file__Contract
 {
     /**
@@ -10,9 +12,10 @@ interface __file__Contract
     public function get();
 
     /**
+     * @param ClientContract $client
      * @return mixed
      */
-    public function create();
+    public function create(ClientContract $client);
 
     /**
      * @return mixed
