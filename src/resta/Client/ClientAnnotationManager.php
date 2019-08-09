@@ -185,7 +185,7 @@ class ClientAnnotationManager extends ClientAnnotationAbstract
             $requestRules = $this->getReflection('rules');
 
             $rules = explode(":",$rule[1]);
-            if(isset($this->inputs[$key])){
+            if(isset($this->inputs[$key]) && !is_array($this->inputs[$key])){
                 foreach($rules as $rule){
                     if(isset($requestRules[$rule])){
                         if(!preg_match('@'.$requestRules[$rule].'@',$this->inputs[$key])){
@@ -193,6 +193,37 @@ class ClientAnnotationManager extends ClientAnnotationAbstract
                                 ->invalidArgument($key.' input value is not valid for '.$rule.' request rule');
                         }
                     }
+                }
+            }
+            else{
+
+                foreach ($this->inputs[$key] as $key=>$input){
+
+                    if(!is_array($input)){
+                        foreach($rules as $rule){
+                            if(isset($requestRules[$rule])){
+                                if(!preg_match('@'.$requestRules[$rule].'@',$input)){
+                                    exception($rule,['key'=>$key])
+                                        ->invalidArgument($key.' input value is not valid for '.$rule.' request rule');
+                                }
+                            }
+                        }
+                    }
+                    else{
+
+                        foreach ($input as $ikey=>$item){
+                            foreach($rules as $rule){
+                                if(isset($requestRules[$rule])){
+                                    if(!preg_match('@'.$requestRules[$rule].'@',$item)){
+                                        exception($rule,['key'=>$item])
+                                            ->invalidArgument($item.' input value is not valid for '.$rule.' request rule');
+                                    }
+                                }
+                            }
+                        }
+
+                    }
+
                 }
             }
         }
