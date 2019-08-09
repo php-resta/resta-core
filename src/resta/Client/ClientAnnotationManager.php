@@ -71,7 +71,7 @@ class ClientAnnotationManager extends ClientAnnotationAbstract
 
             //catch exception
             exception($this->exceptionParams[$key]['name'],$keyParams)
-                ->unexpectedValue($key.' input value is not valid as format ('.$data.')');
+                ->unexpectedValue($this->exceptionParams[$key]['name'].' input value is not valid as format ('.$data.')');
         }
         else{
             //catch exception
@@ -127,9 +127,22 @@ class ClientAnnotationManager extends ClientAnnotationAbstract
                 if(is_array($this->inputs[$key])){
 
                     foreach ($this->inputs[$key] as $this->inputsKey => $this->inputsValue){
-                        if(!preg_match('@'.$regex[1].'@is',$this->inputsValue)){
-                            $this->catchException($key,$regex[1]);
+
+                        if(is_array($this->inputsValue)){
+
+                            foreach ($this->inputsValue as $inputsValueKey => $inputsValueItem){
+                                if(!preg_match('@'.$regex[1].'@is',$inputsValueItem)){
+                                    $this->catchException($key,$regex[1]);
+                                }
+                            }
+
                         }
+                        else{
+                            if(!preg_match('@'.$regex[1].'@is',$this->inputsValue)){
+                                $this->catchException($key,$regex[1]);
+                            }
+                        }
+
                     }
                 }
                 else{
