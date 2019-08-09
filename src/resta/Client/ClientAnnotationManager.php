@@ -189,8 +189,8 @@ class ClientAnnotationManager extends ClientAnnotationAbstract
                 foreach($rules as $rule){
                     if(isset($requestRules[$rule])){
                         if(!preg_match('@'.$requestRules[$rule].'@',$this->inputs[$key])){
-                            exception($rule,['key'=>$key])
-                                ->invalidArgument($key.' input value is not valid for '.$rule.' request rule');
+                            exception($rule,['key'=>$this->inputs[$key]])
+                                ->invalidArgument($this->inputs[$key].' input value is not valid for '.$rule.' request rule');
                         }
                     }
                 }
