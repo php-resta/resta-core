@@ -24,6 +24,6 @@ class RoutePolicy extends ApplicationProvider
             return call_user_func($callback);
         }
 
-        exception()->accessDeniedHttp('Your access has been denied.You have limited authority for this section.');
+        exception()->accessDeniedHttpException('Your access has been denied.You have limited authority for this section.');
     }
 }

@@ -104,7 +104,7 @@ class ExceptionTrace extends ApplicationProvider
             $callNamespace = new $nameNamespace;
         }
         else{
-
+            
             // if you do not have an exception in the application directory,
             // this time we are looking for an exception in the core directory.
             $nameNamespace = __NAMESPACE__.'\\'.$nameException;

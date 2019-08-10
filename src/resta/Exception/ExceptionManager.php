@@ -23,6 +23,18 @@ use Resta\Contracts\ExceptionContracts;
 class ExceptionManager extends ExceptionTrace implements ExceptionContracts
 {
     /**
+     * access denied http exception
+     *
+     * @param null|string $msg
+     * @return null
+     *
+     */
+    public function accessDeniedHttpException($msg=null)
+    {
+        return $this->accessDeniedHttp($msg);
+    }
+
+    /**
      * invalid argument exception
      *
      * @param null|string $msg
