@@ -8,6 +8,12 @@ interface ExceptionContracts
      * @param null|string $msg
      * @return mixed
      */
+    public function accessDeniedHttp($msg=null);
+
+    /**
+     * @param null|string $msg
+     * @return mixed
+     */
     public function invalidArgument($msg=null);
 
     /**
