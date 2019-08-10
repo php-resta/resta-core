@@ -20,6 +20,17 @@ interface RoleInterface
     public function getResource();
 
     /**
+     * @return bool
+     */
+    public function make();
+
+    /**
+     * @param $name
+     * @return $this
+     */
+    public function routeName($name);
+
+    /**
      * @param string $adapter
      * @return mixed
      */
