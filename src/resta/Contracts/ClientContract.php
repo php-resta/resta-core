@@ -10,6 +10,12 @@ interface ClientContract
     public function all();
 
     /**
+     * @param $except
+     * @return mixed
+     */
+    public function except($except);
+
+    /**
      * @param $key
      * @param null $default
      * @return mixed
@@ -21,4 +27,23 @@ interface ClientContract
      * @return bool
      */
     public function has($key);
+
+    /**
+     * @param $key
+     * @return mixed
+     * @return void
+     */
+    public function remove($key);
+
+    /**
+     * @return array
+     */
+    public function request();
+
+    /**
+     * @param $key
+     * @param $value
+     * @return void
+     */
+    public function set($key,$value);
 }

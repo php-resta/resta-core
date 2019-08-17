@@ -2,9 +2,10 @@
 
 namespace __clientNameNamespace__;
 
+use ArrayAccess;
 use Resta\Client\Client as ClientManager;
 
-class ClientProvider extends ClientManager implements \ArrayAccess {
+class ClientProvider extends ClientManager implements ArrayAccess {
 
     /**
      * get request input all
@@ -41,6 +42,39 @@ class ClientProvider extends ClientManager implements \ArrayAccess {
         }
 
         return $default;
+    }
+
+    /**
+     * remove input for request
+     *
+     * @param $key
+     */
+    public function remove($key)
+    {
+        if(isset($this->inputs[$key])){
+            unset($this->inputs[$key]);
+        }
+    }
+
+    /**
+     * take real request for client
+     * @return array
+     */
+    public function request()
+    {
+        return [];
+    }
+
+    /**
+     * set a new input value
+     *
+     * @param $key
+     * @param $value
+     * @return void
+     */
+    public function set($key,$value)
+    {
+        $this->inputs[$key] = $value;
     }
 
     /**
