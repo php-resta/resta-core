@@ -329,6 +329,28 @@ class Client extends ClientAbstract implements HandleContracts
     }
 
     /**
+     * get real request data for client
+     *
+     * @return array
+     */
+    public function getRequestData()
+    {
+        $list = [];
+
+        foreach ($this->requestData as $key=>$item) {
+            if(property_exists($this,'requestExcept') && !in_array($key,$this->requestExcept)){
+                $list[$key] = $item;
+            }
+
+            if(!property_exists($this,'requestExcept')){
+                $list[$key] = $item;
+            }
+        }
+
+        return $list;
+    }
+
+    /**
      * request handle
      *
      * @return mixed|void
