@@ -40,6 +40,11 @@ class Client extends ClientAbstract implements HandleContracts
     protected $clientData;
 
     /**
+     * @var null|array
+     */
+    protected $requestData;
+
+    /**
      * Request constructor.
      *
      * @param null|array $clientData
@@ -464,15 +469,17 @@ class Client extends ClientAbstract implements HandleContracts
                 $this->inputs[$key] = [];
                 foreach ($inputKeys as $input){
 
-                    $this->{$key}           = $input;
-                    $keyMethod              = $this->{$method}();
-                    $this->inputs[$key][]   = $keyMethod;
+                    $this->{$key}               = $input;
+                    $keyMethod                  = $this->{$method}();
+                    $this->inputs[$key][]       = $keyMethod;
+                    $this->requestData[$key][]  = $keyMethod;
                 }
             }
             else{
                 if(isset($this->inputs[$key])){
                     $keyMethod = $this->{$method}();
                     $this->inputs[$key] = $keyMethod;
+                    $this->requestData[$key] = $keyMethod;
                 }
 
             }
