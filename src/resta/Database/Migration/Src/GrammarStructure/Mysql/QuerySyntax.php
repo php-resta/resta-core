@@ -123,6 +123,68 @@ class QuerySyntax extends QuerySyntaxHelper
     }
 
     /**
+     * add Indexes
+     *
+     * @param $alterType
+     */
+    private function addIndex($alterType)
+    {
+        if(isset($this->syntax[0])){
+
+            $index = $this->syntax[0];
+
+            foreach($index as $name=>$item){
+                $index_name = $name;
+                $indexes = implode(',',$item);
+            }
+            $alterSytanx = 'create index '.$index_name.' on '.$this->table.' ('.$indexes.')';
+
+            $query=$this->schema->getConnection()->setQueryBasic($alterSytanx);
+
+            return [
+                'syntax'=>$this->syntax,
+                'type'=>'alter',
+                'result'=>$query['result'],
+                'message'=>$query['message'],
+            ];
+
+
+        }
+
+    }
+
+    /**
+     * add Indexes
+     *
+     * @param $alterType
+     */
+    private function addUnique($alterType)
+    {
+        if(isset($this->syntax[0])){
+
+            $unique = $this->syntax[0];
+
+            foreach($unique as $name=>$item){
+                $unique_name = $name;
+                $uniques = implode(',',$item);
+            }
+            $alterSytanx = 'ALTER TABLE '.$this->table.' ADD CONSTRAINT '.$unique_name.' UNIQUE ('.$uniques.')';
+
+            $query=$this->schema->getConnection()->setQueryBasic($alterSytanx);
+
+            return [
+                'syntax'=>$this->syntax,
+                'type'=>'alter',
+                'result'=>$query['result'],
+                'message'=>$query['message'],
+            ];
+
+
+        }
+
+    }
+
+    /**
      * drop column
      *
      * @param $alterType
@@ -204,7 +266,7 @@ class QuerySyntax extends QuerySyntaxHelper
      */
     private function getDefaultSyntaxGroup($group=null)
     {
-        $this->syntax[]=implode(",",$this->getCreateDefaultList());
+        $this->syntax[] = implode(",",$this->getCreateDefaultList());
         
         //get unique values
         if(isset($this->data['uniqueValueList']) && count($this->data['uniqueValueList'])){
@@ -237,6 +299,14 @@ class QuerySyntax extends QuerySyntaxHelper
 
         if(count($this->data['references'])){
             $this->syntax[]=$this->getReferenceSyntax($this->data['references']);
+        }
+
+        if(isset($this->syntax[0]) && $this->syntax[0]=='' && $group=='addIndex'){
+            $this->syntax[0] = $this->data['index'];
+        }
+
+        if(isset($this->syntax[0]) && $this->syntax[0]=='' && $group=='addUnique'){
+            $this->syntax[0] = $this->data['unique'];
         }
     }
 

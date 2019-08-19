@@ -3,6 +3,8 @@
 namespace Migratio\GrammarStructure\Mysql\Wizard;
 
 use Migratio\Contract\NameContract;
+use Migratio\Contract\IndexContract;
+use Migratio\Contract\UniqueContract;
 use Migratio\Contract\WizardAlterContract;
 use Migratio\Contract\WizardAlterGroupContract;
 
@@ -22,6 +24,28 @@ class WizardAlterGroup extends Wizard implements WizardAlterGroupContract
     {
         $this->alterBinds[] = __FUNCTION__;
         return $this->getWizardAlterInstance(__FUNCTION__);
+    }
+
+    /**
+     * add column
+     *
+     * @return IndexContract
+     */
+    public function addIndex()
+    {
+        $this->alterBinds[] = __FUNCTION__;
+        return $this->addIndexWizardAlterInstance(__FUNCTION__);
+    }
+
+    /**
+     * add column
+     *
+     * @return UniqueContract
+     */
+    public function addUnique()
+    {
+        $this->alterBinds[] = __FUNCTION__;
+        return $this->addUniqueWizardAlterInstance(__FUNCTION__);
     }
 
     /**
@@ -64,6 +88,28 @@ class WizardAlterGroup extends Wizard implements WizardAlterGroupContract
      * @return $this
      */
     private function dropWizardAlterInstance($group)
+    {
+        $this->setAlterType('group',$group);
+
+        return $this;
+    }
+
+    /**
+     * @param $group
+     * @return $this
+     */
+    private function addIndexWizardAlterInstance($group)
+    {
+        $this->setAlterType('group',$group);
+
+        return $this;
+    }
+
+    /**
+     * @param $group
+     * @return $this
+     */
+    private function addUniqueWizardAlterInstance($group)
     {
         $this->setAlterType('group',$group);
 

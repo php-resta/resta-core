@@ -12,6 +12,16 @@ interface WizardAlterGroupContract {
     public function addColumn();
 
     /**
+     * @return IndexContract
+     */
+    public function addIndex();
+
+    /**
+     * @return UniqueContract
+     */
+    public function addUnique();
+    
+    /**
      * @return WizardAlterContract
      */
     public function change();

@@ -197,6 +197,16 @@ class Wizard extends WizardHelper implements WizardContract
     }
 
     /**
+     * @param $index_name
+     * @param array $indexes
+     * @return void
+     */
+    public function indexes($index_name,$indexes=array())
+    {
+        $this->index[$index_name] = $indexes;
+    }
+
+    /**
      * @param bool $null
      * @return $this
      */
@@ -235,9 +245,19 @@ class Wizard extends WizardHelper implements WizardContract
         $name   = ($name===null) ? $this->getLastName() : $name;
         $value  = ($value===null) ? $name : $value;
 
-        $this->unique[$this->getLastName()]=['name'=>$name,'value'=>$value];
+        $this->unique[$this->getLastName()] = ['name'=>$name,'value'=>$value];
 
         return $this;
+    }
+
+    /**
+     * @param $name
+     * @param null $value
+     * @return $this|mixed
+     */
+    public function uniques($unique_name,$uniques=array())
+    {
+        $this->unique[$unique_name] = $uniques;
     }
 }
 
