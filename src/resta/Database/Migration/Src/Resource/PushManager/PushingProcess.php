@@ -25,6 +25,8 @@ trait PushingProcess
                     $query = $this->queryBuilder($table,$data);
 
                     $query = $query->handle();
+
+                    $this->schema->getConnection()->registerMigration($data->getFile());
                     
                     
                     if($query===false){
@@ -34,6 +36,9 @@ trait PushingProcess
                         $status =($query['result']!==false) ? true : false;
                         
                         if($status){
+
+                            //$this->schema->getConnection()->registerMigration($data->getFile());
+                            
                             $this->schema->getConnection()->generateEntity($table);
 
                             if(substr($table,-1)=='s'){

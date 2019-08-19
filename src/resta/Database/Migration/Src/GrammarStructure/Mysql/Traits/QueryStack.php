@@ -15,6 +15,21 @@ trait QueryStack
         return $this->schema->getConnection();
     }
 
+    public function registerMigration($name)
+    {
+        return $this->connection()->query(
+            "INSERT INTO migrations SET name='".$name."'
+            ");
+    }
+
+    public function checkMigration($name)
+    {
+        $query = $this->connection()->query("SELECT * FROM migrations WHERE name='".$name."'")
+            ->fetchAll();
+        
+        return $query;
+    }
+
     /**
      * @return mixed
      */

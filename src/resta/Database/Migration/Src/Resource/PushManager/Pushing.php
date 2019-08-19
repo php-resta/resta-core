@@ -27,15 +27,22 @@ class Pushing extends BaseManager
             $table = strtolower($table);
 
             foreach ($files as $file) {
+                
+                $checkMigration = $this->schema->getConnection()->checkMigration($file);
+                
+                if(!isset($checkMigration[0])){
 
-                $getClassName = preg_replace('@(\d+)_@is','',$file);
-                $className = $this->getClassName($getClassName);
+                    $getClassName = preg_replace('@(\d+)_@is','',$file);
+                    $className = $this->getClassName($getClassName);
 
-                require_once ($file);
+                    require_once ($file);
 
-                $capsule = new SchemaCapsule($this->config,$file,$table);
+                    $capsule = new SchemaCapsule($this->config,$file,$table);
 
-                $this->list[$table][] = (new $className)->up($capsule);
+                    $this->list[$table][] = (new $className)->up($capsule);
+                }
+
+                
             }
         }
 
