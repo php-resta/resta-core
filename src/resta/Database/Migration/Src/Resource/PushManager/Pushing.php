@@ -27,10 +27,16 @@ class Pushing extends BaseManager
             $table = strtolower($table);
 
             foreach ($files as $file) {
+
+                $checkMigrationMain = $this->schema->getConnection()->checkMigrationMain();
                 
-                $checkMigration = $this->schema->getConnection()->checkMigration($file);
+                if($checkMigrationMain===false && isset($this->tableFilters()['Migrations'][0])){
+                    $this->apply($this->tableFilters()['Migrations'][0],'migrations');
+                }
                 
-                if(!isset($checkMigration[0])){
+                $checkMigration = $this->schema->getConnection()->checkMigration($table,$file);
+                
+                if(!$checkMigration){
 
                     $getClassName = preg_replace('@(\d+)_@is','',$file);
                     $className = $this->getClassName($getClassName);
@@ -45,6 +51,25 @@ class Pushing extends BaseManager
                 
             }
         }
+
+        return $this->processHandler();
+    }
+
+    /**
+     * @param $file
+     * @param $table
+     * @return mixed|string
+     */
+    public function apply($file,$table)
+    {
+        $getClassName = preg_replace('@(\d+)_@is','',$file);
+        $className = $this->getClassName($getClassName);
+
+        require_once ($file);
+
+        $capsule = new SchemaCapsule($this->config,$file,$table);
+
+        $this->list[$table][] = (new $className)->up($capsule);
 
         return $this->processHandler();
     }

@@ -15,19 +15,25 @@ trait QueryStack
         return $this->schema->getConnection();
     }
 
-    public function registerMigration($name)
+    public function registerMigration($table,$name)
     {
         return $this->connection()->query(
-            "INSERT INTO migrations SET name='".$name."'
+            "INSERT INTO migrations SET table_name ='".$table."',name='".$name."'
             ");
     }
 
-    public function checkMigration($name)
+    public function checkMigration($table,$name)
     {
-        $query = $this->connection()->query("SELECT * FROM migrations WHERE name='".$name."'")
-            ->fetchAll();
+        $query = $this->connection()->query(
+            "SELECT * FROM migrations WHERE table_name='".$table."' and name='".$name."'
+            ")->fetchAll();
         
-        return $query;
+        return (isset($query[0])) ? true : false;
+    }
+
+    public function checkMigrationMain()
+    {
+        return (in_array('migrations',$this->showTables())) ? true : false;
     }
 
     /**
