@@ -25,8 +25,6 @@ trait PushingProcess
                     $query = $this->queryBuilder($table,$data);
 
                     $query = $query->handle();
-
-                    $this->schema->getConnection()->registerMigration($table,$data->getFile());
                     
                     if($query===false){
                         $results[] = [];
@@ -36,15 +34,15 @@ trait PushingProcess
                         
                         if($status){
 
-                            //$this->schema->getConnection()->registerMigration($table,$data->getFile());
+                            $this->schema->getConnection()->registerMigration($table,$data->getFile());
                             
-                            //$this->schema->getConnection()->generateEntity($table);
+                            $this->schema->getConnection()->generateEntity($table);
 
                             if(substr($table,-1)=='s'){
-                                //app()->command('model create','model:'.strtolower(substr($table,0,-1)).' table:'.$table.' entity:'.$table);
+                                app()->command('model create','model:'.strtolower(substr($table,0,-1)).' table:'.$table.' entity:'.$table);
                             }
                             else{
-                                //app()->command('model create','model:'.strtolower($table).' table:'.$table.' entity:'.$table);
+                                app()->command('model create','model:'.strtolower($table).' table:'.$table.' entity:'.$table);
                             }
                         }
 
