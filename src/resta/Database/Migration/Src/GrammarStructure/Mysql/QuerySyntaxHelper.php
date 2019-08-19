@@ -66,19 +66,28 @@ class QuerySyntaxHelper
         $list[] = (isset($this->data['autoIncrement'][$name])) ? 'AUTO_INCREMENT' : '';
         $list[] = (isset($this->data['primaryKey'][$name])) ? 'PRIMARY KEY' : '';
         
-        if($this->data['types'][$nameKey]=='timestamp' && !isset($this->data['default'][$nameKey])){
-            $this->data['default'][$name] = 'CURRENT_TIMESTAMP';
-        }
-        
-        if($this->data['types'][$nameKey]!=='timestamp'){
-            $list[] = (isset($this->data['default'][$name])) ? ' DEFAULT "'.$this->data['default'][$name].'"' : '';
-        }
-        else{
-            $list[] = (isset($this->data['default'][$name])) ? ' DEFAULT '.$this->data['default'][$name].'' : '';
-        }
-        
-        $list[] = (isset($this->data['comment'][$name])) ? ' COMMENT "'.$this->data['comment'][$name].'"' : '';
+        if(isset($this->data['types'][$nameKey])){
+            if($this->data['types'][$nameKey]=='timestamp' && !isset($this->data['default'][$nameKey])){
+                $this->data['default'][$name] = 'CURRENT_TIMESTAMP';
+            }
 
+            if($this->data['types'][$nameKey]!=='timestamp'){
+                $list[] = (isset($this->data['default'][$name])) ? ' DEFAULT "'.$this->data['default'][$name].'"' : '';
+            }
+            else{
+                $list[] = (isset($this->data['default'][$name])) ? ' DEFAULT '.$this->data['default'][$name].'' : '';
+            }
+
+            $list[] = (isset($this->data['comment'][$name])) ? ' COMMENT "'.$this->data['comment'][$name].'"' : '';
+
+        }
+        
+        if(count($list)===3){
+            $list[] = '';
+            $list[] = '';
+        }
+        
+        
         return $list;
 
     }
@@ -134,8 +143,10 @@ class QuerySyntaxHelper
 
             //set index values
             $this->setIndex($name);
+            
+            $types = (isset($this->data['types'][$key])) ? $this->data['types'][$key] : '';
 
-            $list[]=''.$name.' '.$this->data['types'][$key].' '.$nullableValue.' '.$defaultValue.' '.$primaryKeyValue.' '.$autoIncrementValue.' '.$commentValue.'';
+            $list[]=''.$name.' '.$types.' '.$nullableValue.' '.$defaultValue.' '.$primaryKeyValue.' '.$autoIncrementValue.' '.$commentValue.'';
         }
 
         return $list;

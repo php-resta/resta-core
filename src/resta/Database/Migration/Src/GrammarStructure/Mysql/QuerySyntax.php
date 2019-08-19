@@ -251,7 +251,7 @@ class QuerySyntax extends QuerySyntaxHelper
         $alterType = $this->object->getAlterType();
 
         $group = $alterType['group'];
-        
+
         $this->getDefaultSyntaxGroup($group);
         
         return $this->{$group}($alterType);
