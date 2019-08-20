@@ -134,7 +134,7 @@ class RouteMatching extends ApplicationProvider
         }
 
         if(count($scored)){
-            $arrayCountValues = array_count_values($scored);
+            //$arrayCountValues = array_count_values($scored);
 
             return array_search(max($scored),$scored);
 
