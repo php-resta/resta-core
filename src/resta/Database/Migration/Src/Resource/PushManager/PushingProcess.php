@@ -35,15 +35,20 @@ trait PushingProcess
                         if($status){
 
                             $this->schema->getConnection()->registerMigration($table,$data->getFile());
-                            
-                            $this->schema->getConnection()->generateEntity($table);
 
-                            if(substr($table,-1)=='s'){
-                                app()->command('model create','model:'.strtolower(substr($table,0,-1)).' table:'.$table.' entity:'.$table);
+                            if(app()->isLocale()){
+
+                                $this->schema->getConnection()->generateEntity($table);
+
+                                if(substr($table,-1)=='s'){
+                                    app()->command('model create','model:'.strtolower(substr($table,0,-1)).' table:'.$table.' entity:'.$table);
+                                }
+                                else{
+                                    app()->command('model create','model:'.strtolower($table).' table:'.$table.' entity:'.$table);
+                                }
                             }
-                            else{
-                                app()->command('model create','model:'.strtolower($table).' table:'.$table.' entity:'.$table);
-                            }
+                            
+
                         }
 
                         $results[]= [
