@@ -31,5 +31,10 @@ interface WizardAlterGroupContract {
      */
     public function dropColumn();
 
+    /**
+     * @return DropKeyContract
+     */
+    public function dropKey();
+
 }
 

@@ -23,6 +23,14 @@ class WizardHelper
     /**
      * @return mixed
      */
+    public function getKeys()
+    {
+        return $this->key;
+    }
+
+    /**
+     * @return mixed
+     */
     public function getComment()
     {
         return $this->comment;

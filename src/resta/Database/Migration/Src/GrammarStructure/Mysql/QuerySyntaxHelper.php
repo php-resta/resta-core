@@ -51,6 +51,7 @@ class QuerySyntaxHelper
         $this->data['unique']           = $object->getUnique();
         $this->data['index']            = $object->getIndex();
         $this->data['references']       = $object->getReferences();
+        $this->data['key']              = $object->getKeys();
     }
 
     /**

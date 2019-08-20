@@ -212,6 +212,38 @@ class QuerySyntax extends QuerySyntaxHelper
     }
 
     /**
+     * drop column
+     *
+     * @param $alterType
+     */
+    private function dropKey($alterType)
+    {
+        if(isset($this->syntax[0])){
+
+            $dropKey = $this->syntax[0];
+
+            foreach ($dropKey as $dropType=>$dropName){
+
+                $alterSytanx = 'alter table '.$this->table.' drop '.$dropType.' '.$dropName;
+
+                $query=$this->schema->getConnection()->setQueryBasic($alterSytanx);
+
+                return [
+                    'syntax'=>$this->syntax,
+                    'type'=>'alter',
+                    'result'=>$query['result'],
+                    'message'=>$query['message'],
+                ];
+            }
+
+            
+
+
+        }
+
+    }
+
+    /**
      * @return array
      */
     public function syntaxCreate()
@@ -307,6 +339,10 @@ class QuerySyntax extends QuerySyntaxHelper
 
         if(isset($this->syntax[0]) && $this->syntax[0]=='' && $group=='addUnique'){
             $this->syntax[0] = $this->data['unique'];
+        }
+
+        if(isset($this->syntax[0]) && $this->syntax[0]=='' && $group=='dropKey'){
+            $this->syntax[0] = $this->data['key'];
         }
     }
 

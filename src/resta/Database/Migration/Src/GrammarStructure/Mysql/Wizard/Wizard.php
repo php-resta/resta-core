@@ -93,6 +93,11 @@ class Wizard extends WizardHelper implements WizardContract
     protected $index=array();
 
     /**
+     * @var array
+     */
+    protected $key=array();
+
+    /**
      * @var array $unique
      */
     protected $unique=array();
@@ -204,6 +209,14 @@ class Wizard extends WizardHelper implements WizardContract
     public function indexes($index_name,$indexes=array())
     {
         $this->index[$index_name] = $indexes;
+    }
+
+    /**
+     * @param $key_name
+     */
+    public function key($key_name)
+    {
+        $this->key['Index'] = $key_name;
     }
 
     /**

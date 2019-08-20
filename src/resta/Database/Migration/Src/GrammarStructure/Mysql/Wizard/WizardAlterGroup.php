@@ -5,6 +5,7 @@ namespace Migratio\GrammarStructure\Mysql\Wizard;
 use Migratio\Contract\NameContract;
 use Migratio\Contract\IndexContract;
 use Migratio\Contract\UniqueContract;
+use Migratio\Contract\DropKeyContract;
 use Migratio\Contract\WizardAlterContract;
 use Migratio\Contract\WizardAlterGroupContract;
 
@@ -60,6 +61,17 @@ class WizardAlterGroup extends Wizard implements WizardAlterGroupContract
     }
 
     /**
+     * drop column
+     *
+     * @return DropKeyContract
+     */
+    public function dropKey()
+    {
+        $this->alterBinds[] = __FUNCTION__;
+        return $this->dropKeyWizardAlterInstance(__FUNCTION__);
+    }
+
+    /**
      * change column
      * 
      * @return WizardAlterContract
@@ -88,6 +100,17 @@ class WizardAlterGroup extends Wizard implements WizardAlterGroupContract
      * @return $this
      */
     private function dropWizardAlterInstance($group)
+    {
+        $this->setAlterType('group',$group);
+
+        return $this;
+    }
+
+    /**
+     * @param $group
+     * @return DropKeyContract
+     */
+    private function dropKeyWizardAlterInstance($group)
     {
         $this->setAlterType('group',$group);
 
