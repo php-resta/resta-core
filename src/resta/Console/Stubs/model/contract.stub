@@ -18,12 +18,15 @@ interface __file__Contract
     public function create(ClientContract $client);
 
     /**
+     * @param ClientContract $client
+     * @param bool $createIfNotExist
      * @return mixed
      */
-    public function update();
+    public function update(ClientContract $client,$createIfNotExist=false);
 
     /**
+     * @param ClientContract $client
      * @return mixed
      */
-    public function delete();
+    public function delete(ClientContract $client);
 }

@@ -10,13 +10,47 @@ use __contractNamespace__\__file__Contract;
 class __file__Builder implements __file__Contract
 {
     /**
+     * get all data for __file__ model
+     *
+     * @return mixed
+     */
+    public function all()
+    {
+        //model all data
+        return __file__::all();
+    }
+
+    /**
+     * createIfNotExist method for update method
+     *
+     * @param $data
+     * @return __file__|void
+     */
+    public function createIfNotExist($data)
+    {
+        //create __file__
+        try{
+            $data = __file__::where('field',$data)->first();
+
+            if(is_null($data)){
+                return __file__::create(['field'=>$data]);
+            }
+
+            return $data;
+        }
+        catch (Exception $exception){
+            exception('database_'.$exception->getCode())
+                ->invalidArgument($exception->getMessage());
+        }
+    }
+
+    /**
      * get __file__ model
      *
      * @return mixed
      */
     public function get()
     {
-        //model all data
         return __file__::pagination();
     }
 
@@ -38,27 +72,59 @@ class __file__Builder implements __file__Contract
         }
     }
 
+    /**
+     * get __file__ find method for model
+     *
+     * @param $find
+     * @return mixed
+     */
+    public function find($id)
+    {
+        //model find data
+        return __file__::find($id);
+    }
+
      /**
       * update __file__ model
       *
+      * @param ClientContract $client
+      * @param bool $createIfNotExist
       * @return mixed
       */
-     public function update()
+     public function update(ClientContract $client,$createIfNotExist=false)
      {
-        //update User
-        return __file__::where()->update([]);
+        if($createIfNotExist){
+            $data = $this->createIfNotExist($client->input('field'));
+        }
+
+        if(!isset($data)){
+            $data = __file__::where('user_id',$client->input('user_id'))->first();
+        }
+
+        nullExceptionPointer($data,'field');
+
+        foreach ($client->request() as $input=>$item){
+            $data->{$input} = $item;
+        }
+
+        if($data->save()){
+            return __file__::where('field',$client->input('field'))->first();
+        }
+
+        exception('noUpdate')->runtime('no update');
      }
 
     /**
      * delete __file__ model
      *
+     * @param ClientContract $client
      * @return mixed
      *
      * @throws Exception
      */
-     public function delete()
+     public function delete(ClientContract $client)
      {
-        //delete User
+        //delete __file__
         return __file__::where()->delete();
      }
 }
