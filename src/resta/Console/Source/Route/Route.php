@@ -42,7 +42,7 @@ class Route extends ConsoleOutputter {
 
         echo $this->info('All Route Controller Lists :');
 
-        $this->table->setHeaders(['no','endpoint','http','namespace','method','definition','beforeMiddleware','afterMiddleware','routeCache','doc','status']);
+        $this->table->setHeaders(['no','endpoint','http','method','definition','beforeMiddleware','afterMiddleware','routeCache','doc','status']);
 
         $routes = Router::getRoutes();
         $routeData = isset($routes['data']) ? $routes['data'] : [];
@@ -97,7 +97,7 @@ class Route extends ConsoleOutputter {
                         ++$counter,
                         $endpointData,
                         $data['http'],
-                        $controllerNamespace,
+                        //$controllerNamespace,
                         $data['method'],
                         $methodDefinition,
                         implode(",",$beforeMiddleware),
@@ -115,7 +115,7 @@ class Route extends ConsoleOutputter {
                     ++$counter,
                     $endpointData,
                     $data['http'],
-                    $controllerNamespace,
+                    //$controllerNamespace,
                     $data['method'],
                     $methodDefinition,
                     implode(",",$beforeMiddleware),
@@ -125,7 +125,6 @@ class Route extends ConsoleOutputter {
                     true
                 ]);
             }
-
 
         }
 
