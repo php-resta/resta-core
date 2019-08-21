@@ -14,9 +14,11 @@ class Permission extends Eloquent
     /**
      * @param $routeName
      */
-    public static function roleMake($routeName)
+    public static function permissionMake($routeName)
     {
-        return static::where('route_name',$routeName)->where('role_id',auth()->user()->role_id);
+        $permission = static::where('route_name',$routeName)->where('role_id',auth()->user()->role_id);
+        
+        return ($permission->count()) ? true : false;
     }
 }
 

@@ -28,6 +28,12 @@ interface RoleInterface
      * @param $name
      * @return $this
      */
+    public function role($name);
+
+    /**
+     * @param $name
+     * @return $this
+     */
     public function routeName($name);
 
     /**

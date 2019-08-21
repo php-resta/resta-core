@@ -17,6 +17,11 @@ class RoleManager extends ApplicationProvider implements RoleInterface
     protected $resource = 'Resta\\Role\\Resource';
 
     /**
+     * @var null|string
+     */
+    protected $role;
+
+    /**
      * @var string
      */
     protected $routeName;
@@ -57,14 +62,27 @@ class RoleManager extends ApplicationProvider implements RoleInterface
     public function make()
     {
         $permission = $this->getPermission();
-
-        $routeNames = $permission::roleMake($this->routeName);
-
-        if($routeNames->count()){
-            return true;
+        $role = $this->getRole();
+        
+        if(is_null($this->role)){
+            return $permission::permissionMake($this->routeName);
         }
+        else{
+            return $role::roleMake($this->role);
+        }
+    }
 
-        return false;
+    /**
+     * role name for role manager
+     *
+     * @param $name
+     * @return $this
+     */
+    public function role($name)
+    {
+        $this->role = $name;
+
+        return $this;
     }
 
     /**
@@ -112,5 +130,15 @@ class RoleManager extends ApplicationProvider implements RoleInterface
     private function getPermission()
     {
         return $this->getResource().'\\'.$this->getAdapter().'\Permission';
+    }
+
+    /**
+     * get permission
+     *
+     * @return string
+     */
+    private function getRole()
+    {
+        return $this->getResource().'\\'.$this->getAdapter().'\Role';
     }
 }
