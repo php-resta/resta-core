@@ -35,14 +35,13 @@ class Token extends ConsoleOutputter {
     /**
      * @return void
      */
-    public function create(){
-
-        //
-        $clientApiToken = StaticPathModel::appMiddlewarePath($this->projectName()).'\\ClientApiToken';
+    public function create()
+    {
+        $clientApiToken = app()->namespace()->middleware().'\\ClientApiToken';
         $resolveClientApiToken = app()->resolve($clientApiToken);
 
         //
-        $key=lcfirst($this->argument['key']);
+        $key= lcfirst($this->argument['key']);
 
         echo $this->info($resolveClientApiToken->createToken($key));
     }
