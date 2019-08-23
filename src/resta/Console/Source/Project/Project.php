@@ -98,6 +98,7 @@ class Project extends ConsoleOutputter
         $this->touch['kernel/cache']               = $this->provider().'/CacheServiceProvider.php';
         $this->touch['kernel/authenticate']         = $this->provider().'/AuthenticateServiceProvider.php';
         $this->touch['kernel/role']                 = $this->provider().'/RoleServiceProvider.php';
+        $this->touch['kernel/track']                = $this->provider().'/TrackServiceProvider.php';
         $this->touch['test/testcase']              = $this->test().'/TestCase.php';
         $this->touch['kernel/consoleevent']         = $this->provider().'/ConsoleEventServiceProvider.php';
         $this->touch['middleware/authenticate']     = $this->middleware().'/Authenticate.php';

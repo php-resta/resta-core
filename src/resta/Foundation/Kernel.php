@@ -80,6 +80,7 @@ abstract class Kernel extends Container
         'Resta\Console\Source\Test\Test'                    => ['isRunnable' => true],
         'Resta\Console\Source\Worker\Worker'                => ['isRunnable' => true],
         'Resta\Console\Source\Path\Path'                    => ['isRunnable' => true],
+        'Resta\Console\Source\Track\Track'                  => ['isRunnable' => true],
     ];
 
     /**

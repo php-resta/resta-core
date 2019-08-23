@@ -1,0 +1,22 @@
+<?php
+
+namespace __kernelProviderDir__;
+
+use Resta\Router\Route;
+use Resta\Provider\ServiceProviderManager;
+
+class TrackServiceProvider extends ServiceProviderManager
+{
+    /**
+     * register service provider
+     *
+     * @return mixed|void
+     */
+    public function register()
+    {
+        $this->app->register('track','log',function($output){
+            echo $output;
+        });
+    }
+
+}
