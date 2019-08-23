@@ -36,12 +36,16 @@ class Track extends ConsoleOutputter
         while (@ ob_end_flush()); // end all output buffers if any
 
         $proc = popen($tailCommand, 'r');
+
+        $number = 0;
         while (!feof($proc))
         {
             $result = fread($proc, 4096);
             if(preg_match('@\{(.*)\}@',$result,$output)){
                 $outputArray = json_decode($output[0],1);
-                
+
+                $outputArray['trackNumber'] = ++$number;
+
                 if(app()->has('track.log')){
 
                     $track = app()->get('track.log');
@@ -50,6 +54,6 @@ class Track extends ConsoleOutputter
             }
             @ flush();
         }
-        
+
     }
 }
