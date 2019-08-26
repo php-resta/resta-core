@@ -2,7 +2,6 @@
 
 namespace __kernelProviderDir__;
 
-use Resta\Router\Route;
 use Resta\Provider\ServiceProviderManager;
 
 class TrackServiceProvider extends ServiceProviderManager
@@ -18,6 +17,7 @@ class TrackServiceProvider extends ServiceProviderManager
          * You must specify path before you can use track log.
          * If the value of track.path is not registered on the container.
          * The system will assign the path to the monolog library by rotatingFileHandler class.
+         * You can use console arguments for callback (ex: $ arguments = array ())
          */
         $this->app->register('track','path',function(){
             $logger = app()->path()->appLog().''.DIRECTORY_SEPARATOR.''.date('Y').''.DIRECTORY_SEPARATOR.''.date('m').''.DIRECTORY_SEPARATOR.''.date('d').'-access.log';
@@ -27,9 +27,11 @@ class TrackServiceProvider extends ServiceProviderManager
         /**
          * track log monitor.You can shape it as you wish.
          * php api track log for console You can monitor your log monitor as project project.
+         * You can use console arguments as the second parameter for callback (ex: $ arguments = array ())
          */
         $this->app->register('track','log',function($output){
-            echo $output;
+            echo json_encode($output);
+            echo PHP_EOL;
         });
     }
 
