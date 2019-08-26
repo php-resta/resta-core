@@ -42,54 +42,75 @@ class TrackLogger extends ApplicationProvider
      */
     public function handle()
     {
-        if($this->output['meta']['success'])
-        {
-            echo ''.$this->output['trackNumber'].' - SUCCESS:';
-            echo PHP_EOL;
-            echo 'Request Success : true';
-        }
-        else{
+        if(isset($this->arguments['filter'])){
 
-            echo ''.$this->output['trackNumber'].' - ERROR:';
-            echo PHP_EOL;
-            echo 'Error: '.$this->output['resource']['errorMessage'];
-            echo PHP_EOL;
-            echo 'Error File: '.$this->output['resource']['errorFile'];
-            echo PHP_EOL;
-            echo 'Error Line: '.$this->output['resource']['errorLine'];
-            echo PHP_EOL;
-            echo 'Error Type: '.$this->output['resource']['errorType'];
+            $filterResult = [];
+            $filter = lcfirst($this->arguments['filter']);
+
+            foreach (explode('+',$filter) as $item){
+                $itemList = explode('=',$item);
+                if(isset($this->output[$itemList[0]]) && $this->output[$itemList[0]]==$itemList[1]){
+                    $filterResult[] = true;
+                }
+                else{
+                    $filterResult[] = false;
+                }
+            }
         }
 
-        echo PHP_EOL;
-        echo 'Request Code: '.$this->output['meta']['status'];
+        if(!isset($filterResult) || (isset($filterResult) && is_array($filterResult) && !in_array(false,$filterResult))){
 
-        echo PHP_EOL;
-        $requestClientIp = (isset($this->output['clientIp'])) ? $this->output['clientIp'] : null;
-        echo 'Client Ip: '.$requestClientIp ;
+            if($this->output['meta']['success'])
+            {
+                echo ''.$this->output['trackNumber'].' - SUCCESS:';
+                echo PHP_EOL;
+                echo 'Request Success : true';
+            }
+            else{
 
-        echo PHP_EOL;
-        $requestEndpoint = (isset($this->output['requestUrl'])) ? $this->output['requestUrl'] : null;
-        echo 'Endpoint: '.$requestEndpoint;
+                echo ''.$this->output['trackNumber'].' - ERROR:';
+                echo PHP_EOL;
+                echo 'Error: '.$this->output['resource']['errorMessage'];
+                echo PHP_EOL;
+                echo 'Error File: '.$this->output['resource']['errorFile'];
+                echo PHP_EOL;
+                echo 'Error Line: '.$this->output['resource']['errorLine'];
+                echo PHP_EOL;
+                echo 'Error Type: '.$this->output['resource']['errorType'];
+            }
 
-        echo PHP_EOL;
-        echo 'Get Data: '.json_encode(isset($this->output['getData']) ? $this->output['getData'] : []);
+            echo PHP_EOL;
+            echo 'Request Code: '.$this->output['meta']['status'];
 
-        echo PHP_EOL;
-        echo 'Post Data: '.json_encode(isset($this->output['postData']) ? $this->output['postData'] : []);
+            echo PHP_EOL;
+            $requestClientIp = (isset($this->output['clientIp'])) ? $this->output['clientIp'] : null;
+            echo 'Client Ip: '.$requestClientIp ;
 
-        echo PHP_EOL;
-        $requestAuth = (isset($this->output['auth'])) ? $this->output['auth'] : null;
-        echo 'Auth: '.$requestAuth;
+            echo PHP_EOL;
+            $requestEndpoint = (isset($this->output['requestUrl'])) ? $this->output['requestUrl'] : null;
+            echo 'Endpoint: '.$requestEndpoint;
 
-        echo PHP_EOL;
-        echo 'Time: '.date('Y-m-d H:i:s');
+            echo PHP_EOL;
+            echo 'Get Data: '.json_encode(isset($this->output['getData']) ? $this->output['getData'] : []);
 
-        echo PHP_EOL;
-        $requestClientKey = (isset($this->output['clientApiTokenKey'])) ? $this->output['clientApiTokenKey'] : null;
-        echo 'Client Key: '.$requestClientKey;
+            echo PHP_EOL;
+            echo 'Post Data: '.json_encode(isset($this->output['postData']) ? $this->output['postData'] : []);
 
-        echo PHP_EOL;
-        echo PHP_EOL;
+            echo PHP_EOL;
+            $requestAuth = (isset($this->output['auth'])) ? $this->output['auth'] : null;
+            echo 'Auth: '.$requestAuth;
+
+            echo PHP_EOL;
+            echo 'Time: '.date('Y-m-d H:i:s');
+
+            echo PHP_EOL;
+            $requestClientKey = (isset($this->output['clientApiTokenKey'])) ? $this->output['clientApiTokenKey'] : null;
+            echo 'Client Key: '.$requestClientKey;
+
+            echo PHP_EOL;
+            echo PHP_EOL;
+        }
+
+
     }
 }
