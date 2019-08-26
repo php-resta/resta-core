@@ -26,11 +26,11 @@ class TrackLogger extends ApplicationProvider
     public function __construct(ApplicationContracts $app,$output,$arguments)
     {
         parent::__construct($app);
-        
+
         if(!$this->app->runningInConsole()){
             exception()->runtime('Console application is missing');
         }
-        
+
         $this->output = $output;
         $this->arguments = $arguments;
     }
@@ -65,10 +65,12 @@ class TrackLogger extends ApplicationProvider
         echo 'Request Code: '.$this->output['meta']['status'];
 
         echo PHP_EOL;
-        echo 'Client Ip: '.isset($this->output['clientIp']) ? $this->output['clientIp'] : null ;
+        $requestClientIp = (isset($this->output['clientIp'])) ? $this->output['clientIp'] : null;
+        echo 'Client Ip: '.$requestClientIp ;
 
         echo PHP_EOL;
-        echo 'Endpoint: '.isset($this->output['requestUrl']) ? $this->output['requestUrl'] : null;
+        $requestEndpoint = (isset($this->output['requestUrl'])) ? $this->output['requestUrl'] : null;
+        echo 'Endpoint: '.$requestEndpoint;
 
         echo PHP_EOL;
         echo 'Get Data: '.json_encode(isset($this->output['getData']) ? $this->output['getData'] : []);
@@ -77,13 +79,15 @@ class TrackLogger extends ApplicationProvider
         echo 'Post Data: '.json_encode(isset($this->output['postData']) ? $this->output['postData'] : []);
 
         echo PHP_EOL;
-        echo 'Auth: '.isset($this->output['auth']) ? $this->output['auth'] : null;
+        $requestAuth = (isset($this->output['auth'])) ? $this->output['auth'] : null;
+        echo 'Auth: '.$requestAuth;
 
         echo PHP_EOL;
         echo 'Time: '.date('Y-m-d H:i:s');
 
         echo PHP_EOL;
-        echo 'Client Key: '.isset($this->output['clientApiTokenKey']) ? $this->output['clientApiTokenKey'] : null;
+        $requestClientKey = (isset($this->output['clientApiTokenKey'])) ? $this->output['clientApiTokenKey'] : null;
+        echo 'Client Key: '.$requestClientKey;
 
         echo PHP_EOL;
         echo PHP_EOL;
