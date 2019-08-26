@@ -19,9 +19,9 @@ class TrackLogger extends ApplicationProvider
 
     /**
      * TrackLogger constructor.
+     * @param ApplicationContracts $app
      * @param $output
      * @param $arguments
-     * @param ApplicationContracts $app
      */
     public function __construct(ApplicationContracts $app,$output,$arguments)
     {
