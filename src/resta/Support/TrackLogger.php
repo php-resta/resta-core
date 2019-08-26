@@ -65,25 +65,25 @@ class TrackLogger extends ApplicationProvider
         echo 'Request Code: '.$this->output['meta']['status'];
 
         echo PHP_EOL;
-        echo 'Client Ip: '.$this->output['clientIp'];
+        echo 'Client Ip: '.isset($this->output['clientIp']) ? $this->output['clientIp'] : null ;
 
         echo PHP_EOL;
-        echo 'Endpoint: '.$this->output['requestUrl'];
+        echo 'Endpoint: '.isset($this->output['requestUrl']) ? $this->output['requestUrl'] : null;
 
         echo PHP_EOL;
-        echo 'Get Data: '.json_encode($this->output['getData']);
+        echo 'Get Data: '.json_encode(isset($this->output['getData']) ? $this->output['getData'] : []);
 
         echo PHP_EOL;
-        echo 'Post Data: '.json_encode($this->output['postData']);
+        echo 'Post Data: '.json_encode(isset($this->output['postData']) ? $this->output['postData'] : []);
 
         echo PHP_EOL;
-        echo 'Auth: '.$this->output['auth'];
+        echo 'Auth: '.isset($this->output['auth']) ? $this->output['auth'] : null;
 
         echo PHP_EOL;
         echo 'Time: '.date('Y-m-d H:i:s');
 
         echo PHP_EOL;
-        echo 'Client Key: '.$this->output['clientApiTokenKey'];
+        echo 'Client Key: '.isset($this->output['clientApiTokenKey']) ? $this->output['clientApiTokenKey'] : null;
 
         echo PHP_EOL;
         echo PHP_EOL;

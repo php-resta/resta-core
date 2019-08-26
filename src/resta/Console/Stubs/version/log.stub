@@ -35,6 +35,17 @@ class ServiceLogManager
         $handler->setFilenameFormat('{date}-{filename}', 'Y/m/d');
         $log->pushHandler($handler);
 
+        $output['getData']              = get();
+        $output['postData']             = post();
+        $output['requestUrl']           = request()->getUri();
+        $output['clientIp']             = request()->getClientIp();
+        $output['auth']                 = (is_null(auth()->user())) ? null : auth()->user()->email;
+        $output['clientApiTokenKey']    = (app()->has('clientApiTokenKey')) ? app()->get('clientApiTokenKey') : null;
+
+        if($type=='info'){
+            unset($output['resource']);
+        }
+
         //We write to the specified file.
         $log->{$type}(json_encode($output));
     }
