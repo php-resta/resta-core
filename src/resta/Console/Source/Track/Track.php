@@ -37,6 +37,12 @@ class Track extends ConsoleOutputter
             $logger = app()->path()->appLog().''.DIRECTORY_SEPARATOR.''.date('Y').''.DIRECTORY_SEPARATOR.''.date('m').''.DIRECTORY_SEPARATOR.''.date('d').'-access.log';
         }
 
+        if(!file_exists($logger)){
+            echo 'No requests for a log tracker have been detected yet.';
+            echo PHP_EOL;
+            exit();
+        }
+
         $tailCommand = 'tail -n 1 -f '.escapeshellarg($logger).'';
 
         while (@ ob_end_flush()); // end all output buffers if any
