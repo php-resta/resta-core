@@ -2,6 +2,7 @@
 
 namespace __kernelProviderDir__;
 
+use Resta\Support\TrackLogger;
 use Resta\Provider\ServiceProviderManager;
 
 class TrackServiceProvider extends ServiceProviderManager
@@ -29,9 +30,11 @@ class TrackServiceProvider extends ServiceProviderManager
          * php api track log for console You can monitor your log monitor as project project.
          * You can use console arguments as the second parameter for callback (ex: $ arguments = array ())
          */
-        $this->app->register('track','log',function($output){
-            echo json_encode($output);
-            echo PHP_EOL;
+        $this->app->register('track','log',function($output,$arguments=array()){
+            return $this->app->resolve(TrackLogger::class,[
+                'output' => $output,
+                'arguments' => $arguments
+            ])->handle();
         });
     }
 
