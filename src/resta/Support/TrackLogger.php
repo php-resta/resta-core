@@ -34,7 +34,12 @@ class TrackLogger extends ApplicationProvider
         $this->output = $output;
         $this->arguments = $arguments;
     }
-    
+
+    /**
+     * track logger handle
+     *
+     * @return mixed
+     */
     public function handle()
     {
         if($this->output['meta']['success'])
