@@ -29,7 +29,13 @@ class Track extends ConsoleOutputter
      */
     public function log()
     {
-        $logger = app()->path()->appLog().''.DIRECTORY_SEPARATOR.''.date('Y').''.DIRECTORY_SEPARATOR.''.date('m').''.DIRECTORY_SEPARATOR.''.date('d').'-access.log';
+        if(app()->has('track.path')){
+            $trackPath = app()->get('track.path');
+            $logger = $trackPath($this->argument);
+        }
+        else{
+            $logger = app()->path()->appLog().''.DIRECTORY_SEPARATOR.''.date('Y').''.DIRECTORY_SEPARATOR.''.date('m').''.DIRECTORY_SEPARATOR.''.date('d').'-access.log';
+        }
 
         $tailCommand = 'tail -n 1 -f '.escapeshellarg($logger).'';
 
@@ -49,7 +55,7 @@ class Track extends ConsoleOutputter
                 if(app()->has('track.log')){
 
                     $track = app()->get('track.log');
-                    echo $track($outputArray);
+                    echo $track($outputArray,$this->argument);
                 }
             }
             @ flush();

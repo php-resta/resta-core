@@ -14,6 +14,20 @@ class TrackServiceProvider extends ServiceProviderManager
      */
     public function register()
     {
+        /**
+         * You must specify path before you can use track log.
+         * If the value of track.path is not registered on the container.
+         * The system will assign the path to the monolog library by rotatingFileHandler class.
+         */
+        $this->app->register('track','path',function(){
+            $logger = app()->path()->appLog().''.DIRECTORY_SEPARATOR.''.date('Y').''.DIRECTORY_SEPARATOR.''.date('m').''.DIRECTORY_SEPARATOR.''.date('d').'-access.log';
+            return $logger;
+        });
+
+        /**
+         * track log monitor.You can shape it as you wish.
+         * php api track log for console You can monitor your log monitor as project project.
+         */
         $this->app->register('track','log',function($output){
             echo $output;
         });
