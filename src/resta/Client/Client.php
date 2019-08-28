@@ -304,8 +304,13 @@ class Client extends ClientAbstract implements HandleContracts
 
                 //fake registration
                 if(!isset($this->inputs[$generator])){
-                    $this->{$generator} = $this->{$generatorMethodName}();
-                    $this->inputs[$generator] = $this->{$generatorMethodName}();
+
+                    $generatorMethodNameResult = $this->{$generatorMethodName}();
+
+                    if(!is_null($generatorMethodNameResult)){
+                        $this->{$generator} = $this->{$generatorMethodName}();
+                        $this->inputs[$generator] = $this->{$generatorMethodName}();
+                    }
                 }
                 else {
 
