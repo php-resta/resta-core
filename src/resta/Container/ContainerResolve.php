@@ -51,17 +51,29 @@ class ContainerResolve extends ApplicationProvider
      */
     private function checkParameterForContainer($containers,$parameter)
     {
+        $containerParameterNameValue = false;
+
+        if(isset($containers[$parameter->getType()->getName()])){
+            $parameterNameResolve = $parameter->getType()->getName();
+            $containerParameterNameValue = true;
+        }
+
+        if(!$containerParameterNameValue && isset($containers[$parameter->getName()])){
+            $parameterNameResolve = $parameter->getName();
+            $containerParameterNameValue = true;
+        }
+
         // if the parameter is an object and
         // this object is a service container object
         // then the parameter will bind.
-        if($parameter->getType()!==null && isset($containers[$parameter->getType()->getName()])){
+        if($parameter->getType()!==null && $containerParameterNameValue){
 
             // Unpack the container object and
             // bind it to the param variable.
             $parameterName = $parameter->getName();
 
             //get container object
-            $resolveObject = $containers[$parameter->getType()->getName()];
+            $resolveObject = $containers[$parameterNameResolve];
 
             // if the container object is an object,
             // it is served directly without resolving it.
@@ -73,12 +85,12 @@ class ContainerResolve extends ApplicationProvider
             return [$parameterName=>$parameterResolve];
         }
 
-        if($parameter->getType()!== NULL && Utils::isNamespaceExists($parameter->getType()->getName())){
+        if($parameter->getType()!== NULL && Utils::isNamespaceExists($parameterNameResolve)){
 
             // Unpack the container object and
             // bind it to the param variable.
             $parameterName = $parameter->getName();
-            $parameterResolve = app()->resolve($parameter->getType()->getName());
+            $parameterResolve = app()->resolve($parameterNameResolve);
 
             //return result for parameter of the container
             return [$parameterName=>$parameterResolve];
@@ -121,7 +133,7 @@ class ContainerResolve extends ApplicationProvider
 
         return static::$reflectionInstance;
     }
-    
+
     /**
      * reflection method parameters
      *
@@ -145,6 +157,7 @@ class ContainerResolve extends ApplicationProvider
         $reflection = $this->getReflectionMethod($class);
         $parameters = $reflection->parameters;
 
+
         // we provide the user with the container method document and take action.
         // thus, we help the methods to have a cleaner code structure.
         $this->app->resolve(ContainerMethodDocumentResolver::class,
@@ -158,6 +171,7 @@ class ContainerResolve extends ApplicationProvider
             // this object is a service container object
             // then the parameter will bind.
             $checkParameterForContainer = $this->checkParameterForContainer($containers,$parameter);
+
             $paramMerge = array_merge($param,$checkParameterForContainer);
 
             // we do some useful logic bind for user benefit.
