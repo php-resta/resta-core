@@ -40,9 +40,9 @@ class Client extends ClientAbstract implements HandleContracts
     protected $clientData;
 
     /**
-     * @var null|array
+     * @var array
      */
-    protected $requestData;
+    protected $requestData = [];
 
     /**
      * Request constructor.
