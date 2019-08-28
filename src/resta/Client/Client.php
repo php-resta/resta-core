@@ -310,6 +310,7 @@ class Client extends ClientAbstract implements HandleContracts
                     if(!is_null($generatorMethodNameResult)){
                         $this->{$generator} = $this->{$generatorMethodName}();
                         $this->inputs[$generator] = $this->{$generatorMethodName}();
+                        $this->requestData[$generator] = $this->inputs[$generator];
                     }
                 }
                 else {
