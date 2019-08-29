@@ -2,6 +2,7 @@
 
 namespace Resta\Console\Source\Schedule;
 
+use Resta\Schedule\ScheduleManager;
 use Resta\Support\Utils;
 use Resta\Console\ConsoleOutputter;
 use Resta\Console\ConsoleListAccessor;
@@ -56,12 +57,18 @@ class Schedule extends ConsoleOutputter {
     {
         $schedules = Utils::glob(app()->path()->schedule());
 
+
         if(isset($schedules[$this->argument['schedule']])){
 
             $scheduleNamespace = Utils::getNamespace($schedules[$this->argument['schedule']]);
             $scheduleInstance = app()->resolve($scheduleNamespace);
 
-            $command = '*/1 * * * * cd '.root.' && php api schedule run munch schedule:'.lcfirst($this->argument['schedule']).' >> /dev/null 2>&1';
+            $scheduleManager = new ScheduleManager();
+            $scheduleInstance->when($scheduleManager);
+
+            $cronScheduler = implode(' ',$scheduleManager->getCronScheduler());
+
+            $command = $cronScheduler.' cd '.root.' && php api schedule run munch schedule:'.lcfirst($this->argument['schedule']).' >> /dev/null 2>&1';
 
             if($this->cronjob_exists($command)===false){
 

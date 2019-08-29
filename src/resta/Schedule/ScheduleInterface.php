@@ -5,8 +5,45 @@ namespace Resta\Schedule;
 interface ScheduleInterface
 {
     /**
-     * @param callable $callback
-     * @return mixed
+     * @param integer $day
+     * @return $this
      */
-    public function everyMinute($minute=1) : int ;
+    public function day($day=1);
+
+    /**
+     * @param integer $hour
+     * @return $this
+     */
+    public function everyHour($hour=1);
+    
+    /**
+     * @param int $minute
+     * @return $this
+     */
+    public function everyMinute($minute=1);
+
+    /**
+     * @param mixed $hour
+     * @return $this
+     */
+    public function hour($hour='*');
+
+    /**
+     * @param int $minute
+     * @return $this
+     */
+    public function minute($minute=1);
+
+    /**
+     * @param mixed $month
+     * @return $this
+     */
+    public function month($month=1);
+
+    /**
+     * @param mixed $week$month
+     * @return $this
+     */
+    public function week($week=1);
+
 }
