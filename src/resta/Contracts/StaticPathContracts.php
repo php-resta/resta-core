@@ -66,6 +66,11 @@ interface StaticPathContracts
     public function workers();
 
     /**
+     * @return mixed
+     */
+    public function schedule();
+
+    /**
      * @param null $controller
      * @param bool $bool
      * @return mixed

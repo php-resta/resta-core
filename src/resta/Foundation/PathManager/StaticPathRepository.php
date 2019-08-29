@@ -90,6 +90,14 @@ class StaticPathRepository
     }
 
     /**
+     * @return string
+     */
+    public function appSchedule()
+    {
+        return  $this->appVersion(null).''.DIRECTORY_SEPARATOR.''.StaticPathList::$schedule;
+    }
+
+    /**
      * @return null|string
      */
     private function appDetector()

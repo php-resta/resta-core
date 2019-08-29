@@ -1,0 +1,49 @@
+<?php
+
+namespace __scheduleNamespace__;
+
+use Resta\Schedule\ScheduleInterface;
+use Resta\Foundation\ApplicationProvider;
+use Resta\Schedule\ScheduleCommandInterface;
+use __serviceAnnotations__;
+
+class __scheduleClass__ extends ApplicationProvider implements ScheduleCommandInterface
+{
+    use ServiceAnnotationsManager;
+
+    /**
+     * Suspends execution of the schedule command.
+     *
+     * @var bool
+     */
+    protected $status = true;
+
+    /**
+     * write a description code for which function your command performs.
+     *
+     * @var string
+     */
+    protected $description = 'collect report';
+
+    /**
+     * type your code to run here.
+     *
+     * @return void
+     */
+    public function command() : void
+    {
+        //
+    }
+
+    /**
+     * Use the schedule agreement to determine when to run your code.
+     *
+     * @param ScheduleInterface $schedule
+     * @return void
+     */
+    public function when(ScheduleInterface $schedule) : void
+    {
+        //your command will run every minute.
+        $schedule->everyMinute();
+    }
+}

@@ -134,6 +134,11 @@ class StaticPathList
      */
     public static $workers='Workers';
 
+    /**
+     * @var string
+     */
+    public static $schedule='Schedule';
+
 
     /**
      * @var string

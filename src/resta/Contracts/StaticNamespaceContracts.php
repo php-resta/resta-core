@@ -140,6 +140,11 @@ interface StaticNamespaceContracts
     /**
      * @return mixed
      */
+    public function schedule();
+
+    /**
+     * @return mixed
+     */
     public function optionalSource();
 
     /**

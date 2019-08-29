@@ -105,6 +105,7 @@ class ConsoleOutputter extends ConsolePrepare implements ConsoleOutputterContrac
             $this->argument['modelNamespace']       = app()->namespace()->model();
             $this->argument['sourceNamespace']      = app()->namespace()->optionalSource();
             $this->argument['versionNamespace']     = app()->namespace()->version();
+            $this->argument['serviceAnnotations']   = app()->namespace()->serviceAnnotations();
 
 
             $this->argument['project'] = $this->argument['project'].'\\'.StaticPathList::$projectPrefixGroup;

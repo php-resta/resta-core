@@ -95,6 +95,14 @@ class StaticNamespaceRepository extends StaticPathRepository
     /**
      * @return mixed
      */
+    public function schedule()
+    {
+        return Utils::getNamespace(parent::schedule());
+    }
+
+    /**
+     * @return mixed
+     */
     public function kernel()
     {
         return Utils::getNamespace(parent::kernel());
