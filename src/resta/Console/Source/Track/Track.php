@@ -64,6 +64,9 @@ class Track extends ConsoleOutputter
                     echo $track($outputArray,$this->argument);
                 }
             }
+            else{
+                echo $result;
+            }
             @ flush();
         }
 
