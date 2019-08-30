@@ -3,6 +3,7 @@
 namespace Resta\Console\Source\Schedule;
 
 use Resta\Schedule\ScheduleManager;
+use Resta\Support\ClosureDispatcher;
 use Resta\Support\Utils;
 use Resta\Console\ConsoleOutputter;
 use Resta\Console\ConsoleListAccessor;
@@ -24,7 +25,11 @@ class Schedule extends ConsoleOutputter {
     /**
      * @var $commandRule
      */
-    public $commandRule = ['schedule'];
+    public $commandRule = [
+        'create' => ['schedule'],
+        'register' => ['schedule'],
+        'run' => ['schedule'],
+    ];
 
     /**
      * @return void
@@ -48,6 +53,54 @@ class Schedule extends ConsoleOutputter {
         $this->file->touch($this);
 
         echo $this->classical(' > Schedule file called as "'.$this->argument['schedule'].'" has been successfully created in the '.$schedulePath.'');
+    }
+
+    public function list()
+    {
+        exec('crontab -l',$list);
+
+        $this->table->setHeaders(['no','minute','hour','day','month','week','schedule','description']);
+
+
+        foreach ($list as $key=>$item){
+
+            if(preg_match('@.*php api schedule run '.strtolower($this->projectName()).'.*@is',$item,$result)){
+                if(isset($result[0])){
+
+                    $cron = [];
+
+                    if(preg_match('@(.*)\scd@',$result[0],$cron)){
+                        $cron = (isset($cron[1])) ? explode(' ',$cron[1]) : '';
+
+                    }
+
+                    $scheduleName = '';
+
+                    if(preg_match('@schedule\:(.*?)\s@',$result[0],$scheduler)){
+                        $scheduleName = (isset($scheduler[1])) ? $scheduler[1] : '';
+
+                        $schedulerInstance = $this->scheduleInstance(ucfirst($scheduleName));
+                        $description = ClosureDispatcher::bind($schedulerInstance)->call(function(){
+                            return $this->description;
+                        });
+
+                    }
+
+                    $this->table->addRow([
+                        $key+1,
+                        isset($cron[0]) ? $cron[0] : '',
+                        isset($cron[1]) ? $cron[1] : '',
+                        isset($cron[2]) ? $cron[2] : '',
+                        isset($cron[3]) ? $cron[3] : '',
+                        isset($cron[4]) ? $cron[4] : '',
+                        $scheduleName,
+                        isset($description) ? $description : '',
+                    ]);
+                }
+            }
+        }
+
+        echo $this->table->getTable();
     }
 
     /**
@@ -115,6 +168,23 @@ class Schedule extends ConsoleOutputter {
 
         }
         return $cronjob_exists;
+    }
+
+    /**
+     * @param $schedule
+     * @return mixed|null
+     */
+    private function scheduleInstance($schedule)
+    {
+        $schedules = Utils::glob(app()->path()->schedule());
+
+        if(isset($schedules[$schedule])){
+            $scheduleNamespace = Utils::getNamespace($schedules[$schedule]);
+            return $scheduleInstance = app()->resolve($scheduleNamespace);
+        }
+
+        return null;
+
     }
 
 }
