@@ -3,7 +3,10 @@
 namespace Resta\Provider;
 
 use Resta\Support\Utils;
+use Resta\Support\JsonHandler;
+use Resta\Support\SuperClosure;
 use Resta\Foundation\ApplicationProvider;
+use Resta\Exception\FileNotFoundException;
 
 class ServiceProvider extends  ApplicationProvider
 {
@@ -21,6 +24,7 @@ class ServiceProvider extends  ApplicationProvider
      * @param $provider
      * @param string $method
      *
+     * @throws FileNotFoundException
      */
     private function applyProvider($key,$provider,$method='register')
     {
@@ -40,7 +44,55 @@ class ServiceProvider extends  ApplicationProvider
                 if($method=="register"){
                     /** @scrutinizer ignore-call */
                     $this->app->register('loadedProviders',$key,$provider);
+                    $this->deferrableProvider($providerInstance,$provider);
                 }
+            }
+        }
+    }
+
+    /**
+     * deferrable provider process
+     *
+     * @param $providerInstance
+     * @param $provider
+     *
+     * @throws FileNotFoundException
+     */
+    private function deferrableProvider($providerInstance,$provider)
+    {
+        if($providerInstance instanceof DeferrableProvider && file_exists(serviceJson())){
+            $deferrableProvides = $providerInstance->provides();
+
+            foreach ($deferrableProvides as $deferrableProvide) {
+
+                if($this->app->has($deferrableProvide)){
+
+                    JsonHandler::$file = serviceJson();
+                    $serviceJson = JsonHandler::get();
+
+                    if(!isset($serviceJson['providers'][$provider])){
+
+                        JsonHandler::set('providers-deferrable-classes',[
+                            $provider => true
+                        ]);
+
+                        $container = $this->app->get($deferrableProvide);
+
+                        if(!is_array($container)){
+                            JsonHandler::set('container',[
+                                $deferrableProvide => SuperClosure::set($container)
+                            ]);
+                        }
+                        else{
+                            foreach ($container as $containerKey=>$containerItem) {
+                                JsonHandler::set('container',[
+                                    $deferrableProvide.'.'.$containerKey => SuperClosure::set($containerItem)
+                                ]);
+                            }
+                        }
+                    }
+                }
+
             }
         }
     }
@@ -82,6 +134,7 @@ class ServiceProvider extends  ApplicationProvider
     /**
      * handle service providers
      *
+     * @throws FileNotFoundException
      */
     public function handle()
     {
@@ -96,6 +149,7 @@ class ServiceProvider extends  ApplicationProvider
      *
      * @param array $providers
      *
+     * @throws FileNotFoundException
      */
     public function resolveProviders($providers=array())
     {
@@ -106,12 +160,18 @@ class ServiceProvider extends  ApplicationProvider
         //first we are running register methods of provider classes.
         foreach($providers as $key=>$provider){
 
+            JsonHandler::$file = serviceJson();
+            $serviceJson = JsonHandler::get();
+
             // providers can only be installed once.
             // apply providers and register for kernel
             if(!isset($this->app['loadedProviders'][$key])){
 
                 if(is_array($provider) && isset($provider['status']) && $provider['status']){
-                    $this->applyProvider($key,$provider['class']);
+                    if(!isset($serviceJson['providers-deferrable-classes'][$provider['class']])){
+                        $this->applyProvider($key,$provider['class']);
+                    }
+
                 }
                 else{
                     $this->applyProvider($key,$provider);

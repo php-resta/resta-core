@@ -21,12 +21,11 @@ return [
         'AuthenticateServiceProvider'       => ['class' => AuthenticateServiceProvider::class, 'status' => true],
         'HelperServiceProvider'             => ['class' => HelperServiceProvider::class, 'status' => true],
         'AppServiceProvider'                => ['class' => AppServiceProvider::class, 'status' => true],
-        'ConsoleEventServiceProvider'       => ['class' => ConsoleEventServiceProvider::class, 'status' => true],
+        'ConsoleEventServiceProvider'       => ['class' => ConsoleEventServiceProvider::class, 'status' => app()->runningInConsole()],
         'WorkerServiceProvider'             => ['class' => WorkerServiceProvider::class, 'status' => true],
         'RoleServiceProvider'               => ['class' => RoleServiceProvider::class, 'status' => true],
         'CacheServiceProvider'              => ['class' => CacheServiceProvider::class, 'status' => true],
         'TrackServiceProvider'              => ['class' => TrackServiceProvider::class,'status' => app()->runningInConsole()],
-        'AwsServiceProvider'                => ['class' => AwsServiceProvider::class, 'status' => true],
     ],
 
     /**

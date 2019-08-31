@@ -90,6 +90,7 @@ class Project extends ConsoleOutputter
         //get project file all path
         //$this->touch['publish']                     = $this->project.'/publish.php';
         $this->touch['kernel/kernel']               = $this->kernel().'/Kernel.php';
+        $this->touch['kernel/servicejson']          = $this->kernel().'/service.json';
         $this->touch['kernel/helper']               = $this->provider().'/HelperServiceProvider.php';
         //$this->touch['helpers/general']             = app()->path()->helpers().'/General.php';
         $this->touch['kernel/version']              = $this->kernel().'/Version.php';
