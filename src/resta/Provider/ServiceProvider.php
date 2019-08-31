@@ -64,14 +64,11 @@ class ServiceProvider extends  ApplicationProvider
             $deferrableProvides = $providerInstance->provides();
 
             foreach ($deferrableProvides as $deferrableProvide) {
-
                 if($this->app->has($deferrableProvide)){
-
                     JsonHandler::$file = serviceJson();
                     $serviceJson = JsonHandler::get();
 
                     if(!isset($serviceJson['providers'][$provider])){
-
                         JsonHandler::set('providers-deferrable-classes',[
                             $provider => true
                         ]);
