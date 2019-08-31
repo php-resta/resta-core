@@ -154,11 +154,15 @@ class ServiceProvider extends  ApplicationProvider
         // we register an empty array for the container object.
         $this->assignerLoadedProvidersInitialCoreValue();
 
+        $serviceJson = [];
+
         //first we are running register methods of provider classes.
         foreach($providers as $key=>$provider){
 
-            JsonHandler::$file = serviceJson();
-            $serviceJson = JsonHandler::get();
+            if(file_exists(serviceJson())){
+                JsonHandler::$file = serviceJson();
+                $serviceJson = JsonHandler::get();
+            }
 
             // providers can only be installed once.
             // apply providers and register for kernel
