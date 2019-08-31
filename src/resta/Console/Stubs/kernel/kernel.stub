@@ -18,14 +18,15 @@ return [
      * all providers names
      */
     'providers' => [
-        'AuthenticateServiceProvider'       => AuthenticateServiceProvider::class,
-        'HelperServiceProvider'             => HelperServiceProvider::class,
-        'AppServiceProvider'                => AppServiceProvider::class,
-        'ConsoleEventServiceProvider'       => ConsoleEventServiceProvider::class,
-        'WorkerServiceProvider'             => WorkerServiceProvider::class,
-        'RoleServiceProvider'               => RoleServiceProvider::class,
-        'CacheServiceProvider'              => CacheServiceProvider::class,
-        'TrackServiceProvider'              => TrackServiceProvider::class,
+        'AuthenticateServiceProvider'       => ['class' => AuthenticateServiceProvider::class, 'status' => true],
+        'HelperServiceProvider'             => ['class' => HelperServiceProvider::class, 'status' => true],
+        'AppServiceProvider'                => ['class' => AppServiceProvider::class, 'status' => true],
+        'ConsoleEventServiceProvider'       => ['class' => ConsoleEventServiceProvider::class, 'status' => true],
+        'WorkerServiceProvider'             => ['class' => WorkerServiceProvider::class, 'status' => true],
+        'RoleServiceProvider'               => ['class' => RoleServiceProvider::class, 'status' => true],
+        'CacheServiceProvider'              => ['class' => CacheServiceProvider::class, 'status' => true],
+        'TrackServiceProvider'              => ['class' => TrackServiceProvider::class,'status' => app()->runningInConsole()],
+        'AwsServiceProvider'                => ['class' => AwsServiceProvider::class, 'status' => true],
     ],
 
     /**

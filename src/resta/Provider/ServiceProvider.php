@@ -109,7 +109,14 @@ class ServiceProvider extends  ApplicationProvider
             // providers can only be installed once.
             // apply providers and register for kernel
             if(!isset($this->app['loadedProviders'][$key])){
-                $this->applyProvider($key,$provider);
+
+                if(is_array($provider) && isset($provider['status']) && $provider['status']){
+                    $this->applyProvider($key,$provider['class']);
+                }
+                else{
+                    $this->applyProvider($key,$provider);
+                }
+
             }
         }
 
