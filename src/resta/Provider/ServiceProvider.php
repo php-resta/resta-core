@@ -3,7 +3,10 @@
 namespace Resta\Provider;
 
 use Resta\Support\Utils;
+use Resta\Support\JsonHandler;
+use Resta\Support\SerializeClassProcess;
 use Resta\Foundation\ApplicationProvider;
+use Resta\Exception\FileNotFoundException;
 
 class ServiceProvider extends  ApplicationProvider
 {
@@ -17,9 +20,11 @@ class ServiceProvider extends  ApplicationProvider
     /**
      * apply provider class
      *
-     * @param string $key
-     * @param string $provider
+     * @param $key
+     * @param $provider
      * @param string $method
+     *
+     * @throws FileNotFoundException
      */
     private function applyProvider($key,$provider,$method='register')
     {
@@ -30,7 +35,12 @@ class ServiceProvider extends  ApplicationProvider
             // after determining whether the register or boot methods
             // we are running the provider.
             /** @scrutinizer ignore-call */
-            $providerInstance = $this->app->resolve($provider);
+            if($this->app->runningInConsole()===false){
+                $providerInstance = $this->checkInServiceJsonForProvider($provider);
+            }
+            else{
+                $providerInstance = $this->app->resolve($provider);
+            }
 
             //we need to do method check for provider.
             if(method_exists($providerInstance,$method)){
@@ -61,6 +71,33 @@ class ServiceProvider extends  ApplicationProvider
     }
 
     /**
+     * check in service.json for provider
+     *
+     * @param $provider
+     * @return mixed
+     *
+     * @throws FileNotFoundException
+     */
+    private function checkInServiceJsonForProvider($provider)
+    {
+        JsonHandler::$file = serviceJson();
+        $data = JsonHandler::get();
+
+        if(!isset($data['providers'][$provider])){
+            $serviceRegister = JsonHandler::set('providers',[$provider=>SerializeClassProcess::set($provider)]);
+        }
+
+        if(isset($serviceRegister)){
+            $data = JsonHandler::get();
+            if(!isset($data['providers'][$provider])){
+                return $this->app->resolve($provider);
+            }
+        }
+
+        return SerializeClassProcess::get($data['providers'][$provider]);
+    }
+
+    /**
      * get all service providers
      *
      * @return array
@@ -81,7 +118,7 @@ class ServiceProvider extends  ApplicationProvider
     /**
      * handle service providers
      *
-     * @return void|mixed
+     * @throws FileNotFoundException
      */
     public function handle()
     {
@@ -95,6 +132,8 @@ class ServiceProvider extends  ApplicationProvider
      * resolve providers
      *
      * @param array $providers
+     *
+     * @throws FileNotFoundException
      */
     public function resolveProviders($providers=array())
     {

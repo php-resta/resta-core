@@ -60,7 +60,8 @@
         "illuminate/queue": "^5.8",
         "illuminate/events": "^5.8",
         "aligurbuz/lingua": "dev-master",
-        "ext-json": "*"
+        "ext-json": "*",
+        "jeremeamia/superclosure": "^2.4"
     },
     "require-dev": {
         "composer/composer": "^1.8"

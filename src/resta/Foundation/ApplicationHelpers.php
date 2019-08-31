@@ -421,3 +421,14 @@ if (!function_exists('trans')) {
         return app()->singleton()->appClass->translator($lang,$select);
     }
 }
+
+if (!function_exists('serviceJson')) {
+
+    /**
+     * @return string
+     */
+    function serviceJson()
+    {
+        return app()->path()->kernel().''.DIRECTORY_SEPARATOR.'service.json';
+    }
+}
