@@ -59,7 +59,8 @@
         "league/pipeline": "^1.0",
         "illuminate/queue": "^5.8",
         "illuminate/events": "^5.8",
-        "aligurbuz/lingua": "dev-master"
+        "aligurbuz/lingua": "dev-master",
+        "ext-json": "*"
     },
     "require-dev": {
         "composer/composer": "^1.8"
