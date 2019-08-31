@@ -25,7 +25,8 @@ class SuperClosure
 
     public static function get($object)
     {
-
+        $resolveObject = self::getInstance()->unserialize($object);
+        return $resolveObject();
     }
 
     public static function set($data)
