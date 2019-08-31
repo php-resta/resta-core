@@ -6,6 +6,8 @@ use DI\NotFoundException;
 use DI\DependencyException;
 use Resta\Console\ConsoleBindings;
 use Resta\Contracts\ContainerContracts;
+use Resta\Contracts\ApplicationContracts;
+use Resta\Exception\FileNotFoundException;
 
 class Container implements ContainerContracts,\ArrayAccess
 {
@@ -204,7 +206,9 @@ class Container implements ContainerContracts,\ArrayAccess
      * get abstract data in container
      *
      * @param $abstract
-     * @return null
+     * @return mixed|ApplicationContracts|null
+     *
+     * @throws FileNotFoundException
      */
     public function get($abstract)
     {
@@ -218,7 +222,7 @@ class Container implements ContainerContracts,\ArrayAccess
                 $container = $container[$item];
             }
             else{
-                return null;
+                return ContainerClosureResolver::get($item);
             }
         }
 
