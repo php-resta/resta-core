@@ -215,6 +215,8 @@ class Container implements ContainerContracts,\ArrayAccess
         //get instance container
         $container = app();
 
+        $containerClosureResolver = [];
+
         // the has method can have a dotted string value so
         // we need to be able to control the string or array within the container.
         foreach (explode(".",$abstract) as $item){
@@ -222,7 +224,8 @@ class Container implements ContainerContracts,\ArrayAccess
                 $container = $container[$item];
             }
             else{
-                return ContainerClosureResolver::get($item);
+                $containerClosureResolver[] = $item;
+                $container = ContainerClosureResolver::get(implode('.',$containerClosureResolver));
             }
         }
 
