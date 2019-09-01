@@ -233,10 +233,12 @@ class Container implements ContainerContracts,\ArrayAccess
     }
 
     /**
-     * check abstract data in container
+     * checks if the container entity is available
      *
      * @param $abstract
-     * @return bool
+     * @return bool|mixed
+     *
+     * @throws FileNotFoundException
      */
     public function has($abstract)
     {
@@ -244,6 +246,8 @@ class Container implements ContainerContracts,\ArrayAccess
 
         //get instance container
         $container = $this;
+
+        $containerClosureResolver = [];
 
         // the has method can have a dotted string value so
         // we need to be able to control the string or array within the container.
@@ -257,10 +261,20 @@ class Container implements ContainerContracts,\ArrayAccess
                 // the items corresponding to the dotted value in the container.
                 // the control result is transferred to the bools array.
                 $container = $container[$item];
+
+                if(is_null($container)){
+                    $containerClosureResolver[] = $item;
+                    $container = ContainerClosureResolver::get(implode('.',$containerClosureResolver));
+
+                    if(is_callable($container)){
+                        $bools = [];
+                        $container = true;
+                    }
+                }
+
                 $bools[] = is_null($container) ? false : true;
             }
             else{
-
                 // if the container array corresponds to a string,
                 // the bools array is filled with the isset control directly.
                 $bools[] = isset($container[$item]) ? true : false;
