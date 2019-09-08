@@ -3,7 +3,7 @@
 namespace Resta\Authenticate;
 
 use Resta\Authenticate\Resource\AuthLoginCredentialsManager;
-use Resta\Request\Request as RequestClient;
+use Resta\Client\Client as RequestClient;
 
 class AuthenticateRequest extends RequestClient
 {
@@ -45,6 +45,7 @@ class AuthenticateRequest extends RequestClient
 
         //credentials loop for expected property
         foreach ($this->credentials->get() as $credential){
+            $this->capsule[] = $credential;
             $this->expected[] = $credential;
         }
 

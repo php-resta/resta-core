@@ -92,6 +92,10 @@ class AuthLoginCredentialsManager
      */
     public function getRequest()
     {
+        if(!is_null($clientProvider = $this->manager->getAuth()->provider('client'))){
+            return $clientProvider();
+        }
+
         $request = $this->manager->getAuth()->getRequest();
 
         if($request=='Default'){
