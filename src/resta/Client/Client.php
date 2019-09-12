@@ -45,6 +45,11 @@ class Client extends ClientAbstract implements HandleContracts
     protected $requestData = [];
 
     /**
+     * @var array
+     */
+    protected $generatorList = [];
+
+    /**
      * Request constructor.
      *
      * @param null|array $clientData
@@ -311,6 +316,7 @@ class Client extends ClientAbstract implements HandleContracts
                         $this->{$generator} = $this->{$generatorMethodName}();
                         $this->inputs[$generator] = $this->{$generatorMethodName}();
                         $this->requestData[$generator] = $this->inputs[$generator];
+                        $this->generatorList[] = $generator;
                     }
                 }
                 else {

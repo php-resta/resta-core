@@ -18,6 +18,14 @@ class ClientProvider extends ClientManager implements ArrayAccess {
     }
 
     /**
+     * @return array
+     */
+    public function generatorList()
+    {
+        return $this->generatorList;
+    }
+
+    /**
      * check if the exist the request input
      *
      * @param $key
