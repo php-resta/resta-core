@@ -4,17 +4,19 @@ namespace __modelNamespace__;
 
 use __modelNamespace__\Helper\Scope;
 use __modelNamespace__\Helper\Event;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model as Eloquent;
 
 /**
  * Class __file__
  * @method static $this pagination()
+ * @method static $this select($select=array())
  * @method static $this active()
  * @method static $this find($id)
  * @method static $this insert($data=array())
  * @method static $this create($data=array())
- * @method static $this where(callable $callback=null)
+ * @method static $this where($field,$value)|where(callable $callback=null)
+ * @method static $this get()
+ * @method static $this first()
  * @package App\__project__\__version__\__model__
  */
 class __file__ extends Eloquent
@@ -34,64 +36,6 @@ class __file__ extends Eloquent
     /**
      * @var array
      */
-    protected $hidden = [];
-
-    /**
-     * @var array
-     */
-    protected $filter = ['id'];
-
-    /**
-     * model event boot
-     *
-     * @return void
-     */
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::saved(function($model){
-            $model->getTableChanges($model,'updated');
-        });
-
-        //query filter scope
-        $filter     = (!is_null($filter = get('filter'))) ? $filter : [];
-        $with       = (!is_null($with = get('with'))) ? $with : [];
-        $select     = get('select');
-
-        $withList = [];
-
-        foreach ($with as $item){
-            if(method_exists(new self(),$item)){
-                $withList[] = $item;
-            }
-        }
-
-        static::addGlobalScope('filter', function (Builder $builder) use($filter,$withList,$select){
-
-            $builder->with($withList);
-
-            if(!is_null($select)){
-                $builder->select(explode(',',$select));
-            }
-
-            if(count($filter)){
-                foreach ($filter as $key=>$item){
-                    if(in_array($key,(new self())->filter)){
-                        if($key!=='order'){
-                            $builder->where($key,$item);
-                        }
-                    }
-                }
-
-                if(isset($filter['order'])){
-                    $builder->orderBy('id',$filter['order']);
-                }
-            }
-            else{
-                $builder->orderBy('id','desc');
-            }
-        });
-    }
+    protected $hidden = ['id'];
 }
 

@@ -4,6 +4,7 @@ namespace __modelNamespace__\Helper;
 
 use App\Mobi\Api\V1\Model\TableEvent;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 trait Event
 {
@@ -37,5 +38,64 @@ trait Event
 
            }
        }
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::saved(function($model){
+            $model->getTableChanges($model,'updated');
+        });
+
+        //query filter scope
+        $filter     = (!is_null($filter = get('filter'))) ? $filter : [];
+        $with       = (!is_null($with = get('with'))) ? $with : [];
+        $select     = get('select');
+
+         $selectList = [];
+
+         if(is_array($select) && count($select)){
+            foreach ($select as $selectValue){
+                if(in_array($selectValue,(new self())->fillable)){
+                    $selectList[] = $selectValue;
+                }
+            }
+         }
+
+         $withList = [];
+
+         foreach ($with as $item){
+            if(method_exists(new self(),$item)){
+                $withList[] = $item;
+            }
+         }
+
+         static::addGlobalScope('filter', function (Builder $builder) use($filter,$withList,$selectList){
+
+            $builder->authenticate()->ordered();
+            $builder->with($withList);
+
+            if(count($selectList)){
+                $builder->select($selectList);
+            }
+
+            if(count($filter)){
+                foreach ($filter as $key=>$item){
+                    if(in_array($key,(new self())->fillable)){
+                        if($key!=='order'){
+                            $builder->where($key,$item);
+                        }
+                    }
+                }
+
+                if(isset($filter['order'])){
+                    $builder->orderBy('id',$filter['order']);
+                }
+            }
+            else{
+                $builder->orderBy('id','desc');
+            }
+        });
     }
 }
