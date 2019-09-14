@@ -318,7 +318,6 @@ class Client extends ClientAbstract implements HandleContracts
                     if(!is_null($generatorMethodNameResult)){
                         $this->{$generator} = $this->{$generatorMethodName}();
                         $this->inputs[$generator] = $this->{$generatorMethodName}();
-                        $this->requestData[$generator] = $this->inputs[$generator];
                         $this->generatorList[] = $generator;
                     }
                 }
@@ -343,28 +342,6 @@ class Client extends ClientAbstract implements HandleContracts
                 $this->registerRequestInputs($generator);
             }
         }
-    }
-
-    /**
-     * get real request data for client
-     *
-     * @return array
-     */
-    public function getRequestData()
-    {
-        $list = [];
-
-        foreach ($this->requestData as $key=>$item) {
-            if(property_exists($this,'requestExcept') && !in_array($key,$this->requestExcept)){
-                $list[$key] = $item;
-            }
-
-            if(!property_exists($this,'requestExcept')){
-                $list[$key] = $item;
-            }
-        }
-
-        return $list;
     }
 
     /**
@@ -416,6 +393,23 @@ class Client extends ClientAbstract implements HandleContracts
     }
 
     /**
+     * the values ​​specified in request except property
+     * are subtracted from all input values.
+     *
+     * @return mixed|void
+     */
+    private function requestExcept()
+    {
+        if(property_exists($this,'requestExcept') && is_array($this->requestExcept)){
+            foreach ($this->requestExcept as $item){
+                if(isset($this->inputs[$item])){
+                    unset($this->inputs[$item]);
+                }
+            }
+        }
+    }
+
+    /**
      * request properties
      *
      * @throws ReflectionExceptionAlias
@@ -436,6 +430,10 @@ class Client extends ClientAbstract implements HandleContracts
         // it passes all keys that are sent through
         // a validation method on the user side.
         $this->validation();
+
+        // the values ​​specified in request except property
+        // are subtracted from all input values.
+        $this->requestExcept();
     }
 
     /**
@@ -512,14 +510,12 @@ class Client extends ClientAbstract implements HandleContracts
                     $this->{$key}               = $input;
                     $keyMethod                  = $this->{$method}();
                     $this->inputs[$key][]       = $keyMethod;
-                    $this->requestData[$key][]  = $keyMethod;
                 }
             }
             else{
                 if(isset($this->inputs[$key])){
                     $keyMethod = $this->{$method}();
                     $this->inputs[$key] = $keyMethod;
-                    $this->requestData[$key] = $keyMethod;
                 }
 
             }
