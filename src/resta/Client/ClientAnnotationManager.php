@@ -189,7 +189,7 @@ class ClientAnnotationManager extends ClientAnnotationAbstract
                 foreach($rules as $rule){
                     if(isset($requestRules[$rule])){
                         if(!preg_match('@'.$requestRules[$rule].'@',$this->inputs[$key])){
-                            exception($rule,['key'=>$this->inputs[$key]])
+                            exception($rule,['key'=>$key])
                                 ->invalidArgument($this->inputs[$key].' input value is not valid for '.$rule.' request rule');
                         }
                     }
@@ -203,7 +203,7 @@ class ClientAnnotationManager extends ClientAnnotationAbstract
                         foreach($rules as $rule){
                             if(isset($requestRules[$rule])){
                                 if(!preg_match('@'.$requestRules[$rule].'@',$input)){
-                                    exception($rule,['key'=>$input])
+                                    exception($rule,['key'=>$key])
                                         ->invalidArgument($input.' input value is not valid for '.$rule.' request rule');
                                 }
                             }
@@ -215,7 +215,7 @@ class ClientAnnotationManager extends ClientAnnotationAbstract
                             foreach($rules as $rule){
                                 if(isset($requestRules[$rule])){
                                     if(!preg_match('@'.$requestRules[$rule].'@',$item)){
-                                        exception($rule,['key'=>$item])
+                                        exception($rule,['key'=>$ikey])
                                             ->invalidArgument($item.' input value is not valid for '.$rule.' request rule');
                                     }
                                 }
