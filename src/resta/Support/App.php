@@ -297,7 +297,9 @@ class App
      */
     public function translator($data,$select=array())
     {
-        $lang=(new Lingua(path()->appLanguage()));
+        $languageDir = path()->appLanguage();
+
+        $lang=(new Lingua($languageDir));
 
         if(self::app()->has('locale')){
             $defaultLocale = self::app()->get('locale');
@@ -306,6 +308,9 @@ class App
             $defaultLocale = config('app.locale');
         }
 
+        if(!file_exists($languageDir.''.DIRECTORY_SEPARATOR.''.$defaultLocale)){
+            $defaultLocale = config('app.fallback_locale');
+        }
 
         if(count($select)){
             return $lang->include(['default'])->locale($defaultLocale)->get($data,$select);
