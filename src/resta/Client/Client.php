@@ -15,6 +15,11 @@ class Client extends ClientAbstract implements HandleContracts
     protected $capsule = [];
 
     /**
+     * @var string
+     */
+    protected $clientName;
+
+    /**
      * @var array
      */
     protected $except = [];
@@ -61,8 +66,12 @@ class Client extends ClientAbstract implements HandleContracts
         //reflection process
         $this->reflection = app()['reflection']($this);
 
+        if(property_exists(debug_backtrace()[0]['object'],'clientName')){
+            $this->clientName = debug_backtrace()[0]['object']->clientName;
+        }
+        
         //get http method via request http manager class
-        $this->requestHttp = app()->resolve(ClientHttpManager::class);
+        $this->requestHttp = app()->resolve(ClientHttpManager::class,['client'=>$this]);
 
         //get request client data
         $this->clientData = ($clientData===null) ? $this->requestHttp->resolve() : $clientData;
@@ -342,6 +351,16 @@ class Client extends ClientAbstract implements HandleContracts
                 $this->registerRequestInputs($generator);
             }
         }
+    }
+
+    /**
+     * get client name for request
+     * 
+     * @return string
+     */
+    public function getClientName()
+    {
+        return $this->clientName;
     }
 
     /**

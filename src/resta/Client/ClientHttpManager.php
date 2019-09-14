@@ -13,13 +13,20 @@ class ClientHttpManager extends ApplicationProvider
     protected $method;
 
     /**
-     * RequestHttpManager constructor.
-     *
-     * @param ApplicationContracts $app
+     * @var object
      */
-    public function __construct(ApplicationContracts $app)
+    protected $client;
+
+    /**
+     * ClientHttpManager constructor.
+     * @param ApplicationContracts $app
+     * @param object $client
+     */
+    public function __construct(ApplicationContracts $app, $client)
     {
         parent::__construct($app);
+
+        $this->client = $client;
 
         $this->method = httpMethod();
     }
@@ -36,10 +43,22 @@ class ClientHttpManager extends ApplicationProvider
         $content = json_decode($this->app['request']->getContent(),1);
 
         if(is_array($inputs) && count($inputs)){
+
+            if(isset($inputs[$this->client->getClientName()])){
+                return $inputs[$this->client->getClientName()];
+            }
             return $inputs;
         }
 
-        return is_array($content) ? $content : [];
+        if(is_array($content)){
+
+            if(isset($content[$this->client->getClientName()])){
+                return $content[$this->client->getClientName()];
+            }
+            return $content;
+        }
+
+        return [];
     }
 
     /**
