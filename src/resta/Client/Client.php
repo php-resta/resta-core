@@ -118,6 +118,9 @@ class Client extends ClientAbstract implements HandleContracts
         // this method is a must for http method values to be found in this property.
         if($this->checkProperties('capsule')){
 
+            if(property_exists($this,'auto_capsule') && is_array($this->auto_capsule)){
+                $this->capsule = array_merge($this->capsule,$this->auto_capsule);
+            }
             $caret = $this->capsuleCaret();
 
             foreach($this->inputs as $input=>$value){
@@ -125,7 +128,7 @@ class Client extends ClientAbstract implements HandleContracts
                 if(isset($caret[$input]) || (
                         $this->checkProperties('capsule') && !in_array($input,$this->capsule)
                     )){
-                    exception('capsuleRequestException')
+                    exception('clientCapsule',['key'=>$input])
                         ->overflow('The '.$input.' value cannot be sent.');
                 }
             }
