@@ -325,12 +325,14 @@ class Client extends ClientAbstract implements HandleContracts
                         && in_array($generator,$this->getAutoGeneratorsDontOverwrite())){
                         $this->{$generator} = $this->{$generatorMethodName}();
                         $this->inputs[$generator] = $this->{$generatorMethodName}();
+                        $this->generatorList[] = $generator;
                     }
 
                     if($this->checkProperties('generators_dont_overwrite')
                         && in_array($generator,$this->getGeneratorsDontOverwrite())){
                         $this->{$generator} = $this->{$generatorMethodName}();
                         $this->inputs[$generator] = $this->{$generatorMethodName}();
+                        $this->generatorList[] = $generator;
                     }
 
                 }
@@ -378,6 +380,11 @@ class Client extends ClientAbstract implements HandleContracts
         //that coming with the post.
         $this->initClient();
 
+        // if a fake method is defined and it is not in
+        // the context of any key method when access is granted,
+        // it can be filled with fake method.
+        $this->generatorManager();
+
         // we update the input values ​​after
         // we receive and check the saved objects.
         $this->setClientObjects();
@@ -412,11 +419,6 @@ class Client extends ClientAbstract implements HandleContracts
      */
     private function requestProperties()
     {
-        // if a fake method is defined and it is not in
-        // the context of any key method when access is granted,
-        // it can be filled with fake method.
-        $this->generatorManager();
-
         // contrary to capsule method,
         // expected values must be in the key being sent.
         $this->expectedInputs();
@@ -446,7 +448,7 @@ class Client extends ClientAbstract implements HandleContracts
         // we receive and check the saved objects.
         foreach ($clientObjects as $key=>$value){
 
-            if(isset($clientObjects['origin'][$key])){
+            if(!in_array($key,$this->generatorList) && isset($clientObjects['origin'][$key])){
 
                 $this->{$key} = $clientObjects['origin'][$key];
                 $this->inputs[$key] = $this->{$key};
@@ -456,6 +458,7 @@ class Client extends ClientAbstract implements HandleContracts
                 $this->registerRequestInputs($key);
             }
         }
+
     }
 
     /**
@@ -490,7 +493,7 @@ class Client extends ClientAbstract implements HandleContracts
      */
     private function setRequestInputs($method,$key)
     {
-        if(method_exists($this,$method) && $this->reflection->reflectionMethodParams($method)->isProtected){
+        if(!in_array($key,$this->generatorList) && method_exists($this,$method) && $this->reflection->reflectionMethodParams($method)->isProtected){
 
             //check annotations for method
             $annotation = app()->resolve(ClientAnnotationManager::class,['request'=>$this]);
