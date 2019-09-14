@@ -189,7 +189,14 @@ class ErrorProvider extends ApplicationProvider
         }
         else{
 
-            $this->result = $this->getAppException($environment,$this->data['errStrReal']);
+            if($environment=='production' && preg_match('@SQLSTATE@is',$this->data['errStrReal'])){
+                $externalMessage = 'An unexpected external error has occurred';
+            }
+            else{
+                $externalMessage = $this->data['errStrReal'];
+            }
+
+            $this->result = $this->getAppException($environment,$externalMessage);
 
             //Get or Set the HTTP response code
             http_response_code($this->data['status']);
