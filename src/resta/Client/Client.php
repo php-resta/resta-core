@@ -69,7 +69,7 @@ class Client extends ClientAbstract implements HandleContracts
         if(property_exists(debug_backtrace()[0]['object'],'clientName')){
             $this->clientName = debug_backtrace()[0]['object']->clientName;
         }
-        
+
         //get http method via request http manager class
         $this->requestHttp = app()->resolve(ClientHttpManager::class,['client'=>$this]);
 
@@ -123,6 +123,10 @@ class Client extends ClientAbstract implements HandleContracts
      */
     private function capsule()
     {
+        if(method_exists($this,'capsuleMethod')){
+            $this->capsule = $this->capsuleMethod();
+        }
+
         // expected method is executed.
         // this method is a must for http method values to be found in this property.
         if($this->checkProperties('capsule')){
@@ -130,6 +134,7 @@ class Client extends ClientAbstract implements HandleContracts
             if(property_exists($this,'auto_capsule') && is_array($this->auto_capsule)){
                 $this->capsule = array_merge($this->capsule,$this->auto_capsule);
             }
+
             $caret = $this->capsuleCaret();
 
             foreach($this->inputs as $input=>$value){
@@ -355,7 +360,7 @@ class Client extends ClientAbstract implements HandleContracts
 
     /**
      * get client name for request
-     * 
+     *
      * @return string
      */
     public function getClientName()
