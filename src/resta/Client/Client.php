@@ -124,7 +124,7 @@ class Client extends ClientAbstract implements HandleContracts
     private function capsule()
     {
         if(method_exists($this,'capsuleMethod')){
-            $this->capsule = $this->capsuleMethod();
+            $this->capsule = array_merge($this->capsule,$this->capsuleMethod());
         }
 
         // expected method is executed.
