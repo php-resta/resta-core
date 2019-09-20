@@ -180,7 +180,7 @@ class ClientAnnotationManager extends ClientAnnotationAbstract
      */
     private function getRules($key)
     {
-        if(preg_match('@rule\((.*?)\)\r\n@is',$this->annotation,$rule)){
+        if(preg_match('@rule\((.*?)\)|rule\((.*?)\)\r\n@is',$this->annotation,$rule)){
 
             $requestRules = $this->getReflection('rules');
 
