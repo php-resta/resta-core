@@ -4,6 +4,10 @@ namespace Resta\Client;
 
 use Resta\Contracts\ApplicationContracts;
 
+/**
+ * @property $this inputsKey
+ * @property $this inputsValue
+ */
 class ClientAnnotationManager extends ClientAnnotationAbstract
 {
     /**

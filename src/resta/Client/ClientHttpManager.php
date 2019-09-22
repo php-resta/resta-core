@@ -72,13 +72,11 @@ class ClientHttpManager extends ApplicationProvider
      */
     private function inputVars()
     {
-        global $_PUT;
+        global /** @noinspection PhpUnusedLocalVariableInspection */
+        $_PUT;
 
         /* PUT data comes in on the stdin stream */
         $putdata = fopen("php://input", "r");
-
-        /* Open a file for writing */
-        // $fp = fopen("myputfile.ext", "w");
 
         $raw_data = '';
 
@@ -128,6 +126,7 @@ class ClientHttpManager extends ApplicationProvider
                     $headers['content-disposition'],
                     $matches
                 );
+                /** @noinspection PhpUnusedLocalVariableInspection */
                 list(, $type, $name) = $matches;
 
                 //Parse File
@@ -147,6 +146,7 @@ class ClientHttpManager extends ApplicationProvider
                     $tmp_name = tempnam( ini_get('upload_tmp_dir'), $filename_parts['filename']);
 
                     //populate $_FILES with information, size may be off in multibyte situation
+                    /** @noinspection PhpUndefinedVariableInspection */
                     $_FILES[ $matches[ 2 ] ] = array(
                         'error'=>0,
                         'name'=>$filename,

@@ -2,6 +2,12 @@
 
 namespace Resta\Client;
 
+/**
+ * @property $this auto_generators
+ * @property $this auto_generators_dont_overwrite
+ * @property $this generators
+ * @property $this generators_dont_overwrite
+ */
 abstract class ClientAbstract
 {
     /**

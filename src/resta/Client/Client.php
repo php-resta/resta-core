@@ -7,6 +7,13 @@ use Resta\Contracts\HandleContracts;
 use Resta\Support\ReflectionProcess;
 use ReflectionException as ReflectionExceptionAlias;
 
+/**
+ * @property $this auto_capsule
+ * @property $this http
+ * @property $this autoObjectValidate
+ * @property $this requestExcept
+ * @property $this expected
+ */
 class Client extends ClientAbstract implements HandleContracts
 {
     /**
@@ -15,7 +22,7 @@ class Client extends ClientAbstract implements HandleContracts
     protected $capsule = [];
 
     /**
-     * @var string
+     * @var null|string
      */
     protected $clientName;
 
@@ -25,7 +32,7 @@ class Client extends ClientAbstract implements HandleContracts
     protected $except = [];
 
     /**
-     * @var string
+     * @var null|string
      */
     protected $method;
 
@@ -35,7 +42,7 @@ class Client extends ClientAbstract implements HandleContracts
     protected $reflection;
 
     /**
-     * @var null|object
+     * @var null|ClientHttpManager
      */
     protected $requestHttp;
 
@@ -66,9 +73,8 @@ class Client extends ClientAbstract implements HandleContracts
         //reflection process
         $this->reflection = app()['reflection']($this);
 
-        if(property_exists(debug_backtrace()[0]['object'],'clientName')){
-            $this->clientName = debug_backtrace()[0]['object']->clientName;
-        }
+        //set clientName for client
+        $this->setClientName();
 
         //get http method via request http manager class
         $this->requestHttp = app()->resolve(ClientHttpManager::class,['client'=>$this]);
@@ -90,26 +96,26 @@ class Client extends ClientAbstract implements HandleContracts
         //we get the values ​​to auto-validate.
         foreach ($this->{$validate} as $object=>$datas){
 
+            if(false===Utils::isNamespaceExists($object)){
+                return;
+            }
+
             // the auto-validate value must necessarily represent a class.
             // otherwise auto-validate is not used.
-            if(Utils::isNamespaceExists($object)){
-                $getObjectInstance = app()->resolve($object);
+            $getObjectInstance = app()->resolve($object);
 
-                // we get the index values,
-                // which are called methods of the auto-validate value that represents the class.
-                foreach ($datas as $dataKey=>$data){
+            // we get the index values,
+            // which are called methods of the auto-validate value that represents the class.
+            foreach ($datas as $dataKey=>$data){
 
-                    // if the methods of the auto-validate class resolved by the container resolve method apply,
-                    // the process of auto-validate automatic implementation will be completed.
-                    if(is_numeric($dataKey) && method_exists($getObjectInstance,$data)){
-                        if(isset($this->origin[$data])){
-                            if(!is_array($this->origin[$data])){
-                                $this->origin[$data] = array($this->origin[$data]);
-                            }
-                            foreach ($this->origin[$data] as $originData){
-                                $getObjectInstance->{$data}($originData);
-                            }
-                        }
+                // if the methods of the auto-validate class resolved by the container resolve method apply,
+                // the process of auto-validate automatic implementation will be completed.
+                if(isset($this->origin[$data]) && is_numeric($dataKey) && method_exists($getObjectInstance,$data)){
+                    if(!is_array($this->origin[$data])){
+                        $this->origin[$data] = array($this->origin[$data]);
+                    }
+                    foreach ($this->origin[$data] as $originData){
+                        $getObjectInstance->{$data}($originData);
                     }
                 }
             }
@@ -123,6 +129,7 @@ class Client extends ClientAbstract implements HandleContracts
      */
     private function capsule()
     {
+        //a process can be added to the capsule array using the method.
         if(method_exists($this,'capsuleMethod')){
             $this->capsule = array_merge($this->capsule,$this->capsuleMethod());
         }
@@ -193,7 +200,7 @@ class Client extends ClientAbstract implements HandleContracts
 
                 //exception batMethodCall
                 exception()->badMethodCall(
-                    'Invalid http method process for '.class_basename($this).'.That is accepted http methods ['.implode(",",$this->http).'] ');
+                    'Invalid http method process for '.basename($this).'.That is accepted http methods ['.implode(",",$this->http).'] ');
             }
         }
     }
@@ -436,7 +443,7 @@ class Client extends ClientAbstract implements HandleContracts
     /**
      * request properties
      *
-     * @throws ReflectionExceptionAlias
+     * @return void
      */
     private function requestProperties()
     {
@@ -458,6 +465,27 @@ class Client extends ClientAbstract implements HandleContracts
         // the values ​​specified in request except property
         // are subtracted from all input values.
         $this->requestExcept();
+    }
+
+    /**
+     * set client name for client resolver
+     *
+     * @param null|string $clientName
+     * @return void|mixed
+     */
+    public function setClientName($clientName=null)
+    {
+        if(!is_null($clientName) && is_string($clientName)){
+            return $this->clientName = $clientName;
+        }
+
+        if(!is_null(Utils::trace(0)) && isset(Utils::trace(0)['object'])){
+            $backTrace = Utils::trace(0)['object'];
+
+            if(property_exists($backTrace,'clientName')){
+                $this->clientName = $backTrace->clientName;
+            }
+        }
     }
 
     /**
@@ -555,6 +583,7 @@ class Client extends ClientAbstract implements HandleContracts
     {
         // the auto object validate property is the property
         // where all of your request values ​​are automatically validated.
+        /** @noinspection PhpParamsInspection */
         if(property_exists($this,'autoObjectValidate')
             && is_array($this->autoObjectValidate) && count($this->autoObjectValidate)){
             $this->autoValidate('autoObjectValidate');
