@@ -110,7 +110,7 @@ class Client extends ClientAbstract implements HandleContracts
 
                 // if the methods of the auto-validate class resolved by the container resolve method apply,
                 // the process of auto-validate automatic implementation will be completed.
-                if(isset($this->origin[$data]) && is_numeric($dataKey) && method_exists($getObjectInstance,$data)){
+                if(is_numeric($dataKey) && method_exists($getObjectInstance,$data) && isset($this->origin[$data])){
                     if(!is_array($this->origin[$data])){
                         $this->origin[$data] = array($this->origin[$data]);
                     }
