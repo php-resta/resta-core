@@ -7,16 +7,6 @@ use Resta\Provider\ServiceProviderManager;
 class AppServiceProvider extends ServiceProviderManager
 {
     /**
-     * boot service provider
-     *
-     * @return mixed|void
-     */
-    public function boot()
-    {
-        //
-    }
-
-    /**
      * register service provider
      *
      * @return void
@@ -33,5 +23,11 @@ class AppServiceProvider extends ServiceProviderManager
             }
             return null;
         });
+
+        /**$this->app->register('exceptionContainer',function($response,$status){
+                if($status==500){
+                    logger('500')->info($response);
+                }
+        });**/
     }
 }

@@ -213,8 +213,14 @@ class ErrorProvider extends ApplicationProvider
         $this->result = $this->getExceptionExtender();
 
 
+
         //set json app exception
         $this->app->register('routerResult',$this->result);
+
+        if($this->app->has('exceptionContainer')){
+            $exceptionContainer = $this->app->get('exceptionContainer');
+            $exceptionContainer($this->result,$this->data['status']);
+        }
 
         $restaOutHandle = null;
 
@@ -230,12 +236,12 @@ class ErrorProvider extends ApplicationProvider
             header('Content-type:application/json;charset=utf-8');
 
             echo json_encode($this->app->get('out')->outputFormatter($this->result));
-            exit();
         }
         else{
             echo $restaOutHandle;
-            exit();
         }
+
+        exit();
     }
 
     /**
