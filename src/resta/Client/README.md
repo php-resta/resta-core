@@ -217,3 +217,37 @@ In the above rules variable you can define the rules you want and you can use th
 If you want, you can apply multiple rules in sequence with the (:) character.First, the username entry is integer
 and then apply the rule defined as min6Char, if applicable.
 
+# Use special exceptions for request rules.
+Exception is one of the most important key elements for your system.
+Client resolver allows you to define custom exceptions.You can direct your users by feeding them with the most accurate exception string.
+
+```php
+
+    /**
+     * @var string
+     */
+    protected $username;
+
+    /**
+     * @regex([a-zA-z]+)
+     * @exception(name:username params:key=username)
+     * @return string
+     */
+    protected function username()
+    {
+        return md5($this->username);
+    }
+
+```
+
+The exception to be applied to the regex rule defined above is defined for key defined as username in exception.yml.
+If the 'username' key is defined in the exception.yml file, this message is directly reflected in the output.
+
+```php
+
+    username : (key) is not valid
+
+```
+
+You can send variables to the exception.yml file with the value specified as the parameter.
+'username is not valid' is sent to the output.
