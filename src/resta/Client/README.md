@@ -16,3 +16,5 @@ You will receive requests to this user table as create, update, and delete.The c
 $ php api client create [projectName] name:user client:create
 
 ```
+
+This code will place a directory named user in your application's client directory and 3 files (Client, ClientGenerator, ClientProvider) in the same directory.
