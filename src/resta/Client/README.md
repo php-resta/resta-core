@@ -295,11 +295,11 @@ This package has the default value defined for it.
 
 ```php
 
-        /**
-         * The values ​​expected by the server.
-         * @var array
-         */
-        protected $expected = [];
+    /**
+     * The values ​​expected by the server.
+     * @var array
+     */
+     protected $expected = [];
 
 ```
 
