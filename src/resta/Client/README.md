@@ -20,3 +20,47 @@ $ php api client create [projectName] name:user client:create
 This code will place a directory named user in your application's client directory and 3 files (Client, ClientGenerator, ClientProvider) in the same directory.
 The first part we will deal with is the user directory that we created as name.In this directory there is a 'create' directory which we created as a client and a file named 'clientManager'.
 In the Create directory, there is a 'create' file that meets the actual requests and a file named 'createGenerator'.
+
+# How to Receive Requests
+The Create.php file in the create directory created as a client is the file that receives requests directly.
+
+```php
+
+class Create extends ClientProvider implements ClientContract
+{
+    //request and request generator
+    use Client,CreateGenerator,ClientGenerator;
+
+    /**
+     * @var string
+     */
+     public $clientName = 'Create_client';
+
+    /**
+     * @var array
+    */
+    protected $capsule = [];
+
+    /**
+     * The values ​​expected by the server.
+     * @var array
+     */
+    protected $expected = [];
+
+    /**
+     * remove the specified key from client real request
+     *
+     * @var array
+     */
+    protected $requestExcept = [];
+
+    /**
+     * mandatory http method.
+     * @var array
+     */
+    protected $http = [];
+
+
+}
+
+```
