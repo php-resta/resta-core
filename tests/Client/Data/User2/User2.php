@@ -14,7 +14,7 @@ class User2 extends ClientProvider
     /**
      * @var array
      */
-    protected $capsule = ['a','b','password'];
+    protected $capsule = ['a','b','test','test2','test3','password'];
 
     /**
      * The values ​​expected by the server.
@@ -32,4 +32,32 @@ class User2 extends ClientProvider
      * @var array
      */
     protected $http = [];
+
+    /**
+     * @var string
+     */
+    protected $b;
+
+    /**
+     * @var string
+     */
+    protected $password;
+
+    /**
+     * @return string
+     */
+    protected function b()
+    {
+        return $this->b;
+    }
+
+    /**
+     * @return string
+     */
+    protected function password()
+    {
+        return md5($this->password);
+    }
+
+
 }

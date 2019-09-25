@@ -7,11 +7,81 @@ use Resta\Client\Client as RequestClient;
 class ClientProvider extends RequestClient implements \ArrayAccess {
 
     /**
+     * get request input all
+     *
      * @return array
      */
     public function all()
     {
         return $this->inputs;
+    }
+
+    /**
+     * @return array
+     */
+    public function generatorList()
+    {
+        return $this->generatorList;
+    }
+
+    /**
+     * check if the exist the request input
+     *
+     * @param $key
+     * @return bool
+     */
+    public function has($key)
+    {
+        return (isset($this->inputs[$key])) ? true : false;
+    }
+
+    /**
+     * get input for request
+     *
+     * @param $key
+     * @param null $default
+     * @return mixed
+     */
+    public function input($key, $default=null)
+    {
+        if(isset($this->inputs[$key])){
+            return $this->inputs[$key];
+        }
+
+        return $default;
+    }
+
+    /**
+     * remove input for request
+     *
+     * @param $key
+     */
+    public function remove($key)
+    {
+        if(isset($this->inputs[$key])){
+            unset($this->inputs[$key]);
+        }
+    }
+
+    /**
+     * take real request for client
+     * @return array
+     */
+    public function request()
+    {
+        return $this->getRequestData();
+    }
+
+    /**
+     * set a new input value
+     *
+     * @param $key
+     * @param $value
+     * @return void
+     */
+    public function set($key,$value)
+    {
+        $this->inputs[$key] = $value;
     }
 
     /**
