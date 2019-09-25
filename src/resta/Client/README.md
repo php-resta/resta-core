@@ -100,3 +100,26 @@ By default, the above Create.php file processes all requests directly and does n
     }
 
 ```
+
+With the above code, a sanction was applied to username data. But this sanction did not request a change to username data.
+The direct username value is assigned as the client value.A sanction requires two main rules. The first is a 'protected property' and the second is a 'property function'.
+These two rules are mandatory. These two definitions are called request value sanctions.
+
+* ###### Change the client request sanction.
+
+```php
+
+    /**
+     * @var string
+     */
+    protected $username;
+
+    /**
+     * @return string
+     */
+    protected function username()
+    {
+        return md5($this->username);
+    }
+
+```
