@@ -3,6 +3,7 @@
 namespace Resta\Core\Tests\Client;
 
 use OverflowException;
+use InvalidArgumentException;
 use UnexpectedValueException;
 use Resta\Core\Tests\AbstractTest;
 use Resta\Core\Tests\Client\Data\User\User;
@@ -147,6 +148,34 @@ class ClientTest extends AbstractTest
     {
         $this->expectException(OverflowException::class);
         new User2(['a'=>1,'b'=>1,'capsule1'=>'capsule1','capsule2'=>'capsule2','capsule3'=>'capsule3','password'=>123456]);
+    }
+
+    /**
+     * @throws ReflectionExceptionAlias
+     */
+    public function testClient10()
+    {
+        $user2 = new User2(['a'=>1,'b'=>1,'capsule1'=>'capsule1','capsule2'=>'capsule2','password'=>123456,'rule1'=>123456]);
+        $this->assertSame(123456,$user2->input('rule1'));
+    }
+
+    /**
+     * @throws ReflectionExceptionAlias
+     */
+    public function testClient11()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        new User2(['a'=>1,'b'=>1,'capsule1'=>'capsule1','capsule2'=>'capsule2','password'=>123456,'rule1'=>'a1']);
+
+    }
+
+    /**
+     * @throws ReflectionExceptionAlias
+     */
+    public function testClient12()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        new User2(['a'=>1,'b'=>1,'capsule1'=>'capsule1','capsule2'=>'capsule2','password'=>123456,'rule1'=>123]);
     }
 
 }
