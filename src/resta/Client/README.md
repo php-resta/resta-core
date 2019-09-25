@@ -262,4 +262,29 @@ To send multiple values ​​to your exceptions for the regex method, use the c
 
 - ###### Note : In this way, the use of exception with annotation only applies to regex. Since the value used for Rule is already specified as alias, the exception.yml file will automatically search for that alias value.
 
+```php
+
+    /**
+     * @var string
+     */
+    protected $username;
+
+    /**
+     * @rule(integer)
+     * @return string
+     */
+    protected function username()
+    {
+        return md5($this->username);
+    }
+
+```
+
+exception.yml 
+
+```php
+
+    integer : (key) is not integer
+
+```
 
