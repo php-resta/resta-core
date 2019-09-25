@@ -123,3 +123,5 @@ These two rules are mandatory. These two definitions are called request value sa
     }
 
 ```
+
+It encrypts the username data sent by the client with md5. You will see this in the response data. Here you can use a method as you want.
