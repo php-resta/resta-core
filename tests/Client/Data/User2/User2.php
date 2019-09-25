@@ -14,7 +14,7 @@ class User2 extends ClientProvider
     /**
      * @var array
      */
-    protected $capsule = ['a','b','test','test2','test3','password'];
+    protected $capsule = ['a','b','test','test2','test3','password','cgenerator1','cgenerator2','cgenerator3'];
 
     /**
      * The values ​​expected by the server.
@@ -42,6 +42,14 @@ class User2 extends ClientProvider
      * @var string
      */
     protected $password;
+
+    /**
+     * @return array
+     */
+    public function capsuleMethod() : array
+    {
+        return ['capsule1','capsule2'];
+    }
 
     /**
      * @return string

@@ -25,7 +25,7 @@ class ClientTest extends AbstractTest
     public function testClient()
     {
         $this->expectException(UnexpectedValueException::class);
-        $user = new User(['a'=>'b']);
+        new User(['a'=>'b']);
     }
 
     /**
@@ -43,10 +43,20 @@ class ClientTest extends AbstractTest
      */
     public function testClient3()
     {
-        $user = new User(['a'=>1,'b'=>1,'password'=>123456]);
+        $user = new User(['a'=>1,'b'=>1,'password'=>123456,'cgenerator1'=>'x','cgenerator2'=>'x','cgenerator3'=>'x']);
         $this->assertArrayHasKey('password',$user->all());
         $this->assertArrayHasKey('a',$user->all());
         $this->assertArrayHasKey('b',$user->all());
+        $this->assertArrayHasKey('cgenerator1',$user->all());
+
+        $this->assertSame('cgenerator1',$user->input('cgenerator1'));
+        $this->assertNotSame('x',$user->input('cgenerator1'));
+
+        $this->assertSame('x',$user->input('cgenerator2'));
+        $this->assertNotSame('cgenerator2',$user->input('cgenerator2'));
+
+        $this->assertSame('cgenerator3',$user->input('cgenerator3'));
+        $this->assertNotSame('x',$user->input('cgenerator3'));
     }
 
     /**
@@ -67,6 +77,7 @@ class ClientTest extends AbstractTest
         $this->assertArrayNotHasKey('a',$user2->all());
         $this->assertArrayHasKey('b',$user2->all());
         $this->assertArrayHasKey('password',$user2->all());
+        $this->assertArrayHasKey('cgenerator1',$user2->all());
 
     }
 
@@ -75,10 +86,20 @@ class ClientTest extends AbstractTest
      */
     public function testClient6()
     {
-        $user2 = new User2(['a'=>1,'b'=>1,'password'=>123456]);
+        $user2 = new User2(['a'=>1,'b'=>1,'password'=>123456,'cgenerator1'=>'x','cgenerator2'=>'x','cgenerator3'=>'x']);
         $this->assertArrayNotHasKey('a',$user2->all());
         $this->assertArrayHasKey('b',$user2->all());
         $this->assertArrayHasKey('password',$user2->all());
+        $this->assertArrayHasKey('cgenerator1',$user2->all());
+
+        $this->assertSame('cgenerator1',$user2->input('cgenerator1'));
+        $this->assertNotSame('x',$user2->input('cgenerator1'));
+
+        $this->assertSame('x',$user2->input('cgenerator2'));
+        $this->assertNotSame('cgenerator2',$user2->input('cgenerator2'));
+
+        $this->assertSame('cgenerator3',$user2->input('cgenerator3'));
+        $this->assertNotSame('x',$user2->input('cgenerator3'));
 
         $this->assertSame(1,$user2->input('b'));
         $this->assertSame(md5(123456),$user2->input('password'));
@@ -106,6 +127,26 @@ class ClientTest extends AbstractTest
         $this->assertNotSame(1,$user2->input('test3'));
         $this->assertSame('test3',$user2->input('test3'));
 
+    }
+
+    /**
+     * @throws ReflectionExceptionAlias
+     */
+    public function testClient8()
+    {
+        $user2 = new User2(['a'=>1,'b'=>1,'capsule1'=>'capsule1','capsule2'=>'capsule2','password'=>123456]);
+
+        $this->assertArrayHasKey('capsule1',$user2->all());
+        $this->assertArrayHasKey('capsule2',$user2->all());
+    }
+
+    /**
+     * @throws ReflectionExceptionAlias
+     */
+    public function testClient9()
+    {
+        $this->expectException(OverflowException::class);
+        new User2(['a'=>1,'b'=>1,'capsule1'=>'capsule1','capsule2'=>'capsule2','capsule3'=>'capsule3','password'=>123456]);
     }
 
 }

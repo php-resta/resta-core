@@ -14,7 +14,7 @@ class User extends ClientProvider
     /**
      * @var array
      */
-    protected $capsule = ['a','b','password'];
+    protected $capsule = ['a','b','password','cgenerator1','cgenerator2','cgenerator3'];
 
     /**
      * The values ​​expected by the server.
