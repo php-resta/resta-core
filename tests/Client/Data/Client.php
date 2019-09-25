@@ -1,8 +1,8 @@
 <?php
 
-namespace Resta\Core\Tests\Request\Data;
+namespace Resta\Core\Tests\Client\Data;
 
-trait Request
+trait Client
 {
     /**
      * auto validator keys

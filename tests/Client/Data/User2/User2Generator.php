@@ -1,8 +1,8 @@
 <?php
 
-namespace Resta\Core\Tests\Request\Data\User;
+namespace Resta\Core\Tests\Client\Data\User2;
 
-trait UserRequestGenerator
+trait User2Generator
 {
     /**
      * auto generator for inputs

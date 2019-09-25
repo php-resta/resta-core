@@ -1,10 +1,10 @@
 <?php
 
-namespace Resta\Core\Tests\Request\Data;
+namespace Resta\Core\Tests\Client\Data;
 
-use Resta\Request\Request as RequestClient;
+use Resta\Client\Client as RequestClient;
 
-class RequestProvider extends RequestClient implements \ArrayAccess {
+class ClientProvider extends RequestClient implements \ArrayAccess {
 
     /**
      * @return array
