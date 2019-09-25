@@ -288,3 +288,18 @@ exception.yml
 
 ```
 
+# Add custom definitions for the client solver.
+Except for the annotation method for custom request sanctions, one of the methods can be the data you expect in the data sent by the user.
+In fact, this feature is one of the most widely used methods.The user must send the requested data to the server.
+This package has the default value defined for it.
+
+```php
+
+        /**
+         * The values ​​expected by the server.
+         * @var array
+         */
+        protected $expected = [];
+
+```
+
