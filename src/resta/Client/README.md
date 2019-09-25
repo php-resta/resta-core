@@ -299,7 +299,22 @@ This package has the default value defined for it.
      * The values ​​expected by the server.
      * @var array
      */
-     protected $expected = [];
+     protected $expected = ['username'];
 
 ```
+
+The user must send you the values ​​written in the array defined for the expected property. This is one of the important features for your requests.
+and this package offers you a very convenient way.
+
+```php
+
+    /**
+     * The values ​​expected by the server.
+     * @var array
+     */
+     protected $expected = ['username:email'];
+
+```
+
+In the separations written with a single key (:) character for the array as expected, one of the two keys must be sent.
 
