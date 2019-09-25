@@ -77,3 +77,9 @@ The 'all' method in the controller will reflect the entire request directly to y
 As an annotation, the client object will be annotated and written by resta into your automatic 'annotationManager' file.
 
 * The main topic is your definitions in the Create.php file.
+
+# Define request objects.
+Identifying request objects is very important.
+By default, the above Create.php file processes all requests directly and does not impose any sanctions.
+
+* ###### All request sanctions must be defined as 'protected property' and 'protected function'.
