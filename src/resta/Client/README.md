@@ -78,8 +78,25 @@ As an annotation, the client object will be annotated and written by resta into 
 
 * The main topic is your definitions in the Create.php file.
 
-# Request Sanctions.
+# Define Request Sanctions.
 Identifying request objects is very important.
 By default, the above Create.php file processes all requests directly and does not impose any sanctions.
 
 * ###### All request sanctions must be defined as 'protected property' and 'protected function'.
+
+```php
+
+    /**
+     * @var string
+     */
+    protected $username;
+
+    /**
+     * @return string
+     */
+    protected function username()
+    {
+        return $this->username;
+    }
+
+```
