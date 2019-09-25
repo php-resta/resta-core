@@ -312,9 +312,27 @@ and this package offers you a very convenient way.
      * The values ​​expected by the server.
      * @var array
      */
-     protected $expected = ['username:email'];
+     protected $expected = ['username|email'];
 
 ```
 
-In the separations written with a single key (:) character for the array as expected, one of the two keys must be sent.
+In the separations written with a single key (|) character for the array as expected, one of the two keys must be sent.
 
+exception.yml 
+```php
+
+   clientExpected : (username) is not valid 
+
+```
+
+or
+
+exception.yml 
+```php
+
+   clientExpected : (username) or (email) is not valid 
+
+```
+
+When you want to write a special exception for the request expected method,
+In the exception.yml file, you can type the above key value relationship that corresponds to the clientExpected key.

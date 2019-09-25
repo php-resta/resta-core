@@ -274,14 +274,14 @@ class Client extends ClientAbstract implements HandleContracts
                 // this is evaluated as "or".
                 foreach($expectedData = explode("|",$expected) as $inputs){
                     if(!isset($this->inputs[$inputs])){
-                        $expectedValues[] = $inputs;
+                        $expectedValues[$inputs] = $inputs;
                     }
                 }
 
                 // if the expectedData and expectedValues ​​
                 // array are numerically equal to the expected key, the exception is thrown.
                 if(count($expectedData)===count($expectedValues)){
-                    exception('clientExpected',['key'=>$expected])
+                    exception('clientExpected',(count($expectedValues)) ? $expectedValues : ['key'=>$expected])
                         ->unexpectedValue('You absolutely have to send the value '.implode(" or ",$expectedValues).' for request object');
                 }
             }
