@@ -125,3 +125,25 @@ These two rules are mandatory. These two definitions are called request value sa
 ```
 
 It encrypts the username data sent by the client with md5. You will see this in the response data. Here you can use a method as you want.
+
+# Define rules for request sanctions.
+Defining rules for request sanctions is actually 'validating' incoming data.Request kuralları yazmak çok basittir.
+Sadece yapmanız gereken 'property function' için annotation kullanmanız yeterli olacaktır.
+
+```php
+
+    /**
+     * @var string
+     */
+    protected $username;
+
+    /**
+     * @regex([a-zA-z]+)
+     * @return string
+     */
+    protected function username()
+    {
+        return md5($this->username);
+    }
+
+```
