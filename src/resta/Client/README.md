@@ -194,5 +194,26 @@ These rules are defined in the trait class defined as Client.php. You can see th
         ];
 
 ```
+In the above rules variable you can define the rules you want and you can use them very easily.
 
+```php
+
+    /**
+     * @var string
+     */
+    protected $username;
+
+    /**
+     * @rule(integer:min6Char)
+     * @return string
+     */
+    protected function username()
+    {
+        return md5($this->username);
+    }
+
+```
+
+If you want, you can apply multiple rules in sequence with the (:) character.First, the username entry is integer
+and then apply the rule defined as min6Char, if applicable.
 
