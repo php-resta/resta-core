@@ -148,3 +148,51 @@ Simply use the annotation for the 'property function'.
     }
 
 ```
+
+The rule defined above enforces the letter constraint for username data.
+If the value specified as regex is not sent, the client resolver will throw an exception with 400 error code
+
+```php
+
+    /**
+     * @var string
+     */
+    protected $username;
+
+    /**
+     * @rule(integer)
+     * @return string
+     */
+    protected function username()
+    {
+        return md5($this->username);
+    }
+
+```
+
+If you want, you can use defined rules. A rule is used in the annotation statement above and requires an integer.
+These rules are defined in the trait class defined as Client.php. You can see the rules by looking at that traite.
+
+```php
+
+        /**
+         * request rules
+         *
+         * @var array
+         */
+        protected $rules = [
+            'capital'          => '[A-Z]',
+            'min6Char'         => '.{6,}',
+            'max6Char'         => '^.{0,6}$',
+            'integer'          => '^[0-9]+$',
+            'string'           => '^[a-zA-Z]+$',
+            'alphaNumeric'     => '^[a-zA-Z]+[a-zA-Z0-9._\-\s]+$',
+            'days'             => '^monday$|^sunday$|^tuesday$|^wednesday$|^thursday$|^friday$|^saturday$',
+            'clock'            => '^(([0-1][0-9]|2[0-3]):[0-5][0-9](:[0-5][0-9])?)$',
+            'float'            => '^[0-9]+(\\.[0-9]+)?$',
+            'dontStartSpace'   => '^(?=[^ ]).+(?<=\S)$',
+        ];
+
+```
+
+
