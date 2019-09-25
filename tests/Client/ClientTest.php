@@ -4,6 +4,7 @@ namespace Resta\Core\Tests\Client;
 
 use OverflowException;
 use InvalidArgumentException;
+use Resta\Core\Tests\Client\Data\User3\User3;
 use UnexpectedValueException;
 use Resta\Core\Tests\AbstractTest;
 use Resta\Core\Tests\Client\Data\User\User;
@@ -176,6 +177,35 @@ class ClientTest extends AbstractTest
     {
         $this->expectException(InvalidArgumentException::class);
         new User2(['a'=>1,'b'=>1,'capsule1'=>'capsule1','capsule2'=>'capsule2','password'=>123456,'rule1'=>123]);
+    }
+
+    /**
+     * @throws ReflectionExceptionAlias
+     */
+    public function testClient13()
+    {
+        $user3 = new User3(['username'=>'username']);
+        $this->assertArrayHasKey('username',$user3->all());
+    }
+
+    /**
+     * @throws ReflectionExceptionAlias
+     */
+    public function testClient14()
+    {
+        $user3 = new User3(['email'=>'test']);
+        $this->assertArrayHasKey('email',$user3->all());
+
+
+    }
+
+    /**
+     * @throws ReflectionExceptionAlias
+     */
+    public function testClient15()
+    {
+        $this->expectException(UnexpectedValueException::class);
+        new User3([]);
     }
 
 }
