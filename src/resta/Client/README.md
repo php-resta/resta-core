@@ -251,3 +251,15 @@ If the 'username' key is defined in the exception.yml file, this message is dire
 
 You can send variables to the exception.yml file with the value specified as the parameter.
 'username is not valid' is sent to the output.
+
+```php
+
+    @exception(name:username params:key=username,key2=value)
+
+```
+
+To send multiple values ​​to your exceptions for the regex method, use the comma method in the format above.
+
+- ###### Note : In this way, the use of exception with annotation only applies to regex. Since the value used for Rule is already specified as alias, the exception.yml file will automatically search for that alias value.
+
+
