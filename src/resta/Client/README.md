@@ -64,3 +64,16 @@ class Create extends ClientProvider implements ClientContract
 }
 
 ```
+
+You can make the above 'user: create' client request in any controller file with the following code.
+
+```code
+
+$this->client->user->create->all()
+
+```
+
+The 'all' method in the controller will reflect the entire request directly to your output.
+As an annotation, the client object will be annotated and written by resta into your automatic 'annotationManager' file.
+
+* The main topic is your definitions in the Create.php file.
