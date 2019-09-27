@@ -6,20 +6,21 @@ use __clientNameNamespace__\Client;
 use Resta\Contracts\ClientContract;
 use __clientNameNamespace__\ClientProvider;
 use __clientNameNamespace__\ClientGenerator;
+use __managerTraitNamespace__;
 
 class __client__ extends ClientProvider implements ClientContract
 {
     //request and request generator
-    use Client,__client__Generator,ClientGenerator;
+    use Client,__client__Generator,ClientGenerator,__name__Trait;
 
     /**
      * @var string
      */
-    public $clientName = '__client___client';
+     public $clientName = '__client___client';
 
     /**
      * @var array
-     */
+    */
     protected $capsule = [];
 
     /**

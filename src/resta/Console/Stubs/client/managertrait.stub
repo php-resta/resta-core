@@ -1,0 +1,12 @@
+<?php
+
+namespace __clientNameDirNamespace__;
+
+/**
+ * Class __name__Trait
+ * @package __clientNameDirNamespace__
+ */
+trait __name__Trait
+{
+   //
+}
