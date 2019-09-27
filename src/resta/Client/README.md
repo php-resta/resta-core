@@ -306,6 +306,8 @@ This package has the default value defined for it.
 The user must send you the values ​​written in the array defined for the expected property. This is one of the important features for your requests.
 and this package offers you a very convenient way.
 
+##### Expected Rule:
+
 ```php
 
     /**
@@ -336,3 +338,39 @@ exception.yml
 
 When you want to write a special exception for the request expected method,
 In the exception.yml file, you can type the above key value relationship that corresponds to the clientExpected key.
+
+##### Capsule Rule:
+
+Capsule method means limiting client shipments.This means that; The user cannot send you any data other than the keys specified in the capsule array.
+Capsule method; 'protected property' and 'public function can be written as capsuleMethod ()'.
+
+
+```php
+
+    /**
+     * @var array
+     */
+    protected $capsule = ['user_id'];
+
+```
+
+it is available data in capsule array the above.Client cannot send any input to the server except user_id.
+If the client sends an entry other than user_id, the client resolver will throw a exception.As can be seen, it is quite simple to specify the conditions for the client with the capsule method.
+
+```php
+
+    /**
+     * when we use the method for capsule,
+     * the capsuleMethod method is executed and the results must be array.
+     *
+     * @return array
+     */
+    public function capsuleMethod() : array
+    {
+        return [];
+    }
+
+```
+You have to use a method for capsule data that you don't want to write again and again.
+You may want the Capsule data to be the same as your model's fillable array.It's annoying to write them over and over again.
+Therefore, the client resolver will merge your capsule data, provided that a method called 'capsuleMethod' is output to the array.
