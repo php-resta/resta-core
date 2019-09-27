@@ -456,4 +456,4 @@ There are two protected properties within the system.Keys written as an array wi
 
 In the example above, we have automatically added an entry called code to the client's post.
 In this case, if the client does not send any data called code, then it will appear as code => code in the client data.
-- ###### If the client sends a code entry, the auto_generator will be overridden and the code entry sent by the client will be valid.
+- ###### If the client sends a code input, the auto_generator will be overridden and the code input sent by the client will be valid.
