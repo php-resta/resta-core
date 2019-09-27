@@ -457,3 +457,31 @@ There are two protected properties within the system.Keys written as an array wi
 In the example above, we have automatically added an entry called code to the client's post.
 In this case, if the client does not send any data called code, then it will appear as code => code in the client data.
 - ###### If the client sends a code input, the auto_generator will be overridden and the code input sent by the client will be valid.
+
+```php
+
+    /**
+     * auto generator for inputs
+     * @var array
+     */
+    protected $generators = ['code'];
+    
+    /**
+     * generators dont overwrite
+     *
+     * @var array
+     */
+    protected $generators_dont_overwrite = ['code'];
+    
+    /**
+     * @return string
+     */
+    public function codeGenerator()
+    {
+        return 'code';
+    }
+
+```
+
+In this code; We have defined the dont_overwrite property for code auto keyi. So even if the user sends code input, the code we generate will not be crushed.
+In this case, the client submission will not make any sense and a value that we can safely generate will not be overridden by the client.
