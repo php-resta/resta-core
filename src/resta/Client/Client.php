@@ -142,42 +142,14 @@ class Client extends ClientAbstract implements HandleContracts
                 $this->capsule = array_merge($this->capsule,$this->auto_capsule);
             }
 
-            $caret = $this->capsuleCaret();
-
             foreach($this->inputs as $input=>$value){
 
-                if(isset($caret[$input]) || (
-                        $this->checkProperties('capsule') && !in_array($input,$this->capsule)
-                    )){
+                if($this->checkProperties('capsule') && !in_array($input,$this->capsule)){
                     exception('clientCapsule',['key'=>$input])
                         ->overflow('The '.$input.' value cannot be sent.');
                 }
             }
         }
-    }
-
-    /**
-     * get capsule caret for request
-     *
-     * @return array
-     */
-    private function capsuleCaret()
-    {
-        $caret = [];
-
-        foreach($this->inputs as $input=>$item){
-            if(in_array('@'.$input,$this->capsule)){
-                $caret[$input] = $item;
-            }
-        }
-
-        foreach ($this->capsule as $item) {
-            if(preg_match('#@.*#is',$item)){
-                $this->capsule = array_diff($this->capsule,[$item]);
-            }
-        }
-
-        return $caret;
     }
 
     /**
