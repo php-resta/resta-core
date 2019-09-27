@@ -399,6 +399,37 @@ exception.yml
 You can give your custom exception messages with 'clientCapsule' keyi in the exception.yml file for Capsule.
 Each capsule key will be added to this file as a variable.
 
+##### RequestExcept Rule:
+
+```php
+
+   /**
+    * remove the specified key from client real request
+    *
+    * @var array
+    */
+    protected $requestExcept = [];
+
+```
+
+The RequestExcept property runs after all operations are finished and is a feature used to remove the specified key from client data.
+The typed keys will not be shown in the output.
+
+##### Http Rule:
+
+```php
+
+   /**
+    * mandatory http method.
+    * @var array
+    */
+   protected $http = [];
+
+```
+
+The http rule enforces the [GET, POST..etc ..] http rule for the client.
+The client resolver will throw an invalid method exception except the specified http method.
+
 
 # Auto Generators:
 Auto generators are one of the best ways to use this package.
