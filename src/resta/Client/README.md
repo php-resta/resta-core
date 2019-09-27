@@ -388,3 +388,66 @@ One of the most important points to consider when using Capsule is the repeated 
 For example, your api can continually pagination for data.So you have to add the page key to the capsule data for each client.
 That's not a good thing either.To do this, client resolver offers a 'protected property' property called auto_capsule in Client.php.
 The keys specified in auto_capsule are automatically added to all your client capsule modeling.
+
+exception.yml 
+
+```php
+
+   clientCapsule : (data) data cannot be sent.
+
+```
+You can give your custom exception messages with 'clientCapsule' keyi in the exception.yml file for Capsule.
+Each capsule key will be added to this file as a variable.
+
+
+# Auto Generators:
+Auto generators are one of the best ways to use this package.
+Auto generators are entries that are automatically added to the client data without having to be in the client input.
+There are two auto generator systems.
+The auto_generator system designed for that client, the first of which is in the client directory,
+another is the auto genator system which is located in the ClientGenerator.php file which is designed for all clients.
+
+```php
+
+    /**
+     * auto generator for inputs
+     * @var array
+     */
+    protected $generators = [];
+    
+    /**
+     * generators dont overwrite
+     *
+     * @var array
+     */
+    protected $generators_dont_overwrite = [];
+
+```
+
+The first one is the auto_generator in the createGenerator.php file we created.
+There are two protected properties within the system.Keys written as an array with the first feature will be automatically added to the client input.
+
+```php
+
+    /**
+     * auto generator for inputs
+     * @var array
+     */
+    protected $generators = ['code'];
+    
+    /**
+     * generators dont overwrite
+     *
+     * @var array
+     */
+    protected $generators_dont_overwrite = [];
+    
+    /**
+     * @return string
+     */
+    public function codeGenerator()
+    {
+        return 'code';
+    }
+
+```
