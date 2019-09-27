@@ -374,3 +374,17 @@ If the client sends an entry other than user_id, the client resolver will throw 
 You have to use a method for capsule data that you don't want to write again and again.
 You may want the Capsule data to be the same as your model's fillable array.It's annoying to write them over and over again.
 Therefore, the client resolver will merge your capsule data, provided that a method called 'capsuleMethod' is output to the array.
+
+```php
+
+    /**
+     * @var array
+     */
+    protected $auto_capsule = ['page'];
+
+```
+
+One of the most important points to consider when using Capsule is the repeated and general client inputs.
+For example, your api can continually pagination for data.So you have to add the page key to the capsule data for each client.
+That's not a good thing either.To do this, client resolver offers a 'protected property' property called auto_capsule in Client.php.
+The keys specified in auto_capsule are automatically added to all your client capsule modeling.
