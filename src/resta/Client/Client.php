@@ -363,19 +363,33 @@ class Client extends ClientAbstract implements HandleContracts
         //that coming with the post.
         $this->initClient();
 
+        // this method determines
+        // how the request object will be requested,
+        $this->checkHttpMethod();
+
+        // contrary to capsule method,
+        // expected values must be in the key being sent.
+        $this->expectedInputs();
+
+        // get capsule as mandatory values
+        $this->capsule();
+
         // if a fake method is defined and it is not in
         // the context of any key method when access is granted,
         // it can be filled with fake method.
         $this->generatorManager();
 
+        // it passes all keys that are sent through
+        // a validation method on the user side.
+        $this->validation();
+
         // we update the input values ​​after
         // we receive and check the saved objects.
         $this->setClientObjects();
 
-        // we add our user-side properties for the request object,
-        // and on this we will set all the request object properties
-        // that may be useful for the application.
-        $this->requestProperties();
+        // the values ​​specified in request except property
+        // are subtracted from all input values.
+        $this->requestExcept();
     }
 
     /**
@@ -410,33 +424,6 @@ class Client extends ClientAbstract implements HandleContracts
                 }
             }
         }
-    }
-
-    /**
-     * request properties
-     *
-     * @return void
-     */
-    private function requestProperties()
-    {
-        // contrary to capsule method,
-        // expected values must be in the key being sent.
-        $this->expectedInputs();
-
-        // get capsule as mandatory values
-        $this->capsule();
-
-        // this method determines
-        // how the request object will be requested,
-        $this->checkHttpMethod();
-
-        // it passes all keys that are sent through
-        // a validation method on the user side.
-        $this->validation();
-
-        // the values ​​specified in request except property
-        // are subtracted from all input values.
-        $this->requestExcept();
     }
 
     /**
