@@ -15,11 +15,11 @@ class __client__ extends ClientProvider implements ClientContract
     /**
      * @var string
      */
-     public $clientName = '__client___client';
+    public $clientName = '__client___client';
 
     /**
      * @var array
-    */
+     */
     protected $capsule = [];
 
     /**
