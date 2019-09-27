@@ -393,7 +393,7 @@ exception.yml
 
 ```php
 
-   clientCapsule : (data) data cannot be sent.
+   clientCapsule : (data) input cannot be sent.
 
 ```
 You can give your custom exception messages with 'clientCapsule' keyi in the exception.yml file for Capsule.
@@ -451,3 +451,9 @@ There are two protected properties within the system.Keys written as an array wi
     }
 
 ```
+
+###### Note: You must write a public method for each generators array key.The public method written must be terminated with Generator prefix.
+
+In the example above, we have automatically added an entry called code to the client's post.
+In this case, if the client does not send any data called code, then it will appear as code => code in the client data.
+- ###### If the client sends a code entry, the auto_generator will be overridden and the code entry sent by the client will be valid.
