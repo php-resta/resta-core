@@ -253,7 +253,7 @@ class Client extends ClientAbstract implements HandleContracts
                 // if the expectedData and expectedValues ​​
                 // array are numerically equal to the expected key, the exception is thrown.
                 if(count($expectedData)===count($expectedValues)){
-                    exception('clientExpected',(count($expectedValues)) ? $expectedValues : ['key'=>$expected])
+                    exception('clientExpected',['key'=>$expected])
                         ->unexpectedValue('You absolutely have to send the value '.implode(" or ",$expectedValues).' for request object');
                 }
             }
@@ -367,10 +367,6 @@ class Client extends ClientAbstract implements HandleContracts
         // how the request object will be requested,
         $this->checkHttpMethod();
 
-        // contrary to capsule method,
-        // expected values must be in the key being sent.
-        $this->expectedInputs();
-
         // get capsule as mandatory values
         $this->capsule();
 
@@ -378,6 +374,10 @@ class Client extends ClientAbstract implements HandleContracts
         // the context of any key method when access is granted,
         // it can be filled with fake method.
         $this->generatorManager();
+
+        // contrary to capsule method,
+        // expected values must be in the key being sent.
+        $this->expectedInputs();
 
         // it passes all keys that are sent through
         // a validation method on the user side.
