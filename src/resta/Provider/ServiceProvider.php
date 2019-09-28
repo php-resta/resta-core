@@ -76,9 +76,26 @@ class ServiceProvider extends  ApplicationProvider
                         $container = $this->app->get($deferrableProvide);
 
                         if(!is_array($container)){
-                            JsonHandler::set('container',[
-                                $deferrableProvide => SuperClosure::set($container)
-                            ]);
+
+                            if($container instanceof \Closure){
+                                JsonHandler::set('container',[
+                                    $deferrableProvide => SuperClosure::set($container)
+                                ]);
+
+                                JsonHandler::set('container-format',[
+                                    $deferrableProvide => 'closure'
+                                ]);
+                            }
+                            else{
+                                JsonHandler::set('container',[
+                                    $deferrableProvide => $container
+                                ]);
+
+                                JsonHandler::set('container-format',[
+                                    $deferrableProvide => 'string'
+                                ]);
+                            }
+
                         }
                         else{
                             foreach ($container as $containerKey=>$containerItem) {

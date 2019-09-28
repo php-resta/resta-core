@@ -10,7 +10,7 @@ class ContainerClosureResolver
 {
     /**
      * container resolver service json file
-     * 
+     *
      * @param $key
      * @return mixed|null
      *
@@ -23,10 +23,13 @@ class ContainerClosureResolver
             $serviceJson = JsonHandler::get();
 
             if(isset($serviceJson['container'][$key])){
+                if($serviceJson['container-format'][$key]=='string'){
+                    return $serviceJson['container'][$key];
+                }
                 return SuperClosure::get($serviceJson['container'][$key]);
             }
         }
-        
+
         return null;
     }
 }
