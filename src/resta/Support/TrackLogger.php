@@ -36,11 +36,29 @@ class TrackLogger extends ApplicationProvider
     }
 
     /**
-     * track logger handle
+     * get arguments property variable
      *
-     * @return mixed
+     * @return array|null
      */
-    public function handle()
+    public function getArguments()
+    {
+        return $this->arguments;
+    }
+
+    /**
+     * get output property variable
+     *
+     * @return array|null
+     */
+    public function getOutput()
+    {
+        return $this->output;
+    }
+
+    /**
+     * @param $callback
+     */
+    public function handle($callback)
     {
         if(isset($this->arguments['filter'])){
 
@@ -108,9 +126,12 @@ class TrackLogger extends ApplicationProvider
             echo 'Client Key: '.$requestClientKey;
 
             echo PHP_EOL;
+            if(is_callable($callback)){
+                echo $callback($this);
+            }
+
+            echo PHP_EOL;
             echo PHP_EOL;
         }
-
-
     }
 }
