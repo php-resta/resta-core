@@ -217,12 +217,7 @@ class ErrorProvider extends ApplicationProvider
 
         if($this->app->has('exceptionContainer')){
             $exceptionContainer = $this->app->get('exceptionContainer');
-            $exceptionContainer($this->result,$this->data['status']);
-        }
-
-        if($this->app->has('exceptionExtenderContainer')){
-            $exceptionExtenderContainer = $this->app->get('exceptionExtenderContainer');
-            $this->result = $exceptionExtenderContainer($this->result);
+            $this->result = $exceptionContainer($this->result,$this->data['status']);
         }
 
         $restaOutHandle = null;
