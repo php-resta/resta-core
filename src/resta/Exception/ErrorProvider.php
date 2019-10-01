@@ -202,17 +202,15 @@ class ErrorProvider extends ApplicationProvider
             http_response_code($this->data['status']);
         }
 
+        // exception extender The exception information
+        // that is presented as an extra to the exception result set.
+        $this->result = $this->getExceptionExtender();
+
         if($environment==="production"){
 
             $productionLogMessage = $this->getAppException('local',$this->data['errStrReal']);
             $this->app->register('productionLogMessage',$this->app->get('out')->outputFormatter($productionLogMessage));
         }
-
-        // exception extender The exception information
-        // that is presented as an extra to the exception result set.
-        $this->result = $this->getExceptionExtender();
-
-
 
         //set json app exception
         $this->app->register('routerResult',$this->result);
@@ -220,6 +218,11 @@ class ErrorProvider extends ApplicationProvider
         if($this->app->has('exceptionContainer')){
             $exceptionContainer = $this->app->get('exceptionContainer');
             $exceptionContainer($this->result,$this->data['status']);
+        }
+
+        if($this->app->has('exceptionExtenderContainer')){
+            $exceptionExtenderContainer = $this->app->get('exceptionExtenderContainer');
+            $this->result = $exceptionExtenderContainer($this->result);
         }
 
         $restaOutHandle = null;
@@ -267,7 +270,7 @@ class ErrorProvider extends ApplicationProvider
      */
     private function getExceptionExtender()
     {
-        return $this->app->resolve(
+        return  $this->app->resolve(
             $this->app->get('macro')->call('exceptionExtender',function(){
                 return ExceptionExtender::class;
             }),

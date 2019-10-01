@@ -132,12 +132,17 @@ class Route extends RouteHttpManager
                 // we are set the solved pattern to a variable.
                 $resolve = $routes['data'][$patternResolve];
 
-                return [
+                $routeResolvedData = [
                     'class'         => $resolve['class'],
                     'method'        => $resolve['method'],
                     'controller'    => $resolve['controller'],
                     'namespace'     => $resolve['namespace'],
+                    'http'          => httpMethod(),
                 ];
+
+                app()->register('routeResolvedData',$routeResolvedData);
+
+                return $routeResolvedData;
             }
         }
 
@@ -302,7 +307,7 @@ class Route extends RouteHttpManager
         (new self())->handle(false);
 
         $mappings = [];
-        
+
         $routes = self::getRoutes();
         $routeData = isset($routes['data']) ? $routes['data'] : [];
         $routePattern = isset($routes['pattern']) ? $routes['pattern'] : [];
@@ -347,7 +352,7 @@ class Route extends RouteHttpManager
             $mappings[$key]['doc'] = 'not available';
 
         }
-        
+
         return $mappings;
     }
 
