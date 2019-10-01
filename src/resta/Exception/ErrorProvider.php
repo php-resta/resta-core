@@ -215,9 +215,9 @@ class ErrorProvider extends ApplicationProvider
         //set json app exception
         $this->app->register('routerResult',$this->result);
 
-        if($this->app->has('exceptionOutput')){
-            $exceptionOutput = $this->app->get('exceptionOutput');
-            $this->result = $exceptionOutput($this->result,$this->data['status']);
+        if($this->app->has('exceptionResponse')){
+            $exceptionResponse = $this->app->get('exceptionResponse');
+            $this->result = $exceptionResponse($this->result,$this->data['status']);
         }
 
         $restaOutHandle = null;
