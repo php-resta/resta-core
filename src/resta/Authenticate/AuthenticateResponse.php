@@ -49,7 +49,7 @@ trait AuthenticateResponse
     }
 
     /**
-     * @return array
+     * @return array|void
      */
     protected function getResult()
     {
@@ -86,6 +86,4 @@ trait AuthenticateResponse
 
         app()->register('authenticateSuccess',$value);
     }
-
-
 }
