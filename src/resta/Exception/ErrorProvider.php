@@ -207,8 +207,8 @@ class ErrorProvider extends ApplicationProvider
         $this->result = $this->getExceptionExtender();
 
         if($environment==="production"){
-
             $productionLogMessage = $this->getAppException('local',$this->data['errStrReal']);
+            $productionLogMessage = array_merge($productionLogMessage,$this->result);
             $this->app->register('productionLogMessage',$this->app->get('out')->outputFormatter($productionLogMessage));
         }
 
