@@ -8,6 +8,7 @@ use __kernelProviderDir__\CacheServiceProvider;
 use __kernelProviderDir__\TrackServiceProvider;
 use __kernelProviderDir__\HelperServiceProvider;
 use __kernelProviderDir__\WorkerServiceProvider;
+use __kernelProviderDir__\ExceptionServiceProvider;
 use __kernelProviderDir__\ConsoleEventServiceProvider;
 use __kernelProviderDir__\AuthenticateServiceProvider;
 
@@ -25,6 +26,7 @@ return [
         'WorkerServiceProvider'             => ['class' => WorkerServiceProvider::class, 'status' => true],
         'RoleServiceProvider'               => ['class' => RoleServiceProvider::class, 'status' => true],
         'CacheServiceProvider'              => ['class' => CacheServiceProvider::class, 'status' => true],
+        'ExceptionServiceProvider'          => ['class' => ExceptionServiceProvider::class, 'status' => true],
         'TrackServiceProvider'              => ['class' => TrackServiceProvider::class,'status' => app()->runningInConsole()],
     ],
 
