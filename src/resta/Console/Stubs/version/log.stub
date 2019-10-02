@@ -39,7 +39,7 @@ class ServiceLogManager
         $output['postData']             = post();
         $output['requestUrl']           = request()->getUri();
         $output['clientIp']             = request()->getClientIp();
-        $output['auth']                 = (is_null(auth()->user())) ? null : auth()->user()->email;
+        $output['auth']                 = (app()->has('authenticateSuccess')===false) ? null : auth()->user()->email;
         $output['clientApiTokenKey']    = (app()->has('clientApiTokenKey')) ? app()->get('clientApiTokenKey') : null;
 
         if($type=='info'){
