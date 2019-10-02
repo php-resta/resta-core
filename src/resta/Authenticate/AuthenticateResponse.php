@@ -25,6 +25,7 @@ trait AuthenticateResponse
         // if the status value is true,
         // we send output generated from the token value.
         if($this->checkStatus()){
+            $this->setAuthenticateSuccess(true);
             return true;
         }
 
@@ -44,7 +45,7 @@ trait AuthenticateResponse
         }
 
         //logout exception
-       $this->{$this->params['exception']}();
+        $this->{$this->params['exception']}();
     }
 
     /**
@@ -70,6 +71,20 @@ trait AuthenticateResponse
         // if the status is unsuccessful,
         // the direct exception will be thrown away.
         $this->exceptionManager($exceptionType);
+    }
+
+    /**
+     * set authenticate loaded container value
+     *
+     * @param bool $value
+     */
+    private function setAuthenticateSuccess($value=true)
+    {
+        if(app()->has('authenticateSuccess')){
+            app()->terminate('authenticateSuccess');
+        }
+
+        app()->register('authenticateSuccess',$value);
     }
 
 
