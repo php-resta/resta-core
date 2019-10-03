@@ -25,7 +25,7 @@ abstract class ClientAbstract
      *
      * @return array
      */
-    protected function get()
+    public function get()
     {
         return $this->inputs;
     }
