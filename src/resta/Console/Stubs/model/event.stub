@@ -73,7 +73,7 @@ trait Event
 
          static::addGlobalScope('filter', function (Builder $builder) use($filter,$withList,$selectList){
 
-            $builder->authenticate()->ordered();
+            //$builder->authenticate()->ordered();
             $builder->with($withList);
 
             if(count($selectList)){

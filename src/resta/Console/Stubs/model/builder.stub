@@ -2,13 +2,22 @@
 
 namespace __builderNamespace__;
 
+use Throwable;
 use Exception;
 use __modelNamespace__\__file__;
 use Resta\Contracts\ClientContract;
 use __contractNamespace__\__file__Contract;
+use Illuminate\Database\ConnectionInterface;
 
 class __file__Builder implements __file__Contract
 {
+    /**
+     * get model name property
+     *
+     * @var __file__
+     */
+    protected static $model = __file__::class;
+
     /**
      * get all data for __file__ model
      *
@@ -21,6 +30,27 @@ class __file__Builder implements __file__Contract
     }
 
     /**
+     * create __file__ model
+     *
+     * @param ClientContract $client
+     * @return void|mixed
+     */
+    public function create(ClientContract $client)
+    {
+        //create User
+        try{
+            return $this->UniqueEntityForIsDeleted($client,function() use($client){
+                return static::$model::create($client->all());
+            });
+
+            }
+            catch (Exception $exception){
+                exception('database_'.$exception->getCode(),['key'=>$client->input('field')])
+                    ->invalidArgument($exception->getMessage());
+            }
+        }
+
+    /**
      * createIfNotExist method for update method
      *
      * @param $data
@@ -30,10 +60,10 @@ class __file__Builder implements __file__Contract
     {
         //create __file__
         try{
-            $data = __file__::where('field',$data)->first();
+            $data = static::$model::where('field',$data)->first();
 
             if(is_null($data)){
-                return __file__::create(['field'=>$data]);
+                return static::$model::create(['field'=>$data]);
             }
 
             return $data;
@@ -45,43 +75,42 @@ class __file__Builder implements __file__Contract
     }
 
     /**
+     * check if entity is available for model
+     *
+     * @param null $value
+     * @param string $field
+     * @return bool
+     */
+    public function exist($value=null,$field='id')
+    {
+        $query = $this->find($value,$field);
+
+        return (is_array($query) && count($query)) ? true :false;
+    }
+
+    /**
+     * get __file__ find method for model
+     *
+     * @param null|string $value
+     * @param string $field
+     * @param array $select
+     * @return mixed
+     */
+    public function find($value=null,$field='id',$select=['*'])
+    {
+        //model find data
+        return static::$model::select($select)->where($field,$value)->get()->toArray();
+    }
+
+    /**
      * get __file__ model
      *
      * @return mixed
      */
     public function get()
     {
-        return __file__::pagination();
-    }
-
-    /**
-     * create __file__ model
-     *
-     * @param ClientContract $client
-     * @return void|mixed
-    */
-    public function create(ClientContract $client)
-    {
-        //create User
-        try{
-             return __file__::create($client->all());
-        }
-        catch (Exception $exception){
-             exception('database_'.$exception->getCode())
-                ->invalidArgument($exception->getMessage());
-        }
-    }
-
-    /**
-     * get __file__ find method for model
-     *
-     * @param $find
-     * @return mixed
-     */
-    public function find($id)
-    {
-        //model find data
-        return __file__::find($id);
+        //model all data
+        return static::$model::pagination();
     }
 
      /**
@@ -89,7 +118,7 @@ class __file__Builder implements __file__Contract
       *
       * @param ClientContract $client
       * @param bool $createIfNotExist
-      * @return mixed
+      * @return mixed|void
       */
      public function update(ClientContract $client,$createIfNotExist=false)
      {
@@ -98,34 +127,88 @@ class __file__Builder implements __file__Contract
         }
 
         if(!isset($data)){
-            $data = __file__::where('user_id',$client->input('user_id'))->first();
+            $data = static::$model::where('field',$client->input('field'))
+                     ->where('field',$client->input('field'))->first();
         }
 
-        nullExceptionPointer($data,'field');
+        nullExceptionPointer($data,'nullMessage');
 
-        foreach ($client->request() as $input=>$item){
-            $data->{$input} = $item;
+        foreach ($client->all() as $input=>$item){
+            if(in_array($input,$data->getFillable())){
+                $data->{$input} = (is_array($item)) ? json_encode($item) : $item;
+            }
         }
 
-        if($data->save()){
-            return __file__::where('field',$client->input('field'))->first();
+        try{
+            $data->save();
+            return static::$model::where('field',$client->input('field'))->first();
+        }catch (Exception $e){
+                 exception('database_'.$e->getCode(),['key'=>$client->input('field')])
+                     ->invalidArgument($e->getMessage());
         }
-
-        exception('noUpdate')->runtime('no update');
      }
 
-    /**
-     * delete __file__ model
-     *
-     * @param ClientContract $client
-     * @return mixed
-     *
-     * @throws Exception
-     */
-     public function delete(ClientContract $client)
+     /**
+      * update array for __file__ model
+      *
+      * @param ClientContract $client
+      * @param ConnectionInterface $connection
+      * @return mixed
+      *
+      * @throws Throwable
+      */
+     public function updateArray(ClientContract $client,ConnectionInterface $connection)
      {
-        //delete __file__
-        return __file__::where()->delete();
+        $clientArray = clientArray($client,'field');
+
+        if(count($clientArray)){
+            return $connection->transaction(function() use($client,$clientArray){
+
+                $result = [];
+                foreach ($clientArray as $data){
+                    $counter = 0;
+                    foreach ($data as $input=>$value){
+                        $counter++;
+                        $client->set($input,$value);
+
+                        if(count($data)==$counter){
+                            $result[] = $this->update($client);
+                        }
+                    }
+                }
+
+                return $result;
+            });
+        }
+
+        return null;
+     }
+
+
+     /**
+      *
+      * @param ClientContract $client
+      * @param callable $callable
+      * @return mixed|void
+      */
+     private function UniqueEntityForIsDeleted(ClientContract $client,callable $callable)
+     {
+        $uniqueEntityForIsDeleted = $this->find(
+                 $client->input('field'),
+                 'field'
+        );
+
+        if(is_array($uniqueEntityForIsDeleted) && count($uniqueEntityForIsDeleted)){
+
+            $data = $uniqueEntityForIsDeleted[0];
+            if($data['is_deleted']==1){
+                $client->set('field',$data['field']);
+                $client->set('is_deleted',0);
+                return $this->update($client);
+            }
+        }
+
+        return call_user_func($callable);
      }
 }
 
