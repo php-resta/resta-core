@@ -117,7 +117,10 @@ class Http
         if(httpMethod()==$method){
             $rawData = json_decode(request()->getContent(),1);
 
-            $body['params'] = get();
+            $get = get();
+            if(is_array($get) && count($get)){
+                $body['params'] = get();
+            }
 
             if(is_null($rawData)){
                 $inputData = $this->getInputData();
@@ -126,7 +129,12 @@ class Http
                     $body['body']['form-data'] = $this->getInputData();
                 }
                 else{
-                    $body['body']['x-www-form-urlencoded'] = request()->request->all();
+
+                    $all = request()->request->all();
+                    if(is_array($all) && count($all)){
+                        $body['body']['x-www-form-urlencoded'] = $all;
+                    }
+
                 }
 
             }
