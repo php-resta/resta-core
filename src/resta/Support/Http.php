@@ -114,6 +114,7 @@ class Http
     public function httpMethodData($method='get')
     {
         $body = [];
+
         if(httpMethod()==$method){
             $rawData = json_decode(request()->getContent(),1);
 
@@ -123,20 +124,19 @@ class Http
             }
 
             if(is_null($rawData)){
-                $inputData = $this->getInputData();
 
-                if(!is_null($inputData)){
-                    $body['body']['form-data'] = $this->getInputData();
+                $containerMethod = app()->get(httpMethod());
+
+                if(is_array($containerMethod) && count($containerMethod)){
+                    $inputData = $containerMethod;
                 }
                 else{
-
-                    $all = request()->request->all();
-                    if(is_array($all) && count($all)){
-                        $body['body']['x-www-form-urlencoded'] = $all;
-                    }
-
+                    $inputData = $this->getInputData();
                 }
 
+                if(!is_null($inputData)){
+                    $body['body']['form-data'] = $inputData;
+                }
             }
             else{
                 $body['body']['raw-data'] = $rawData;
