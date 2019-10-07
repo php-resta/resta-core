@@ -463,13 +463,16 @@ class Client extends ClientAbstract implements HandleContracts
 
             if(property_exists($this,'groups') && is_array($this->groups) && in_array($key,$this->groups)){
 
-                $this->{$key} = $clientObjects['origin'][array_search($key,$this->groups)][$key];
-                $this->inputs[$key] = $this->{$key};
+                if(isset($clientObjects['origin'][array_search($key,$this->groups)])){
+                    $this->{$key} = $clientObjects['origin'][array_search($key,$this->groups)][$key];
+                    $this->inputs[$key] = $this->{$key};
 
-                // the request update to be performed using
-                // the method name to be used with the http method.
-                $this->registerRequestInputs($key);
-                unset($this->inputs[$key]);
+                    // the request update to be performed using
+                    // the method name to be used with the http method.
+                    $this->registerRequestInputs($key);
+                    unset($this->inputs[$key]);
+                }
+
             }
 
             if(!in_array($key,$this->generatorList) && isset($clientObjects['origin'][$key])){
