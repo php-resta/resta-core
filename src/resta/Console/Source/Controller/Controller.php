@@ -102,8 +102,18 @@ class Controller extends ConsoleOutputter {
 
             // we process the processes related to file creation operations.
             // and then create files related to the touch method of the file object as it is in the directory process.
-            $this->touch['service/endpoint']        = $this->directory['endpoint'].''.DIRECTORY_SEPARATOR.''.$this->argument['serviceClass'].''. $this->argument['callClassPrefix'].'.php';
-            $this->touch['service/route']           = $this->directory['routes'].''.DIRECTORY_SEPARATOR.''.$controller.'Route.php';
+            
+            if(isset($this->argument['type']) && $this->argument['type']=='Crud'){
+                $this->touch['service/endpointcrud']        = $this->directory['endpoint'].''.DIRECTORY_SEPARATOR.''.$this->argument['serviceClass'].''. $this->argument['callClassPrefix'].'.php';
+                $this->touch['service/routecrud']           = $this->directory['routes'].''.DIRECTORY_SEPARATOR.''.$controller.'Route.php';
+
+            }
+            else{
+                $this->touch['service/endpoint']        = $this->directory['endpoint'].''.DIRECTORY_SEPARATOR.''.$this->argument['serviceClass'].''. $this->argument['callClassPrefix'].'.php';
+                $this->touch['service/route']           = $this->directory['routes'].''.DIRECTORY_SEPARATOR.''.$controller.'Route.php';
+
+            }
+            
             $this->touch['service/resourceIndex']   = $this->directory['resource'].''.DIRECTORY_SEPARATOR.'index.html';
             $this->touch['service/app']             = $this->directory['endpoint'].''.DIRECTORY_SEPARATOR.'App.php';
             $this->touch['service/developer']       = $this->directory['configuration'].''.DIRECTORY_SEPARATOR.'Developer.php';

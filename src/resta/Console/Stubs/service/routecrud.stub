@@ -1,0 +1,17 @@
+<?php
+
+use Resta\Router\Route;
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider.
+|
+*/
+Route::namespace('__bundleName__')->get("/","__serviceClass__Controller@index");
+Route::namespace('__bundleName__')->post("/","__serviceClass__Controller@create");
+Route::namespace('__bundleName__')->put("/","__serviceClass__Controller@update");
+Route::namespace('__bundleName__')->delete("/","__serviceClass__Controller@delete");

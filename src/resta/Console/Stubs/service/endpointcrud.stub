@@ -1,0 +1,46 @@
+<?php
+
+namespace __controllerNamespace__;
+
+class __serviceClass____callClassPrefix__ extends App
+{
+    /**
+     * #define:get __serviceClass__
+     *
+     * @return mixed|array
+     */
+    public function get()
+    {
+        return 'get';
+    }
+
+     /**
+      * #define:create __serviceClass__
+      *
+      * @return mixed|array
+      */
+     public function create()
+     {
+        return 'create';
+     }
+
+     /**
+      * #define:update __serviceClass__
+      *
+      * @return mixed|array
+      */
+     public function update()
+     {
+        return 'update';
+     }
+
+     /**
+      * #define:delete __serviceClass__
+      *
+      * @return mixed|array
+      */
+     public function delete()
+     {
+        return 'delete';
+     }
+}
