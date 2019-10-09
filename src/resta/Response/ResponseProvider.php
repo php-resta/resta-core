@@ -46,7 +46,7 @@ class ResponseProvider extends ApplicationProvider
      *
      * @return \Resta\Config\ConfigProcess
      */
-    private function formatter()
+    public function formatter()
     {
         //we get and handle the adapter classes in
         //the output array according to the base object.
@@ -111,10 +111,9 @@ class ResponseProvider extends ApplicationProvider
     {
         $dataCapsule = config('response.data');
 
-        return app()->resolve($this->formatter())->{$outputter}(
-            array_merge(
-                config('response.meta'),
-                [$dataCapsule=>$data]
-            ));
+        return  array_merge(
+            config('response.meta'),
+            [$dataCapsule=>$data]
+        );
     }
 }

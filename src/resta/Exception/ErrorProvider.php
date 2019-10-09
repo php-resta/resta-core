@@ -231,14 +231,19 @@ class ErrorProvider extends ApplicationProvider
         if($restaOutHandle===null){
 
             //header set and symfony response call
-            //header('Content-type:application/json;charset=utf-8');
+            $lastResult = $this->app->get('out')->outputFormatter($this->result);
 
             if($this->app->has('clientResponseType')){
-                echo $this->app->get('out')->outputFormatter($this->result,$this->app->get('clientResponseType'));
+
+                $responseType = $this->app->get('clientResponseType');
+                echo app()->resolve($this->app->get('out')->formatter())->{$responseType}($lastResult);
             }
             else{
-                echo $this->app->get('out')->outputFormatter($this->result);
+
+                $defaultResponseType = (is_null(config('app.response'))) ? 'json' : config('app.response');
+                echo app()->resolve($this->app->get('out')->formatter())->{$defaultResponseType}($lastResult);
             }
+
 
         }
         else{
