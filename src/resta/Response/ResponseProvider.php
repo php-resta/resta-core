@@ -107,13 +107,14 @@ class ResponseProvider extends ApplicationProvider
      * @param array $data
      * @return array
      */
-    public function outputFormatter($data=array())
+    public function outputFormatter($data=array(),$outputter='json')
     {
         $dataCapsule = config('response.data');
 
-        return array_merge(
-            config('response.meta'),
-            [$dataCapsule=>$data]
-        );
+        return app()->resolve($this->formatter())->{$outputter}(
+            array_merge(
+                config('response.meta'),
+                [$dataCapsule=>$data]
+            ));
     }
 }
