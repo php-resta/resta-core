@@ -189,7 +189,7 @@ class ErrorProvider extends ApplicationProvider
         }
         else{
 
-            if($environment=='production' && preg_match('@SQLSTATE@is',$this->data['errStrReal'])){
+            if($this->data['status']=='500' && $environment=='production'){
                 $externalMessage = 'An unexpected external error has occurred';
             }
             else{
