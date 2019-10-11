@@ -49,8 +49,8 @@ trait Event
         });
 
         //query filter scope
-        $filter     = (!is_null($filter = get('filter'))) ? $filter : [];
-        $with       = (!is_null($with = get('with'))) ? $with : [];
+        $filter     = (is_array($filter = get('filter'))) ? $filter : [];
+        $with       = (is_array($with = get('with'))) ? $with : [];
         $select     = get('select');
 
          $selectList = [];
