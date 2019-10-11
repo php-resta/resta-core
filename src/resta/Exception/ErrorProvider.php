@@ -208,8 +208,8 @@ class ErrorProvider extends ApplicationProvider
 
         if($environment==="production"){
             $productionLogMessage = $this->getAppException('local',$this->data['errStrReal']);
-            $productionLogMessage = array_merge($productionLogMessage,$this->result);
-            $this->app->register('productionLogMessage',$this->app->get('out')->outputFormatter($productionLogMessage));
+            $productionLogMessageMerge = array_merge($productionLogMessage,$this->result);
+            $this->app->register('productionLogMessage',$this->app->get('out')->outputFormatter($productionLogMessageMerge));
         }
 
         //set json app exception
@@ -217,7 +217,7 @@ class ErrorProvider extends ApplicationProvider
 
         if($this->app->has('exceptionResponse')){
             $exceptionResponse = $this->app->get('exceptionResponse');
-            $this->result = $exceptionResponse($this->result,$this->data['status']);
+            $exceptionResponse((isset($productionLogMessage)) ? $productionLogMessage : $this->result,$this->data['status']);
         }
 
         $restaOutHandle = null;
