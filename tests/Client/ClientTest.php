@@ -4,10 +4,10 @@ namespace Resta\Core\Tests\Client;
 
 use OverflowException;
 use InvalidArgumentException;
-use Resta\Core\Tests\Client\Data\User5\User5;
 use UnexpectedValueException;
 use Resta\Core\Tests\AbstractTest;
 use Resta\Core\Tests\Client\Data\User\User;
+use Resta\Core\Tests\Client\Data\User5\User5;
 use Resta\Core\Tests\Client\Data\User3\User3;
 use Resta\Core\Tests\Client\Data\User4\User4;
 use Resta\Core\Tests\Client\Data\User2\User2;
