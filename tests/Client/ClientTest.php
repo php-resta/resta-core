@@ -299,4 +299,30 @@ class ClientTest extends AbstractTest
         $this->assertArrayHasKey('code1',$user5->all());
         $this->assertSame([123456,234567],$user5->all()['code1']);
     }
+
+    /**
+     * @throws ReflectionExceptionAlias
+     */
+    public function testClient25()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        new User5(['code1'=>[[1]]]);
+    }
+
+    /**
+     * @throws ReflectionExceptionAlias
+     */
+    public function testClient26()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        new User5(['code1'=>[[123456,'asa']]]);
+    }
+
+    /**
+     * @throws ReflectionExceptionAlias
+     */
+    public function testClient27()
+    {
+        new User5(['code1'=>[[123456,234567]]]);
+    }
 }
