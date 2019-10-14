@@ -8,6 +8,25 @@ use Illuminate\Database\Eloquent\Builder;
 
 trait Event
 {
+
+    /**
+     * @var array
+     */
+    protected static $orderStrings = ['ASC','DESC'];
+
+    /**
+     * @var array
+     */
+    protected static $allowedQueryComparisons = ['>','<','like','=','!='];
+
+    /**
+     * @return array
+     */
+    public static function getFillableValues()
+    {
+        return (new self())->getFillable();
+    }
+
     /**
      * get table changes
      *
@@ -78,6 +97,48 @@ trait Event
 
             if(count($selectList)){
                 $builder->select($selectList);
+            }
+
+            if(count($queries)){
+                foreach ($queries as $criteria=>$queryString) {
+                    $queryStringExplode = explode(' ',$queryString);
+                    $number = count($queryStringExplode);
+
+                    if($number%3==0 || $number%3==1){
+                        $repeat = $number/3;
+                        if($number=='3' && in_array($queryStringExplode[0],(new self())->fillable) && in_array($queryStringExplode[1],static::$allowedQueryComparisons)){
+                            $builder->where(function($builder) use($queryStringExplode){
+                                $builder->where($queryStringExplode[0],$queryStringExplode[1],$queryStringExplode[2]);
+                            });
+                        }
+                        else{
+                            if(in_array($queryStringExplode[0],(new self())->fillable) && in_array($queryStringExplode[1],static::$allowedQueryComparisons)){
+                                $firstQuery = $builder->where($queryStringExplode[0],$queryStringExplode[1],$queryStringExplode[2]);
+
+                                for ($i=1; $i<$repeat; $i++){
+                                    $findOperatorNumber = (3*$i);
+                                    if($queryStringExplode[$findOperatorNumber]=='and'){
+                                        $builder->where(function() use($firstQuery,$queryStringExplode,$findOperatorNumber){
+                                            if(in_array($queryStringExplode[$findOperatorNumber+2],static::$allowedQueryComparisons)){
+                                                $firstQuery->where($queryStringExplode[$findOperatorNumber+1],$queryStringExplode[$findOperatorNumber+2],$queryStringExplode[$findOperatorNumber+3]);
+                                            }
+
+                                        });
+                                    }
+
+                                    if($queryStringExplode[$findOperatorNumber]=='or'){
+                                        $builder->where(function() use($firstQuery,$queryStringExplode,$findOperatorNumber){
+                                            if(in_array($queryStringExplode[$findOperatorNumber + 2],static::$allowedQueryComparisons)) {
+                                                $firstQuery->orWhere($queryStringExplode[$findOperatorNumber + 1], $queryStringExplode[$findOperatorNumber + 2], $queryStringExplode[$findOperatorNumber + 3]);
+                                            }
+                                        });
+                                    }
+
+                                }
+                            }
+                        }
+                    }
+                }
             }
 
             if(count($filter)){
