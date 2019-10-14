@@ -149,6 +149,7 @@ class Client extends ClientAbstract implements HandleContracts
                 foreach ($this->capsule as $item) {
                     $groupProcess = $this->groupsProcess($item,true);
                     if(is_array($groupProcess)){
+                        $defaultInputs = $this->inputs;
                         $this->inputs = array_merge($this->inputs,$groupProcess);
                     }
                 }
@@ -160,6 +161,10 @@ class Client extends ClientAbstract implements HandleContracts
                     exception('clientCapsule',['key'=>$input])
                         ->overflow('The '.$input.' value cannot be sent.');
                 }
+            }
+
+            if(isset($defaultInputs)){
+                $this->inputs = $defaultInputs;
             }
         }
     }
@@ -384,6 +389,7 @@ class Client extends ClientAbstract implements HandleContracts
                     if(isset($clientObjects['origin'][$key])){
                         return $clientObjects['origin'][$key];
                     }
+                    return [];
                 }
 
                 if(isset($clientObjects['origin'][$group][$key])){
