@@ -91,7 +91,7 @@ trait Event
             }
          }
 
-         static::addGlobalScope('filter', function (Builder $builder) use($filter,$withList,$selectList){
+         static::addGlobalScope('filter', function (Builder $builder) use($filter,$withList,$selectList,$queries){
 
             //$builder->authenticate()->ordered();
             $builder->with($withList);
