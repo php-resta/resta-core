@@ -5,6 +5,7 @@ namespace Resta\Core\Tests\Client;
 use OverflowException;
 use InvalidArgumentException;
 use Resta\Core\Tests\Client\Data\User3\User3;
+use Resta\Core\Tests\Client\Data\User4\User4;
 use UnexpectedValueException;
 use Resta\Core\Tests\AbstractTest;
 use Resta\Core\Tests\Client\Data\User\User;
@@ -206,6 +207,24 @@ class ClientTest extends AbstractTest
     {
         $this->expectException(UnexpectedValueException::class);
         new User3([]);
+    }
+
+    /**
+     * @throws ReflectionExceptionAlias
+     */
+    public function testClient16()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        new User4(['status'=>'string']);
+    }
+
+    /**
+     * @throws ReflectionExceptionAlias
+     */
+    public function testClient17()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        new User4(['items'=>['status'=>'string']]);
     }
 
 }
