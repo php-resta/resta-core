@@ -20,7 +20,7 @@ class User4 extends ClientProvider
      * The values ​​expected by the server.
      * @var array
      */
-    protected $expected = [];
+    protected $expected = ['status'];
 
     /**
      * @var array

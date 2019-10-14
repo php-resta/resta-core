@@ -246,6 +246,11 @@ class Client extends ClientAbstract implements HandleContracts
                 // mandatory expected data for each key can be separated by | operator.
                 // this is evaluated as "or".
                 foreach($expectedData = explode("|",$expected) as $inputs){
+
+                    // we should do key control for group format.
+                    // this process will allow us to perform key control for 2D array correctly.
+                    $this->groupsProcess($inputs);
+
                     if(!isset($this->inputs[$inputs])){
                         $expectedValues[$inputs] = $inputs;
                     }
@@ -346,6 +351,32 @@ class Client extends ClientAbstract implements HandleContracts
     public function getClientName()
     {
         return $this->clientName;
+    }
+
+    /**
+     * we should do key control for group format.
+     * this process will allow us to perform key control for 2D array correctly.
+     *
+     * @param null $key
+     * @param null $callback
+     */
+    public function groupsProcess($key=null,$callback=null)
+    {
+        if(property_exists($this,'groups') && is_array($this->groups)){
+
+            $clientObjects = $this->getClientObjects();
+
+            foreach ($this->groups as $group){
+                if(isset($clientObjects['origin'][$group][$key])){
+                    $this->{$key} = $clientObjects['origin'][$group][$key];
+                    $this->inputs[$key] = $this->{$key};
+
+                    if(is_callable($callback)){
+                        call_user_func_array($callback,[$key]);
+                    }
+                }
+            }
+        }
     }
 
     /**
@@ -461,20 +492,12 @@ class Client extends ClientAbstract implements HandleContracts
         // we receive and check the saved objects.
         foreach ($clientObjects as $key=>$value){
 
-            if(property_exists($this,'groups') && is_array($this->groups)){
-
-                foreach ($this->groups as $group){
-                    if(isset($clientObjects['origin'][$group][$key])){
-                        $this->{$key} = $clientObjects['origin'][$group][$key];
-                        $this->inputs[$key] = $this->{$key};
-
-                        // the request update to be performed using
-                        // the method name to be used with the http method.
-                        $this->registerRequestInputs($key);
-                        unset($this->inputs[$key]);
-                    }
-                }
-            }
+            // we should do key control for group format.
+            // this process will allow us to perform key control for 2D array correctly.
+            $this->groupsProcess($key,function($key){
+                $this->registerRequestInputs($key);
+                unset($this->inputs[$key]);
+            });
 
             if(!in_array($key,$this->generatorList) && isset($clientObjects['origin'][$key])){
 
