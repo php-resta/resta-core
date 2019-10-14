@@ -143,7 +143,7 @@ class Client extends ClientAbstract implements HandleContracts
                 $this->capsule = array_merge($this->capsule,$this->auto_capsule);
             }
 
-            if(is_array($this->groups)){
+            if(property_exists($this,'groups') && is_array($this->groups)){
                 $this->capsule = array_merge($this->capsule,$this->groups);
 
                 foreach ($this->capsule as $item) {
