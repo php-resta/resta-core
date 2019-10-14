@@ -224,7 +224,6 @@ class ClientTest extends AbstractTest
     public function testClient17()
     {
         $this->expectException(InvalidArgumentException::class);
-        new User4(['items'=>['status'=>'string']]);
+        new User4(['items'=>['status'=>'string','foo'=>'xxx']]);
     }
-
 }

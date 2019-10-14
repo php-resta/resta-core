@@ -14,7 +14,7 @@ class User4 extends ClientProvider
     /**
      * @var array
      */
-    protected $capsule = [];
+    protected $capsule = ['status','foo'];
 
     /**
      * The values ​​expected by the server.

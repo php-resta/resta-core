@@ -143,6 +143,17 @@ class Client extends ClientAbstract implements HandleContracts
                 $this->capsule = array_merge($this->capsule,$this->auto_capsule);
             }
 
+            if(is_array($this->groups)){
+                $this->capsule = array_merge($this->capsule,$this->groups);
+
+                foreach ($this->capsule as $item) {
+                    $groupProcess = $this->groupsProcess($item,true);
+                    if(is_array($groupProcess)){
+                        $this->inputs = array_merge($this->inputs,$groupProcess);
+                    }
+                }
+            }
+
             foreach($this->inputs as $input=>$value){
 
                 if($this->checkProperties('capsule') && !in_array($input,$this->capsule)){
@@ -359,6 +370,7 @@ class Client extends ClientAbstract implements HandleContracts
      *
      * @param null $key
      * @param null $callback
+     * @return mixed|void
      */
     public function groupsProcess($key=null,$callback=null)
     {
@@ -367,7 +379,15 @@ class Client extends ClientAbstract implements HandleContracts
             $clientObjects = $this->getClientObjects();
 
             foreach ($this->groups as $group){
+
+                if(true === $callback){
+                    if(isset($clientObjects['origin'][$key])){
+                        return $clientObjects['origin'][$key];
+                    }
+                }
+
                 if(isset($clientObjects['origin'][$group][$key])){
+
                     $this->{$key} = $clientObjects['origin'][$group][$key];
                     $this->inputs[$key] = $this->{$key};
 
@@ -377,6 +397,8 @@ class Client extends ClientAbstract implements HandleContracts
                 }
             }
         }
+
+        return [];
     }
 
     /**
