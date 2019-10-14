@@ -225,5 +225,29 @@ class ClientTest extends AbstractTest
     {
         $this->expectException(InvalidArgumentException::class);
         new User4(['items'=>['status'=>'string','foo'=>'xxx']]);
+
+    }
+
+    /**
+     * @throws ReflectionExceptionAlias
+     */
+    public function testClient18()
+    {
+        $this->expectException(OverflowException::class);
+        new User4(['items'=>['status'=>'string','foox'=>'xxx']]);
+
+    }
+
+    /**
+     * @throws ReflectionExceptionAlias
+     */
+    public function testClient19()
+    {
+        $user4 = new User4(['items'=>['status'=>1,'foo'=>'xxx']]);
+        $this->assertTrue(true,is_array($user4->all()['items']));
+        $this->assertTrue(true,is_integer($user4->all()['items']['status']));
+        $this->assertArrayNotHasKey('status',$user4->all());
+        $this->assertArrayNotHasKey('foo',$user4->all());
+
     }
 }
