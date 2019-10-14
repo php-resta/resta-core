@@ -70,6 +70,7 @@ trait Event
         //query filter scope
         $filter     = (is_array($filter = get('filter'))) ? $filter : [];
         $with       = (is_array($with = get('with'))) ? $with : [];
+        $queries    = (is_array($queries = get('query'))) ? $queries : [];
         $select     = get('select');
 
          $selectList = [];
