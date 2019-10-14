@@ -4,11 +4,12 @@ namespace Resta\Core\Tests\Client;
 
 use OverflowException;
 use InvalidArgumentException;
-use Resta\Core\Tests\Client\Data\User3\User3;
-use Resta\Core\Tests\Client\Data\User4\User4;
+use Resta\Core\Tests\Client\Data\User5\User5;
 use UnexpectedValueException;
 use Resta\Core\Tests\AbstractTest;
 use Resta\Core\Tests\Client\Data\User\User;
+use Resta\Core\Tests\Client\Data\User3\User3;
+use Resta\Core\Tests\Client\Data\User4\User4;
 use Resta\Core\Tests\Client\Data\User2\User2;
 use ReflectionException as ReflectionExceptionAlias;
 
@@ -249,5 +250,53 @@ class ClientTest extends AbstractTest
         $this->assertArrayNotHasKey('status',$user4->all());
         $this->assertArrayNotHasKey('foo',$user4->all());
 
+    }
+
+    /**
+     * @throws ReflectionExceptionAlias
+     */
+    public function testClient20()
+    {
+        $user5 = new User5(['date'=>'2019-06-30']);
+        $this->assertArrayNotHasKey('cgenerator1',$user5->all());
+        $this->assertArrayNotHasKey('cgenerator2',$user5->all());
+        $this->assertArrayNotHasKey('cgenerator3',$user5->all());
+    }
+
+    /**
+     * @throws ReflectionExceptionAlias
+     */
+    public function testClient21()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        new User5(['code1'=>['asa']]);
+    }
+
+    /**
+     * @throws ReflectionExceptionAlias
+     */
+    public function testClient22()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        new User5(['code1'=>[1,'asa']]);
+    }
+
+    /**
+     * @throws ReflectionExceptionAlias
+     */
+    public function testClient23()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $user5 = new User5(['code1'=>[1,2]]);
+    }
+
+    /**
+     * @throws ReflectionExceptionAlias
+     */
+    public function testClient24()
+    {
+        $user5 = new User5(['code1'=>[123456,234567]]);
+        $this->assertArrayHasKey('code1',$user5->all());
+        $this->assertSame([123456,234567],$user5->all()['code1']);
     }
 }

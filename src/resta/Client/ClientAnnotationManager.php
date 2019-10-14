@@ -208,7 +208,7 @@ class ClientAnnotationManager extends ClientAnnotationAbstract
                             if(isset($requestRules[$rule])){
                                 if(!preg_match('@'.$requestRules[$rule].'@',$input)){
                                     exception($rule,['key'=>''.$key.':'.$input])
-                                        ->invalidArgument($input.' input value is not valid for '.$rule.' request rule');
+                                        ->invalidArgument($key.':'.$input.' input value is not valid for '.$rule.' request rule');
                                 }
                             }
                         }
@@ -220,7 +220,7 @@ class ClientAnnotationManager extends ClientAnnotationAbstract
                                 if(isset($requestRules[$rule])){
                                     if(!preg_match('@'.$requestRules[$rule].'@',$item)){
                                         exception($rule,['key'=>''.$key.':'.$item])
-                                            ->invalidArgument($item.' input value is not valid for '.$rule.' request rule');
+                                            ->invalidArgument($key.':'.$item.' input value is not valid for '.$rule.' request rule');
                                     }
                                 }
                             }
