@@ -629,4 +629,14 @@ class Arr
         return $list;
     }
 
+    /**
+     * @param array $data
+     * @param $key
+     * @param $value
+     */
+    public static function setNested($data=array(),$key,$value)
+    {
+        dd($data);
+    }
+
 }

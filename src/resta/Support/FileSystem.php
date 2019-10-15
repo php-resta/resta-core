@@ -606,4 +606,17 @@ class Filesystem
         if (count($subresults) > 0) {$results = array_merge($subresults, $results);}
         return $results;
     }
+
+    /**
+     * it writes data as json the specified file
+     * 
+     * @param $path
+     * @param array $data
+     * @return JsonHandler
+     */
+    public function jsonHandler($path)
+    {
+        JsonHandler::$file = $path;
+        return JsonHandler::class;
+    }
 }

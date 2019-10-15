@@ -3,6 +3,7 @@
 namespace Resta\Support;
 
 use Resta\Exception\FileNotFoundException;
+use Zend\Crypt\Symmetric\PaddingPluginManager;
 
 class JsonHandler
 {
@@ -23,15 +24,12 @@ class JsonHandler
      */
     private static function checkFile()
     {
-        if(!is_null(self::$singleton)) return self::$singleton;
-
         $filePortions = explode(DIRECTORY_SEPARATOR,self::$file);
         $pop = array_pop($filePortions);
 
         if(file_exists(implode(DIRECTORY_SEPARATOR,$filePortions))
             && preg_match('@[a-zA-Z0-9]+\.json@',$pop)){
-            self::$singleton = self::$file;
-            return self::$singleton;
+            return self::$file;
         }
 
         exception()->runtime('file path is invalid for json handler');
@@ -116,11 +114,17 @@ class JsonHandler
      *
      * @throws FileNotFoundException
      */
-    public static function get()
+    public static function get($key=null)
     {
         self::createIfNotFileExist();
 
-        return self::decode(files()->get(self::checkFile()));
+        $data = self::decode(files()->get(self::checkFile()));
+        
+        if(is_null($key)){
+            return $data;
+        }
+        
+        return $data[$key];
     }
 
     /**
@@ -137,13 +141,23 @@ class JsonHandler
         self::createIfNotFileExist();
         
         $file = self::get();
-        
-        if(isset($file[$key]) && is_array($value)){
-            $file[$key] = array_merge($file[$key],$value);
-            files()->put(self::checkFile(),self::encode($file));
+
+        $dotted = explode('.',$key);
+
+        if(count($dotted)>1){
+            $arrayInstance = new ArraySafe(self::get());
+            $nestedArray = $arrayInstance->set('t.a.b','d')->toArray();
+            files()->put(self::checkFile(),self::encode($nestedArray));
         }
         else{
-            files()->put(self::checkFile(),self::encode(array_merge($file,[$key=>$value])));
+
+            if(isset($file[$key]) && is_array($value)){
+                $file[$key] = array_merge($file[$key],$value);
+                files()->put(self::checkFile(),self::encode($file));
+            }
+            else{
+                files()->put(self::checkFile(),self::encode(array_merge($file,[$key=>$value])));
+            }
         }
 
         return self::get();
