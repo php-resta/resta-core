@@ -3,7 +3,6 @@
 namespace Resta\Support;
 
 use Resta\Exception\FileNotFoundException;
-use Zend\Crypt\Symmetric\PaddingPluginManager;
 
 class JsonHandler
 {
@@ -11,11 +10,6 @@ class JsonHandler
      * @var string
      */
     public static $file;
-
-    /**
-     * @var string
-     */
-    private static $singleton;
 
     /**
      * checks according to the path and extension of the file.
@@ -37,7 +31,7 @@ class JsonHandler
 
     /**
      * create if not file exits
-     * 
+     *
      * @return void
      */
     public static function createIfNotFileExist()
@@ -110,6 +104,7 @@ class JsonHandler
     /**
      * get json data
      *
+     * @param null|string $key
      * @return array
      *
      * @throws FileNotFoundException
@@ -119,12 +114,13 @@ class JsonHandler
         self::createIfNotFileExist();
 
         $data = self::decode(files()->get(self::checkFile()));
-        
+
         if(is_null($key)){
             return $data;
         }
-        
-        return $data[$key];
+
+        $arrayInstance = new ArraySafe(self::get());
+        return $arrayInstance->get($key);
     }
 
     /**
@@ -139,14 +135,14 @@ class JsonHandler
     public static function set($key,$value)
     {
         self::createIfNotFileExist();
-        
+
         $file = self::get();
 
         $dotted = explode('.',$key);
 
         if(count($dotted)>1){
             $arrayInstance = new ArraySafe(self::get());
-            $nestedArray = $arrayInstance->set('t.a.b','d')->toArray();
+            $nestedArray = $arrayInstance->set($key,$value)->toArray();
             files()->put(self::checkFile(),self::encode($nestedArray));
         }
         else{
