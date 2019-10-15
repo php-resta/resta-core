@@ -1,0 +1,46 @@
+<?php
+
+namespace __controllerNamespace__;
+
+class __file____callClassPrefix__ extends App
+{
+    /**
+     * #define: get __file__
+     *
+     * @return mixed|array
+     */
+    public function get()
+    {
+        return 'get __file__';
+    }
+
+    /**
+     * #define: create __file__
+     *
+     * @return mixed|array
+     */
+    public function create()
+    {
+        return 'create __file__';
+    }
+
+    /**
+     * #define: update __file__
+     *
+     * @return mixed|array
+     */
+    public function update()
+    {
+        return 'update __file__';
+    }
+
+    /**
+     * #define: delete __file__
+     *
+     * @return mixed|array
+     */
+    public function delete()
+    {
+        return 'delete __file__';
+    }
+}

@@ -2,6 +2,7 @@
 
 namespace Resta\Console\Source\Controller;
 
+use Resta\Router\Route;
 use Resta\Support\Utils;
 use Resta\Config\Config;
 use Resta\Console\ConsoleOutputter;
@@ -74,6 +75,8 @@ class Controller extends ConsoleOutputter {
 
         $this->directory['routes']       = path()->route();
 
+        $routePath = $this->directory['routes'].''.DIRECTORY_SEPARATOR.''.$controller.'Route.php';
+
         // with the directory operation,
         // we get to the service directory, which is called the controller.
         $this->file->makeDirectory($this);
@@ -89,10 +92,30 @@ class Controller extends ConsoleOutputter {
 
         }
         elseif(isset($this->argument['file']) && file_exists($this->directory['endpoint'])){
+            
 
-            $this->touch['service/controllerfile']   = $this->directory['endpoint'].''.DIRECTORY_SEPARATOR.''.$this->argument['file'].''. $this->argument['callClassPrefix'].'.php';
 
-            $this->file->touch($this);
+            if(isset($this->argument['type']) && $this->argument['type']=='Crud'){
+
+                $this->touch['service/controllerfilecrud']   = $this->directory['endpoint'].''.DIRECTORY_SEPARATOR.''.$this->argument['file'].''. $this->argument['callClassPrefix'].'.php';
+
+                $this->file->touch($this);
+
+                files()->append($routePath,PHP_EOL.'Route::namespace(\''.$controller.'\')->get("/'.strtolower($this->argument['file']).'","'.$this->argument['file'].'Controller@get");');
+                files()->append($routePath,PHP_EOL.'Route::namespace(\''.$controller.'\')->post("/'.strtolower($this->argument['file']).'","'.$this->argument['file'].'Controller@create");');
+                files()->append($routePath,PHP_EOL.'Route::namespace(\''.$controller.'\')->put("/'.strtolower($this->argument['file']).'","'.$this->argument['file'].'Controller@update");');
+                files()->append($routePath,PHP_EOL.'Route::namespace(\''.$controller.'\')->delete("/'.strtolower($this->argument['file']).'","'.$this->argument['file'].'Controller@delete");');
+
+            }
+            else{
+
+                $this->touch['service/controllerfile']   = $this->directory['endpoint'].''.DIRECTORY_SEPARATOR.''.$this->argument['file'].''. $this->argument['callClassPrefix'].'.php';
+
+                $this->file->touch($this);
+
+                files()->append($routePath,PHP_EOL.'Route::namespace(\''.$controller.'\')->get("/'.strtolower($this->argument['file']).'","'.$this->argument['file'].'Controller@index");');
+
+            }
 
             // and as a result we print the result on the console screen.
             echo $this->classical(' > Controller called as "'.$this->argument['file'].'" has been successfully created in the '.$this->directory['endpoint'].'');
@@ -105,12 +128,12 @@ class Controller extends ConsoleOutputter {
             
             if(isset($this->argument['type']) && $this->argument['type']=='Crud'){
                 $this->touch['service/endpointcrud']        = $this->directory['endpoint'].''.DIRECTORY_SEPARATOR.''.$this->argument['serviceClass'].''. $this->argument['callClassPrefix'].'.php';
-                $this->touch['service/routecrud']           = $this->directory['routes'].''.DIRECTORY_SEPARATOR.''.$controller.'Route.php';
+                $this->touch['service/routecrud']           = $routePath;
 
             }
             else{
                 $this->touch['service/endpoint']        = $this->directory['endpoint'].''.DIRECTORY_SEPARATOR.''.$this->argument['serviceClass'].''. $this->argument['callClassPrefix'].'.php';
-                $this->touch['service/route']           = $this->directory['routes'].''.DIRECTORY_SEPARATOR.''.$controller.'Route.php';
+                $this->touch['service/route']           = $routePath;
 
             }
             
