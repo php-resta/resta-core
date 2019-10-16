@@ -123,7 +123,7 @@ class ClientAnnotationManager extends ClientAnnotationAbstract
     {
         // with the method based regex annotation,
         // we check the rule definition for our requests.
-        if(preg_match('@regex\((.*?)\)\r\n@is',$this->annotation,$regex)){
+        if(preg_match('@regex\((.*?)\)|regex\((.*?)\)\r\n@is',$this->annotation,$regex)){
             if(isset($this->inputs[$key])){
 
                 // for the definition of rules,
