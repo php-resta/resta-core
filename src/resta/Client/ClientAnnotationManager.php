@@ -90,7 +90,7 @@ class ClientAnnotationManager extends ClientAnnotationAbstract
      */
     private function getException($key)
     {
-        if(preg_match('@exception\((.*?)\)\r\n@is',$this->annotation,$exception)){
+        if(preg_match('@exception\((.*?)\)|exception\((.*?)\)\r\n@is',$this->annotation,$exception)){
 
             $exceptionSpaceExplode = explode(" ",$exception[1]);
 
