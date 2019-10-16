@@ -7,10 +7,13 @@ use Exception;
 use __modelNamespace__\__file__;
 use Resta\Contracts\ClientContract;
 use __contractNamespace__\__file__Contract;
+use __builderNamespace__\Assistant\Builder;
 use Illuminate\Database\ConnectionInterface;
 
 class __file__Builder implements __file__Contract
 {
+    use Builder;
+
     /**
      * get model name property
      *

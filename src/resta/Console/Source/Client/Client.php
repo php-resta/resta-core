@@ -54,10 +54,12 @@ class Client extends ConsoleOutputter
         //set project directory
         $this->file->makeDirectory($this);
 
+        $this->argument['managerTraitNamespace'] = Utils::getNamespace($this->directory['clientNameDir'].'/'.$name.'Trait.php');
+
         if(!file_exists($manager = $this->directory['clientNameDir'].'/'.$name.'Manager.php')){
             $this->touch['client/manager'] = $manager;
             $this->touch['client/managertrait'] = $this->directory['clientNameDir'].'/'.$name.'Trait.php';
-            $this->argument['managerTraitNamespace'] = Utils::getNamespace($this->directory['clientNameDir'].'/'.$name.'Trait.php');
+            
         }
 
         if(!file_exists($this->directory['clientNameCreate'].'/Client.php')){

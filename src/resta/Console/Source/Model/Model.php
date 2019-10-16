@@ -51,11 +51,13 @@ class Model extends ConsoleOutputter {
 
         $this->directory['modelDir']    = app()->path()->model();
         $this->directory['builderDir']  = $this->directory['modelDir'].'/Builder';
+        $this->directory['builderAssistantDir']  = $this->directory['modelDir'].'/Builder/Assistant';
         $this->directory['contract']    = $this->directory['modelDir'].'/Contract';
         $this->directory['helper']      = $this->directory['modelDir'].'/Helper';
 
         $this->argument['modelNamespace'] = Utils::getNamespace($this->directory['modelDir']);
         $this->argument['builderNamespace'] = Utils::getNamespace($this->directory['builderDir']);
+        $this->argument['builderAssistantNamespace'] = Utils::getNamespace($this->directory['builderAssistantDir']);
         $this->argument['contractNamespace'] = Utils::getNamespace($this->directory['contract']);
 
         //set project directory
@@ -64,6 +66,7 @@ class Model extends ConsoleOutputter {
         //model set
         $this->touch['model/model']     = $this->directory['modelDir'].''.DIRECTORY_SEPARATOR.''.$this->argument['file'].'.php';
         $this->touch['model/builder']   = $this->directory['builderDir'].''.DIRECTORY_SEPARATOR.''.$this->argument['file'].'Builder.php';
+        $this->touch['model/builderasistant']   = $this->directory['builderAssistantDir'].''.DIRECTORY_SEPARATOR.'Builder.php';
         $this->touch['model/contract']  = $this->directory['contract'].''.DIRECTORY_SEPARATOR.''.$this->argument['file'].'Contract.php';
 
         if(!file_exists($this->directory['helper'].''.DIRECTORY_SEPARATOR.'Scope.php')){
