@@ -99,7 +99,9 @@ class Controller extends ConsoleOutputter {
 
                 $this->touch['service/controllerfilecrud']   = $this->directory['endpoint'].''.DIRECTORY_SEPARATOR.''.$this->argument['file'].''. $this->argument['callClassPrefix'].'.php';
 
-                $this->file->touch($this);
+                $this->file->touch($this,[
+                    'stub'=>'Controller_Create'
+                ]);
 
                 files()->append($routePath,PHP_EOL.'Route::namespace(\''.$controller.'\')->get("/'.strtolower($this->argument['file']).'","'.$this->argument['file'].'Controller@get");');
                 files()->append($routePath,PHP_EOL.'Route::namespace(\''.$controller.'\')->post("/'.strtolower($this->argument['file']).'","'.$this->argument['file'].'Controller@create");');
@@ -111,11 +113,15 @@ class Controller extends ConsoleOutputter {
 
                 $this->touch['service/controllerfile']   = $this->directory['endpoint'].''.DIRECTORY_SEPARATOR.''.$this->argument['file'].''. $this->argument['callClassPrefix'].'.php';
 
-                $this->file->touch($this);
+                $this->file->touch($this,[
+                    'stub'=>'Controller_Create'
+                ]);
 
                 files()->append($routePath,PHP_EOL.'Route::namespace(\''.$controller.'\')->get("/'.strtolower($this->argument['file']).'","'.$this->argument['file'].'Controller@index");');
 
             }
+
+            
 
             // and as a result we print the result on the console screen.
             echo $this->classical(' > Controller called as "'.$this->argument['file'].'" has been successfully created in the '.$this->directory['endpoint'].'');

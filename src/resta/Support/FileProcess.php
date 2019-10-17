@@ -178,6 +178,7 @@ class FileProcess
         foreach ($param->argument as $key=>$value){
 
             $content=str_replace("__".$key."__",$value,$content);
+            $content=str_replace("__".$key."-low__",strtolower($value),$content);
         }
 
         $dt = fopen($path, "w");
