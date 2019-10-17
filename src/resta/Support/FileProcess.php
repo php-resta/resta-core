@@ -84,7 +84,7 @@ class FileProcess
     public function setDirectory($directory)
     {
         try {
-            $this->fs->mkdir($directory,'07777');
+            $this->fs->mkdir($directory);
         } catch (IOExceptionInterface $e) {
             return "An error occurred while creating your directory at ".$e->getPath();
         }
@@ -138,7 +138,7 @@ class FileProcess
 
         foreach ($stubStructure as $stubberDirectory){
 
-            $stubberDirectoryList=$stubberDirectoryList.'/'.$stubberDirectory;
+            $stubberDirectoryList = $stubberDirectoryList.'/'.$stubberDirectory;
 
             $this->setDirectory($stubberDirectoryList);
         }
