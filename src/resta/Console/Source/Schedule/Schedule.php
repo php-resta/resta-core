@@ -4,6 +4,7 @@ namespace Resta\Console\Source\Schedule;
 
 use Resta\Schedule\ScheduleManager;
 use Resta\Support\ClosureDispatcher;
+use Resta\Support\JsonHandler;
 use Resta\Support\Utils;
 use Resta\Console\ConsoleOutputter;
 use Resta\Console\ConsoleListAccessor;
@@ -29,7 +30,18 @@ class Schedule extends ConsoleOutputter {
         'create' => ['schedule'],
         'register' => ['schedule'],
         'run' => ['schedule'],
+        'delete' => ['schedule']
     ];
+
+    /**
+     * schedule clear
+     * 
+     * @return void
+     */
+    public function clear()
+    {
+        shell_exec('crontab -r');
+    }
 
     /**
      * @return void
@@ -53,6 +65,22 @@ class Schedule extends ConsoleOutputter {
         $this->file->touch($this);
 
         echo $this->classical(' > Schedule file called as "'.$this->argument['schedule'].'" has been successfully created in the '.$schedulePath.'');
+    }
+
+    /**
+     * schedule delete
+     * 
+     * @throws \Resta\Exception\FileNotFoundException
+     */
+    public function delete()
+    {
+        $this->scheduleJsonFile();
+        $this->clear();
+        foreach (JsonHandler::get() as $schedule=>$items){
+            if($schedule!==$this->argument['schedule']){
+                app()->command('schedule register','schedule:'.$schedule);
+            }
+        }
     }
 
     public function list()
@@ -128,6 +156,11 @@ class Schedule extends ConsoleOutputter {
                 $output = shell_exec('crontab -l');
                 file_put_contents('/tmp/crontab.txt', $output.''.$command.''.PHP_EOL);
                 exec('crontab /tmp/crontab.txt');
+                
+                $this->scheduleJsonFile();
+                JsonHandler::set($this->argument['schedule'].'.namespace',$scheduleNamespace);
+                JsonHandler::set($this->argument['schedule'].'.date',date('Y-m-d H:i:s'));
+                JsonHandler::set($this->argument['schedule'].'.command',$cronScheduler);
 
                 echo $this->info('Cron has been added');
             }
@@ -146,6 +179,15 @@ class Schedule extends ConsoleOutputter {
             $scheduleInstance = app()->resolve($scheduleNamespace);
 
             $scheduleInstance->command();
+        }
+    }
+    
+    public function update()
+    {
+        $this->clear();
+        $this->scheduleJsonFile();
+        foreach (JsonHandler::get() as $schedule=>$items){
+            app()->command('schedule register','schedule:'.lcfirst($schedule));
         }
     }
 
@@ -185,6 +227,11 @@ class Schedule extends ConsoleOutputter {
 
         return null;
 
+    }
+    
+    private function scheduleJsonFile()
+    {
+        JsonHandler::$file = path()->kernel().''.DIRECTORY_SEPARATOR.'Schedule.json';
     }
 
 }
