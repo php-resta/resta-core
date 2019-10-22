@@ -5,6 +5,13 @@ namespace Resta\Schedule;
 interface ScheduleInterface
 {
     /**
+     * @param int $hour
+     * @param int $minute
+     * @return void
+     */
+    public function daily($hour=0,$minute=0);
+    
+    /**
      * @param integer $day
      * @return $this
      */

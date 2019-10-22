@@ -10,6 +10,20 @@ class ScheduleManager implements ScheduleInterface
     protected static $cronScheduler = ['*','*','*','*','*'];
 
     /**
+     * schedule daily
+     * 
+     * @param int $hour
+     * @param int $minute
+     * @return void
+     */
+    public function daily($hour=0,$minute=0)
+    {
+        self::$cronScheduler[1] = $hour;
+
+        self::$cronScheduler[0] = $minute;
+    }
+
+    /**
      * set day for scheduler
      *
      * @param integer $day
