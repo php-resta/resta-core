@@ -19,8 +19,10 @@ class __className__ implements MigrationContract
             $wizard->auto_increment();
             //
 
-            $wizard->name('created_at')->dateTime();
-            $wizard->name('updated_at')->dateTime();
+            $wizard->name('status')->enum([0,1])->default(1)->index();
+            $wizard->name('is_deleted')->enum([0,1])->default(0)->index();
+            $wizard->name('created_at')->timestamp();
+            $wizard->name('updated_at')->timestamp();
 
         });
     }
