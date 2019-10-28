@@ -111,6 +111,16 @@ class Client extends ClientAbstract implements HandleContracts
 
                 // if the methods of the auto-validate class resolved by the container resolve method apply,
                 // the process of auto-validate automatic implementation will be completed.
+                if(method_exists($getObjectInstance,$dataKey) && is_array($data)){
+                    foreach ($data as $dataItem){
+                        if(isset($this->origin[$dataItem])){
+                            $getObjectInstance->{$dataKey}($this->origin[$dataItem]);
+                        }
+                    }
+                }
+
+                // if the methods of the auto-validate class resolved by the container resolve method apply,
+                // the process of auto-validate automatic implementation will be completed.
                 if(is_numeric($dataKey) && method_exists($getObjectInstance,$data) && isset($this->origin[$data])){
                     if(!is_array($this->origin[$data])){
                         $this->origin[$data] = array($this->origin[$data]);
@@ -427,6 +437,10 @@ class Client extends ClientAbstract implements HandleContracts
         // how the request object will be requested,
         $this->checkHttpMethod();
 
+        // it passes all keys that are sent through
+        // a validation method on the user side.
+        $this->validation();
+
         // get capsule as mandatory values
         $this->capsule();
 
@@ -438,10 +452,6 @@ class Client extends ClientAbstract implements HandleContracts
         // contrary to capsule method,
         // expected values must be in the key being sent.
         $this->expectedInputs();
-
-        // it passes all keys that are sent through
-        // a validation method on the user side.
-        $this->validation();
 
         // we update the input values ​​after
         // we receive and check the saved objects.
