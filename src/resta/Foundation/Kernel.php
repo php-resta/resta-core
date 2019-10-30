@@ -17,7 +17,6 @@ abstract class Kernel extends Container
         'environment'       => 'environment',
         'logger'            => 'logger',
         'config'            => 'config',
-        'encrypter'         => 'encrypter',
         'eventDispatcher'   => 'eventDispatcher',
         'serviceProvider'   => 'serviceProvider',
     ];

@@ -69,22 +69,6 @@ class BootLoader extends ApplicationProvider implements BootContracts
     }
 
     /**
-     * encrypter boot
-     *
-     * @return mixed|void
-     */
-    private function encrypter()
-    {
-        // the rest system will assign a random key to your application for you.
-        // this application will single the advantages of using the rest system for your application in particular.
-        if(core()->isAvailableStore && $this->app->checkBindings('encrypter')===false){
-            $this->app->make('encrypter',function($app){
-                return $app['revision']['encrypter'] ?? EncrypterProvider::class;
-            });
-        }
-    }
-
-    /**
      * environment boot
      *
      * @return mixed|void
