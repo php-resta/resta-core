@@ -99,9 +99,17 @@ class ServiceProvider extends  ApplicationProvider
                         }
                         else{
                             foreach ($container as $containerKey=>$containerItem) {
-                                JsonHandler::set('container',[
-                                    $deferrableProvide.'.'.$containerKey => SuperClosure::set($containerItem)
-                                ]);
+                                if($containerItem instanceof \Closure){
+                                    JsonHandler::set('container.'.$deferrableProvide.'.'.$containerKey.'',SuperClosure::set($containerItem));
+
+                                    JsonHandler::set('container-format.'.$deferrableProvide.'.'.$containerKey,'closure');
+                                }
+                                else{
+                                    JsonHandler::set('container.'.$deferrableProvide.'.'.$containerKey.'',$containerItem);
+
+                                    JsonHandler::set('container-format.'.$deferrableProvide.'.'.$containerKey,'string');
+                                }
+
                             }
                         }
                     }

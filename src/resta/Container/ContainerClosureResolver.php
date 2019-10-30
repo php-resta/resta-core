@@ -22,11 +22,33 @@ class ContainerClosureResolver
             JsonHandler::$file = serviceJson();
             $serviceJson = JsonHandler::get();
 
-            if(isset($serviceJson['container'][$key])){
-                if($serviceJson['container-format'][$key]=='string'){
-                    return $serviceJson['container'][$key];
+            $dottedKey = explode('.',$key);
+
+            if(count($dottedKey)==2){
+
+                if(isset($serviceJson['container'][$dottedKey[0]][$dottedKey[1]])){
+                    $arrayData = $serviceJson['container'][$dottedKey[0]][$dottedKey[1]];
+
+                    if($serviceJson['container-format'][$dottedKey[0]][$dottedKey[1]]=='string'){
+                        return $arrayData;
+                    }
+
+                    if($serviceJson['container-format'][$dottedKey[0]][$dottedKey[1]]=='closure'){
+                        return SuperClosure::get($arrayData);
+                    }
                 }
-                return SuperClosure::get($serviceJson['container'][$key]);
+            }
+            else{
+
+                if(isset($serviceJson['container'][$key])){
+                    if($serviceJson['container-format'][$key]=='string'){
+                        return $serviceJson['container'][$key];
+                    }
+
+                    if($serviceJson['container-format'][$key]=='closure'){
+                        return SuperClosure::get($serviceJson['container'][$key]);
+                    }
+                }
             }
         }
 
