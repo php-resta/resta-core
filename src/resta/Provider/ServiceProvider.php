@@ -60,12 +60,14 @@ class ServiceProvider extends  ApplicationProvider
      */
     private function deferrableProvider($providerInstance,$provider)
     {
-        if($providerInstance instanceof DeferrableProvider && file_exists(serviceJson())){
+        $serviceJson = $this->app->containerCacheFile();
+        
+        if($providerInstance instanceof DeferrableProvider && file_exists($serviceJson)){
             $deferrableProvides = $providerInstance->provides();
 
             foreach ($deferrableProvides as $deferrableProvide) {
                 if($this->app->has($deferrableProvide)){
-                    JsonHandler::$file = serviceJson();
+                    JsonHandler::$file = $serviceJson;
                     $serviceJson = JsonHandler::get();
 
                     if(!isset($serviceJson['providers'][$provider])){
@@ -184,8 +186,8 @@ class ServiceProvider extends  ApplicationProvider
         //first we are running register methods of provider classes.
         foreach($providers as $key=>$provider){
 
-            if(file_exists(serviceJson())){
-                JsonHandler::$file = serviceJson();
+            if(file_exists($this->app->containerCacheFile())){
+                JsonHandler::$file = $this->app->containerCacheFile();
                 $serviceJson = JsonHandler::get();
             }
 

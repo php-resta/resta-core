@@ -429,6 +429,12 @@ if (!function_exists('serviceJson')) {
      */
     function serviceJson()
     {
-        return app()->path()->kernel().''.DIRECTORY_SEPARATOR.'service.json';
+        $file = app()->path()->kernel().''.DIRECTORY_SEPARATOR.'service.json';
+
+        if(file_exists($file)){
+            return $file;
+        }
+
+        return null;
     }
 }

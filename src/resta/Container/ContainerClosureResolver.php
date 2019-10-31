@@ -18,8 +18,10 @@ class ContainerClosureResolver
      */
     public static function get($key)
     {
-        if(file_exists(serviceJson())){
-            JsonHandler::$file = serviceJson();
+        $serviceJson = app()->containerCacheFile();
+        
+        if(file_exists($serviceJson)){
+            JsonHandler::$file = $serviceJson;
             $serviceJson = JsonHandler::get();
 
             $dottedKey = explode('.',$key);

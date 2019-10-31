@@ -134,6 +134,20 @@ class Application extends Kernel implements ApplicationContracts
     }
 
     /**
+     * get container cache file
+     * 
+     * @return mixed|string
+     */
+    public function containerCacheFile()
+    {
+        if(!is_null(serviceJson())){
+            return serviceJson();
+        }
+
+        return $this['containerCacheFile'];
+    }
+
+    /**
      * get core path
      *
      * @return mixed
