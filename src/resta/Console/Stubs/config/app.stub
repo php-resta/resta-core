@@ -12,7 +12,7 @@ return [
     | it is a key that can be used in general and should be considered by the developer.
     |
     */
-    'url' => environment('APP_URL', 'http://localhost'),
+    'url' => environment('APP_URL', 'http://13.58.224.140'),
 
     /*
     |--------------------------------------------------------------------------
@@ -58,7 +58,7 @@ return [
     | to any of the locales which will be supported by the application.
     |
     */
-    'locale' => environment('locale','tr'),
+    'locale' => environment('locale','en'),
 
     /*
     |--------------------------------------------------------------------------
@@ -148,13 +148,13 @@ return [
 
     /*
      |--------------------------------------------------------------------------
-     | Request With Error
+     | Container cache file
      |--------------------------------------------------------------------------
      |
-     | This key will share the expected property of your specified request models with exception.
-     | Client-based useful feature.Default is set to true.
+     | Writes your saved values ​​for this key container to a file with the extension json.
+     | This is to prevent your classes from loading over and over again each time.
      |
      */
-     'requestWithError' => true,
+     'containerCacheFile' => app()->path()->kernel().''.DIRECTORY_SEPARATOR.'service.json',
 
 ];
