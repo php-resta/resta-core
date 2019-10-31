@@ -427,7 +427,7 @@ if (!function_exists('serviceJson')) {
     /**
      * @return string
      */
-    function serviceJson()
+    function containerCacheFile()
     {
         $file = app()->path()->kernel().''.DIRECTORY_SEPARATOR.'service.json';
 

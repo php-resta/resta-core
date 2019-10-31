@@ -140,10 +140,14 @@ class Application extends Kernel implements ApplicationContracts
      */
     public function containerCacheFile()
     {
-        if(!is_null(serviceJson())){
-            return serviceJson();
+        // this is the method that allows container records
+        // to be written to a json file.
+        if(!is_null($containerCacheFile = containerCacheFile())){
+            return $containerCacheFile;
         }
 
+        // if the container json file is null
+        // then a registered container value is assigned.
         return $this['containerCacheFile'];
     }
 
