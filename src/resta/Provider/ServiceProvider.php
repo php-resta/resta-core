@@ -177,7 +177,9 @@ class ServiceProvider extends  ApplicationProvider
                     }
                 }
                 else{
-                    $this->applyProvider($key,$provider);
+                    if(!isset($serviceJson['providers-deferrable-classes'][$provider])){
+                        $this->applyProvider($key,$provider);
+                    }
                 }
             }
 
