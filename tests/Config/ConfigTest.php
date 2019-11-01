@@ -19,15 +19,7 @@ class ConfigTest extends AbstractTest
     {
         parent::setUp();
 
-        $configDirectory = root.''.DIRECTORY_SEPARATOR.'Config';
 
-        if(!file_exists($configDirectory)){
-            @mkdir($configDirectory);
-            @touch($configDirectory.''.DIRECTORY_SEPARATOR.'Core.php');
-        }
-
-        //set config path
-        static::$app->setPaths('config',$configDirectory);
 
         static::$app->loadConfig(function()
         {
