@@ -171,7 +171,6 @@ class ServiceProvider extends  ApplicationProvider
             // providers can only be installed once.
             // apply providers and register for kernel
             if(!isset($this->app['loadedProviders'][$key])){
-
                 if(is_array($provider) && isset($provider['class']) && isset($provider['status']) && $provider['status']){
                     if(!isset($serviceJson['providers-deferrable-classes'][$provider['class']])){
                         $this->applyProvider($key,$provider['class']);
@@ -181,10 +180,6 @@ class ServiceProvider extends  ApplicationProvider
                     $this->applyProvider($key,$provider);
                 }
             }
-        }
-
-        //then we are running boot methods of provider classes.
-        foreach($providers as $key=>$provider){
 
             //if the providers register is already booted.
             if(isset($this->app['loadedProviders'][$key])){
