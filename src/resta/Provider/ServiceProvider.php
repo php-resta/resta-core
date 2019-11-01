@@ -61,63 +61,50 @@ class ServiceProvider extends  ApplicationProvider
     private function deferrableProvider($providerInstance,$provider)
     {
         $serviceJson = $this->app->containerCacheFile();
-        
-        if($providerInstance instanceof DeferrableProvider && file_exists($serviceJson)){
-            $deferrableProvides = $providerInstance->provides();
 
-            foreach ($deferrableProvides as $deferrableProvide) {
-                if($this->app->has($deferrableProvide)){
-                    JsonHandler::$file = $serviceJson;
-                    $serviceJson = JsonHandler::get();
+        if(!isset($serviceJson['providers'][$provider])) {
 
-                    if(!isset($serviceJson['providers'][$provider])){
-                        JsonHandler::set('providers-deferrable-classes',[
-                            $provider => true
-                        ]);
+            if ($providerInstance instanceof DeferrableProvider && file_exists($serviceJson)) {
+                $deferrableProvides = $providerInstance->provides();
+
+                JsonHandler::$file = $serviceJson;
+
+                JsonHandler::set('providers-deferrable-classes', [
+                    $provider => true
+                ]);
+
+                foreach ($deferrableProvides as $deferrableProvide) {
+                    if ($this->app->has($deferrableProvide)) {
 
                         $container = $this->app->get($deferrableProvide);
 
-                        if(!is_array($container)){
+                        if (!is_array($container)) {
 
-                            if($container instanceof \Closure){
-                                JsonHandler::set('container',[
-                                    $deferrableProvide => SuperClosure::set($container)
-                                ]);
-
-                                JsonHandler::set('container-format',[
-                                    $deferrableProvide => 'closure'
-                                ]);
-                            }
-                            else{
-                                JsonHandler::set('container',[
-                                    $deferrableProvide => $container
-                                ]);
-
-                                JsonHandler::set('container-format',[
-                                    $deferrableProvide => 'string'
-                                ]);
+                            if ($container instanceof \Closure) {
+                                JsonHandler::set('container.'.$deferrableProvide, SuperClosure::set($container));
+                                JsonHandler::set('container-format.'.$deferrableProvide, 'closure');
+                            } else {
+                                JsonHandler::set('container.'.$deferrableProvide, $container);
+                                JsonHandler::set('container-format.'.$deferrableProvide, 'string');
                             }
 
-                        }
-                        else{
-                            foreach ($container as $containerKey=>$containerItem) {
-                                if($containerItem instanceof \Closure){
-                                    JsonHandler::set('container.'.$deferrableProvide.'.'.$containerKey.'',SuperClosure::set($containerItem));
-
-                                    JsonHandler::set('container-format.'.$deferrableProvide.'.'.$containerKey,'closure');
-                                }
-                                else{
-                                    JsonHandler::set('container.'.$deferrableProvide.'.'.$containerKey.'',$containerItem);
-
-                                    JsonHandler::set('container-format.'.$deferrableProvide.'.'.$containerKey,'string');
+                        } else {
+                            foreach ($container as $containerKey => $containerItem) {
+                                if ($containerItem instanceof \Closure) {
+                                    JsonHandler::set('container.' . $deferrableProvide . '.' . $containerKey . '', SuperClosure::set($containerItem));
+                                    JsonHandler::set('container-format.' . $deferrableProvide . '.' . $containerKey, 'closure');
+                                } else {
+                                    JsonHandler::set('container.' . $deferrableProvide . '.' . $containerKey . '', $containerItem);
+                                    JsonHandler::set('container-format.' . $deferrableProvide . '.' . $containerKey, 'string');
                                 }
 
                             }
                         }
                     }
-                }
 
+                }
             }
+
         }
     }
 
@@ -183,28 +170,24 @@ class ServiceProvider extends  ApplicationProvider
 
         $serviceJson = [];
 
+        if(file_exists($this->app->containerCacheFile())){
+            JsonHandler::$file = $this->app->containerCacheFile();
+            $serviceJson = JsonHandler::get();
+        }
+
         //first we are running register methods of provider classes.
         foreach($providers as $key=>$provider){
-
-            if(file_exists($this->app->containerCacheFile())){
-                JsonHandler::$file = $this->app->containerCacheFile();
-                $serviceJson = JsonHandler::get();
-            }
 
             // providers can only be installed once.
             // apply providers and register for kernel
             if(!isset($this->app['loadedProviders'][$key])){
 
-                if(is_array($provider) && isset($provider['status']) && $provider['status']){
+                if(is_array($provider) && isset($provider['class']) && isset($provider['status']) && $provider['status']){
                     if(!isset($serviceJson['providers-deferrable-classes'][$provider['class']])){
                         $this->applyProvider($key,$provider['class']);
                     }
 
                 }
-                else{
-                    $this->applyProvider($key,$provider);
-                }
-
             }
         }
 

@@ -45,6 +45,11 @@ interface ApplicationContracts
     /**
      * @return mixed
      */
+   public function containerCacheFile();
+
+    /**
+     * @return mixed
+     */
    public function corePath();
 
     /**

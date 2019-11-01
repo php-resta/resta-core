@@ -225,8 +225,11 @@ class Container implements ContainerContracts,\ArrayAccess
             }
             else{
                 $containerClosureResolver[] = $item;
-                $container = ContainerClosureResolver::get(implode('.',$containerClosureResolver));
             }
+        }
+
+        if(count($containerClosureResolver)>0){
+            $container = ContainerClosureResolver::get(implode('.',$containerClosureResolver));
         }
 
         return $container;

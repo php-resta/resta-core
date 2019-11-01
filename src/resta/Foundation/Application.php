@@ -30,19 +30,32 @@ class Application extends Kernel implements ApplicationContracts
     protected const VERSION = '1.0.0';
 
     /**
+     * console variable
+     *
      * @var bool
      */
     protected $console;
 
     /**
-     * Application constructor.
+     * container cache file variable
      *
-     * @param bool $console
+     * @var string
      */
-    public function __construct($console=false)
+    protected $containerCacheFile;
+
+    /**
+     * Application constructor.
+     * @param bool $console
+     * @param null $containerCacheFile
+     */
+    public function __construct($console=false,$containerCacheFile=null)
     {
         //get console status for cli
         $this->console = (is_bool($console)) ? $console : true;
+
+        if(!is_null($containerCacheFile)){
+            $this->containerCacheFile = $containerCacheFile;
+        }
 
         // the bootstrapper method is the initial process
         // that runs the individual methods that the application initiated.
@@ -135,8 +148,8 @@ class Application extends Kernel implements ApplicationContracts
 
     /**
      * get container cache file
-     * 
-     * @return mixed|string
+     *
+     * @return null|string
      */
     public function containerCacheFile()
     {
@@ -148,7 +161,11 @@ class Application extends Kernel implements ApplicationContracts
 
         // if the container json file is null
         // then a registered container value is assigned.
-        return $this['containerCacheFile'];
+        if(!is_null($this->containerCacheFile)){
+            return $this->containerCacheFile;
+        }
+
+        return null;
     }
 
     /**

@@ -43,7 +43,7 @@ class ContainerClosureResolver
             else{
 
                 if(isset($serviceJson['container'][$key])){
-                    if($serviceJson['container-format'][$key]=='string'){
+                    if($serviceJson['container-format'][$key]=='string' || is_array($serviceJson['container-format'][$key])){
                         return $serviceJson['container'][$key];
                     }
 

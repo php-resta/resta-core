@@ -23,7 +23,11 @@ abstract class AbstractTest extends TestCase
         ]);
 
         if(static::$app===null){
-            static::$app = new Application(true);
+            static::$app = new Application(true,__DIR__.'/../Config/service.json');
+        }
+
+        if(!file_exists($containerCacheFile = static::$app->containerCacheFile())){
+            files()->put($containerCacheFile,'[]');
         }
 
         parent::setUp();
