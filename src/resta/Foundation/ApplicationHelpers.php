@@ -179,6 +179,10 @@ if (!function_exists('exception')) {
      */
     function exception($name=null,$params=array())
     {
+        if(isset($params['key'])){
+            app()->register('errorInput',$params['key']);
+        }
+
         $exceptionManager=ExceptionManager::class;
         return app()->resolve($exceptionManager,['name'=>$name,'params'=>$params]);
     }
