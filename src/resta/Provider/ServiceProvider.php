@@ -180,10 +180,6 @@ class ServiceProvider extends  ApplicationProvider
                     $this->applyProvider($key,$provider);
                 }
             }
-        }
-
-        //then we are running boot methods of provider classes.
-        foreach($providers as $key=>$provider){
 
             //if the providers register is already booted.
             if(isset($this->app['loadedProviders'][$key])){
