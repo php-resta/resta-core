@@ -32,7 +32,7 @@
         "predis/predis": "^1.0",
         "symfony/var-dumper": "*",
         "monolog/monolog": "^1.22",
-        "symfony/console": "^4.3.4",
+        "symfony/console": "^4.2",
         "symfony/debug": "^4.2",
         "vlucas/phpdotenv": "^2.4",
         "guzzlehttp/guzzle": "^6.2",
