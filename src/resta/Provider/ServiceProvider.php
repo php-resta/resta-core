@@ -176,9 +176,6 @@ class ServiceProvider extends  ApplicationProvider
                         $this->applyProvider($key,$provider['class']);
                     }
                 }
-                else{
-                    $this->applyProvider($key,$provider);
-                }
             }
 
             //if the providers register is already booted.
