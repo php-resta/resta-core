@@ -54,7 +54,6 @@
         "symfony/stopwatch": "^4.1",
         "fzaninotto/faker": "^1.7",
         "league/pipeline": "^1.0",
-        "illuminate/queue": "^5.8",
         "illuminate/events": "^5.8",
         "aligurbuz/lingua": "dev-master",
         "ext-json": "*",
