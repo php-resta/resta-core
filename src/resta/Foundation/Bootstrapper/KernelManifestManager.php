@@ -86,15 +86,6 @@ class KernelManifestManager
                     //we combine the kernel with the application list on the application side.
                     $kernelMakers = array_merge($this->{$maker},$this->run[$maker]);
 
-                    // classes in the entire maker list can be uploaded on a per-user basis.
-                    // if the maker is present on a method basis, then the maker list values ​​must be true or false.
-                    // if one of the maker classes is false will not load this maker class.
-                    foreach ($kernelMakers as $kernelMakerAbstract=>$kernelMaker) {
-                        if($kernelMaker){
-                            $kernelMakers[$kernelMakerAbstract] = $appMaker[$kernelMakerAbstract];
-                        }
-                    }
-
                     // save all kernel maker list.
                     $app->setMakerList($kernelMakers);
                 }
