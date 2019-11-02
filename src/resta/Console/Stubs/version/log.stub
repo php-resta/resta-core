@@ -22,6 +22,10 @@ class ServiceLogManager
      */
     public function file($output,$file="access",$type="info")
     {
+        if(is_string($output)){
+            $output = ['message' => $output];
+        }
+
         //log register path
         $filePath = path()->appLog().'/'.$file.'.log';
 
