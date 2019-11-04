@@ -38,6 +38,14 @@ trait Event
             $this->entities = $this->fillable;
         }
 
+        if(property_exists($this,'relationWith') && is_array($this->relationWith) && count($this->relationWith)){
+            if(in_array('user_id',$this->fillable)){
+                $this->relationWith['user'] = 'Include user data related with folder data.';
+            }
+
+            app()->register('illuminator','relations',$this->relationWith);
+        }
+
         parent::__construct($attributes);
     }
 

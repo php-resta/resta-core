@@ -43,5 +43,12 @@ class __file__ extends Eloquent
      */
     protected $forbidden = ['id'];
 
+    /**
+     * @var array
+     */
+    protected $relationWith = [
+        //'photos' => 'Include photos related with __table__ data.',
+    ];
+
 }
 
