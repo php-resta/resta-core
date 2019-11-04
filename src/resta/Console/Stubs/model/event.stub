@@ -8,6 +8,21 @@ use Illuminate\Database\Eloquent\Builder;
 
 trait Event
 {
+    /**
+     * User_addon constructor.
+     * @param array $attributes
+     * @throws ReflectionException
+     */
+    public function __construct(array $attributes = [])
+    {
+        //appserviceprovider container register for entities
+        if(app()->has('entities')){
+            $entities = app()->get('entities');
+            $this->fillable = $entities($this->table);
+        }
+
+        parent::__construct($attributes);
+    }
 
     /**
      * @var array

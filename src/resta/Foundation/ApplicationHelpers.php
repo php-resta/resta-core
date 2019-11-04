@@ -426,6 +426,22 @@ if (!function_exists('trans')) {
     }
 }
 
+if (!function_exists('entities')) {
+
+    /**
+     * @param null|string $table
+     * @return void|array
+     */
+    function entities($table=null)
+    {
+        if(!is_null($table) && app()->has('entities')){
+            return app()->get('entities')($table);
+        }
+
+        exception()->runtime('entities container not found');
+    }
+}
+
 if (!function_exists('serviceJson')) {
 
     /**
