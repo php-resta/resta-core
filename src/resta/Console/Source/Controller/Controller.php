@@ -92,11 +92,8 @@ class Controller extends ConsoleOutputter {
 
         }
         elseif(isset($this->argument['file']) && file_exists($this->directory['endpoint'])){
-            
-
-
             if(isset($this->argument['type']) && $this->argument['type']=='Crud'){
-
+                
                 $this->touch['service/controllerfilecrud']   = $this->directory['endpoint'].''.DIRECTORY_SEPARATOR.''.$this->argument['file'].''. $this->argument['callClassPrefix'].'.php';
 
                 $this->file->touch($this,[
@@ -120,9 +117,7 @@ class Controller extends ConsoleOutputter {
                 files()->append($routePath,PHP_EOL.'Route::namespace(\''.$controller.'\')->get("/'.strtolower($this->argument['file']).'","'.$this->argument['file'].'Controller@index");');
 
             }
-
             
-
             // and as a result we print the result on the console screen.
             echo $this->classical(' > Controller called as "'.$this->argument['file'].'" has been successfully created in the '.$this->directory['endpoint'].'');
 
@@ -133,7 +128,10 @@ class Controller extends ConsoleOutputter {
             // and then create files related to the touch method of the file object as it is in the directory process.
             
             if(isset($this->argument['type']) && $this->argument['type']=='Crud'){
-                $this->touch['service/endpointcrud']        = $this->directory['endpoint'].''.DIRECTORY_SEPARATOR.''.$this->argument['serviceClass'].''. $this->argument['callClassPrefix'].'.php';
+                
+                $this->argument['file'] = $this->argument['serviceClass'];
+                
+                $this->touch['service/controllerfilecrud']  = $this->directory['endpoint'].''.DIRECTORY_SEPARATOR.''.$this->argument['serviceClass'].''. $this->argument['callClassPrefix'].'.php';
                 $this->touch['service/routecrud']           = $routePath;
 
             }
