@@ -48,7 +48,7 @@ class __file__Builder implements __file__Contract
 
             }
             catch (Exception $exception){
-                exception('database_'.$exception->getCode(),['key'=>$client->input('field')])
+                exception('database_'.$exception->getCode(),['key'=>'field:'.$client->input('field')])
                     ->invalidArgument($exception->getMessage());
             }
         }
