@@ -37,5 +37,11 @@ class __file__ extends Eloquent
      * @var array
      */
     protected $hidden = ['id'];
+
+    /**
+     * @var array
+     */
+    protected $forbidden = ['id'];
+
 }
 

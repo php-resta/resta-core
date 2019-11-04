@@ -9,7 +9,12 @@ use Illuminate\Database\Eloquent\Builder;
 trait Event
 {
     /**
-     * User_addon constructor.
+     * @var array
+     */
+    protected $entities = [];
+
+    /**
+     * model constructor.
      * @param array $attributes
      * @throws ReflectionException
      */
@@ -18,7 +23,19 @@ trait Event
         //appserviceprovider container register for entities
         if(app()->has('entities')){
             $entities = app()->get('entities');
-            $this->fillable = $entities($this->table);
+
+            if(property_exists($this,'forbidden') && is_array($this->forbidden)){
+                $this->fillable = array_diff($entities($this->table),$this->forbidden);
+            }
+            else{
+                $this->fillable = $entities($this->table);
+            }
+
+            if(in_array('created_at',$this->fillable) || in_array('updated_at',$this->fillable)){
+                $this->fillable = array_diff($this->fillable,['created_at','updated_at']);
+            }
+
+            $this->entities = $this->fillable;
         }
 
         parent::__construct($attributes);
@@ -33,6 +50,14 @@ trait Event
      * @var array
      */
     protected static $allowedQueryComparisons = ['>','<','like','=','!='];
+
+    /**
+     * @return HasOne
+     */
+    public function user()
+    {
+        return $this->hasOne(User::class,'id','user_id');
+    }
 
     /**
      * @return array
