@@ -114,7 +114,11 @@ class Client extends ClientAbstract implements HandleContracts
                 if(method_exists($getObjectInstance,$dataKey) && is_array($data)){
                     foreach ($data as $dataItem){
                         if(isset($this->origin[$dataItem])){
-                            $getObjectInstance->{$dataKey}($this->origin[$dataItem]);
+                            $getObjectInstance->{$dataKey}($this->origin[$dataItem],$this,$dataItem);
+                        }
+
+                        if(method_exists($this,$afterMethod = 'after'.ucfirst($dataKey))){
+                            $this->{$afterMethod}($this,$dataItem);
                         }
                     }
                 }
@@ -126,7 +130,7 @@ class Client extends ClientAbstract implements HandleContracts
                         $this->origin[$data] = array($this->origin[$data]);
                     }
                     foreach ($this->origin[$data] as $originData){
-                        $getObjectInstance->{$data}($originData);
+                        $getObjectInstance->{$data}($originData,$this,$data);
                     }
                 }
             }
