@@ -77,6 +77,14 @@ class Model extends ConsoleOutputter {
             $this->touch['model/event'] = $this->directory['helper'].''.DIRECTORY_SEPARATOR.'Event.php';
         }
 
+        if(!file_exists($this->directory['helper'].''.DIRECTORY_SEPARATOR.'TableChanges.php')){
+            $this->touch['model/tablechanges'] = $this->directory['helper'].''.DIRECTORY_SEPARATOR.'TableChanges.php';
+        }
+
+        if(!file_exists($this->directory['helper'].''.DIRECTORY_SEPARATOR.'Constructor.php')){
+            $this->touch['model/constructor'] = $this->directory['helper'].''.DIRECTORY_SEPARATOR.'Constructor.php';
+        }
+
         //set entity map
 
         $entityDir = $this->directory['modelDir'].''.DIRECTORY_SEPARATOR.'Entity';

@@ -1,0 +1,41 @@
+<?php
+
+namespace __modelNamespace__\Helper;
+
+use __modelNamespace__\TableEvent;
+use Illuminate\Database\Eloquent\Model;
+
+trait TableChanges
+{
+    /**
+     * get table changes
+     *
+     * @param Model $model
+     * @param $event
+     */
+    public function getTableChanges($model,$event)
+    {
+        $dirty = $model->getDirty();
+
+        $authId = (is_null(auth()->user())) ? '0' : auth()->user()->id;
+
+        if(count($dirty)){
+            foreach ($dirty as $field=>$value) {
+
+                if($field!=='updated_at'){
+                    TableEvent::insert([
+                        'table_name' => $model->getTable(),
+                        'table_field' => $field,
+                        'old_value'  => $model->getOriginal($field),
+                        'new_value'  => $value,
+                        'event_name' => $event,
+                        'client_ip'         => ip2long(request()->getClientIp()),
+                        'auth_id'    => $authId,
+                        'created_at' => date('Y-m-d H:i:s')
+                    ]);
+                }
+
+            }
+        }
+    }
+}

@@ -2,52 +2,11 @@
 
 namespace __modelNamespace__\Helper;
 
-use App\Mobi\Api\V1\Model\TableEvent;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 
 trait Event
 {
-    /**
-     * @var array
-     */
-    protected $entities = [];
-
-    /**
-     * model constructor.
-     * @param array $attributes
-     * @throws ReflectionException
-     */
-    public function __construct(array $attributes = [])
-    {
-        //appserviceprovider container register for entities
-        if(app()->has('entities')){
-            $entities = app()->get('entities');
-
-            if(property_exists($this,'forbidden') && is_array($this->forbidden)){
-                $this->fillable = array_diff($entities($this->table),$this->forbidden);
-            }
-            else{
-                $this->fillable = $entities($this->table);
-            }
-
-            if(in_array('created_at',$this->fillable) || in_array('updated_at',$this->fillable)){
-                $this->fillable = array_diff($this->fillable,['created_at','updated_at']);
-            }
-
-            $this->entities = $this->fillable;
-        }
-
-        if(property_exists($this,'relationWith') && is_array($this->relationWith) && count($this->relationWith)){
-            if(in_array('user_id',$this->fillable)){
-                $this->relationWith['user'] = 'Include user data related with folder data.';
-            }
-
-            app()->register('illuminator','relations',$this->relationWith);
-        }
-
-        parent::__construct($attributes);
-    }
+    use TableChanges,Constructor;
 
     /**
      * @var array
@@ -55,152 +14,81 @@ trait Event
     protected static $orderStrings = ['ASC','DESC'];
 
     /**
-     * @var array
-     */
-    protected static $allowedQueryComparisons = ['>','<','like','=','!='];
-
-    /**
-     * @return HasOne
-     */
-    public function user()
-    {
-        return $this->hasOne(User::class,'id','user_id');
-    }
-
-    /**
+     * get fillable values
+     *
      * @return array
      */
     public static function getFillableValues()
     {
-        return (new self())->getFillable();
+        return (new self())->fillable;
     }
 
     /**
-     * get table changes
-     *
-     * @param Model $model
-     * @param $event
+     * eloquent model static boot
      */
-    public function getTableChanges($model,$event)
-    {
-       $dirty = $model->getDirty();
-
-       $authId = (is_null(auth()->user())) ? '0' : auth()->user()->id;
-
-       if(count($dirty)){
-           foreach ($dirty as $field=>$value) {
-
-               if($field!=='updated_at'){
-                   TableEvent::insert([
-                       'table_name' => $model->getTable(),
-                       'table_field' => $field,
-                       'old_value'  => $model->getOriginal($field),
-                       'new_value'  => $value,
-                       'event_name' => $event,
-                       'client_ip'         => ip2long(request()->getClientIp()),
-                       'auth_id'    => $authId,
-                       'created_at' => date('Y-m-d H:i:s')
-                   ]);
-               }
-
-           }
-       }
-    }
-
     protected static function boot()
     {
         parent::boot();
+
+        $self = (new self());
 
         static::saved(function($model){
             $model->getTableChanges($model,'updated');
         });
 
-        //query filter scope
-        $filter     = (is_array($filter = get('filter'))) ? $filter : [];
-        $with       = (is_array($with = get('with'))) ? $with : [];
-        $queries    = (is_array($queries = get('query'))) ? $queries : [];
-        $select     = get('select');
+        /**
+         * authenticate global scope
+         */
+        static::addGlobalScope('authenticate',function (Builder $builder){
+            //$builder->authenticate();
+        });
 
-         $selectList = [];
+        /**
+         * with queries global scope
+         */
+        static::addGlobalScope('withes',function (Builder $builder) use($self){
+            $builder->with($self->withQueries);
+        });
 
-         if(is_array($select) && count($select)){
-            foreach ($select as $selectValue){
-                if(in_array($selectValue,(new self())->fillable)){
-                    $selectList[] = $selectValue;
-                }
+        /**
+         * select queries global scope
+         */
+        static::addGlobalScope('select',function (Builder $builder) use($self){
+            if(count($select = $self->selectQueries)){
+                $builder->select($select);
             }
-         }
+        });
 
-         $withList = [];
+        /**
+         * filter queries global scope
+         */
+        static::addGlobalScope('filter', function (Builder $builder) use($self){
 
-         foreach ($with as $item){
-            if(method_exists(new self(),$item)){
-                $withList[] = $item;
-            }
-         }
-
-         static::addGlobalScope('filter', function (Builder $builder) use($filter,$withList,$selectList,$queries){
-
-            //$builder->authenticate()->ordered();
-            $builder->with($withList);
-
-            if(count($selectList)){
-                $builder->select($selectList);
-            }
-
-            if(count($queries)){
-                foreach ($queries as $criteria=>$queryString) {
-                    $queryStringExplode = explode(' ',$queryString);
-                    $number = count($queryStringExplode);
-
-                    if($number%3==0 || $number%3==1){
-                        $repeat = $number/3;
-                        if($number=='3' && in_array($queryStringExplode[0],(new self())->fillable) && in_array($queryStringExplode[1],static::$allowedQueryComparisons)){
-                            $builder->where(function($builder) use($queryStringExplode){
-                                $builder->where($queryStringExplode[0],$queryStringExplode[1],$queryStringExplode[2]);
-                            });
-                        }
-                        else{
-                            if(in_array($queryStringExplode[0],(new self())->fillable) && in_array($queryStringExplode[1],static::$allowedQueryComparisons)){
-                                $firstQuery = $builder->where($queryStringExplode[0],$queryStringExplode[1],$queryStringExplode[2]);
-
-                                for ($i=1; $i<$repeat; $i++){
-                                    $findOperatorNumber = (3*$i);
-                                    if($queryStringExplode[$findOperatorNumber]=='and'){
-                                        $builder->where(function() use($firstQuery,$queryStringExplode,$findOperatorNumber){
-                                            if(in_array($queryStringExplode[$findOperatorNumber+2],static::$allowedQueryComparisons)){
-                                                $firstQuery->where($queryStringExplode[$findOperatorNumber+1],$queryStringExplode[$findOperatorNumber+2],$queryStringExplode[$findOperatorNumber+3]);
-                                            }
-
-                                        });
-                                    }
-
-                                    if($queryStringExplode[$findOperatorNumber]=='or'){
-                                        $builder->where(function() use($firstQuery,$queryStringExplode,$findOperatorNumber){
-                                            if(in_array($queryStringExplode[$findOperatorNumber + 2],static::$allowedQueryComparisons)) {
-                                                $firstQuery->orWhere($queryStringExplode[$findOperatorNumber + 1], $queryStringExplode[$findOperatorNumber + 2], $queryStringExplode[$findOperatorNumber + 3]);
-                                            }
-                                        });
-                                    }
-
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+            $filter = $self->filterQueries;
 
             if(count($filter)){
                 foreach ($filter as $key=>$item){
-                    if(in_array($key,(new self())->fillable)){
+                    if(in_array($key,$self->fillable)){
                         if($key!=='order'){
                             $builder->where($key,$item);
                         }
                     }
                 }
 
-                if(isset($filter['order'])){
+                if(isset($filter['order']) && is_string($filter['order'])
+                    && in_array(strtoupper($filter['order']),static::$orderStrings)){
                     $builder->orderBy('id',$filter['order']);
+                }
+
+                if(isset($filter['order']) && is_array($filter['order'])){
+                    if(count($filter['order'])==1){
+                        foreach ($filter['order'] as $orderField=>$orderValue){
+                            if(in_array(strtoupper($orderValue),static::$orderStrings)){
+                                $builder->orderBy($orderField,$orderValue);
+                            }
+                        }
+                    }
+
                 }
             }
             else{
