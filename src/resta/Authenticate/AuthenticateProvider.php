@@ -75,7 +75,7 @@ class AuthenticateProvider extends ConfigProvider implements AuthenticateContrac
      */
     public function guard($guard)
     {
-        $this->guard=$guard;
+        $this->guard = $guard;
 
         $this->setAuthenticateNeeds();
 
@@ -105,11 +105,7 @@ class AuthenticateProvider extends ConfigProvider implements AuthenticateContrac
 
         // the login value stored in the params property of the login manager object will return a builder object.
         // we will return the value of the login state as a boolean using the count method of this builder object.
-        if($this->getModel()=="Default"){
-            return $this->getResult();
-        }
-
-        return $loginManager->loginProcess();
+        return $this->getResult();
 
     }
 

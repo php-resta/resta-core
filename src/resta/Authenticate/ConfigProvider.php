@@ -25,11 +25,6 @@ class ConfigProvider
     protected $driver;
 
     /**
-     * @var null|mixed
-     */
-    protected $model;
-
-    /**
      * ConfigProvider constructor.
      */
     public function __construct()
@@ -39,6 +34,8 @@ class ConfigProvider
         if($this->guard=="default"){
             $this->setAuthenticateNeeds();
         }
+
+        $this->table();
     }
 
     /**
@@ -96,14 +93,7 @@ class ConfigProvider
      */
     public function getDriverBuilderNamespace()
     {
-        $this->getModel();
-
-        if($this->model=="Default"){
-
-            return $this->driverDefaultNamespace.'\\'.$this->getDriver().'\\UserBuilder';
-        }
-
-        return $this->model;
+        return $this->driverDefaultNamespace.'\\'.$this->getDriver().'\\UserBuilder';
     }
 
     /**
@@ -123,14 +113,7 @@ class ConfigProvider
      */
     public function getDriverNamespace()
     {
-        $this->getModel();
-
-        if($this->model=="Default"){
-
-            return $this->driverDefaultNamespace.'\\'.$this->getDriver().'\\User';
-        }
-
-        return $this->model;
+        return $this->driverDefaultNamespace.'\\'.$this->getDriver().'\\User';
     }
 
     /**
@@ -151,18 +134,6 @@ class ConfigProvider
     public function getHttp()
     {
         return $this->config['guard'][$this->guard]['http'];
-    }
-
-    /**
-     * get model for authenticate
-     *
-     * @return string
-     */
-    public function getModel()
-    {
-        $this->model = ucfirst($this->config['guard'][$this->guard]['model']);
-
-        return $this->model;
     }
 
     /**
@@ -208,8 +179,6 @@ class ConfigProvider
     protected function setAuthenticateNeeds()
     {
         $this->getDriver();
-
-        $this->getModel();
     }
 
     /**
@@ -223,6 +192,18 @@ class ConfigProvider
         $this->store = $store;
 
         return $this;
+    }
+
+    /**
+     * table name for authenticate
+     *
+     * @return string
+     */
+    public function table()
+    {
+        $table = $this->config['guard'][$this->guard]['table'];
+
+        app()->register('authenticateTable',$table);
     }
 
 }

@@ -28,9 +28,7 @@ class AuthLoginManager extends ResourceManager
         $this->credentials = new AuthLoginCredentialsManager($this->getCredentials($credentials),$this);
 
         //query login
-        if($this->auth->getModel()=="Default"){
-            $this->loginProcess();
-        }
+        $this->loginProcess();
     }
 
     /**

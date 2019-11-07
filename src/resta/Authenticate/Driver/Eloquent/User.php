@@ -6,7 +6,13 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
 class User extends Eloquent
 {
     /**
-     * @var $table string
+     * User constructor.
+     * @param array $attributes
      */
-    protected $table = 'users';
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+
+        $this->table = app()->get('authenticateTable');
+    }
 }
