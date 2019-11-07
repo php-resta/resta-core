@@ -21,7 +21,7 @@ return [
     'guard'=>[
         'default'=>[
             'request'           => 'default',
-            'model'             => 'default',
+            'table'             => 'users',
             'credentials'       => ['username','password'],
             'http'              => ['login'=>'post'],
             'key'               => 'token',
