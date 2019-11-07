@@ -60,6 +60,20 @@ class Route extends RouteHttpManager
     }
 
     /**
+     * get route calling for http
+     * 
+     * @return array|mixed
+     */
+    public static function getCallingRoute()
+    {
+        if(app()->has('routeResolvedData')){
+            return app()->get('routeResolvedData');
+        }
+        
+        return [];
+    }
+
+    /**
      * get route controller class
      *
      * @return string

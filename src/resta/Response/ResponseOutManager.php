@@ -23,7 +23,7 @@ class ResponseOutManager
      */
     public function json()
     {
-        $this->app->response='json';
+        $this->app->response = 'json';
     }
 
     /**
@@ -31,6 +31,6 @@ class ResponseOutManager
      */
     public function xml()
     {
-        $this->app->response='xml';
+        $this->app->response = 'xml';
     }
 }

@@ -20,7 +20,7 @@ trait ResponseOutput
     {
         if(isset(core()->controllerWatch)){
 
-            $watch=core()->controllerWatch;
+            $watch = core()->controllerWatch;
             return array_merge($printer,['watch'=>['memory'=>$watch['memory']]]);
         }
 
@@ -41,7 +41,13 @@ trait ResponseOutput
      */
     protected function getOutPutter()
     {
-        return $this->printer($this->getRouter());
+        $output = is_array($eventOutput = $this->fireEvent('output',true))
+            ? $eventOutput
+            : $this->printer($this->getRouter());
+
+        app()->register('output',$output);
+
+        return $output;
     }
 
     /**
@@ -105,7 +111,7 @@ trait ResponseOutput
 
         // For the data to be included in the response,
         // we go to the dataIncludedForPrinter method.
-        $this->printer=$this->dataIncludedForPrinter($this->printer);
+        $this->printer = $this->dataIncludedForPrinter($this->printer);
 
         // If the log feature is available on the kernel,
         // we run the logger process.

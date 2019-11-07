@@ -2,6 +2,7 @@
 
 namespace Resta\Response;
 
+use Closure;
 use Resta\Support\Utils;
 use Resta\Support\ClosureDispatcher;
 use Resta\Foundation\ApplicationProvider;
@@ -39,6 +40,32 @@ class ResponseProvider extends ApplicationProvider
 
             return config('app.response');
         });
+    }
+
+    /**
+     * resolving event fire for response
+     *
+     * @param null $event
+     * @param bool $return
+     * @return void
+     */
+    protected function fireEvent($event=null,$return=false)
+    {
+        // if an array of response-events is registered
+        // in the container system, the event will fire.
+        if($this->app->has('response-event.'.$event)){
+            $event = $this->app->get('response-event.'.$event);
+
+            // the event to be fired must be
+            // a closure instance.
+            if($event instanceof Closure){
+                $eventResolved = $event($this->app);
+
+                if($return){
+                    return $eventResolved;
+                }
+            }
+        }
     }
 
     /**
@@ -93,9 +120,18 @@ class ResponseProvider extends ApplicationProvider
         //if out putter is not null
         if(Utils::isNamespaceExists($formatter)){
 
-            //We resolve the response via the service container
-            //and run the handle method.
-            $result = app()->resolve($formatter)->{$this->getResponseKind()}($this->getOutPutter());
+            //fire event before response output
+            $this->fireEvent('before');
+
+            //get outputter for result
+            $outPutter = $this->getOutPutter();
+
+            //fire event after response output
+            $this->fireEvent('after');
+
+            // we resolve the response via the service container
+            // and run the handle method.
+            $result = app()->resolve($formatter)->{$this->getResponseKind()}($outPutter);
 
             $this->app->register('result',$result);
         }

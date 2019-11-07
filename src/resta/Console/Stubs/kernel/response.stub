@@ -1,0 +1,36 @@
+<?php
+
+namespace __kernelProviderDir__;
+
+use Resta\Contracts\ApplicationContracts;
+use Resta\Provider\ServiceProviderManager;
+
+class ResponseServiceProvider extends ServiceProviderManager
+{
+    /**
+     * register service provider
+     *
+     * @return void
+     */
+    public function register() : void
+    {
+        // you can do something in this callback method
+        // when you want to run an event before your application outputs.
+        $this->app->register('response-event','before',function(){
+            //
+        });
+
+        // you can do something in this callback method
+        // when you want to run an event after your application outputs.
+        $this->app->register('response-event','after',function(){
+           //
+        });
+
+        // if you want to change to the final output of your application,
+        // you can use the output event.
+        $this->app->register('response-event','output',function(ApplicationContracts $app){
+            //must be array callback process
+            return $app->get('output');
+        });
+    }
+}
