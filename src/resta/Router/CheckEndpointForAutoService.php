@@ -2,12 +2,13 @@
 
 namespace Resta\Router;
 
+use Resta\Traits\NamespaceForRoute;
 use Resta\Foundation\ApplicationProvider;
 
 class CheckEndpointForAutoService extends ApplicationProvider
 {
     /**
-     * @param $instance \Resta\Traits\NamespaceForRoute
+     * @param $instance NamespaceForRoute
      * @param callable|null $func
      * @return string
      */
@@ -21,7 +22,7 @@ class CheckEndpointForAutoService extends ApplicationProvider
         $configAutoServices = config('autoservices');
 
         //auto service is invoked if auto service is allowed for any class yada config.
-        if(class_exists($autoServiceNamespace) && $configAutoServices[strtolower(endpoint)]){
+        if(class_exists($autoServiceNamespace) && isset($configAutoServices[strtolower(endpoint)])){
             return $autoServiceNamespace;
         }
 
