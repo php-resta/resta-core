@@ -597,11 +597,11 @@ class Client extends ClientAbstract implements HandleContracts
                 $inputKeys = $this->inputs[$key];
 
                 $this->inputs[$key] = [];
-                foreach ($inputKeys as $input){
+                foreach ($inputKeys as $ikey=>$input){
 
                     $this->{$key}               = $input;
                     $keyMethod                  = $this->{$method}();
-                    $this->inputs[$key][]       = $keyMethod;
+                    $this->inputs[$key][$ikey]       = $keyMethod;
                 }
             }
             else{
