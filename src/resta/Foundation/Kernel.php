@@ -19,6 +19,7 @@ abstract class Kernel extends Container
         'config'            => 'config',
         'eventDispatcher'   => 'eventDispatcher',
         'serviceProvider'   => 'serviceProvider',
+        'router'            => 'router',
     ];
 
     /**
@@ -45,7 +46,6 @@ abstract class Kernel extends Container
      * @var array
      */
     protected $reflectionGroups=[
-        'router'    => 'router',
         'response'  => 'response',
     ];
 
