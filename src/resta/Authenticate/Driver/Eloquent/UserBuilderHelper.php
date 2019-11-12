@@ -181,6 +181,16 @@ class UserBuilderHelper
                 $this->auth->params['status'] = 0;
                 $this->auth->params['exception'] = 'update';
             }
+            else{
+                if(!is_null($after = $this->auth->provider('after'))){
+                    if(false === $after($this->auth->params['builder']->first())){
+                        $this->auth->params['status'] = 0;
+                        $this->auth->params['exception'] = 'update';
+                    }
+                }
+            }
+
+
         }
     }
 

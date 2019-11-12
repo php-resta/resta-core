@@ -18,7 +18,22 @@ class AuthenticateServiceProvider extends ServiceProviderManager
         });**/
 
         $this->app->register('authenticate','password',function($password){
-           return md5(sha1($password));
+           return md5(sha1($password)); // or verify
+        });
+
+        $this->app->register('authenticate','addQuery',function($query){
+            $query->where('status',1);
+        });
+
+        $this->app->register('authenticate','client',function(){
+            //authenticate client
+        });
+
+        /**
+         * The process you can do after the authenticate query. You should definitely return boolean to callback.
+         */
+        $this->app->register('authenticate','after',function($auth){
+            return true;
         });
     }
 }
