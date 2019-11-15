@@ -60,6 +60,7 @@ trait AuthenticateResponse
         if($this->checkStatus()){
             $result['message']                  = 'token success';
             $result['token']                    = $this->params['token'];
+            $result['user']                     = $this->params['data'];
 
             //we send the result value.
             return $result;
