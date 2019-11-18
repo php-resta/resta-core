@@ -436,6 +436,10 @@ class Client extends ClientAbstract implements HandleContracts
         //we record the values ​​
         //that coming with the post.
         $this->initClient();
+        
+        if(method_exists($this,'eventBefore')){
+            $this->eventBefore();
+        }
 
         // this method determines
         // how the request object will be requested,
