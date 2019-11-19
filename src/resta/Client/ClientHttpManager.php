@@ -38,6 +38,11 @@ class ClientHttpManager extends ApplicationProvider
      */
     public function resolve()
     {
+        if($this->app->has('clientReset')){
+            $this->app->terminate('clientReset');
+            return [];
+        }
+
         $inputs = $this->app->get($this->method);
 
         $content = json_decode($this->app['request']->getContent(),1);
