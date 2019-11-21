@@ -16,4 +16,14 @@ trait __client__Generator
      * @var array
      */
     protected $generators_dont_overwrite = [];
+
+    /**
+     * it generates code for request input
+     *
+     * @return int
+     */
+    protected function codeGenerator()
+    {
+        return 1;
+    }
 }
