@@ -1,0 +1,21 @@
+<?php
+
+namespace __clientNameDirNamespace__;
+
+/**
+ * Class __name__Trait
+ * @package __clientNameDirNamespace__
+ */
+trait __trait__Trait
+{
+    /**
+     * when we use the method for capsule,
+     * the capsuleMethod method is executed and the results must be array.
+     *
+     * @return array
+     */
+    public function capsuleMethod() : array
+    {
+        return [];
+    }
+}

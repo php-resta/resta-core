@@ -62,6 +62,16 @@ class Client extends ConsoleOutputter
             
         }
 
+        if(isset($this->argument['trait'])){
+            $this->argument['name'] = $this->argument['trait'];
+            
+            if(!file_exists($managerCustomTrait = $this->directory['clientNameDir'].'/'.$this->argument['trait'].'Trait.php')){
+                $this->touch['client/managercustomtrait'] = $managerCustomTrait;
+            }
+
+            $this->argument['managerTraitNamespace'] = Utils::getNamespace($managerCustomTrait);
+        }
+
         if(!file_exists($this->directory['clientNameCreate'].'/Client.php')){
             $this->touch['client/client'] = $this->directory['clientNameCreate'].'/Client.php';
             $this->touch['client/clientGenerator'] = $this->directory['clientNameCreate'].'/ClientGenerator.php';
@@ -71,8 +81,8 @@ class Client extends ConsoleOutputter
 
         if(!file_exists($clientSourceName = $this->directory['clientSource'].'/'.$client.'.php')){
             $this->touch['client/source'] = $clientSourceName.'';
-            //$this->touch['client/sourcegenerator'] = $this->directory['clientSource'].'/'.$client.'Generator.php';
         }
+        
 
         if(!file_exists($this->directory['clientNameCreate'].'/ClientProvider.php')){
             $this->touch['client/clientProvider'] = $this->directory['clientNameCreate'].'/ClientProvider.php';
