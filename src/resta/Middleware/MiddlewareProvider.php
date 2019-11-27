@@ -2,6 +2,7 @@
 
 namespace Resta\Middleware;
 
+use Resta\Router\Route;
 use Resta\Support\Utils;
 use Resta\Contracts\HandleContracts;
 use Resta\Foundation\ApplicationProvider;
@@ -133,11 +134,25 @@ class MiddlewareProvider extends ApplicationProvider implements HandleContracts
      */
     public function middlewareKeyOdds($key=null)
     {
+        $route = Route::getRouteResolve();
+
+        $endpoint = (isset($route['namespace']))
+            ? $route['namespace']
+            : (defined('endpoint')) ? endpoint : null;
+
+        $method = (isset($route['method']))
+            ? $route['method'] :
+            ($this->app->has('routeParameters')) ? implode("/",$this->app['routeParameters']) : '';
+
+        $http = (isset($route['http']))
+            ? $route['http'] :
+            ($this->app->has('httpMethod')) ? $this->app['httpMethod'] : null ;
+
         // identifying constants for the middleware layer.
         // with the property of the user, the user is free to determine the constants that the middleware layer wants.
-        $method     = $this->odds['method'] ?? implode("/",$this->app['routeParameters']);
-        $endpoint   = $this->odds['endpoint'] ?? endpoint;
-        $http       = $this->odds['http'] ?? $this->app['httpMethod'];
+        $method     = $this->odds['method'] ?? $method;
+        $endpoint   = $this->odds['endpoint'] ?? $endpoint;
+        $http       = $this->odds['http'] ?? $http;
 
         //method can only return fixed.
         if(!is_null($key)){
@@ -147,6 +162,8 @@ class MiddlewareProvider extends ApplicationProvider implements HandleContracts
         //middleware key odds
         return [
             strtolower($endpoint),
+            strtolower($endpoint).'@'.strtolower($http),
+            strtolower($endpoint).'@'.strtolower($http).'@'.strtolower($method),
             strtolower($endpoint).'@'.strtolower($method),
             strtolower($endpoint).'@'.strtolower($method).'@'.strtolower($http)
         ];
