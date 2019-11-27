@@ -20,14 +20,15 @@ return [
     */
     'guard'=>[
         'default'=>[
-            'request'           => 'default',
-            'table'             => 'users',
-            'credentials'       => ['username','password'],
-            'http'              => ['login'=>'post'],
-            'key'               => 'token',
-            'addToWhere'        => null,
-            'token'             => null,
-            'expire'            => 0,
+            'request'               => 'default',
+            'table'                 => 'users',
+            'credentials'           => ['username','password'],
+            'http'                  => ['login'=>'post'],
+            'key'                   => 'token',
+            'addToWhere'            => null,
+            'token'                 => null,
+            'expire'                => 0,
+            'deviceTokenRegister'   => 'device_tokens'
         ],
 
     ],

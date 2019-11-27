@@ -36,6 +36,8 @@ class ConfigProvider
         }
 
         $this->table();
+
+        $this->deviceTokenTable();
     }
 
     /**
@@ -204,6 +206,24 @@ class ConfigProvider
         $table = $this->config['guard'][$this->guard]['table'];
 
         app()->register('authenticateTable',$table);
+    }
+
+    /**
+     * table name for authenticate
+     *
+     * @return string
+     */
+    public function deviceTokenTable()
+    {
+        if(isset($this->config['guard'][$this->guard]['deviceTokenRegister'])){
+            $table = $this->config['guard'][$this->guard]['deviceTokenRegister'];
+
+            app()->register('authenticateDeviceTokenTable',$table);
+        }
+        else{
+            app()->register('authenticateDeviceTokenTable','device_tokens');
+        }
+
     }
 
 }

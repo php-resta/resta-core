@@ -6,12 +6,13 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
 class DeviceToken extends Eloquent
 {
     /**
-     * @var $table string
+     * User constructor.
+     * @param array $attributes
      */
-    protected $table = 'device_tokens';
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
 
-    /**
-     * @var array 
-     */
-    protected $fillable = ['user_id','token','token_integer','device_agent','device_agent_integer','expire'];
+        $this->table = app()->get('authenticateDeviceTokenTable');
+    }
 }
