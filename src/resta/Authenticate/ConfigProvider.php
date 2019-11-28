@@ -49,6 +49,10 @@ class ConfigProvider
     {
         $this->config = config('authenticate');
 
+        if(!is_null($config = $this->provider('config'))){
+            $this->config = $config($this->config,$this->config['guard'][$this->guard]);
+        }
+
         return $this->config;
     }
 
