@@ -68,6 +68,7 @@ class ExcludeMiddleware extends ApplicationProvider
         $this->excludeForAll($excludeKey,$excludeVal,function() use ($excludeKey,$excludeVal){
 
             if($excludeKey == $this->excludeList['middleware']['middlewareName']){
+                $this->result = true;
                 $this->inArrayExclude($excludeVal);
 
             }
