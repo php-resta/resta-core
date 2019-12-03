@@ -39,6 +39,6 @@ class AuthenticateServiceProvider extends ServiceProviderManager
         //You can change your configuration settings for authenticate.
         $this->app->register('authenticate','configuration',function($config){
             return $config;
-        }
+        });
     }
 }
