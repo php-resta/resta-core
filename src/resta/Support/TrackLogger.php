@@ -109,10 +109,13 @@ class TrackLogger extends ApplicationProvider
             echo 'Endpoint: '.$requestEndpoint;
 
             echo PHP_EOL;
-            echo 'Get Data: '.json_encode(isset($this->output['getData']) ? $this->output['getData'] : []);
+            echo 'Get Data: '.json_encode(isset($this->output['resource']['errorDetails']['client']['GET']) ? $this->output['resource']['errorDetails']['client']['GET'] : []);
 
             echo PHP_EOL;
-            echo 'Post Data: '.json_encode(isset($this->output['postData']) ? $this->output['postData'] : []);
+            echo 'Post Data: '.json_encode(isset($this->output['resource']['errorDetails']['client']['POST']) ? $this->output['resource']['errorDetails']['client']['POST'] : []);
+
+            echo PHP_EOL;
+            echo 'Put Data: '.json_encode(isset($this->output['resource']['errorDetails']['client']['PUT']) ? $this->output['resource']['errorDetails']['client']['PUT'] : []);
 
             echo PHP_EOL;
             $requestAuth = (isset($this->output['auth'])) ? $this->output['auth'] : null;
