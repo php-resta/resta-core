@@ -201,7 +201,11 @@ class UserBuilderHelper
      */
     protected function saveDeviceToken()
     {
-        $token_integer = crc32(md5($this->auth->params['token']));
+        $token_integer = null;
+
+        if(isset($this->auth->params['token'])){
+            $token_integer = crc32(md5($this->auth->params['token']));
+        }
 
         if(!is_null($token_integer)){
 
