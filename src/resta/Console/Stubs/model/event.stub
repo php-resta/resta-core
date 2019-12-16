@@ -59,41 +59,63 @@ trait Event
             }
         });
 
-         /**
-           * filter queries global scope
-           */
-          static::addGlobalScope('filter', function (Builder $builder) use($self){
+        /**
+         * filter queries global scope
+         */
+         static::addGlobalScope('filter', function (Builder $builder) use($self){
 
-              $filter = $self->filterQueries;
+                    $filter = $self->filterQueries;
 
-              if(count($filter)){
-                  foreach ($filter as $key=>$item){
-                      if(in_array($key,$self->fillable)){
-                          if($key!=='order'){
-                              $builder->where($key,$item);
-                          }
-                      }
-                  }
+                    if(count($filter)){
+                        foreach ($filter as $key=>$item){
+                            if(in_array($key,$self->fillable)){
 
-                  if(isset($filter['order']) && is_string($filter['order'])
-                      && in_array(strtoupper($filter['order']),static::$orderStrings)){
-                      $builder->orderBy('id',$filter['order']);
-                  }
+                                if($key!=='order'){
+                                    if(is_array($item)){
 
-                  if(isset($filter['order']) && is_array($filter['order'])){
-                      if(count($filter['order'])==1){
-                          foreach ($filter['order'] as $orderField=>$orderValue){
-                              if(in_array(strtoupper($orderValue),static::$orderStrings) && in_array($orderField,$self->fillable)){
-                                  $builder->orderBy($orderField,$orderValue);
-                              }
-                          }
-                      }
+                                        $itemArrayList = [];
 
-                  }
-              }
-              else{
-                  $builder->orderBy('id','desc');
-              }
-          });
+                                        foreach ($item as $operator=>$value){
+                                            if(in_array((string)$operator,$self::$whereOperators)){
+                                                $builder->where($key,$operator,$value);
+                                            }
+                                            else{
+                                                $itemArrayList[] = $value;
+                                            }
+                                        }
+
+                                        if(count($itemArrayList)){
+                                            $builder->whereIn($key,$itemArrayList);
+                                        }
+
+                                    }
+                                    else{
+                                        $builder->where($key,$item);
+                                    }
+
+                                }
+                            }
+                        }
+
+                        if(isset($filter['order']) && is_string($filter['order'])
+                            && in_array(strtoupper($filter['order']),static::$orderStrings)){
+                            $builder->orderBy('id',$filter['order']);
+                        }
+
+                        if(isset($filter['order']) && is_array($filter['order'])){
+                            if(count($filter['order'])==1){
+                                foreach ($filter['order'] as $orderField=>$orderValue){
+                                    if(in_array(strtoupper($orderValue),static::$orderStrings) && in_array($orderField,$self->fillable)){
+                                        $builder->orderBy($orderField,$orderValue);
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+                    else{
+                        $builder->orderBy('id','desc');
+                    }
+        });
     }
 }
