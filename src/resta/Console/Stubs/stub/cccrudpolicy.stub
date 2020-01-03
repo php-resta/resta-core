@@ -1,0 +1,19 @@
+<?php
+
+namespace __controllerNamespace__\Policy;
+
+use Resta\Role\RoleInterface;
+
+class __serviceClass____callClassPrefix__Policy
+{
+    /**
+     * policy for controller
+     *
+     * @param RoleInterface $role
+     * @return bool
+     */
+    public function index(RoleInterface $role)
+    {
+        return $role->directly();
+    }
+}

@@ -2,6 +2,7 @@
 
 namespace Resta\Console\Source\Project;
 
+use Resta\Foundation\PathManager\StaticPathList;
 use Resta\Support\Utils;
 use Resta\Console\ConsoleOutputter;
 use Resta\Console\ConsoleListAccessor;
@@ -62,27 +63,26 @@ class Project extends ConsoleOutputter
         //$this->directory['optionalDir'] = $this->optional();
 
         //get project directory all path
-        $this->directory['kernelDir']               = $this->kernel();
-        $this->directory['middleWareDir']           = $this->middleware();
-        //$this->directory['factoryDir']              = app()->path()->factory();
-        $this->directory['nodeDir']                 = $this->node();
-        $this->directory['webservice']              = $this->webservice();
-        $this->directory['stubDir']                 = $this->stub();
-        $this->directory['providerDir']             = $this->provider();
-        $this->directory['storageDir']              = $this->storage();
-        $this->directory['logDir']                  = $this->log();
-        $this->directory['resourceDir']             = $this->resource();
-        $this->directory['resourceCacheDir']        = $this->resource().'/'.StaticPathModel::$cache;
-        $this->directory['languageDir']             = $this->language();
-        $this->directory['languageEnDir']           = $this->language().'/en';
-        //$this->directory['callDir']                 = $this->controller();
-        $this->directory['configDir']               = $this->config();
-        $this->directory['testDir']                 = $this->test();
-        //$this->directory['helpersDir']              = app()->path()->helpers();
-        //$this->directory['sourceDir']               = $this->sourceDir();
-        //$this->directory['sourceSupportDir']        = $this->sourceSupportDir();
-        //$this->directory['sourceSupportTraitDir']   = $this->sourceSupportDir().'/Traits';
-        $this->directory['exceptionDir']            = app()->path()->exception();
+        $this->directory['kernelDir']                           = $this->kernel();
+        $this->directory['middleWareDir']                       = $this->middleware();
+        $this->directory['nodeDir']                             = $this->node();
+        $this->directory['webservice']                          = $this->webservice();
+        $this->directory['stubDir']                             = $this->stub();
+        $this->directory['stubControllerDir']                   = $this->stub().''.DIRECTORY_SEPARATOR.'Controller';
+        $this->directory['stubControllerCreateDir']             = $this->directory['stubControllerDir'].''.DIRECTORY_SEPARATOR.'Create';
+        $this->directory['stubControllerCreateCrudFileDir']     = $this->directory['stubControllerCreateDir'].''.DIRECTORY_SEPARATOR.'Crudfile';
+        $this->directory['stubDir']                             = $this->stub();
+        $this->directory['stubDir']                             = $this->stub();
+        $this->directory['providerDir']                         = $this->provider();
+        $this->directory['storageDir']                          = $this->storage();
+        $this->directory['logDir']                              = $this->log();
+        $this->directory['resourceDir']                         = $this->resource();
+        $this->directory['resourceCacheDir']                    = $this->resource().'/'.StaticPathModel::$cache;
+        $this->directory['languageDir']                         = $this->language();
+        $this->directory['languageEnDir']                       = $this->language().'/en';
+        $this->directory['configDir']                           = $this->config();
+        $this->directory['testDir']                             = $this->test();
+        $this->directory['exceptionDir']                        = app()->path()->exception();
 
         //set project directory
         $this->file->makeDirectory($this);
@@ -121,6 +121,16 @@ class Project extends ConsoleOutputter
         $this->touch['resource/index']              = $this->resource().'/index.html';
         $this->touch['resource/index']              = $this->resource().'/'.StaticPathModel::$cache.'/index.html';
         $this->touch['stub/index']                  = $this->stub().'/index.html';
+        $this->touch['stub/cccrudapp']              = $this->directory['stubControllerCreateCrudFileDir'] .'/app.stub';
+        $this->touch['stub/cccrudconf']              = $this->directory['stubControllerCreateCrudFileDir'] .'/conf.stub';
+        $this->touch['stub/cccrudcontrollerfilecrud']              = $this->directory['stubControllerCreateCrudFileDir'] .'/controllerfilecrud.stub';
+        $this->touch['stub/cccruddeveloper']              = $this->directory['stubControllerCreateCrudFileDir'] .'/developer.stub';
+        $this->touch['stub/cccruddoc']              = $this->directory['stubControllerCreateCrudFileDir'] .'/doc.stub';
+        $this->touch['stub/cccruddummy']              = $this->directory['stubControllerCreateCrudFileDir'] .'/dummy.stub';
+        $this->touch['stub/cccrudroute']              = $this->directory['stubControllerCreateCrudFileDir'] .'/routecrud.stub';
+        $this->touch['stub/cccrudpolicy']              = $this->directory['stubControllerCreateCrudFileDir'] .'/policy.stub';
+        $this->touch['stub/cccrudreadme']              = $this->directory['stubControllerCreateCrudFileDir'] .'/readme.stub';
+        $this->touch['stub/cccrudresourceindex']              = $this->directory['stubControllerCreateCrudFileDir'] .'/resourceIndex.stub';
         $this->touch['config/hateoas']              = $this->config().'/Hateoas.php';
         //$this->touch['config/response']             = $this->config().'/Response.php';
         $this->touch['config/redis']                = $this->config().'/Redis.php';

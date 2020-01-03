@@ -1,0 +1,22 @@
+<?php
+
+namespace __controllerNamespace__;
+
+use __versionNamespace__\ServiceAnnotationsManager;
+
+abstract class App
+{
+    //get service annotations
+    use ServiceAnnotationsManager;
+
+    /**
+     * service restrictions method.
+     *
+     * restrictions for production environment
+     * @return array
+     */
+    public function restrictions()
+    {
+        return [];
+    }
+}

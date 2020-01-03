@@ -1,0 +1,52 @@
+<?php
+
+namespace __controllerNamespace__;
+
+use Throwable;
+use Illuminate\Database\ConnectionInterface;
+
+class __file____callClassPrefix__ extends App
+{
+    /**
+     * #define: get __file__ list
+     *
+     * @return mixed|array
+     */
+    public function get()
+    {
+        return $this->builder->__model-low__()->get();
+    }
+
+     /**
+      * #define: create any __file__
+      *
+      * @return mixed|array
+      */
+     public function create()
+     {
+        $client = $this->client->__client-low__->__client-low___create;
+
+        return $this->builder->__model-low__()->create($client);
+     }
+
+     /**
+      * #define: update __file__
+      *
+      * @param ConnectionInterface $connection
+      * @return mixed|array
+      *
+      * @throws Throwable
+      */
+     public function update(ConnectionInterface $connection)
+     {
+        $client = $this->client->__client-low__->__client-low___update;
+
+        $updateArray = $this->builder->__model-low__()->updateArray($client,$connection);
+
+        if(!is_null($updateArray)){
+            return $updateArray;
+        }
+
+        return $this->builder->__model-low__()->update($client);
+     }
+}

@@ -19,19 +19,49 @@ class ConsoleEventServiceProvider extends ServiceProviderManager
             // by default we have written a migration event.
             // according to your needs you can write the event.
             event()->addListener('console','default',function($args){
-                call_user_func_array([$this,'createModelForMigration'],[$args]);
+                call_user_func_array([$this,'createControllerForMigrationPull'],[$args]);
+                call_user_func_array([$this,'createModelForMigrationCreate'],[$args]);
                 call_user_func_array([$this,'createTestForController'],[$args]);
             });
         }
     }
 
     /**
-     * log for console event
+     * controller file creating for console event
      *
      * @param array $args
      * @return mixed|void
      */
-    private function createModelForMigration($args=array())
+    private function createControllerForMigrationPull($args=array())
+    {
+        // if there is a value of migration for the argument values,
+        // then a controller will be created when that migration is pull.
+        if($args['class']=="migration" && $args['classMethod']=="pull" && isset($args['only'])){
+
+            $only = $args['only'];
+
+            if(substr($only,-1)=='s'){
+                // The symfony process will be executed as an application method.
+                $this->app->command('controller create','controller:'.strtolower($only).' type:crud stub:crudfile model:'.strtolower(substr($only,0,-1)).' client:'.strtolower($only));
+                $this->app->command('client create','name:'.strtolower($only).' client:'.strtolower($only).'_create');
+                $this->app->command('client create','name:'.strtolower($only).' client:'.strtolower($only).'_update');
+            }
+            else{
+                // The symfony process will be executed as an application method.
+                $this->app->command('controller create','controller:'.strtolower($only).' type:crud stub:crudfile model:'.strtolower($only).' client:'.strtolower($only).'');
+                $this->app->command('client create','name:'.strtolower($only).' client:'.strtolower($only).'_create');
+                $this->app->command('client create','name:'.strtolower($only).' client:'.strtolower($only).'_update');
+            }
+        }
+    }
+
+    /**
+     * model file creating for console event
+     *
+     * @param array $args
+     * @return mixed|void
+     */
+    private function createModelForMigrationCreate($args=array())
     {
         // if there is a value of migration create and model for the argument values,
         // then a model will be created when that migration is created.
@@ -43,7 +73,7 @@ class ConsoleEventServiceProvider extends ServiceProviderManager
     }
 
     /**
-     * controller test file for console event
+     * controller test file creating for console event
      *
      * @param array $args
      * @return mixed|void
