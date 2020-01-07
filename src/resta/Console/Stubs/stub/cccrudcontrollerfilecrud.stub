@@ -24,7 +24,7 @@ class __file____callClassPrefix__ extends App
       */
      public function create()
      {
-        $client = $this->client->__client-low__->__client-low___create;
+        $client = $this->client->__client-low__->__clientfile-low___create;
 
         return $this->builder->__model-low__()->create($client);
      }
@@ -39,7 +39,7 @@ class __file____callClassPrefix__ extends App
       */
      public function update(ConnectionInterface $connection)
      {
-        $client = $this->client->__client-low__->__client-low___update;
+        $client = $this->client->__client-low__->__clientfile-low___update;
 
         $updateArray = $this->builder->__model-low__()->updateArray($client,$connection);
 

@@ -30,6 +30,16 @@ trait Constructor
     protected $selectQueries = [];
 
     /**
+     * @var array
+     */
+    protected $baseQueries = [];
+
+    /**
+     * @var array
+     */
+    protected $sumQueries = [];
+
+    /**
      * User_addon constructor.
      * @param array $attributes
      */
@@ -52,12 +62,13 @@ trait Constructor
             $this->entities = $this->fillable;
         }
 
-        if(property_exists($this,'relationWith') && is_array($this->relationWith) && count($this->relationWith)){
+        if(property_exists($this,'relationWith') && is_array($this->relationWith) && count($this->relationWith) && httpMethod()=='get'){
             if(in_array('user_id',$this->fillable)){
                 $this->relationWith['user'] = 'Include user data related with folder data.';
             }
 
             app()->register('illuminator','relations',$this->relationWith);
+
         }
 
         parent::__construct($attributes);
@@ -72,8 +83,10 @@ trait Constructor
      */
     protected function propertyHandle()
     {
+        $this->baseQueries();
         $this->withQueries();
         $this->selectQueries();
+        $this->sumQueries();
         $this->filterQueries();
     }
 
@@ -86,8 +99,10 @@ trait Constructor
     {
         $with = (is_array($with = get('with'))) ? $with : [];
 
+        $relations = app()->get('illuminator.relations');
+
         foreach ($with as $item){
-            if(method_exists($this,$item)){
+            if(isset($relations[$item]) && method_exists($this,$item)){
                 $this->withQueries[] = $item;
             }
         }
@@ -119,5 +134,25 @@ trait Constructor
     private function filterQueries()
     {
         $this->filterQueries = (is_array($filter = get('filter'))) ? $filter : [];
+    }
+
+    /**
+     * filter queries for model
+     *
+     * @return void
+     */
+    private function baseQueries()
+    {
+        $this->baseQueries = (is_array($query = get('query'))) ? $query : [];
+    }
+
+    /**
+     * filter queries for model
+     *
+     * @return void
+     */
+    private function sumQueries()
+    {
+        $this->sumQueries = (is_array($query = get('sum'))) ? $query : [];
     }
 }

@@ -36,21 +36,25 @@ class ConsoleEventServiceProvider extends ServiceProviderManager
     {
         // if there is a value of migration for the argument values,
         // then a controller will be created when that migration is pull.
-        if($args['class']=="migration" && $args['classMethod']=="pull" && isset($args['only'])){
+        if($args['class']=="migration" && $args['classMethod']=="pull" && isset($args['only']) && isset($args['controller'])){
 
             $only = $args['only'];
 
-            if(substr($only,-1)=='s'){
+            $controller = $args['controller'];
+
+            $modelName = (substr($only,-1)=='s') ? strtolower(substr($only,0,-1)) : strtolower($only);
+
+            if(isset($args['file'])){
                 // The symfony process will be executed as an application method.
-                $this->app->command('controller create','controller:'.strtolower($only).' type:crud stub:crudfile model:'.strtolower(substr($only,0,-1)).' client:'.strtolower($only));
-                $this->app->command('client create','name:'.strtolower($only).' client:'.strtolower($only).'_create');
-                $this->app->command('client create','name:'.strtolower($only).' client:'.strtolower($only).'_update');
+                $this->app->command('controller create','controller:'.strtolower($controller).' file:'.strtolower($args['file']).' type:crud stub:crudfile model:'.$modelName.' client:'.strtolower($controller).' clientfile:'.strtolower($args['file']).'');
+                $this->app->command('client create','name:'.strtolower($controller).' client:'.strtolower($args['file']).'_create trait:'.strtolower($args['file']));
+                $this->app->command('client create','name:'.strtolower($controller).' client:'.strtolower($args['file']).'_update trait:'.strtolower($args['file']).'');
             }
             else{
                 // The symfony process will be executed as an application method.
-                $this->app->command('controller create','controller:'.strtolower($only).' type:crud stub:crudfile model:'.strtolower($only).' client:'.strtolower($only).'');
-                $this->app->command('client create','name:'.strtolower($only).' client:'.strtolower($only).'_create');
-                $this->app->command('client create','name:'.strtolower($only).' client:'.strtolower($only).'_update');
+                $this->app->command('controller create','controller:'.strtolower($controller).' type:crud stub:crudfile model:'.$modelName.' client:'.strtolower($only).' clientfile:'.strtolower($controller).'');
+                $this->app->command('client create','name:'.strtolower($controller).' client:'.strtolower($controller).'_create');
+                $this->app->command('client create','name:'.strtolower($controller).' client:'.strtolower($controller).'_update');
             }
         }
     }
