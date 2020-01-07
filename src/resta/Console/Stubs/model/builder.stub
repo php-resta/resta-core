@@ -48,7 +48,7 @@ class __file__Builder implements __file__Contract
 
             }
             catch (Exception $exception){
-                exception('database_'.$exception->getCode(),['key'=>'field:'.$client->input('field')])
+                exception('database_'.$exception->getCode(),['key'=>'__file-low___code:'.$client->input('__file-low___code')])
                     ->invalidArgument($exception->getMessage());
             }
         }
@@ -63,10 +63,10 @@ class __file__Builder implements __file__Contract
     {
         //create __file__
         try{
-            $data = static::$model::where('field',$data)->first();
+            $data = static::$model::where('__file-low___code',$data)->first();
 
             if(is_null($data)){
-                return static::$model::create(['field'=>$data]);
+                return static::$model::create(['__file-low___code'=>$data]);
             }
 
             return $data;
@@ -130,11 +130,10 @@ class __file__Builder implements __file__Contract
         }
 
         if(!isset($data)){
-            $data = static::$model::where('field',$client->input('field'))
-                     ->where('field',$client->input('field'))->first();
+            $data = static::$model::where('__file-low___code',$client->input('__file-low___code'))->first();
         }
 
-        nullExceptionPointer($data,'nullMessage');
+        nullExceptionPointer($data,'__file-low___code:'.$client->input('__file-low___code'));
 
         foreach ($client->all() as $input=>$item){
             if(in_array($input,$data->getFillable())){
@@ -144,9 +143,9 @@ class __file__Builder implements __file__Contract
 
         try{
             $data->save();
-            return static::$model::where('field',$client->input('field'))->first();
+            return static::$model::where('__file-low___code',$client->input('__file-low___code'))->first();
         }catch (Exception $e){
-                 exception('database_'.$e->getCode(),['key'=>$client->input('field')])
+                 exception('database_'.$e->getCode(),['key'=>$client->input('__file-low___code')])
                      ->invalidArgument($e->getMessage());
         }
      }
@@ -162,7 +161,7 @@ class __file__Builder implements __file__Contract
       */
      public function updateArray(ClientContract $client,ConnectionInterface $connection)
      {
-        $clientArray = clientArray($client,'field');
+        $clientArray = clientArray($client,'__file-low___code');
 
         if(count($clientArray)){
             return $connection->transaction(function() use($client,$clientArray){
@@ -197,8 +196,8 @@ class __file__Builder implements __file__Contract
      private function UniqueEntityForIsDeleted(ClientContract $client,callable $callable)
      {
         $uniqueEntityForIsDeleted = $this->find(
-                 $client->input('field'),
-                 'field'
+                 $client->input('__file-low___code'),
+                 '__file-low___code'
         );
 
         if(is_array($uniqueEntityForIsDeleted) && count($uniqueEntityForIsDeleted)){
