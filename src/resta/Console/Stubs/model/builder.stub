@@ -203,9 +203,9 @@ class __file__Builder implements __file__Contract
         if(is_array($uniqueEntityForIsDeleted) && count($uniqueEntityForIsDeleted)){
 
             $data = $uniqueEntityForIsDeleted[0];
-            if($data['is_deleted']==1){
+            if($data['is_deleted']=='1'){
                 $client->set('field',$data['field']);
-                $client->set('is_deleted',0);
+                $client->set('is_deleted','0');
                 return $this->update($client);
             }
         }
