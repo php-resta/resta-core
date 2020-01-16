@@ -45,7 +45,7 @@ trait Event
         });
 
         static::saved(function($model){
-            $model->getTableChanges($model,'updated');
+            //$model->getTableChanges($model,'updated');
         });
 
         /**
