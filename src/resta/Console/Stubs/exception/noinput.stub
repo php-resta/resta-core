@@ -1,0 +1,46 @@
+<?php
+
+namespace __exceptionNamespace__;
+
+use Exception;
+use Throwable;
+use __versionNamespace__\ServiceAnnotationsManager;
+
+class NoInputException extends Exception
+{
+    //get app annotations controller
+    use ServiceAnnotationsManager;
+
+    /**
+     * @var string $lang
+     */
+    protected $lang = 'noInput';
+
+    /**
+     * No Input Exception constructor.
+     *
+     * @param string $message
+     * @param int $code
+     * @param Throwable|null $previous
+     */
+     public function __construct($message = "NoInput Exception", $code = 400, Throwable $previous = null)
+     {
+        parent::__construct($message, $code, $previous);
+     }
+
+    /**
+     * make event for exception
+     *
+     * @method event
+     * @param $exception
+     * @return mixed|void
+     */
+     public function event($exception)
+     {
+         /**
+          * You can run the event directly when the exception is thrown.
+          * As an example you can log.
+         */
+         //logger()->emergency($exception);
+     }
+}

@@ -1,2 +1,4 @@
 default : default
 page : The (page) variable can only contain a numeric value.
+noInput : you do not have any input submissions.
+Authenticate: You do not have token privileges to view this endpoint.

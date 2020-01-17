@@ -72,7 +72,6 @@ class Project extends ConsoleOutputter
         $this->directory['stubControllerCreateDir']             = $this->directory['stubControllerDir'].''.DIRECTORY_SEPARATOR.'Create';
         $this->directory['stubControllerCreateCrudFileDir']     = $this->directory['stubControllerCreateDir'].''.DIRECTORY_SEPARATOR.'Crudfile';
         $this->directory['stubDir']                             = $this->stub();
-        $this->directory['stubDir']                             = $this->stub();
         $this->directory['providerDir']                         = $this->provider();
         $this->directory['storageDir']                          = $this->storage();
         $this->directory['logDir']                              = $this->log();
@@ -83,6 +82,7 @@ class Project extends ConsoleOutputter
         $this->directory['configDir']                           = $this->config();
         $this->directory['testDir']                             = $this->test();
         $this->directory['exceptionDir']                        = app()->path()->exception();
+        $this->directory['helperDir']                           = app()->path()->helpers();
 
         //set project directory
         $this->file->makeDirectory($this);
@@ -155,6 +155,8 @@ class Project extends ConsoleOutputter
         $this->touch['app/composer']                = $this->projectPath().'/composer.json';
         $this->touch['test/index']                  = $this->storage().'/index.html';
         $this->touch['exception/authenticate']      = $this->directory['exceptionDir'] .'/AuthenticateException.php';
+        $this->touch['exception/noinput']           = $this->directory['exceptionDir'] .'/NoInputException.php';
+        $this->touch['helpers/general']              = $this->directory['helperDir'] .'/General.php';
 
         //set project touch
         $this->file->touch($this);
