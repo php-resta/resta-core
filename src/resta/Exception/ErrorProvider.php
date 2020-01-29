@@ -321,7 +321,7 @@ class ErrorProvider extends ApplicationProvider
      */
     public function inStackTrace($error)
     {
-        if($this->app->has('urlComponent')){
+        if($this->app->has('urlComponent') && isset($error['file'])){
             if(!preg_match('@'.$this->app['urlComponent']['project'].'@',$error['file'])
                 && !$this->app->has('exceptionFile')){
                 if(preg_match('@ in\s(.*?)\n@is',$error['message'],$result)){
