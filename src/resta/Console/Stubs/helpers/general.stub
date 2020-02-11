@@ -30,6 +30,24 @@ if (!function_exists('clientArray')) {
     }
 }
 
+if (!function_exists('mysqlErrorColumn')) {
+
+    /**
+     * @param null $error
+     * @return mixed|void
+     */
+    function mysqlErrorColumn($error=NULL)
+    {
+        if(preg_match('@\'(.*?)\'@is',$error,$list)){
+            if(isset($list[1])){
+                return $list[1].' value is invalid for data format.';
+            }
+        }
+
+        return 'Data format is invalid';
+    }
+}
+
 if (!function_exists('nullExceptionPointer')) {
 
     /**

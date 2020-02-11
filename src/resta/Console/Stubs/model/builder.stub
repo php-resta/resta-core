@@ -49,7 +49,7 @@ class __file__Builder implements __file__Contract
             }
             catch (Exception $exception){
                 exception('database_'.$exception->getCode(),['key'=>'__file-low___code:'.$client->input('__file-low___code')])
-                    ->invalidArgument($exception->getMessage());
+                    ->invalidArgument(mysqlErrorColumn($exception->getPrevious()));
             }
         }
 
@@ -73,7 +73,7 @@ class __file__Builder implements __file__Contract
         }
         catch (Exception $exception){
             exception('database_'.$exception->getCode())
-                ->invalidArgument($exception->getMessage());
+                ->invalidArgument(mysqlErrorColumn($exception->getPrevious()));
         }
     }
 
