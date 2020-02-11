@@ -20,7 +20,7 @@ class ConsoleEventServiceProvider extends ServiceProviderManager
             // according to your needs you can write the event.
             event()->addListener('console','default',function($args){
                 call_user_func_array([$this,'createControllerForMigrationPull'],[$args]);
-                call_user_func_array([$this,'createModelForMigrationCreate'],[$args]);
+                call_user_func_array([$this,'createModelForMigrationPush'],[$args]);
                 call_user_func_array([$this,'createTestForController'],[$args]);
             });
         }
@@ -65,14 +65,22 @@ class ConsoleEventServiceProvider extends ServiceProviderManager
      * @param array $args
      * @return mixed|void
      */
-    private function createModelForMigrationCreate($args=array())
+    private function createModelForMigrationPush($args=array())
     {
         // if there is a value of migration create and model for the argument values,
         // then a model will be created when that migration is created.
-        if($args['class']=="migration" && $args['classMethod']=="create" && isset($args['model'])){
+        if($args['class']=="migration" && $args['classMethod']=="push"){
+
+            $args['only'] = $args['table'];
+
+            if(!isset($args['controller'])){
+                $args['controller'] = $args['table'];
+            }
+
+            $args['classMethod'] = 'pull';
 
             // The symfony process will be executed as an application method.
-            $this->app->command('model create','model:'.strtolower($args['model']));
+            $this->createControllerForMigrationPull($args);
         }
     }
 

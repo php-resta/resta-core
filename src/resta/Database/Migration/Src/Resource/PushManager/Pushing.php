@@ -46,6 +46,12 @@ class Pushing extends BaseManager
                     $capsule = new SchemaCapsule($this->config,$file,$table);
 
                     $this->list[$table][] = (new $className)->up($capsule);
+
+                    if(app()->has('arguments')){
+                        app()->terminate('arguments');
+                    }
+
+                    app()->register('arguments','table',$table);
                 }
 
                 

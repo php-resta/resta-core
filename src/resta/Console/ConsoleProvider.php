@@ -59,6 +59,10 @@ class ConsoleProvider extends ApplicationProvider
             }
 
             if(isset($listeners['console']['default'])){
+                
+                if($this->app->has('arguments')){
+                    $args = array_merge($args,$this->app->get('arguments'));
+                }
 
                 $event = $listeners['console']['default'];
                 return call_user_func_array($event,['args'=>$args,'app'=>$this->app]);
