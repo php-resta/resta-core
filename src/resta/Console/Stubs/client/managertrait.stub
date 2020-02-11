@@ -2,12 +2,17 @@
 
 namespace __clientNameDirNamespace__;
 
+use __versionNamespace__\ServiceAnnotationsManager;
+
 /**
  * Class __name__Trait
  * @package __clientNameDirNamespace__
  */
 trait __name__Trait
 {
+    //get app annotations controller
+    use ServiceAnnotationsManager;
+
     /**
      * when we use the method for capsule,
      * the capsuleMethod method is executed and the results must be array.
