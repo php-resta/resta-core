@@ -16,11 +16,13 @@ class __className__ implements MigrationContract
     {
         return $schema->create(function(Wizard $wizard){
 
-            $wizard->auto_increment();
-            //
+            $modelName = (substr(__CLASS__,-1)=='s') ? strtolower(substr(__CLASS__,0,-1)) : strtolower(__CLASS__);
 
-            $wizard->name('status')->enum([0,1])->default(1)->index();
-            $wizard->name('is_deleted')->enum([0,1])->default(0)->index();
+            $wizard->auto_increment();
+            $wizard->name($modelName.'_code')->bigint(20)->default(0)->index();
+
+            $wizard->name('status')->enum(['0','1'])->default('1')->index();
+            $wizard->name('is_deleted')->enum(['0','1'])->default('0')->index();
             $wizard->name('created_at')->timestamp();
             $wizard->name('updated_at')->timestamp();
 
