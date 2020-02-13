@@ -52,6 +52,7 @@ class Pushing extends BaseManager
                     }
 
                     app()->register('arguments','table',$table);
+                    app()->register('arguments','connection',$this->schema->getConnection());
                 }
 
                 
