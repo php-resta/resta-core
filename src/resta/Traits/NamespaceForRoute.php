@@ -168,7 +168,7 @@ trait NamespaceForRoute
         }
 
         //check namespace exists
-        if(file_exists(Utils::getPathFromNamespace($namespace)) && Utils::isNamespaceExists($namespace)){
+        if(Utils::isNamespaceExists($namespace)){
 
             // the controller classes are registered in the config controller.
             // the controller class is not executed if it is not available here.
