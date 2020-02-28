@@ -51,14 +51,11 @@ class Pushing extends BaseManager
                         app()->terminate('arguments');
                     }
 
-                    app()->register('arguments','table',$table);
-                    app()->register('arguments','connection',$this->schema->getConnection());
                 }
-
-                
             }
         }
 
+        app()->register('arguments','connection',$this->schema->getConnection());
         return $this->processHandler();
     }
 

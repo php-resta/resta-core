@@ -26,6 +26,10 @@ class __className__ implements MigrationContract
             $wizard->name('created_at')->timestamp();
             $wizard->name('updated_at')->timestamp();
 
+            //app()->register('arguments','table','table_name');
+            //app()->register('arguments','controller','controller_name');
+            //app()->register('arguments','file','file_name');
+
         });
     }
 
