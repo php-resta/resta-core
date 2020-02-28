@@ -619,4 +619,27 @@ class Filesystem
         JsonHandler::$file = $path;
         return JsonHandler::class;
     }
+
+    /**
+     * @param $executionPath
+     * @param $param
+     * @return bool
+     */
+    public function change($executionPath,$param)
+    {
+        $dt = fopen($executionPath, "r");
+        $content = fread($dt, filesize($executionPath));
+        fclose($dt);
+
+        foreach ($param as $key=>$value){
+
+            $content=str_replace("".$key."",$value,$content);
+        }
+
+        $dt = fopen($executionPath, "w");
+        fwrite($dt, $content);
+        fclose($dt);
+
+        return true;
+    }
 }
