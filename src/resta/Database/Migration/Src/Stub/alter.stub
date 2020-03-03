@@ -17,6 +17,10 @@ class __className__ implements MigrationContract
         return $schema->alter(function(Wizard $wizard){
 
             //
+
+            //app()->register('arguments','table','table_name');
+            //app()->register('arguments','controller','controller_name');
+            //app()->register('arguments','file','file_name');
         });
     }
 

@@ -47,10 +47,6 @@ class Pushing extends BaseManager
 
                     $this->list[$table][] = (new $className)->up($capsule);
 
-                    if(app()->has('arguments')){
-                        app()->terminate('arguments');
-                    }
-
                 }
             }
         }
