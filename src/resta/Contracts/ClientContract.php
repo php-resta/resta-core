@@ -46,4 +46,9 @@ interface ClientContract
      * @return void
      */
     public function set($key,$value);
+
+    /**
+     * @return mixed
+     */
+    public function reset();
 }
