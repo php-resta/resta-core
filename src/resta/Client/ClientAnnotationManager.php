@@ -191,11 +191,41 @@ class ClientAnnotationManager extends ClientAnnotationAbstract
             $rules = explode(":",$rule[1]);
             if(isset($this->inputs[$key]) && !is_array($this->inputs[$key])){
                 foreach($rules as $rule){
+
+                    $ruleExplode = explode('#',$rule);
+                    $rule = $ruleExplode[0];
+
                     if(isset($requestRules[$rule])){
                         if(!preg_match('@'.$requestRules[$rule].'@',$this->inputs[$key])){
                             exception($rule,['key'=>$key.':'.$this->inputs[$key]])
                                 ->invalidArgument($key.':'.$this->inputs[$key].' input value is not valid for '.$rule.' request rule');
                         }
+                    }
+
+                    //rule method
+                    if(!isset($requestRules[$rule])){
+                        $this->request->call(function() use($rule,$key,$ruleExplode){
+                            if(method_exists($this,$ruleMethod = '__rule'.ucfirst($rule))){
+                                if(isset($ruleExplode[1])){
+
+                                    $reValueList = [];
+                                    foreach (explode(',',$ruleExplode[1]) as $reValue){
+                                        $reValueExplode = explode('=',$reValue);
+                                        $reValueListKey = $reValueExplode[0];
+                                        $reValueListValue = (isset($reValueExplode[1])) ? $reValueExplode[1] : null;
+
+                                        $reValueList[$reValueListKey] = $reValueListValue;
+
+                                    }
+
+                                    $this->{$ruleMethod}($key,$this->inputs[$key],$reValueList);
+                                }
+                                else{
+                                    $this->{$ruleMethod}($key,$this->inputs[$key]);
+                                }
+
+                            }
+                        });
                     }
                 }
             }
