@@ -43,13 +43,26 @@ class RouteMatching extends ApplicationProvider
 
         $patternList = [];
 
-        foreach($routes['data'] as $patternKey=>$routeData){
-            if($routeData['http']==httpMethod()){
-                $patternList[$patternKey]=$patterns[$patternKey];
+        if(isset($routes['data'])){
+            foreach($routes['data'] as $patternKey=>$routeData){
+                if(isset($routeData['http']) && $routeData['http']==httpMethod()){
+                    $patternList[$patternKey]=$patterns[$patternKey];
+                }
             }
         }
 
         $scoredList = [];
+
+        if(is_array($urlRoute) && $this->app->has('routeModule')){
+            $urlRouteModuleList = [];
+            foreach ($urlRoute as $moduleKey=>$moduleValue){
+                if($moduleKey!==0){
+                    $urlRouteModuleList[] = $moduleValue;
+                }
+            }
+
+            $urlRoute = $urlRouteModuleList;
+        }
 
         foreach ($patternList as $key=>$pattern){
 

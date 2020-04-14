@@ -33,14 +33,4 @@ class __file____callClassPrefix__ extends App
     {
         return 'update __file__';
     }
-
-    /**
-     * #define: delete __file__
-     *
-     * @return mixed|array
-     */
-    public function delete()
-    {
-        return 'delete __file__';
-    }
 }

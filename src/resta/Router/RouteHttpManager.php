@@ -49,6 +49,23 @@ abstract class RouteHttpManager
     }
 
     /**
+     * set namespace for route
+     *
+     * @param $namespace
+     * @return Route
+     */
+    public static function module($module) : Route
+    {
+        // this feature is ideal for detecting
+        // a directory with a reachable endpoint.
+        static::$module = $module;
+
+        // the method returns
+        // the class itself.
+        return new static();
+    }
+
+    /**
      * http post method
      *
      * @param mixed ...$params

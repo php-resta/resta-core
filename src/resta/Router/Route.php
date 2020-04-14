@@ -37,6 +37,11 @@ class Route extends RouteHttpManager
     protected static $namespace;
 
     /**
+     * @var null|string $module
+     */
+    protected static $module;
+
+    /**
      * get route checkArrayEqual
      *
      * @param $patterns
@@ -237,8 +242,21 @@ class Route extends RouteHttpManager
             // then only that endpoint is transferred into the path
             if(defined('endpoint') && $endpoint){
 
-                $routeName      = endpoint.'Route.php';
-                $routeMapper    = $routeDefinitor['routePath'].''.DIRECTORY_SEPARATOR.''.$routeName;
+                $moduleDirectoryPath = $routeDefinitor['routePath'].''.DIRECTORY_SEPARATOR.''.endpoint;
+
+                if(file_exists($moduleDirectoryPath)){
+
+                    $routeParameters = app()->get('routeParameters');
+                    
+                    app()->register('routeModule',true);
+
+                    $routeName      = isset($routeParameters[0]) ? $routeParameters[0].'Route.php' : null.'Route.php';
+                    $routeMapper    = $routeDefinitor['routePath'].''.DIRECTORY_SEPARATOR.''.endpoint.''.DIRECTORY_SEPARATOR.''.$routeName;
+                }
+                else{
+                    $routeName      = endpoint.'Route.php';
+                    $routeMapper    = $routeDefinitor['routePath'].''.DIRECTORY_SEPARATOR.''.$routeName;
+                }
 
                 if(file_exists($routeMapper) && !isset(static::$paths[$routeMapper])){
                     static::$paths[$routeMapper] = $routeDefinitor['controllerPath'];
