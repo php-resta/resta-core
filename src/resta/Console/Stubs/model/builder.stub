@@ -4,6 +4,7 @@ namespace __builderNamespace__;
 
 use Throwable;
 use Exception;
+use Store\Services\DB;
 use __modelNamespace__\__file__;
 use Resta\Contracts\ClientContract;
 use __contractNamespace__\__file__Contract;
@@ -195,18 +196,28 @@ class __file__Builder implements __file__Contract
       */
      private function UniqueEntityForIsDeleted(ClientContract $client,callable $callable)
      {
-        $uniqueEntityForIsDeleted = $this->find(
-                 $client->input('__file-low___code'),
-                 '__file-low___code'
-        );
+        $uniques = (array)DB::uniques(app()->resolve(static::$model)->getTable());
 
-        if(is_array($uniqueEntityForIsDeleted) && count($uniqueEntityForIsDeleted)){
+        foreach ($uniques as $unique){
 
-            $data = $uniqueEntityForIsDeleted[0];
-            if($data['is_deleted']=='1'){
-                $client->set('field',$data['field']);
-                $client->set('is_deleted','0');
-                return $this->update($client);
+            $uniqueEntityForIsDeleted = static::$model::where(function($query) use($client,$unique){
+
+                foreach ($unique as $uniqueValue){
+                    $query->where($uniqueValue,$client->input($uniqueValue));
+                }
+
+            })->get()->toArray();
+
+            if(is_array($uniqueEntityForIsDeleted) && count($uniqueEntityForIsDeleted)){
+
+                $data = $uniqueEntityForIsDeleted[0];
+                if($data['is_deleted']=='1'){
+                    foreach ($data as $dataKey=>$dataValue){
+                        $client->set($dataKey,$dataValue);
+                    }
+                    $client->set('is_deleted','0');
+                    return $this->update($client);
+                }
             }
         }
 
