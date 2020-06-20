@@ -14,6 +14,7 @@ use ReflectionException as ReflectionExceptionAlias;
  * @property $this requestExcept
  * @property $this expected
  * @property  $this groups
+ * @property  $this unity
  */
 class Client extends ClientAbstract implements HandleContracts
 {
@@ -457,6 +458,10 @@ class Client extends ClientAbstract implements HandleContracts
         // expected values must be in the key being sent.
         $this->expectedInputs();
 
+        // contrary to unity method,
+        // accepts only one of the elements in the array in the client data sent.
+        $this->unity();
+
         // we update the input values ​​after
         // we receive and check the saved objects.
         $this->setClientObjects();
@@ -474,6 +479,31 @@ class Client extends ClientAbstract implements HandleContracts
         }
 
         app()->register('clientRequestInputs',$this->inputs);
+    }
+
+    /**
+     * accepts only one of the elements in the array in the client data sent.
+     *
+     * @return void
+     */
+    private function unity()
+    {
+        // unity method is executed.
+        if($this->checkProperties('unity')){
+
+            $list = [];
+
+            foreach ($this->unity as $unity){
+                if(isset($this->inputs[$unity])){
+                    $list[] = $unity;
+                }
+            }
+
+            if(count($list)>1){
+                exception('clientUnityExpected',['key'=>implode(',',$this->unity)])
+                    ->invalidArgument('clientUnityExpected');
+            }
+        }
     }
 
     /**
