@@ -80,7 +80,7 @@ class ClientProvider extends ClientManager implements ArrayAccess {
      */
     public function request()
     {
-        return $this->getRequestData();
+        return $this->getOrigin();
     }
 
     /**
