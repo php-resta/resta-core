@@ -41,13 +41,7 @@ trait ResponseOutput
      */
     protected function getOutPutter()
     {
-        $output = is_array($eventOutput = $this->fireEvent('output',true))
-            ? $eventOutput
-            : $this->printer($this->getRouter());
-
-        app()->register('output',$output);
-
-        return $output;
+        return $this->printer(app()->get('output'));
     }
 
     /**

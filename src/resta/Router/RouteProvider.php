@@ -2,6 +2,7 @@
 
 namespace Resta\Router;
 
+use Closure;
 use Resta\Traits\NamespaceForRoute;
 use Resta\Container\DIContainerManager;
 use Resta\Foundation\ApplicationProvider;
@@ -13,6 +14,32 @@ class RouteProvider extends ApplicationProvider
     use NamespaceForRoute;
 
     /**
+     * resolving event fire for response
+     *
+     * @param null $event
+     * @param bool $return
+     * @return mixed|void
+     */
+    private function fireEvent($event=null,$return=false)
+    {
+        // if an array of response-events is registered
+        // in the container system, the event will fire.
+        if($this->app->has('response-event.'.$event)){
+            $event = $this->app->get('response-event.'.$event);
+
+            // the event to be fired must be
+            // a closure instance.
+            if($event instanceof Closure){
+                $eventResolved = $event($this->app);
+
+                if($return){
+                    return $eventResolved;
+                }
+            }
+        }
+    }
+
+    /**
      * call controller for routing
      *
      * @return mixed
@@ -22,13 +49,31 @@ class RouteProvider extends ApplicationProvider
      */
     private function callController()
     {
-        //the singleton eager class is a class built to temporarily prevent
-        //the use of user-side kernel objects used by the rest system.
-        //Objects in this class are destroyed when their work is finished.
-        $this->singletonEagerForRoute();
+        $this->fireEvent('before',true);
 
-        //call service together with controller method
-        return $this->getCallBindController();
+        if($this->app->has('output')){
+            return $this->app->get('output');
+        }
+
+        if(is_array($event = $this->fireEvent('output',true))){
+            $controller = $event;
+        }
+        else{
+
+            //the singleton eager class is a class built to temporarily prevent
+            //the use of user-side kernel objects used by the rest system.
+            //Objects in this class are destroyed when their work is finished.
+            $this->singletonEagerForRoute();
+
+            //call service together with controller method
+            $controller = $this->getCallBindController();
+        }
+
+        $this->app->register('output',$controller);
+
+        $this->fireEvent('after',true);
+
+        return $controller;
     }
 
     /**
@@ -62,13 +107,10 @@ class RouteProvider extends ApplicationProvider
      */
     public function handle()
     {
-        return $this->app->resolve(RoutePolicy::class)->gate(function(){
+        $this->app->register('routerResult',$this->callController());
 
-            $this->app->register('routerResult',$this->callController());
-
-            //we call our services as controller
-            return $this->app['routerResult'];
-        });
+        //we call our services as controller
+        return $this->app['routerResult'];
     }
 
     /**

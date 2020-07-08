@@ -120,14 +120,8 @@ class ResponseProvider extends ApplicationProvider
         //if out putter is not null
         if(Utils::isNamespaceExists($formatter)){
 
-            //fire event before response output
-            $this->fireEvent('before');
-
             //get outputter for result
             $outPutter = $this->getOutPutter();
-
-            //fire event after response output
-            $this->fireEvent('after');
 
             // we resolve the response via the service container
             // and run the handle method.
