@@ -71,8 +71,6 @@ class RouteProvider extends ApplicationProvider
 
         $this->app->register('output',$controller);
 
-        $this->fireEvent('after',true);
-
         return $controller;
     }
 

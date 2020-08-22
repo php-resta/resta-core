@@ -128,6 +128,8 @@ class ResponseProvider extends ApplicationProvider
             $result = app()->resolve($formatter)->{$this->getResponseKind()}($outPutter);
 
             $this->app->register('result',$result);
+
+            $this->fireEvent('after',true);
         }
     }
 
