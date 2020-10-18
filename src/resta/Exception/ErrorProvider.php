@@ -173,7 +173,7 @@ class ErrorProvider extends ApplicationProvider
             && Str::startsWith($vendorDirectory,'vendor/php-resta')===false)
         {
 
-            $externalMessage = ($environment==="production") ?
+            $externalMessage = (config('app.debugger') === false) ?
                 'An unexpected external error has occurred' :
                 $this->data['errStrReal'];
 
@@ -189,7 +189,7 @@ class ErrorProvider extends ApplicationProvider
         }
         else{
 
-            if($this->data['status']=='500' && $environment=='production'){
+            if($this->data['status']=='500' && config('app.debugger') === false){
                 $externalMessage = 'An unexpected external error has occurred';
             }
             else{

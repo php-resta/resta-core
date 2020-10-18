@@ -12,7 +12,19 @@ return [
     | it is a key that can be used in general and should be considered by the developer.
     |
     */
-    'url' => environment('APP_URL', 'http://13.58.224.140'),
+    'url' => environment('APP_URL', 'localhost'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Application Debug Mode
+    |--------------------------------------------------------------------------
+    |
+    | When your application is in debug mode, detailed error messages with
+    | stack traces will be shown on every error that occurs within your
+    | application. If disabled, a simple generic error page is shown.
+    |
+    */
+    'debugger' => environment('APP_DEBUGGER', 'false'),
 
     /*
     |--------------------------------------------------------------------------
@@ -22,8 +34,7 @@ return [
     | These are the keys to be automatically included in the documentation parameters
     | to be created for the application.With these keys, we prevent you from writing
     | the same keys over and over to the file that will create your documentation.
-    |
-    */
+    |/*
     'docHook' => [
         'params'=> [
             'token'=> [
