@@ -140,13 +140,17 @@ class MiddlewareProvider extends ApplicationProvider implements HandleContracts
             ? $route['namespace']
             : (defined('endpoint')) ? endpoint : null;
 
+        $routeParameterContainer = ($this->app->has('routeParameters')) ? implode("/",$this->app['routeParameters']) : '';
+
         $method = (isset($route['method']))
             ? $route['method'] :
-            ($this->app->has('routeParameters')) ? implode("/",$this->app['routeParameters']) : '';
+            $routeParameterContainer;
+
+        $routeHttpContainer = ($this->app->has('httpMethod')) ? $this->app['httpMethod'] : null ;
 
         $http = (isset($route['http']))
             ? $route['http'] :
-            ($this->app->has('httpMethod')) ? $this->app['httpMethod'] : null ;
+            $routeHttpContainer;
 
         // identifying constants for the middleware layer.
         // with the property of the user, the user is free to determine the constants that the middleware layer wants.
