@@ -136,9 +136,11 @@ class MiddlewareProvider extends ApplicationProvider implements HandleContracts
     {
         $route = Route::getRouteResolve();
 
+        $endPointTernary = (defined('endpoint')) ? endpoint : null;
+
         $endpoint = (isset($route['namespace']))
             ? $route['namespace']
-            : (defined('endpoint')) ? endpoint : null;
+            : $endPointTernary;
 
         $routeParameterContainer = ($this->app->has('routeParameters')) ? implode("/",$this->app['routeParameters']) : '';
 
