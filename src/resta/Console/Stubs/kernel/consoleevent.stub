@@ -2,6 +2,7 @@
 
 namespace __kernelProviderDir__;
 
+use Resta\Support\Utils;
 use Resta\Provider\ServiceProviderManager;
 
 class ConsoleEventServiceProvider extends ServiceProviderManager
@@ -21,7 +22,7 @@ class ConsoleEventServiceProvider extends ServiceProviderManager
             event()->addListener('console','default',function($args){
                 call_user_func_array([$this,'createControllerForMigrationPull'],[$args]);
                 call_user_func_array([$this,'createModelForMigrationPush'],[$args]);
-                call_user_func_array([$this,'createTestForController'],[$args]);
+                //call_user_func_array([$this,'createTestForController'],[$args]);
             });
         }
     }
@@ -49,12 +50,89 @@ class ConsoleEventServiceProvider extends ServiceProviderManager
                 $this->app->command('controller create','controller:'.strtolower($controller).' file:'.strtolower($args['file']).' type:crud stub:crudfile model:'.$modelName.' client:'.strtolower($controller).' clientfile:'.strtolower($args['file']).'');
                 $this->app->command('client create','name:'.strtolower($controller).' client:'.strtolower($args['file']).'_create trait:'.strtolower($args['file']));
                 $this->app->command('client create','name:'.strtolower($controller).' client:'.strtolower($args['file']).'_update trait:'.strtolower($args['file']).'');
+
+                if(isset($args['table'])){
+
+                    $client_controller = ucfirst($controller);
+                    $client_file_controller = ucfirst($args['file']);
+                    $client_create = $client_file_controller.'_create';
+                    $client_update = $client_file_controller.'_update';
+
+                    $clientTrait = $this->app->path()->version().'/Client/'.$client_controller.'/'.$client_file_controller.'Trait.php';
+                    $clientCreate = $this->app->path()->version().'/Client/'.$client_controller.'/'.$client_create.'/'.$client_create.'Generator.php';
+                    $clientUpdate = $this->app->path()->version().'/Client/'.$client_controller.'/'.$client_update.'/'.$client_update.'.php';
+
+                    files()->change($clientCreate,[
+                        'protected $generators = [];' => 'protected $generators = ["'.$modelName.'_code"];',
+                        'protected $generators_dont_overwrite = [];' => 'protected $generators_dont_overwrite = ["'.$modelName.'_code"];',
+                        'protected function codeGenerator()' => 'protected function '.$modelName.'_codeGenerator()',
+                        'return 1;' => 'return codeGenerator($this,$this->expected);',
+
+                    ]);
+
+                    files()->change($clientUpdate,[
+                        'protected $expected = [];' => 'protected $expected = ["'.$modelName.'_code"];'
+
+                    ]);
+
+                    $entityTablePath = path()->version().''.DIRECTORY_SEPARATOR.'Client'.DIRECTORY_SEPARATOR.'Entities'.DIRECTORY_SEPARATOR.''.ucfirst($args['table']);
+                    $entityTableNamespace = Utils::getNamespace($entityTablePath);
+
+
+                    files()->change($clientTrait,[
+                        'return [];' => 'return $this->builder->'.$modelName.'()->getFillable();',
+                        $this->app->namespace()->serviceAnnotations().';' => $this->app->namespace()->serviceAnnotations().'; '.PHP_EOL.'use '.$entityTableNamespace.';',
+                        'use ServiceAnnotationsManager;' => 'use ServiceAnnotationsManager,'.ucfirst($args['table']).';'
+
+                    ]);
+
+                    $this->app->command('clientEntity handle','table:'.$args['table']);
+                }
+
             }
             else{
+
                 // The symfony process will be executed as an application method.
                 $this->app->command('controller create','controller:'.strtolower($controller).' type:crud stub:crudfile model:'.$modelName.' client:'.strtolower($only).' clientfile:'.strtolower($controller).'');
                 $this->app->command('client create','name:'.strtolower($controller).' client:'.strtolower($controller).'_create');
                 $this->app->command('client create','name:'.strtolower($controller).' client:'.strtolower($controller).'_update');
+
+                if(isset($args['table'])){
+
+                    $client_controller = ucfirst($controller);
+                    $client_create = $client_controller.'_create';
+                    $client_update = $client_controller.'_update';
+
+                    $clientTrait = $this->app->path()->version().'/Client/'.$client_controller.'/'.$client_controller.'Trait.php';
+                    $clientCreate = $this->app->path()->version().'/Client/'.$client_controller.'/'.$client_create.'/'.$client_create.'Generator.php';
+                    $clientUpdate = $this->app->path()->version().'/Client/'.$client_controller.'/'.$client_update.'/'.$client_update.'.php';
+
+                    files()->change($clientCreate,[
+                        'protected $generators = [];' => 'protected $generators = ["'.$modelName.'_code"];',
+                        'protected $generators_dont_overwrite = [];' => 'protected $generators_dont_overwrite = ["'.$modelName.'_code"];',
+                        'protected function codeGenerator()' => 'protected function '.$modelName.'_codeGenerator()',
+                        'return 1;' => 'return codeGenerator($this,$this->expected);',
+
+                    ]);
+
+                    files()->change($clientUpdate,[
+                        'protected $expected = [];' => 'protected $expected = ["'.$modelName.'_code"];'
+
+                    ]);
+
+                    $entityTablePath = path()->version().''.DIRECTORY_SEPARATOR.'Client'.DIRECTORY_SEPARATOR.'Entities'.DIRECTORY_SEPARATOR.''.ucfirst($args['table']);
+                    $entityTableNamespace = Utils::getNamespace($entityTablePath);
+
+
+                    files()->change($clientTrait,[
+                        'return [];' => 'return $this->builder->'.$modelName.'()->getFillable();',
+                        $this->app->namespace()->serviceAnnotations().';' => $this->app->namespace()->serviceAnnotations().'; '.PHP_EOL.'use '.$entityTableNamespace.';',
+                        'use ServiceAnnotationsManager;' => 'use ServiceAnnotationsManager,'.ucfirst($args['table']).';'
+
+                    ]);
+
+                    $this->app->command('clientEntity handle','table:'.$args['table']);
+                }
             }
         }
     }
@@ -69,15 +147,10 @@ class ConsoleEventServiceProvider extends ServiceProviderManager
     {
         // if there is a value of migration create and model for the argument values,
         // then a model will be created when that migration is created.
-        if($args['class']=="migration" && $args['classMethod']=="push"){
-
-            $args['only'] = $args['table'];
-
-            if(!isset($args['controller'])){
-                $args['controller'] = $args['table'];
-            }
+        if($args['class']=="migration" && $args['classMethod']=="push" && isset($args['table']) && $this->app->isLocale()){
 
             $args['classMethod'] = 'pull';
+            $args['only'] = $args['table'];
 
             // The symfony process will be executed as an application method.
             $this->createControllerForMigrationPull($args);

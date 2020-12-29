@@ -51,7 +51,7 @@ class Controller extends ConsoleOutputter {
     {
         $controller                     = $this->argument['controller'];
         $resourceInController           = $this->argument['resourceInController'] = StaticPathList::$resourceInController;
-        $configurationInController      = $this->argument['configurationInController'] = StaticPathList::$configurationInController;
+        //$configurationInController      = $this->argument['configurationInController'] = StaticPathList::$configurationInController;
 
         $this->argument['bundleName'] = $controller.''.StaticPathList::$controllerBundleName;
 
@@ -63,8 +63,8 @@ class Controller extends ConsoleOutputter {
         $this->argument['methodPrefix']         = StaticPathModel::$methodPrefix;
         $this->directory['endpoint']            = app()->path()->controller().''.DIRECTORY_SEPARATOR.''.$controller.''.StaticPathList::$controllerBundleName;
         $this->directory['resource']            = $this->directory['endpoint'].'/'.$resourceInController;
-        $this->directory['policy']              = $this->directory['endpoint'].'/Policy';
-        $this->directory['configuration']       = $this->directory['endpoint'].'/'.$configurationInController;
+        //$this->directory['policy']              = $this->directory['endpoint'].'/Policy';
+        //$this->directory['configuration']       = $this->directory['endpoint'].'/'.$configurationInController;
 
 
         $this->argument['controllerNamespace']  = app()->namespace()->controller().'\\'.$controller.''.StaticPathList::$controllerBundleName;
@@ -93,7 +93,7 @@ class Controller extends ConsoleOutputter {
         }
         elseif(isset($this->argument['file']) && file_exists($this->directory['endpoint'])){
             if(isset($this->argument['type']) && $this->argument['type']=='Crud'){
-                
+
                 $this->touch['service/controllerfilecrud']   = $this->directory['endpoint'].''.DIRECTORY_SEPARATOR.''.$this->argument['file'].''. $this->argument['callClassPrefix'].'.php';
 
                 $this->file->touch($this,[
@@ -103,7 +103,7 @@ class Controller extends ConsoleOutputter {
                 files()->append($routePath,PHP_EOL.'Route::namespace(\''.$controller.'\')->get("/'.strtolower($this->argument['file']).'","'.$this->argument['file'].'Controller@get");');
                 files()->append($routePath,PHP_EOL.'Route::namespace(\''.$controller.'\')->post("/'.strtolower($this->argument['file']).'","'.$this->argument['file'].'Controller@create");');
                 files()->append($routePath,PHP_EOL.'Route::namespace(\''.$controller.'\')->put("/'.strtolower($this->argument['file']).'","'.$this->argument['file'].'Controller@update");');
-                files()->append($routePath,PHP_EOL.'Route::namespace(\''.$controller.'\')->delete("/'.strtolower($this->argument['file']).'","'.$this->argument['file'].'Controller@delete");');
+                //files()->append($routePath,PHP_EOL.'Route::namespace(\''.$controller.'\')->delete("/'.strtolower($this->argument['file']).'","'.$this->argument['file'].'Controller@delete");');
 
             }
             else{
@@ -117,7 +117,7 @@ class Controller extends ConsoleOutputter {
                 files()->append($routePath,PHP_EOL.'Route::namespace(\''.$controller.'\')->get("/'.strtolower($this->argument['file']).'","'.$this->argument['file'].'Controller@index");');
 
             }
-            
+
             // and as a result we print the result on the console screen.
             echo $this->classical(' > Controller called as "'.$this->argument['file'].'" has been successfully created in the '.$this->directory['endpoint'].'');
 
@@ -126,11 +126,11 @@ class Controller extends ConsoleOutputter {
 
             // we process the processes related to file creation operations.
             // and then create files related to the touch method of the file object as it is in the directory process.
-            
+
             if(isset($this->argument['type']) && $this->argument['type']=='Crud'){
-                
+
                 $this->argument['file'] = $this->argument['serviceClass'];
-                
+
                 $this->touch['service/controllerfilecrud']  = $this->directory['endpoint'].''.DIRECTORY_SEPARATOR.''.$this->argument['serviceClass'].''. $this->argument['callClassPrefix'].'.php';
                 $this->touch['service/routecrud']           = $routePath;
 
@@ -140,21 +140,21 @@ class Controller extends ConsoleOutputter {
                 $this->touch['service/route']           = $routePath;
 
             }
-            
+
             $this->touch['service/resourceIndex']   = $this->directory['resource'].''.DIRECTORY_SEPARATOR.'index.html';
             $this->touch['service/app']             = $this->directory['endpoint'].''.DIRECTORY_SEPARATOR.'App.php';
-            $this->touch['service/developer']       = $this->directory['configuration'].''.DIRECTORY_SEPARATOR.'Developer.php';
-            $this->touch['service/conf']            = $this->directory['configuration'].''.DIRECTORY_SEPARATOR.'ServiceConf.php';
-            $this->touch['service/dummy']           = $this->directory['configuration'].''.DIRECTORY_SEPARATOR.'Dummy.yaml';
-            $this->touch['service/doc']             = $this->directory['configuration'].''.DIRECTORY_SEPARATOR.'Doc.yaml';
+            //$this->touch['service/developer']       = $this->directory['configuration'].''.DIRECTORY_SEPARATOR.'Developer.php';
+            //$this->touch['service/conf']            = $this->directory['configuration'].''.DIRECTORY_SEPARATOR.'ServiceConf.php';
+            //$this->touch['service/dummy']           = $this->directory['configuration'].''.DIRECTORY_SEPARATOR.'Dummy.yaml';
+            //$this->touch['service/doc']             = $this->directory['configuration'].''.DIRECTORY_SEPARATOR.'Doc.yaml';
             $this->touch['service/readme']          = $this->directory['endpoint'].''.DIRECTORY_SEPARATOR.'README.md';
-            $this->touch['service/policy']          = $this->directory['policy'].''.DIRECTORY_SEPARATOR.''.$this->argument['serviceClass'].''. $this->argument['callClassPrefix'].'Policy.php';
+            //$this->touch['service/policy']          = $this->directory['policy'].''.DIRECTORY_SEPARATOR.''.$this->argument['serviceClass'].''. $this->argument['callClassPrefix'].'Policy.php';
 
             $this->file->touch($this,[
                 'stub'=>'Controller_Create'
             ]);
 
-            $this->docUpdate();
+            //$this->docUpdate();
 
             // and as a result we print the result on the console screen.
             echo $this->classical(' > Controller called as "'.$controller.'" has been successfully created in the '.app()->namespace()->call().'');

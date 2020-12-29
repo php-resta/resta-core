@@ -47,6 +47,7 @@ class Project extends ConsoleOutputter
         $this->directory['projectDir']          = $this->projectPath();
         $this->argument['exceptionNamespace']   = app()->namespace()->exception();
         $this->argument['resourcePath']         = app()->path()->appResourche();
+        $this->argument['commandNamespace']           = app()->namespace()->command();
         $this->argument['testNamespace']             = app()->namespace()->tests();
 
         $recursiveDefaultDirectory = explode("\\",$this->argument['project']);
@@ -83,6 +84,7 @@ class Project extends ConsoleOutputter
         $this->directory['testDir']                             = $this->test();
         $this->directory['exceptionDir']                        = app()->path()->exception();
         $this->directory['helperDir']                           = app()->path()->helpers();
+        $this->directory['commandDir']                          = app()->path()->command();
 
         //set project directory
         $this->file->makeDirectory($this);
@@ -133,6 +135,7 @@ class Project extends ConsoleOutputter
         $this->touch['stub/cccrudresourceindex']              = $this->directory['stubControllerCreateCrudFileDir'] .'/resourceIndex.stub';
         $this->touch['config/hateoas']              = $this->config().'/Hateoas.php';
         //$this->touch['config/response']             = $this->config().'/Response.php';
+        $this->touch['command/clientEntity']          = $this->directory['commandDir'].'/ClientEntity.php';
         $this->touch['config/redis']                = $this->config().'/Redis.php';
         $this->touch['config/app']                  = $this->config().'/App.php';
         $this->touch['config/autoservice']          = $this->config().'/AutoServices.php';
