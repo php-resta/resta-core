@@ -35,6 +35,18 @@ class UrlProvider extends ApplicationProvider
         // ​​to be processed throughout the application in query format.
         $query = $this->convertArrayForQuery();
 
+        $parametersYaml = $this->app()->path()->app().'parameters.yaml';
+
+        if(file_exists($parametersYaml) && isset($query[0])){
+            $callParametersYaml = (Utils::yaml($parametersYaml))->get();
+            if(isset($callParametersYaml['workingDir'])){
+                $parametersWorkingDir = explode('@',$callParametersYaml['workingDir']);
+                if($query[0]==$parametersWorkingDir[0]){
+                    $query[0] = $parametersWorkingDir[1] ?? $query[0];
+                }
+            }
+        }
+
         // if the version in the query array does not conform to the format,
         // it will be formatted.
         $query = $this->queryFormatProcess($query);
