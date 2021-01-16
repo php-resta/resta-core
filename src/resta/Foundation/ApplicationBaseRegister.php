@@ -146,6 +146,11 @@ class ApplicationBaseRegister extends ApplicationProvider implements HandleContr
         //we first load the response class as a singleton object to allow you to send output anywhere
         $this->app->register('out',$this->app->resolve(ResponseProvider::class));
 
+        $parametersYaml = $this->app()->path()->app().'parameters.yaml';
+        if(file_exists($parametersYaml)){
+            $this->app()->register('parametersYaml',(Utils::yaml($parametersYaml))->get());
+        }
+
         $requestService = "Store\Services\RequestService";
 
         //The HttpFoundation component defines an object-oriented layer for the HTTP specification.

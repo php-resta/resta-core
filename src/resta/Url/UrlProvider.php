@@ -37,8 +37,8 @@ class UrlProvider extends ApplicationProvider
 
         $parametersYaml = $this->app()->path()->app().'parameters.yaml';
 
-        if(file_exists($parametersYaml) && isset($query[0])){
-            $callParametersYaml = (Utils::yaml($parametersYaml))->get();
+        if(isset($query[0]) && $this->app->has('parametersYaml')){
+            $callParametersYaml = $this->app->get('parametersYaml');
             if(isset($callParametersYaml['workingDir'])){
                 $parametersWorkingDir = explode('@',$callParametersYaml['workingDir']);
                 if($query[0]==$parametersWorkingDir[0]){
