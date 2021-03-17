@@ -27,7 +27,11 @@ class StaticNamespaceRepository extends StaticPathRepository
      */
     public function builder()
     {
-        return Utils::getNamespace(parent::builder());
+        if(isset($this->parameters['namespace']['builder'])){
+            return $this->parameters['namespace']['builder'].'\\'.StaticPathList::$builder;
+        }
+
+        die('builder namespace in parameters file is not valid');
     }
 
     /**
@@ -169,7 +173,11 @@ class StaticNamespaceRepository extends StaticPathRepository
      */
     public function model()
     {
-        return Utils::getNamespace(parent::model());
+        if(isset($this->parameters['namespace']['model'])){
+            return $this->parameters['namespace']['model'].'\\'.StaticPathList::$model;
+        }
+
+        die('model namespace in parameters file is not valid');
     }
 
     /**

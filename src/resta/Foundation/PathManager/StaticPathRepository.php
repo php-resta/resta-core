@@ -212,7 +212,11 @@ class StaticPathRepository
      */
     public function appModel($app=null)
     {
-        return $this->appVersion($app).''.DIRECTORY_SEPARATOR.''.StaticPathList::$model;
+        if(isset($this->parameters['paths']['model'])){
+            return $this->parameters['paths']['model'].''.DIRECTORY_SEPARATOR.''.StaticPathList::$model;
+        }
+
+        die('model path is not valid for parameters file');
     }
 
     /**

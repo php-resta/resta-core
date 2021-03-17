@@ -55,10 +55,10 @@ class Model extends ConsoleOutputter {
         $this->directory['contract']    = $this->directory['modelDir'].'/Contract';
         $this->directory['helper']      = $this->directory['modelDir'].'/Helper';
 
-        $this->argument['modelNamespace'] = Utils::getNamespace($this->directory['modelDir']);
-        $this->argument['builderNamespace'] = Utils::getNamespace($this->directory['builderDir']);
-        $this->argument['builderAssistantNamespace'] = Utils::getNamespace($this->directory['builderAssistantDir']);
-        $this->argument['contractNamespace'] = Utils::getNamespace($this->directory['contract']);
+        $this->argument['modelNamespace'] = app()->namespace()->model();
+        $this->argument['builderNamespace'] = $this->argument['modelNamespace'].'\Builder';
+        $this->argument['builderAssistantNamespace'] = $this->argument['modelNamespace'].'\Builder\Assistant';
+        $this->argument['contractNamespace'] = $this->argument['modelNamespace'].'\Contract';
 
         //set project directory
         $this->file->makeDirectory($this);
@@ -92,55 +92,57 @@ class Model extends ConsoleOutputter {
         if(!file_exists($entityDir)){
             files()->makeDirectory($entityDir);
         }
+        
+        if(isset($this->argument['table'])){
 
-        $entityTableName = ucfirst($this->argument['table']);
+            $entityTableName = ucfirst($this->argument['table']);
 
-        $entityClass = $entityDir.''.DIRECTORY_SEPARATOR.''.$entityTableName.''.DIRECTORY_SEPARATOR.''.$entityTableName;
+            $entityClass = $entityDir.''.DIRECTORY_SEPARATOR.''.$entityTableName.''.DIRECTORY_SEPARATOR.''.$entityTableName;
+            $entityClassNamespace = $this->argument['modelNamespace'].'\Entity\\'.$entityTableName.'\\'.$entityTableName;
 
+            $generator = new Generator($entityDir,$entityClassNamespace,'EntityMap');
 
-        $generator = new Generator($entityDir,'EntityMap');
+            if(!file_exists($entityDir.''.DIRECTORY_SEPARATOR.'EntityMap.php')){
 
-        if(!file_exists($entityDir.''.DIRECTORY_SEPARATOR.'EntityMap.php')){
+                //$this->setAnnotations();
+                $generator->createClass();
+            }
 
-            //$this->setAnnotations();
-            $generator->createClass();
+            $entityMapNamespace = $this->argument['modelNamespace'].'\Entity\EntityMap';
+
+            $entityMapNamespaceResolve = new $entityMapNamespace;
+
+            if(!method_exists($entityMapNamespaceResolve,strtolower($this->argument['table']))){
+
+                $generator->createClassUse([
+                    $entityClassNamespace
+                ]);
+
+                $generator->createMethod([
+                    strtolower($this->argument['table'])
+                ]);
+
+                $generator->createMethodParameters([
+                    strtolower($this->argument['table']) => '$query'
+                ]);
+
+                $generator->createMethodBody([
+                    strtolower($this->argument['table'])=>'return new '.$entityTableName.'($query);'
+                ]);
+
+                $generator->createMethodDocument([
+                    strtolower($this->argument['table']) => [
+                        $entityTableName.' Entity Instance',
+                        '',
+                        '@param $query',
+                        '@return '.$entityTableName
+                    ]
+                ]);
+            }
         }
-
-        $entityMapNamespace = Utils::getNamespace($entityDir.''.DIRECTORY_SEPARATOR.'EntityMap.php');
-
-        $entityMapNamespaceResolve = new $entityMapNamespace;
-
-        if(!method_exists($entityMapNamespaceResolve,strtolower($this->argument['table']))){
-
-            $generator->createClassUse([
-                Utils::getNamespace($entityClass)
-            ]);
-
-            $generator->createMethod([
-                strtolower($this->argument['table'])
-            ]);
-
-            $generator->createMethodParameters([
-                strtolower($this->argument['table']) => '$query'
-            ]);
-
-            $generator->createMethodBody([
-                strtolower($this->argument['table'])=>'return new '.$entityTableName.'($query);'
-            ]);
-
-            $generator->createMethodDocument([
-                strtolower($this->argument['table']) => [
-                    $entityTableName.' Entity Instance',
-                    '',
-                    '@param $query',
-                    '@return '.$entityTableName
-                ]
-            ]);
-        }
-
-
+        
         //set builder map
-        $generator = new Generator($this->directory['builderDir'],'BuilderMap');
+        $generator = new Generator($this->directory['builderDir'],$this->argument['builderNamespace'],'BuilderMap');
 
         if(!file_exists($this->directory['builderDir'].''.DIRECTORY_SEPARATOR.'BuilderMap.php')){
 
