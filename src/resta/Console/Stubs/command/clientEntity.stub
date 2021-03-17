@@ -8,7 +8,7 @@ use Resta\Console\ConsoleOutputter;
 use Resta\Support\Generator\Generator;
 use Resta\Console\ConsoleListAccessor;
 use Resta\Exception\FileNotFoundException;
-use __versionNamespace__\ServiceAnnotationsManager;
+use __serviceAnnotations__;
 
 class ClientEntity extends ConsoleOutputter
 {

@@ -363,12 +363,9 @@ class Application extends Kernel implements ApplicationContracts
     public function serviceProviders() : array
     {
         //get project providers from config kernel
-        $providers = (is_array(config('kernel.providers')))
+        return (is_array(config('kernel.providers')))
             ? config('kernel.providers')
             : [];
-
-        //core kernel providers and project providers have been merged
-        return array_merge($this->manifest('providers'),$providers);
     }
 
     /**

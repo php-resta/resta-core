@@ -11,19 +11,9 @@ class BootFireCallback extends ApplicationProvider
      */
     public static function loadBootstrappers($booter)
     {
-        //We allocate our application class from
-        //the booter path.
-        $app = pos($booter);
-
-        // We get instance for customBooter class
-        // we get our object-protected boot lists
-        // directly in the application class with the help of public access method.
-        $customBooter   = $app->resolve(CustomBooter::class,['boot'=>end($booter)]);
-        $boot           = ($customBooter)->customBootstrappers($booter);
-
         // and as a result we now use
         //the instance properties of our boot lists to include our implementation.
-        $app->resolve(FinalBooting::class,['boot'=>$boot]);
+        app()->resolve(FinalBooting::class,['boot'=>app()->manifest((end($booter)))]);
     }
 
     /**

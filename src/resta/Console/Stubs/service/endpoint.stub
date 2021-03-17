@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace __controllerNamespace__;
 
 class __serviceClass____callClassPrefix__ extends App
@@ -7,12 +9,12 @@ class __serviceClass____callClassPrefix__ extends App
     /**
      * #define: get __serviceClass__
      *
-     * @return mixed|array
+     * @return array
      */
-    public function index()
+    public function index() : array
     {
         return [
-            'endpoint'=>'__serviceClass__'
+            'endpoint' => '__serviceClass__'
         ];
     }
 }

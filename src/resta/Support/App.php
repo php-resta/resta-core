@@ -69,7 +69,7 @@ class App
      */
     private static function client()
     {
-        $clientManager = self::app()->namespace()->version().'\\ClientManager';
+        $clientManager = self::app()->namespace()->request().'\\ClientManager';
         return new $clientManager;
     }
 

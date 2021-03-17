@@ -83,7 +83,7 @@ abstract class GeneratorAbstract
      * @param $name
      * @param Filesystem $fileSystem
      */
-    public function __construct($path,$name,Filesystem $fileSystem=null)
+    public function __construct($path,$namespace,$name,Filesystem $fileSystem=null)
     {
         $this->format = $this->type;
 
@@ -95,7 +95,7 @@ abstract class GeneratorAbstract
 
         $this->fileSystem = (is_null($fileSystem)) ? files() : $fileSystem;
 
-        $this->namespace = Utils::getNamespace($this->path);
+        $this->namespace = $namespace;
 
         $this->setStubPath();
 

@@ -93,18 +93,12 @@ class ConfigProcess implements \ArrayAccess
     private function getConfigData($kernelConfig,$config)
     {
         //if the config data is a class instance, we get it as an object.
-        if(Utils::isNamespaceExists($configFile = ($kernelConfig[$config]['namespace'] ?? ''))){
+        if(Utils::isNamespaceExists($configFile = $kernelConfig[$config]['namespace'])){
             $configData = app()->resolve($configFile)->handle();
         }
 
-        $configFile = $kernelConfig[$config]['file'] ?? '';
-
         //if the config data is just an array.
-        if(
-            !isset($configData)
-            && substr($configFile,-4)=='.php'
-            && file_exists($configFile)
-        ){
+        if(!isset($configData) && file_exists($configFile=$kernelConfig[$config]['file'])){
             $configData = require($configFile);
         }
 

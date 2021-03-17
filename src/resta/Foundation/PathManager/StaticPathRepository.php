@@ -2,12 +2,26 @@
 
 namespace Resta\Foundation\PathManager;
 
+use http\Exception\InvalidArgumentException;
 use Resta\Support\Str;
 use Resta\Support\Utils;
 use Resta\Url\UrlVersionIdentifier;
 
 class StaticPathRepository
 {
+    /**
+     * @var array
+     */
+    protected $parameters = [];
+
+    /**
+     * StaticPathRepository constructor.
+     */
+    public function __construct()
+    {
+        $this->parameters = app()->get('parameters');
+    }
+
     /**
      * @param null $app
      * @return string
@@ -58,10 +72,11 @@ class StaticPathRepository
      */
     public function appConfig($app=null)
     {
-        if(isset(core()->paths['config'])){
-            return core()->paths['config'];
+        if(isset($this->parameters['paths']['config']) && file_exists($this->parameters['paths']['config'])){
+            return $this->parameters['paths']['config'].''.DIRECTORY_SEPARATOR.''.StaticPathList::$config;
         }
-        return $this->appVersion($app).''.DIRECTORY_SEPARATOR.''.StaticPathList::$config;
+
+        die('config path invalid for parameters file ('.($this->parameters['paths']['config'] ?? null).')');
     }
 
     /**
@@ -70,7 +85,11 @@ class StaticPathRepository
      */
     public function appHelpers($app=null)
     {
-        return $this->appVersion($app).''.DIRECTORY_SEPARATOR.''.StaticPathList::$helpers;
+        if(isset($this->parameters['paths']['helper'])){
+            return $this->parameters['paths']['helper'].''.DIRECTORY_SEPARATOR.''.StaticPathList::$helpers;
+        }
+
+        die('helper path is not valid for parameters file');
     }
 
     /**
@@ -111,7 +130,11 @@ class StaticPathRepository
      */
     public function appFactory($app=null)
     {
-        return $this->appVersion($app).''.DIRECTORY_SEPARATOR.''.StaticPathList::$factory;
+        if(isset($this->parameters['paths']['factory'])){
+            return $this->parameters['paths']['factory'].''.DIRECTORY_SEPARATOR.''.StaticPathList::$factory;
+        }
+
+        die('factory path is not valid for parameters file');
     }
 
     /**
@@ -119,9 +142,11 @@ class StaticPathRepository
      */
     public function appKernel()
     {
-        $kernel     = $this->app().''.DIRECTORY_SEPARATOR.''.StaticPathList::$kernel;
+        if(isset($this->parameters['paths']['kernel'])){
+            return $this->parameters['paths']['kernel'].''.DIRECTORY_SEPARATOR.''.StaticPathList::$kernel;
+        }
 
-        return $kernel;
+        die('kernel path is not valid for parameters file');
     }
 
     /**
@@ -129,7 +154,7 @@ class StaticPathRepository
      */
     public function appProvider()
     {
-        $kernel     = $this->app().''.DIRECTORY_SEPARATOR.''.StaticPathList::$kernel.''.DIRECTORY_SEPARATOR.''.StaticPathList::$provider;
+        $kernel     = $this->appKernel().''.DIRECTORY_SEPARATOR.''.StaticPathList::$provider;
 
         return $kernel;
     }
@@ -165,7 +190,11 @@ class StaticPathRepository
      */
     public function appMiddleware($app=null)
     {
-        return $this->appVersion($app).''.DIRECTORY_SEPARATOR.''.StaticPathList::$middleware;
+        if(isset($this->parameters['paths']['middleware'])){
+            return $this->parameters['paths']['middleware'].''.DIRECTORY_SEPARATOR.''.StaticPathList::$middleware;
+        }
+
+        die('middleware path in parameters file is not valid');
     }
 
     /**
@@ -192,7 +221,11 @@ class StaticPathRepository
      */
     public function appException($app=null)
     {
-        return $this->appVersion().''.DIRECTORY_SEPARATOR.''.StaticPathList::$exception;
+        if(isset($this->parameters['paths']['exception'])){
+            return $this->parameters['paths']['exception'].''.DIRECTORY_SEPARATOR.''.StaticPathList::$exception;
+        }
+
+        die('exception path in parameters file is not valid');
     }
 
     /**
@@ -236,7 +269,11 @@ class StaticPathRepository
      */
     public function appRequest()
     {
-        return $this->appVersion().''.DIRECTORY_SEPARATOR.''.StaticPathList::$request;
+        if(isset($this->parameters['paths']['client'])){
+            return $this->parameters['paths']['client'].''.DIRECTORY_SEPARATOR.'Client';
+        }
+
+        die('client path is not valid for parameters file');
     }
 
     /**
@@ -244,9 +281,11 @@ class StaticPathRepository
      */
     public function appRepository()
     {
-        $repository     = $this->app().''.DIRECTORY_SEPARATOR.''.StaticPathList::$repository;
+        if(isset($this->parameters['paths']['repository'])){
+            return $this->parameters['paths']['repository'].''.DIRECTORY_SEPARATOR.''.StaticPathList::$repository;
+        }
 
-        return $repository;
+        die('repository path is not valid for parameters file');
     }
 
     /**
@@ -254,7 +293,11 @@ class StaticPathRepository
      */
     public function appRoute()
     {
-        return $this->appVersion().''.DIRECTORY_SEPARATOR.''.StaticPathList::$route;
+        if(isset($this->parameters['paths']['route'])){
+            return $this->parameters['paths']['route'].''.DIRECTORY_SEPARATOR.''.StaticPathList::$route;
+        }
+
+        die('route file is not valid for parameters file');
     }
 
     /**
@@ -289,7 +332,11 @@ class StaticPathRepository
      */
     public function appServiceAnnotations($app=null)
     {
-        return $this->appVersion($app).''.DIRECTORY_SEPARATOR.''.StaticPathList::$serviceAnnotations;
+        if(isset($this->parameters['paths']['serviceAnnotation'])){
+            return $this->parameters['paths']['serviceAnnotation'].''.DIRECTORY_SEPARATOR.''.StaticPathList::$serviceAnnotations.'.php';
+        }
+
+        die('service annotation file is not valid for parameters file');
     }
 
     /**
@@ -324,9 +371,13 @@ class StaticPathRepository
      */
     public function appStorage()
     {
-        $storage = $this->app().''.DIRECTORY_SEPARATOR.''.StaticPathList::$storage;
+        $extension  = DIRECTORY_SEPARATOR.''.StaticPathList::$storage;
 
-        return $storage;
+        if(isset($this->parameters['paths']['storage']) && file_exists($this->parameters['paths']['storage'])){
+            return $this->parameters['paths']['storage'].''.$extension;
+        }
+
+        die('storage path invalid for parameters file ('.($this->parameters['paths']['storage'] ?? null).')');
     }
 
     /**
@@ -389,17 +440,11 @@ class StaticPathRepository
      */
     public function controller($controller=null,$bool=false)
     {
-        $namespaceController = ($controller===null) ? app()->namespace()->controller()
-            : app()->namespace()->controller($controller,true);
-
-        if($bool){
-            $namespaceControllerExplode = explode("\\",$namespaceController);
-            array_pop($namespaceControllerExplode);
-
-            $namespaceController = implode("\\",$namespaceControllerExplode);
+        if(isset($this->parameters['paths']['controller'])){
+            return $this->parameters['paths']['controller'].''.DIRECTORY_SEPARATOR.''.StaticPathList::$controller;
         }
 
-        return Utils::getPathFromNamespace($namespaceController,false);
+        die('controller path is not valid for parameters file');
     }
 
     /**
@@ -415,7 +460,11 @@ class StaticPathRepository
      */
     public function environmentFile()
     {
-        return StaticPathModel::getEnvironmentFile();
+        if(isset($this->parameters['paths']['environmentFile'])){
+            return $this->parameters['paths']['environmentFile'].''.DIRECTORY_SEPARATOR.'env.yaml';
+        }
+
+        die('environment file path is not valid for parameters file');
     }
 
     /**

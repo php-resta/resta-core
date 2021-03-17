@@ -19,7 +19,20 @@ trait ConsoleArguments
         if(!defined('arguments'))  define ('arguments',['api']);
 
         //get psr standard console arguments
-        return core()->consoleArguments = Utils::upperCase(arguments);
+        $argumentList = [];
+        foreach ((array)arguments as $key => $argument){
+            if($key<3){
+                $argumentList[] = $argument;
+            }
+            else{
+                $argumentList[3] = 'project';
+                if($key>2){
+                    $argumentList[$key+1] = $argument;
+                }
+            }
+        }
+
+        return core()->consoleArguments = Utils::upperCase($argumentList);
     }
 
     /**

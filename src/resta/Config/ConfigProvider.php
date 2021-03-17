@@ -21,9 +21,6 @@ class ConfigProvider extends ApplicationProvider implements ConfigProviderContra
     {
         define('config',true);
 
-        //automatically add values ​​to the configuration files.
-        $this->loadPreDefinedConfigurationFiles();
-
         //set config values
         $this->setConfig();
 
@@ -33,21 +30,6 @@ class ConfigProvider extends ApplicationProvider implements ConfigProviderContra
             date_default_timezone_set(config('app.timezone'));
             mb_internal_encoding('UTF-8');
         }
-    }
-
-    /**
-     * load pre defined configuration files
-     *
-     * @return void
-     */
-    private function loadPreDefinedConfigurationFiles()
-    {
-        $this->app->loadConfig(function(){
-            return [
-                'Kernel'    => path()->kernel().''.DIRECTORY_SEPARATOR.''.StaticPathList::$kernel.'.php',
-                'Response'  => path()->storeConfigDir().''.DIRECTORY_SEPARATOR.'Response.php',
-            ];
-        });
     }
 
     /**

@@ -2,7 +2,7 @@
 
 namespace __clientNameDirNamespace__;
 
-use __versionNamespace__\ServiceAnnotationsManager;
+use __serviceAnnotations__;
 
 /**
  * Class __name__Trait

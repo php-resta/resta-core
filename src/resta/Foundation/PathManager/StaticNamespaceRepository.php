@@ -37,19 +37,11 @@ class StaticNamespaceRepository extends StaticPathRepository
      */
     public function controller($endpoint=null,$bind=array())
     {
-        $call=Utils::getNamespace($this->appCall());
+        $controllerNamespace = $this->parameters['namespace']['controller'] ?? null;
 
-        if($endpoint===null) return $call;
-
-        $bundleName = $call.'\\'.ucfirst($endpoint).''.StaticPathList::$controllerBundleName.'';
-
-        $endpointCall=$bundleName.'\\'.ucfirst($endpoint).''.StaticPathModel::$callClassPrefix;
-
-        if($bind===true) return $endpointCall;
-
-        if($bind=="bundle") return $bundleName;
-
-        return app()->resolve($endpointCall,$bind);
+        if(!is_null($controllerNamespace)){
+            return $controllerNamespace.'\\'.StaticPathList::$controller;
+        }
     }
 
     /**
@@ -105,7 +97,23 @@ class StaticNamespaceRepository extends StaticPathRepository
      */
     public function kernel()
     {
-        return Utils::getNamespace(parent::kernel());
+        if(isset($this->parameters['namespace']['kernel'])){
+            return $this->parameters['namespace']['kernel'].'\\'.StaticPathList::$kernel;
+        }
+
+        die('kernel namespace in parameters file is not valid');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function manifest()
+    {
+        if(isset($this->parameters['namespace']['manifest'])){
+            return $this->parameters['namespace']['manifest'].'\Manifest';
+        }
+
+        die('manifest namespace in parameters file is not valid');
     }
 
     /**
@@ -129,7 +137,11 @@ class StaticNamespaceRepository extends StaticPathRepository
      */
     public function middleware()
     {
-        return Utils::getNamespace(parent::middleware());
+        if(isset($this->parameters['namespace']['middleware'])){
+            return $this->parameters['namespace']['middleware'].'\\'.StaticPathList::$middleware;
+        }
+
+        die('middleware namespace in parameters file is not valid');
     }
 
     /**
@@ -137,7 +149,11 @@ class StaticNamespaceRepository extends StaticPathRepository
      */
     public function factory()
     {
-        return Utils::getNamespace(parent::factory());
+        if(isset($this->parameters['namespace']['factory'])){
+            return $this->parameters['namespace']['factory'].'\\'.StaticPathList::$factory;
+        }
+
+        die('factory namespace in parameters file is not valid');
     }
 
     /**
@@ -161,7 +177,11 @@ class StaticNamespaceRepository extends StaticPathRepository
      */
     public function exception()
     {
-        return Utils::getNamespace(parent::exception());
+        if(isset($this->parameters['namespace']['exception'])){
+            return $this->parameters['namespace']['exception'].'\\'.StaticPathList::$exception;
+        }
+
+        die('middleware namespace in parameters file is not valid');
     }
 
     /**
@@ -217,7 +237,11 @@ class StaticNamespaceRepository extends StaticPathRepository
      */
     public function request()
     {
-        return Utils::getNamespace(parent::request());
+        if(isset($this->parameters['namespace']['client'])){
+            return $this->parameters['namespace']['client'].'\Client';
+        }
+
+        die('repository namespace in parameters file is not valid');
     }
 
     /**
@@ -225,7 +249,11 @@ class StaticNamespaceRepository extends StaticPathRepository
      */
     public function repository()
     {
-        return Utils::getNamespace(parent::repository());
+        if(isset($this->parameters['namespace']['repository'])){
+            return $this->parameters['namespace']['repository'].'\\'.StaticPathList::$repository;
+        }
+
+        die('repository namespace in parameters file is not valid');
     }
 
     /**
@@ -241,7 +269,11 @@ class StaticNamespaceRepository extends StaticPathRepository
      */
     public function serviceAnnotations()
     {
-        return Utils::getNamespace(parent::serviceAnnotations());
+        if(isset($this->parameters['namespace']['serviceAnnotation'])){
+            return $this->parameters['namespace']['serviceAnnotation'].'\\'.StaticPathList::$serviceAnnotations;
+        }
+
+        die('service annotation namespace in parameters file is not valid');
     }
 
 
@@ -250,7 +282,11 @@ class StaticNamespaceRepository extends StaticPathRepository
      */
     public function serviceEventDispatcher()
     {
-        return Utils::getNamespace(parent::ServiceEventDispatcher());
+        if(isset($this->parameters['namespace']['eventDispatcherManager'])){
+            return $this->parameters['namespace']['eventDispatcherManager'].'\ServiceEventDispatcherManager';
+        }
+
+        die('service event dispatcher namespace in parameters file is not valid'.PHP_EOL);
     }
 
     /**
@@ -258,7 +294,11 @@ class StaticNamespaceRepository extends StaticPathRepository
      */
     public function serviceMiddleware()
     {
-        return Utils::getNamespace(parent::serviceMiddleware());
+        if(isset($this->parameters['namespace']['serviceMiddleware'])){
+            return $this->parameters['namespace']['serviceMiddleware'].'\\'.StaticPathList::$serviceMiddleware;
+        }
+
+        die('service middleware namespace in parameters file is not valid');
     }
 
     /**

@@ -349,8 +349,10 @@ class Utils
     public static function getRequestPathInfo()
     {
         if(is_null(BootStaticManager::getRequestPath())){
-            return explode("/",request()->getPathInfo());
+            $pathInfo = '/project'.request()->getPathInfo();
+            return explode("/",$pathInfo);
         }
+
         return BootStaticManager::getRequestPath();
     }
 

@@ -16,12 +16,17 @@ class EnvironmentProvider extends ApplicationProvider implements HandleContracts
      */
     public function environment($var=array(),$environment=null)
     {
+        //The first variable is built on production.
+        $env = 'production';
+
         //environment is recognized as a production environment directly
         //if there is no env object in the environment variable.
-        $isProduction = $environment['env'] ?? 'production';
+        if(isset($environment['env'])){
+            $env = $environment['env'];
+        }
 
         //we issue a controlled environment key map for the submitted environment
-        return (count($var)===0) ? $isProduction : self::getEnvironmentForVariables($var,$environment);
+        return (count($var)===0) ? $env : self::getEnvironmentForVariables($var,$environment);
     }
 
     /**

@@ -4,7 +4,7 @@ namespace __exceptionNamespace__;
 
 use Exception;
 use Throwable;
-use __versionNamespace__\ServiceAnnotationsManager;
+use __serviceAnnotations__;
 
 class AuthenticateException extends Exception
 {

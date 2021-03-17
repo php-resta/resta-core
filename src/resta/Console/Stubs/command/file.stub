@@ -4,7 +4,7 @@ namespace __commandNamespace__;
 
 use Resta\Console\ConsoleOutputter;
 use Resta\Console\ConsoleListAccessor;
-use __versionNamespace__\ServiceAnnotationsManager;
+use __serviceAnnotations__;
 
 class __command__ extends ConsoleOutputter
 {

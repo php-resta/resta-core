@@ -34,6 +34,11 @@ interface StaticNamespaceContracts
     /**
      * @return mixed
      */
+    public function manifest();
+
+    /**
+     * @return mixed
+     */
     public function config();
 
     /**

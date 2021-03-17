@@ -2,6 +2,7 @@
 
 namespace Resta\Foundation;
 
+use http\Exception\InvalidArgumentException;
 use Resta\Support\App;
 use Resta\Support\Macro;
 use Resta\Support\Utils;
@@ -49,6 +50,14 @@ class ApplicationBaseRegister extends ApplicationProvider implements HandleContr
         //we can use this method to move an instance of the application class with the kernel object
         //and easily resolve an encrypted instance of all the kernel variables in our helper class.
         ClassAliasGroup::setAlias(App::class,'application');
+
+        try {
+            $parametersLoad = require_once (root.''.DIRECTORY_SEPARATOR.'parameters.php');
+            $this->app->register('parameters',$parametersLoad);
+        }
+        catch (\Exception $exception){
+            throw new InvalidArgumentException($exception->getMessage());
+        }
 
         //set base instances
         $this->setBaseInstances();
@@ -145,11 +154,6 @@ class ApplicationBaseRegister extends ApplicationProvider implements HandleContr
 
         //we first load the response class as a singleton object to allow you to send output anywhere
         $this->app->register('out',$this->app->resolve(ResponseProvider::class));
-
-        $parametersYaml = $this->app()->path()->app().'parameters.yaml';
-        if(file_exists($parametersYaml)){
-            $this->app()->register('parametersYaml',(Utils::yaml($parametersYaml))->get());
-        }
 
         $requestService = "Store\Services\RequestService";
 

@@ -35,7 +35,7 @@ class KernelManifestManager
         // if there is manifest propery in the resta
         // in this case,manifest property is manifest class
         if($app['isAvailableStore']){
-            $this->manifest = $this->manifest->resolve("Src\Manifest");
+            $this->manifest = $this->manifest->resolve($app->namespace()->manifest());
         }
 
         //closure dispatcher for manifest property

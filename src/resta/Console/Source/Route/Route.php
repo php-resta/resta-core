@@ -68,7 +68,7 @@ class Route extends ConsoleOutputter {
             $afterMiddleware = $middlewareProvider->getShow();
 
             $endpoint = $data['endpoint'];
-            $controllerNamespace = Utils::getNamespace($data['controller'].'/'.$data['namespace'].'/'.$data['class']);
+            $controllerNamespace = app()->namespace()->controller().'\\'.$data['namespace'].'\\'.$data['class'];
 
             /**
              * @var ReflectionProcess $reflection

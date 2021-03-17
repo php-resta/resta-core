@@ -150,6 +150,11 @@ interface StaticPathContracts
     /**
      * @return mixed
      */
+    public function serviceAnnotations();
+
+    /**
+     * @return mixed
+     */
     public function storeConfigDir();
 
     /**

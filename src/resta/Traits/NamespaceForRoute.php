@@ -160,10 +160,10 @@ trait NamespaceForRoute
             $fromRoutesClass    = (isset($fromRoutes['class'])) ? $fromRoutes['class'] : null;
 
             if($fromRoutes['namespace']===null){
-                $namespace = Utils::getNamespace($fromRoutes['controller']).'\\'.$fromRoutesClass;
+                $namespace = app()->namespace()->controller().'\\'.$fromRoutesClass;
             }
             else{
-                $namespace = Utils::getNamespace($fromRoutes['controller']).'\\'.$fromRoutes['namespace'].'\\'.$fromRoutesClass;
+                $namespace = app()->namespace()->controller().'\\'.$fromRoutes['namespace'].'\\'.$fromRoutesClass;
             }
         }
 

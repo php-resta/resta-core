@@ -45,6 +45,7 @@ class Helper extends ConsoleOutputter
             $this->file->makeDirectory($this);
         }
 
+        $this->argument['helperName'] = strtolower($this->argument['helper']);
         $this->touch['helpers/general']= app()->path()->helpers().'/'.ucfirst($this->argument['helper']).'.php';
 
 

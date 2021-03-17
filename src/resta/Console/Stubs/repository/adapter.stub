@@ -3,7 +3,7 @@
 namespace __repositoryNamespace__;
 
 use Store\Traits\RepositoryTrait;
-use __versionNamespace__\ServiceAnnotationsManager;
+use __serviceAnnotations__;
 
 class __repository__Adapter
 {
@@ -12,6 +12,6 @@ class __repository__Adapter
     /**
      * @var string
      */
-    protected $adapter='Main';
+    protected $adapter = 'Main';
 
 }

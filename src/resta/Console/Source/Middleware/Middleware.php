@@ -39,12 +39,10 @@ class Middleware extends ConsoleOutputter {
      */
     public function create(){
 
+        $this->argument['middlewareNamespace'] = app()->namespace()->middleware();
         $this->touch['middleware/middleware']= path()->middleware().'/'.$this->argument['middleware'].'.php';
 
-
         $this->file->touch($this);
-
-        chmod($this->touch['middleware/middleware'],0777);
 
         echo $this->classical(' > Middleware called as "'.$this->argument['middleware'].'" has been successfully created in the '.app()->namespace()->middleware().'');
 

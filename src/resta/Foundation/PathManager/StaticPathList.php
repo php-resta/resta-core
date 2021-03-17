@@ -77,7 +77,7 @@ class StaticPathList
     /**
      * @var string
      */
-    public static $storage='Storage';
+    public static $storage = 'storage';
 
     /**
      * @var string
@@ -117,7 +117,7 @@ class StaticPathList
     /**
      * @var string
      */
-    public static $config='Config';
+    public static $config = 'config';
 
     /**
      * @var string

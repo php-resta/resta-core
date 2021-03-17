@@ -7,6 +7,6 @@ interface __repository__Contract
     /**
      * @return mixed
      */
-    public function getRepository();
+    public function get();
 
 }

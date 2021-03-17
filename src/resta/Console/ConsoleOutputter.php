@@ -98,24 +98,11 @@ class ConsoleOutputter extends ConsolePrepare implements ConsoleOutputterContrac
         require_once ('ConsoleTable.php');
         $this->table = new \console_table();
 
-
-        if(isset($this->argument['project'])){
-
-            $this->argument['repositoryNamespace']  = app()->namespace()->repository();
-            $this->argument['modelNamespace']       = app()->namespace()->model();
-            $this->argument['sourceNamespace']      = app()->namespace()->optionalSource();
-            $this->argument['versionNamespace']     = app()->namespace()->version();
-            $this->argument['serviceAnnotations']   = app()->namespace()->serviceAnnotations();
-
-
-            $this->argument['project'] = $this->argument['project'].'\\'.StaticPathList::$projectPrefixGroup;
-
-
-            $this->project = StaticPathModel::appPath().'/'.str_replace('\\','/',$this->argument['project']);
-
-
-        }
-
+        $this->argument['repositoryNamespace']  = app()->namespace()->repository();
+        $this->argument['modelNamespace']       = app()->namespace()->model();
+        $this->argument['sourceNamespace']      = app()->namespace()->optionalSource();
+        $this->argument['versionNamespace']     = app()->namespace()->version();
+        $this->argument['serviceAnnotations']   = app()->namespace()->serviceAnnotations();
     }
 
     // Returns all foreground color names

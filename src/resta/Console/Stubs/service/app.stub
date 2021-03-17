@@ -2,21 +2,10 @@
 
 namespace __controllerNamespace__;
 
-use __versionNamespace__\ServiceAnnotationsManager;
+use __serviceAnnotations__;
 
 abstract class App
 {
     //get service annotations
     use ServiceAnnotationsManager;
-
-    /**
-     * service restrictions method.
-     *
-     * restrictions for production environment
-     * @return array
-     */
-    public function restrictions()
-    {
-        return [];
-    }
 }

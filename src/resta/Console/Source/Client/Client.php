@@ -43,18 +43,17 @@ class Client extends ConsoleOutputter
         $name = $this->argument['name'];
         $client = $this->argument['client'];
 
-
         $this->directory['clientNameCreate']        = path()->request();
-        $this->argument['clientNameNamespace']      = Utils::getNamespace($this->directory['clientNameCreate']);
+        $this->argument['clientNameNamespace']      = $clientNamespace = app()->namespace()->request();
         $this->directory['clientNameDir']           = $this->directory['clientNameCreate'].'/'.$name;
-        $this->argument['clientNameDirNamespace']   = Utils::getNamespace($this->directory['clientNameCreate'].'/'.$name);
+        $this->argument['clientNameDirNamespace']   = $resource = $clientNamespace.'\\'.$name;
         $this->directory['clientSource']            = $this->directory['clientNameDir'].'/'.$client;
-        $this->argument['clientSourceNamespace']    = Utils::getNamespace($this->directory['clientNameDir'].'/'.$client.'');
+        $this->argument['clientSourceNamespace']    = $resource.'\\'.$client;
         
         //set project directory
         $this->file->makeDirectory($this);
 
-        $this->argument['managerTraitNamespace'] = Utils::getNamespace($this->directory['clientNameDir'].'/'.$name.'Trait.php');
+        $this->argument['managerTraitNamespace'] = $resource.'\\'.$name.'Trait';
 
         if(!file_exists($manager = $this->directory['clientNameDir'].'/'.$name.'Manager.php')){
             $this->touch['client/manager'] = $manager;
@@ -69,7 +68,7 @@ class Client extends ConsoleOutputter
                 $this->touch['client/managercustomtrait'] = $managerCustomTrait;
             }
 
-            $this->argument['managerTraitNamespace'] = Utils::getNamespace($managerCustomTrait);
+            $this->argument['managerTraitNamespace'] = $resource.'\\'.$this->argument['trait'].'Trait';
         }
 
         if(!file_exists($this->directory['clientNameCreate'].'/Client.php')){
@@ -77,7 +76,7 @@ class Client extends ConsoleOutputter
             $this->touch['client/clientGenerator'] = $this->directory['clientNameCreate'].'/ClientGenerator.php';
         }
 
-        $clientSourceNamespace = Utils::getNamespace($this->directory['clientSource'].'/'.$client.'.php');
+        $clientSourceNamespace = $this->argument['clientSourceNamespace'].'\\'.$client;
 
         if(!file_exists($clientSourceName = $this->directory['clientSource'].'/'.$client.'.php')){
             $this->touch['client/source'] = $clientSourceName.'';
@@ -96,11 +95,13 @@ class Client extends ConsoleOutputter
 
         $nameManager = $name.'Manager';
 
-        $nameGeneratorNamespace = Utils::getNamespace($managerPath = $this->directory['clientNameDir'].''.DIRECTORY_SEPARATOR.''.$nameManager.'.php');
+        $managerPath = $this->directory['clientNameDir'].''.DIRECTORY_SEPARATOR.''.$nameManager.'.php';
+        $nameGeneratorNamespace = $resource.'\\'.$nameManager;
 
-        $generator = new Generator(path()->version(),'ClientManager');
 
-        $clientManager = app()->namespace()->version().'\\ClientManager';
+        $generator = new Generator($this->directory['clientNameCreate'],$clientNamespace,'ClientManager');
+
+        $clientManager = $clientNamespace.'\\ClientManager';
 
         $clientManagerResolve = new $clientManager;
 
@@ -128,14 +129,14 @@ class Client extends ConsoleOutputter
                 strtolower($name) => 'protected'
             ]);
 
-            Utils::changeClass(path()->version().''.DIRECTORY_SEPARATOR.'ClientManager.php',
+            Utils::changeClass($this->directory['clientNameCreate'].''.DIRECTORY_SEPARATOR.'ClientManager.php',
                 [
                     'Class ClientManager'=>'Class ClientManager'.PHP_EOL.' * @property '.$nameManager.' '.strtolower($name),
                 ]);
 
         }
 
-        $nameGenerator = new Generator($this->directory['clientNameDir'],$name.'Manager');
+        $nameGenerator = new Generator($this->directory['clientNameDir'],$resource,$name.'Manager');
 
         $nameGeneratorNamespaceResolve = new $nameGeneratorNamespace;
 

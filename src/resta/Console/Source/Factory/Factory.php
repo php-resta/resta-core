@@ -41,7 +41,8 @@ class Factory extends ConsoleOutputter {
      */
     public function create()
     {
-        $factoryFile = app()->path()->factory().''.DIRECTORY_SEPARATOR.'Factory.php';
+        $factoryPath = app()->path()->factory();
+        $factoryFile = $factoryPath.''.DIRECTORY_SEPARATOR.'Factory.php';
 
         $this->argument['factoryDir']   = app()->namespace()->factory();
         $factoryArgument                = $this->argument['factory'];
@@ -54,10 +55,10 @@ class Factory extends ConsoleOutputter {
 
         $this->file->makeDirectory($this);
 
-        if(!file_exists($this->factory().'/Factory.php')){
+        if(!file_exists($factoryFile)){
 
-            $this->touch['factory/factory']             = $this->factory().'/Factory.php';
-            $this->touch['factory/factorymanager']      = $this->factory().'/FactoryManager.php';
+            $this->touch['factory/factory']             = $factoryFile;
+            $this->touch['factory/factorymanager']      = $factoryPath.'/FactoryManager.php';
         }
 
         if(file_exists( $this->directory['factoryArgumentDir'])){
@@ -82,7 +83,7 @@ class Factory extends ConsoleOutputter {
      */
     public static function '.strtolower($factoryArgument ).'() : '.$factoryArgument.'Interface
     {
-        return static::singleton('.$factoryArgument.'Manager::class);
+        return new '.$factoryArgument.'Manager();
     }
     ',
                         'namespace '.$this->argument['factoryDir'].';' => 'namespace '.$this->argument['factoryDir'].';

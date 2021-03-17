@@ -3,7 +3,7 @@
 namespace __listenNamespace__;
 
 use __eventKeyNamespace__;
-use __versionNamespace__\ServiceAnnotationsManager;
+use __serviceAnnotations__;
 
 class __eventListen__
 {
