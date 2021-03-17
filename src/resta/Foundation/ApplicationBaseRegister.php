@@ -46,6 +46,7 @@ class ApplicationBaseRegister extends ApplicationProvider implements HandleContr
      */
     public function handle()
     {
+
         //we can use this method to move an instance of the application class with the kernel object
         //and easily resolve an encrypted instance of all the kernel variables in our helper class.
         ClassAliasGroup::setAlias(App::class,'application');
