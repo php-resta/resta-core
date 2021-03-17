@@ -75,6 +75,7 @@ class Client extends ClientAbstract implements HandleContracts
         //reflection process
         $this->reflection = app()['reflection']($this);
 
+
         //set clientName for client
         $this->setClientName();
 
@@ -346,8 +347,8 @@ class Client extends ClientAbstract implements HandleContracts
                     $generatorMethodNameResult = $this->{$generatorMethodName}();
 
                     if(!is_null($generatorMethodNameResult)){
-                        $this->{$generator} = $this->{$generatorMethodName}();
-                        $this->inputs[$generator] = $this->{$generatorMethodName}();
+                        $this->{$generator} = $calledGenerator = $generatorMethodNameResult;
+                        $this->inputs[$generator] = $calledGenerator;
                         $this->generatorList[] = $generator;
                     }
                 }
@@ -355,15 +356,15 @@ class Client extends ClientAbstract implements HandleContracts
 
                     if($this->checkProperties('auto_generators_dont_overwrite')
                         && in_array($generator,$this->getAutoGeneratorsDontOverwrite())){
-                        $this->{$generator} = $this->{$generatorMethodName}();
-                        $this->inputs[$generator] = $this->{$generatorMethodName}();
+                        $this->{$generator} = $calledGenerator = $this->{$generatorMethodName}();
+                        $this->inputs[$generator] = $calledGenerator;
                         $this->generatorList[] = $generator;
                     }
 
                     if($this->checkProperties('generators_dont_overwrite')
                         && in_array($generator,$this->getGeneratorsDontOverwrite())){
-                        $this->{$generator} = $this->{$generatorMethodName}();
-                        $this->inputs[$generator] = $this->{$generatorMethodName}();
+                        $this->{$generator} = $calledGenerator = $this->{$generatorMethodName}();
+                        $this->inputs[$generator] = $calledGenerator;
                         $this->generatorList[] = $generator;
                     }
 
