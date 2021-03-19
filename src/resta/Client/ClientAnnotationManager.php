@@ -231,7 +231,7 @@ class ClientAnnotationManager extends ClientAnnotationAbstract
             }
             else{
 
-                foreach ($this->inputs[$key] as $ikey=>$input){
+                foreach (($this->inputs[$key] ?? []) as $ikey=>$input){
 
                     if(!is_array($input)){
                         foreach($rules as $rule){
